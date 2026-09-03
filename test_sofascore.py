@@ -18,48 +18,79 @@ async def main():
 
         page = await browser.new_page()
 
-        # WebSocket
-        def websocket_opened(ws):
-            print("\n========== WEBSOCKET OPEN ==========")
-            print(ws.url)
+        # اتصال مستقیم به Chrome DevTools Protocol
+        cdp = await page.context.new_cdp_session(page)
 
-            ws.on(
-                "framereceived",
-                lambda payload: print(
-                    f"\n[WS RECEIVED]\n{payload}"
-                )
-            )
+        # فعال کردن شنود شبکه
+        await cdp.send("Network.enable")
 
-            ws.on(
-                "framesent",
-                lambda payload: print(
-                    f"\n[WS SENT]\n{payload}"
-                )
-            )
+        # WebSocket ساخته شد
+        def websocket_created(params):
+            print("\n========== WEBSOCKET CREATED ==========")
+            print("URL:", params.get("url"))
+            print("Request ID:", params.get("requestId"))
 
-            ws.on(
-                "close",
-                lambda: print(
-                    f"\n[WS CLOSED]\n{ws.url}"
-                )
-            )
+        cdp.on(
+            "Network.webSocketCreated",
+            websocket_created
+        )
 
-        page.on("websocket", websocket_opened)
+        # اتصال WebSocket برقرار شد
+        def handshake(params):
+            print("\n========== WEBSOCKET HANDSHAKE ==========")
+            print("Status:", params["response"].get("status"))
+            print("Status text:", params["response"].get("statusText"))
 
-        # Network requests
-        def request_sent(request):
-            url = request.url
+        cdp.on(
+            "Network.webSocketHandshakeResponseReceived",
+            handshake
+        )
 
-            if any(x in url.lower() for x in [
-                "sofascore",
-                "api",
-                "event",
-                "websocket",
-                "ws"
-            ]):
-                print(f"\n[REQUEST]\n{url}")
+        # پیام دریافتی از WebSocket
+        def websocket_received(params):
+            response = params.get("response", {})
+            payload = response.get("payloadData", "")
 
-        page.on("request", request_sent)
+            print("\n========== WEBSOCKET RECEIVED ==========")
+            print(payload)
+
+        cdp.on(
+            "Network.webSocketFrameReceived",
+            websocket_received
+        )
+
+        # پیام ارسالی به WebSocket
+        def websocket_sent(params):
+            response = params.get("response", {})
+            payload = response.get("payloadData", "")
+
+            print("\n========== WEBSOCKET SENT ==========")
+            print(payload)
+
+        cdp.on(
+            "Network.webSocketFrameSent",
+            websocket_sent
+        )
+
+        # خطای WebSocket
+        def websocket_error(params):
+            print("\n========== WEBSOCKET ERROR ==========")
+            print(params)
+
+        cdp.on(
+            "Network.webSocketFrameError",
+            websocket_error
+        )
+
+        # WebSocket بسته شد
+        def websocket_closed(params):
+            print("\n========== WEBSOCKET CLOSED ==========")
+            print(params.get("requestId"))
+
+        cdp.on(
+            "Network.webSocketClosed",
+            websocket_closed
+        )
 
         print(f"Opening: {SOFASCORE_URL}")
 
@@ -70,7 +101,7 @@ async def main():
         )
 
         print("Page loaded.")
-        print("Monitoring network traffic for 60 seconds...")
+        print("Monitoring Chrome network events for 60 seconds...")
 
         await page.wait_for_timeout(60000)
 
