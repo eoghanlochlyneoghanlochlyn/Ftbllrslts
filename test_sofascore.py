@@ -2,7 +2,10 @@ import asyncio
 from playwright.async_api import async_playwright
 
 
-SOFASCORE_URL = "https://www.sofascore.com/"
+SOFASCORE_URL = (
+    "https://www.sofascore.com/football/match/"
+    "neom-sc-al-khaleej/DUqbsGmme#id:16629472"
+)
 
 
 async def main():
@@ -16,7 +19,7 @@ async def main():
         page = await browser.new_page()
 
         def websocket_opened(ws):
-            print(f"\n[WebSocket OPEN]")
+            print("\n[WebSocket OPEN]")
             print(ws.url)
 
             ws.on(
