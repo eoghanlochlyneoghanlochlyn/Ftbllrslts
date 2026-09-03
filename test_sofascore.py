@@ -18,32 +18,48 @@ async def main():
 
         page = await browser.new_page()
 
+        # WebSocket
         def websocket_opened(ws):
-            print("\n[WebSocket OPEN]")
+            print("\n========== WEBSOCKET OPEN ==========")
             print(ws.url)
 
             ws.on(
                 "framereceived",
                 lambda payload: print(
-                    f"\n[WebSocket RECEIVED]\n{payload}"
+                    f"\n[WS RECEIVED]\n{payload}"
                 )
             )
 
             ws.on(
                 "framesent",
                 lambda payload: print(
-                    f"\n[WebSocket SENT]\n{payload}"
+                    f"\n[WS SENT]\n{payload}"
                 )
             )
 
             ws.on(
                 "close",
                 lambda: print(
-                    f"\n[WebSocket CLOSED]\n{ws.url}"
+                    f"\n[WS CLOSED]\n{ws.url}"
                 )
             )
 
         page.on("websocket", websocket_opened)
+
+        # Network requests
+        def request_sent(request):
+            url = request.url
+
+            if any(x in url.lower() for x in [
+                "sofascore",
+                "api",
+                "event",
+                "websocket",
+                "ws"
+            ]):
+                print(f"\n[REQUEST]\n{url}")
+
+        page.on("request", request_sent)
 
         print(f"Opening: {SOFASCORE_URL}")
 
@@ -54,9 +70,9 @@ async def main():
         )
 
         print("Page loaded.")
-        print("Waiting for WebSocket traffic...")
+        print("Monitoring network traffic for 60 seconds...")
 
-        await page.wait_for_timeout(30000)
+        await page.wait_for_timeout(60000)
 
         await browser.close()
 
