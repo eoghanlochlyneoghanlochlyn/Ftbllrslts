@@ -1,13 +1,12 @@
 from curl_cffi import requests
 
+MATCH_ID = 4653711
 
-EVENT_ID = 16995551
-
-URL = f"https://www.sofascore.com/api/v1/event/{EVENT_ID}"
+URL = f"https://www.fotmob.com/api/data/matchDetails?matchId={MATCH_ID}"
 
 
 def main():
-    print("Connecting to SofaScore...")
+    print("Connecting to FotMob...")
 
     response = requests.get(
         URL,
