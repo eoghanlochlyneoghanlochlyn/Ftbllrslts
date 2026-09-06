@@ -27,4 +27,4 @@ jobs:
 
       - name: Run Scraper Script
         run: |
-          python Testg.py
+          python testg.py
