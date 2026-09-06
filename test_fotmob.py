@@ -43,19 +43,17 @@ HEADERS = {
 
 
 # ============================================================
-# دریافت اطلاعات خام
+# دریافت اطلاعات مسابقه
 # ============================================================
 
 def get_match_details(match_id):
-    """
-    دریافت پاسخ خام matchDetails از فوت‌موب.
-    """
-
     params = {
         "matchId": match_id
     }
 
-    print(f"   ↳ درخواست matchDetails برای شناسه {match_id}")
+    print(
+        f"   ↳ درخواست اطلاعات مسابقه {match_id}"
+    )
 
     try:
         response = requests.get(
@@ -65,44 +63,42 @@ def get_match_details(match_id):
             timeout=30,
         )
 
-        print(f"   ↳ HTTP {response.status_code}")
-
-        if response.status_code != 200:
-            print("   ❌ دریافت اطلاعات ناموفق بود.")
-            print(
-                f"   ↳ متن پاسخ: "
-                f"{response.text[:1000]}"
-            )
-            return None
-
-        try:
-            data = response.json()
-
-        except Exception as e:
-            print(
-                f"   ❌ پاسخ JSON معتبر نیست: {e}"
-            )
-
-            print(
-                f"   ↳ متن پاسخ: "
-                f"{response.text[:1000]}"
-            )
-
-            return None
-
+    except requests.RequestException as error:
         print(
-            "   ✅ پاسخ JSON با موفقیت دریافت شد."
+            f"   ❌ خطای اتصال: {error}"
         )
-
-        return data
-
-    except requests.RequestException as e:
-
-        print(
-            f"   ❌ خطای درخواست: {e}"
-        )
-
         return None
+
+    print(
+        f"   ↳ HTTP {response.status_code}"
+    )
+
+    if response.status_code != 200:
+        print(
+            "   ❌ دریافت اطلاعات ناموفق بود."
+        )
+        print(
+            f"   ↳ پاسخ: {response.text[:1000]}"
+        )
+        return None
+
+    try:
+        data = response.json()
+
+    except ValueError:
+        print(
+            "   ❌ پاسخ دریافت‌شده JSON معتبر نیست."
+        )
+        print(
+            f"   ↳ پاسخ: {response.text[:1000]}"
+        )
+        return None
+
+    print(
+        "   ✅ پاسخ JSON با موفقیت دریافت شد."
+    )
+
+    return data
 
 
 # ============================================================
@@ -113,21 +109,14 @@ def print_structure(
     value,
     path="root",
     depth=0,
-    max_depth=5,
+    max_depth=6,
 ):
-    """
-    فقط ساختار JSON را چاپ می‌کند.
-    مقدارهای بزرگ چاپ نمی‌شوند.
-    """
-
     indent = "  " * depth
 
     if depth > max_depth:
-
         print(
             f"{indent}{path}: ..."
         )
-
         return
 
     if isinstance(value, dict):
@@ -139,7 +128,9 @@ def print_structure(
 
         for key, child in value.items():
 
-            child_path = f"{path}.{key}"
+            child_path = (
+                f"{path}.{key}"
+            )
 
             if isinstance(child, dict):
 
@@ -158,13 +149,25 @@ def print_structure(
                     f"ARRAY ({len(child)} آیتم)"
                 )
 
-                if child:
+                if len(child) > 0:
 
                     first_item = child[0]
 
                     if isinstance(
                         first_item,
                         dict,
+                    ):
+
+                        print_structure(
+                            first_item,
+                            f"{child_path}[0]",
+                            depth + 2,
+                            max_depth,
+                        )
+
+                    elif isinstance(
+                        first_item,
+                        list,
                     ):
 
                         print_structure(
@@ -197,7 +200,7 @@ def print_structure(
             f"ARRAY ({len(value)} آیتم)"
         )
 
-        if value:
+        if len(value) > 0:
 
             print_structure(
                 value[0],
@@ -215,19 +218,14 @@ def print_structure(
 
 
 # ============================================================
-# ذخیره JSON خام
+# ذخیره پاسخ خام
 # ============================================================
 
 def save_raw_json(
-    match_key,
-    match_name,
     match_id,
+    match_name,
     data,
 ):
-    """
-    ذخیره کامل پاسخ خام فوت‌موب.
-    """
-
     os.makedirs(
         OUTPUT_DIR,
         exist_ok=True,
@@ -242,14 +240,13 @@ def save_raw_json(
         filename,
     )
 
-    wrapper = {
+    output = {
         "saved_at": (
             datetime.utcnow().isoformat()
             + "Z"
         ),
-        "match_key": match_key,
-        "match_name": match_name,
         "match_id": match_id,
+        "match_name": match_name,
         "data": data,
     }
 
@@ -259,29 +256,27 @@ def save_raw_json(
             filepath,
             "w",
             encoding="utf-8",
-        ) as f:
+        ) as file:
 
             json.dump(
-                wrapper,
-                f,
+                output,
+                file,
                 ensure_ascii=False,
                 indent=2,
             )
 
-        print(
-            f"   💾 فایل ذخیره شد: "
-            f"{filepath}"
-        )
-
-        return filepath
-
-    except Exception as e:
+    except OSError as error:
 
         print(
-            f"   ❌ خطا در ذخیره فایل: {e}"
+            f"   ❌ خطا در ذخیره فایل: {error}"
         )
+        return False
 
-        return None
+    print(
+        f"   💾 فایل ذخیره شد: {filepath}"
+    )
+
+    return True
 
 
 # ============================================================
@@ -289,17 +284,18 @@ def save_raw_json(
 # ============================================================
 
 def inspect_match(
-    match_key,
-    match_info,
+    match_id,
+    match_name,
 ):
-
-    match_name = match_info["name"]
-    match_id = match_info["id"]
 
     print()
     print("=" * 70)
-    print(f"⚽ {match_name}")
-    print(f"🆔 شناسه: {match_id}")
+    print(
+        f"⚽ {match_name}"
+    )
+    print(
+        f"🆔 شناسه: {match_id}"
+    )
     print("=" * 70)
 
     data = get_match_details(
@@ -307,36 +303,102 @@ def inspect_match(
     )
 
     if data is None:
-
         print(
-            "❌ اطلاعاتی برای این مسابقه "
-            "دریافت نشد."
+            "❌ اطلاعات مسابقه دریافت نشد."
         )
-
         return False
 
     print()
     print(
-        "🔍 ساختار پاسخ JSON:"
+        "🔍 ساختار پاسخ دریافت‌شده:"
     )
-
     print("-" * 70)
 
     print_structure(
         data,
         path="data",
-        depth=0,
-        max_depth=5,
     )
 
-    print()
     print("-" * 70)
 
-    filepath = save_raw_json(
-        match_key,
-        match_name,
+    saved = save_raw_json(
         match_id,
+        match_name,
         data,
     )
 
-    if
+    if saved:
+        print(
+            "✅ بررسی مسابقه با موفقیت انجام شد."
+        )
+    else:
+        print(
+            "⚠️ دریافت موفق بود ولی ذخیره فایل انجام نشد."
+        )
+
+    return saved
+
+
+# ============================================================
+# اجرای اصلی
+# ============================================================
+
+def main():
+
+    print("=" * 70)
+    print(
+        "⚽ آزمایش اطلاعات خام فوت‌موب"
+    )
+    print("=" * 70)
+
+    print()
+    print(
+        "تعداد مسابقه‌ها: "
+        f"{len(MATCHES)}"
+    )
+
+    print()
+
+    for match_info in MATCHES.values():
+
+        print(
+            f"  • {match_info['id']}"
+        )
+
+    success_count = 0
+
+    for match_info in MATCHES.values():
+
+        success = inspect_match(
+            match_info["id"],
+            match_info["name"],
+        )
+
+        if success:
+            success_count += 1
+
+    print()
+    print("=" * 70)
+    print(
+        "🏁 آزمایش به پایان رسید"
+    )
+    print("=" * 70)
+
+    print(
+        f"✅ موفق: {success_count} "
+        f"از {len(MATCHES)}"
+    )
+
+    print()
+    print(
+        f"📁 فایل‌ها در پوشه "
+        f"'{OUTPUT_DIR}' ذخیره شدند."
+    )
+
+
+# ============================================================
+# شروع برنامه
+# ============================================================
+
+if __name__ == "__main__":
+    main()
