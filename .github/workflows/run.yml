@@ -1,9 +1,7 @@
 name: Run FotMob Scraper
 
 on:
-  # قابلیت اجرای دستی از تب Actions
   workflow_dispatch:
-  # اجرای خودکار روزانه (مثلاً هر روز ساعت ۱۲ شب به وقت UTC)
   schedule:
     - cron: '0 0 * * *'
 
