@@ -3,110 +3,130 @@ import re
 import requests
 
 
-class FotMobScraper:
+class FlashscoreScraper:
 
     def __init__(self):
-        self.session = requests.Session()
-        # هدرهای دقیق مرورگر واقعی برای جلوگیری از ۴۰۴ و بلاک شدن
-        self.session.headers.update({
+        self.headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+                " (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             ),
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Referer": "https://www.fotmob.com/",
-        })
+            "x-fsign": "SW1hZ2luZSBhbnkgdGV4dCBoZXJl",
+        }
 
     def extract_match_id(self, url_or_id: str) -> str:
-        """شناسه عددی بازی را از هر نوع لینکی بیرون می‌کشد"""
-        # اگر کاربر یک لینک کامل فرستاده بود
-        match = re.search(r"match(?:es)?/.*?/(\d+)", url_or_id)
-        if match:
-            return match.group(1)
+        """استخراج ID هشت‌کاراکتری از پارامتر mid یا لینک اصلی"""
+        mid_match = re.search(r"mid=([a-zA-Z0-9]+)", url_or_id)
+        if mid_match:
+            return mid_match.group(1)
 
-        # اگر لینک شامل کد چندرقمی بود
-        numbers = re.findall(r"\d+", url_or_id)
-        if numbers:
-            return numbers[-1]
+        match_id_search = re.search(r"/([a-zA-Z0-9]{8})/", url_or_id)
+        if match_id_search:
+            return match_id_search.group(1)
 
-        return url_or_id
+        return url_or_id.strip()
 
-    def get_match_details(self, url_or_id: str) -> dict:
+    def get_match_data(self, url_or_id: str) -> dict:
         match_id = self.extract_match_id(url_or_id)
 
-        # قبل از صدا زدن API، یک‌بار صفحه اصلی را می‌بینیم تا کوکی‌های لازم ست شوند
-        try:
-            self.session.get("https://www.fotmob.com/", timeout=10)
-        except Exception:
-            pass
-
-        # API اصلی دریافت جزئیات مسابقه
-        api_url = f"https://www.fotmob.com/api/matchDetails?matchId={match_id}"
+        events_url = f"https://local-global.flashscore.ninja/2/x/feed/df_sue_1_{match_id}"
+        lineup_url = f"https://local-global.flashscore.ninja/2/x/feed/df_sut_1_{match_id}"
 
         try:
-            response = self.session.get(api_url, timeout=15)
-            response.raise_for_status()
-            data = response.json()
+            res_events = requests.get(
+                events_url, headers=self.headers, timeout=10
+            )
+            res_lineup = requests.get(
+                lineup_url, headers=self.headers, timeout=10
+            )
 
-            general = data.get("general", {})
-            header = data.get("header", {})
-            content = data.get("content", {})
+            events_parsed = self._parse_feed(res_events.text)
+            lineup_parsed = self._parse_feed(res_lineup.text)
 
             return {
                 "match_id": match_id,
-                "league": general.get("leagueName"),
-                "home_team": general.get("homeTeam", {}).get("name"),
-                "away_team": general.get("awayTeam", {}).get("name"),
-                "score": header.get("status", {}).get("scoreStr"),
-                "status": header.get("status", {}).get("reason", {}).get("short"),
-                "scorers": self._extract_scorers(header),
-                "lineups": self._extract_lineups(content.get("lineup", {})),
+                "teams": events_parsed.get("teams", "نامشخص"),
+                "score": events_parsed.get("score", "0 - 0"),
+                "scorers": events_parsed.get("scorers", []),
+                "lineups": lineup_parsed.get("lineups", {"home": [], "away": []}),
             }
-
         except Exception as e:
             return {"error": f"خطا در دریافت اطلاعات: {str(e)}"}
 
-    def _extract_scorers(self, header: dict) -> dict:
-        events = header.get("teams", [])
-        scorers = {"home": [], "away": []}
+    def _parse_feed(self, raw_text: str) -> dict:
+        result = {"scorers": [], "lineups": {"home": [], "away": []}}
+        blocks = raw_text.split("¬")
 
-        for team_idx, team_key in enumerate(["home", "away"]):
-            if team_idx < len(events):
-                for event in events[team_idx].get("scoreEvents", []):
-                    player = event.get("player", {}).get("name")
-                    time_str = event.get("timeStr")
-                    scorers[team_key].append(f"{player} ({time_str}')")
+        current_team = None
+        home_name, away_name = "", ""
+        score_home, score_away = "", ""
 
-        return scorers
+        for block in blocks:
+            if "÷" not in block:
+                continue
+            key, val = block.split("÷", 1)
 
-    def _extract_lineups(self, lineup_data: dict) -> dict:
-        lineups = {"home": [], "away": []}
+            if key == "FH":
+                home_name = val
+            elif key == "FK":
+                away_name = val
+            elif key == "AG":
+                score_home = val
+            elif key == "AH":
+                score_away = val
+            elif key == "IN":
+                result["scorers"].append(val)
+            elif key == "PD":
+                if current_team:
+                    result["lineups"][current_team].append(val)
+            elif key == "TM":
+                current_team = "home" if val == "1" else "away"
 
-        for side in ["home", "away"]:
-            starters = lineup_data.get(side, {}).get("startingLineup", [])
-            for item in starters:
-                # بسته به فرمت پاسخ API، بازیکنان یا آرایه هستند یا دیکشنری
-                if isinstance(item, list):
-                    for player in item:
-                        name = player.get("name", {}).get("fullName")
-                        if name:
-                            lineups[side].append(name)
-                elif isinstance(item, dict):
-                    name = item.get("name", {}).get("fullName")
-                    if name:
-                        lineups[side].append(name)
+        if home_name and away_name:
+            result["teams"] = f"{home_name} vs {away_name}"
+            result["score"] = f"{score_home} - {score_away}"
 
-        return lineups
+        return result
+
+    def print_match_summary(self, data: dict):
+        """چاپ شکیل و خوانای خروجی در لاگ گیت‌هاب"""
+        if "error" in data:
+            print(f"❌ {data['error']}")
+            return
+
+        print("========================================")
+        print(f" ⚽ مسابقه: {data.get('teams')}")
+        print(f" 📊 نتیجه: {data.get('score')}")
+        print("========================================")
+
+        scorers = data.get("scorers", [])
+        if scorers:
+            print(" 🎯 گل‌زنان:")
+            for scorer in scorers:
+                print(f"   • {scorer}")
+        else:
+            print(" 🎯 گل‌زنان: گلی ثبت نشده است.")
+
+        print("----------------------------------------")
+        lineups = data.get("lineups", {})
+        home_players = lineups.get("home", [])
+        away_players = lineups.get("away", [])
+
+        if home_players or away_players:
+            print(" 📋 ترکیب اصلی:")
+            print(f"   🏠 میزبان: {', '.join(home_players[:11])}")
+            print(f"   🚀 میهمان: {', '.join(away_players[:11])}")
+        else:
+            print(" 📋 ترکیب: هنوز اعلام نشده است.")
+
+        print("========================================")
 
 
 if __name__ == "__main__":
-    scraper = FotMobScraper()
+    scraper = FlashscoreScraper()
 
-    # تست با یک Match ID معتبر (مثلاً بازی آرسنال و چلسی یا هر بازی دیگری)
-    TEST_MATCH_ID = "4506520"
+    # لینک مستقیم بازی میلان و یوونتوس
+    URL = "https://www.flashscore.com/match/football/ac-milan-8Sa8HInO/juventus-C06aJvIB/summary/lineups/?mid=G4XZ0kFD"
 
-    print(f"در حال دریافت اطلاعات بازی (آی‌دی: {TEST_MATCH_ID})...")
-    result = scraper.get_match_details(TEST_MATCH_ID)
-    print(json.dumps(result, ensure_ascii=False, indent=4))
-
+    match_data = scraper.get_match_data(URL)
+    scraper.print_match_summary(match_data)
