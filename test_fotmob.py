@@ -24,13 +24,8 @@ MATCHES = [
 URL = "https://www.fotmob.com/api/data/matchDetails"
 
 HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/131.0.0.0 Safari/537.36"
-    ),
-    "Accept": "application/json, text/plain, */*",
-    "Accept-Language": "en-US,en;q=0.9",
+    "User-Agent": "Mozilla/5.0",
+    "Accept": "application/json",
     "Referer": "https://www.fotmob.com/",
 }
 
@@ -42,7 +37,6 @@ HEADERS = {
 def get_match(match_id):
 
     try:
-
         response = requests.get(
             URL,
             params={"matchId": match_id},
@@ -50,9 +44,7 @@ def get_match(match_id):
             timeout=30,
         )
 
-        print(
-            f"   ↳ HTTP {response.status_code}"
-        )
+        print(f"HTTP: {response.status_code}")
 
         if response.status_code != 200:
             return None
@@ -60,58 +52,51 @@ def get_match(match_id):
         return response.json()
 
     except Exception as error:
-
-        print(
-            f"   ❌ خطا: {error}"
-        )
-
+        print(f"خطا: {error}")
         return None
 
 
 # ============================================================
-# جستجوی بازگشتی در JSON
+# جستجوی بازگشتی یک کلید در JSON
 # ============================================================
 
-def find_keys(data, wanted_keys):
+def find_values(data, keys):
 
-    results = []
+    result = []
 
     if isinstance(data, dict):
 
         for key, value in data.items():
 
-            if key.lower() in wanted_keys:
-                results.append(value)
+            if key.lower() in keys:
+                result.append(value)
 
-            results.extend(
-                find_keys(
-                    value,
-                    wanted_keys,
-                )
+            result.extend(
+                find_values(value, keys)
             )
 
     elif isinstance(data, list):
 
         for item in data:
 
-            results.extend(
-                find_keys(
-                    item,
-                    wanted_keys,
-                )
+            result.extend(
+                find_values(item, keys)
             )
 
-    return results
+    return result
 
 
 # ============================================================
-# پیدا کردن نام بازیکن
+# تبدیل اطلاعات بازیکن به نام
 # ============================================================
 
-def player_name(player):
+def get_player_name(player):
+
+    if isinstance(player, str):
+        return player
 
     if not isinstance(player, dict):
-        return str(player)
+        return None
 
     for key in [
         "name",
@@ -122,44 +107,80 @@ def player_name(player):
 
         value = player.get(key)
 
-        if isinstance(value, str) and value.strip():
-            return value.strip()
+        if isinstance(value, str):
+            return value
 
     nested = player.get("player")
 
     if isinstance(nested, dict):
-        return player_name(nested)
+        return get_player_name(nested)
 
-    return "بازیکن نامشخص"
+    return None
 
 
 # ============================================================
-# استخراج بازیکنان از یک ساختار
+# نمایش ترکیب
 # ============================================================
 
-def extract_players(data):
+def show_lineups(data):
 
-    players = []
+    print()
+    print("👥 ترکیب:")
 
-    if isinstance(data, list):
+    values = find_values(
+        data,
+        {
+            "lineup",
+            "lineups",
+        },
+    )
 
-        for item in data:
+    if not values:
 
-            if isinstance(item, dict):
+        print("   ترکیب پیدا نشد.")
+        return
 
-                name = player_name(item)
+    names = []
 
-                if name != "بازیکن نامشخص":
-                    players.append(name)
+    for value in values:
 
-    elif isinstance(data, dict):
+        if isinstance(value, dict):
 
-        name = player_name(data)
+            for key in [
+                "starters",
+                "players",
+                "startingPlayers",
+                "bench",
+                "substitutes",
+            ]:
 
-        if name != "بازیکن نامشخص":
-            players.append(name)
+                players = value.get(key)
 
-    return players
+                if isinstance(players, list):
+
+                    for player in players:
+
+                        name = get_player_name(player)
+
+                        if name and name not in names:
+                            names.append(name)
+
+        elif isinstance(value, list):
+
+            for player in value:
+
+                name = get_player_name(player)
+
+                if name and name not in names:
+                    names.append(name)
+
+    if not names:
+
+        print("   بازیکنی در ترکیب پیدا نشد.")
+        return
+
+    for name in names:
+        print(f"   • {name}")
 
 
 # ============================================================
@@ -171,99 +192,30 @@ def show_score(data):
     print()
     print("📊 نتیجه:")
 
-    score_data = find_keys(
+    values = find_values(
         data,
         {
             "score",
-            "current",
-            "ftscore",
-            "homeScore",
-            "awayScore",
         },
     )
-
-    if not score_data:
-
-        print("   اطلاعات نتیجه پیدا نشد.")
-        return
 
     found = False
 
-    for item in score_data:
+    for value in values:
 
-        if isinstance(item, dict):
+        if not isinstance(value, dict):
+            continue
 
-            home = (
-                item.get("home")
-                or item.get("homeScore")
-            )
+        home = value.get("home")
+        away = value.get("away")
 
-            away = (
-                item.get("away")
-                or item.get("awayScore")
-            )
+        if home is not None and away is not None:
 
-            if home is not None or away is not None:
-
-                print(
-                    f"   ⚽ {home} - {away}"
-                )
-
-                found = True
+            print(f"   ⚽ {home} - {away}")
+            found = True
 
     if not found:
-
-        print(
-            "   اطلاعات نتیجه در پاسخ وجود دارد "
-            "اما ساختار آن هنوز مشخص نیست."
-        )
-
-
-# ============================================================
-# نمایش ترکیب
-# ============================================================
-
-def show_lineups(data):
-
-    print()
-    print("👥 ترکیب تیم‌ها:")
-
-    lineup_data = find_keys(
-        data,
-        {
-            "lineup",
-            "lineups",
-            "players",
-        },
-    )
-
-    all_players = []
-
-    for item in lineup_data:
-
-        players = extract_players(item)
-
-        for player in players:
-
-            if player not in all_players:
-                all_players.append(player)
-
-    if not all_players:
-
-        print(
-            "   ترکیب بازیکنان پیدا نشد."
-        )
-
-        return
-
-    for number, player in enumerate(
-        all_players,
-        1,
-    ):
-
-        print(
-            f"   {number}. {player}"
-        )
+        print("   نتیجه پیدا نشد.")
 
 
 # ============================================================
@@ -275,43 +227,51 @@ def show_goals(data):
     print()
     print("⚽ گلزنان:")
 
-    event_data = find_keys(
+    events = find_values(
         data,
         {
             "events",
             "goals",
-            "goal",
-            "matchfacts",
+            "incidents",
         },
     )
 
-    goals = []
+    names = []
 
     def scan(value):
 
         if isinstance(value, dict):
 
-            text = " ".join(
-                str(value.get(key, ""))
-                for key in [
-                    "type",
-                    "eventType",
-                    "incidentType",
-                    "action",
-                ]
-            ).lower()
+            text = ""
+
+            for key in [
+                "type",
+                "eventType",
+                "incidentType",
+                "action",
+                "event",
+            ]:
+
+                item = value.get(key)
+
+                if item is not None:
+                    text += " " + str(item).lower()
 
             if "goal" in text:
 
-                name = (
-                    value.get("playerName")
-                    or value.get("name")
-                )
+                for key in [
+                    "playerName",
+                    "name",
+                    "player",
+                    "scorer",
+                ]:
 
-                if name:
-                    goals.append(
-                        str(name)
-                    )
+                    player = value.get(key)
+
+                    name = get_player_name(player)
+
+                    if name and name not in names:
+                        names.append(name)
 
             for child in value.values():
                 scan(child)
@@ -321,29 +281,16 @@ def show_goals(data):
             for child in value:
                 scan(child)
 
-    for item in event_data:
+    for item in events:
         scan(item)
 
-    unique_goals = []
+    if not names:
 
-    for goal in goals:
-
-        if goal not in unique_goals:
-            unique_goals.append(goal)
-
-    if not unique_goals:
-
-        print(
-            "   گلزنی پیدا نشد."
-        )
-
+        print("   گلزنی پیدا نشد.")
         return
 
-    for goal in unique_goals:
-
-        print(
-            f"   ⚽ {goal}"
-        )
+    for name in names:
+        print(f"   ⚽ {name}")
 
 
 # ============================================================
@@ -355,10 +302,11 @@ def show_substitutions(data):
     print()
     print("🔄 تعویض‌ها:")
 
-    substitution_data = find_keys(
+    events = find_values(
         data,
         {
-            "substitution",
+            "events",
+            "incidents",
             "substitutions",
         },
     )
@@ -369,20 +317,21 @@ def show_substitutions(data):
 
         if isinstance(value, dict):
 
-            text = " ".join(
-                str(value.get(key, ""))
-                for key in [
-                    "type",
-                    "eventType",
-                    "incidentType",
-                    "action",
-                ]
-            ).lower()
+            text = ""
 
-            if (
-                "substitution" in text
-                or "sub" == text.strip()
-            ):
+            for key in [
+                "type",
+                "eventType",
+                "incidentType",
+                "action",
+            ]:
+
+                item = value.get(key)
+
+                if item is not None:
+                    text += " " + str(item).lower()
+
+            if "substitution" in text:
 
                 substitutions.append(value)
 
@@ -394,100 +343,84 @@ def show_substitutions(data):
             for child in value:
                 scan(child)
 
-    for item in substitution_data:
+    for item in events:
         scan(item)
 
     if not substitutions:
 
-        print(
-            "   تعویضی پیدا نشد."
-        )
-
+        print("   تعویضی پیدا نشد.")
         return
 
-    for substitution in substitutions:
+    for item in substitutions:
 
-        player_out = (
-            substitution.get("playerOut")
-            or substitution.get("outPlayer")
-            or substitution.get("playerOff")
-        )
+        player_in = None
+        player_out = None
 
-        player_in = (
-            substitution.get("playerIn")
-            or substitution.get("inPlayer")
-            or substitution.get("playerOn")
-        )
+        for key in [
+            "playerIn",
+            "inPlayer",
+            "playerOn",
+        ]:
 
-        if isinstance(
-            player_out,
-            dict,
-        ):
-            player_out = player_name(
-                player_out
-            )
+            if key in item:
+                player_in = get_player_name(
+                    item[key]
+                )
+                break
 
-        if isinstance(
-            player_in,
-            dict,
-        ):
-            player_in = player_name(
-                player_in
-            )
+        for key in [
+            "playerOut",
+            "outPlayer",
+            "playerOff",
+        ]:
+
+            if key in item:
+                player_out = get_player_name(
+                    item[key]
+                )
+                break
 
         print(
-            f"   🔄 {player_out or '?'} "
-            f"⬅️ {player_in or '?'}"
+            f"   🔄 "
+            f"{player_out or '?'} "
+            f"← "
+            f"{player_in or '?'}"
         )
 
 
 # ============================================================
-# بررسی مسابقه
+# بررسی یک مسابقه
 # ============================================================
 
 def check_match(match):
 
     print()
-    print("=" * 70)
-    print(
-        f"⚽ {match['name']}"
-    )
-    print(
-        f"🆔 شناسه: {match['id']}"
-    )
-    print("=" * 70)
+    print("=" * 60)
+    print(f"⚽ {match['name']}")
+    print(f"🆔 {match['id']}")
+    print("=" * 60)
 
-    data = get_match(
-        match["id"]
-    )
+    data = get_match(match["id"])
 
     if data is None:
 
-        print(
-            "❌ اطلاعات مسابقه دریافت نشد."
-        )
-
+        print("❌ اطلاعات دریافت نشد.")
         return
 
     if isinstance(data, dict):
 
         if data.get("error") is True:
 
-            print(
-                "❌ فوت‌موب برای این شناسه "
-                "خطا برگرداند."
-            )
+            print("❌ فوت‌موب خطا برگرداند.")
 
-            if data.get("message"):
-                print(
-                    f"   پیام: {data['message']}"
-                )
+            message = data.get("message")
+
+            if message:
+                print(f"پیام: {message}")
 
             return
 
-    print(
-        "✅ اطلاعات مسابقه دریافت شد."
-    )
+    print("✅ اطلاعات دریافت شد.")
 
     show_score(data)
 
@@ -497,5 +430,25 @@ def check_match(match):
 
     show_substitutions(data)
 
+    print("=" * 60)
+
+
+# ============================================================
+# اجرای برنامه
+# ============================================================
+
+def main():
+
+    print("=" * 60)
+    print("⚽ آزمایش اطلاعات فوت‌موب")
+    print("=" * 60)
+
+    for match in MATCHES:
+        check_match(match)
+
     print()
-    print("=" * 
+    print("🏁 پایان آزمایش")
+
+
+if __name__ == "__main__":
+    main()
