@@ -1,4 +1,4 @@
-name: SofaScore WebSocket Test
+name: Test SportsAPI
 
 on:
   workflow_dispatch:
@@ -8,17 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: دریافت کد
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: نصب Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+      - name: نصب requests
+        run: pip install requests
 
-      - name: Run SofaScore test
-        run: python test_sofascore.py
+      - name: اجرای تست
+        env:
+          SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
+        run: python test_sportsapi.py
