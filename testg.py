@@ -1,39 +1,57 @@
 import json
+import re
 import requests
+from bs4 import BeautifulSoup
 
 
-class FotMobScraper:
+class FotMobWebScraper:
 
     def __init__(self):
         self.headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-                " (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            )
+                " (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+            ),
+            "Accept-Language": "en-US,en;q=0.9",
         }
 
-    def get_match_details(self, match_id: str) -> dict:
-        url = f"https://www.fotmob.com/api/matchDetails?matchId={match_id}"
+    def get_match_by_url(self, match_url: str) -> dict:
         try:
-            response = requests.get(url, headers=self.headers)
+            # ۱. دریافت مستقیم صفحه وب بازی
+            response = requests.get(match_url, headers=self.headers, timeout=15)
             response.raise_for_status()
-            data = response.json()
 
-            general = data.get("general", {})
-            header = data.get("header", {})
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            # ۲. پیدا کردن داده‌های اصلی درون سورس HTML
+            script_tag = soup.find("script", id="__NEXT_DATA__")
+
+            if not script_tag:
+                return {
+                    "error": (
+                        "داده‌های ساختاریافته در صفحه یافت نشد."
+                        " احتمالاً لینک اشتباه است."
+                    )
+                }
+
+            page_data = json.loads(script_tag.string)
+            props = page_data.get("props", {}).get("pageProps", {})
+            content = props.get("content", {})
+            general = props.get("general", {})
+            header = props.get("header", {})
 
             return {
-                "match_id": match_id,
                 "league": general.get("leagueName"),
                 "home_team": general.get("homeTeam", {}).get("name"),
                 "away_team": general.get("awayTeam", {}).get("name"),
                 "score": header.get("status", {}).get("scoreStr"),
                 "status": header.get("status", {}).get("reason", {}).get("short"),
                 "scorers": self._extract_scorers(header),
-                "lineups": self._extract_lineups(data.get("content", {}).get("lineup", {})),
+                "lineups": self._extract_lineups(content.get("lineup", {})),
             }
+
         except Exception as e:
-            return {"error": str(e)}
+            return {"error": f"خطا در دریافت اطلاعات: {str(e)}"}
 
     def _extract_scorers(self, header: dict) -> dict:
         events = header.get("teams", [])
@@ -43,16 +61,7 @@ class FotMobScraper:
                 for event in events[team_idx].get("scoreEvents", []):
                     player = event.get("player", {}).get("name")
                     time_str = event.get("timeStr")
-                    is_penalty = event.get("pen")
-                    is_own_goal = event.get("ownGoal")
-
-                    detail = f"{player} ({time_str}')"
-                    if is_penalty:
-                        detail += " [پنالتی]"
-                    if is_own_goal:
-                        detail += " [گل به خودی]"
-
-                    scorers[team_key].append(detail)
+                    scorers[team_key].append(f"{player} ({time_str}')")
         return scorers
 
     def _extract_lineups(self, lineup_data: dict) -> dict:
@@ -68,11 +77,11 @@ class FotMobScraper:
 
 
 if __name__ == "__main__":
-    scraper = FotMobScraper()
+    scraper = FotMobWebScraper()
 
-    # آیدی بازی میلان و یوونتوس از لینکی که فرستادید (5749667)
-    MATCH_ID = "5749667"
+    # دقیقاً همان آدرس کاملی که در مرورگر باز می‌کنید را اینجا بگذارید
+    URL = "https://www.fotmob.com/matches/milan-vs-juventus/2tc0mu"
 
-    print("در حال دریافت اطلاعات بازی میلان و یوونتوس...")
-    result = scraper.get_match_details(MATCH_ID)
+    print("در حال استخراج اطلاعات از صفحه...")
+    result = scraper.get_match_by_url(URL)
     print(json.dumps(result, ensure_ascii=False, indent=4))
