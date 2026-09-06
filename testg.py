@@ -1,10 +1,9 @@
 import json
-import re
 import requests
 from bs4 import BeautifulSoup
 
 
-class FotMobWebScraper:
+class FotMobScraper:
 
     def __init__(self):
         self.headers = {
@@ -15,30 +14,23 @@ class FotMobWebScraper:
             "Accept-Language": "en-US,en;q=0.9",
         }
 
-    def get_match_by_url(self, match_url: str) -> dict:
+    def get_match_details(self, match_url: str) -> dict:
         try:
-            # ۱. دریافت مستقیم صفحه وب بازی
             response = requests.get(match_url, headers=self.headers, timeout=15)
             response.raise_for_status()
 
             soup = BeautifulSoup(response.text, "html.parser")
-
-            # ۲. پیدا کردن داده‌های اصلی درون سورس HTML
             script_tag = soup.find("script", id="__NEXT_DATA__")
 
             if not script_tag:
-                return {
-                    "error": (
-                        "داده‌های ساختاریافته در صفحه یافت نشد."
-                        " احتمالاً لینک اشتباه است."
-                    )
-                }
+                return {"error": "داده‌های بازی پیدا نشد."}
 
             page_data = json.loads(script_tag.string)
             props = page_data.get("props", {}).get("pageProps", {})
-            content = props.get("content", {})
+
             general = props.get("general", {})
             header = props.get("header", {})
+            content = props.get("content", {})
 
             return {
                 "league": general.get("leagueName"),
@@ -46,42 +38,66 @@ class FotMobWebScraper:
                 "away_team": general.get("awayTeam", {}).get("name"),
                 "score": header.get("status", {}).get("scoreStr"),
                 "status": header.get("status", {}).get("reason", {}).get("short"),
-                "scorers": self._extract_scorers(header),
-                "lineups": self._extract_lineups(content.get("lineup", {})),
+                "scorers": self._extract_scorers(content),
+                "lineups": self._extract_lineups(content),
             }
 
         except Exception as e:
-            return {"error": f"خطا در دریافت اطلاعات: {str(e)}"}
+            return {"error": f"خطا: {str(e)}"}
 
-    def _extract_scorers(self, header: dict) -> dict:
-        events = header.get("teams", [])
+    def _extract_scorers(self, content: dict) -> dict:
         scorers = {"home": [], "away": []}
-        for team_idx, team_key in enumerate(["home", "away"]):
-            if team_idx < len(events):
-                for event in events[team_idx].get("scoreEvents", []):
-                    player = event.get("player", {}).get("name")
-                    time_str = event.get("timeStr")
-                    scorers[team_key].append(f"{player} ({time_str}')")
+        # استخراج گل‌ها از بخش events
+        events = content.get("matchFacts", {}).get("events", {}).get("events", [])
+        for event in events:
+            if event.get("type") == "Goal":
+                team = "home" if event.get("isHome") else "away"
+                player = event.get("player", {}).get("name", "Unknown")
+                time = event.get("time")
+                scorers[team].append(f"{player} ({time}')")
         return scorers
 
-    def _extract_lineups(self, lineup_data: dict) -> dict:
+    def _extract_lineups(self, content: dict) -> dict:
         lineups = {"home": [], "away": []}
+        lineup_data = content.get("lineup", {})
+
         for side in ["home", "away"]:
-            for player in lineup_data.get(side, {}).get("startingLineup", []):
-                if isinstance(player, list):
-                    for sub in player:
-                        lineups[side].append(sub.get("name", {}).get("fullName"))
-                else:
-                    lineups[side].append(player.get("name", {}).get("fullName"))
+            team_data = lineup_data.get(side, {})
+
+            # استخراج ترکیب اولیه
+            starters = team_data.get("startingLineup", [])
+            for group in starters:
+                # برخی ساختارها گروهی (بر اساس پست) هستند و برخی لیست ساده
+                if isinstance(group, list):
+                    for player in group:
+                        name = player.get("name", {}).get("fullName") or player.get(
+                            "name", {}
+                        ).get("firstName")
+                        if name:
+                            lineups[side].append(name)
+                elif isinstance(group, dict):
+                    name = group.get("name", {}).get("fullName")
+                    if name:
+                        lineups[side].append(name)
+
+            # اگر ترکیب در بخش دیگری بود (ساختار جایگزین)
+            if not lineups[side]:
+                players = team_data.get("players", [])
+                for row in players:
+                    for player in row:
+                        name = player.get("name", {}).get("fullName")
+                        if name:
+                            lineups[side].append(name)
+
         return lineups
 
 
 if __name__ == "__main__":
-    scraper = FotMobWebScraper()
+    scraper = FotMobScraper()
 
-    # دقیقاً همان آدرس کاملی که در مرورگر باز می‌کنید را اینجا بگذارید
+    # آدرس بازی مورد نظر
     URL = "https://www.fotmob.com/matches/milan-vs-juventus/2tc0mu"
 
-    print("در حال استخراج اطلاعات از صفحه...")
-    result = scraper.get_match_by_url(URL)
+    print("در حال استخراج اطلاعات کامل...")
+    result = scraper.get_match_details(URL)
     print(json.dumps(result, ensure_ascii=False, indent=4))
