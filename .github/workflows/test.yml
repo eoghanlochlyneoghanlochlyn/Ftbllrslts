@@ -1,4 +1,4 @@
-name: Test SportsAPI
+name: Test Big Balls API
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
       - name: نصب requests
         run: pip install requests
 
-      - name: اجرای تست
+      - name: اجرای تست Big Balls API
         env:
-          SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
-        run: python test_sportsapi.py
+          BIGBALLS_API_KEY: ${{ secrets.BIGBALLS_API_KEY }}
+        run: python test_bigballs.py
