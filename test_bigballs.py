@@ -3,50 +3,89 @@ import requests
 
 API_KEY = os.environ.get("BIGBALLS_API_KEY")
 
-print("=" * 50)
-print("⚽ تست اتصال به Big Balls Sports Data")
-print("=" * 50)
+print("=" * 60)
+print("⚽ تست دریافت مسابقات فوتبال از Big Balls Sports Data")
+print("=" * 60)
 
 if not API_KEY:
     print("❌ کلید BIGBALLS_API_KEY پیدا نشد.")
     exit(1)
 
-URL = "https://api.bigballsdata.com/v1/user/me"
+URL = "https://api.bigballsdata.com/v1/matches"
 
 HEADERS = {
     "Authorization": f"Bearer {API_KEY}"
+}
+
+PARAMS = {
+    "sport": "football"
 }
 
 try:
     response = requests.get(
         URL,
         headers=HEADERS,
+        params=PARAMS,
         timeout=20
     )
 
     print(f"HTTP: {response.status_code}")
     print()
 
-    print("پاسخ خام:")
-    print(response.text)
+    if response.status_code != 200:
+        print("❌ درخواست ناموفق بود.")
+        print(response.text)
+        exit(1)
+
+    data = response.json()
+
+    print("✅ دریافت مسابقات موفق بود.")
     print()
 
-    if response.status_code == 200:
-        data = response.json()
+    matches = data.get("data", [])
 
-        print("✅ اتصال و احراز هویت موفق بود.")
+    print(f"⚽ تعداد مسابقات دریافت‌شده: {len(matches)}")
+    print()
+
+    if not matches:
+        print("⚠️ هیچ مسابقه‌ای برنگشت.")
         print()
+        print("پاسخ کامل API:")
+        print(data)
+        exit(0)
 
-        user_data = data.get("data", {})
-        limits = user_data.get("limits", {})
+    print("=" * 60)
 
-        print(f"پلن: {user_data.get('plan', 'نامشخص')}")
-        print(f"اتصال گیت‌هاب: {user_data.get('github_connected', 'نامشخص')}")
-        print(f"سهمیه در دقیقه: {limits.get('per_minute', 'نامشخص')}")
-        print(f"سهمیه روزانه: {limits.get('per_day', 'نامشخص')}")
+    for i, match in enumerate(matches[:20], start=1):
 
-    else:
-        print("❌ درخواست ناموفق بود.")
+        match_id = match.get("id", "نامشخص")
+
+        home = match.get("home", {})
+        away = match.get("away", {})
+
+        if isinstance(home, dict):
+            home_name = home.get("name", "نامشخص")
+        else:
+            home_name = str(home)
+
+        if isinstance(away, dict):
+            away_name = away.get("name", "نامشخص")
+        else:
+            away_name = str(away)
+
+        score = match.get("score", {})
+        status = match.get("status", "نامشخص")
+        kickoff = match.get("kickoff_utc", "نامشخص")
+        league = match.get("league", "نامشخص")
+
+        print(f"#{i}")
+        print(f"مسابقه: {home_name} - {away_name}")
+        print(f"شناسه: {match_id}")
+        print(f"زمان: {kickoff}")
+        print(f"وضعیت: {status}")
+        print(f"نتیجه: {score}")
+        print(f"لیگ: {league}")
+        print("-" * 60)
 
 except requests.RequestException as e:
     print("❌ خطا در اتصال به سرور:")
