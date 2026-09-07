@@ -12,7 +12,7 @@ HEADERS = {
 
 
 print("=" * 70)
-print("⚽ دریافت فهرست لیگ‌های فوتبال")
+print("⚽ تست فیلتر مسابقات لیگ برتر انگلیس")
 print("=" * 70)
 
 
@@ -21,10 +21,11 @@ if not API_KEY:
     exit(1)
 
 
-url = f"{BASE_URL}/v1/leagues"
+url = f"{BASE_URL}/v1/matches"
 
 params = {
-    "sport": "football"
+    "sport": "football",
+    "league": "epl"
 }
 
 
@@ -48,7 +49,58 @@ try:
 
     print("✅ درخواست موفق بود.")
     print()
-    print("پاسخ کامل:")
+
+    matches = data.get("data", [])
+
+    print(f"📊 تعداد مسابقات دریافت‌شده: {len(matches)}")
+    print()
+
+    for index, match in enumerate(matches, start=1):
+
+        print("-" * 70)
+        print(f"مسابقه {index}")
+
+        print(
+            "شناسه:",
+            match.get("id")
+        )
+
+        print(
+            "لیگ:",
+            match.get("league")
+        )
+
+        print(
+            "وضعیت:",
+            match.get("status")
+        )
+
+        home = match.get("home", {})
+        away = match.get("away", {})
+
+        print(
+            "میزبان:",
+            home.get("name"),
+            "| شناسه:",
+            home.get("id")
+        )
+
+        print(
+            "میهمان:",
+            away.get("name"),
+            "| شناسه:",
+            away.get("id")
+        )
+
+        print(
+            "نتیجه:",
+            match.get("score")
+        )
+
+    print()
+    print("=" * 70)
+    print("پاسخ خام API")
+    print("=" * 70)
     print(json.dumps(data, ensure_ascii=False, indent=2))
 
 except requests.RequestException as e:
