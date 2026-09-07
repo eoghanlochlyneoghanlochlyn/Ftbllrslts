@@ -11,43 +11,6 @@ HEADERS = {
 
 
 # ============================================================
-# تیم‌های موردنظر
-# ============================================================
-
-TARGET_TEAMS = {
-    "epl": [
-        "Liverpool",
-        "Arsenal",
-        "Manchester City",
-        "Manchester United",
-        "Chelsea",
-        "Tottenham Hotspur",
-    ],
-
-    "seriea": [
-        "Juventus",
-        "AC Milan",
-        "Inter",
-    ],
-
-    "bundesliga": [
-        "Bayern Munich",
-        "Borussia Dortmund",
-    ],
-
-    "ligue1": [
-        "Paris Saint-Germain",
-    ],
-
-    "laliga": [
-        "Real Madrid",
-        "Barcelona",
-        "Atletico Madrid",
-    ],
-}
-
-
-# ============================================================
 # بررسی کلید
 # ============================================================
 
@@ -57,29 +20,42 @@ if not API_KEY:
 
 
 # ============================================================
-# دریافت تیم‌های هر لیگ
+# لیگ‌هایی که باید بررسی شوند
 # ============================================================
 
+LEAGUES = {
+    "seriea": "سری آ",
+    "laliga": "لالیگا",
+}
+
+
+# ============================================================
+# جستجوی نام تیم
+# ============================================================
+
+SEARCH_NAMES = [
+    "Inter",
+    "Atletico",
+]
+
+
 print("=" * 70)
-print("⚽ پیدا کردن شناسه تیم‌های موردنظر")
+print("🔎 پیدا کردن نام دقیق اینتر و اتلتیکو مادرید")
 print("=" * 70)
 
 
-found_teams = {}
-
-
-for league, wanted_names in TARGET_TEAMS.items():
+for league_id, league_name in LEAGUES.items():
 
     print()
     print("=" * 70)
-    print(f"🏆 لیگ: {league}")
+    print(f"🏆 {league_name} ({league_id})")
     print("=" * 70)
 
     url = f"{BASE_URL}/v1/teams"
 
     params = {
         "sport": "football",
-        "league": league,
+        "league": league_id,
     }
 
     try:
@@ -98,7 +74,7 @@ for league, wanted_names in TARGET_TEAMS.items():
     print(f"HTTP: {response.status_code}")
 
     if response.status_code != 200:
-        print("❌ دریافت تیم‌ها ناموفق بود.")
+        print("❌ درخواست ناموفق بود.")
         print(response.text)
         continue
 
@@ -106,77 +82,37 @@ for league, wanted_names in TARGET_TEAMS.items():
         data = response.json()
 
     except ValueError:
-        print("❌ پاسخ دریافتی JSON نیست.")
+        print("❌ پاسخ JSON نیست.")
         print(response.text)
         continue
 
     teams = data.get("data", [])
 
-    print(f"📊 تعداد تیم‌های دریافت‌شده: {len(teams)}")
+    print(f"📊 تعداد تیم‌ها: {len(teams)}")
+    print()
 
-    found_teams[league] = {}
+    found_any = False
 
-    # --------------------------------------------------------
-    # جستجوی تیم‌های موردنظر
-    # --------------------------------------------------------
+    for team in teams:
 
-    for wanted_name in wanted_names:
+        name = str(team.get("name", "")).strip()
 
-        found = None
+        name_lower = name.lower()
 
-        wanted_lower = wanted_name.lower().strip()
+        for search_name in SEARCH_NAMES:
 
-        for team in teams:
+            if search_name.lower() in name_lower:
 
-            team_name = str(
-                team.get("name", "")
-            ).strip()
+                print(f"✅ نام ثبت‌شده: {name}")
+                print(f"   شناسه: {team.get('id')}")
+                print()
 
-            if team_name.lower() == wanted_lower:
-                found = team
+                found_any = True
                 break
 
-        if found:
+    if not found_any:
 
-            team_id = found.get("id")
-            team_name = found.get("name")
-
-            found_teams[league][team_name] = team_id
-
-            print()
-            print(f"✅ {team_name}")
-            print(f"   شناسه: {team_id}")
-
-        else:
-
-            print()
-            print(f"❌ پیدا نشد: {wanted_name}")
-
-
-# ============================================================
-# نمایش خلاصه نهایی
-# ============================================================
-
-print()
-print("=" * 70)
-print("📋 خلاصه نهایی شناسه تیم‌ها")
-print("=" * 70)
-
-
-for league, teams in found_teams.items():
-
-    print()
-    print(f"🏆 {league}")
-
-    if not teams:
-        print("   هیچ تیمی پیدا نشد.")
-        continue
-
-    for team_name, team_id in teams.items():
-
-        print(
-            f"   {team_name}: {team_id}"
-        )
+        print("❌ مورد مشابهی پیدا نشد.")
 
 
 print()
