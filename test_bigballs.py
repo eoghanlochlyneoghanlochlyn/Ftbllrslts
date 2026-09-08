@@ -3,560 +3,283 @@ import json
 import requests
 
 
-# ============================================================
-# تنظیمات
-# ============================================================
-
 API_KEY = os.getenv("BIGBALLS_API_KEY")
 
-BASE_URL = "https://api.bigballsdata.com"
+MATCH_ID = "f11c25d9-7e10-4cd0-b8fa-9b39827768ce"
+
+BASE_URL = "https://api.bigballsdata.com/v1"
 
 HEADERS = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
 
-# ============================================================
-# شناسه آخرین بازی یوونتوس و میلان
-# Juventus 1 - 1 AC Milan
-# 2026-09-06
-# ============================================================
+def get_json(url, params=None):
+    response = requests.get(
+        url,
+        headers=HEADERS,
+        params=params,
+        timeout=30
+    )
 
-MATCH_ID = "f11c25d9-7e10-4cd0-b8fa-9b39827768ce"
+    print(f"HTTP {response.status_code} | {url}")
 
+    response.raise_for_status()
 
-# ============================================================
-# درخواست به API
-# ============================================================
-
-def get_api(endpoint, params=None):
-
-    url = f"{BASE_URL}{endpoint}"
-
-    try:
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            params=params,
-            timeout=30,
-        )
-    except requests.RequestException as e:
-        print(f"❌ خطای اتصال:")
-        print(e)
-        return None
-
-    print()
-    print(f"GET {response.url}")
-    print(f"HTTP: {response.status_code}")
-
-    if response.status_code != 200:
-        print("❌ پاسخ خطا:")
-        print(response.text)
-        return None
-
-    try:
-        return response.json()
-    except ValueError:
-        print("❌ پاسخ JSON معتبر نیست.")
-        print(response.text)
-        return None
+    return response.json()
 
 
-# ============================================================
-# چاپ JSON مرتب
-# ============================================================
+def value(stats, key):
+    item = stats.get(key)
 
-def print_json(title, data):
+    if isinstance(item, dict):
+        return item.get("value", "-")
 
-    print()
-    print("=" * 80)
-    print(title)
-    print("=" * 80)
+    return item if item is not None else "-"
 
-    if data is None:
-        print("❌ داده‌ای دریافت نشد.")
-        return
+
+# ---------------------------------------------------------
+# اطلاعات اصلی مسابقه
+# ---------------------------------------------------------
+
+match = get_json(
+    f"{BASE_URL}/stored/matches/{MATCH_ID}"
+)
+
+match_data = match.get("data", match)
+
+home = match_data.get("home", {})
+away = match_data.get("away", {})
+
+score = match_data.get("score") or {}
+
+print("\n" + "=" * 50)
+print("🏟 اطلاعات مسابقه")
+print("=" * 50)
+
+print(
+    f"{home.get('name', '?')} "
+    f"{score.get('home', '?')} - {score.get('away', '?')} "
+    f"{away.get('name', '?')}"
+)
+
+print(f"لیگ: {match_data.get('league', '-')}")
+print(f"زمان: {match_data.get('kickoff_utc', '-')}")
+print(f"وضعیت: {match_data.get('status', '-')}")
+print(f"شناسه: {MATCH_ID}")
+
+
+# ---------------------------------------------------------
+# رویدادها
+# ---------------------------------------------------------
+
+events = get_json(
+    f"{BASE_URL}/matches/{MATCH_ID}/events",
+    params={"sport": "football"}
+)
+
+event_list = events.get("data", [])
+
+print("\n" + "=" * 50)
+print(f"⚽ رویدادها ({len(event_list)})")
+print("=" * 50)
+
+for event in event_list:
+
+    event_type = event.get("event_type", event.get("type", "-"))
+
+    player = event.get("player_name")
+
+    if not player:
+        player_data = event.get("player", {})
+        if isinstance(player_data, dict):
+            player = player_data.get("name")
+
+    team = event.get("team_name")
+
+    if not team:
+        team_data = event.get("team", {})
+        if isinstance(team_data, dict):
+            team = team_data.get("name")
+
+    minute = event.get("minute", event.get("time", "-"))
+
+    assist = event.get("assist_player_name")
+
+    if not assist:
+        assist_data = event.get("assist_player", {})
+        if isinstance(assist_data, dict):
+            assist = assist_data.get("name")
 
     print(
-        json.dumps(
-            data,
-            indent=2,
-            ensure_ascii=False
+        f"{event_type} | "
+        f"{minute}' | "
+        f"{player or '-'} | "
+        f"{team or '-'}"
+        + (f" | پاس گل: {assist}" if assist else "")
+    )
+
+
+# ---------------------------------------------------------
+# ترکیب
+# ---------------------------------------------------------
+
+lineups = get_json(
+    f"{BASE_URL}/stored/matches/{MATCH_ID}/lineups"
+)
+
+lineup_data = lineups.get("data", {})
+
+print("\n" + "=" * 50)
+print("👥 ترکیب")
+print("=" * 50)
+
+
+for side, team_name in [
+    ("home", home.get("name", "میزبان")),
+    ("away", away.get("name", "مهمان"))
+]:
+
+    team_lineup = lineup_data.get(side, {})
+
+    if not isinstance(team_lineup, dict):
+        continue
+
+    starters = team_lineup.get("starters", [])
+    bench = team_lineup.get("bench", [])
+
+    print(f"\n{team_name}")
+
+    print(
+        "فیکس: "
+        + ", ".join(
+            player.get("name", "?")
+            for player in starters
+            if isinstance(player, dict)
+        )
+    )
+
+    print(
+        "ذخیره: "
+        + ", ".join(
+            player.get("name", "?")
+            for player in bench
+            if isinstance(player, dict)
         )
     )
 
 
-# ============================================================
-# اطلاعات پایه مسابقه
-# ============================================================
-
-def get_match():
-
-    return get_api(
-        f"/v1/stored/matches/{MATCH_ID}"
-    )
-
-
-# ============================================================
-# رویدادهای مسابقه
-#
-# گل
-# کارت
-# تعویض
-# و سایر رویدادها
-# ============================================================
-
-def get_events():
-
-    return get_api(
-        f"/v1/matches/{MATCH_ID}/events",
-        {
-            "sport": "football"
-        }
-    )
-
-
-# ============================================================
-# ترکیب‌ها
-# ============================================================
-
-def get_lineups():
-
-    return get_api(
-        f"/v1/stored/matches/{MATCH_ID}/lineups"
-    )
-
-
-# ============================================================
+# ---------------------------------------------------------
 # آمار تیمی و بازیکنان
-# ============================================================
+# ---------------------------------------------------------
 
-def get_stats():
+stats_response = get_json(
+    f"{BASE_URL}/stored/matches/{MATCH_ID}/stats"
+)
 
-    return get_api(
-        f"/v1/stored/matches/{MATCH_ID}/stats"
+stats_data = stats_response.get("data", {})
+
+team_stats = stats_data.get("team_stats", {})
+players = stats_data.get("players", [])
+
+
+# ---------------------------------------------------------
+# آمار تیمی
+# ---------------------------------------------------------
+
+print("\n" + "=" * 50)
+print("📊 آمار تیمی")
+print("=" * 50)
+
+
+for team_key, team_name in [
+    ("home", home.get("name", "میزبان")),
+    ("away", away.get("name", "مهمان"))
+]:
+
+    stats = team_stats.get(team_key, {})
+
+    if not isinstance(stats, dict):
+        continue
+
+    print(f"\n{team_name}")
+
+    important_stats = [
+        ("Possession", "مالکیت"),
+        ("SHOTS", "شوت"),
+        ("ON GOAL", "شوت در چارچوب"),
+        ("Passes", "پاس"),
+        ("Pass Completion %", "دقت پاس"),
+        ("Corner Kicks", "کرنر"),
+        ("Fouls", "خطا"),
+        ("Yellow Cards", "کارت زرد"),
+        ("Red Cards", "کارت قرمز"),
+        ("Offsides", "آفساید"),
+        ("Tackles", "تکل"),
+        ("Interceptions", "قطع توپ"),
+    ]
+
+    for key, label in important_stats:
+
+        if key in stats:
+            print(f"{label}: {stats[key]}")
+
+
+# ---------------------------------------------------------
+# آمار بازیکنان
+# ---------------------------------------------------------
+
+print("\n" + "=" * 50)
+print(f"👤 آمار بازیکنان ({len(players)})")
+print("=" * 50)
+
+
+for player in players:
+
+    if not isinstance(player, dict):
+        continue
+
+    name = player.get("name", "?")
+    team = player.get("team_name", "?")
+    position = player.get("position", "-")
+
+    player_stats = player.get("stats", {})
+
+    print(
+        f"\n{name} | {team} | {position}"
     )
 
+    important_player_stats = [
+        ("minutes", "دقیقه"),
+        ("rating", "امتیاز"),
+        ("goals", "گل"),
+        ("assists", "پاس گل"),
+        ("shots_total", "شوت"),
+        ("shots_on", "در چارچوب"),
+        ("passes_total", "پاس"),
+        ("passes_key", "پاس کلیدی"),
+        ("pass_accuracy", "دقت پاس"),
+        ("dribbles_success", "دریبل موفق"),
+        ("duels_won", "دوئل موفق"),
+        ("tackles_total", "تکل"),
+        ("interceptions", "قطع توپ"),
+        ("fouls_committed", "خطا"),
+        ("yellow_cards", "کارت زرد"),
+        ("red_cards", "کارت قرمز"),
+    ]
 
-# ============================================================
-# جزئیات بازی از events
-# ============================================================
+    values = []
 
-def print_events(events):
+    for key, label in important_player_stats:
 
-    if not events:
-        return
-
-    data = events.get("data")
-
-    if not isinstance(data, list):
-        return
-
-    print()
-    print("=" * 80)
-    print("⚽ رویدادهای مسابقه")
-    print("=" * 80)
-
-    if not data:
-        print("هیچ رویدادی ثبت نشده است.")
-        return
-
-    for index, event in enumerate(data, 1):
-
-        print()
-        print(f"رویداد {index}")
-        print("-" * 50)
-
-        if isinstance(event, dict):
-
-            # چند فیلد رایج را اول نمایش می‌دهیم
-            preferred_fields = [
-                "minute",
-                "period",
-                "clock",
-                "type",
-                "event_type",
-                "player",
-                "player_name",
-                "team",
-                "team_name",
-                "assist",
-                "assist_name",
-                "description",
-            ]
-
-            printed = set()
-
-            for field in preferred_fields:
-
-                if field not in event:
-                    continue
-
-                value = event[field]
-
-                if value is None:
-                    continue
-
-                print(f"{field}: {value}")
-                printed.add(field)
-
-            # اگر فیلدهای دیگری هم وجود داشتند
-            # آنها را هم نشان می‌دهیم
-            for key, value in event.items():
-
-                if key in printed:
-                    continue
-
-                print(f"{key}: {value}")
-
-
-# ============================================================
-# نمایش ترکیب‌ها
-# ============================================================
-
-def print_lineups(lineups):
-
-    if not lineups:
-        return
-
-    print()
-    print("=" * 80)
-    print("👥 ترکیب تیم‌ها")
-    print("=" * 80)
-
-    data = lineups.get("data")
-
-    if not isinstance(data, dict):
-        print("ساختار ترکیب قابل شناسایی نیست.")
-        return
-
-    meta = lineups.get("meta")
-
-    if isinstance(meta, dict):
-
-        available = meta.get("available")
-
-        print(
-            f"داده ترکیب در API موجود است: {available}"
-        )
-
-        if meta.get("coverage_note"):
-            print(
-                f"توضیح: {meta.get('coverage_note')}"
+        if key in player_stats:
+            values.append(
+                f"{label}: {value(player_stats, key)}"
             )
 
-    for side in ["home", "away"]:
+    print(" | ".join(values))
 
-        players = data.get(side)
 
-        print()
-        print("-" * 80)
-        print(
-            "ترکیب میزبان"
-            if side == "home"
-            else "ترکیب مهمان"
-        )
-        print("-" * 80)
-
-        if not players:
-            print("اطلاعاتی وجود ندارد.")
-            continue
-
-        for player in players:
-
-            if not isinstance(player, dict):
-                print(player)
-                continue
-
-            print()
-
-            # ساختار رسمی endpoint به شکل
-            # field / value است.
-            if "field" in player:
-
-                field = player.get("field")
-                value = player.get("value")
-
-                print(
-                    f"{field}: {value}"
-                )
-
-            else:
-
-                print(
-                    json.dumps(
-                        player,
-                        ensure_ascii=False
-                    )
-                )
-
-
-# ============================================================
-# نمایش آمار تیمی
-# ============================================================
-
-def print_team_stats(stats):
-
-    if not stats:
-        return
-
-    data = stats.get("data")
-
-    if not isinstance(data, dict):
-        return
-
-    team_stats = data.get("team_stats")
-
-    print()
-    print("=" * 80)
-    print("📊 آمار تیمی")
-    print("=" * 80)
-
-    if not team_stats:
-        print("آمار تیمی موجود نیست.")
-        return
-
-    current_team = None
-
-    for stat in team_stats:
-
-        if not isinstance(stat, dict):
-            continue
-
-        team_name = stat.get(
-            "team_name",
-            "نامشخص"
-        )
-
-        if team_name != current_team:
-
-            print()
-            print("-" * 60)
-            print(team_name)
-            print("-" * 60)
-
-            current_team = team_name
-
-        field = stat.get(
-            "label"
-        ) or stat.get(
-            "field",
-            "نامشخص"
-        )
-
-        value = stat.get(
-            "display_value"
-        )
-
-        if value is None:
-            value = stat.get("value")
-
-        print(
-            f"{field}: {value}"
-        )
-
-
-# ============================================================
-# نمایش آمار بازیکنان
-# ============================================================
-
-def print_player_stats(stats):
-
-    if not stats:
-        return
-
-    data = stats.get("data")
-
-    if not isinstance(data, dict):
-        return
-
-    players = data.get("players")
-
-    print()
-    print("=" * 80)
-    print("👤 آمار بازیکنان")
-    print("=" * 80)
-
-    if not players:
-        print("آمار بازیکنان موجود نیست.")
-        return
-
-    for index, player in enumerate(players, 1):
-
-        print()
-        print("-" * 60)
-        print(f"بازیکن {index}")
-        print("-" * 60)
-
-        if isinstance(player, dict):
-
-            print(
-                json.dumps(
-                    player,
-                    indent=2,
-                    ensure_ascii=False
-                )
-            )
-
-        else:
-
-            print(player)
-
-
-# ============================================================
-# خلاصه اطلاعات مسابقه
-# ============================================================
-
-def print_match_summary(match):
-
-    if not match:
-        return
-
-    data = match.get("data", match)
-
-    if not isinstance(data, dict):
-        return
-
-    print()
-    print("=" * 80)
-    print("🏟 اطلاعات مسابقه")
-    print("=" * 80)
-
-    home = data.get("home") or {}
-    away = data.get("away") or {}
-    score = data.get("score") or {}
-
-    print(
-        f"میزبان: {home.get('name', 'نامشخص')}"
-    )
-
-    print(
-        f"مهمان: {away.get('name', 'نامشخص')}"
-    )
-
-    print(
-        f"نتیجه: "
-        f"{score.get('home', '?')} - "
-        f"{score.get('away', '?')}"
-    )
-
-    print(
-        f"لیگ: {data.get('league', 'نامشخص')}"
-    )
-
-    print(
-        f"زمان: "
-        f"{data.get('kickoff_utc', 'نامشخص')}"
-    )
-
-    print(
-        f"وضعیت: "
-        f"{data.get('status', 'نامشخص')}"
-    )
-
-    print(
-        f"شناسه مسابقه: "
-        f"{data.get('id', MATCH_ID)}"
-    )
-
-
-# ============================================================
-# اجرای اصلی
-# ============================================================
-
-def main():
-
-    if not API_KEY:
-
-        print(
-            "❌ BIGBALLS_API_KEY پیدا نشد."
-        )
-
-        return
-
-    print("=" * 80)
-    print("⚽ اطلاعات کامل Juventus - AC Milan")
-    print("=" * 80)
-
-    print()
-    print(f"Match ID: {MATCH_ID}")
-
-    # --------------------------------------------------------
-    # 1. اطلاعات پایه مسابقه
-    # --------------------------------------------------------
-
-    match = get_match()
-
-    print_match_summary(match)
-
-    # --------------------------------------------------------
-    # 2. رویدادها
-    # --------------------------------------------------------
-
-    events = get_events()
-
-    print_events(events)
-
-    # --------------------------------------------------------
-    # 3. ترکیب
-    # --------------------------------------------------------
-
-    lineups = get_lineups()
-
-    print_lineups(lineups)
-
-    # --------------------------------------------------------
-    # 4. آمار
-    # --------------------------------------------------------
-
-    stats = get_stats()
-
-    print_team_stats(stats)
-
-    print_player_stats(stats)
-
-    # --------------------------------------------------------
-    # پایان
-    # --------------------------------------------------------
-
-    print()
-    print("=" * 80)
-    print("📦 داده خام API")
-    print("=" * 80)
-
-    print()
-    print("----- MATCH -----")
-    print_json(
-        "اطلاعات خام مسابقه",
-        match
-    )
-
-    print()
-    print("----- EVENTS -----")
-    print_json(
-        "رویدادهای خام",
-        events
-    )
-
-    print()
-    print("----- LINEUPS -----")
-    print_json(
-        "ترکیب خام",
-        lineups
-    )
-
-    print()
-    print("----- STATS -----")
-    print_json(
-        "آمار خام",
-        stats
-    )
-
-    print()
-    print("=" * 80)
-    print("✅ پایان")
-    print("=" * 80)
-
-
-if __name__ == "__main__":
-    main()
+print("\n" + "=" * 50)
+print("✅ پایان گزارش")
+print("=" * 50)
