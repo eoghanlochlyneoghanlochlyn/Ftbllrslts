@@ -28,108 +28,104 @@ def get_json(url, params=None):
     return response.json()
 
 
-print("🔎 در حال پیدا کردن Porto vs Manchester City...")
+print("🔎 در حال بررسی مسابقات ذخیره‌شده...")
 
 response = get_json(
-    f"{BASE_URL}/matches",
+    f"{BASE_URL}/stored/matches",
     params={
         "sport": "football",
-        "status": "scheduled",
         "limit": 200
     }
 )
 
 matches = response.get("data", [])
 
-target = None
+print()
+print("📥 تعداد مسابقات دریافت‌شده:", len(matches))
+
+print()
+print("🔎 بررسی ترکیب مسابقات...")
+print("=" * 80)
+
+found = 0
 
 for match in matches:
 
-    home = match.get("home", {}).get("name", "")
-    away = match.get("away", {}).get("name", "")
+    match_id = match.get("id")
 
-    if (
-        home == "FC Porto"
-        and away == "Manchester City"
-    ):
-        target = match
-        break
+    home = match.get("home", {})
+    away = match.get("away", {})
 
+    home_name = home.get("name", "")
+    away_name = away.get("name", "")
 
-if not target:
+    if not match_id:
+        continue
 
-    print("❌ مسابقه Porto vs Manchester City پیدا نشد.")
-
-    print("\nمسابقات مشابه:")
-
-    for match in matches:
-
-        home = match.get("home", {}).get("name", "")
-        away = match.get("away", {}).get("name", "")
-
-        if (
-            "Porto" in home
-            or "Porto" in away
-            or "Manchester City" in home
-            or "Manchester City" in away
-        ):
-            print(
-                match.get("id"),
-                "|",
-                home,
-                "vs",
-                away
-            )
-
-    raise SystemExit
-
-
-match_id = target.get("id")
-
-print()
-print("✅ مسابقه پیدا شد:")
-print(
-    target.get("home", {}).get("name"),
-    "vs",
-    target.get("away", {}).get("name")
-)
-print("🆔 Match ID:", match_id)
-print("⏰ Kickoff:", target.get("kickoff_utc"))
-print("🏆 League:", target.get("league"))
-
-print()
-print("🔎 بررسی ترکیب...")
-print(
-    f"{BASE_URL}/stored/matches/{match_id}/lineups"
-)
-
-lineup_response = requests.get(
-    f"{BASE_URL}/stored/matches/{match_id}/lineups",
-    headers=HEADERS,
-    timeout=30
-)
-
-print()
-print("📡 HTTP Status:", lineup_response.status_code)
-
-print()
-print("📦 پاسخ خام API:")
-print("=" * 80)
-
-try:
-
-    lineup_data = lineup_response.json()
-
-    print(
-        json.dumps(
-            lineup_data,
-            ensure_ascii=False,
-            indent=2
-        )
+    lineup_url = (
+        f"{BASE_URL}/stored/matches/"
+        f"{match_id}/lineups"
     )
 
-except ValueError:
+    try:
 
-    print(lineup_response.text)
+        lineup_response = requests.get(
+            lineup_url,
+            headers=HEADERS,
+            timeout=30
+        )
 
+        if lineup_response.status_code != 200:
+            continue
+
+        lineup_data = lineup_response.json()
+
+        meta = lineup_data.get("meta", {})
+        data = lineup_data.get("data", {})
+
+        available = meta.get("available", False)
+
+        home_lineup = data.get("home", [])
+        away_lineup = data.get("away", [])
+
+        if available and (home_lineup or away_lineup):
+
+            found += 1
+
+            print()
+            print("✅ مسابقه دارای ترکیب پیدا شد:")
+            print(
+                f"{home_name} vs {away_name}"
+            )
+            print("🆔 Match ID:", match_id)
+            print()
+            print(
+                json.dumps(
+                    lineup_data,
+                    ensure_ascii=False,
+                    indent=2
+                )
+            )
+
+            print()
+            print("-" * 80)
+
+            if found >= 5:
+                break
+
+    except Exception:
+        continue
+
+
+print()
 print("=" * 80)
+
+if found == 0:
+
+    print("❌ هیچ مسابقه‌ای با ترکیب موجود پیدا نشد.")
+
+else:
+
+    print(
+        f"🎯 تعداد مسابقات دارای ترکیب پیدا‌شده: {found}"
+    )
