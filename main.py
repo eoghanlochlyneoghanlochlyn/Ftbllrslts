@@ -2,7 +2,6 @@ import os
 import requests
 
 from football_teams import FOOTBALL_TEAMS
-from match_data import get_match_data
 
 
 # ============================================================
@@ -54,18 +53,23 @@ def get_team_matches(team_id):
 
 
 # ============================================================
-# پیدا کردن آخرین مسابقه تمام‌شده یک تیم
+# پیدا کردن نزدیک‌ترین مسابقه آینده یک تیم
 # ============================================================
 
-def get_latest_finished_match(team_id):
+def get_next_match(team_id):
 
     matches = get_team_matches(team_id)
 
-    finished_matches = []
+    upcoming_matches = []
 
     for match in matches:
 
-        if match.get("status") != "finished":
+        if match.get("status") != "scheduled":
+            continue
+
+        kickoff = match.get("kickoff_utc")
+
+        if not kickoff:
             continue
 
         home = match.get("home") or {}
@@ -77,47 +81,45 @@ def get_latest_finished_match(team_id):
         if team_id not in (home_id, away_id):
             continue
 
-        kickoff = match.get("kickoff_utc")
+        upcoming_matches.append(match)
 
-        if not kickoff:
-            continue
-
-        finished_matches.append(match)
-
-    if not finished_matches:
+    if not upcoming_matches:
         return None
 
-    finished_matches.sort(
-        key=lambda match: match.get("kickoff_utc", ""),
-        reverse=True
+    upcoming_matches.sort(
+        key=lambda match: match.get(
+            "kickoff_utc",
+            ""
+        )
     )
 
-    return finished_matches[0]
+    return upcoming_matches[0]
 
 
 # ============================================================
-# پیدا کردن آخرین مسابقه هر 15 تیم
+# پیدا کردن نزدیک‌ترین مسابقه آینده برای تمام تیم‌ها
 # ============================================================
 
-def find_latest_matches():
+def find_next_matches():
 
-    latest_matches = {}
+    next_matches = {}
 
     print()
     print("=" * 70)
-    print("🔎 پیدا کردن آخرین مسابقه تمام‌شده هر تیم")
+    print("🔎 پیدا کردن نزدیک‌ترین مسابقه آینده")
     print("=" * 70)
 
     for team_name, team_id in FOOTBALL_TEAMS.items():
 
         try:
 
-            match = get_latest_finished_match(team_id)
+            match = get_next_match(team_id)
 
             if not match:
 
                 print(
-                    f"❌ {team_name} → مسابقه‌ای پیدا نشد."
+                    f"❌ {team_name} → "
+                    "مسابقه آینده‌ای پیدا نشد."
                 )
 
                 continue
@@ -127,42 +129,65 @@ def find_latest_matches():
             home = match.get("home") or {}
             away = match.get("away") or {}
 
-            score = match.get("score") or {}
+            print()
+            print(
+                f"✅ {team_name}"
+            )
 
             print(
-                f"✅ {team_name} → "
-                f'{home.get("name", "-")} '
-                f'{score.get("home", "-")}-'
-                f'{score.get("away", "-")} '
+                f'   {home.get("name", "-")} '
+                f'vs '
                 f'{away.get("name", "-")}'
             )
 
-            latest_matches[team_name] = match
+            print(
+                f'   لیگ: {match.get("league", "-")}'
+            )
+
+            print(
+                f'   زمان UTC: '
+                f'{match.get("kickoff_utc", "-")}'
+            )
+
+            print(
+                f'   وضعیت: '
+                f'{match.get("status", "-")}'
+            )
+
+            print(
+                f'   شناسه: {match_id}'
+            )
+
+            next_matches[team_name] = match
 
         except requests.RequestException as error:
 
+            print()
             print(
-                f"❌ {team_name} → خطای ارتباط با API: {error}"
+                f"❌ {team_name} → "
+                f"خطای ارتباط با API: {error}"
             )
 
         except Exception as error:
 
+            print()
             print(
-                f"❌ {team_name} → خطای غیرمنتظره: {error}"
+                f"❌ {team_name} → "
+                f"خطای غیرمنتظره: {error}"
             )
 
-    return latest_matches
+    return next_matches
 
 
 # ============================================================
 # حذف مسابقات تکراری
 # ============================================================
 
-def get_unique_matches(latest_matches):
+def get_unique_matches(next_matches):
 
     unique_matches = {}
 
-    for team_name, match in latest_matches.items():
+    for team_name, match in next_matches.items():
 
         match_id = match.get("id")
 
@@ -185,48 +210,9 @@ def print_unique_matches(unique_matches):
     print()
     print("=" * 70)
     print(
-        f"📋 مسابقات یکتا ({len(unique_matches)})"
+        f"📋 مسابقات آینده یکتا "
+        f"({len(unique_matches)})"
     )
-    print("=" * 70)
-
-    for match_id, match in unique_matches.items():
-
-        home = match.get("home") or {}
-        away = match.get("away") or {}
-
-        score = match.get("score") or {}
-
-        print(
-            f'{home.get("name", "-")} '
-            f'{score.get("home", "-")}-'
-            f'{score.get("away", "-")} '
-            f'{away.get("name", "-")}'
-        )
-
-        print(
-            f'   لیگ: {match.get("league", "-")}'
-        )
-
-        print(
-            f'   زمان: {match.get("kickoff_utc", "-")}'
-        )
-
-        print(
-            f'   شناسه: {match_id}'
-        )
-
-
-# ============================================================
-# دریافت اطلاعات کامل مسابقات
-# ============================================================
-
-def get_all_match_data(unique_matches):
-
-    all_match_data = {}
-
-    print()
-    print("=" * 70)
-    print("🔄 دریافت اطلاعات کامل مسابقات")
     print("=" * 70)
 
     for match_id, match in unique_matches.items():
@@ -236,31 +222,28 @@ def get_all_match_data(unique_matches):
 
         print()
         print(
-            f'🔄 {home.get("name", "-")} - '
+            f'⚽ {home.get("name", "-")} '
+            f'vs '
             f'{away.get("name", "-")}'
         )
 
-        try:
+        print(
+            f'   لیگ: {match.get("league", "-")}'
+        )
 
-            data = get_match_data(match_id)
+        print(
+            f'   زمان UTC: '
+            f'{match.get("kickoff_utc", "-")}'
+        )
 
-            all_match_data[match_id] = data
+        print(
+            f'   وضعیت: '
+            f'{match.get("status", "-")}'
+        )
 
-            print("✅ اطلاعات کامل دریافت شد.")
-
-        except requests.RequestException as error:
-
-            print(
-                f"❌ خطای ارتباط با API: {error}"
-            )
-
-        except Exception as error:
-
-            print(
-                f"❌ خطای غیرمنتظره: {error}"
-            )
-
-    return all_match_data
+        print(
+            f'   شناسه: {match_id}'
+        )
 
 
 # ============================================================
@@ -271,96 +254,72 @@ def main():
 
     if not API_KEY:
 
-        print("❌ BIGBALLS_API_KEY پیدا نشد.")
+        print(
+            "❌ BIGBALLS_API_KEY پیدا نشد."
+        )
 
         raise SystemExit(1)
 
     print()
     print("=" * 70)
-    print("⚽ Football Results Bot")
+    print("⚽ Football Results Bot - Stage 3")
     print("=" * 70)
 
     print(
-        f"تعداد تیم‌های موردنظر: {len(FOOTBALL_TEAMS)}"
+        f"تعداد تیم‌های موردنظر: "
+        f"{len(FOOTBALL_TEAMS)}"
     )
 
     # --------------------------------------------------------
-    # مرحله 1: پیدا کردن آخرین بازی هر تیم
+    # پیدا کردن مسابقه آینده هر تیم
     # --------------------------------------------------------
 
-    latest_matches = find_latest_matches()
+    next_matches = find_next_matches()
 
     # --------------------------------------------------------
-    # مرحله 2: حذف مسابقات تکراری
+    # حذف مسابقات تکراری
     # --------------------------------------------------------
 
     unique_matches = get_unique_matches(
-        latest_matches
+        next_matches
     )
+
+    # --------------------------------------------------------
+    # نتیجه
+    # --------------------------------------------------------
 
     print()
     print("=" * 70)
-    print("📊 نتیجه انتخاب مسابقات")
+    print("📊 نتیجه")
     print("=" * 70)
 
     print(
-        f"تیم‌های بررسی‌شده: {len(FOOTBALL_TEAMS)}"
+        f"تیم‌های بررسی‌شده: "
+        f"{len(FOOTBALL_TEAMS)}"
     )
 
     print(
-        f"تیم‌هایی که مسابقه پیدا شد: "
-        f"{len(latest_matches)}"
+        f"تیم‌هایی که مسابقه آینده دارند: "
+        f"{len(next_matches)}"
     )
 
     print(
-        f"مسابقات یکتا: {len(unique_matches)}"
+        f"مسابقات آینده یکتا: "
+        f"{len(unique_matches)}"
     )
 
     # --------------------------------------------------------
-    # نمایش مسابقات
+    # نمایش مسابقات یکتا
     # --------------------------------------------------------
 
-    print_unique_matches(unique_matches)
-
-    # --------------------------------------------------------
-    # مرحله 3: دریافت اطلاعات کامل
-    # --------------------------------------------------------
-
-    all_match_data = get_all_match_data(
+    print_unique_matches(
         unique_matches
     )
 
-    # --------------------------------------------------------
-    # نتیجه نهایی
-    # --------------------------------------------------------
-
     print()
     print("=" * 70)
-    print("🏁 نتیجه نهایی")
+    print("✅ مرحله ۳ با موفقیت تمام شد.")
     print("=" * 70)
-
-    print(
-        f"تعداد مسابقات یکتا: {len(unique_matches)}"
-    )
-
-    print(
-        f"تعداد مسابقات دریافت‌شده: "
-        f"{len(all_match_data)}"
-    )
-
-    if len(all_match_data) == len(unique_matches):
-
-        print()
-        print(
-            "✅ اطلاعات تمام مسابقات با موفقیت دریافت شد."
-        )
-
-    else:
-
-        print()
-        print(
-            "⚠️ بعضی از مسابقات با موفقیت دریافت نشدند."
-        )
 
 
 # ============================================================
