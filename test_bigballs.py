@@ -1,5 +1,4 @@
 import os
-import json
 import requests
 
 
@@ -29,106 +28,130 @@ def get_json(url, params=None):
     return response.json()
 
 
-def value(stats, key):
+def get_stat_value(stats, key):
     item = stats.get(key)
 
     if isinstance(item, dict):
         return item.get("value", "-")
 
-    return item if item is not None else "-"
+    if item is None:
+        return "-"
+
+    return item
 
 
-# ---------------------------------------------------------
+# =========================================================
 # اطلاعات اصلی مسابقه
-# ---------------------------------------------------------
+# =========================================================
 
-match = get_json(
+match_response = get_json(
     f"{BASE_URL}/stored/matches/{MATCH_ID}"
 )
 
-match_data = match.get("data", match)
+match = match_response.get("data", match_response)
 
-home = match_data.get("home", {})
-away = match_data.get("away", {})
+home = match.get("home", {})
+away = match.get("away", {})
 
-score = match_data.get("score") or {}
+score = match.get("score") or {}
+
+home_name = home.get("name", "میزبان")
+away_name = away.get("name", "مهمان")
 
 print("\n" + "=" * 50)
 print("🏟 اطلاعات مسابقه")
 print("=" * 50)
 
 print(
-    f"{home.get('name', '?')} "
+    f"{home_name} "
     f"{score.get('home', '?')} - {score.get('away', '?')} "
-    f"{away.get('name', '?')}"
+    f"{away_name}"
 )
 
-print(f"لیگ: {match_data.get('league', '-')}")
-print(f"زمان: {match_data.get('kickoff_utc', '-')}")
-print(f"وضعیت: {match_data.get('status', '-')}")
+print(f"لیگ: {match.get('league', '-')}")
+print(f"زمان: {match.get('kickoff_utc', '-')}")
+print(f"وضعیت: {match.get('status', '-')}")
 print(f"شناسه: {MATCH_ID}")
 
 
-# ---------------------------------------------------------
+# =========================================================
 # رویدادها
-# ---------------------------------------------------------
+# =========================================================
 
-events = get_json(
+events_response = get_json(
     f"{BASE_URL}/matches/{MATCH_ID}/events",
     params={"sport": "football"}
 )
 
-event_list = events.get("data", [])
+events = events_response.get("data", [])
 
 print("\n" + "=" * 50)
-print(f"⚽ رویدادها ({len(event_list)})")
+print(f"⚽ رویدادها ({len(events)})")
 print("=" * 50)
 
-for event in event_list:
+for event in events:
 
-    event_type = event.get("event_type", event.get("type", "-"))
+    event_type = (
+        event.get("event_type")
+        or event.get("type")
+        or event.get("event")
+        or "-"
+    )
 
     player = event.get("player_name")
 
     if not player:
-        player_data = event.get("player", {})
+        player_data = event.get("player")
+
         if isinstance(player_data, dict):
             player = player_data.get("name")
 
     team = event.get("team_name")
 
     if not team:
-        team_data = event.get("team", {})
+        team_data = event.get("team")
+
         if isinstance(team_data, dict):
             team = team_data.get("name")
 
-    minute = event.get("minute", event.get("time", "-"))
+    minute = (
+        event.get("minute")
+        or event.get("minute_display")
+        or event.get("time")
+        or event.get("elapsed")
+        or "-"
+    )
 
     assist = event.get("assist_player_name")
 
     if not assist:
-        assist_data = event.get("assist_player", {})
+        assist_data = event.get("assist_player")
+
         if isinstance(assist_data, dict):
             assist = assist_data.get("name")
 
-    print(
+    line = (
         f"{event_type} | "
         f"{minute}' | "
         f"{player or '-'} | "
         f"{team or '-'}"
-        + (f" | پاس گل: {assist}" if assist else "")
     )
 
+    if assist:
+        line += f" | پاس گل: {assist}"
 
-# ---------------------------------------------------------
+    print(line)
+
+
+# =========================================================
 # ترکیب
-# ---------------------------------------------------------
+# =========================================================
 
-lineups = get_json(
+lineups_response = get_json(
     f"{BASE_URL}/stored/matches/{MATCH_ID}/lineups"
 )
 
-lineup_data = lineups.get("data", {})
+lineups = lineups_response.get("data", {})
 
 print("\n" + "=" * 50)
 print("👥 ترکیب")
@@ -136,13 +159,14 @@ print("=" * 50)
 
 
 for side, team_name in [
-    ("home", home.get("name", "میزبان")),
-    ("away", away.get("name", "مهمان"))
+    ("home", home_name),
+    ("away", away_name)
 ]:
 
-    team_lineup = lineup_data.get(side, {})
+    team_lineup = lineups.get(side)
 
     if not isinstance(team_lineup, dict):
+        print(f"\n{team_name}: اطلاعات ترکیب موجود نیست")
         continue
 
     starters = team_lineup.get("starters", [])
@@ -150,28 +174,34 @@ for side, team_name in [
 
     print(f"\n{team_name}")
 
+    starter_names = []
+
+    for player in starters:
+        if isinstance(player, dict):
+            name = player.get("name", "?")
+            starter_names.append(name)
+
+    bench_names = []
+
+    for player in bench:
+        if isinstance(player, dict):
+            name = player.get("name", "?")
+            bench_names.append(name)
+
     print(
         "فیکس: "
-        + ", ".join(
-            player.get("name", "?")
-            for player in starters
-            if isinstance(player, dict)
-        )
+        + (", ".join(starter_names) if starter_names else "-")
     )
 
     print(
         "ذخیره: "
-        + ", ".join(
-            player.get("name", "?")
-            for player in bench
-            if isinstance(player, dict)
-        )
+        + (", ".join(bench_names) if bench_names else "-")
     )
 
 
-# ---------------------------------------------------------
-# آمار تیمی و بازیکنان
-# ---------------------------------------------------------
+# =========================================================
+# آمار
+# =========================================================
 
 stats_response = get_json(
     f"{BASE_URL}/stored/matches/{MATCH_ID}/stats"
@@ -179,55 +209,110 @@ stats_response = get_json(
 
 stats_data = stats_response.get("data", {})
 
-team_stats = stats_data.get("team_stats", {})
+team_stats = stats_data.get("team_stats", [])
 players = stats_data.get("players", [])
-
-
-# ---------------------------------------------------------
-# آمار تیمی
-# ---------------------------------------------------------
 
 print("\n" + "=" * 50)
 print("📊 آمار تیمی")
 print("=" * 50)
 
 
-for team_key, team_name in [
-    ("home", home.get("name", "میزبان")),
-    ("away", away.get("name", "مهمان"))
-]:
-
-    stats = team_stats.get(team_key, {})
-
-    if not isinstance(stats, dict):
-        continue
-
-    print(f"\n{team_name}")
-
-    important_stats = [
-        ("Possession", "مالکیت"),
-        ("SHOTS", "شوت"),
-        ("ON GOAL", "شوت در چارچوب"),
-        ("Passes", "پاس"),
-        ("Pass Completion %", "دقت پاس"),
-        ("Corner Kicks", "کرنر"),
-        ("Fouls", "خطا"),
-        ("Yellow Cards", "کارت زرد"),
-        ("Red Cards", "کارت قرمز"),
-        ("Offsides", "آفساید"),
-        ("Tackles", "تکل"),
-        ("Interceptions", "قطع توپ"),
-    ]
-
-    for key, label in important_stats:
-
-        if key in stats:
-            print(f"{label}: {stats[key]}")
-
-
 # ---------------------------------------------------------
+# team_stats واقعی به صورت LIST است
+# ---------------------------------------------------------
+
+if isinstance(team_stats, list):
+
+    for team in team_stats:
+
+        if not isinstance(team, dict):
+            continue
+
+        team_id = team.get("team_id")
+        team_name = team.get("team_name")
+
+        if not team_name:
+
+            if team_id == home.get("id"):
+                team_name = home_name
+
+            elif team_id == away.get("id"):
+                team_name = away_name
+
+        team_name = team_name or "تیم"
+
+        print(f"\n{team_name}")
+
+        important_stats = [
+            ("Possession", "مالکیت"),
+            ("SHOTS", "شوت"),
+            ("ON GOAL", "شوت در چارچوب"),
+            ("Passes", "پاس"),
+            ("Pass Completion %", "دقت پاس"),
+            ("Corner Kicks", "کرنر"),
+            ("Fouls", "خطا"),
+            ("Yellow Cards", "کارت زرد"),
+            ("Red Cards", "کارت قرمز"),
+            ("Offsides", "آفساید"),
+            ("Tackles", "تکل"),
+            ("Interceptions", "قطع توپ"),
+            ("Clearances", "دفع توپ"),
+        ]
+
+        for key, label in important_stats:
+
+            if key in team:
+                print(
+                    f"{label}: {get_stat_value(team, key)}"
+                )
+
+
+elif isinstance(team_stats, dict):
+
+    for team_key, team_name in [
+        ("home", home_name),
+        ("away", away_name)
+    ]:
+
+        stats = team_stats.get(team_key, {})
+
+        if not isinstance(stats, dict):
+            continue
+
+        print(f"\n{team_name}")
+
+        important_stats = [
+            ("Possession", "مالکیت"),
+            ("SHOTS", "شوت"),
+            ("ON GOAL", "شوت در چارچوب"),
+            ("Passes", "پاس"),
+            ("Pass Completion %", "دقت پاس"),
+            ("Corner Kicks", "کرنر"),
+            ("Fouls", "خطا"),
+            ("Yellow Cards", "کارت زرد"),
+            ("Red Cards", "کارت قرمز"),
+            ("Offsides", "آفساید"),
+            ("Tackles", "تکل"),
+            ("Interceptions", "قطع توپ"),
+            ("Clearances", "دفع توپ"),
+        ]
+
+        for key, label in important_stats:
+
+            if key in stats:
+                print(
+                    f"{label}: {get_stat_value(stats, key)}"
+                )
+
+
+else:
+
+    print("ساختار آمار تیمی ناشناخته است.")
+
+
+# =========================================================
 # آمار بازیکنان
-# ---------------------------------------------------------
+# =========================================================
 
 print("\n" + "=" * 50)
 print(f"👤 آمار بازیکنان ({len(players)})")
@@ -274,12 +359,17 @@ for player in players:
 
         if key in player_stats:
             values.append(
-                f"{label}: {value(player_stats, key)}"
+                f"{label}: {get_stat_value(player_stats, key)}"
             )
 
-    print(" | ".join(values))
+    if values:
+        print(" | ".join(values))
 
+
+# =========================================================
+# پایان
+# =========================================================
 
 print("\n" + "=" * 50)
-print("✅ پایان گزارش")
+print("✅ گزارش کامل شد")
 print("=" * 50)
