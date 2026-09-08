@@ -1,0 +1,48 @@
+name: Football Results - Stage 2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-stage2:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # --------------------------------------------------------
+      # دریافت کدها از مخزن
+      # --------------------------------------------------------
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------
+      # نصب پایتون
+      # --------------------------------------------------------
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # --------------------------------------------------------
+      # نصب کتابخانه‌ها
+      # --------------------------------------------------------
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # --------------------------------------------------------
+      # اجرای مرحله دوم
+      # --------------------------------------------------------
+
+      - name: Run Stage 2
+        env:
+          BIGBALLS_API_KEY: ${{ secrets.BIGBALLS_API_KEY }}
+        run: |
+          python main.py
