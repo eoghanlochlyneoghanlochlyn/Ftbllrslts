@@ -1,7 +1,7 @@
+import json
 import os
 import requests
-
-from football_teams import FOOTBALL_TEAMS
+from datetime import datetime, timezone
 
 
 # ============================================================
@@ -16,9 +16,34 @@ HEADERS = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
+CACHE_FILE = "cache.json"
+
 
 # ============================================================
-# درخواست به API
+# ۱۵ تیم موردنظر
+# ============================================================
+
+TRACKED_TEAMS = {
+    "Liverpool",
+    "Arsenal",
+    "Manchester City",
+    "Manchester United",
+    "Chelsea",
+    "Tottenham Hotspur",
+    "Juventus",
+    "AC Milan",
+    "Inter Milan",
+    "Bayern Munich",
+    "Borussia Dortmund",
+    "Paris Saint-Germain",
+    "Real Madrid",
+    "Barcelona",
+    "Atlético Madrid",
+}
+
+
+# ============================================================
+# ارتباط با API
 # ============================================================
 
 def get_json(url, params=None):
@@ -36,16 +61,17 @@ def get_json(url, params=None):
 
 
 # ============================================================
-# دریافت مسابقات یک تیم
+# دریافت مسابقات آینده فوتبال
 # ============================================================
 
-def get_team_matches(team_id):
+def get_upcoming_matches():
 
     response = get_json(
-        f"{BASE_URL}/teams/{team_id}/matches",
+        f"{BASE_URL}/matches",
         params={
             "sport": "football",
-            "limit": 100
+            "status": "scheduled",
+            "limit": 200
         }
     )
 
@@ -53,277 +79,355 @@ def get_team_matches(team_id):
 
 
 # ============================================================
-# پیدا کردن نزدیک‌ترین مسابقه آینده یک تیم
+# بارگذاری کش
 # ============================================================
 
-def get_next_match(team_id):
+def load_cache():
 
-    matches = get_team_matches(team_id)
+    if not os.path.exists(CACHE_FILE):
+        return {}
 
-    upcoming_matches = []
+    try:
 
-    for match in matches:
+        with open(
+            CACHE_FILE,
+            "r",
+            encoding="utf-8"
+        ) as file:
 
-        if match.get("status") != "scheduled":
-            continue
+            data = json.load(file)
 
-        kickoff = match.get("kickoff_utc")
+            if isinstance(data, dict):
+                return data
 
-        if not kickoff:
-            continue
+    except (json.JSONDecodeError, OSError):
 
-        home = match.get("home") or {}
-        away = match.get("away") or {}
+        print("⚠️ فایل cache.json قابل خواندن نیست.")
+        print("🔄 کش جدید ساخته می‌شود.")
 
-        home_id = home.get("id")
-        away_id = away.get("id")
+    return {}
 
-        if team_id not in (home_id, away_id):
-            continue
 
-        upcoming_matches.append(match)
+# ============================================================
+# ذخیره کش
+# ============================================================
 
-    if not upcoming_matches:
-        return None
+def save_cache(cache):
 
-    upcoming_matches.sort(
-        key=lambda match: match.get(
-            "kickoff_utc",
-            ""
+    with open(
+        CACHE_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        json.dump(
+            cache,
+            file,
+            ensure_ascii=False,
+            indent=2
         )
-    )
-
-    return upcoming_matches[0]
 
 
 # ============================================================
-# پیدا کردن نزدیک‌ترین مسابقه آینده برای تمام تیم‌ها
+# بررسی اینکه مسابقه مربوط به یکی از ۱۵ تیم هست یا نه
 # ============================================================
 
-def find_next_matches():
+def get_tracked_team(match):
 
-    next_matches = {}
+    home = match.get("home") or {}
+    away = match.get("away") or {}
 
-    print()
-    print("=" * 70)
-    print("🔎 پیدا کردن نزدیک‌ترین مسابقه آینده")
-    print("=" * 70)
+    home_name = home.get("name")
+    away_name = away.get("name")
 
-    for team_name, team_id in FOOTBALL_TEAMS.items():
+    if home_name in TRACKED_TEAMS:
+        return home_name
 
-        try:
+    if away_name in TRACKED_TEAMS:
+        return away_name
 
-            match = get_next_match(team_id)
-
-            if not match:
-
-                print(
-                    f"❌ {team_name} → "
-                    "مسابقه آینده‌ای پیدا نشد."
-                )
-
-                continue
-
-            match_id = match.get("id")
-
-            home = match.get("home") or {}
-            away = match.get("away") or {}
-
-            print()
-            print(
-                f"✅ {team_name}"
-            )
-
-            print(
-                f'   {home.get("name", "-")} '
-                f'vs '
-                f'{away.get("name", "-")}'
-            )
-
-            print(
-                f'   لیگ: {match.get("league", "-")}'
-            )
-
-            print(
-                f'   زمان UTC: '
-                f'{match.get("kickoff_utc", "-")}'
-            )
-
-            print(
-                f'   وضعیت: '
-                f'{match.get("status", "-")}'
-            )
-
-            print(
-                f'   شناسه: {match_id}'
-            )
-
-            next_matches[team_name] = match
-
-        except requests.RequestException as error:
-
-            print()
-            print(
-                f"❌ {team_name} → "
-                f"خطای ارتباط با API: {error}"
-            )
-
-        except Exception as error:
-
-            print()
-            print(
-                f"❌ {team_name} → "
-                f"خطای غیرمنتظره: {error}"
-            )
-
-    return next_matches
+    return None
 
 
 # ============================================================
-# حذف مسابقات تکراری
+# حذف مسابقات تکراری بر اساس شناسه مسابقه
 # ============================================================
 
-def get_unique_matches(next_matches):
+def remove_duplicates(matches):
 
     unique_matches = {}
 
-    for team_name, match in next_matches.items():
+    for match in matches:
 
         match_id = match.get("id")
 
         if not match_id:
             continue
 
-        if match_id not in unique_matches:
+        unique_matches[match_id] = match
 
-            unique_matches[match_id] = match
-
-    return unique_matches
+    return list(unique_matches.values())
 
 
 # ============================================================
-# نمایش مسابقات یکتا
+# مرتب‌سازی بر اساس زمان شروع
 # ============================================================
 
-def print_unique_matches(unique_matches):
+def sort_by_kickoff(matches):
+
+    def get_time(match):
+
+        kickoff = match.get("kickoff_utc")
+
+        if not kickoff:
+            return datetime.max.replace(tzinfo=timezone.utc)
+
+        try:
+            return datetime.fromisoformat(
+                kickoff.replace("Z", "+00:00")
+            )
+
+        except ValueError:
+            return datetime.max.replace(
+                tzinfo=timezone.utc
+            )
+
+    return sorted(
+        matches,
+        key=get_time
+    )
+
+
+# ============================================================
+# اضافه کردن مسابقه جدید به کش
+# ============================================================
+
+def add_new_matches(matches, cache):
+
+    new_matches = []
+
+    for match in matches:
+
+        match_id = match.get("id")
+
+        if not match_id:
+            continue
+
+        if match_id in cache:
+            continue
+
+        home = match.get("home") or {}
+        away = match.get("away") or {}
+
+        tracked_team = get_tracked_team(match)
+
+        cache[match_id] = {
+            "home": home.get("name"),
+            "away": away.get("name"),
+            "league": match.get("league"),
+            "kickoff_utc": match.get("kickoff_utc"),
+            "status": match.get("status"),
+            "tracked_team": tracked_team,
+
+            "lineup_sent": False,
+
+            "goals": [],
+
+            "finished": False
+        }
+
+        new_matches.append(match)
+
+    return new_matches
+
+
+# ============================================================
+# نمایش مسابقات جدید
+# ============================================================
+
+def print_new_matches(matches):
+
+    if not matches:
+
+        print()
+        print("ℹ️ مسابقه جدیدی پیدا نشد.")
+        return
 
     print()
     print("=" * 70)
-    print(
-        f"📋 مسابقات آینده یکتا "
-        f"({len(unique_matches)})"
-    )
+    print("🆕 مسابقات جدید")
     print("=" * 70)
 
-    for match_id, match in unique_matches.items():
+    for match in matches:
 
         home = match.get("home") or {}
         away = match.get("away") or {}
 
         print()
+
         print(
-            f'⚽ {home.get("name", "-")} '
-            f'vs '
-            f'{away.get("name", "-")}'
+            f"⚽ {home.get('name', '-')} "
+            f"vs "
+            f"{away.get('name', '-')}"
         )
 
         print(
-            f'   لیگ: {match.get("league", "-")}'
+            f"🏆 لیگ: "
+            f"{match.get('league', '-')}"
         )
 
         print(
-            f'   زمان UTC: '
-            f'{match.get("kickoff_utc", "-")}'
+            f"🕐 زمان UTC: "
+            f"{match.get('kickoff_utc', '-')}"
         )
 
         print(
-            f'   وضعیت: '
-            f'{match.get("status", "-")}'
+            f"🎯 تیم موردنظر: "
+            f"{get_tracked_team(match) or '-'}"
         )
 
         print(
-            f'   شناسه: {match_id}'
+            f"🆔 شناسه: "
+            f"{match.get('id', '-')}"
         )
+
+    print()
+    print("=" * 70)
 
 
 # ============================================================
-# اجرای برنامه
+# اجرای اصلی
 # ============================================================
 
 def main():
 
     if not API_KEY:
 
-        print(
-            "❌ BIGBALLS_API_KEY پیدا نشد."
-        )
+        print("❌ BIGBALLS_API_KEY پیدا نشد.")
 
         raise SystemExit(1)
 
-    print()
-    print("=" * 70)
-    print("⚽ Football Results Bot - Stage 3")
-    print("=" * 70)
+    print("🔄 دریافت مسابقات آینده فوتبال...")
+
+    try:
+
+        all_matches = get_upcoming_matches()
+
+    except requests.HTTPError as error:
+
+        print()
+        print("❌ خطای HTTP:")
+        print(error)
+
+        raise SystemExit(1)
+
+    except requests.RequestException as error:
+
+        print()
+        print("❌ خطای ارتباط با API:")
+        print(error)
+
+        raise SystemExit(1)
+
+    except Exception as error:
+
+        print()
+        print("❌ خطای غیرمنتظره:")
+        print(error)
+
+        raise SystemExit(1)
 
     print(
-        f"تعداد تیم‌های موردنظر: "
-        f"{len(FOOTBALL_TEAMS)}"
+        f"📥 تعداد مسابقات دریافتی از API: "
+        f"{len(all_matches)}"
     )
-
-    # --------------------------------------------------------
-    # پیدا کردن مسابقه آینده هر تیم
-    # --------------------------------------------------------
-
-    next_matches = find_next_matches()
 
     # --------------------------------------------------------
     # حذف مسابقات تکراری
     # --------------------------------------------------------
 
-    unique_matches = get_unique_matches(
-        next_matches
+    all_matches = remove_duplicates(
+        all_matches
+    )
+
+    print(
+        f"🧹 تعداد مسابقات یکتا: "
+        f"{len(all_matches)}"
     )
 
     # --------------------------------------------------------
-    # نتیجه
+    # مرتب‌سازی
     # --------------------------------------------------------
+
+    all_matches = sort_by_kickoff(
+        all_matches
+    )
+
+    # --------------------------------------------------------
+    # فقط مسابقات مربوط به ۱۵ تیم
+    # --------------------------------------------------------
+
+    tracked_matches = []
+
+    for match in all_matches:
+
+        if get_tracked_team(match):
+
+            tracked_matches.append(match)
+
+    print(
+        f"🎯 مسابقات مربوط به ۱۵ تیم: "
+        f"{len(tracked_matches)}"
+    )
+
+    # --------------------------------------------------------
+    # بارگذاری کش
+    # --------------------------------------------------------
+
+    cache = load_cache()
+
+    print(
+        f"💾 مسابقات موجود در کش: "
+        f"{len(cache)}"
+    )
+
+    # --------------------------------------------------------
+    # پیدا کردن مسابقات جدید
+    # --------------------------------------------------------
+
+    new_matches = add_new_matches(
+        tracked_matches,
+        cache
+    )
+
+    # --------------------------------------------------------
+    # ذخیره کش
+    # --------------------------------------------------------
+
+    save_cache(cache)
+
+    # --------------------------------------------------------
+    # نمایش نتیجه
+    # --------------------------------------------------------
+
+    print_new_matches(
+        new_matches
+    )
+
+    print()
+    print(
+        f"💾 تعداد مسابقات ذخیره‌شده در کش: "
+        f"{len(cache)}"
+    )
 
     print()
     print("=" * 70)
-    print("📊 نتیجه")
-    print("=" * 70)
-
-    print(
-        f"تیم‌های بررسی‌شده: "
-        f"{len(FOOTBALL_TEAMS)}"
-    )
-
-    print(
-        f"تیم‌هایی که مسابقه آینده دارند: "
-        f"{len(next_matches)}"
-    )
-
-    print(
-        f"مسابقات آینده یکتا: "
-        f"{len(unique_matches)}"
-    )
-
-    # --------------------------------------------------------
-    # نمایش مسابقات یکتا
-    # --------------------------------------------------------
-
-    print_unique_matches(
-        unique_matches
-    )
-
-    print()
-    print("=" * 70)
-    print("✅ مرحله ۳ با موفقیت تمام شد.")
+    print("✅ بررسی مسابقات با موفقیت انجام شد.")
     print("=" * 70)
 
 
 # ============================================================
-# اجرای مستقیم
+# اجرا
 # ============================================================
 
 if __name__ == "__main__":
