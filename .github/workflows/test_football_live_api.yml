@@ -42,7 +42,7 @@ jobs:
           echo "Waiting for API..."
 
           for i in {1..30}; do
-            if curl -s http://localhost:3000/api/fotmob/matches/date/2026-09-09 > /tmp/test.json; then
+            if curl -s http://localhost:3001/ > /tmp/test.json; then
               echo "API is responding."
               break
             fi
@@ -55,5 +55,11 @@ jobs:
           cat api.log
 
           echo
-          echo "===== TEST RESPONSE ====="
+          echo "===== ROOT RESPONSE ====="
           cat /tmp/test.json
+
+          echo
+          echo "===== MATCHES TEST ====="
+
+          curl -i \
+            "http://localhost:3001/api/fotmob/matches/date/2026-09-09"
