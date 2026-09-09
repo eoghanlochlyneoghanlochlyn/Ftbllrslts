@@ -65,9 +65,7 @@ def get_fotmob_data(match_id):
 
     print("✅ __NEXT_DATA__ پیدا شد.")
 
-    raw_json = match.group(1)
-
-    data = json.loads(raw_json)
+    data = json.loads(match.group(1))
 
     print("✅ JSON با موفقیت استخراج شد.")
     print()
@@ -104,7 +102,6 @@ def print_match_info(page_props):
     print(f"زمان: {match_time}")
     print(f"شروع شده: {started}")
     print(f"تمام شده: {finished}")
-
     print()
 
 
@@ -154,6 +151,26 @@ def print_score(page_props):
     print()
 
 
+def get_player_name(value):
+    if not isinstance(value, dict):
+        return None
+
+    name = value.get("name")
+
+    if name:
+        return name
+
+    player = value.get("player")
+
+    if isinstance(player, dict):
+        name = player.get("name")
+
+        if name:
+            return name
+
+    return None
+
+
 def print_events(page_props):
     content = page_props.get("content", {})
     match_facts = content.get("matchFacts", {})
@@ -177,26 +194,42 @@ def print_events(page_props):
 
         print(f"رویداد {index}:")
 
-        if isinstance(event, dict):
+        if not isinstance(event, dict):
+            print()
+            continue
 
-            for key in [
-                "type",
+        event_type = event.get(
+            "type",
+            event.get(
                 "eventType",
-                "time",
-                "timeStr",
-                "name",
-                "player",
-                "playerName",
-                "assist",
-                "assistPlayer",
-                "homeScore",
-                "awayScore",
-            ]:
+                "نامشخص",
+            ),
+        )
 
-                if key in event:
-                    print(
-                        f"  {key}: {event[key]}"
-                    )
+        time = event.get(
+            "timeStr",
+            event.get(
+                "time",
+                "نامشخص",
+            ),
+        )
+
+        print(f"  نوع: {event_type}")
+        print(f"  دقیقه: {time}")
+
+        player = event.get("player")
+
+        player_name = get_player_name(player)
+
+        if player_name:
+            print(f"  بازیکن: {player_name}")
+
+        if "homeScore" in event:
+            print(
+                f"  نتیجه لحظه‌ای: "
+                f"{event.get('homeScore')} - "
+                f"{event.get('awayScore')}"
+            )
 
         print()
 
@@ -206,11 +239,11 @@ def print_lineup_debug(page_props):
     lineup = content.get("lineup", {})
 
     print("=" * 70)
-    print("DEBUG LINEUP STRUCTURE")
+    print("بررسی ساختار ترکیب")
     print("=" * 70)
 
     if not lineup:
-        print("❌ lineup خالی است.")
+        print("❌ lineup پیدا نشد.")
         print()
         return
 
@@ -223,18 +256,18 @@ def print_lineup_debug(page_props):
         "awayTeam",
     ]:
 
-        team_data = lineup.get(side, {})
+        team_data = lineup.get(side)
 
         print("-" * 70)
         print(side)
         print("-" * 70)
 
         if not isinstance(team_data, dict):
-            print("❌ اطلاعات تیم ساختار دیکشنری ندارد.")
+            print("❌ اطلاعات تیم پیدا نشد.")
             print()
             continue
 
-        print("کلیدهای تیم:")
+        print("کلیدهای این تیم:")
         print(list(team_data.keys()))
         print()
 
@@ -249,23 +282,25 @@ def print_lineup_debug(page_props):
 
                 if value:
 
-                    print("اولین مورد این لیست:")
+                    first = value[0]
 
-                    print(
-                        json.dumps(
-                            value[0],
-                            ensure_ascii=False,
-                            indent=2,
+                    if isinstance(first, dict):
+
+                        print(
+                            "کلیدهای اولین مورد:"
                         )
-                    )
 
-                    print()
+                        print(
+                            list(first.keys())
+                        )
+
+                        print()
 
             elif isinstance(value, dict):
 
                 print(
                     f"کلید '{key}': "
-                    f"دیکشنری با {len(value)} کلید"
+                    f"دیکشنری"
                 )
 
             else:
@@ -301,6 +336,11 @@ def print_lineups(page_props):
         print(title)
         print("-" * 50)
 
+        if not isinstance(team_data, dict):
+            print("❌ اطلاعات تیم پیدا نشد.")
+            print()
+            continue
+
         team_name = team_data.get(
             "name",
             "نامشخص",
@@ -328,11 +368,7 @@ def print_lineups(page_props):
                 if not isinstance(player, dict):
                     continue
 
-                name = (
-                    player.get("name")
-                    or player.get("player", {}).get("name")
-                    or "نامشخص"
-                )
+                name = get_player_name(player)
 
                 number = player.get(
                     "shirtNumber",
@@ -345,7 +381,8 @@ def print_lineups(page_props):
                 )
 
                 print(
-                    f"  {number} | {name}"
+                    f"  {number} | "
+                    f"{name or 'نامشخص'}"
                     f"{' | ' + str(position) if position else ''}"
                 )
 
@@ -363,11 +400,7 @@ def print_lineups(page_props):
                 if not isinstance(player, dict):
                     continue
 
-                name = (
-                    player.get("name")
-                    or player.get("player", {}).get("name")
-                    or "نامشخص"
-                )
+                name = get_player_name(player)
 
                 number = player.get(
                     "shirtNumber",
@@ -375,7 +408,8 @@ def print_lineups(page_props):
                 )
 
                 print(
-                    f"  {number} | {name}"
+                    f"  {number} | "
+                    f"{name or 'نامشخص'}"
                 )
 
         else:
@@ -384,6 +418,123 @@ def print_lineups(page_props):
 
         print()
         print()
+
+
+def find_substitution_objects(obj, path="root"):
+    results = []
+
+    if isinstance(obj, dict):
+
+        for key, value in obj.items():
+
+            key_lower = str(key).lower()
+
+            if (
+                "substitution" in key_lower
+                or key_lower in [
+                    "subs",
+                    "substitutes",
+                ]
+            ):
+
+                if isinstance(value, list):
+
+                    for index, item in enumerate(value):
+
+                        if isinstance(item, dict):
+
+                            results.append(
+                                (
+                                    f"{path}.{key}[{index}]",
+                                    item,
+                                )
+                            )
+
+                elif isinstance(value, dict):
+
+                    results.append(
+                        (
+                            f"{path}.{key}",
+                            value,
+                        )
+                    )
+
+            results.extend(
+                find_substitution_objects(
+                    value,
+                    f"{path}.{key}",
+                )
+            )
+
+    elif isinstance(obj, list):
+
+        for index, value in enumerate(obj):
+
+            results.extend(
+                find_substitution_objects(
+                    value,
+                    f"{path}[{index}]",
+                )
+            )
+
+    return results
+
+
+def print_substitution_debug(page_props):
+    content = page_props.get("content", {})
+
+    print("=" * 70)
+    print("بررسی ساختار تعویض‌ها")
+    print("=" * 70)
+
+    results = find_substitution_objects(
+        content
+    )
+
+    if not results:
+        print(
+            "❌ هیچ ساختار احتمالی برای "
+            "تعویض پیدا نشد."
+        )
+        print()
+        return
+
+    printed = set()
+
+    for path, obj in results:
+
+        signature = json.dumps(
+            obj,
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+
+        if signature in printed:
+            continue
+
+        printed.add(signature)
+
+        print(f"مسیر: {path}")
+        print("ساختار:")
+
+        print(
+            json.dumps(
+                obj,
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+
+        print()
+        print("-" * 70)
+        print()
+
+        if len(printed) >= 20:
+            print(
+                "⚠️ برای جلوگیری از طولانی شدن "
+                "خروجی، بررسی متوقف شد."
+            )
+            break
 
 
 def print_stats(page_props):
@@ -507,6 +658,10 @@ def main():
         print_lineup_debug(page_props)
 
         print_lineups(page_props)
+
+        print_substitution_debug(
+            page_props
+        )
 
         print_stats(page_props)
 
