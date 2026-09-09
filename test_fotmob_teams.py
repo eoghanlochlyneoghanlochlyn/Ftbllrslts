@@ -1,223 +1,325 @@
 import json
 import requests
-from datetime import datetime, timezone
 
 
 # ============================================================
 # تنظیمات
 # ============================================================
 
-TEAMS = {
-    "Liverpool": 8650,
-    "Arsenal": 9825,
-    "Manchester City": 8456,
-    "Manchester United": 10260,
-    "Chelsea": 8455,
-    "Tottenham Hotspur": 8586,
-    "Juventus": 9885,
-    "AC Milan": 8564,
-    "Inter Milan": 8636,
-    "Bayern Munich": 9823,
-    "Borussia Dortmund": 9789,
-    "PSG": 9847,
-    "Real Madrid": 8633,
-    "Barcelona": 8634,
-    "Atlético Madrid": 9906,
+MATCH_ID = "6106264"
+
+URL = f"https://www.fotmob.com/match/{MATCH_ID}"
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/140.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
+              "image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://www.fotmob.com/",
 }
 
 
 # ============================================================
-# دریافت مسابقات فوت‌ماب
+# دریافت صفحه مسابقه
 # ============================================================
 
-def get_matches(date_string):
-    url = (
-        "https://www.fotmob.com/api/data/matches"
-        f"?date={date_string}"
-    )
+def get_match_page():
 
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/140.0.0.0 Safari/537.36"
-        ),
-        "Accept": "application/json, text/plain, */*",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://www.fotmob.com/",
-    }
-
-    print(f"🌐 درخواست به فوت‌ماب:")
-    print(url)
+    print("🌐 درخواست به فوت‌ماب:")
+    print(URL)
     print()
 
     response = requests.get(
-        url,
-        headers=headers,
+        URL,
+        headers=HEADERS,
         timeout=30
     )
 
     print(f"📡 HTTP Status: {response.status_code}")
+    print(f"📏 HTML Length: {len(response.text)}")
     print()
 
     response.raise_for_status()
 
-    return response.json()
+    return response.text
 
 
 # ============================================================
-# پیدا کردن بازی‌های تیم‌های موردنظر
+# استخراج __NEXT_DATA__
 # ============================================================
 
-def find_target_matches(data):
-    found_matches = []
+def extract_next_data(html):
 
-    leagues = data.get("leagues", [])
+    marker_start = '<script id="__NEXT_DATA__" type="application/json">'
+    marker_end = "</script>"
 
-    print(f"🏆 تعداد لیگ‌ها: {len(leagues)}")
+    start = html.find(marker_start)
+
+    if start == -1:
+        raise Exception("❌ __NEXT_DATA__ پیدا نشد.")
+
+    start += len(marker_start)
+
+    end = html.find(marker_end, start)
+
+    if end == -1:
+        raise Exception("❌ پایان __NEXT_DATA__ پیدا نشد.")
+
+    json_text = html[start:end]
+
+    data = json.loads(json_text)
+
+    print("✅ __NEXT_DATA__ با موفقیت استخراج شد.")
     print()
 
-    for league in leagues:
-
-        league_name = league.get("name", "Unknown League")
-
-        matches = league.get("matches", [])
-
-        for match in matches:
-
-            home = match.get("home", {})
-            away = match.get("away", {})
-
-            home_id = home.get("id")
-            away_id = away.get("id")
-
-            if home_id in TEAMS.values() or away_id in TEAMS.values():
-
-                found_matches.append({
-                    "league": league_name,
-                    "match_id": match.get("id"),
-                    "home": home.get("name"),
-                    "home_id": home_id,
-                    "away": away.get("name"),
-                    "away_id": away_id,
-                    "status": match.get("status"),
-                    "finished": match.get("status", {}).get("finished"),
-                    "started": match.get("status", {}).get("started"),
-                    "utc_time": match.get("status", {}).get("utcTime"),
-                })
-
-    return found_matches
+    return data
 
 
 # ============================================================
-# نمایش نتیجه
+# استخراج اطلاعات اصلی
 # ============================================================
 
-def print_matches(matches):
+def extract_match_data(root):
+
+    page_props = (
+        root
+        .get("props", {})
+        .get("pageProps", {})
+    )
+
+    general = page_props.get("general", {})
+    header = page_props.get("header", {})
+    content = page_props.get("content", {})
+
+    return {
+        "general": general,
+        "header": header,
+        "content": content,
+    }
+
+
+# ============================================================
+# نمایش کلیدهای موجود
+# ============================================================
+
+def show_structure(data):
 
     print("=" * 70)
-    print("⚽ بازی‌های تیم‌های موردنظر")
+    print("🧩 ساختار اطلاعات مسابقه")
     print("=" * 70)
     print()
 
-    if not matches:
-        print("❌ هیچ بازی‌ای برای تیم‌های موردنظر پیدا نشد.")
+    general = data["general"]
+    header = data["header"]
+    content = data["content"]
+
+    print("📌 کلیدهای general:")
+    print(list(general.keys()))
+    print()
+
+    print("📌 کلیدهای header:")
+    print(list(header.keys()))
+    print()
+
+    print("📌 کلیدهای content:")
+    print(list(content.keys()))
+    print()
+
+
+# ============================================================
+# نمایش اطلاعات اصلی بازی
+# ============================================================
+
+def show_basic_info(data):
+
+    general = data["general"]
+    header = data["header"]
+
+    print("=" * 70)
+    print("⚽ اطلاعات اصلی بازی")
+    print("=" * 70)
+    print()
+
+    print("🆔 Match ID:")
+    print(general.get("matchId"))
+    print()
+
+    print("🏆 نام مسابقه:")
+    print(general.get("matchName"))
+    print()
+
+    print("🏟️ لیگ:")
+    print(general.get("leagueName"))
+    print()
+
+    print("🕐 زمان بازی:")
+    print(general.get("matchTimeUTC"))
+    print()
+
+    print("▶️ شروع شده:")
+    print(general.get("started"))
+    print()
+
+    print("🏁 تمام شده:")
+    print(general.get("finished"))
+    print()
+
+    print("📊 سطح پوشش:")
+    print(general.get("coverageLevel"))
+    print()
+
+    print("🏠 اطلاعات تیم میزبان:")
+
+    home_team = (
+        header.get("teams", {})
+        .get("home", {})
+    )
+
+    print(home_team)
+    print()
+
+    print("✈️ اطلاعات تیم مهمان:")
+
+    away_team = (
+        header.get("teams", {})
+        .get("away", {})
+    )
+
+    print(away_team)
+    print()
+
+
+# ============================================================
+# بررسی ترکیب
+# ============================================================
+
+def show_lineups(data):
+
+    content = data["content"]
+
+    lineup = content.get("lineup")
+
+    print("=" * 70)
+    print("👥 بررسی ترکیب")
+    print("=" * 70)
+    print()
+
+    if not lineup:
+        print("❌ بخش lineup وجود ندارد یا خالی است.")
+        print()
         return
 
-    print(f"✅ تعداد بازی‌های پیدا شده: {len(matches)}")
+    print("✅ بخش lineup وجود دارد.")
     print()
 
-    for index, match in enumerate(matches, 1):
+    print("کلیدهای lineup:")
+    print(list(lineup.keys()))
+    print()
 
-        print(f"--- بازی {index} ---")
+    home = lineup.get("homeTeam")
+    away = lineup.get("awayTeam")
 
-        print(f"🏆 لیگ: {match['league']}")
+    print("🏠 ترکیب میزبان:")
+    print(home)
+    print()
 
-        print(
-            f"⚽ بازی: "
-            f"{match['home']} vs {match['away']}"
-        )
-
-        print(f"🆔 Match ID: {match['match_id']}")
-
-        print(f"🕐 زمان UTC: {match['utc_time']}")
-
-        print(f"▶️ شروع شده: {match['started']}")
-
-        print(f"🏁 تمام شده: {match['finished']}")
-
-        print()
+    print("✈️ ترکیب مهمان:")
+    print(away)
+    print()
 
 
 # ============================================================
-# ذخیره نتیجه در فایل JSON
+# بررسی رویدادها
 # ============================================================
 
-def save_results(matches):
+def show_events(data):
 
-    with open(
-        "fotmob_matches.json",
-        "w",
-        encoding="utf-8"
-    ) as file:
+    content = data["content"]
 
-        json.dump(
-            matches,
-            file,
-            ensure_ascii=False,
-            indent=2
-        )
-
-    print("💾 نتیجه در فایل fotmob_matches.json ذخیره شد.")
-
-
-# ============================================================
-# اجرای اصلی
-# ============================================================
-
-def main():
-
-    # تاریخ امروز به وقت UTC
-    today = datetime.now(timezone.utc).strftime("%Y%m%d")
+    match_facts = content.get("matchFacts", {})
 
     print("=" * 70)
-    print("🔎 تست پیدا کردن مسابقات فوت‌ماب")
+    print("📋 بررسی رویدادهای بازی")
     print("=" * 70)
     print()
 
-    print(f"📅 تاریخ مورد بررسی: {today}")
+    print("کلیدهای matchFacts:")
+
+    if match_facts:
+        print(list(match_facts.keys()))
+    else:
+        print("❌ matchFacts وجود ندارد.")
+
     print()
 
-    try:
+    events_section = match_facts.get("events", {})
 
-        data = get_matches(today)
+    events = events_section.get("events", [])
 
-        print("✅ اطلاعات مسابقات دریافت شد.")
+    print(f"📌 تعداد رویدادها: {len(events)}")
+    print()
+
+    if events:
+
+        for event in events[:20]:
+
+            print(event)
+
+    else:
+
+        print("❌ هنوز رویدادی وجود ندارد.")
+
+    print()
+
+
+# ============================================================
+# بررسی آمار
+# ============================================================
+
+def show_stats(data):
+
+    content = data["content"]
+
+    stats = content.get("stats")
+
+    print("=" * 70)
+    print("📊 بررسی آمار")
+    print("=" * 70)
+    print()
+
+    if not stats:
+        print("❌ بخش stats وجود ندارد.")
         print()
+        return
 
-        matches = find_target_matches(data)
+    print("کلیدهای stats:")
+    print(list(stats.keys()))
+    print()
 
-        print_matches(matches)
+    periods = stats.get("Periods", {})
 
-        save_results(matches)
+    print("دوره‌های آماری:")
 
-        print()
-        print("=" * 70)
-        print("✅ تست با موفقیت تمام شد.")
-        print("=" * 70)
+    for period_name in periods.keys():
+        print(f"  - {period_name}")
 
-    except requests.exceptions.RequestException as error:
-
-        print()
-        print("❌ خطا در درخواست به فوت‌ماب:")
-        print(error)
-
-    except Exception as error:
-
-        print()
-        print("❌ خطای غیرمنتظره:")
-        print(error)
+    print()
 
 
-if __name__ == "__main__":
-    main()
+# ============================================================
+# بررسی همه اطلاعات موجود در pageProps
+# ============================================================
+
+def show_page_props_keys(root):
+
+    page_props = (
+        root
+        .get("props", {})
+        .get("pageProps", {})
+    )
+
+   
