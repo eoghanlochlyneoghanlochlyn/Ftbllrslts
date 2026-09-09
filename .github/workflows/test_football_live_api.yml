@@ -1,0 +1,59 @@
+name: Test Football Live API
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout our repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Football Live API
+        uses: actions/checkout@v4
+        with:
+          repository: Ryzellx/football-live-api
+          path: football-live-api
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: football-live-api
+        run: npm install
+
+      - name: Build project
+        working-directory: football-live-api
+        run: npm run build
+
+      - name: Start API
+        working-directory: football-live-api
+        run: |
+          npm start > api.log 2>&1 &
+          echo $! > api.pid
+
+          echo "Waiting for API..."
+
+          for i in {1..30}; do
+            if curl -s http://localhost:3000/api/fotmob/matches/date/2026-09-09 > /tmp/test.json; then
+              echo "API is responding."
+              break
+            fi
+
+            sleep 2
+          done
+
+          echo
+          echo "===== API LOG ====="
+          cat api.log
+
+          echo
+          echo "===== TEST RESPONSE ====="
+          cat /tmp/test.json
