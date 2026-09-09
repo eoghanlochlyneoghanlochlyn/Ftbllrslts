@@ -1,157 +1,237 @@
 import json
 import requests
 
+
 MATCH_ID = "6106264"
 
-print("=" * 60)
-print("TEST STARTED")
-print("=" * 60)
+URL = f"https://www.fotmob.com/match/{MATCH_ID}"
 
-url = f"https://www.fotmob.com/match/{MATCH_ID}"
-
-headers = {
+HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
 
-print("Requesting:", url)
+
+print("=" * 60)
+print("🔎 TEST FOTMOB LINEUP")
+print("=" * 60)
+print()
+
+# ============================================================
+# دریافت صفحه
+# ============================================================
+
+print("🌐 Requesting FotMob...")
 
 response = requests.get(
-    url,
-    headers=headers,
+    URL,
+    headers=HEADERS,
     timeout=30
 )
 
-print("HTTP STATUS:", response.status_code)
-print("HTML LENGTH:", len(response.text))
+print("📡 HTTP STATUS:", response.status_code)
 
-if response.status_code != 200:
-    print("ERROR: HTTP request failed")
-    raise SystemExit(1)
+response.raise_for_status()
 
-print("HTTP request OK")
+print("📏 HTML LENGTH:", len(response.text))
+print()
+
+# ============================================================
+# استخراج __NEXT_DATA__
+# ============================================================
 
 marker = '<script id="__NEXT_DATA__" type="application/json">'
 
 start = response.text.find(marker)
 
-print("NEXT_DATA POSITION:", start)
-
 if start == -1:
-    print("ERROR: NEXT_DATA not found")
+    print("❌ NEXT_DATA NOT FOUND")
     raise SystemExit(1)
 
 start += len(marker)
 
 end = response.text.find("</script>", start)
 
-print("NEXT_DATA END:", end)
-
 if end == -1:
-    print("ERROR: NEXT_DATA end not found")
+    print("❌ NEXT_DATA END NOT FOUND")
     raise SystemExit(1)
 
 raw_json = response.text[start:end]
 
-print("JSON LENGTH:", len(raw_json))
+data = json.loads(raw_json)
 
-try:
-    data = json.loads(raw_json)
-except Exception as error:
-    print("ERROR: JSON parsing failed")
-    print(error)
-    raise SystemExit(1)
-
-print("JSON PARSED OK")
-
-props = data.get("props", {})
-page_props = props.get("pageProps", {})
-
+print("✅ JSON OK")
 print()
-print("=" * 60)
-print("PAGE PROPS")
-print("=" * 60)
 
-print(list(page_props.keys()))
+# ============================================================
+# دسترسی به اطلاعات مسابقه
+# ============================================================
+
+page_props = (
+    data
+    .get("props", {})
+    .get("pageProps", {})
+)
 
 general = page_props.get("general", {})
 
-print()
+content = page_props.get("content", {})
+
+lineup = content.get("lineup")
+
+# ============================================================
+# اطلاعات اصلی بازی
+# ============================================================
+
 print("=" * 60)
-print("MATCH INFORMATION")
+print("⚽ MATCH")
 print("=" * 60)
 
 print("Match ID:", general.get("matchId"))
-print("Match name:", general.get("matchName"))
+print("Match:", general.get("matchName"))
 print("League:", general.get("leagueName"))
 print("Time:", general.get("matchTimeUTC"))
 print("Started:", general.get("started"))
 print("Finished:", general.get("finished"))
 print("Coverage:", general.get("coverageLevel"))
 
-content = page_props.get("content", {})
-
 print()
+
+# ============================================================
+# بررسی وجود ترکیب
+# ============================================================
+
 print("=" * 60)
-print("CONTENT")
+print("👥 LINEUP")
 print("=" * 60)
-
-print(list(content.keys()))
-
-lineup = content.get("lineup")
-
-print()
-print("LINEUP:")
 
 if lineup is None:
-    print("NOT AVAILABLE")
 
-elif lineup == {}:
-    print("EMPTY")
+    print("❌ LINEUP NOT AVAILABLE")
 
 else:
-    print("AVAILABLE")
-    print(list(lineup.keys()))
 
-match_facts = content.get("matchFacts")
+    print("Lineup available: YES")
+    print()
 
-print()
-print("MATCH FACTS:")
+    # --------------------------------------------------------
+    # اطلاعات کلی ترکیب
+    # --------------------------------------------------------
 
-if match_facts is None:
-    print("NOT AVAILABLE")
-else:
-    print("AVAILABLE")
-    print(list(match_facts.keys()))
+    print("Lineup ID:", lineup.get("matchId"))
+    print("Lineup type:", lineup.get("lineupType"))
+    print("Source:", lineup.get("source"))
 
-stats = content.get("stats")
+    print()
 
-print()
-print("STATS:")
+    # --------------------------------------------------------
+    # فیلترهای موجود
+    # --------------------------------------------------------
 
-if stats is None:
-    print("NOT AVAILABLE")
-else:
-    print("AVAILABLE")
-    print(list(stats.keys()))
+    print("Available filters:")
 
-with open(
-    "match_6106264_raw.json",
-    "w",
-    encoding="utf-8"
-) as file:
-    json.dump(
-        data,
-        file,
-        ensure_ascii=False,
-        indent=2
-    )
+    filters = lineup.get("availableFilters")
+
+    if filters:
+
+        print(filters)
+
+    else:
+
+        print("None")
+
+    print()
+
+    # --------------------------------------------------------
+    # تیم میزبان
+    # --------------------------------------------------------
+
+    home = lineup.get("homeTeam")
+
+    print("=" * 60)
+    print("🏠 HOME TEAM")
+    print("=" * 60)
+
+    if home:
+
+        print("Team:", home.get("name"))
+        print("Team ID:", home.get("id"))
+        print()
+
+        print("Keys:")
+
+        for key in home.keys():
+            print(" -", key)
+
+        print()
+
+        # چاپ اطلاعات بازیکنان
+        players = home.get("players")
+
+        if players:
+
+            print("Players:")
+
+            for player in players:
+
+                print(player)
+
+        else:
+
+            print("Players: NONE")
+
+    else:
+
+        print("HOME TEAM DATA NOT AVAILABLE")
+
+    print()
+
+    # --------------------------------------------------------
+    # تیم مهمان
+    # --------------------------------------------------------
+
+    away = lineup.get("awayTeam")
+
+    print("=" * 60)
+    print("✈️ AWAY TEAM")
+    print("=" * 60)
+
+    if away:
+
+        print("Team:", away.get("name"))
+        print("Team ID:", away.get("id"))
+        print()
+
+        print("Keys:")
+
+        for key in away.keys():
+            print(" -", key)
+
+        print()
+
+        # چاپ اطلاعات بازیکنان
+        players = away.get("players")
+
+        if players:
+
+            print("Players:")
+
+            for player in players:
+
+                print(player)
+
+        else:
+
+            print("Players: NONE")
+
+    else:
+
+        print("AWAY TEAM DATA NOT AVAILABLE")
+
+# ============================================================
+# پایان
+# ============================================================
 
 print()
 print("=" * 60)
-print("RAW DATA SAVED")
+print("✅ TEST FINISHED")
 print("=" * 60)
-
-print("match_6106264_raw.json")
-
-print()
-print("TEST FINISHED")
