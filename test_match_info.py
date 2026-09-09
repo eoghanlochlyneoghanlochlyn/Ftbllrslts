@@ -4,131 +4,169 @@ import requests
 
 
 MATCH_ID = "6106264"
-
 URL = f"https://www.fotmob.com/match/{MATCH_ID}"
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/140.0.0.0 Safari/537.36"
-    )
-}
+
+print("FOTMOB POSITION ID TEST")
+print(f"Match ID: {MATCH_ID}")
+print("Requesting FotMob...")
+
+response = requests.get(
+    URL,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    },
+    timeout=30
+)
+
+print(f"HTTP STATUS: {response.status_code}")
+
+if response.status_code != 200:
+    print("ERROR: Could not load FotMob page.")
+    raise SystemExit(1)
 
 
-def get_next_data(html):
-    match = re.search(
-        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-        html,
-        re.DOTALL
-    )
+html = response.text
 
-    if not match:
-        return None
+match = re.search(
+    r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
+    html,
+    re.DOTALL
+)
 
-    return json.loads(match.group(1))
+if not match:
+    print("ERROR: __NEXT_DATA__ not found.")
+    raise SystemExit(1)
 
 
-def print_team(team, label):
-    print()
-    print("=" * 60)
-    print(label)
-    print("=" * 60)
+data = json.loads(match.group(1))
 
-    print(f"Team: {team.get('name')}")
-    print(f"Formation: {team.get('formation')}")
+print("NEXT_DATA JSON OK")
+print()
 
-    starters = team.get("starters", [])
-    subs = team.get("subs", [])
 
-    print()
-    print(f"STARTERS ({len(starters)}):")
+# --------------------------------------------------
+# پیدا کردن lineup
+# --------------------------------------------------
 
-    for index, player in enumerate(starters, 1):
+content = data.get("props", {}).get("pageProps", {}).get("content", {})
+lineup = content.get("lineup", {})
+
+if not lineup:
+    print("ERROR: lineup not found.")
+    raise SystemExit(1)
+
+
+print("LINEUP FOUND")
+print()
+
+
+# --------------------------------------------------
+# بررسی positionId بازیکنان اصلی
+# --------------------------------------------------
+
+for side in ["home", "away"]:
+
+    team_data = lineup.get(side, {})
+
+    team_name = team_data.get("teamName", "Unknown")
+
+    print(f"{side.upper()} TEAM: {team_name}")
+
+    starters = team_data.get("starters", [])
+
+    for player in starters:
+
         name = player.get("name")
-        number = player.get("shirtNumber")
         position_id = player.get("positionId")
-        rating = player.get("performance", {}).get("rating")
 
         print(
-            f"{index}. {name} | "
-            f"#{number} | "
-            f"positionId={position_id} | "
-            f"rating={rating}"
+            f"{name} -> positionId={position_id}"
         )
 
     print()
-    print(f"SUBSTITUTES ({len(subs)}):")
 
-    for index, player in enumerate(subs, 1):
-        name = player.get("name")
-        number = player.get("shirtNumber")
+
+# --------------------------------------------------
+# جستجوی اطلاعات مربوط به positionId داخل کل JSON
+# --------------------------------------------------
+
+position_ids = set()
+
+for side in ["home", "away"]:
+
+    team_data = lineup.get(side, {})
+
+    for player in team_data.get("starters", []):
+
         position_id = player.get("positionId")
-        rating = player.get("performance", {}).get("rating")
 
-        print(
-            f"{index}. {name} | "
-            f"#{number} | "
-            f"positionId={position_id} | "
-            f"rating={rating}"
-        )
+        if position_id is not None:
+            position_ids.add(position_id)
 
 
-def main():
-    print("FOTMOB LINEUP TEST")
-    print("=" * 60)
-
-    print(f"Match ID: {MATCH_ID}")
-    print("Requesting FotMob...")
-
-    response = requests.get(
-        URL,
-        headers=HEADERS,
-        timeout=30
-    )
-
-    print(f"HTTP STATUS: {response.status_code}")
-
-    response.raise_for_status()
-
-    data = get_next_data(response.text)
-
-    if data is None:
-        print("ERROR: __NEXT_DATA__ NOT FOUND")
-        return
-
-    page_props = data.get("props", {}).get("pageProps", {})
-    general = page_props.get("general", {})
-    content = page_props.get("content", {})
-    lineup = content.get("lineup")
-
-    print("NEXT_DATA JSON OK")
-
-    print()
-    print(f"Match: {general.get('matchName')}")
-    print(f"Started: {general.get('started')}")
-    print(f"Finished: {general.get('finished')}")
-
-    if not lineup:
-        print()
-        print("LINEUP NOT AVAILABLE")
-        return
-
-    print()
-    print(f"Lineup type: {lineup.get('lineupType')}")
-    print(f"Source: {lineup.get('source')}")
-
-    home_team = lineup.get("homeTeam", {})
-    away_team = lineup.get("awayTeam", {})
-
-    print_team(home_team, "HOME TEAM")
-    print_team(away_team, "AWAY TEAM")
-
-    print()
-    print("=" * 60)
-    print("TEST FINISHED")
-    print("=" * 60)
+print("POSITION IDs FOUND:")
+print(sorted(position_ids))
+print()
 
 
-if __name__ == "__main__":
-    main()
+print("SEARCHING FOR POSITION DEFINITIONS...")
+print()
+
+
+# --------------------------------------------------
+# جستجوی هر positionId در ساختار JSON
+# --------------------------------------------------
+
+def search_position_ids(obj, path="root"):
+
+    if isinstance(obj, dict):
+
+        for key, value in obj.items():
+
+            # اگر کلید احتمالاً مربوط به position باشد
+            key_lower = str(key).lower()
+
+            if (
+                "position" in key_lower
+                or "role" in key_lower
+                or "formation" in key_lower
+            ):
+                text = str(value)
+
+                found = [
+                    pid for pid in position_ids
+                    if str(pid) in text
+                ]
+
+                if found:
+                    print(
+                        f"[FOUND] {path}.{key}"
+                    )
+                    print(
+                        f"  position IDs: {found}"
+                    )
+                    print(
+                        f"  value: {text[:500]}"
+                    )
+                    print()
+
+            search_position_ids(
+                value,
+                f"{path}.{key}"
+            )
+
+    elif isinstance(obj, list):
+
+        for index, value in enumerate(obj):
+
+            search_position_ids(
+                value,
+                f"{path}[{index}]"
+            )
+
+
+search_position_ids(data)
+
+
+print("TEST FINISHED")
