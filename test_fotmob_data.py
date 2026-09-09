@@ -5,8 +5,6 @@ import requests
 
 MATCH_ID = "6106242"
 
-URL = f"https://www.fotmob.com/match/{MATCH_ID}"
-
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (X11; Linux x86_64) "
@@ -48,13 +46,11 @@ def get_fotmob_data(match_id):
 
     response.raise_for_status()
 
-    html = response.text
-
     match = re.search(
         r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>'
         r'(.*?)'
         r'</script>',
-        html,
+        response.text,
         re.DOTALL,
     )
 
@@ -77,268 +73,695 @@ def get_page_props(data):
     return data["props"]["pageProps"]
 
 
+def get_general(page_props):
+    return page_props.get("general", {})
+
+
+def get_content(page_props):
+    return page_props.get("content", {})
+
+
+def get_team_name(team_data):
+    if not isinstance(team_data, dict):
+        return "نامشخص"
+
+    return team_data.get("name", "نامشخص")
+
+
+def get_player_name(player):
+    if not isinstance(player, dict):
+        return None
+
+    name = player.get("name")
+
+    if name:
+        return name
+
+    nested_player = player.get("player")
+
+    if isinstance(nested_player, dict):
+        return nested_player.get("name")
+
+    return None
+
+
+def get_player_number(player):
+    if not isinstance(player, dict):
+        return ""
+
+    return str(
+        player.get(
+            "shirtNumber",
+            "",
+        )
+    )
+
+
+def find_final_score(page_props):
+    header = page_props.get("header", {})
+
+    if isinstance(header, dict):
+
+        status = header.get("status", {})
+
+        if isinstance(status, dict):
+
+            score_str = status.get("scoreStr")
+
+            if isinstance(score_str, str):
+                if re.search(
+                    r"\d+\s*[-:]\s*\d+",
+                    score_str,
+                ):
+                    return score_str
+
+        teams = header.get("teams", [])
+
+        if isinstance(teams, list) and len(teams) >= 2:
+
+            scores = []
+
+            for team in teams[:2]:
+
+                if not isinstance(team, dict):
+                    continue
+
+                score = team.get("score")
+
+                if score is not None:
+                    scores.append(str(score))
+
+            if len(scores) == 2:
+                return f"{scores[0]} - {scores[1]}"
+
+    general = get_general(page_props)
+
+    for key in [
+        "scoreStr",
+        "score",
+        "scoreString",
+    ]:
+
+        value = general.get(key)
+
+        if isinstance(value, str):
+
+            if re.search(
+                r"\d+\s*[-:]\s*\d+",
+                value,
+            ):
+                return value
+
+    return None
+
+
+def get_events(page_props):
+    content = get_content(page_props)
+
+    match_facts = content.get(
+        "matchFacts",
+        {},
+    )
+
+    events_data = match_facts.get(
+        "events",
+        {},
+    )
+
+    events = events_data.get(
+        "events",
+        [],
+    )
+
+    if not isinstance(events, list):
+        return []
+
+    return events
+
+
+def get_event_time(event):
+    if not isinstance(event, dict):
+        return ""
+
+    time_str = event.get("timeStr")
+
+    if time_str is not None:
+        return str(time_str)
+
+    time = event.get("time")
+
+    if time is not None:
+        return str(time)
+
+    return ""
+
+
+def get_event_type(event):
+    if not isinstance(event, dict):
+        return ""
+
+    return (
+        event.get("type")
+        or event.get("eventType")
+        or ""
+    )
+
+
+def get_event_player(event):
+    if not isinstance(event, dict):
+        return None
+
+    return get_player_name(
+        event.get("player")
+    )
+
+
 def print_match_info(page_props):
-    general = page_props.get("general", {})
+    general = get_general(page_props)
 
-    home_team = general.get("homeTeam", {})
-    away_team = general.get("awayTeam", {})
+    home_team = general.get(
+        "homeTeam",
+        {},
+    )
 
-    home_name = home_team.get("name", "نامشخص")
-    away_name = away_team.get("name", "نامشخص")
+    away_team = general.get(
+        "awayTeam",
+        {},
+    )
+
+    home_name = get_team_name(home_team)
+    away_name = get_team_name(away_team)
 
     match_time = general.get(
         "matchTimeUTC",
         "نامشخص",
     )
 
-    started = general.get("started")
-    finished = general.get("finished")
+    started = general.get(
+        "started",
+        False,
+    )
+
+    finished = general.get(
+        "finished",
+        False,
+    )
 
     print("=" * 70)
     print("اطلاعات مسابقه")
     print("=" * 70)
 
-    print(f"مسابقه: {home_name} - {away_name}")
-    print(f"زمان: {match_time}")
-    print(f"شروع شده: {started}")
-    print(f"تمام شده: {finished}")
+    print(
+        f"مسابقه: "
+        f"{home_name} - {away_name}"
+    )
+
+    print(
+        f"زمان: {match_time}"
+    )
+
+    print(
+        f"شروع شده: {started}"
+    )
+
+    print(
+        f"تمام شده: {finished}"
+    )
+
     print()
 
 
-def find_score(obj):
-    if isinstance(obj, dict):
-
-        for key in [
-            "scoreStr",
-            "score",
-            "scoreString",
-        ]:
-            value = obj.get(key)
-
-            if isinstance(value, str):
-                if re.search(r"\d+\s*[-:]\s*\d+", value):
-                    return value
-
-        for value in obj.values():
-            result = find_score(value)
-
-            if result:
-                return result
-
-    elif isinstance(obj, list):
-
-        for value in obj:
-            result = find_score(value)
-
-            if result:
-                return result
-
-    return None
-
-
 def print_score(page_props):
+    score = find_final_score(
+        page_props
+    )
+
     print("=" * 70)
     print("نتیجه")
     print("=" * 70)
 
-    score = find_score(page_props)
-
     if score:
-        print(f"نتیجه: {score}")
+        print(
+            f"نتیجه: {score}"
+        )
     else:
-        print("❌ نتیجه پیدا نشد.")
+        print(
+            "❌ نتیجه پیدا نشد."
+        )
 
     print()
 
 
-def get_player_name(value):
-    if not isinstance(value, dict):
-        return None
+def print_goals(page_props):
+    events = get_events(page_props)
 
-    name = value.get("name")
-
-    if name:
-        return name
-
-    player = value.get("player")
-
-    if isinstance(player, dict):
-        name = player.get("name")
-
-        if name:
-            return name
-
-    return None
-
-
-def print_events(page_props):
-    content = page_props.get("content", {})
-    match_facts = content.get("matchFacts", {})
-
-    events_data = match_facts.get("events", {})
-    events = events_data.get("events", [])
+    goals = [
+        event
+        for event in events
+        if get_event_type(event) == "Goal"
+    ]
 
     print("=" * 70)
-    print("رویدادهای مسابقه")
+    print("گل‌ها")
     print("=" * 70)
 
-    print(f"تعداد رویدادها: {len(events)}")
-    print()
-
-    if not events:
-        print("❌ هیچ رویدادی پیدا نشد.")
+    if not goals:
+        print(
+            "هیچ گلی ثبت نشده."
+        )
         print()
         return
 
-    for index, event in enumerate(events, start=1):
+    for event in goals:
 
-        print(f"رویداد {index}:")
+        minute = get_event_time(event)
+        player = get_event_player(event)
 
-        if not isinstance(event, dict):
-            print()
-            continue
-
-        event_type = event.get(
-            "type",
-            event.get(
-                "eventType",
-                "نامشخص",
-            ),
+        print(
+            f"{minute}' "
+            f"{player or 'نامشخص'}"
         )
 
-        time = event.get(
-            "timeStr",
-            event.get(
-                "time",
-                "نامشخص",
-            ),
-        )
-
-        print(f"  نوع: {event_type}")
-        print(f"  دقیقه: {time}")
-
-        player = event.get("player")
-
-        player_name = get_player_name(player)
-
-        if player_name:
-            print(f"  بازیکن: {player_name}")
-
-        if "homeScore" in event:
-            print(
-                f"  نتیجه لحظه‌ای: "
-                f"{event.get('homeScore')} - "
-                f"{event.get('awayScore')}"
-            )
-
-        print()
+    print()
 
 
-def print_lineup_debug(page_props):
-    content = page_props.get("content", {})
-    lineup = content.get("lineup", {})
+def print_cards(page_props):
+    events = get_events(page_props)
+
+    cards = [
+        event
+        for event in events
+        if get_event_type(event) == "Card"
+    ]
 
     print("=" * 70)
-    print("بررسی ساختار ترکیب")
+    print("کارت‌ها")
+    print("=" * 70)
+
+    if not cards:
+        print(
+            "هیچ کارتی ثبت نشده."
+        )
+        print()
+        return
+
+    for event in cards:
+
+        minute = get_event_time(event)
+        player = get_event_player(event)
+
+        print(
+            f"{minute}' "
+            f"{player or 'نامشخص'}"
+        )
+
+    print()
+
+
+def get_lineup(page_props):
+    content = get_content(page_props)
+
+    return content.get(
+        "lineup",
+        {},
+    )
+
+
+def get_team_lineup(
+    lineup,
+    side,
+):
+    team_data = lineup.get(
+        side,
+        {},
+    )
+
+    if not isinstance(team_data, dict):
+        return {}, [], [], []
+
+    starters = team_data.get(
+        "starters",
+        [],
+    )
+
+    subs = team_data.get(
+        "subs",
+        [],
+    )
+
+    unavailable = team_data.get(
+        "unavailable",
+        [],
+    )
+
+    if not isinstance(starters, list):
+        starters = []
+
+    if not isinstance(subs, list):
+        subs = []
+
+    if not isinstance(unavailable, list):
+        unavailable = []
+
+    return (
+        team_data,
+        starters,
+        subs,
+        unavailable,
+    )
+
+
+def print_one_team_lineup(
+    title,
+    team_data,
+    starters,
+    subs,
+):
+    team_name = team_data.get(
+        "name",
+        "نامشخص",
+    )
+
+    formation = team_data.get(
+        "formation",
+        "نامشخص",
+    )
+
+    rating = team_data.get(
+        "rating",
+        "نامشخص",
+    )
+
+    print(title)
+    print("-" * 50)
+
+    print(
+        f"تیم: {team_name}"
+    )
+
+    print(
+        f"آرایش: {formation}"
+    )
+
+    print(
+        f"امتیاز تیم: {rating}"
+    )
+
+    print()
+
+    print("بازیکنان اصلی:")
+
+    if starters:
+
+        for player in starters:
+
+            name = get_player_name(
+                player
+            )
+
+            number = get_player_number(
+                player
+            )
+
+            if name:
+                print(
+                    f"  {number} | {name}"
+                )
+
+    else:
+
+        print(
+            "  ❌ بازیکنی پیدا نشد."
+        )
+
+    print()
+
+    print("نیمکت:")
+
+    if subs:
+
+        for player in subs:
+
+            name = get_player_name(
+                player
+            )
+
+            number = get_player_number(
+                player
+            )
+
+            if name:
+                print(
+                    f"  {number} | {name}"
+                )
+
+    else:
+
+        print(
+            "  ❌ بازیکنی پیدا نشد."
+        )
+
+    print()
+
+
+def print_lineups(page_props):
+    lineup = get_lineup(
+        page_props
+    )
+
+    print("=" * 70)
+    print("ترکیب و نیمکت")
     print("=" * 70)
 
     if not lineup:
-        print("❌ lineup پیدا نشد.")
+        print(
+            "❌ اطلاعات ترکیب پیدا نشد."
+        )
         print()
         return
 
-    print("کلیدهای اصلی lineup:")
-    print(list(lineup.keys()))
-    print()
+    (
+        home_team,
+        home_starters,
+        home_subs,
+        _,
+    ) = get_team_lineup(
+        lineup,
+        "homeTeam",
+    )
+
+    (
+        away_team,
+        away_starters,
+        away_subs,
+        _,
+    ) = get_team_lineup(
+        lineup,
+        "awayTeam",
+    )
+
+    print_one_team_lineup(
+        "تیم میزبان",
+        home_team,
+        home_starters,
+        home_subs,
+    )
+
+    print_one_team_lineup(
+        "تیم مهمان",
+        away_team,
+        away_starters,
+        away_subs,
+    )
+
+
+def get_substitution_events(
+    player,
+):
+    if not isinstance(player, dict):
+        return []
+
+    performance = player.get(
+        "performance",
+        {},
+    )
+
+    if not isinstance(
+        performance,
+        dict,
+    ):
+        return []
+
+    events = performance.get(
+        "substitutionEvents",
+        [],
+    )
+
+    if not isinstance(events, list):
+        return []
+
+    return events
+
+
+def collect_substitutions_for_team(
+    team_data,
+):
+    if not isinstance(team_data, dict):
+        return []
+
+    substitutions = []
+
+    starters = team_data.get(
+        "starters",
+        [],
+    )
+
+    subs = team_data.get(
+        "subs",
+        [],
+    )
+
+    if not isinstance(starters, list):
+        starters = []
+
+    if not isinstance(subs, list):
+        subs = []
+
+    for player in starters:
+
+        name = get_player_name(
+            player
+        )
+
+        number = get_player_number(
+            player
+        )
+
+        for event in get_substitution_events(
+            player
+        ):
+
+            if not isinstance(event, dict):
+                continue
+
+            if event.get("type") != "subOut":
+                continue
+
+            substitutions.append(
+                {
+                    "time": event.get(
+                        "time"
+                    ),
+                    "out": name,
+                    "out_number": number,
+                    "in": None,
+                    "in_number": "",
+                }
+            )
+
+    for player in subs:
+
+        name = get_player_name(
+            player
+        )
+
+        number = get_player_number(
+            player
+        )
+
+        for event in get_substitution_events(
+            player
+        ):
+
+            if not isinstance(event, dict):
+                continue
+
+            if event.get("type") != "subIn":
+                continue
+
+            time = event.get(
+                "time"
+            )
+
+            matching = None
+
+            for item in substitutions:
+
+                if (
+                    item.get("time") == time
+                    and item.get("in") is None
+                ):
+                    matching = item
+                    break
+
+            if matching:
+
+                matching["in"] = name
+                matching["in_number"] = number
+
+            else:
+
+                substitutions.append(
+                    {
+                        "time": time,
+                        "out": None,
+                        "out_number": "",
+                        "in": name,
+                        "in_number": number,
+                    }
+                )
+
+    substitutions.sort(
+        key=lambda item: (
+            item.get("time")
+            if isinstance(
+                item.get("time"),
+                int,
+            )
+            else 999
+        )
+    )
+
+    return substitutions
+
+
+def format_minute(value):
+    if value is None:
+        return "نامشخص"
+
+    return str(value)
+
+
+def print_substitutions(page_props):
+    lineup = get_lineup(
+        page_props
+    )
+
+    print("=" * 70)
+    print("تعویض‌ها")
+    print("=" * 70)
+
+    if not lineup:
+        print(
+            "❌ اطلاعات ترکیب پیدا نشد."
+        )
+        print()
+        return
 
     for side in [
         "homeTeam",
         "awayTeam",
     ]:
 
-        team_data = lineup.get(side)
+        team_data = lineup.get(
+            side,
+            {},
+        )
 
-        print("-" * 70)
-        print(side)
-        print("-" * 70)
-
-        if not isinstance(team_data, dict):
-            print("❌ اطلاعات تیم پیدا نشد.")
-            print()
-            continue
-
-        print("کلیدهای این تیم:")
-        print(list(team_data.keys()))
-        print()
-
-        for key, value in team_data.items():
-
-            if isinstance(value, list):
-
-                print(
-                    f"کلید '{key}': "
-                    f"لیست با {len(value)} مورد"
-                )
-
-                if value:
-
-                    first = value[0]
-
-                    if isinstance(first, dict):
-
-                        print(
-                            "کلیدهای اولین مورد:"
-                        )
-
-                        print(
-                            list(first.keys())
-                        )
-
-                        print()
-
-            elif isinstance(value, dict):
-
-                print(
-                    f"کلید '{key}': "
-                    f"دیکشنری"
-                )
-
-            else:
-
-                print(
-                    f"کلید '{key}': "
-                    f"{value}"
-                )
-
-        print()
-
-
-def print_lineups(page_props):
-    content = page_props.get("content", {})
-    lineup = content.get("lineup", {})
-
-    print("=" * 70)
-    print("ترکیب")
-    print("=" * 70)
-
-    if not lineup:
-        print("❌ اطلاعات ترکیب پیدا نشد.")
-        print()
-        return
-
-    for side, title in [
-        ("homeTeam", "ترکیب تیم میزبان"),
-        ("awayTeam", "ترکیب تیم مهمان"),
-    ]:
-
-        team_data = lineup.get(side, {})
-
-        print(title)
-        print("-" * 50)
-
-        if not isinstance(team_data, dict):
-            print("❌ اطلاعات تیم پیدا نشد.")
-            print()
+        if not isinstance(
+            team_data,
+            dict,
+        ):
             continue
 
         team_name = team_data.get(
@@ -346,207 +769,71 @@ def print_lineups(page_props):
             "نامشخص",
         )
 
-        print(f"تیم: {team_name}")
-        print()
-
-        starters = team_data.get(
-            "starters",
-            [],
-        )
-
-        substitutes = team_data.get(
-            "substitutes",
-            [],
-        )
-
-        print("بازیکنان اصلی:")
-
-        if starters:
-
-            for player in starters:
-
-                if not isinstance(player, dict):
-                    continue
-
-                name = get_player_name(player)
-
-                number = player.get(
-                    "shirtNumber",
-                    "",
-                )
-
-                position = player.get(
-                    "position",
-                    "",
-                )
-
-                print(
-                    f"  {number} | "
-                    f"{name or 'نامشخص'}"
-                    f"{' | ' + str(position) if position else ''}"
-                )
-
-        else:
-
-            print("  ❌ بازیکنی پیدا نشد.")
-
-        print()
-        print("بازیکنان نیمکت:")
-
-        if substitutes:
-
-            for player in substitutes:
-
-                if not isinstance(player, dict):
-                    continue
-
-                name = get_player_name(player)
-
-                number = player.get(
-                    "shirtNumber",
-                    "",
-                )
-
-                print(
-                    f"  {number} | "
-                    f"{name or 'نامشخص'}"
-                )
-
-        else:
-
-            print("  ❌ بازیکنی پیدا نشد.")
-
-        print()
-        print()
-
-
-def find_substitution_objects(obj, path="root"):
-    results = []
-
-    if isinstance(obj, dict):
-
-        for key, value in obj.items():
-
-            key_lower = str(key).lower()
-
-            if (
-                "substitution" in key_lower
-                or key_lower in [
-                    "subs",
-                    "substitutes",
-                ]
-            ):
-
-                if isinstance(value, list):
-
-                    for index, item in enumerate(value):
-
-                        if isinstance(item, dict):
-
-                            results.append(
-                                (
-                                    f"{path}.{key}[{index}]",
-                                    item,
-                                )
-                            )
-
-                elif isinstance(value, dict):
-
-                    results.append(
-                        (
-                            f"{path}.{key}",
-                            value,
-                        )
-                    )
-
-            results.extend(
-                find_substitution_objects(
-                    value,
-                    f"{path}.{key}",
-                )
+        substitutions = (
+            collect_substitutions_for_team(
+                team_data
             )
-
-    elif isinstance(obj, list):
-
-        for index, value in enumerate(obj):
-
-            results.extend(
-                find_substitution_objects(
-                    value,
-                    f"{path}[{index}]",
-                )
-            )
-
-    return results
-
-
-def print_substitution_debug(page_props):
-    content = page_props.get("content", {})
-
-    print("=" * 70)
-    print("بررسی ساختار تعویض‌ها")
-    print("=" * 70)
-
-    results = find_substitution_objects(
-        content
-    )
-
-    if not results:
-        print(
-            "❌ هیچ ساختار احتمالی برای "
-            "تعویض پیدا نشد."
-        )
-        print()
-        return
-
-    printed = set()
-
-    for path, obj in results:
-
-        signature = json.dumps(
-            obj,
-            ensure_ascii=False,
-            sort_keys=True,
         )
 
-        if signature in printed:
+        if not substitutions:
             continue
 
-        printed.add(signature)
-
-        print(f"مسیر: {path}")
-        print("ساختار:")
-
         print(
-            json.dumps(
-                obj,
-                ensure_ascii=False,
-                indent=2,
-            )
+            f"{team_name}:"
         )
 
-        print()
-        print("-" * 70)
+        for item in substitutions:
+
+            minute = format_minute(
+                item.get("time")
+            )
+
+            player_out = (
+                item.get("out")
+                or "نامشخص"
+            )
+
+            player_in = (
+                item.get("in")
+                or "نامشخص"
+            )
+
+            print(
+                f"  {minute}' "
+                f"خروج: {player_out} "
+                f"← ورود: {player_in}"
+            )
+
         print()
 
-        if len(printed) >= 20:
-            print(
-                "⚠️ برای جلوگیری از طولانی شدن "
-                "خروجی، بررسی متوقف شد."
-            )
-            break
+
+def extract_stat_value(stat):
+    if not isinstance(stat, dict):
+        return None
+
+    return stat.get(
+        "stats"
+    )
 
 
 def print_stats(page_props):
-    content = page_props.get("content", {})
-    stats_data = content.get("stats", {})
+    content = get_content(
+        page_props
+    )
+
+    stats_data = content.get(
+        "stats",
+        {},
+    )
 
     print("=" * 70)
-    print("آمار مسابقه")
+    print("آمار مهم مسابقه")
     print("=" * 70)
 
     if not stats_data:
-        print("❌ آمار پیدا نشد.")
+        print(
+            "❌ آمار پیدا نشد."
+        )
         print()
         return
 
@@ -565,56 +852,86 @@ def print_stats(page_props):
         [],
     )
 
-    if not groups:
-        print("❌ ساختار آمار پیدا نشد.")
+    if not isinstance(
+        groups,
+        list,
+    ):
+        print(
+            "❌ ساختار آمار پیدا نشد."
+        )
         print()
         return
 
+    preferred_stats = [
+        "Ball possession",
+        "Expected goals (xG)",
+        "Total shots",
+        "Shots on target",
+        "Touches in opposition box",
+        "Big chances",
+        "Big chances missed",
+        "Accurate passes",
+        "Yellow cards",
+        "Corners",
+    ]
+
+    found = {}
+
     for group in groups:
 
-        if not isinstance(group, dict):
+        if not isinstance(
+            group,
+            dict,
+        ):
             continue
-
-        title = group.get(
-            "title",
-            group.get(
-                "name",
-                "آمار",
-            ),
-        )
-
-        print(f"{title}:")
-        print("-" * 40)
 
         stats = group.get(
             "stats",
             [],
         )
 
-        if isinstance(stats, list):
+        if not isinstance(
+            stats,
+            list,
+        ):
+            continue
 
-            for stat in stats:
+        for stat in stats:
 
-                if not isinstance(stat, dict):
-                    continue
+            if not isinstance(
+                stat,
+                dict,
+            ):
+                continue
 
-                name = (
-                    stat.get("title")
-                    or stat.get("name")
-                    or stat.get("label")
-                    or "نامشخص"
-                )
+            name = (
+                stat.get("title")
+                or stat.get("name")
+                or stat.get("label")
+            )
 
-                values = stat.get(
-                    "stats",
-                    [],
-                )
+            if not name:
+                continue
 
-                print(
-                    f"  {name}: {values}"
-                )
+            if name in preferred_stats:
 
-        print()
+                if name not in found:
+                    found[name] = (
+                        extract_stat_value(
+                            stat
+                        )
+                    )
+
+    for name in preferred_stats:
+
+        if name in found:
+
+            print(
+                f"  {name}: "
+                f"{found[name]}"
+            )
+
+    print()
 
 
 def save_raw_data(data):
@@ -636,6 +953,7 @@ def save_raw_data(data):
     print(
         f"✅ داده خام در {filename} ذخیره شد."
     )
+
     print()
 
 
@@ -643,32 +961,50 @@ def main():
 
     try:
 
-        data = get_fotmob_data(MATCH_ID)
+        data = get_fotmob_data(
+            MATCH_ID
+        )
 
-        page_props = get_page_props(data)
+        page_props = get_page_props(
+            data
+        )
 
-        print()
-
-        print_match_info(page_props)
-
-        print_score(page_props)
-
-        print_events(page_props)
-
-        print_lineup_debug(page_props)
-
-        print_lineups(page_props)
-
-        print_substitution_debug(
+        print_match_info(
             page_props
         )
 
-        print_stats(page_props)
+        print_score(
+            page_props
+        )
 
-        save_raw_data(data)
+        print_goals(
+            page_props
+        )
+
+        print_cards(
+            page_props
+        )
+
+        print_lineups(
+            page_props
+        )
+
+        print_substitutions(
+            page_props
+        )
+
+        print_stats(
+            page_props
+        )
+
+        save_raw_data(
+            data
+        )
 
         print("=" * 70)
-        print("✅ تست با موفقیت تمام شد.")
+        print(
+            "✅ تست با موفقیت تمام شد."
+        )
         print("=" * 70)
 
     except Exception as error:
@@ -677,7 +1013,10 @@ def main():
         print("❌ خطا")
         print("=" * 70)
 
-        print(type(error).__name__)
+        print(
+            type(error).__name__
+        )
+
         print(error)
 
         raise
