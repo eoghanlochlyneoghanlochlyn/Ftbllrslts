@@ -24,3 +24,9 @@ jobs:
       - name: Run FotMob data test
         run: |
           python test_fotmob_data.py
+
+      - name: Upload raw FotMob data
+        uses: actions/upload-artifact@v4
+        with:
+          name: fotmob-match-data
+          path: fotmob_match_data.json
