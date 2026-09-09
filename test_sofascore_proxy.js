@@ -1,15 +1,15 @@
-import { SofascoreRepository } from "@devneonix/sofascore-api";
+import { SofascoreRepository } from "./sofascore-api/dist/index.js";
 
 const EVENT_ID = "15655701";
 
 async function main() {
-    console.log("🔎 تست پروژه DevNeonix");
+    console.log("🔎 تست پروژه DevNeonix SofaScore API");
     console.log("🆔 Event ID:", EVENT_ID);
     console.log();
 
     try {
         console.log("📦 دریافت اطلاعات کامل مسابقه...");
-        console.log("=" .repeat(80));
+        console.log("=".repeat(80));
 
         const fullData =
             await SofascoreRepository.getEventFullData(
@@ -26,9 +26,9 @@ async function main() {
         );
 
         console.log();
-        console.log("=" .repeat(80));
+        console.log("=".repeat(80));
         console.log("👥 دریافت ترکیب...");
-        console.log("=" .repeat(80));
+        console.log("=".repeat(80));
 
         const lineups =
             await SofascoreRepository.getLineups(
@@ -49,6 +49,7 @@ async function main() {
         console.error("❌ خطا:");
 
         if (error.response) {
+
             console.error(
                 "HTTP:",
                 error.response.status
@@ -61,10 +62,13 @@ async function main() {
                     2
                 )
             );
+
         } else {
+
             console.error(
                 error.message
             );
+
         }
 
         process.exit(1);
