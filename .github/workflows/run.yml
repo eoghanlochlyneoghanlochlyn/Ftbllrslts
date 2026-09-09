@@ -25,4 +25,4 @@ jobs:
 
       - name: Run Scraper Script
         run: |
-          python testg.py
+          python test_sofascore.py
