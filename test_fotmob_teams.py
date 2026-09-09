@@ -3,23 +3,7 @@ import requests
 from urllib.parse import quote
 
 
-TEAMS = [
-    "Liverpool",
-    "Arsenal",
-    "Manchester City",
-    "Manchester United",
-    "Chelsea",
-    "Tottenham Hotspur",
-    "Juventus",
-    "AC Milan",
-    "Inter Milan",
-    "Bayern Munich",
-    "Borussia Dortmund",
-    "PSG",
-    "Real Madrid",
-    "Barcelona",
-    "Atlético Madrid",
-]
+SEARCH_TERM = "Real Madrid"
 
 
 HEADERS = {
@@ -38,11 +22,21 @@ HEADERS = {
 }
 
 
-def search_fotmob(term):
+def main():
+
     url = (
         "https://www.fotmob.com/api/data/search/suggest"
-        f"?term={quote(term)}&hits=20&lang=en"
+        f"?term={quote(SEARCH_TERM)}&hits=20&lang=en"
     )
+
+    print("=" * 70)
+    print("تست جست‌وجوی فوت‌ماب")
+    print("=" * 70)
+
+    print()
+    print(f"جست‌وجو: {SEARCH_TERM}")
+    print(f"URL: {url}")
+    print()
 
     response = requests.get(
         url,
@@ -51,271 +45,107 @@ def search_fotmob(term):
     )
 
     print(
-        f"HTTP {response.status_code} | "
-        f"{term}"
+        f"HTTP Status: {response.status_code}"
     )
+
+    print(
+        f"Response Length: {len(response.text)}"
+    )
+
+    print()
 
     response.raise_for_status()
 
-    return response.json()
+    try:
 
+        data = response.json()
 
-def extract_results(data):
-    if isinstance(data, list):
-        return data
+    except Exception:
 
-    if not isinstance(data, dict):
-        return []
-
-    for key in [
-        "suggestions",
-        "results",
-        "data",
-    ]:
-        value = data.get(key)
-
-        if isinstance(value, list):
-            return value
-
-    return []
-
-
-def get_result_type(item):
-    if not isinstance(item, dict):
-        return ""
-
-    return (
-        item.get("type")
-        or item.get("entityType")
-        or item.get("category")
-        or ""
-    )
-
-
-def get_team_id(item):
-    if not isinstance(item, dict):
-        return None
-
-    for key in [
-        "id",
-        "teamId",
-    ]:
-        value = item.get(key)
-
-        if value is not None:
-            return value
-
-    team = item.get("team")
-
-    if isinstance(team, dict):
-        for key in [
-            "id",
-            "teamId",
-        ]:
-            value = team.get(key)
-
-            if value is not None:
-                return value
-
-    return None
-
-
-def get_team_name(item):
-    if not isinstance(item, dict):
-        return None
-
-    for key in [
-        "name",
-        "teamName",
-        "title",
-    ]:
-        value = item.get(key)
-
-        if value:
-            return value
-
-    team = item.get("team")
-
-    if isinstance(team, dict):
-        for key in [
-            "name",
-            "teamName",
-            "title",
-        ]:
-            value = team.get(key)
-
-            if value:
-                return value
-
-    return None
-
-
-def is_team_result(item):
-    result_type = str(
-        get_result_type(item)
-    ).lower()
-
-    if result_type in [
-        "team",
-        "club",
-    ]:
-        return True
-
-    if get_team_id(item) is not None:
-        return True
-
-    return False
-
-
-def find_team_results(data):
-    results = extract_results(data)
-
-    teams = []
-
-    for item in results:
-
-        if not is_team_result(item):
-            continue
-
-        team_id = get_team_id(item)
-        team_name = get_team_name(item)
-
-        if team_id is None:
-            continue
-
-        teams.append(
-            {
-                "id": team_id,
-                "name": team_name,
-                "type": get_result_type(item),
-            }
-        )
-
-    return teams
-
-
-def main():
-
-    print("=" * 70)
-    print("جست‌وجوی ۱۵ تیم در فوت‌ماب")
-    print("=" * 70)
-    print()
-
-    found_teams = {}
-
-    for search_name in TEAMS:
-
-        print("=" * 70)
         print(
-            f"جست‌وجو: {search_name}"
+            "❌ پاسخ JSON نیست."
         )
-        print("=" * 70)
-
-        try:
-
-            data = search_fotmob(
-                search_name
-            )
-
-            teams = find_team_results(
-                data
-            )
-
-            if not teams:
-
-                print(
-                    "❌ نتیجهٔ تیمی پیدا نشد."
-                )
-                print()
-                continue
-
-            print(
-                f"تعداد نتایج تیمی: "
-                f"{len(teams)}"
-            )
-            print()
-
-            for index, team in enumerate(
-                teams,
-                start=1,
-            ):
-
-                print(
-                    f"{index}. "
-                    f"{team['name']} "
-                    f"→ ID: {team['id']}"
-                )
-
-            best = teams[0]
-
-            found_teams[search_name] = {
-                "name": best["name"],
-                "id": best["id"],
-            }
-
-            print()
-            print(
-                "⭐ نتیجهٔ انتخاب‌شده:"
-            )
-            print(
-                f"{best['name']} "
-                f"→ {best['id']}"
-            )
-
-        except Exception as error:
-
-            print(
-                f"❌ خطا: {error}"
-            )
 
         print()
-
-    print("=" * 70)
-    print("خلاصهٔ نهایی")
-    print("=" * 70)
-    print()
-
-    for search_name in TEAMS:
-
-        result = found_teams.get(
-            search_name
+        print(
+            response.text[:5000]
         )
 
-        if result:
+        raise
 
+    print("✅ پاسخ JSON است.")
+    print()
+
+    print("=" * 70)
+    print("ساختار اصلی پاسخ")
+    print("=" * 70)
+
+    if isinstance(data, dict):
+
+        print(
+            "نوع: dict"
+        )
+
+        print(
+            "کلیدها:"
+        )
+
+        for key in data.keys():
             print(
-                f"{search_name:<24} "
-                f"→ {result['name']:<24} "
-                f"→ {result['id']}"
+                f"  - {key}"
             )
 
-        else:
+    elif isinstance(data, list):
 
-            print(
-                f"{search_name:<24} "
-                f"→ ❌ پیدا نشد"
-            )
+        print(
+            "نوع: list"
+        )
+
+        print(
+            f"تعداد عناصر: {len(data)}"
+        )
+
+    else:
+
+        print(
+            f"نوع پاسخ: {type(data).__name__}"
+        )
 
     print()
 
+    print("=" * 70)
+    print("پاسخ کامل JSON")
+    print("=" * 70)
+
+    print(
+        json.dumps(
+            data,
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
     with open(
-        "fotmob_teams.json",
+        "fotmob_search_raw.json",
         "w",
         encoding="utf-8",
     ) as file:
 
         json.dump(
-            found_teams,
+            data,
             file,
             ensure_ascii=False,
             indent=2,
         )
 
+    print()
+    print("=" * 70)
     print(
-        "✅ نتیجه در "
-        "fotmob_teams.json "
+        "✅ پاسخ خام در "
+        "fotmob_search_raw.json "
         "ذخیره شد."
     )
+    print("=" * 70)
 
 
 if __name__ == "__main__":
