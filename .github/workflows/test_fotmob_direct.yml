@@ -1,0 +1,32 @@
+name: Test Direct FotMob
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test FotMob matches
+        run: |
+          echo "===== FETCHING REAL MADRID vs INTER ====="
+
+          curl -L -i \
+            "https://www.fotmob.com/api/matches?date=20260908" \
+            -o /tmp/matches.txt
+
+          echo
+          echo "===== MATCHES RESPONSE ====="
+          cat /tmp/matches.txt
+
+      - name: Test FotMob match details
+        run: |
+          echo
+          echo "===== FETCHING MATCH DETAILS ====="
+
+          curl -L -i \
+            "https://www.fotmob.com/api/matchDetails?matchId=6106242"
