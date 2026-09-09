@@ -122,4 +122,4 @@ jobs:
           echo "===== FETCHING MATCH DETAILS ====="
 
           curl -i \
-            "http://localhost:3001/api/fotmob/match/$MATCH_ID"
+            "http://localhost:3001/api/match/$MATCH_ID"
