@@ -11,20 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Checkout repository
+      - name: Checkout our repository
         uses: actions/checkout@v4
+
+      - name: Checkout DevNeonix SofaScore API
+        uses: actions/checkout@v4
+        with:
+          repository: DevNeonix/sofascore-api
+          path: sofascore-api
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install DevNeonix SofaScore API
-        run: |
-          npm init -y
-          npm install @devneonix/sofascore-api
+      - name: Install dependencies
+        working-directory: sofascore-api
+        run: npm install
 
-      - name: Run SofaScore Test
-        run: |
-          node test_sofascore_proxy.js
+      - name: Build DevNeonix SofaScore API
+        working-directory: sofascore-api
+        run: npm run build
+
+      - name: Run SofaScore test
+        run: node test_sofascore_proxy.js
