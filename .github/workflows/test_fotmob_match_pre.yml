@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -17,7 +17,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install requests
-        run: pip install requests
+        run: python -m pip install requests
 
-      - name: Run test
-        run: python test_fotmob_match_pre.py
+      - name: Check files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Files:"
+          ls -la
+
+      - name: Run Python test
+        run: python -u test_fotmob_match_pre.py
