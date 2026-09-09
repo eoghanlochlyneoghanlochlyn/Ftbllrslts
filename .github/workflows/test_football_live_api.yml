@@ -1,4 +1,4 @@
-name: Test Football Live API
+name: Test Real Madrid vs Inter
 
 on:
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
           echo "Waiting for API..."
 
           for i in {1..30}; do
-            if curl -s http://localhost:3001/ > /tmp/test.json; then
+            if curl -s http://localhost:3001/ > /tmp/root.json; then
               echo "API is responding."
               break
             fi
@@ -56,10 +56,70 @@ jobs:
 
           echo
           echo "===== ROOT RESPONSE ====="
-          cat /tmp/test.json
+          cat /tmp/root.json
 
           echo
-          echo "===== MATCHES TEST ====="
+          echo "===== FETCHING MATCHES FOR 2026-09-08 ====="
+
+          curl -s \
+            "http://localhost:3001/api/fotmob/matches/date/2026-09-08" \
+            > /tmp/matches.json
+
+          echo
+          echo "===== SEARCHING FOR REAL MADRID vs INTER ====="
+
+          MATCH=$(python -c "
+          import json
+
+          with open('/tmp/matches.json', 'r', encoding='utf-8') as f:
+              data = json.load(f)
+
+          found = None
+
+          for league in data.get('data', {}).get('leagues', []):
+              for match in league.get('matches', []):
+                  home = match.get('home', {}).get('name', '')
+                  away = match.get('away', {}).get('name', '')
+
+                  if (
+                      ('Real Madrid' in home and 'Inter' in away)
+                      or
+                      ('Inter' in home and 'Real Madrid' in away)
+                  ):
+                      found = match
+                      break
+
+              if found:
+                  break
+
+          if found:
+              print(json.dumps(found, ensure_ascii=False, indent=2))
+          else:
+              print('MATCH_NOT_FOUND')
+          ")
+
+          echo "$MATCH"
+
+          if [ "$MATCH" = "MATCH_NOT_FOUND" ]; then
+            echo
+            echo "❌ Real Madrid vs Inter was not found."
+            exit 1
+          fi
+
+          MATCH_ID=$(echo "$MATCH" | python -c "
+          import sys
+          import json
+
+          data = json.load(sys.stdin)
+          print(data['id'])
+          ")
+
+          echo
+          echo "===== MATCH ID ====="
+          echo "$MATCH_ID"
+
+          echo
+          echo "===== FETCHING MATCH DETAILS ====="
 
           curl -i \
-            "http://localhost:3001/api/fotmob/matches/date/2026-09-09"
+            "http://localhost:3001/api/fotmob/match/$MATCH_ID"
