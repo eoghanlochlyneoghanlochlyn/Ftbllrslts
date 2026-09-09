@@ -1,321 +1,222 @@
 import json
 import requests
-from urllib.parse import quote
+from datetime import datetime, timezone
 
 
-TEAMS = [
-    "Liverpool",
-    "Arsenal",
-    "Manchester City",
-    "Manchester United",
-    "Chelsea",
-    "Tottenham Hotspur",
-    "Juventus",
-    "AC Milan",
-    "Inter Milan",
-    "Bayern Munich",
-    "Borussia Dortmund",
-    "PSG",
-    "Real Madrid",
-    "Barcelona",
-    "Atlético Madrid",
-]
+# ============================================================
+# تنظیمات
+# ============================================================
 
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (X11; Linux x86_64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/140.0.0.0 Safari/537.36"
-    ),
-    "Accept": (
-        "text/html,application/xhtml+xml,"
-        "application/xml;q=0.9,image/avif,image/webp,"
-        "*/*;q=0.8"
-    ),
-    "Accept-Language": "en-US,en;q=0.9",
-    "Referer": "https://www.fotmob.com/",
+TEAMS = {
+    "Liverpool": 8650,
+    "Arsenal": 9825,
+    "Manchester City": 8456,
+    "Manchester United": 10260,
+    "Chelsea": 8455,
+    "Tottenham Hotspur": 8586,
+    "Juventus": 9885,
+    "AC Milan": 8564,
+    "Inter Milan": 8636,
+    "Bayern Munich": 9823,
+    "Borussia Dortmund": 9789,
+    "PSG": 9847,
+    "Real Madrid": 8633,
+    "Barcelona": 8634,
+    "Atlético Madrid": 9906,
 }
 
 
-def search_fotmob(term):
+# ============================================================
+# دریافت مسابقات فوت‌ماب
+# ============================================================
+
+def get_matches(date_string):
     url = (
-        "https://www.fotmob.com/api/data/search/suggest"
-        f"?term={quote(term)}&hits=20&lang=en"
+        "https://www.fotmob.com/api/data/matches"
+        f"?date={date_string}"
     )
+
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/140.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://www.fotmob.com/",
+    }
+
+    print(f"🌐 درخواست به فوت‌ماب:")
+    print(url)
+    print()
 
     response = requests.get(
         url,
-        headers=HEADERS,
-        timeout=30,
+        headers=headers,
+        timeout=30
     )
 
-    print(
-        f"HTTP {response.status_code} | {term}"
-    )
+    print(f"📡 HTTP Status: {response.status_code}")
+    print()
 
     response.raise_for_status()
 
     return response.json()
 
 
-def extract_team_suggestions(data):
-    teams = []
+# ============================================================
+# پیدا کردن بازی‌های تیم‌های موردنظر
+# ============================================================
 
-    if not isinstance(data, list):
-        return teams
+def find_target_matches(data):
+    found_matches = []
 
-    for section in data:
+    leagues = data.get("leagues", [])
 
-        if not isinstance(section, dict):
-            continue
+    print(f"🏆 تعداد لیگ‌ها: {len(leagues)}")
+    print()
 
-        suggestions = section.get(
-            "suggestions",
-            [],
-        )
+    for league in leagues:
 
-        if not isinstance(suggestions, list):
-            continue
+        league_name = league.get("name", "Unknown League")
 
-        for item in suggestions:
+        matches = league.get("matches", [])
 
-            if not isinstance(item, dict):
-                continue
+        for match in matches:
 
-            if item.get("type") != "team":
-                continue
+            home = match.get("home", {})
+            away = match.get("away", {})
 
-            team_id = item.get("id")
-            team_name = item.get("name")
+            home_id = home.get("id")
+            away_id = away.get("id")
 
-            if team_id is None:
-                continue
+            if home_id in TEAMS.values() or away_id in TEAMS.values():
 
-            if not team_name:
-                continue
+                found_matches.append({
+                    "league": league_name,
+                    "match_id": match.get("id"),
+                    "home": home.get("name"),
+                    "home_id": home_id,
+                    "away": away.get("name"),
+                    "away_id": away_id,
+                    "status": match.get("status"),
+                    "finished": match.get("status", {}).get("finished"),
+                    "started": match.get("status", {}).get("started"),
+                    "utc_time": match.get("status", {}).get("utcTime"),
+                })
 
-            teams.append(
-                {
-                    "id": str(team_id),
-                    "name": team_name,
-                    "score": item.get(
-                        "score",
-                        0,
-                    ),
-                    "league_id": item.get(
-                        "leagueId"
-                    ),
-                    "league_name": item.get(
-                        "leagueName"
-                    ),
-                }
-            )
-
-    return teams
+    return found_matches
 
 
-def choose_best_team(
-    search_name,
-    teams,
-):
-    if not teams:
-        return None
+# ============================================================
+# نمایش نتیجه
+# ============================================================
 
-    search_name_lower = (
-        search_name.strip().lower()
-    )
-
-    exact_matches = [
-        team
-        for team in teams
-        if team["name"].strip().lower()
-        == search_name_lower
-    ]
-
-    if exact_matches:
-
-        exact_matches.sort(
-            key=lambda team: team.get(
-                "score",
-                0,
-            ),
-            reverse=True,
-        )
-
-        return exact_matches[0]
-
-    teams.sort(
-        key=lambda team: team.get(
-            "score",
-            0,
-        ),
-        reverse=True,
-    )
-
-    return teams[0]
-
-
-def main():
+def print_matches(matches):
 
     print("=" * 70)
-    print("پیدا کردن شناسهٔ ۱۵ تیم در فوت‌ماب")
+    print("⚽ بازی‌های تیم‌های موردنظر")
     print("=" * 70)
     print()
 
-    found_teams = {}
+    if not matches:
+        print("❌ هیچ بازی‌ای برای تیم‌های موردنظر پیدا نشد.")
+        return
 
-    for search_name in TEAMS:
+    print(f"✅ تعداد بازی‌های پیدا شده: {len(matches)}")
+    print()
 
-        print("=" * 70)
+    for index, match in enumerate(matches, 1):
+
+        print(f"--- بازی {index} ---")
+
+        print(f"🏆 لیگ: {match['league']}")
+
         print(
-            f"جست‌وجو: {search_name}"
+            f"⚽ بازی: "
+            f"{match['home']} vs {match['away']}"
         )
-        print("=" * 70)
 
-        try:
+        print(f"🆔 Match ID: {match['match_id']}")
 
-            data = search_fotmob(
-                search_name
-            )
+        print(f"🕐 زمان UTC: {match['utc_time']}")
 
-            teams = extract_team_suggestions(
-                data
-            )
+        print(f"▶️ شروع شده: {match['started']}")
 
-            if not teams:
-
-                print(
-                    "❌ هیچ تیمی پیدا نشد."
-                )
-                print()
-
-                continue
-
-            print(
-                f"تعداد نتایج تیمی: "
-                f"{len(teams)}"
-            )
-            print()
-
-            print("نتایج:")
-
-            for index, team in enumerate(
-                teams,
-                start=1,
-            ):
-
-                print(
-                    f"  {index}. "
-                    f"{team['name']} "
-                    f"→ ID: {team['id']} "
-                    f"| لیگ: "
-                    f"{team['league_name']}"
-                )
-
-            best_team = choose_best_team(
-                search_name,
-                teams,
-            )
-
-            if best_team is None:
-
-                print(
-                    "❌ انتخاب تیم ناموفق بود."
-                )
-
-                print()
-
-                continue
-
-            found_teams[search_name] = {
-                "id": best_team["id"],
-                "name": best_team["name"],
-                "league_id": best_team[
-                    "league_id"
-                ],
-                "league_name": best_team[
-                    "league_name"
-                ],
-            }
-
-            print()
-            print(
-                "⭐ تیم انتخاب‌شده:"
-            )
-
-            print(
-                f"  {best_team['name']} "
-                f"→ ID: {best_team['id']}"
-            )
-
-            print(
-                f"  لیگ: "
-                f"{best_team['league_name']}"
-            )
-
-        except Exception as error:
-
-            print(
-                f"❌ خطا: {error}"
-            )
+        print(f"🏁 تمام شده: {match['finished']}")
 
         print()
 
-    print("=" * 70)
-    print("خلاصهٔ نهایی")
-    print("=" * 70)
-    print()
 
-    for search_name in TEAMS:
+# ============================================================
+# ذخیره نتیجه در فایل JSON
+# ============================================================
 
-        team = found_teams.get(
-            search_name
-        )
-
-        if team:
-
-            print(
-                f"{search_name:<24} "
-                f"→ {team['name']:<24} "
-                f"→ ID: {team['id']}"
-            )
-
-        else:
-
-            print(
-                f"{search_name:<24} "
-                f"→ ❌ پیدا نشد"
-            )
-
-    print()
+def save_results(matches):
 
     with open(
-        "fotmob_teams.json",
+        "fotmob_matches.json",
         "w",
-        encoding="utf-8",
+        encoding="utf-8"
     ) as file:
 
         json.dump(
-            found_teams,
+            matches,
             file,
             ensure_ascii=False,
-            indent=2,
+            indent=2
         )
 
-    print(
-        "✅ نتیجه در "
-        "fotmob_teams.json "
-        "ذخیره شد."
-    )
+    print("💾 نتیجه در فایل fotmob_matches.json ذخیره شد.")
 
+
+# ============================================================
+# اجرای اصلی
+# ============================================================
+
+def main():
+
+    # تاریخ امروز به وقت UTC
+    today = datetime.now(timezone.utc).strftime("%Y%m%d")
+
+    print("=" * 70)
+    print("🔎 تست پیدا کردن مسابقات فوت‌ماب")
+    print("=" * 70)
     print()
-    print("=" * 70)
-    print(
-        f"تعداد تیم‌های پیدا شده: "
-        f"{len(found_teams)} از {len(TEAMS)}"
-    )
-    print("=" * 70)
+
+    print(f"📅 تاریخ مورد بررسی: {today}")
+    print()
+
+    try:
+
+        data = get_matches(today)
+
+        print("✅ اطلاعات مسابقات دریافت شد.")
+        print()
+
+        matches = find_target_matches(data)
+
+        print_matches(matches)
+
+        save_results(matches)
+
+        print()
+        print("=" * 70)
+        print("✅ تست با موفقیت تمام شد.")
+        print("=" * 70)
+
+    except requests.exceptions.RequestException as error:
+
+        print()
+        print("❌ خطا در درخواست به فوت‌ماب:")
+        print(error)
+
+    except Exception as error:
+
+        print()
+        print("❌ خطای غیرمنتظره:")
+        print(error)
 
 
 if __name__ == "__main__":
