@@ -12,7 +12,7 @@ HEADERS = {
 
 
 print("=" * 60)
-print("🔎 TEST FOTMOB LINEUP")
+print("🔎 TEST FOTMOB MATCH DATA")
 print("=" * 60)
 print()
 
@@ -28,20 +28,21 @@ response = requests.get(
     timeout=30
 )
 
-print("📡 HTTP STATUS:", response.status_code)
+print("HTTP STATUS:", response.status_code)
+print("HTML LENGTH:", len(response.text))
+print()
 
 response.raise_for_status()
 
-print("📏 HTML LENGTH:", len(response.text))
-print()
+html = response.text
 
 # ============================================================
-# استخراج __NEXT_DATA__
+# استخراج NEXT_DATA
 # ============================================================
 
 marker = '<script id="__NEXT_DATA__" type="application/json">'
 
-start = response.text.find(marker)
+start = html.find(marker)
 
 if start == -1:
     print("❌ NEXT_DATA NOT FOUND")
@@ -49,21 +50,21 @@ if start == -1:
 
 start += len(marker)
 
-end = response.text.find("</script>", start)
+end = html.find("</script>", start)
 
 if end == -1:
     print("❌ NEXT_DATA END NOT FOUND")
     raise SystemExit(1)
 
-raw_json = response.text[start:end]
+raw_json = html[start:end]
 
 data = json.loads(raw_json)
 
-print("✅ JSON OK")
+print("✅ NEXT_DATA JSON OK")
 print()
 
 # ============================================================
-# دسترسی به اطلاعات مسابقه
+# اطلاعات اصلی
 # ============================================================
 
 page_props = (
@@ -76,112 +77,52 @@ general = page_props.get("general", {})
 
 content = page_props.get("content", {})
 
-lineup = content.get("lineup")
-
-# ============================================================
-# اطلاعات اصلی بازی
-# ============================================================
-
 print("=" * 60)
 print("⚽ MATCH")
 print("=" * 60)
 
 print("Match ID:", general.get("matchId"))
 print("Match:", general.get("matchName"))
-print("League:", general.get("leagueName"))
-print("Time:", general.get("matchTimeUTC"))
 print("Started:", general.get("started"))
 print("Finished:", general.get("finished"))
-print("Coverage:", general.get("coverageLevel"))
 
 print()
 
 # ============================================================
-# بررسی وجود ترکیب
+# بررسی lineup
 # ============================================================
+
+lineup = content.get("lineup")
 
 print("=" * 60)
 print("👥 LINEUP")
 print("=" * 60)
 
-if lineup is None:
+if not lineup:
 
-    print("❌ LINEUP NOT AVAILABLE")
+    print("❌ NO LINEUP")
 
 else:
 
-    print("Lineup available: YES")
-    print()
-
-    # --------------------------------------------------------
-    # اطلاعات کلی ترکیب
-    # --------------------------------------------------------
-
-    print("Lineup ID:", lineup.get("matchId"))
     print("Lineup type:", lineup.get("lineupType"))
     print("Source:", lineup.get("source"))
-
     print()
 
-    # --------------------------------------------------------
-    # فیلترهای موجود
-    # --------------------------------------------------------
-
-    print("Available filters:")
-
-    filters = lineup.get("availableFilters")
-
-    if filters:
-
-        print(filters)
-
-    else:
-
-        print("None")
-
-    print()
+    home = lineup.get("homeTeam", {})
+    away = lineup.get("awayTeam", {})
 
     # --------------------------------------------------------
     # تیم میزبان
     # --------------------------------------------------------
 
-    home = lineup.get("homeTeam")
+    print("HOME:", home.get("name"))
+    print("HOME FORMATION:", home.get("formation"))
 
-    print("=" * 60)
-    print("🏠 HOME TEAM")
-    print("=" * 60)
+    starters = home.get("starters", [])
+    subs = home.get("subs", [])
 
-    if home:
-
-        print("Team:", home.get("name"))
-        print("Team ID:", home.get("id"))
-        print()
-
-        print("Keys:")
-
-        for key in home.keys():
-            print(" -", key)
-
-        print()
-
-        # چاپ اطلاعات بازیکنان
-        players = home.get("players")
-
-        if players:
-
-            print("Players:")
-
-            for player in players:
-
-                print(player)
-
-        else:
-
-            print("Players: NONE")
-
-    else:
-
-        print("HOME TEAM DATA NOT AVAILABLE")
+    print("HOME STARTERS:", len(starters))
+    print("HOME SUBS:", len(subs))
 
     print()
 
@@ -189,49 +130,62 @@ else:
     # تیم مهمان
     # --------------------------------------------------------
 
-    away = lineup.get("awayTeam")
+    print("AWAY:", away.get("name"))
+    print("AWAY FORMATION:", away.get("formation"))
 
-    print("=" * 60)
-    print("✈️ AWAY TEAM")
-    print("=" * 60)
+    starters = away.get("starters", [])
+    subs = away.get("subs", [])
 
-    if away:
+    print("AWAY STARTERS:", len(starters))
+    print("AWAY SUBS:", len(subs))
 
-        print("Team:", away.get("name"))
-        print("Team ID:", away.get("id"))
-        print()
+print()
 
-        print("Keys:")
+# ============================================================
+# جستجوی عبارت های مربوط به lineup در HTML
+# ============================================================
 
-        for key in away.keys():
-            print(" -", key)
+print("=" * 60)
+print("🔍 SEARCHING HTML FOR LINEUP DATA")
+print("=" * 60)
 
-        print()
+keywords = [
+    "lineupType",
+    "starters",
+    "substitutes",
+    "bench",
+    "predicted",
+    "standard"
+]
 
-        # چاپ اطلاعات بازیکنان
-        players = away.get("players")
+for keyword in keywords:
 
-        if players:
+    count = html.count(keyword)
 
-            print("Players:")
+    print(f"{keyword}: {count}")
 
-            for player in players:
+print()
 
-                print(player)
+# ============================================================
+# ذخیره HTML
+# ============================================================
 
-        else:
+with open(
+    "fotmob_match_page.html",
+    "w",
+    encoding="utf-8"
+) as f:
 
-            print("Players: NONE")
+    f.write(html)
 
-    else:
+print("💾 HTML SAVED: fotmob_match_page.html")
 
-        print("AWAY TEAM DATA NOT AVAILABLE")
+print()
 
 # ============================================================
 # پایان
 # ============================================================
 
-print()
 print("=" * 60)
 print("✅ TEST FINISHED")
 print("=" * 60)
