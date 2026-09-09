@@ -50,10 +50,6 @@ def get_fotmob_data(match_id):
 
     html = response.text
 
-    # ---------------------------------------------------------
-    # پیدا کردن __NEXT_DATA__
-    # ---------------------------------------------------------
-
     match = re.search(
         r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>'
         r'(.*?)'
@@ -113,13 +109,8 @@ def print_match_info(page_props):
 
 
 def find_score(obj):
-    """
-    پیدا کردن score در ساختار داده فوت‌ماب.
-    """
-
     if isinstance(obj, dict):
 
-        # حالت‌های رایج
         for key in [
             "scoreStr",
             "score",
@@ -131,7 +122,6 @@ def find_score(obj):
                 if re.search(r"\d+\s*[-:]\s*\d+", value):
                     return value
 
-        # جستجوی بازگشتی
         for value in obj.values():
             result = find_score(value)
 
@@ -189,7 +179,6 @@ def print_events(page_props):
 
         if isinstance(event, dict):
 
-            # فقط اطلاعات مهم را چاپ می‌کنیم
             for key in [
                 "type",
                 "eventType",
@@ -208,6 +197,83 @@ def print_events(page_props):
                     print(
                         f"  {key}: {event[key]}"
                     )
+
+        print()
+
+
+def print_lineup_debug(page_props):
+    content = page_props.get("content", {})
+    lineup = content.get("lineup", {})
+
+    print("=" * 70)
+    print("DEBUG LINEUP STRUCTURE")
+    print("=" * 70)
+
+    if not lineup:
+        print("❌ lineup خالی است.")
+        print()
+        return
+
+    print("کلیدهای اصلی lineup:")
+    print(list(lineup.keys()))
+    print()
+
+    for side in [
+        "homeTeam",
+        "awayTeam",
+    ]:
+
+        team_data = lineup.get(side, {})
+
+        print("-" * 70)
+        print(side)
+        print("-" * 70)
+
+        if not isinstance(team_data, dict):
+            print("❌ اطلاعات تیم ساختار دیکشنری ندارد.")
+            print()
+            continue
+
+        print("کلیدهای تیم:")
+        print(list(team_data.keys()))
+        print()
+
+        for key, value in team_data.items():
+
+            if isinstance(value, list):
+
+                print(
+                    f"کلید '{key}': "
+                    f"لیست با {len(value)} مورد"
+                )
+
+                if value:
+
+                    print("اولین مورد این لیست:")
+
+                    print(
+                        json.dumps(
+                            value[0],
+                            ensure_ascii=False,
+                            indent=2,
+                        )
+                    )
+
+                    print()
+
+            elif isinstance(value, dict):
+
+                print(
+                    f"کلید '{key}': "
+                    f"دیکشنری با {len(value)} کلید"
+                )
+
+            else:
+
+                print(
+                    f"کلید '{key}': "
+                    f"{value}"
+                )
 
         print()
 
@@ -256,6 +322,7 @@ def print_lineups(page_props):
         print("بازیکنان اصلی:")
 
         if starters:
+
             for player in starters:
 
                 if not isinstance(player, dict):
@@ -283,12 +350,14 @@ def print_lineups(page_props):
                 )
 
         else:
+
             print("  ❌ بازیکنی پیدا نشد.")
 
         print()
         print("بازیکنان نیمکت:")
 
         if substitutes:
+
             for player in substitutes:
 
                 if not isinstance(player, dict):
@@ -310,6 +379,7 @@ def print_lineups(page_props):
                 )
 
         else:
+
             print("  ❌ بازیکنی پیدا نشد.")
 
         print()
@@ -389,17 +459,9 @@ def print_stats(page_props):
                     [],
                 )
 
-                if isinstance(values, list):
-
-                    print(
-                        f"  {name}: {values}"
-                    )
-
-                else:
-
-                    print(
-                        f"  {name}: {values}"
-                    )
+                print(
+                    f"  {name}: {values}"
+                )
 
         print()
 
@@ -441,6 +503,8 @@ def main():
         print_score(page_props)
 
         print_events(page_props)
+
+        print_lineup_debug(page_props)
 
         print_lineups(page_props)
 
