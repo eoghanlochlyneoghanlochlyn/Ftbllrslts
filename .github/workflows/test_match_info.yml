@@ -24,4 +24,4 @@ jobs:
           TELEGRAMBOT: ${{ secrets.TELEGRAMBOT }}
           TELEGRAMCHANNEL: ${{ secrets.TELEGRAMCHANNEL }}
         run: |
-          python telegram_test.py
+          python test_match_info.py
