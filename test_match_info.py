@@ -29,52 +29,31 @@ def get_next_data(html):
     return json.loads(match.group(1))
 
 
-def print_player(player, number):
-    name = player.get("name", "Unknown")
-    shirt_number = player.get("shirtNumber")
-    position_id = player.get("positionId")
-    rating = None
+def inspect_structure(obj, path=""):
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            current_path = f"{path}.{key}" if path else key
 
-    performance = player.get("performance")
+            if isinstance(value, list):
+                print(
+                    f"LIST  | {current_path} | "
+                    f"items={len(value)}"
+                )
 
-    if isinstance(performance, dict):
-        rating = performance.get("rating")
+                if value and isinstance(value[0], dict):
+                    print(
+                        f"       first item keys: "
+                        f"{list(value[0].keys())}"
+                    )
 
-    print(
-        f"{number}. {name}"
-        f" | #{shirt_number}"
-        f" | positionId={position_id}"
-        f" | rating={rating}"
-    )
+            elif isinstance(value, dict):
+                print(f"DICT  | {current_path}")
 
-
-def print_team(team, label):
-    print()
-    print("=" * 60)
-    print(label)
-    print("=" * 60)
-
-    print(f"Team: {team.get('name')}")
-    print(f"Formation: {team.get('formation')}")
-
-    starters = team.get("starters", [])
-    substitutes = team.get("substitutes", [])
-
-    print()
-    print(f"STARTERS ({len(starters)}):")
-
-    for index, player in enumerate(starters, start=1):
-        print_player(player, index)
-
-    print()
-    print(f"SUBSTITUTES ({len(substitutes)}):")
-
-    for index, player in enumerate(substitutes, start=1):
-        print_player(player, index)
+                inspect_structure(value, current_path)
 
 
 def main():
-    print("FOTMOB LINEUP TEST")
+    print("FOTMOB LINEUP STRUCTURE TEST")
     print("=" * 60)
 
     print(f"Match ID: {MATCH_ID}")
@@ -111,62 +90,42 @@ def main():
 
     try:
         page_props = data["props"]["pageProps"]
+        content = page_props["content"]
+        lineup = content["lineup"]
     except (KeyError, TypeError):
         print()
-        print("PAGE PROPS NOT FOUND")
+        print("LINEUP STRUCTURE NOT FOUND")
         return
-
-    general = page_props.get("general", {})
-    header = page_props.get("header", {})
-    content = page_props.get("content", {})
 
     print()
     print("=" * 60)
-    print("MATCH INFORMATION")
+    print("LINEUP TOP-LEVEL KEYS")
     print("=" * 60)
 
-    print(f"Match ID: {general.get('matchId')}")
-    print(f"Match name: {general.get('matchName')}")
-    print(f"League: {general.get('leagueName')}")
-    print(f"Time: {general.get('matchTime')}")
-    print(f"Started: {general.get('started')}")
-    print(f"Finished: {general.get('finished')}")
-
-    lineup = content.get("lineup")
-
-    print()
-    print("=" * 60)
-    print("LINEUP INFORMATION")
-    print("=" * 60)
-
-    if not lineup:
-        print("LINEUP NOT AVAILABLE")
-        return
-
-    print("Lineup available: YES")
-    print(f"Lineup ID: {lineup.get('matchId')}")
-    print(f"Lineup type: {lineup.get('lineupType')}")
-    print(f"Source: {lineup.get('source')}")
-
-    available_filters = lineup.get("availableFilters")
-
-    if available_filters:
-        print(f"Available filters: {available_filters}")
+    print(list(lineup.keys()))
 
     home_team = lineup.get("homeTeam")
     away_team = lineup.get("awayTeam")
 
-    if not home_team:
+    for label, team in [
+        ("HOME TEAM", home_team),
+        ("AWAY TEAM", away_team),
+    ]:
         print()
-        print("HOME TEAM DATA NOT FOUND")
-    else:
-        print_team(home_team, "HOME TEAM")
+        print("=" * 60)
+        print(label)
+        print("=" * 60)
 
-    if not away_team:
+        if not team:
+            print("TEAM DATA NOT FOUND")
+            continue
+
+        print("TEAM KEYS:")
+        print(list(team.keys()))
+
         print()
-        print("AWAY TEAM DATA NOT FOUND")
-    else:
-        print_team(away_team, "AWAY TEAM")
+        print("STRUCTURE:")
+        inspect_structure(team)
 
     print()
     print("=" * 60)
