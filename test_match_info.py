@@ -34,7 +34,7 @@ HEADERS = {
 }
 
 
-unique_ids = set()
+positions = {}
 
 
 print("TEST STARTED")
@@ -42,57 +42,41 @@ print("TEST STARTED")
 
 for match_id in MATCH_IDS:
 
-    print()
-    print("=" * 90)
-    print(f"MATCH {match_id}")
-    print("=" * 90)
-
-    url = f"https://www.fotmob.com/match/{match_id}"
+    print(f"Checking match {match_id}...")
 
     try:
+        url = f"https://www.fotmob.com/match/{match_id}"
+
         response = requests.get(
             url,
             headers=HEADERS,
             timeout=30
         )
 
-        print("HTTP:", response.status_code)
-
         if response.status_code != 200:
-            print("REQUEST FAILED")
+            print(f"HTTP ERROR: {response.status_code}")
             continue
 
-        html = response.text
-
-        next_data_match = re.search(
+        match = re.search(
             r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-            html,
+            response.text,
             re.DOTALL
         )
 
-        if not next_data_match:
+        if not match:
             print("NEXT_DATA NOT FOUND")
             continue
 
-        data = json.loads(next_data_match.group(1))
+        data = json.loads(match.group(1))
 
         page_props = data["props"]["pageProps"]
-
         content = page_props["content"]
-
-        match_name = page_props.get("general", {}).get(
-            "matchName",
-            f"Match {match_id}"
-        )
 
         lineup = content.get("lineup")
 
         if not lineup:
             print("NO LINEUP")
             continue
-
-        print("Match:", match_name)
-        print("Lineup type:", lineup.get("lineupType"))
 
         for side in ["homeTeam", "awayTeam"]:
 
@@ -101,32 +85,29 @@ for match_id in MATCH_IDS:
             if not team:
                 continue
 
-            print()
-            print("-" * 70)
-            print(team.get("name"))
-            print("Formation:", team.get("formation"))
-            print("-" * 70)
+            team_name = team.get("name")
+            formation = team.get("formation")
 
-            starters = team.get("starters", [])
-
-            if not starters:
-                print("NO STARTERS")
-                continue
-
-            for player in starters:
+            for player in team.get("starters", []):
 
                 position_id = player.get("positionId")
 
-                if position_id is not None:
-                    unique_ids.add(position_id)
+                if position_id is None:
+                    continue
 
-                print(
-                    f"{str(position_id):>3} | "
-                    f"usual={str(player.get('usualPlayingPositionId')):>3} | "
-                    f"{player.get('name', 'Unknown'):<25} | "
-                    f"H={player.get('horizontalLayout')} | "
-                    f"V={player.get('verticalLayout')}"
-                )
+                if position_id not in positions:
+                    positions[position_id] = []
+
+                horizontal = player.get("horizontalLayout")
+                vertical = player.get("verticalLayout")
+
+                positions[position_id].append({
+                    "player": player.get("name"),
+                    "team": team_name,
+                    "formation": formation,
+                    "horizontal": horizontal,
+                    "vertical": vertical
+                })
 
         time.sleep(1)
 
@@ -135,14 +116,31 @@ for match_id in MATCH_IDS:
 
 
 print()
-print("=" * 90)
-print("UNIQUE POSITION IDS")
-print("=" * 90)
+print("=" * 100)
+print("POSITION ID ANALYSIS")
+print("=" * 100)
 
-for position_id in sorted(unique_ids):
-    print(position_id)
+
+for position_id in sorted(positions):
+
+    print()
+    print(f"POSITION ID: {position_id}")
+    print("-" * 100)
+
+    for item in positions[position_id]:
+
+        print(
+            f'{item["player"]} | '
+            f'{item["team"]} | '
+            f'Formation={item["formation"]} | '
+            f'H={item["horizontal"]} | '
+            f'V={item["vertical"]}'
+        )
 
 
 print()
-print("TOTAL UNIQUE POSITION IDS:", len(unique_ids))
+print("=" * 100)
+print("TOTAL UNIQUE POSITION IDS:", len(positions))
+print("=" * 100)
+
 print("TEST FINISHED")
