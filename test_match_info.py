@@ -1,146 +1,178 @@
 import json
 import re
 import requests
-import time
 
 
-MATCH_IDS = [
-    6106400,
-    6106237,
-    6099342,
-    6106404,
-    6106242,
-    5802923,
-    5749667,
-    5868047,
-    5881154,
-    5749665,
-    5852780,
-    5161884,
-    5898847,
-    5904728,
-    5961833,
-    5970091,
-    4667793,
-    4653714,
-    4653718,
-    4947828,
-    4947832,
-]
+MATCH_ID = "6106264"
 
+URL = f"https://www.fotmob.com/match/{MATCH_ID}"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0"
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/140.0.0.0 Safari/537.36"
+    )
 }
 
 
-positions = {}
+def get_next_data(html):
+    match = re.search(
+        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
+        html,
+        re.DOTALL,
+    )
+
+    if not match:
+        return None
+
+    return json.loads(match.group(1))
 
 
-print("TEST STARTED")
+def print_player(player, number):
+    name = player.get("name", "Unknown")
+    shirt_number = player.get("shirtNumber")
+    position_id = player.get("positionId")
+    rating = None
+
+    performance = player.get("performance")
+
+    if isinstance(performance, dict):
+        rating = performance.get("rating")
+
+    print(
+        f"{number}. {name}"
+        f" | #{shirt_number}"
+        f" | positionId={position_id}"
+        f" | rating={rating}"
+    )
 
 
-for match_id in MATCH_IDS:
+def print_team(team, label):
+    print()
+    print("=" * 60)
+    print(label)
+    print("=" * 60)
 
-    print(f"Checking match {match_id}...")
+    print(f"Team: {team.get('name')}")
+    print(f"Formation: {team.get('formation')}")
 
-    try:
-        url = f"https://www.fotmob.com/match/{match_id}"
-
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            timeout=30
-        )
-
-        if response.status_code != 200:
-            print(f"HTTP ERROR: {response.status_code}")
-            continue
-
-        match = re.search(
-            r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-            response.text,
-            re.DOTALL
-        )
-
-        if not match:
-            print("NEXT_DATA NOT FOUND")
-            continue
-
-        data = json.loads(match.group(1))
-
-        page_props = data["props"]["pageProps"]
-        content = page_props["content"]
-
-        lineup = content.get("lineup")
-
-        if not lineup:
-            print("NO LINEUP")
-            continue
-
-        for side in ["homeTeam", "awayTeam"]:
-
-            team = lineup.get(side)
-
-            if not team:
-                continue
-
-            team_name = team.get("name")
-            formation = team.get("formation")
-
-            for player in team.get("starters", []):
-
-                position_id = player.get("positionId")
-
-                if position_id is None:
-                    continue
-
-                if position_id not in positions:
-                    positions[position_id] = []
-
-                horizontal = player.get("horizontalLayout")
-                vertical = player.get("verticalLayout")
-
-                positions[position_id].append({
-                    "player": player.get("name"),
-                    "team": team_name,
-                    "formation": formation,
-                    "horizontal": horizontal,
-                    "vertical": vertical
-                })
-
-        time.sleep(1)
-
-    except Exception as error:
-        print("ERROR:", repr(error))
-
-
-print()
-print("=" * 100)
-print("POSITION ID ANALYSIS")
-print("=" * 100)
-
-
-for position_id in sorted(positions):
+    starters = team.get("starters", [])
+    substitutes = team.get("substitutes", [])
 
     print()
-    print(f"POSITION ID: {position_id}")
-    print("-" * 100)
+    print(f"STARTERS ({len(starters)}):")
 
-    for item in positions[position_id]:
+    for index, player in enumerate(starters, start=1):
+        print_player(player, index)
 
-        print(
-            f'{item["player"]} | '
-            f'{item["team"]} | '
-            f'Formation={item["formation"]} | '
-            f'H={item["horizontal"]} | '
-            f'V={item["vertical"]}'
+    print()
+    print(f"SUBSTITUTES ({len(substitutes)}):")
+
+    for index, player in enumerate(substitutes, start=1):
+        print_player(player, index)
+
+
+def main():
+    print("FOTMOB LINEUP TEST")
+    print("=" * 60)
+
+    print(f"Match ID: {MATCH_ID}")
+    print(f"URL: {URL}")
+    print()
+
+    try:
+        response = requests.get(
+            URL,
+            headers=HEADERS,
+            timeout=30,
         )
+    except Exception as e:
+        print("REQUEST ERROR")
+        print(e)
+        return
+
+    print(f"HTTP STATUS: {response.status_code}")
+    print(f"HTML LENGTH: {len(response.text)}")
+
+    if response.status_code != 200:
+        print()
+        print("FotMob request failed.")
+        return
+
+    data = get_next_data(response.text)
+
+    if not data:
+        print()
+        print("NEXT_DATA NOT FOUND")
+        return
+
+    print("NEXT_DATA JSON OK")
+
+    try:
+        page_props = data["props"]["pageProps"]
+    except (KeyError, TypeError):
+        print()
+        print("PAGE PROPS NOT FOUND")
+        return
+
+    general = page_props.get("general", {})
+    header = page_props.get("header", {})
+    content = page_props.get("content", {})
+
+    print()
+    print("=" * 60)
+    print("MATCH INFORMATION")
+    print("=" * 60)
+
+    print(f"Match ID: {general.get('matchId')}")
+    print(f"Match name: {general.get('matchName')}")
+    print(f"League: {general.get('leagueName')}")
+    print(f"Time: {general.get('matchTime')}")
+    print(f"Started: {general.get('started')}")
+    print(f"Finished: {general.get('finished')}")
+
+    lineup = content.get("lineup")
+
+    print()
+    print("=" * 60)
+    print("LINEUP INFORMATION")
+    print("=" * 60)
+
+    if not lineup:
+        print("LINEUP NOT AVAILABLE")
+        return
+
+    print("Lineup available: YES")
+    print(f"Lineup ID: {lineup.get('matchId')}")
+    print(f"Lineup type: {lineup.get('lineupType')}")
+    print(f"Source: {lineup.get('source')}")
+
+    available_filters = lineup.get("availableFilters")
+
+    if available_filters:
+        print(f"Available filters: {available_filters}")
+
+    home_team = lineup.get("homeTeam")
+    away_team = lineup.get("awayTeam")
+
+    if not home_team:
+        print()
+        print("HOME TEAM DATA NOT FOUND")
+    else:
+        print_team(home_team, "HOME TEAM")
+
+    if not away_team:
+        print()
+        print("AWAY TEAM DATA NOT FOUND")
+    else:
+        print_team(away_team, "AWAY TEAM")
+
+    print()
+    print("=" * 60)
+    print("TEST FINISHED")
+    print("=" * 60)
 
 
-print()
-print("=" * 100)
-print("TOTAL UNIQUE POSITION IDS:", len(positions))
-print("=" * 100)
-
-print("TEST FINISHED")
+if __name__ == "__main__":
+    main()
