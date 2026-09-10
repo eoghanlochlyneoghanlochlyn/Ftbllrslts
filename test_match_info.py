@@ -3,6 +3,7 @@ import re
 import requests
 import time
 
+
 MATCH_IDS = [
     6106400,
     6106237,
@@ -27,48 +28,71 @@ MATCH_IDS = [
     4947832,
 ]
 
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
 
+
 unique_ids = set()
+
+
+print("TEST STARTED")
+
 
 for match_id in MATCH_IDS:
 
-    print("\n" + "=" * 90)
+    print()
+    print("=" * 90)
     print(f"MATCH {match_id}")
     print("=" * 90)
 
     url = f"https://www.fotmob.com/match/{match_id}"
 
     try:
-        r = requests.get(url, headers=HEADERS, timeout=30)
+        response = requests.get(
+            url,
+            headers=HEADERS,
+            timeout=30
+        )
 
-        if r.status_code != 200:
-            print("HTTP:", r.status_code)
+        print("HTTP:", response.status_code)
+
+        if response.status_code != 200:
+            print("REQUEST FAILED")
             continue
 
-        m = re.search(
+        html = response.text
+
+        next_data_match = re.search(
             r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-            r.text,
+            html,
             re.DOTALL
         )
 
-        if not m:
+        if not next_data_match:
             print("NEXT_DATA NOT FOUND")
             continue
 
-        data = json.loads(m.group(1))
+        data = json.loads(next_data_match.group(1))
 
-        content = data["props"]["pageProps"]["content"]
+        page_props = data["props"]["pageProps"]
 
-        print("Match:", content["seo"]["title"])
+        content = page_props["content"]
+
+        match_name = page_props.get("general", {}).get(
+            "matchName",
+            f"Match {match_id}"
+        )
 
         lineup = content.get("lineup")
 
         if not lineup:
             print("NO LINEUP")
             continue
+
+        print("Match:", match_name)
+        print("Lineup type:", lineup.get("lineupType"))
 
         for side in ["homeTeam", "awayTeam"]:
 
@@ -77,33 +101,48 @@ for match_id in MATCH_IDS:
             if not team:
                 continue
 
-            print("\n")
+            print()
             print("-" * 70)
-            print(team["name"])
+            print(team.get("name"))
             print("Formation:", team.get("formation"))
             print("-" * 70)
 
-            for p in team.get("starters", []):
+            starters = team.get("starters", [])
 
-                pid = p.get("positionId")
-                unique_ids.add(pid)
+            if not starters:
+                print("NO STARTERS")
+                continue
+
+            for player in starters:
+
+                position_id = player.get("positionId")
+
+                if position_id is not None:
+                    unique_ids.add(position_id)
 
                 print(
-                    f"{pid:>3} | "
-                    f"usual={p.get('usualPlayingPositionId')} | "
-                    f"{p['name']:<25} | "
-                    f"H={p.get('horizontalLayout')} | "
-                    f"V={p.get('verticalLayout')}"
+                    f"{str(position_id):>3} | "
+                    f"usual={str(player.get('usualPlayingPositionId')):>3} | "
+                    f"{player.get('name', 'Unknown'):<25} | "
+                    f"H={player.get('horizontalLayout')} | "
+                    f"V={player.get('verticalLayout')}"
                 )
 
         time.sleep(1)
 
-    except Exception as e:
-        print(e)
+    except Exception as error:
+        print("ERROR:", repr(error))
 
-print("\n")
+
+print()
 print("=" * 90)
 print("UNIQUE POSITION IDS")
 print("=" * 90)
 
-print(sorted(unique_ids))
+for position_id in sorted(unique_ids):
+    print(position_id)
+
+
+print()
+print("TOTAL UNIQUE POSITION IDS:", len(unique_ids))
+print("TEST FINISHED")
