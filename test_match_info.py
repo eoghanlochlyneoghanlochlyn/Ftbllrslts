@@ -1,143 +1,283 @@
-import json
-import re
-import requests
+```python
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+from test_daily_matches import fetch_matches_for_date
+
+from match_cache import (
+    load_matches_cache,
+    add_or_update_match,
+    save_matches_cache,
+)
 
 
-MATCH_ID = "5881169"
+# ============================================================
+# مسابقات تستی
+# ============================================================
 
-URL = f"https://www.fotmob.com/match/{MATCH_ID}"
+TEST_MATCH_IDS = {
+    "5868059": "Sevilla vs Valencia",
+    "5749679": "Venezia vs Fiorentina",
+    "5881169": "Union Berlin vs Schalke 04",
+    "5802935": "Rennes vs Marseille",
+}
 
 
-def fetch_page():
-    response = requests.get(
-        URL,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/140.0.0.0 Safari/537.36"
+# ============================================================
+# تنظیمات
+# ============================================================
+
+IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
+
+
+# ============================================================
+# پیدا کردن مسابقات تستی
+# ============================================================
+
+def find_test_matches():
+    today = datetime.now(
+        IRAN_TIMEZONE
+    ).date()
+
+    dates = [
+        today - timedelta(days=1),
+        today,
+        today + timedelta(days=1),
+    ]
+
+    found_matches = {}
+
+    for current_date in dates:
+        date_string = current_date.strftime(
+            "%Y%m%d"
+        )
+
+        print("")
+        print(
+            f"Downloading matches for "
+            f"{date_string}..."
+        )
+
+        try:
+            matches = fetch_matches_for_date(
+                date_string
             )
-        },
-        timeout=30,
-    )
 
-    print("HTTP status:", response.status_code)
+        except Exception as exc:
+            print(
+                f"ERROR downloading "
+                f"{date_string}: {exc}"
+            )
+            continue
 
-    response.raise_for_status()
+        print(
+            f"Matches returned: "
+            f"{len(matches)}"
+        )
 
-    return response.text
+        for match in matches:
+            match_id = str(
+                match.get("id")
+            )
 
+            if match_id in TEST_MATCH_IDS:
+                found_matches[match_id] = match
 
-def extract_next_data(html):
-    match = re.search(
-        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-        html,
-        re.DOTALL,
-    )
-
-    if not match:
-        print("ERROR: __NEXT_DATA__ not found.")
-        return None
-
-    return json.loads(match.group(1))
+    return found_matches
 
 
-def main():
-    print("=" * 70)
-    print("UNION BERLIN vs SCHALKE 04")
-    print("Match ID:", MATCH_ID)
-    print("=" * 70)
+# ============================================================
+# نمایش اطلاعات یک مسابقه
+# ============================================================
 
-    html = fetch_page()
-    data = extract_next_data(html)
-
-    if not data:
-        return
-
-    content = (
-        data
-        .get("props", {})
-        .get("pageProps", {})
-        .get("content", {})
-    )
-
-    lineup = content.get("lineup")
-
-    if not isinstance(lineup, dict):
-        print("\nNO LINEUP OBJECT FOUND")
-        return
-
-    print("\nLINEUP OBJECT FOUND")
-    print("-" * 70)
-
-    print("lineupType:", repr(lineup.get("lineupType")))
-    print("source:", repr(lineup.get("source")))
-    print("matchId:", repr(lineup.get("matchId")))
-
-    print("\nLINEUP KEYS:")
-    print(list(lineup.keys()))
-
-    home = lineup.get("homeTeam") or {}
-    away = lineup.get("awayTeam") or {}
-
-    print("\nHOME TEAM")
-    print("-" * 70)
-    print("ID:", home.get("id"))
-    print("Name:", home.get("name"))
-    print("Formation:", home.get("formation"))
-    print("Starters:", len(home.get("starters") or []))
-    print("Subs:", len(home.get("subs") or []))
-    print("Coach:", home.get("coach"))
-
-    print("\nAWAY TEAM")
-    print("-" * 70)
-    print("ID:", away.get("id"))
-    print("Name:", away.get("name"))
-    print("Formation:", away.get("formation"))
-    print("Starters:", len(away.get("starters") or []))
-    print("Subs:", len(away.get("subs") or []))
-    print("Coach:", away.get("coach"))
-
-    print("\nHOME STARTERS")
-    print("-" * 70)
-
-    for player in home.get("starters") or []:
-        print(json.dumps(player, ensure_ascii=False, indent=2))
-
-    print("\nAWAY STARTERS")
-    print("-" * 70)
-
-    for player in away.get("starters") or []:
-        print(json.dumps(player, ensure_ascii=False, indent=2))
-
-    print("\nFULL LINEUP JSON")
+def print_match(match_id, match):
+    print("")
     print("-" * 70)
 
     print(
-        json.dumps(
-            lineup,
-            ensure_ascii=False,
-            indent=2,
-        )
+        f"Match ID: {match_id}"
     )
 
-    with open(
-        "union_lineup_output.json",
-        "w",
-        encoding="utf-8",
-    ) as f:
-        json.dump(
-            lineup,
-            f,
-            ensure_ascii=False,
-            indent=2,
+    print(
+        f"Test name: "
+        f"{TEST_MATCH_IDS[match_id]}"
+    )
+
+    print(
+        f"Actual home: "
+        f"{match.get('home')}"
+    )
+
+    print(
+        f"Actual away: "
+        f"{match.get('away')}"
+    )
+
+    print(
+        f"League: "
+        f"{match.get('league')}"
+    )
+
+    print(
+        f"Date: "
+        f"{match.get('date')}"
+    )
+
+    print(
+        f"UTC time: "
+        f"{match.get('utc_time')}"
+    )
+
+    print(
+        f"Iran time: "
+        f"{match.get('iran_time')}"
+    )
+
+    print(
+        f"Status: "
+        f"{match.get('status')}"
+    )
+
+    print(
+        f"URL: "
+        f"{match.get('url')}"
+    )
+
+    print("-" * 70)
+
+
+# ============================================================
+# ساخت کش تستی
+# ============================================================
+
+def main():
+    print("")
+    print("=" * 70)
+    print("TEST PRE-MATCH CACHE")
+    print("=" * 70)
+
+    print("")
+    print("Searching FotMob for the four test matches...")
+
+    found_matches = find_test_matches()
+
+    print("")
+    print("=" * 70)
+    print(
+        f"Found test matches: "
+        f"{len(found_matches)}/"
+        f"{len(TEST_MATCH_IDS)}"
+    )
+    print("=" * 70)
+
+    # --------------------------------------------------------
+    # نمایش مسابقات پیدا شده
+    # --------------------------------------------------------
+
+    for match_id in TEST_MATCH_IDS:
+        if match_id in found_matches:
+            print_match(
+                match_id,
+                found_matches[match_id],
+            )
+
+    # --------------------------------------------------------
+    # بررسی مسابقات گم‌شده
+    # --------------------------------------------------------
+
+    missing_matches = []
+
+    for match_id in TEST_MATCH_IDS:
+        if match_id not in found_matches:
+            missing_matches.append(
+                match_id
+            )
+
+    if missing_matches:
+        print("")
+        print("=" * 70)
+        print("WARNING: Some test matches were not found.")
+        print("=" * 70)
+
+        for match_id in missing_matches:
+            print(
+                f"{match_id}: "
+                f"{TEST_MATCH_IDS[match_id]}"
+            )
+
+        print("")
+        print(
+            "The cache was NOT changed."
         )
 
-    print("\n" + "=" * 70)
-    print("TEST COMPLETED.")
-    print("Saved: union_lineup_output.json")
+        return
+
+    # --------------------------------------------------------
+    # کش فعلی را می‌خوانیم
+    # --------------------------------------------------------
+
+    cache = load_matches_cache()
+
+    # --------------------------------------------------------
+    # فقط چهار مسابقه تستی را نگه می‌داریم
+    # --------------------------------------------------------
+
+    test_cache = {}
+
+    for match_id, match in found_matches.items():
+        test_cache[match_id] = match
+
+    # --------------------------------------------------------
+    # رکوردها را با ساختار واقعی match_cache.py می‌سازیم
+    # --------------------------------------------------------
+
+    final_cache = {}
+
+    for match_id, match in test_cache.items():
+        add_or_update_match(
+            final_cache,
+            match,
+        )
+
+    # --------------------------------------------------------
+    # ذخیره کش
+    # --------------------------------------------------------
+
+    save_matches_cache(
+        final_cache
+    )
+
+    print("")
+    print("=" * 70)
+    print("TEST CACHE CREATED SUCCESSFULLY")
+    print("=" * 70)
+
+    print("")
+    print(
+        f"Total cached test matches: "
+        f"{len(final_cache)}"
+    )
+
+    print("")
+
+    for match_id, match in final_cache.items():
+        print(
+            f"{match_id}: "
+            f"{match.get('home')} 🆚 "
+            f"{match.get('away')} | "
+            f"{match.get('status')} | "
+            f"{match.get('iran_time')}"
+        )
+
+    print("")
+    print("=" * 70)
+    print(
+        "matches_cache.json now contains "
+        "ONLY the four test matches."
+    )
     print("=" * 70)
 
 
 if __name__ == "__main__":
     main()
+```
