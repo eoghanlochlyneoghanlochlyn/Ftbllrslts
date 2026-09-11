@@ -1,4 +1,3 @@
-```python
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -280,4 +279,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
