@@ -142,7 +142,7 @@
   "5749679": {
     "id": "5749679",
     "date": "20260911",
-    "league": "",
+    "league": "Serie A",
     "home": "Venezia",
     "away": "Fiorentina",
     "home_id": 7881,
@@ -157,12 +157,13 @@
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
-    "last_score": "-"
+    "last_score": "-",
+    "last_pre_match_sent_at": null
   },
   "5802935": {
     "id": "5802935",
     "date": "20260911",
-    "league": "",
+    "league": "Ligue 1",
     "home": "Rennes",
     "away": "Marseille",
     "home_id": 9851,
@@ -177,12 +178,13 @@
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
-    "last_score": "-"
+    "last_score": "-",
+    "last_pre_match_sent_at": null
   },
   "5868059": {
     "id": "5868059",
     "date": "20260911",
-    "league": "",
+    "league": "LaLiga",
     "home": "Sevilla",
     "away": "Valencia",
     "home_id": 8302,
@@ -197,12 +199,13 @@
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
-    "last_score": "-"
+    "last_score": "-",
+    "last_pre_match_sent_at": null
   },
   "5881169": {
     "id": "5881169",
     "date": "20260911",
-    "league": "",
+    "league": "Bundesliga",
     "home": "Union Berlin",
     "away": "Schalke 04",
     "home_id": 8149,
@@ -217,6 +220,7 @@
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
-    "last_score": "-"
+    "last_score": "-",
+    "last_pre_match_sent_at": null
   }
 }
