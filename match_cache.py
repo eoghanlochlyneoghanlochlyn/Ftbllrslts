@@ -1,8 +1,15 @@
 import json
 import os
 
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
 
 CACHE_FILE = "matches_cache.json"
+
+IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
+
+KEEP_FINISHED_DAYS = 3
 
 
 def load_matches_cache():
@@ -73,6 +80,7 @@ def create_match_record(match):
         "finished_sent": False,
 
         "sent_goal_ids": [],
+
         "last_status": match.get("status"),
         "last_score": match.get("score"),
     }
@@ -110,3 +118,52 @@ def add_or_update_match(cache, match):
     )
 
     return False
+
+
+def parse_iran_datetime(value):
+    if not value:
+        return None
+
+    try:
+        return datetime.strptime(
+            value,
+            "%Y-%m-%d %H:%M",
+        ).replace(
+            tzinfo=IRAN_TIMEZONE
+        )
+
+    except Exception:
+        return None
+
+
+def remove_old_matches(cache):
+    now = datetime.now(IRAN_TIMEZONE)
+
+    cutoff_time = now - timedelta(
+        days=KEEP_FINISHED_DAYS
+    )
+
+    cleaned_cache = {}
+
+    removed_count = 0
+
+    for match_id, match in cache.items():
+        status = match.get("status")
+
+        iran_time = parse_iran_datetime(
+            match.get("iran_time")
+        )
+
+        should_remove = (
+            status == "Finished"
+            and iran_time is not None
+            and iran_time < cutoff_time
+        )
+
+        if should_remove:
+            removed_count += 1
+            continue
+
+        cleaned_cache[match_id] = match
+
+    return cleaned_cache, removed_count
