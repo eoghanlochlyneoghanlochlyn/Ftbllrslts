@@ -25,6 +25,21 @@ TEST_MATCH_IDS = {
 
 
 # ============================================================
+# اطلاعات ثابت همین چهار مسابقه تستی
+#
+# این بخش فقط برای تست ساخت کش است.
+# در سیستم اصلی، مسابقات از FotMob دریافت می‌شوند.
+# ============================================================
+
+TEST_LEAGUES = {
+    "5868059": "LaLiga",
+    "5749679": "Serie A",
+    "5881169": "Bundesliga",
+    "5802935": "Ligue 1",
+}
+
+
+# ============================================================
 # تنظیمات
 # ============================================================
 
@@ -62,7 +77,9 @@ def utc_to_iran(utc_time):
         return None
 
     try:
-        value = str(utc_time).strip()
+        value = str(
+            utc_time
+        ).strip()
 
         dt = datetime.fromisoformat(
             value.replace(
@@ -86,7 +103,7 @@ def utc_to_iran(utc_time):
 
     except Exception as exc:
         print(
-            f"ERROR converting UTC time "
+            "ERROR converting UTC time "
             f"to Iran time: {exc}"
         )
 
@@ -97,14 +114,14 @@ def utc_to_iran(utc_time):
 # وضعیت مسابقه
 # ============================================================
 
-def get_match_status(match_info):
+def get_match_status(match_data):
     if not isinstance(
-        match_info,
+        match_data,
         dict,
     ):
         return "Upcoming"
 
-    status = match_info.get(
+    status = match_data.get(
         "status"
     )
 
@@ -199,7 +216,7 @@ def extract_next_data(page_html):
 
     except json.JSONDecodeError as exc:
         print(
-            f"ERROR parsing __NEXT_DATA__: "
+            "ERROR parsing __NEXT_DATA__: "
             f"{exc}"
         )
 
@@ -210,7 +227,10 @@ def extract_next_data(page_html):
 # دسترسی امن به مسیر تو در تو
 # ============================================================
 
-def get_nested(data, *keys):
+def get_nested(
+    data,
+    *keys,
+):
     current = data
 
     for key in keys:
@@ -228,70 +248,75 @@ def get_nested(data, *keys):
 
 
 # ============================================================
-# استخراج محتوای اصلی FotMob
+# استخراج eventJSONLD
+#
+# FotMob اطلاعات پایه مسابقه را در این بخش قرار می‌دهد.
 # ============================================================
 
-def get_content(root):
-    content = get_nested(
+def get_event_jsonld(root):
+    event_jsonld = get_nested(
         root,
         "props",
         "pageProps",
-        "content",
+        "seo",
+        "eventJSONLD",
     )
 
     if isinstance(
-        content,
+        event_jsonld,
         dict,
     ):
-        return content
+        return event_jsonld
 
-    return {}
-
-
-# ============================================================
-# پیدا کردن مقدار یک کلید در JSON
-#
-# برای اینکه اگر ساختار FotMob کمی تغییر کرد
-# تست کاملاً خراب نشود.
-# ============================================================
-
-def find_key_recursive(
-    data,
-    wanted_key,
-):
+    # بعضی نسخه‌ها ممکن است JSON-LD را
+    # به صورت لیست برگردانند.
     if isinstance(
-        data,
-        dict,
-    ):
-        if wanted_key in data:
-            value = data.get(
-                wanted_key
-            )
-
-            if value is not None:
-                return value
-
-        for value in data.values():
-            result = find_key_recursive(
-                value,
-                wanted_key,
-            )
-
-            if result is not None:
-                return result
-
-    elif isinstance(
-        data,
+        event_jsonld,
         list,
     ):
-        for item in data:
-            result = find_key_recursive(
+        for item in event_jsonld:
+            if not isinstance(
                 item,
-                wanted_key,
-            )
+                dict,
+            ):
+                continue
 
-            if result is not None:
-                return result
+            if (
+                item.get("@type")
+                == "SportsEvent"
+            ):
+                return item
+
+            if (
+                "homeTeam" in item
+                and "awayTeam" in item
+            ):
+                return item
+
+    return None
+
+
+# ============================================================
+# استخراج نام تیم از JSON-LD
+# ============================================================
+
+def get_event_team_name(
+    team_data
+):
+    if isinstance(
+        team_data,
+        dict,
+    ):
+        return (
+            team_data.get("name")
+            or team_data.get("alternateName")
+        )
+
+    if isinstance(
+        team_data,
+        str,
+    ):
+        return team_data
 
     return None
 
@@ -304,258 +329,134 @@ def extract_match_info(
     root,
     match_id,
 ):
-    content = get_content(
+    event = get_event_jsonld(
         root
     )
 
-    match_info = content.get(
-        "match"
-    )
+    if not event:
+        print(
+            "ERROR: eventJSONLD "
+            "not found."
+        )
 
-    if not isinstance(
-        match_info,
-        dict,
-    ):
-        match_info = {}
+        return None
+
+    print(
+        "eventJSONLD found."
+    )
 
     # --------------------------------------------------------
     # تیم میزبان
     # --------------------------------------------------------
 
-    home_team = match_info.get(
-        "homeTeam"
-    )
-
-    if not isinstance(
-        home_team,
-        dict,
-    ):
-        home_team = {}
-
-    home_name = (
-        home_team.get("name")
-        or home_team.get("longName")
-        or home_team.get("shortName")
-    )
-
-    home_id = home_team.get(
-        "id"
+    home_name = get_event_team_name(
+        event.get("homeTeam")
     )
 
     # --------------------------------------------------------
     # تیم مهمان
     # --------------------------------------------------------
 
-    away_team = match_info.get(
-        "awayTeam"
+    away_name = get_event_team_name(
+        event.get("awayTeam")
     )
 
-    if not isinstance(
-        away_team,
-        dict,
-    ):
-        away_team = {}
+    # --------------------------------------------------------
+    # زمان شروع
+    # --------------------------------------------------------
 
-    away_name = (
-        away_team.get("name")
-        or away_team.get("longName")
-        or away_team.get("shortName")
-    )
-
-    away_id = away_team.get(
-        "id"
+    utc_time = (
+        event.get("startDate")
     )
 
     # --------------------------------------------------------
     # لیگ
-    # --------------------------------------------------------
-
-    league = (
-        match_info.get(
-            "leagueName"
-        )
-        or content.get(
-            "leagueName"
-        )
-    )
-
-    if not league:
-        league_object = (
-            match_info.get(
-                "league"
-            )
-        )
-
-        if isinstance(
-            league_object,
-            dict,
-        ):
-            league = (
-                league_object.get(
-                    "name"
-                )
-                or league_object.get(
-                    "leagueName"
-                )
-            )
-
-    if not league:
-        league = "Unknown League"
-
-    # --------------------------------------------------------
-    # زمان UTC
     #
-    # اول مسیرهای محتمل و شناخته‌شده را بررسی می‌کنیم.
+    # برای این تست چهار مسابقه، نام رقابت مشخص است.
     # --------------------------------------------------------
 
-    utc_time = None
-
-    status_object = match_info.get(
-        "status"
+    league = TEST_LEAGUES.get(
+        str(match_id)
     )
 
-    if isinstance(
-        status_object,
-        dict,
-    ):
-        utc_time = (
-            status_object.get(
-                "utcTime"
-            )
-            or status_object.get(
-                "utcDate"
-            )
-        )
-
-    if not utc_time:
-        utc_time = (
-            content.get(
-                "status",
-                {},
-            ).get(
-                "utcTime"
-            )
-            if isinstance(
-                content.get(
-                    "status"
-                ),
-                dict,
-            )
-            else None
-        )
-
-    if not utc_time:
-        utc_time = find_key_recursive(
-            match_info,
-            "utcTime",
-        )
-
-    if not utc_time:
-        utc_time = find_key_recursive(
-            content,
-            "utcTime",
-        )
-
     # --------------------------------------------------------
-    # اگر UTC پیدا نشد، eventJSONLD را هم بررسی می‌کنیم.
+    # بررسی اطلاعات ضروری
     # --------------------------------------------------------
 
-    if not utc_time:
-        event_json_ld = get_nested(
-            root,
-            "props",
-            "pageProps",
-            "seo",
-            "eventJSONLD",
+    if not home_name:
+        print(
+            "ERROR: Home team could "
+            "not be identified from "
+            "eventJSONLD."
         )
 
-        if isinstance(
-            event_json_ld,
-            dict,
-        ):
-            utc_time = (
-                event_json_ld.get(
-                    "startDate"
-                )
-            )
+        return None
+
+    if not away_name:
+        print(
+            "ERROR: Away team could "
+            "not be identified from "
+            "eventJSONLD."
+        )
+
+        return None
+
+    if not utc_time:
+        print(
+            "ERROR: Kickoff time could "
+            "not be identified from "
+            "eventJSONLD."
+        )
+
+        return None
 
     # --------------------------------------------------------
-    # تاریخ و ساعت ایران
+    # ساعت ایران
     # --------------------------------------------------------
 
     iran_time = utc_to_iran(
         utc_time
     )
 
-    # --------------------------------------------------------
-    # وضعیت
-    # --------------------------------------------------------
-
-    status = get_match_status(
-        match_info
-    )
-
-    # --------------------------------------------------------
-    # امتیاز
-    # --------------------------------------------------------
-
-    score = "-"
-
-    home_score = home_team.get(
-        "score"
-    )
-
-    away_score = away_team.get(
-        "score"
-    )
-
-    if (
-        status in {
-            "Finished",
-            "Live",
-        }
-        and home_score is not None
-        and away_score is not None
-    ):
-        score = (
-            f"{home_score} - "
-            f"{away_score}"
+    if not iran_time:
+        print(
+            "ERROR: Iran time could "
+            "not be calculated."
         )
 
-    # --------------------------------------------------------
-    # تاریخ
-    # --------------------------------------------------------
-
-    date_value = None
-
-    if iran_time:
-        try:
-            date_value = datetime.strptime(
-                iran_time,
-                "%Y-%m-%d %H:%M",
-            ).strftime(
-                "%Y-%m-%d"
-            )
-
-        except Exception:
-            date_value = None
+        return None
 
     # --------------------------------------------------------
-    # رکورد نهایی
+    # تاریخ ایران
+    # --------------------------------------------------------
+
+    try:
+        date_value = datetime.strptime(
+            iran_time,
+            "%Y-%m-%d %H:%M",
+        ).strftime(
+            "%Y-%m-%d"
+        )
+
+    except Exception:
+        date_value = None
+
+    # --------------------------------------------------------
+    # رکورد اولیه
     # --------------------------------------------------------
 
     return {
         "id": str(match_id),
         "date": date_value,
         "league": league,
-        "home": home_name or "Unknown",
-        "away": away_name or "Unknown",
-        "home_id": home_id,
-        "away_id": away_id,
+        "home": home_name,
+        "away": away_name,
+        "home_id": None,
+        "away_id": None,
         "utc_time": utc_time,
         "iran_time": iran_time,
-        "status": status,
-        "score": score,
+        "status": "Upcoming",
+        "score": "-",
         "url": FOTMOB_MATCH_URL.format(
             match_id
         ),
@@ -620,21 +521,6 @@ def print_match(
     )
 
     print(
-        f"Score: "
-        f"{match.get('score')}"
-    )
-
-    print(
-        f"Home ID: "
-        f"{match.get('home_id')}"
-    )
-
-    print(
-        f"Away ID: "
-        f"{match.get('away_id')}"
-    )
-
-    print(
         f"URL: "
         f"{match.get('url')}"
     )
@@ -668,7 +554,7 @@ def find_test_matches():
         )
 
         # ----------------------------------------------------
-        # دریافت مستقیم صفحه مسابقه
+        # دریافت صفحه
         # ----------------------------------------------------
 
         page_html = fetch_match_page(
@@ -700,61 +586,24 @@ def find_test_matches():
             continue
 
         # ----------------------------------------------------
-        # استخراج اطلاعات مسابقه
+        # استخراج اطلاعات
         # ----------------------------------------------------
 
-        try:
-            match = extract_match_info(
-                root,
-                match_id,
-            )
+        match = extract_match_info(
+            root,
+            match_id,
+        )
 
-        except Exception as exc:
+        if not match:
             print(
-                f"ERROR extracting "
-                f"match information: {exc}"
+                "Could not extract "
+                "match information."
             )
 
             continue
 
         # ----------------------------------------------------
-        # بررسی حداقل اطلاعات ضروری
-        # ----------------------------------------------------
-
-        if (
-            not match.get("home")
-            or match.get("home") == "Unknown"
-        ):
-            print(
-                "WARNING: Home team "
-                "could not be identified."
-            )
-
-            continue
-
-        if (
-            not match.get("away")
-            or match.get("away") == "Unknown"
-        ):
-            print(
-                "WARNING: Away team "
-                "could not be identified."
-            )
-
-            continue
-
-        if not match.get(
-            "utc_time"
-        ):
-            print(
-                "WARNING: UTC kickoff "
-                "time could not be identified."
-            )
-
-            continue
-
-        # ----------------------------------------------------
-        # مسابقه معتبر است
+        # ذخیره
         # ----------------------------------------------------
 
         found_matches[
@@ -819,19 +668,6 @@ def main():
     )
 
     # --------------------------------------------------------
-    # نمایش مسابقات پیدا شده
-    # --------------------------------------------------------
-
-    for match_id in TEST_MATCH_IDS:
-        if match_id in found_matches:
-            print_match(
-                match_id,
-                found_matches[
-                    match_id
-                ],
-            )
-
-    # --------------------------------------------------------
     # بررسی مسابقات گم‌شده
     # --------------------------------------------------------
 
@@ -848,10 +684,12 @@ def main():
         print(
             "=" * 70
         )
+
         print(
             "WARNING: Some test matches "
             "were not found."
         )
+
         print(
             "=" * 70
         )
@@ -873,7 +711,7 @@ def main():
     # ساخت کش جدید
     #
     # عمداً کش قبلی را نمی‌خوانیم.
-    # این تست باید فقط همین چهار مسابقه را داشته باشد.
+    # این تست باید فقط چهار مسابقه را داشته باشد.
     # --------------------------------------------------------
 
     final_cache = {}
