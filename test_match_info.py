@@ -4,7 +4,7 @@ import json
 import asyncio
 import requests
 
-from datetime import datetime
+from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 from telegram import Bot
 
@@ -35,128 +35,206 @@ def get_next_data(html):
     return json.loads(match.group(1))
 
 
-def iran_time(utc_time):
-    if not utc_time:
-        return "Unknown"
+def get_match_time_iran(general):
+    candidates = [
+        general.get("matchTime"),
+        general.get("matchTimeUTC"),
+        general.get("utcTime"),
+        general.get("matchDate"),
+    ]
 
-    try:
-        dt = datetime.fromisoformat(
-            utc_time.replace("Z", "+00:00")
-        )
+    for value in candidates:
+        if not value:
+            continue
 
-        return dt.astimezone(
-            ZoneInfo("Asia/Tehran")
-        ).strftime("%Y-%m-%d %H:%M")
+        try:
+            dt = datetime.fromisoformat(
+                str(value).replace("Z", "+00:00")
+            )
 
-    except:
-        return utc_time
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+
+            return dt.astimezone(
+                ZoneInfo("Asia/Tehran")
+            ).strftime("%Y-%m-%d %H:%M")
+
+        except Exception:
+            pass
+
+    match_name = general.get("matchName", "")
+
+    match = re.search(
+        r"([A-Z][a-z]{2}, [A-Z][a-z]{2} \d{1,2}, \d{4}, \d{2}:\d{2} UTC)",
+        match_name,
+    )
+
+    if match:
+        try:
+            dt = datetime.strptime(
+                match.group(1),
+                "%a, %b %d, %Y, %H:%M UTC",
+            ).replace(tzinfo=timezone.utc)
+
+            return dt.astimezone(
+                ZoneInfo("Asia/Tehran")
+            ).strftime("%Y-%m-%d %H:%M")
+
+        except Exception:
+            pass
+
+    return "Unknown"
 
 
 def player_rating(player):
+    performance = player.get("performance")
 
-    perf = player.get("performance")
-
-    if isinstance(perf, dict):
-        return perf.get("rating")
+    if isinstance(performance, dict):
+        return performance.get("rating", "-")
 
     return "-"
 
 
-def build_team(team):
+def sort_players(players):
+    return sorted(
+        players,
+        key=lambda player: (
+            player.get("horizontalLayout", {}).get("x", 0),
+            player.get("horizontalLayout", {}).get("y", 0),
+        ),
+    )
+
+
+def build_pitch_lineup(team):
+    starters = sort_players(team.get("starters", []))
+
+    if not starters:
+        return "اطلاعات ترکیب موجود نیست"
 
     lines = []
 
-    lines.append(f"🏟 Team: {team['name']}")
-    lines.append(f"📐 Formation: {team['formation']}")
+    lines.append("📋 ترکیب روی زمین")
+
+    for player in starters:
+        layout = player.get("horizontalLayout", {})
+        x = layout.get("x", 0)
+        y = layout.get("y", 0)
+
+        lines.append(
+            f"{player.get('name', '-')}"
+            f" | #{player.get('shirtNumber', '-')}"
+            f" | موقعیت: {x:.2f}/{y:.2f}"
+        )
+
+    return "\n".join(lines)
+
+
+def build_team(team):
+    lines = []
+
+    lines.append(f"🏟 Team: {team.get('name', '-')}")
+    lines.append(f"📐 Formation: {team.get('formation', '-')}")
     lines.append(f"⭐ Team Rating: {team.get('rating')}")
     lines.append(f"👥 Average Age: {team.get('averageStarterAge')}")
     lines.append("")
 
     lines.append("🟢 Starting XI")
 
-    starters = sorted(
-        team["starters"],
-        key=lambda p: (
-            p["horizontalLayout"]["x"],
-            p["horizontalLayout"]["y"],
-        ),
-    )
+    starters = sort_players(team.get("starters", []))
 
-    for p in starters:
-
+    for player in starters:
         lines.append(
-            f"#{p['shirtNumber']:>2}  "
-            f"{p['name']} "
-            f"({player_rating(p)})"
+            f"#{str(player.get('shirtNumber', '-')):>2}  "
+            f"{player.get('name', '-')}"
+            f" ({player_rating(player)})"
         )
 
     lines.append("")
     lines.append("🪑 Bench")
 
-    for p in team.get("subs", []):
+    substitutes = team.get("subs", [])
 
-        lines.append(
-            f"#{p.get('shirtNumber','-')} "
-            f"{p['name']}"
-        )
+    if substitutes:
+        for player in substitutes:
+            lines.append(
+                f"#{player.get('shirtNumber', '-')}"
+                f" {player.get('name', '-')}"
+            )
+    else:
+        lines.append("اطلاعات نیمکت در دادهٔ فوت‌موب موجود نیست")
 
     unavailable = team.get("unavailable", [])
 
     if unavailable:
-
         lines.append("")
         lines.append("❌ Unavailable")
 
-        for p in unavailable:
-
+        for player in unavailable:
             reason = ""
 
-            if isinstance(p.get("unavailability"), dict):
-                reason = p["unavailability"].get("label", "")
+            unavailability = player.get("unavailability")
 
-            lines.append(
-                f"{p['name']} {reason}"
-            )
+            if isinstance(unavailability, dict):
+                reason = unavailability.get("label", "")
+
+            player_name = player.get("name", "-")
+
+            if reason:
+                lines.append(f"{player_name} — {reason}")
+            else:
+                lines.append(player_name)
+
+    lines.append("")
+    lines.append(build_pitch_lineup(team))
 
     return "\n".join(lines)
 
 
 def build_message(general, lineup):
-
-    home = lineup["homeTeam"]
-    away = lineup["awayTeam"]
+    home_team = lineup.get("homeTeam", {})
+    away_team = lineup.get("awayTeam", {})
 
     message = []
 
     message.append("🏆 MATCH INFORMATION")
     message.append("")
 
-    message.append(f"League : {general.get('leagueName')}")
-    message.append(f"Match  : {general.get('matchName')}")
-    message.append(f"Time 🇮🇷 : {iran_time(general.get('matchTime'))}")
-
     message.append(
-        f"Started : {general.get('started')}"
+        f"League : {general.get('leagueName', '-')}"
     )
 
     message.append(
-        f"Finished : {general.get('finished')}"
+        f"Match  : {general.get('matchName', '-')}"
+    )
+
+    message.append(
+        f"Time 🇮🇷 : {get_match_time_iran(general)}"
+    )
+
+    message.append(
+        f"Started : {general.get('started', False)}"
+    )
+
+    message.append(
+        f"Finished : {general.get('finished', False)}"
     )
 
     message.append("")
     message.append("━━━━━━━━━━━━━━━━━━━━━━")
     message.append("")
-    message.append(build_team(home))
+
+    message.append(build_team(home_team))
+
     message.append("")
     message.append("━━━━━━━━━━━━━━━━━━━━━━")
     message.append("")
-    message.append(build_team(away))
+
+    message.append(build_team(away_team))
 
     return "\n".join(message)
 
 
-async def send(message):
-
+async def send_to_telegram(message):
     bot = Bot(os.environ["TELEGRAMBOT"])
 
     await bot.send_message(
@@ -166,8 +244,7 @@ async def send(message):
 
 
 def main():
-
-    print("Downloading...")
+    print("Downloading FotMob page...")
 
     response = requests.get(
         URL,
@@ -176,7 +253,9 @@ def main():
     )
 
     if response.status_code != 200:
-        raise Exception("FotMob request failed")
+        raise Exception(
+            f"FotMob request failed: {response.status_code}"
+        )
 
     data = get_next_data(response.text)
 
@@ -186,21 +265,23 @@ def main():
     page = data["props"]["pageProps"]
 
     general = page["general"]
-
-    lineup = page["content"]["lineup"]
+    content = page["content"]
+    lineup = content["lineup"]
 
     message = build_message(
         general,
         lineup,
     )
 
+    print("")
     print(message)
+    print("")
 
     asyncio.run(
-        send(message)
+        send_to_telegram(message)
     )
 
-    print("\nTelegram message sent successfully.")
+    print("Telegram message sent successfully.")
 
 
 if __name__ == "__main__":
