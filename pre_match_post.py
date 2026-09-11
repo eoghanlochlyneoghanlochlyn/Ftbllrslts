@@ -1,1099 +1,948 @@
-import asyncio
+import html
 import json
 import re
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 import requests
 
+from match_cache import load_matches_cache, save_cache
 from telegram_sender import send_telegram_message
 
 
-CACHE_FILE = "matches_cache.json"
+# ============================================================
+# تنظیمات
+# ============================================================
 
+FOTMOB_MATCH_URL = "https://www.fotmob.com/match/{}"
 
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 Chrome/131.0 Safari/537.36"
-    )
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/140.0.0.0 Safari/537.36"
+    ),
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;"
+        "q=0.9,image/avif,image/webp,*/*;q=0.8"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
 }
 
+REQUEST_TIMEOUT = 20
 
-PERSIAN_LEAGUES = {
+# اگر تا این زمان ترکیب رسمی پیدا نشد،
+# پیام "ترکیب رسمی هنوز اعلام نشده" ارسال می‌شود.
+FALLBACK_MINUTES = 30
+
+
+# ============================================================
+# ترجمه لیگ‌ها
+# ============================================================
+
+LEAGUE_TRANSLATIONS = {
     "Premier League": "لیگ برتر انگلیس",
     "LaLiga": "لالیگا",
-    "Serie A": "سری آ ایتالیا",
+    "La Liga": "لالیگا",
+    "Serie A": "سری آ",
     "Bundesliga": "بوندس‌لیگا",
-    "Ligue 1": "لیگ یک فرانسه",
+    "Ligue 1": "لیگ ۱ فرانسه",
+    "UEFA Champions League": "لیگ قهرمانان اروپا",
     "Champions League": "لیگ قهرمانان اروپا",
+    "UEFA Europa League": "لیگ اروپا",
     "Europa League": "لیگ اروپا",
+    "UEFA Conference League": "لیگ کنفرانس اروپا",
     "Conference League": "لیگ کنفرانس اروپا",
     "FA Cup": "جام حذفی انگلیس",
     "EFL Cup": "جام اتحادیه انگلیس",
-    "Copa del Rey": "جام حذفی اسپانیا",
+    "Carabao Cup": "جام اتحادیه انگلیس",
     "DFB Pokal": "جام حذفی آلمان",
     "Coppa Italia": "جام حذفی ایتالیا",
+    "Copa del Rey": "جام حذفی اسپانیا",
     "Coupe de France": "جام حذفی فرانسه",
+    "Super Cup": "سوپرجام",
 }
 
 
-PERSIAN_TEAM_NAMES = {
-    "Manchester United": "منچستریونایتد",
-    "Manchester City": "منچسترسیتی",
+# ============================================================
+# ترجمه نام تیم‌ها
+# ============================================================
+
+TEAM_TRANSLATIONS = {
     "Liverpool": "لیورپول",
     "Arsenal": "آرسنال",
+    "Manchester City": "منچسترسیتی",
+    "Manchester United": "منچستریونایتد",
     "Chelsea": "چلسی",
     "Tottenham Hotspur": "تاتنهام",
+    "Tottenham": "تاتنهام",
     "Juventus": "یوونتوس",
-    "AC Milan": "میلان",
+    "AC Milan": "آث میلان",
     "Milan": "میلان",
-    "Inter Milan": "اینتر",
     "Inter": "اینتر",
+    "Inter Milan": "اینتر",
+    "Inter Milano": "اینتر",
     "Bayern Munich": "بایرن مونیخ",
+    "Bayern München": "بایرن مونیخ",
     "Borussia Dortmund": "بوروسیا دورتموند",
-    "Paris Saint-Germain": "پاری‌سن‌ژرمن",
     "PSG": "پاری‌سن‌ژرمن",
+    "Paris Saint-Germain": "پاری‌سن‌ژرمن",
     "Real Madrid": "رئال مادرید",
     "Barcelona": "بارسلونا",
-    "Atletico Madrid": "اتلتیکومادرید",
     "Atlético Madrid": "اتلتیکومادرید",
-    "Hull City": "هال سیتی",
-    "Fulham": "فولام",
-    "Everton": "اورتون",
-    "Sunderland": "ساندرلند",
-    "Lazio": "لاتزیو",
-    "Paderborn": "پادربورن",
-    "Rayo Vallecano": "رایو وایکانو",
-    "Rayo Vallecano de Madrid": "رایو وایکانو",
-    "Sabah FK": "صباح",
+    "Atletico Madrid": "اتلتیکومادرید",
+    "Atletico de Madrid": "اتلتیکومادرید",
+    "Sevilla": "سویا",
+    "Valencia": "والنسیا",
+    "Fiorentina": "فیورنتینا",
+    "Venezia": "ونیزیا",
+    "Union Berlin": "یونیون برلین",
+    "Schalke 04": "شالکه",
+    "Marseille": "مارسی",
+    "Rennes": "رن",
 }
 
 
-def load_cache():
-    try:
-        with open(
-            CACHE_FILE,
-            "r",
-            encoding="utf-8",
-        ) as file:
-            return json.load(file)
+# ============================================================
+# ابزارهای عمومی
+# ============================================================
 
-    except FileNotFoundError:
-        print("Cache file not found.")
-        return {}
-
-    except json.JSONDecodeError:
-        print(
-            "Cache file contains invalid JSON."
-        )
-        return {}
+def log(message):
+    print(message, flush=True)
 
 
-def save_cache(cache):
-    try:
-        with open(
-            CACHE_FILE,
-            "w",
-            encoding="utf-8",
-        ) as file:
-            json.dump(
-                cache,
-                file,
-                ensure_ascii=False,
-                indent=2,
-            )
-
-        print("Cache saved successfully.")
-        return True
-
-    except OSError as exc:
-        print(
-            f"Could not save cache: {exc}"
-        )
-        return False
-
-
-def parse_utc_datetime(value):
-    if not value:
-        return None
-
-    try:
-        if (
-            isinstance(value, str)
-            and value.endswith("Z")
-        ):
-            value = (
-                value[:-1]
-                + "+00:00"
-            )
-
-        dt = datetime.fromisoformat(value)
-
-        if dt.tzinfo is None:
-            dt = dt.replace(
-                tzinfo=timezone.utc
-            )
-
-        return dt.astimezone(
-            timezone.utc
-        )
-
-    except (
-        ValueError,
-        TypeError,
-    ):
-        return None
-
-
-def get_minutes_until_kickoff(utc_time):
-    kickoff = parse_utc_datetime(
-        utc_time
-    )
-
-    if kickoff is None:
-        return None
-
-    now = datetime.now(
-        timezone.utc
-    )
-
-    remaining_seconds = (
-        kickoff - now
-    ).total_seconds()
-
-    return remaining_seconds / 60
-
-
-def format_remaining_time(minutes_until):
-    if minutes_until is None:
+def translate_league(name):
+    if not name:
         return "نامشخص"
 
-    if minutes_until < 0:
-        return (
-            "شروع شده یا زمان آن گذشته است"
-        )
+    name = str(name).strip()
 
-    total_minutes = int(
-        minutes_until
-    )
-
-    hours = total_minutes // 60
-    minutes = total_minutes % 60
-
-    if hours > 0:
-        return (
-            f"{hours} ساعت و "
-            f"{minutes} دقیقه"
-        )
-
-    return f"{minutes} دقیقه"
+    return LEAGUE_TRANSLATIONS.get(name, name)
 
 
-def format_iran_time(utc_time):
-    dt = parse_utc_datetime(
-        utc_time
-    )
-
-    if dt is None:
+def translate_team(name):
+    if not name:
         return "نامشخص"
 
-    iran_time = dt + timedelta(
-        hours=3,
-        minutes=30,
-    )
+    name = str(name).strip()
 
-    return iran_time.strftime(
-        "%H:%M"
-    )
+    return TEAM_TRANSLATIONS.get(name, name)
 
+
+def get_nested(data, *keys):
+    current = data
+
+    for key in keys:
+        if not isinstance(current, dict):
+            return None
+
+        current = current.get(key)
+
+    return current
+
+
+# ============================================================
+# دریافت صفحه مسابقه فوت‌موب
+# ============================================================
 
 def fetch_match_page(match_id):
-    url = (
-        f"https://www.fotmob.com/"
-        f"match/{match_id}"
-    )
+    url = FOTMOB_MATCH_URL.format(match_id)
+
+    log(f"Fetching FotMob page: {url}")
 
     try:
         response = requests.get(
             url,
             headers=HEADERS,
-            timeout=20,
+            timeout=REQUEST_TIMEOUT,
         )
 
-        if response.status_code != 200:
-            print(
-                f"Could not fetch match "
-                f"{match_id}. "
-                f"HTTP status: "
-                f"{response.status_code}"
-            )
-            return None
+        log(f"HTTP status: {response.status_code}")
 
-        match = re.search(
-            r'<script id="__NEXT_DATA__" '
-            r'type="application/json">'
-            r'(.*?)'
-            r'</script>',
-            response.text,
-            re.DOTALL,
-        )
+        response.raise_for_status()
 
-        if not match:
-            print(
-                f"__NEXT_DATA__ not found "
-                f"for match {match_id}."
-            )
-            return None
-
-        return json.loads(
-            match.group(1)
-        )
+        return response.text
 
     except requests.RequestException as exc:
-        print(
-            f"Request error for match "
-            f"{match_id}: {exc}"
-        )
-        return None
-
-    except json.JSONDecodeError:
-        print(
-            f"Invalid JSON for match "
-            f"{match_id}."
-        )
+        log(f"ERROR fetching FotMob page: {exc}")
         return None
 
 
-def get_page_data(data):
+# ============================================================
+# استخراج __NEXT_DATA__
+# ============================================================
+
+def extract_next_data(page_html):
+    if not page_html:
+        return None
+
+    match = re.search(
+        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>(.*?)</script>',
+        page_html,
+        re.DOTALL | re.IGNORECASE,
+    )
+
+    if not match:
+        log("ERROR: __NEXT_DATA__ not found.")
+        return None
+
+    raw_json = html.unescape(match.group(1))
+
     try:
-        return data[
-            "props"
-        ][
-            "pageProps"
-        ]
+        return json.loads(raw_json)
 
-    except (
-        KeyError,
-        TypeError,
-    ):
-        return {}
+    except json.JSONDecodeError as exc:
+        log(f"ERROR parsing __NEXT_DATA__: {exc}")
+        return None
 
 
-def get_lineup_data(page):
-    content = (
-        page.get("content")
-        or {}
+# ============================================================
+# استخراج اطلاعات lineup
+# ============================================================
+
+def get_lineup_data(root):
+    if not isinstance(root, dict):
+        return None
+
+    lineup = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "content",
+        "lineup",
     )
 
-    lineup = (
-        content.get("lineup")
-        or {}
-    )
+    if not isinstance(lineup, dict):
+        log("LINEUP OBJECT NOT FOUND")
+        return None
+
+    log("LINEUP OBJECT FOUND")
 
     return lineup
 
 
-def get_coach_name(team_data):
-    if not isinstance(
-        team_data,
-        dict,
-    ):
-        return "Unknown"
+# ============================================================
+# وضعیت رسمی بودن ترکیب
+# ============================================================
 
-    coach = team_data.get(
-        "coach"
+def has_official_lineups(lineup):
+    """
+    در تست‌های واقعی FotMob:
+
+    standard  -> ترکیب منتشرشده
+    confirmed -> ترکیب منتشرشده
+    predicted -> ترکیب پیش‌بینی‌شده
+
+    برای جلوگیری از ارسال اشتباه، فقط standard و confirmed
+    را رسمی در نظر می‌گیریم.
+    """
+
+    if not isinstance(lineup, dict):
+        return False
+
+    lineup_type = str(
+        lineup.get("lineupType") or ""
+    ).strip().lower()
+
+    log(f"FotMob lineupType: {lineup_type}")
+
+    if lineup_type not in {
+        "standard",
+        "confirmed",
+    }:
+        return False
+
+    home_team = lineup.get("homeTeam") or {}
+    away_team = lineup.get("awayTeam") or {}
+
+    home_starters = get_starters(home_team)
+    away_starters = get_starters(away_team)
+
+    log(f"Home starters: {len(home_starters)}")
+    log(f"Away starters: {len(away_starters)}")
+
+    return (
+        len(home_starters) >= 11
+        and len(away_starters) >= 11
     )
 
-    if isinstance(
-        coach,
-        dict,
-    ):
-        for key in (
-            "name",
-            "shortName",
-            "fullName",
-        ):
-            value = coach.get(
-                key
-            )
 
-            if value:
-                return str(
-                    value
-                )
+# ============================================================
+# نام مربی
+# ============================================================
 
-    if (
-        isinstance(
-            coach,
-            str,
+def get_coach_name(team_data):
+    if not isinstance(team_data, dict):
+        return "Unknown"
+
+    coach = team_data.get("coach")
+
+    if isinstance(coach, dict):
+        return (
+            coach.get("name")
+            or coach.get("shortName")
+            or "Unknown"
         )
-        and coach.strip()
-    ):
-        return coach.strip()
+
+    if isinstance(coach, str):
+        return coach
 
     return "Unknown"
 
+
+# ============================================================
+# آرایش
+# ============================================================
 
 def get_formation(team_data):
-    if not isinstance(
-        team_data,
-        dict,
-    ):
+    if not isinstance(team_data, dict):
         return "Unknown"
 
-    for key in (
-        "formation",
-        "expectedFormation",
-    ):
-        value = team_data.get(
-            key
-        )
+    formation = team_data.get("formation")
 
-        if value:
-            return str(
-                value
-            )
+    if formation:
+        return str(formation)
 
     return "Unknown"
 
+
+# ============================================================
+# بازیکنان اصلی
+# ============================================================
 
 def get_starters(team_data):
-    if not isinstance(
-        team_data,
-        dict,
-    ):
+    if not isinstance(team_data, dict):
         return []
 
-    starters = team_data.get(
-        "starters"
-    )
+    starters = team_data.get("starters")
 
-    if isinstance(
-        starters,
-        list,
-    ):
-        return starters
+    if not isinstance(starters, list):
+        return []
 
-    return []
+    return starters
 
+
+# ============================================================
+# نام بازیکن
+# ============================================================
 
 def get_player_name(player):
-    if not isinstance(
-        player,
-        dict,
-    ):
+    if not isinstance(player, dict):
         return "Unknown"
 
-    for key in (
-        "name",
-        "playerName",
-        "shortName",
-        "fullName",
-    ):
-        value = player.get(
-            key
+    player_data = player.get("player")
+
+    if isinstance(player_data, dict):
+        name = (
+            player_data.get("name")
+            or player_data.get("shortName")
+            or player_data.get("fullName")
         )
 
-        if value:
-            return str(
-                value
-            )
+        if name:
+            return str(name)
 
-    nested_player = player.get(
-        "player"
+    name = (
+        player.get("name")
+        or player.get("shortName")
+        or player.get("fullName")
     )
 
-    if isinstance(
-        nested_player,
-        dict,
-    ):
-        for key in (
-            "name",
-            "shortName",
-            "fullName",
-        ):
-            value = nested_player.get(
-                key
-            )
-
-            if value:
-                return str(
-                    value
-                )
+    if name:
+        return str(name)
 
     return "Unknown"
 
 
+# ============================================================
+# شماره پیراهن
+# ============================================================
+
 def get_player_number(player):
-    if not isinstance(
-        player,
-        dict,
-    ):
-        return ""
+    if not isinstance(player, dict):
+        return None
 
-    for key in (
-        "shirtNumber",
-        "number",
-        "jerseyNumber",
-    ):
-        value = player.get(
-            key
-        )
+    number = player.get("shirtNumber")
 
-        if value is not None:
-            return str(
-                value
-            )
+    if number is None:
+        number = player.get("number")
 
-    return ""
+    if number is None:
+        player_data = player.get("player")
 
+        if isinstance(player_data, dict):
+            number = player_data.get("shirtNumber")
+
+            if number is None:
+                number = player_data.get("number")
+
+    if number is None:
+        return None
+
+    return str(number)
+
+
+# ============================================================
+# فرمت بازیکن
+# ============================================================
 
 def format_player(player):
-    name = get_player_name(
-        player
-    )
-
-    number = get_player_number(
-        player
-    )
+    name = get_player_name(player)
+    number = get_player_number(player)
 
     if number:
-        return (
-            f"{number}. {name}"
-        )
+        return f"{number}. {name}"
 
     return name
 
 
-def translate_league(league_name):
-    if not league_name:
+# ============================================================
+# استخراج اطلاعات مسابقه
+# ============================================================
+
+def extract_match_info(root, match):
+    """
+    اطلاعات پایه را اول از کش می‌گیریم.
+    اگر چیزی موجود نبود، از __NEXT_DATA__ استفاده می‌کنیم.
+    """
+
+    content = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "content",
+    )
+
+    if not isinstance(content, dict):
+        content = {}
+
+    match_info = content.get("match")
+
+    if not isinstance(match_info, dict):
+        match_info = {}
+
+    home_team = match_info.get("homeTeam")
+
+    if not isinstance(home_team, dict):
+        home_team = {}
+
+    away_team = match_info.get("awayTeam")
+
+    if not isinstance(away_team, dict):
+        away_team = {}
+
+    home_name = (
+        match.get("home")
+        or home_team.get("name")
+        or "Unknown"
+    )
+
+    away_name = (
+        match.get("away")
+        or away_team.get("name")
+        or "Unknown"
+    )
+
+    league = (
+        match.get("league")
+        or match_info.get("leagueName")
+        or content.get("leagueName")
+        or "Unknown"
+    )
+
+    return {
+        "home": home_name,
+        "away": away_name,
+        "league": league,
+    }
+
+
+# ============================================================
+# تبدیل ساعت به ساعت ایران
+# ============================================================
+
+def get_iran_time(match):
+    iran_time = match.get("iran_time")
+
+    if not iran_time:
         return "نامشخص"
 
-    return PERSIAN_LEAGUES.get(
-        league_name,
-        league_name,
-    )
-
-
-def translate_team(team_name):
-    if not team_name:
-        return "نامشخص"
-
-    return PERSIAN_TEAM_NAMES.get(
-        team_name,
-        team_name,
-    )
-
-
-def has_official_lineups(lineup):
-    if not isinstance(
-        lineup,
-        dict,
-    ):
-        return False
-
-    lineup_type = str(
-        lineup.get(
-            "lineupType"
+    try:
+        parsed = datetime.fromisoformat(
+            str(iran_time).replace("Z", "+00:00")
         )
-        or ""
-    ).lower()
 
-    if lineup_type != "confirmed":
-        return False
+        return parsed.strftime("%H:%M")
 
-    home_team = (
-        lineup.get("homeTeam")
-        or {}
+    except Exception:
+        pass
+
+    text = str(iran_time)
+
+    match_time = re.search(
+        r"(\d{1,2}):(\d{2})",
+        text,
     )
 
-    away_team = (
-        lineup.get("awayTeam")
-        or {}
-    )
-
-    home_starters = get_starters(
-        home_team
-    )
-
-    away_starters = get_starters(
-        away_team
-    )
-
-    return (
-        len(home_starters) > 0
-        and len(away_starters) > 0
-    )
-
-
-def is_match_eligible(
-    match,
-    lineup,
-    minutes_until,
-):
-    if match.get(
-        "pre_match_sent",
-        False,
-    ):
+    if match_time:
         return (
-            False,
-            "Pre-match message "
-            "was already sent.",
+            f"{int(match_time.group(1)):02d}:"
+            f"{match_time.group(2)}"
         )
 
-    status = str(
-        match.get("status")
-        or ""
-    ).strip()
+    return text
 
-    if status != "Upcoming":
-        return (
-            False,
-            f"Match status is "
-            f"{status}.",
-        )
 
-    if has_official_lineups(
-        lineup
-    ):
-        return (
-            True,
-            "Both official lineups "
-            "are confirmed.",
-        )
+# ============================================================
+# ساخت بخش ترکیب یک تیم
+# ============================================================
 
-    if minutes_until is None:
-        return (
-            False,
-            "Kickoff time is "
-            "unavailable.",
-        )
+def format_team_lineup(team_data):
+    if not isinstance(team_data, dict):
+        return "Unknown"
 
-    if (
-        0
-        <= minutes_until
-        <= 60
-    ):
-        return (
-            True,
-            "One hour or less "
-            "remains until kickoff.",
-        )
-
-    if minutes_until < 0:
-        return (
-            False,
-            "Kickoff time has "
-            "already passed.",
-        )
-
-    return (
-        False,
-        "Official lineups are "
-        "unavailable and more "
-        "than one hour remains.",
+    team_name = translate_team(
+        team_data.get("name")
     )
 
+    coach = get_coach_name(team_data)
+    formation = get_formation(team_data)
+    starters = get_starters(team_data)
 
-def build_team_section(
-    team_name,
-    team_data,
-):
     lines = []
 
-    lines.append(
-        team_name
-    )
+    lines.append(f"🔹 {team_name}")
+    lines.append(f"Coach: {coach}")
+    lines.append(f"Formation: {formation}")
+    lines.append("Starting XI:")
 
-    coach = get_coach_name(
-        team_data
-    )
-
-    formation = get_formation(
-        team_data
-    )
-
-    starters = get_starters(
-        team_data
-    )
-
-    lines.append(
-        f"Coach: {coach}"
-    )
-
-    lines.append(
-        f"Formation: {formation}"
-    )
-
-    if starters:
-        lines.append("")
+    for player in starters:
         lines.append(
-            "Starting XI:"
+            f"• {format_player(player)}"
         )
 
-        for player in starters:
-            lines.append(
-                format_player(
-                    player
-                )
-            )
+    return "\n".join(lines)
 
-    return "\n".join(
-        lines
-    )
 
+# ============================================================
+# ساخت پست پیش‌مسابقه
+# ============================================================
 
 def build_pre_match_post(
     match,
-    lineup,
+    lineup=None,
+    official_lineups=False,
 ):
-    home = match.get(
-        "home",
-        "Unknown",
+    home = translate_team(
+        match.get("home")
     )
 
-    away = match.get(
-        "away",
-        "Unknown",
+    away = translate_team(
+        match.get("away")
     )
 
-    league = match.get(
-        "league",
-        "Unknown",
+    league = translate_league(
+        match.get("league")
     )
 
-    utc_time = match.get(
-        "utc_time"
-    )
-
-    home_team_data = (
-        lineup.get("homeTeam")
-        or {}
-    )
-
-    away_team_data = (
-        lineup.get("awayTeam")
-        or {}
-    )
-
-    official_lineups = (
-        has_official_lineups(
-            lineup
-        )
-    )
-
-    persian_league = (
-        translate_league(
-            league
-        )
-    )
-
-    persian_home = (
-        translate_team(
-            home
-        )
-    )
-
-    persian_away = (
-        translate_team(
-            away
-        )
-    )
-
-    iran_time = (
-        format_iran_time(
-            utc_time
-        )
-    )
+    iran_time = get_iran_time(match)
 
     lines = []
 
-    lines.append(
-        f"🏆 {persian_league}"
-    )
-
+    lines.append(f"🏆 {league}")
     lines.append("")
-
     lines.append(
-        f"{persian_home} 🆚 "
-        f"{persian_away}"
-    )
-
-    lines.append("")
-
-    lines.append(
-        f"⏰ {iran_time} "
-        f"به وقت ایران"
-    )
-
-    lines.append("")
-
-    lines.append(
-        "━━━━━━━━━━━━━━━━━━━━━━"
-    )
-
-    lines.append("")
-
-    if official_lineups:
-        lines.append(
-            build_team_section(
-                home,
-                home_team_data,
-            )
-        )
-
-        lines.append("")
-
-        lines.append(
-            "━━━━━━━━━━━━━━━━━━━━━━"
-        )
-
-        lines.append("")
-
-        lines.append(
-            build_team_section(
-                away,
-                away_team_data,
-            )
-        )
-
-    else:
-        lines.append(
-            "ترکیب رسمی هنوز "
-            "اعلام نشده است."
-        )
-
-    return "\n".join(
-        lines
-    )
-
-
-async def process_match(
-    match_id,
-    match,
-):
-    home = match.get(
-        "home",
-        "Unknown",
-    )
-
-    away = match.get(
-        "away",
-        "Unknown",
-    )
-
-    print()
-    print(
-        "=" * 90
-    )
-
-    print(
         f"{home} 🆚 {away}"
     )
-
-    print(
-        f"Match ID: {match_id}"
+    lines.append("")
+    lines.append(
+        f"⏰ {iran_time} به وقت ایران"
     )
 
-    status = match.get(
-        "status",
-        "",
-    )
+    lines.append("")
+    lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+    lines.append("")
 
-    pre_match_sent = match.get(
-        "pre_match_sent",
-        False,
-    )
+    if official_lineups and isinstance(lineup, dict):
+        home_team = lineup.get("homeTeam") or {}
+        away_team = lineup.get("awayTeam") or {}
 
-    utc_time = match.get(
-        "utc_time"
-    )
-
-    minutes_until = (
-        get_minutes_until_kickoff(
-            utc_time
+        lines.append(
+            format_team_lineup(home_team)
         )
-    )
 
-    print(
-        f"Status: {status}"
-    )
+        lines.append("")
 
-    print(
-        "Pre-match already sent: "
-        f"{pre_match_sent}"
-    )
-
-    print(
-        f"UTC kickoff: {utc_time}"
-    )
-
-    if minutes_until is None:
-        print(
-            "Minutes until kickoff: "
-            "Unknown"
+        lines.append(
+            format_team_lineup(away_team)
         )
 
     else:
-        print(
-            "Minutes until kickoff: "
-            f"{minutes_until:.1f}"
+        lines.append(
+            "ترکیب رسمی هنوز اعلام نشده است."
         )
 
-        print(
-            "Remaining time: "
-            f"{format_remaining_time(minutes_until)}"
+    return "\n".join(lines)
+
+
+# ============================================================
+# محاسبه زمان باقی‌مانده تا شروع
+# ============================================================
+
+def get_minutes_until_kickoff(match):
+    utc_time = match.get("utc_time")
+
+    if not utc_time:
+        return None
+
+    try:
+        kickoff = datetime.fromisoformat(
+            str(utc_time).replace("Z", "+00:00")
         )
 
-    if pre_match_sent:
-        print(
-            "Decision: ALREADY SENT"
+        if kickoff.tzinfo is None:
+            kickoff = kickoff.replace(
+                tzinfo=timezone.utc
+            )
+
+        now = datetime.now(timezone.utc)
+
+        difference = (
+            kickoff - now
+        ).total_seconds() / 60
+
+        return difference
+
+    except Exception as exc:
+        log(
+            f"ERROR parsing kickoff time: {exc}"
         )
 
-        print(
-            "Reason: Pre-match "
-            "message was already sent."
+        return None
+
+
+# ============================================================
+# تصمیم‌گیری برای ارسال
+# ============================================================
+
+def should_send_pre_match(
+    match,
+    official_lineups,
+):
+    if match.get("pre_match_sent") is True:
+        return (
+            False,
+            "Pre-match post already sent.",
         )
 
+    status = str(
+        match.get("status") or ""
+    ).strip().lower()
+
+    if status != "upcoming":
+        return (
+            False,
+            f"Match status is {match.get('status')}.",
+        )
+
+    minutes_until_kickoff = (
+        get_minutes_until_kickoff(match)
+    )
+
+    if minutes_until_kickoff is None:
+        return (
+            False,
+            "Kickoff time is unavailable.",
+        )
+
+    log(
+        f"Minutes until kickoff: "
+        f"{minutes_until_kickoff:.1f}"
+    )
+
+    # --------------------------------------------------------
+    # حالت اول:
+    # ترکیب رسمی پیدا شده
+    # --------------------------------------------------------
+
+    if official_lineups:
+        return (
+            True,
+            "Official lineups detected.",
+        )
+
+    # --------------------------------------------------------
+    # حالت دوم:
+    # هنوز ترکیب رسمی نیست،
+    # ولی 30 دقیقه یا کمتر مانده
+    # --------------------------------------------------------
+
+    if (
+        0 <= minutes_until_kickoff
+        <= FALLBACK_MINUTES
+    ):
+        return (
+            True,
+            "Fallback: 30 minutes or less remain.",
+        )
+
+    # --------------------------------------------------------
+    # اگر بازی شروع شده باشد، هیچ پست پیش‌مسابقه‌ای
+    # نباید ارسال شود.
+    # --------------------------------------------------------
+
+    if minutes_until_kickoff < 0:
+        return (
+            False,
+            "Kickoff time has already passed.",
+        )
+
+    return (
+        False,
+        "More than 30 minutes remain and official lineups are not available.",
+    )
+
+
+# ============================================================
+# پردازش یک مسابقه
+# ============================================================
+
+async def process_match(match):
+    match_id = match.get("id")
+
+    log("")
+    log("=" * 70)
+    log(
+        f"Processing match: "
+        f"{match.get('home')} vs {match.get('away')}"
+    )
+    log(f"Match ID: {match_id}")
+    log(f"Status: {match.get('status')}")
+    log(
+        f"Pre-match sent: "
+        f"{match.get('pre_match_sent')}"
+    )
+    log(
+        f"UTC time: "
+        f"{match.get('utc_time')}"
+    )
+    log("=" * 70)
+
+    if not match_id:
+        log("ERROR: Match ID is missing.")
         return False
 
-    if status != "Upcoming":
-        print(
-            "Decision: WAIT"
-        )
-
-        print(
-            f"Reason: Match status "
-            f"is {status}."
-        )
-
+    if match.get("pre_match_sent") is True:
+        log("Decision: ALREADY SENT")
         return False
 
-    data = fetch_match_page(
-        match_id
-    )
+    page_html = fetch_match_page(match_id)
 
-    if not data:
-        print(
-            "Decision: WAIT"
-        )
-
-        print(
-            "Reason: Could not fetch "
-            "FotMob match page."
-        )
-
+    if not page_html:
+        log("Decision: WAIT")
         return False
 
-    page = get_page_data(
-        data
-    )
+    root = extract_next_data(page_html)
 
-    lineup = get_lineup_data(
-        page
-    )
+    if not root:
+        log("Decision: WAIT")
+        return False
 
-    lineup_type = lineup.get(
-        "lineupType"
-    )
+    lineup = get_lineup_data(root)
 
-    home_team = (
-        lineup.get("homeTeam")
-        or {}
-    )
+    if lineup is None:
+        log("Decision: WAIT")
+        return False
 
-    away_team = (
-        lineup.get("awayTeam")
-        or {}
-    )
+    lineup_type = str(
+        lineup.get("lineupType") or ""
+    ).strip().lower()
 
-    home_starters = get_starters(
-        home_team
-    )
-
-    away_starters = get_starters(
-        away_team
-    )
-
-    official_lineups = (
-        has_official_lineups(
-            lineup
-        )
-    )
-
-    print(
+    log(
         f"FotMob lineupType: "
         f"{lineup_type}"
     )
 
-    print(
+    home_team = lineup.get("homeTeam") or {}
+    away_team = lineup.get("awayTeam") or {}
+
+    home_starters = get_starters(home_team)
+    away_starters = get_starters(away_team)
+
+    log(
         f"Home starters: "
         f"{len(home_starters)}"
     )
 
-    print(
+    log(
         f"Away starters: "
         f"{len(away_starters)}"
     )
 
-    print(
+    official_lineups = has_official_lineups(
+        lineup
+    )
+
+    log(
         f"Official lineups: "
         f"{official_lineups}"
     )
 
-    eligible, reason = (
-        is_match_eligible(
-            match=match,
-            lineup=lineup,
-            minutes_until=minutes_until,
+    should_send, reason = (
+        should_send_pre_match(
+            match,
+            official_lineups,
         )
     )
 
-    print(
+    log(
         f"Decision reason: "
         f"{reason}"
     )
 
-    if not eligible:
-        print(
-            "Decision: WAIT"
-        )
-
-        print(
-            "No Telegram post "
-            "generated."
-        )
-
+    if not should_send:
+        log("Decision: WAIT")
         return False
 
-    print(
-        "Decision: SEND"
-    )
+    log("Decision: SEND")
 
-    print(
-        "This match is eligible "
-        "for a pre-match post."
-    )
-
-    post = build_pre_match_post(
+    post_text = build_pre_match_post(
         match=match,
         lineup=lineup,
+        official_lineups=official_lineups,
     )
 
-    print()
-    print(
-        "GENERATED TELEGRAM POST"
+    log("")
+    log("Generated Telegram post:")
+    log("-" * 70)
+    log(post_text)
+    log("-" * 70)
+
+    success = await send_telegram_message(
+        post_text
     )
 
-    print(
-        "-" * 90
-    )
-
-    print(post)
-
-    print(
-        "-" * 90
-    )
-
-    print()
-    print(
-        "Sending message to Telegram..."
-    )
-
-    sent = await send_telegram_message(
-        post
-    )
-
-    if not sent:
-        print(
-            "Telegram send failed."
-        )
-
-        print(
-            "pre_match_sent will "
-            "remain False."
+    if not success:
+        log(
+            "Telegram send failed. "
+            "Cache will NOT be marked as sent."
         )
 
         return False
 
-    match[
-        "pre_match_sent"
-    ] = True
+    match["pre_match_sent"] = True
 
-    match[
-        "last_pre_match_sent_at"
-    ] = datetime.now(
-        timezone.utc
-    ).isoformat()
+    match["last_pre_match_sent_at"] = (
+        datetime.now(
+            timezone.utc
+        ).isoformat()
+    )
 
-    print(
-        "pre_match_sent set to True."
+    log(
+        "pre_match_sent = True"
     )
 
     return True
 
 
+# ============================================================
+# تابع اصلی
+# ============================================================
+
 async def main():
-    print(
-        "Pre-match Post Generator"
+    log("")
+    log("=" * 70)
+    log("PRE-MATCH POST PROCESSOR")
+    log("=" * 70)
+    log(
+        f"Fallback window: "
+        f"{FALLBACK_MINUTES} minutes"
     )
-
-    print(
-        "=" * 90
+    log(
+        "Official lineup types: "
+        "standard / confirmed"
     )
+    log("=" * 70)
 
-    cache = load_cache()
+    cache = load_matches_cache()
 
-    if not cache:
-        print(
-            "No matches found "
-            "in cache."
+    if not isinstance(cache, dict):
+        log(
+            "ERROR: matches_cache.json "
+            "could not be loaded."
         )
+
         return
 
-    print(
-        f"Cached matches: "
+    if not cache:
+        log(
+            "No matches found in cache."
+        )
+
+        return
+
+    log(
+        f"Matches in cache: "
         f"{len(cache)}"
     )
 
-    cache_changed = False
+    changed = False
 
     for match_id, match in cache.items():
-        sent = await process_match(
-            match_id,
-            match,
-        )
+        if not isinstance(match, dict):
+            continue
 
-        if sent:
-            cache_changed = True
+        try:
+            sent = await process_match(
+                match
+            )
 
-    if cache_changed:
-        print()
-        print(
-            "Saving updated cache..."
+            if sent:
+                changed = True
+
+        except Exception as exc:
+            log("")
+            log(
+                f"ERROR processing match "
+                f"{match_id}: {exc}"
+            )
+
+            import traceback
+
+            traceback.print_exc()
+
+    # --------------------------------------------------------
+    # ذخیره کش فقط در پایان
+    # --------------------------------------------------------
+
+    if changed:
+        log("")
+        log(
+            "Saving updated matches_cache.json..."
         )
 
         save_cache(cache)
 
-    else:
-        print()
-        print(
-            "No cache changes "
-            "were necessary."
+        log(
+            "Cache saved successfully."
         )
 
-    print()
-    print(
-        "=" * 90
-    )
+    else:
+        log("")
+        log(
+            "No cache changes."
+        )
 
-    print(
-        "Pre-match processing "
-        "completed."
-    )
+    log("")
+    log("=" * 70)
+    log("PRE-MATCH PROCESSING FINISHED")
+    log("=" * 70)
 
+
+# ============================================================
+# اجرای برنامه
+# ============================================================
 
 if __name__ == "__main__":
-    asyncio.run(
-        main()
-    )
+    import asyncio
+
+    asyncio.run(main())
