@@ -1,6 +1,4 @@
 import json
-from datetime import datetime, timezone
-
 
 import requests
 
@@ -39,7 +37,9 @@ def load_cache():
         return {}
 
     except json.JSONDecodeError:
-        print("Cache file contains invalid JSON.")
+        print(
+            "Cache file contains invalid JSON."
+        )
         return {}
 
 
@@ -117,29 +117,62 @@ def determine_score(match):
     return "-"
 
 
-def create_match_record(match):
-    match_id = str(
-        match.get("id")
-    )
+def get_league_name(
+    match,
+    league,
+):
+    if isinstance(
+        league,
+        dict,
+    ):
+        league_name = str(
+            league.get("name")
+            or ""
+        ).strip()
 
-    league_name = str(
+        if league_name:
+            return league_name
+
+    match_league_name = str(
         match.get("leagueName")
         or ""
     ).strip()
 
-    if not league_name:
-        league = match.get(
-            "league"
-        )
+    if match_league_name:
+        return match_league_name
 
-        if isinstance(
-            league,
-            dict,
-        ):
-            league_name = str(
-                league.get("name")
-                or ""
-            ).strip()
+    match_league = (
+        match.get("league")
+        or {}
+    )
+
+    if isinstance(
+        match_league,
+        dict,
+    ):
+        league_name = str(
+            match_league.get("name")
+            or ""
+        ).strip()
+
+        if league_name:
+            return league_name
+
+    return ""
+
+
+def create_match_record(
+    match,
+    league,
+):
+    match_id = str(
+        match.get("id")
+    )
+
+    league_name = get_league_name(
+        match,
+        league,
+    )
 
     home = (
         match.get("home")
@@ -242,7 +275,10 @@ def main():
             ):
                 found_matches[
                     match_id
-                ] = match
+                ] = (
+                    match,
+                    league,
+                )
 
     print()
     print(
@@ -280,13 +316,16 @@ def main():
     for match_id in sorted(
         found_matches.keys()
     ):
-        match = found_matches[
-            match_id
-        ]
+        match, league = (
+            found_matches[
+                match_id
+            ]
+        )
 
         new_record = (
             create_match_record(
-                match
+                match,
+                league,
             )
         )
 
