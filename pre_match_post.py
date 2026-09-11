@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 import requests
 
-from match_cache import load_matches_cache, save_cache
+from match_cache import load_matches_cache, save_matches_cache
 from telegram_sender import send_telegram_message
 
 
@@ -920,7 +920,7 @@ async def main():
             "Saving updated matches_cache.json..."
         )
 
-        save_cache(cache)
+        save_matches_cache(cache)
 
         log(
             "Cache saved successfully."
