@@ -215,12 +215,12 @@
     "status": "Upcoming",
     "score": "-",
     "url": "https://www.fotmob.com/match/5881169",
-    "pre_match_sent": false,
+    "pre_match_sent": true,
     "lineup_sent": false,
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
     "last_score": "-",
-    "last_pre_match_sent_at": null
+    "last_pre_match_sent_at": "2026-09-11T17:30:36.595468+00:00"
   }
 }
