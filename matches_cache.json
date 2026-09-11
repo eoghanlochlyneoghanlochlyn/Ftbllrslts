@@ -152,13 +152,13 @@
     "status": "Upcoming",
     "score": "-",
     "url": "https://www.fotmob.com/match/5749679",
-    "pre_match_sent": false,
+    "pre_match_sent": true,
     "lineup_sent": false,
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
     "last_score": "-",
-    "last_pre_match_sent_at": null
+    "last_pre_match_sent_at": "2026-09-11T17:45:28.328343+00:00"
   },
   "5802935": {
     "id": "5802935",
@@ -173,13 +173,13 @@
     "status": "Upcoming",
     "score": "-",
     "url": "https://www.fotmob.com/match/5802935",
-    "pre_match_sent": false,
+    "pre_match_sent": true,
     "lineup_sent": false,
     "finished_sent": false,
     "sent_goal_ids": [],
     "last_status": "Upcoming",
     "last_score": "-",
-    "last_pre_match_sent_at": null
+    "last_pre_match_sent_at": "2026-09-11T17:45:28.782086+00:00"
   },
   "5868059": {
     "id": "5868059",
