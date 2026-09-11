@@ -22,6 +22,24 @@ HEADERS = {
 }
 
 
+TEAM_NAMES_FA = {
+    "Manchester United": "منچستریونایتد",
+    "Sabah FK": "صباح",
+    "Sabah": "صباح",
+}
+
+
+COMPETITION_NAMES_FA = {
+    "Champions League": "لیگ قهرمانان اروپا",
+    "Europa League": "لیگ اروپا",
+    "Premier League": "لیگ برتر انگلیس",
+    "LaLiga": "لالیگا",
+    "Serie A": "سری آ",
+    "Bundesliga": "بوندسلیگا",
+    "Ligue 1": "لیگ یک فرانسه",
+}
+
+
 def get_next_data(html):
     match = re.search(
         r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
@@ -33,6 +51,14 @@ def get_next_data(html):
         return None
 
     return json.loads(match.group(1))
+
+
+def translate_team_name(name):
+    return TEAM_NAMES_FA.get(name, name)
+
+
+def translate_competition_name(name):
+    return COMPETITION_NAMES_FA.get(name, name)
 
 
 def get_match_time_iran(general):
@@ -86,11 +112,44 @@ def get_match_time_iran(general):
     return "Unknown"
 
 
-def player_rating(player):
+def get_coach_name(team):
+    coach = team.get("coach")
+
+    if not coach:
+        return "Unknown"
+
+    if isinstance(coach, str):
+        return coach
+
+    if isinstance(coach, dict):
+        for key in [
+            "name",
+            "fullName",
+            "shortName",
+            "displayName",
+        ]:
+            if coach.get(key):
+                return coach[key]
+
+        first_name = coach.get("firstName", "")
+        last_name = coach.get("lastName", "")
+
+        full_name = f"{first_name} {last_name}".strip()
+
+        if full_name:
+            return full_name
+
+    return "Unknown"
+
+
+def get_player_rating(player):
     performance = player.get("performance")
 
     if isinstance(performance, dict):
-        return performance.get("rating", "-")
+        rating = performance.get("rating")
+
+        if rating is not None:
+            return rating
 
     return "-"
 
@@ -105,133 +164,214 @@ def sort_players(players):
     )
 
 
-def build_pitch_lineup(team):
+def get_short_player_name(player):
+    name = player.get("name", "-")
+
+    parts = name.split()
+
+    if len(parts) <= 1:
+        return name
+
+    return parts[-1]
+
+
+def build_compact_lineup(team, show_ratings=False):
     starters = sort_players(team.get("starters", []))
 
     if not starters:
-        return "اطلاعات ترکیب موجود نیست"
+        return "Lineup unavailable"
 
     lines = []
 
-    lines.append("📋 ترکیب روی زمین")
+    current_x = None
+    current_line = []
 
     for player in starters:
         layout = player.get("horizontalLayout", {})
         x = layout.get("x", 0)
-        y = layout.get("y", 0)
 
-        lines.append(
-            f"{player.get('name', '-')}"
-            f" | #{player.get('shirtNumber', '-')}"
-            f" | موقعیت: {x:.2f}/{y:.2f}"
-        )
+        if current_x is None:
+            current_x = x
+
+        if abs(x - current_x) > 0.12:
+            if current_line:
+                lines.append(" · ".join(current_line))
+
+            current_line = []
+            current_x = x
+
+        player_name = get_short_player_name(player)
+
+        if show_ratings:
+            rating = get_player_rating(player)
+            player_name = f"{player_name} {rating}"
+
+        current_line.append(player_name)
+
+    if current_line:
+        lines.append(" · ".join(current_line))
 
     return "\n".join(lines)
 
 
-def build_team(team):
+def build_team_block(team, show_ratings=False):
+    team_name = team.get("name", "-")
+    coach_name = get_coach_name(team)
+    formation = team.get("formation", "-")
+
     lines = []
 
-    lines.append(f"🏟 Team: {team.get('name', '-')}")
-    lines.append(f"📐 Formation: {team.get('formation', '-')}")
-    lines.append(f"⭐ Team Rating: {team.get('rating')}")
-    lines.append(f"👥 Average Age: {team.get('averageStarterAge')}")
-    lines.append("")
+    lines.append(
+        f"🔴 {team_name}"
+    )
 
-    lines.append("🟢 Starting XI")
+    lines.append(
+        f"Coach: {coach_name}"
+    )
 
-    starters = sort_players(team.get("starters", []))
+    lines.append(
+        f"Formation: {formation}"
+    )
 
-    for player in starters:
-        lines.append(
-            f"#{str(player.get('shirtNumber', '-')):>2}  "
-            f"{player.get('name', '-')}"
-            f" ({player_rating(player)})"
-        )
+    if show_ratings:
+        team_rating = team.get("rating")
 
-    lines.append("")
-    lines.append("🪑 Bench")
-
-    substitutes = team.get("subs", [])
-
-    if substitutes:
-        for player in substitutes:
+        if team_rating is not None:
             lines.append(
-                f"#{player.get('shirtNumber', '-')}"
-                f" {player.get('name', '-')}"
+                f"Team rating: {team_rating}"
             )
-    else:
-        lines.append("اطلاعات نیمکت در دادهٔ فوت‌موب موجود نیست")
-
-    unavailable = team.get("unavailable", [])
-
-    if unavailable:
-        lines.append("")
-        lines.append("❌ Unavailable")
-
-        for player in unavailable:
-            reason = ""
-
-            unavailability = player.get("unavailability")
-
-            if isinstance(unavailability, dict):
-                reason = unavailability.get("label", "")
-
-            player_name = player.get("name", "-")
-
-            if reason:
-                lines.append(f"{player_name} — {reason}")
-            else:
-                lines.append(player_name)
 
     lines.append("")
-    lines.append(build_pitch_lineup(team))
+    lines.append(
+        build_compact_lineup(
+            team,
+            show_ratings=show_ratings,
+        )
+    )
 
     return "\n".join(lines)
 
 
-def build_message(general, lineup):
+def get_score(general, header):
+    home_score = None
+    away_score = None
+
+    possible_sources = [
+        header,
+        general,
+    ]
+
+    for source in possible_sources:
+        if not isinstance(source, dict):
+            continue
+
+        if home_score is None:
+            home_score = source.get("homeScore")
+
+        if away_score is None:
+            away_score = source.get("awayScore")
+
+        if home_score is None:
+            home_score = source.get("homeTeamScore")
+
+        if away_score is None:
+            away_score = source.get("awayTeamScore")
+
+    return home_score, away_score
+
+
+def build_message(general, header, lineup):
     home_team = lineup.get("homeTeam", {})
     away_team = lineup.get("awayTeam", {})
 
-    message = []
+    league_name = general.get("leagueName", "Unknown")
+    league_name_fa = translate_competition_name(league_name)
 
-    message.append("🏆 MATCH INFORMATION")
-    message.append("")
+    home_name = home_team.get("name", "Home")
+    away_name = away_team.get("name", "Away")
 
-    message.append(
-        f"League : {general.get('leagueName', '-')}"
-    )
+    home_name_fa = translate_team_name(home_name)
+    away_name_fa = translate_team_name(away_name)
 
-    message.append(
-        f"Match  : {general.get('matchName', '-')}"
-    )
+    match_time = get_match_time_iran(general)
 
-    message.append(
-        f"Time 🇮🇷 : {get_match_time_iran(general)}"
-    )
+    finished = bool(general.get("finished", False))
+    started = bool(general.get("started", False))
 
-    message.append(
-        f"Started : {general.get('started', False)}"
-    )
+    lines = []
 
-    message.append(
-        f"Finished : {general.get('finished', False)}"
-    )
+    if finished:
+        home_score, away_score = get_score(
+            general,
+            header,
+        )
 
-    message.append("")
-    message.append("━━━━━━━━━━━━━━━━━━━━━━")
-    message.append("")
+        lines.append(f"🏆 {league_name_fa}")
+        lines.append("")
+        lines.append(
+            f"{home_name_fa} {home_score if home_score is not None else '-'} "
+            f"🆚 "
+            f"{away_score if away_score is not None else '-'} {away_name_fa}"
+        )
+        lines.append("")
+        lines.append(
+            f"⏰ {match_time}"
+        )
+        lines.append("")
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("")
 
-    message.append(build_team(home_team))
+        lines.append(
+            build_team_block(
+                home_team,
+                show_ratings=True,
+            )
+        )
 
-    message.append("")
-    message.append("━━━━━━━━━━━━━━━━━━━━━━")
-    message.append("")
+        lines.append("")
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("")
 
-    message.append(build_team(away_team))
+        lines.append(
+            build_team_block(
+                away_team,
+                show_ratings=True,
+            )
+        )
 
-    return "\n".join(message)
+    else:
+        lines.append(f"🏆 {league_name_fa}")
+        lines.append("")
+        lines.append(
+            f"{home_name_fa} 🆚 {away_name_fa}"
+        )
+        lines.append("")
+        lines.append(
+            f"⏰ {match_time}"
+        )
+        lines.append("")
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("")
+
+        lines.append(
+            build_team_block(
+                home_team,
+                show_ratings=False,
+            )
+        )
+
+        lines.append("")
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("")
+
+        lines.append(
+            build_team_block(
+                away_team,
+                show_ratings=False,
+            )
+        )
+
+    return "\n".join(lines)
 
 
 async def send_to_telegram(message):
@@ -265,11 +405,12 @@ def main():
     page = data["props"]["pageProps"]
 
     general = page["general"]
-    content = page["content"]
-    lineup = content["lineup"]
+    header = page.get("header", {})
+    lineup = page["content"]["lineup"]
 
     message = build_message(
         general,
+        header,
         lineup,
     )
 
