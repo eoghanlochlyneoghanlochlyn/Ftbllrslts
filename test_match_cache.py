@@ -5,6 +5,7 @@ from test_daily_matches import fetch_matches_for_date
 from match_cache import (
     add_or_update_match,
     load_matches_cache,
+    remove_old_matches,
     save_matches_cache,
 )
 
@@ -40,6 +41,10 @@ def main():
             else:
                 updated_matches += 1
 
+    cache, removed_matches = remove_old_matches(
+        cache
+    )
+
     save_matches_cache(cache)
 
     print("")
@@ -48,6 +53,7 @@ def main():
     print("=" * 60)
     print(f"New matches: {new_matches}")
     print(f"Updated matches: {updated_matches}")
+    print(f"Removed old matches: {removed_matches}")
     print(f"Total cached matches: {len(cache)}")
     print("=" * 60)
 
