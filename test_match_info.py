@@ -1,3 +1,4 @@
+```python
 import json
 import os
 import re
@@ -576,6 +577,246 @@ def is_match_finished(root):
                 return True
 
     return False
+
+
+# --------------------------------------------------------
+# استخراج نتیجه بازی
+#
+# فقط برای بازی تمام‌شده استفاده می‌شود.
+#
+# خروجی:
+#
+# {
+#     "home": 0,
+#     "away": 1
+# }
+# --------------------------------------------------------
+
+def get_match_score(root, content):
+    candidates = []
+
+    # ----------------------------------------------------
+    # 1. header.status.scoreStr
+    # ----------------------------------------------------
+
+    status = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "header",
+        "status",
+    )
+
+    if isinstance(status, dict):
+
+        candidates.extend(
+            [
+                status.get("scoreStr"),
+                status.get("score"),
+            ]
+        )
+
+    # ----------------------------------------------------
+    # 2. general.scoreStr / general.score
+    # ----------------------------------------------------
+
+    general = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "general",
+    )
+
+    if isinstance(general, dict):
+
+        candidates.extend(
+            [
+                general.get("scoreStr"),
+                general.get("score"),
+            ]
+        )
+
+    # ----------------------------------------------------
+    # 3. content.status
+    # ----------------------------------------------------
+
+    content_status = (
+        content.get("status")
+        if isinstance(content, dict)
+        else None
+    )
+
+    if isinstance(content_status, dict):
+
+        candidates.extend(
+            [
+                content_status.get("scoreStr"),
+                content_status.get("score"),
+            ]
+        )
+
+    # ----------------------------------------------------
+    # 4. content.scoreStr / content.score
+    # ----------------------------------------------------
+
+    if isinstance(content, dict):
+
+        candidates.extend(
+            [
+                content.get("scoreStr"),
+                content.get("score"),
+            ]
+        )
+
+    # ----------------------------------------------------
+    # بررسی همه گزینه‌ها
+    # ----------------------------------------------------
+
+    for candidate in candidates:
+
+        if candidate is None:
+            continue
+
+        # --------------------------------------------
+        # حالت:
+        # "0 - 1"
+        # "0-1"
+        # "0 : 1"
+        # --------------------------------------------
+
+        if isinstance(candidate, str):
+
+            match = re.search(
+                r"(\d+)\s*[-:]\s*(\d+)",
+                candidate,
+            )
+
+            if match:
+
+                try:
+                    return {
+                        "home": int(
+                            match.group(1)
+                        ),
+                        "away": int(
+                            match.group(2)
+                        ),
+                    }
+
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+                    pass
+
+        # --------------------------------------------
+        # حالت دیکشنری
+        # --------------------------------------------
+
+        if isinstance(candidate, dict):
+
+            home_value = first_non_empty(
+                candidate.get("home"),
+                candidate.get("homeScore"),
+                candidate.get("homeGoals"),
+            )
+
+            away_value = first_non_empty(
+                candidate.get("away"),
+                candidate.get("awayScore"),
+                candidate.get("awayGoals"),
+            )
+
+            if (
+                home_value != ""
+                and away_value != ""
+            ):
+
+                try:
+                    return {
+                        "home": int(
+                            home_value
+                        ),
+                        "away": int(
+                            away_value
+                        ),
+                    }
+
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+                    pass
+
+    # ----------------------------------------------------
+    # اگر scoreStr پیدا نشد، از eventهای Goal
+    # نتیجه را بازسازی می‌کنیم.
+    #
+    # این fallback مخصوصاً برای مقاومت بیشتر
+    # در برابر تغییر ساختار FotMob است.
+    # ----------------------------------------------------
+
+    events = get_match_events(
+        root
+    )
+
+    home_goals = 0
+    away_goals = 0
+
+    for event in events:
+
+        if not isinstance(event, dict):
+            continue
+
+        event_type = clean_text(
+            event.get("type")
+        ).lower()
+
+        if event_type != "goal":
+            continue
+
+        if event.get(
+            "isPenaltyShootoutEvent"
+        ) is True:
+            continue
+
+        if is_cancelled_goal_event(
+            event
+        ):
+            continue
+
+        is_home = event.get(
+            "isHome"
+        )
+
+        own_goal = is_own_goal(
+            event
+        )
+
+        if own_goal:
+
+            if is_home is True:
+                away_goals += 1
+
+            elif is_home is False:
+                home_goals += 1
+
+        else:
+
+            if is_home is True:
+                home_goals += 1
+
+            elif is_home is False:
+                away_goals += 1
+
+    if home_goals or away_goals:
+
+        return {
+            "home": home_goals,
+            "away": away_goals,
+        }
+
+    return None
 
 
 # --------------------------------------------------------
@@ -2211,10 +2452,6 @@ def is_red_card_event(event):
     ):
         return False
 
-    # ----------------------------------------------------
-    # اگر کارت برای مربی باشد، نادیده گرفته می‌شود.
-    # ----------------------------------------------------
-
     card_description = event.get(
         "cardDescription"
     )
@@ -2323,17 +2560,6 @@ def get_event_assist_player_id(event):
 
 # --------------------------------------------------------
 # اطلاعات رویدادهای بازیکنان
-#
-# خروجی:
-#
-# {
-#     player_id: {
-#         "goals": 1,
-#         "penalty_goals": 1,
-#         "assists": 1,
-#         "red_cards": 1,
-#     }
-# }
 # --------------------------------------------------------
 
 def extract_player_events(root):
@@ -2358,13 +2584,6 @@ def extract_player_events(root):
 
         return player_events[player_id]
 
-    # ----------------------------------------------------
-    # اول VARهای مردودکننده گل را پیدا می‌کنیم.
-    #
-    # فعلاً برای جلوگیری از خطای احتمالی، شناسه
-    # گل مردود را ذخیره می‌کنیم.
-    # ----------------------------------------------------
-
     cancelled_goal_player_ids = set()
 
     for event in events:
@@ -2386,10 +2605,6 @@ def extract_player_events(root):
                 player_id
             )
 
-    # ----------------------------------------------------
-    # پردازش Goal و Card
-    # ----------------------------------------------------
-
     for event in events:
 
         if not isinstance(event, dict):
@@ -2398,10 +2613,6 @@ def extract_player_events(root):
         event_type = clean_text(
             event.get("type")
         ).lower()
-
-        # ------------------------------------------------
-        # گل
-        # ------------------------------------------------
 
         if event_type == "goal":
 
@@ -2412,21 +2623,10 @@ def extract_player_events(root):
             if player_id is None:
                 continue
 
-            # --------------------------------------------
-            # گل‌های مربوط به ضربات پنالتی پس از پایان
-            # بازی هم Goal هستند، اما فقط گل پنالتی عادی
-            # را علامت می‌زنیم.
-            # --------------------------------------------
-
             if event.get(
                 "isPenaltyShootoutEvent"
             ) is True:
                 continue
-
-            # --------------------------------------------
-            # اگر بازیکن در فهرست VAR لغوشده باشد،
-            # فعلاً آن را گل واقعی محسوب نمی‌کنیم.
-            # --------------------------------------------
 
             if player_id in cancelled_goal_player_ids:
                 continue
@@ -2439,10 +2639,6 @@ def extract_player_events(root):
 
             if is_penalty_goal(event):
                 data["penalty_goals"] += 1
-
-            # --------------------------------------------
-            # پاس گل
-            # --------------------------------------------
 
             assist_player_id = (
                 get_event_assist_player_id(
@@ -2457,10 +2653,6 @@ def extract_player_events(root):
                 )
 
                 assist_data["assists"] += 1
-
-        # ------------------------------------------------
-        # کارت قرمز
-        # ------------------------------------------------
 
         elif event_type == "card":
 
@@ -2487,10 +2679,6 @@ def extract_player_events(root):
 
 # --------------------------------------------------------
 # استخراج گلزنان هر تیم
-#
-# own goal:
-# گل به خودی بازیکن تیم A
-# باید برای تیم B به عنوان گل ثبت شود.
 # --------------------------------------------------------
 
 def extract_scorers(
@@ -2519,10 +2707,6 @@ def extract_scorers(
 
     cancelled_goal_indexes = set()
 
-    # ----------------------------------------------------
-    # VARهای لغوکننده گل
-    # ----------------------------------------------------
-
     cancelled_player_ids = set()
 
     for event in events:
@@ -2542,10 +2726,6 @@ def extract_scorers(
                 cancelled_player_ids.add(
                     player_id
                 )
-
-    # ----------------------------------------------------
-    # پردازش گل‌ها
-    # ----------------------------------------------------
 
     for event_index, event in enumerate(
         events
@@ -2604,10 +2784,6 @@ def extract_scorers(
         if not player_name:
             continue
 
-        # ------------------------------------------------
-        # گل به خودی
-        # ------------------------------------------------
-
         own_goal = is_own_goal(
             event
         )
@@ -2632,10 +2808,6 @@ def extract_scorers(
 
             continue
 
-        # ------------------------------------------------
-        # گل عادی
-        # ------------------------------------------------
-
         if player_id in home_ids:
 
             home_scorers.append(
@@ -2649,11 +2821,6 @@ def extract_scorers(
             )
 
         else:
-
-            # ------------------------------------------------
-            # اگر بازیکن در lineup پیدا نشد، از isHome
-            # خود event برای تعیین تیم استفاده می‌کنیم.
-            # ------------------------------------------------
 
             if is_home is True:
                 home_scorers.append(
@@ -2727,20 +2894,6 @@ def get_player_event_markers(
         or 0
     )
 
-    # ----------------------------------------------------
-    # گل
-    #
-    # اگر تمام گل‌های بازیکن پنالتی باشند:
-    # P ⚽
-    #
-    # اگر بخشی پنالتی و بخشی عادی باشند:
-    # P ⚽ برای پنالتی‌ها و ⚽ برای بقیه
-    #
-    # مثال:
-    # 2 گل که یکی پنالتی است:
-    # P ⚽ ⚽
-    # ----------------------------------------------------
-
     normal_goals = (
         goals
         - penalty_goals
@@ -2766,10 +2919,6 @@ def get_player_event_markers(
             f"×{normal_goals} ⚽"
         )
 
-    # ----------------------------------------------------
-    # پاس گل
-    # ----------------------------------------------------
-
     if assists == 1:
 
         markers.append(
@@ -2781,10 +2930,6 @@ def get_player_event_markers(
         markers.append(
             f"×{assists} 👟"
         )
-
-    # ----------------------------------------------------
-    # کارت قرمز
-    # ----------------------------------------------------
 
     if red_cards == 1:
 
@@ -2819,10 +2964,6 @@ def format_player(
 
     result = name
 
-    # ----------------------------------------------------
-    # Rating فقط بعد از پایان بازی
-    # ----------------------------------------------------
-
     if show_rating:
 
         rating = get_player_rating(
@@ -2834,12 +2975,6 @@ def format_player(
             result += (
                 f" {rating:.1f}"
             )
-
-    # ----------------------------------------------------
-    # رویدادهای بازیکن
-    #
-    # یک پرانتز واحد
-    # ----------------------------------------------------
 
     if player_events is not None:
 
@@ -2993,10 +3128,6 @@ def format_team_lineup(
     if line:
         lines.append(line)
 
-    # ----------------------------------------------------
-    # بازیکن ناشناخته
-    # ----------------------------------------------------
-
     if groups["unknown"]:
 
         unknown_line = format_player_line(
@@ -3011,10 +3142,6 @@ def format_team_lineup(
             lines.append(
                 unknown_line
             )
-
-    # ----------------------------------------------------
-    # فاصله بین آخرین خط اصلی و تعویضی‌ها
-    # ----------------------------------------------------
 
     lines.append("")
 
@@ -3109,6 +3236,34 @@ def build_message(root):
     )
 
     show_rating = finished
+
+    # ----------------------------------------------------
+    # نتیجه فقط بعد از پایان بازی
+    # ----------------------------------------------------
+
+    match_score = None
+
+    if finished:
+
+        match_score = get_match_score(
+            root,
+            content,
+        )
+
+    if match_score:
+
+        print(
+            "FINAL SCORE:",
+            f"{match_score['home']} - "
+            f"{match_score['away']}",
+        )
+
+    else:
+
+        print(
+            "FINAL SCORE:",
+            "NOT FOUND",
+        )
 
     lineup = get_lineup(
         content,
@@ -3453,9 +3608,30 @@ def build_message(root):
 
     message.append("")
 
-    message.append(
-        f"⚽️ {home_name} 🆚 {away_name}"
-    )
+    # ----------------------------------------------------
+    # نام تیم‌ها
+    #
+    # فقط اگر بازی تمام شده باشد، نتیجه کنار اسم
+    # تیم قرار می‌گیرد.
+    # ----------------------------------------------------
+
+    if finished and match_score:
+
+        message.append(
+            f"⚽️ {home_name} "
+            f"{match_score['home']} "
+            f"🆚 "
+            f"{away_name} "
+            f"{match_score['away']}"
+        )
+
+    else:
+
+        message.append(
+            f"⚽️ {home_name} "
+            f"🆚 "
+            f"{away_name}"
+        )
 
     message.append(
         f"🕐 {kickoff} به وقت ایران"
@@ -3652,3 +3828,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
