@@ -986,20 +986,12 @@ def get_player_rating(player):
 
 # --------------------------------------------------------
 # استخراج positionId
-#
-# نکته:
-# اینجا عمداً recursive_find استفاده نشده.
-#
-# چون positionId باید متعلق به خود همین player باشد،
-# نه هر positionId دیگری که در ساختار فرزند/اطلاعات جانبی
-# پیدا شود.
 # --------------------------------------------------------
 
 def get_player_position_id(player):
     if not isinstance(player, dict):
         return None
 
-    # حالت اصلی
     for key in (
         "positionId",
         "positionID",
@@ -1018,7 +1010,6 @@ def get_player_position_id(player):
             ):
                 pass
 
-    # اگر اطلاعات بازیکن داخل player باشد
     nested_player = player.get(
         "player"
     )
@@ -1031,9 +1022,7 @@ def get_player_position_id(player):
             "position_id",
         ):
 
-            value = nested_player.get(
-                key
-            )
+            value = nested_player.get(key)
 
             if value is not None:
 
@@ -1049,9 +1038,15 @@ def get_player_position_id(player):
 
 
 # --------------------------------------------------------
-# تبدیل positionId به گروه
+# تبدیل positionId به گروه پایه
 #
-# این نگاشت همان نگاشت قبلی استخراج‌شده از FotMob است.
+# نکته بسیار مهم:
+#
+# این تابع دیگر مستقیماً تعیین نمی‌کند که بازیکن
+# در پیام نهایی در خط هافبک یا حمله قرار بگیرد.
+#
+# بعضی positionIdها مثل 78 و 82 و 84 و ... در
+# ترکیب‌های مختلف می‌توانند نقش متفاوتی داشته باشند.
 # --------------------------------------------------------
 
 def position_group(player):
@@ -1062,17 +1057,11 @@ def position_group(player):
     if position_id is None:
         return "unknown"
 
-    # ----------------------------------------------------
     # دروازه‌بان
-    # ----------------------------------------------------
-
     if position_id == 11:
         return "goalkeeper"
 
-    # ----------------------------------------------------
-    # مدافع
-    # ----------------------------------------------------
-
+    # مدافع‌های قطعی
     if position_id in {
         32,
         33,
@@ -1084,10 +1073,7 @@ def position_group(player):
     }:
         return "defender"
 
-    # ----------------------------------------------------
-    # هافبک / وینگ‌بک / بازیکن میانی
-    # ----------------------------------------------------
-
+    # هافبک‌های قطعی
     if position_id in {
         51,
         59,
@@ -1107,10 +1093,7 @@ def position_group(player):
     }:
         return "midfielder"
 
-    # ----------------------------------------------------
-    # بازیکنان هجومی / وینگر
-    # ----------------------------------------------------
-
+    # بازیکنان مرزی بین هافبک و حمله
     if position_id in {
         78,
         82,
@@ -1123,12 +1106,9 @@ def position_group(player):
         103,
         107,
     }:
-        return "attacker"
+        return "wide_attacker"
 
-    # ----------------------------------------------------
-    # مهاجمان مرکزی
-    # ----------------------------------------------------
-
+    # مهاجم‌های مرکزی قطعی
     if position_id in {
         104,
         105,
@@ -1141,7 +1121,244 @@ def position_group(player):
 
 
 # --------------------------------------------------------
-# پیدا کردن مربی
+# layout بازیکن
+# --------------------------------------------------------
+
+def get_player_layout(player):
+    if not isinstance(player, dict):
+        return None, None
+
+    sources = [
+        player,
+        player.get("player"),
+    ]
+
+    for source in sources:
+
+        if not isinstance(source, dict):
+            continue
+
+        horizontal = None
+        vertical = None
+
+        for key in (
+            "horizontalLayout",
+            "horizontal",
+            "x",
+        ):
+
+            if source.get(key) is not None:
+                horizontal = source.get(key)
+                break
+
+        for key in (
+            "verticalLayout",
+            "vertical",
+            "y",
+        ):
+
+            if source.get(key) is not None:
+                vertical = source.get(key)
+                break
+
+        if (
+            horizontal is not None
+            or vertical is not None
+        ):
+
+            try:
+                if horizontal is not None:
+                    horizontal = float(horizontal)
+            except (
+                TypeError,
+                ValueError,
+            ):
+                horizontal = None
+
+            try:
+                if vertical is not None:
+                    vertical = float(vertical)
+            except (
+                TypeError,
+                ValueError,
+            ):
+                vertical = None
+
+            return (
+                horizontal,
+                vertical,
+            )
+
+    return None, None
+
+
+# --------------------------------------------------------
+# تبدیل layout به عدد
+# --------------------------------------------------------
+
+def numeric_layout_value(value):
+    if value is None:
+        return None
+
+    try:
+        return float(value)
+    except (
+        TypeError,
+        ValueError,
+    ):
+        return None
+
+
+# --------------------------------------------------------
+# تشخیص Formation
+# --------------------------------------------------------
+
+def get_formation(team):
+    if not isinstance(team, dict):
+        return ""
+
+    direct_keys = (
+        "formation",
+        "formationName",
+        "system",
+        "shape",
+    )
+
+    for key in direct_keys:
+
+        value = team.get(key)
+
+        if isinstance(value, str):
+
+            value = value.strip()
+
+            if re.fullmatch(
+                r"\d+(?:-\d+)+",
+                value,
+            ):
+                return value
+
+        elif isinstance(value, dict):
+
+            name = first_non_empty(
+                value.get("name"),
+                value.get("formation"),
+                value.get("value"),
+            )
+
+            if name:
+
+                name = clean_text(
+                    name
+                )
+
+                if re.fullmatch(
+                    r"\d+(?:-\d+)+",
+                    name,
+                ):
+                    return name
+
+    results = recursive_find(
+        team,
+        {
+            "formation",
+            "formationName",
+            "system",
+            "shape",
+        },
+    )
+
+    for _, value in results:
+
+        if isinstance(value, str):
+
+            value = value.strip()
+
+            if re.fullmatch(
+                r"\d+(?:-\d+)+",
+                value,
+            ):
+                return value
+
+        elif isinstance(value, dict):
+
+            name = first_non_empty(
+                value.get("name"),
+                value.get("formation"),
+                value.get("value"),
+            )
+
+            if name:
+
+                name = clean_text(
+                    name
+                )
+
+                if re.fullmatch(
+                    r"\d+(?:-\d+)+",
+                    name,
+                ):
+                    return name
+
+    return ""
+
+
+# --------------------------------------------------------
+# تبدیل Formation به خطوط
+#
+# 3-4-3 -> دفاع 3، هافبک 4، حمله 3
+# 4-4-2 -> دفاع 4، هافبک 4، حمله 2
+# 4-2-3-1 -> دفاع 4، هافبک 5، حمله 1
+# 3-5-2 -> دفاع 3، هافبک 5، حمله 2
+# --------------------------------------------------------
+
+def parse_formation(formation):
+    if not formation:
+        return None
+
+    parts = formation.split("-")
+
+    numbers = []
+
+    for part in parts:
+
+        try:
+            number = int(part)
+        except (
+            TypeError,
+            ValueError,
+        ):
+            return None
+
+        if number <= 0:
+            return None
+
+        numbers.append(number)
+
+    # در Formation استاندارد، مجموع خطوط خارج از GK باید 10 باشد
+    if len(numbers) < 2:
+        return None
+
+    if sum(numbers) != 10:
+        return None
+
+    defenders = numbers[0]
+    attackers = numbers[-1]
+
+    midfielders = sum(
+        numbers[1:-1]
+    )
+
+    return {
+        "defenders": defenders,
+        "midfielders": midfielders,
+        "attackers": attackers,
+        "lines": numbers,
+    }
+
+
+# --------------------------------------------------------
+# مربی
 # --------------------------------------------------------
 
 def get_coach(team):
@@ -1206,89 +1423,163 @@ def get_coach(team):
 
 
 # --------------------------------------------------------
-# پیدا کردن سیستم
+# بازیکن را بر اساس اطلاعات پایه به یکی از گروه‌ها
+# اختصاص می‌دهد.
+#
+# خروجی:
+# goalkeeper
+# defender
+# midfielder
+# wide_attacker
+# attacker
+# unknown
 # --------------------------------------------------------
 
-def get_formation(team):
-    if not isinstance(team, dict):
-        return ""
-
-    direct_keys = (
-        "formation",
-        "formationName",
-        "system",
-        "shape",
+def get_base_player_role(player):
+    return position_group(
+        player
     )
 
-    for key in direct_keys:
 
-        value = team.get(key)
+# --------------------------------------------------------
+# امتیاز اطمینان برای اینکه بازیکن ذاتاً متعلق به
+# کدام خط است.
+#
+# عدد بزرگ‌تر = اطمینان بیشتر
+# --------------------------------------------------------
 
-        if isinstance(value, str):
-
-            value = value.strip()
-
-            if value:
-                return value
-
-        if isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("formation"),
-                value.get("value"),
-            )
-
-            if name:
-                return clean_text(name)
-
-    results = recursive_find(
-        team,
-        {
-            "formation",
-            "formationName",
-            "system",
-            "shape",
-        },
+def role_priority(player, target_role):
+    role = get_base_player_role(
+        player
     )
 
-    for _, value in results:
+    if target_role == "defender":
 
-        if isinstance(value, str):
+        if role == "defender":
+            return 100
 
-            value = value.strip()
+        if role == "unknown":
+            return 20
 
-            if (
-                re.fullmatch(
-                    r"\d{3,4}",
-                    value,
-                )
-                or re.fullmatch(
-                    r"\d-\d-\d(?:-\d)?",
-                    value,
-                )
-            ):
-                return value
+        return 0
 
-        elif isinstance(value, dict):
+    if target_role == "midfielder":
 
-            name = first_non_empty(
-                value.get("name"),
-                value.get("formation"),
-                value.get("value"),
+        if role == "midfielder":
+            return 100
+
+        # بازیکنان wide_attacker را عمداً
+        # می‌توانیم برای تکمیل خط هافبک استفاده کنیم.
+        if role == "wide_attacker":
+            return 60
+
+        if role == "unknown":
+            return 20
+
+        return 0
+
+    if target_role == "attacker":
+
+        if role == "attacker":
+            return 100
+
+        if role == "wide_attacker":
+            return 60
+
+        if role == "unknown":
+            return 20
+
+        return 0
+
+    return 0
+
+
+# --------------------------------------------------------
+# فاصله عمقی بازیکن
+#
+# اگر layout عمودی وجود داشته باشد، از آن برای
+# تشخیص اینکه بازیکن جلوتر یا عقب‌تر قرار گرفته
+# استفاده می‌کنیم.
+# --------------------------------------------------------
+
+def get_depth(player):
+    _, vertical = get_player_layout(
+        player
+    )
+
+    return numeric_layout_value(
+        vertical
+    )
+
+
+# --------------------------------------------------------
+# مرتب کردن بازیکنان یک خط از چپ به راست
+#
+# horizontalLayout در FotMob برای تعیین جای افقی
+# بازیکن استفاده می‌شود.
+# --------------------------------------------------------
+
+def sort_line_players(players):
+    if not players:
+        return []
+
+    decorated = []
+
+    has_horizontal = False
+
+    for index, player in enumerate(
+        players
+    ):
+
+        horizontal, _ = get_player_layout(
+            player
+        )
+
+        horizontal = numeric_layout_value(
+            horizontal
+        )
+
+        if horizontal is not None:
+            has_horizontal = True
+
+        decorated.append(
+            (
+                index,
+                player,
+                horizontal,
             )
+        )
 
-            if name:
-                return clean_text(name)
+    if not has_horizontal:
+        return players
 
-    return ""
+    decorated.sort(
+        key=lambda item: (
+            item[2]
+            if item[2] is not None
+            else 999999
+        )
+    )
+
+    return [
+        item[1]
+        for item in decorated
+    ]
 
 
 # --------------------------------------------------------
-# مرتب کردن بازیکنان
+# انتخاب بازیکنان بر اساس Formation
+#
+# این مهم‌ترین بخش جدید است.
+#
+# positionId دیگر به تنهایی تعیین‌کننده خط نیست.
+# Formation تعیین می‌کند چند نفر باید در هر خط باشند.
 # --------------------------------------------------------
 
-def organize_players(starters):
+def organize_players(
+    starters,
+    formation,
+):
     groups = {
         "goalkeeper": [],
         "defender": [],
@@ -1297,15 +1588,481 @@ def organize_players(starters):
         "unknown": [],
     }
 
+    if not starters:
+        return groups
+
+    formation_info = parse_formation(
+        formation
+    )
+
+    # ----------------------------------------------------
+    # اگر Formation معتبر نبود،
+    # fallback به positionId
+    # ----------------------------------------------------
+
+    if not formation_info:
+
+        for player in starters:
+
+            role = get_base_player_role(
+                player
+            )
+
+            if role == "goalkeeper":
+                groups["goalkeeper"].append(
+                    player
+                )
+
+            elif role == "defender":
+                groups["defender"].append(
+                    player
+                )
+
+            elif role == "midfielder":
+                groups["midfielder"].append(
+                    player
+                )
+
+            elif role in (
+                "wide_attacker",
+                "attacker",
+            ):
+                groups["attacker"].append(
+                    player
+                )
+
+            else:
+                groups["unknown"].append(
+                    player
+                )
+
+        return groups
+
+    # ----------------------------------------------------
+    # اول دروازه‌بان
+    # ----------------------------------------------------
+
+    goalkeeper = None
+
     for player in starters:
 
-        group = position_group(
+        if get_base_player_role(
             player
+        ) == "goalkeeper":
+
+            goalkeeper = player
+            break
+
+    if goalkeeper is not None:
+
+        groups["goalkeeper"].append(
+            goalkeeper
         )
 
-        groups[group].append(
+    remaining = [
+        player
+        for player in starters
+        if player is not goalkeeper
+    ]
+
+    # ----------------------------------------------------
+    # تعداد موردنیاز
+    # ----------------------------------------------------
+
+    defender_count = (
+        formation_info["defenders"]
+    )
+
+    midfielder_count = (
+        formation_info["midfielders"]
+    )
+
+    attacker_count = (
+        formation_info["attackers"]
+    )
+
+    # ----------------------------------------------------
+    # دفاع
+    #
+    # اول مدافع‌های قطعی را انتخاب می‌کنیم.
+    # ----------------------------------------------------
+
+    defenders = [
+        player
+        for player in remaining
+        if get_base_player_role(
             player
+        ) == "defender"
+    ]
+
+    # اگر تعداد مدافع قطعی بیشتر از Formation بود،
+    # با layout عمقی نزدیک‌ترین‌ها به خط دفاعی را
+    # نگه می‌داریم.
+    if len(defenders) > defender_count:
+
+        defenders_with_depth = []
+
+        for player in defenders:
+
+            depth = get_depth(
+                player
+            )
+
+            defenders_with_depth.append(
+                (
+                    player,
+                    depth,
+                )
+            )
+
+        usable_depth = [
+            item
+            for item in defenders_with_depth
+            if item[1] is not None
+        ]
+
+        if usable_depth:
+
+            usable_depth.sort(
+                key=lambda item: item[1]
+            )
+
+            defenders = [
+                item[0]
+                for item in usable_depth[
+                    :defender_count
+                ]
+            ]
+
+        else:
+
+            defenders = defenders[
+                :defender_count
+            ]
+
+    # اگر مدافع کافی نداریم، unknown را اضافه می‌کنیم.
+    if len(defenders) < defender_count:
+
+        candidates = [
+            player
+            for player in remaining
+            if (
+                player not in defenders
+                and get_base_player_role(
+                    player
+                ) == "unknown"
+            )
+        ]
+
+        needed = (
+            defender_count
+            - len(defenders)
         )
+
+        defenders.extend(
+            candidates[:needed]
+        )
+
+    for player in defenders:
+        if player in remaining:
+            remaining.remove(
+                player
+            )
+
+    groups["defender"] = defenders
+
+    # ----------------------------------------------------
+    # مهاجم‌های قطعی
+    #
+    # فقط مهاجمان مرکزی قطعی را اینجا می‌گیریم.
+    # wide_attacker فعلاً آزاد می‌ماند تا Formation
+    # تعیین کند هافبک است یا مهاجم.
+    # ----------------------------------------------------
+
+    pure_attackers = [
+        player
+        for player in remaining
+        if get_base_player_role(
+            player
+        ) == "attacker"
+    ]
+
+    # تعداد مهاجم قطعی موردنیاز
+    pure_attackers_to_take = min(
+        len(pure_attackers),
+        attacker_count,
+    )
+
+    attackers = pure_attackers[
+        :pure_attackers_to_take
+    ]
+
+    for player in attackers:
+        if player in remaining:
+            remaining.remove(
+                player
+            )
+
+    # ----------------------------------------------------
+    # حالا بازیکنان باقی‌مانده را داریم.
+    #
+    # معمولاً اینها ترکیبی از:
+    # - هافبک‌های قطعی
+    # - وینگرها
+    # - بازیکنان ناشناخته
+    # هستند.
+    # ----------------------------------------------------
+
+    fixed_midfielders = [
+        player
+        for player in remaining
+        if get_base_player_role(
+            player
+        ) == "midfielder"
+    ]
+
+    wide_players = [
+        player
+        for player in remaining
+        if get_base_player_role(
+            player
+        ) == "wide_attacker"
+    ]
+
+    unknown_players = [
+        player
+        for player in remaining
+        if get_base_player_role(
+            player
+        ) == "unknown"
+    ]
+
+    # ----------------------------------------------------
+    # اول هافبک‌های قطعی را وارد خط هافبک می‌کنیم.
+    # ----------------------------------------------------
+
+    midfielders = fixed_midfielders[
+        :midfielder_count
+    ]
+
+    for player in midfielders:
+        if player in remaining:
+            remaining.remove(
+                player
+            )
+
+    # ----------------------------------------------------
+    # ظرفیت باقی‌مانده خط هافبک
+    # ----------------------------------------------------
+
+    midfield_need = (
+        midfielder_count
+        - len(midfielders)
+    )
+
+    # ----------------------------------------------------
+    # وینگرها را با توجه به Formation تقسیم می‌کنیم.
+    #
+    # این قسمت دقیقاً مشکل بازی KV Mechelen و
+    # Anderlecht را حل می‌کند.
+    # ----------------------------------------------------
+
+    if midfield_need > 0:
+
+        wide_sorted = list(
+            wide_players
+        )
+
+        # اگر verticalLayout داریم، بازیکنان
+        # عقب‌تر را برای تکمیل خط هافبک ترجیح می‌دهیم.
+        wide_with_depth = []
+
+        for player in wide_sorted:
+
+            depth = get_depth(
+                player
+            )
+
+            wide_with_depth.append(
+                (
+                    player,
+                    depth,
+                )
+            )
+
+        if any(
+            depth is not None
+            for _, depth
+            in wide_with_depth
+        ):
+
+            wide_with_depth.sort(
+                key=lambda item: (
+                    item[1]
+                    if item[1] is not None
+                    else 999999
+                )
+            )
+
+            wide_sorted = [
+                item[0]
+                for item in wide_with_depth
+            ]
+
+        selected = wide_sorted[
+            :midfield_need
+        ]
+
+        midfielders.extend(
+            selected
+        )
+
+        for player in selected:
+
+            if player in remaining:
+                remaining.remove(
+                    player
+                )
+
+            if player in wide_players:
+                wide_players.remove(
+                    player
+                )
+
+    # ----------------------------------------------------
+    # حالا ظرفیت باقی‌مانده مهاجمان
+    # ----------------------------------------------------
+
+    attacker_need = (
+        attacker_count
+        - len(attackers)
+    )
+
+    if attacker_need > 0:
+
+        # وینگرهای باقی‌مانده اولویت دارند.
+        selected = wide_players[
+            :attacker_need
+        ]
+
+        attackers.extend(
+            selected
+        )
+
+        for player in selected:
+
+            if player in remaining:
+                remaining.remove(
+                    player
+                )
+
+            if player in wide_players:
+                wide_players.remove(
+                    player
+                )
+
+    # ----------------------------------------------------
+    # اگر هنوز خط هافبک کامل نشده،
+    # از unknown استفاده می‌کنیم.
+    # ----------------------------------------------------
+
+    if len(midfielders) < midfielder_count:
+
+        midfield_need = (
+            midfielder_count
+            - len(midfielders)
+        )
+
+        candidates = [
+            player
+            for player in unknown_players
+            if player in remaining
+        ]
+
+        selected = candidates[
+            :midfield_need
+        ]
+
+        midfielders.extend(
+            selected
+        )
+
+        for player in selected:
+
+            if player in remaining:
+                remaining.remove(
+                    player
+                )
+
+    # ----------------------------------------------------
+    # اگر هنوز خط حمله کامل نشده،
+    # از unknown باقی‌مانده استفاده می‌کنیم.
+    # ----------------------------------------------------
+
+    if len(attackers) < attacker_count:
+
+        attacker_need = (
+            attacker_count
+            - len(attackers)
+        )
+
+        candidates = [
+            player
+            for player in unknown_players
+            if player in remaining
+        ]
+
+        selected = candidates[
+            :attacker_need
+        ]
+
+        attackers.extend(
+            selected
+        )
+
+        for player in selected:
+
+            if player in remaining:
+                remaining.remove(
+                    player
+                )
+
+    # ----------------------------------------------------
+    # اگر هنوز بازیکنی باقی مانده،
+    # گم نمی‌شود.
+    # ----------------------------------------------------
+
+    groups["midfielder"] = midfielders
+    groups["attacker"] = attackers
+
+    groups["unknown"] = [
+        player
+        for player in remaining
+    ]
+
+    # ----------------------------------------------------
+    # مرتب‌سازی داخل خطوط
+    # ----------------------------------------------------
+
+    groups["goalkeeper"] = sort_line_players(
+        groups["goalkeeper"]
+    )
+
+    groups["defender"] = sort_line_players(
+        groups["defender"]
+    )
+
+    groups["midfielder"] = sort_line_players(
+        groups["midfielder"]
+    )
+
+    groups["attacker"] = sort_line_players(
+        groups["attacker"]
+    )
+
+    groups["unknown"] = sort_line_players(
+        groups["unknown"]
+    )
 
     return groups
 
@@ -1404,7 +2161,8 @@ def format_team_lineup(
     )
 
     groups = organize_players(
-        starters
+        starters,
+        formation,
     )
 
     lines = []
@@ -1461,8 +2219,8 @@ def format_team_lineup(
     if line:
         lines.append(line)
 
-    # اگر FotMob شناسه‌ای داد که در نگاشت ما نیست،
-    # بازیکن را گم نمی‌کنیم.
+    # اگر به هر دلیل بازیکنی در هیچ خطی قرار نگرفت،
+    # آن را گم نمی‌کنیم.
     if groups["unknown"]:
 
         unknown_line = format_player_line(
@@ -1670,7 +2428,7 @@ def build_message(root):
 
     print("")
     print("-" * 70)
-    print("POSITION IDS")
+    print("POSITION IDS / BASE ROLES")
     print("-" * 70)
 
     for player in (
@@ -1688,14 +2446,105 @@ def build_message(root):
             )
         )
 
-        group = position_group(
+        role = position_group(
             player
+        )
+
+        horizontal, vertical = (
+            get_player_layout(
+                player
+            )
         )
 
         print(
             f"{name}: "
             f"positionId={position_id} "
-            f"→ {group}"
+            f"→ {role} "
+            f"| x={horizontal} "
+            f"| y={vertical}"
+        )
+
+    print("-" * 70)
+
+    # ----------------------------------------------------
+    # نمایش نتیجه نهایی تقسیم خطوط برای دیباگ
+    # ----------------------------------------------------
+
+    print("")
+    print("-" * 70)
+    print("FINAL FORMATION GROUPS")
+    print("-" * 70)
+
+    for label, team, starters, formation in (
+        (
+            home_name,
+            home_team,
+            home_starters,
+            home_formation,
+        ),
+        (
+            away_name,
+            away_team,
+            away_starters,
+            away_formation,
+        ),
+    ):
+
+        groups = organize_players(
+            starters,
+            formation,
+        )
+
+        print("")
+        print(
+            label,
+            "| Formation:",
+            formation,
+        )
+
+        print(
+            "GK:",
+            [
+                get_player_name(player)
+                for player
+                in groups["goalkeeper"]
+            ],
+        )
+
+        print(
+            "DEF:",
+            [
+                get_player_name(player)
+                for player
+                in groups["defender"]
+            ],
+        )
+
+        print(
+            "MID:",
+            [
+                get_player_name(player)
+                for player
+                in groups["midfielder"]
+            ],
+        )
+
+        print(
+            "ATT:",
+            [
+                get_player_name(player)
+                for player
+                in groups["attacker"]
+            ],
+        )
+
+        print(
+            "UNKNOWN:",
+            [
+                get_player_name(player)
+                for player
+                in groups["unknown"]
+            ],
         )
 
     print("-" * 70)
