@@ -545,6 +545,28 @@ def is_match_finished(content):
         "status"
     )
 
+    # ----------------------------------------------------
+    # DEBUG موقت:
+    # وضعیت واقعی فوت‌موب را چاپ می‌کنیم تا مشخص شود
+    # چرا بازی تمام‌شده تشخیص داده نشده است.
+    # ----------------------------------------------------
+
+    print("")
+    print("=" * 70)
+    print("STATUS DEBUG")
+    print("=" * 70)
+    print(
+        json.dumps(
+            status,
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+    print("=" * 70)
+    print("END STATUS DEBUG")
+    print("=" * 70)
+    print("")
+
     if isinstance(status, dict):
 
         if status.get("finished") is True:
@@ -1468,8 +1490,6 @@ def role_priority(player, target_role):
         if role == "midfielder":
             return 100
 
-        # بازیکنان wide_attacker را عمداً
-        # می‌توانیم برای تکمیل خط هافبک استفاده کنیم.
         if role == "wide_attacker":
             return 60
 
@@ -1496,10 +1516,6 @@ def role_priority(player, target_role):
 
 # --------------------------------------------------------
 # فاصله عمقی بازیکن
-#
-# اگر layout عمودی وجود داشته باشد، از آن برای
-# تشخیص اینکه بازیکن جلوتر یا عقب‌تر قرار گرفته
-# استفاده می‌کنیم.
 # --------------------------------------------------------
 
 def get_depth(player):
@@ -1514,9 +1530,6 @@ def get_depth(player):
 
 # --------------------------------------------------------
 # مرتب کردن بازیکنان یک خط از چپ به راست
-#
-# horizontalLayout در FotMob برای تعیین جای افقی
-# بازیکن استفاده می‌شود.
 # --------------------------------------------------------
 
 def sort_line_players(players):
@@ -1569,11 +1582,6 @@ def sort_line_players(players):
 
 # --------------------------------------------------------
 # انتخاب بازیکنان بر اساس Formation
-#
-# این مهم‌ترین بخش جدید است.
-#
-# positionId دیگر به تنهایی تعیین‌کننده خط نیست.
-# Formation تعیین می‌کند چند نفر باید در هر خط باشند.
 # --------------------------------------------------------
 
 def organize_players(
@@ -1594,11 +1602,6 @@ def organize_players(
     formation_info = parse_formation(
         formation
     )
-
-    # ----------------------------------------------------
-    # اگر Formation معتبر نبود،
-    # fallback به positionId
-    # ----------------------------------------------------
 
     if not formation_info:
 
@@ -1638,10 +1641,6 @@ def organize_players(
 
         return groups
 
-    # ----------------------------------------------------
-    # اول دروازه‌بان
-    # ----------------------------------------------------
-
     goalkeeper = None
 
     for player in starters:
@@ -1665,10 +1664,6 @@ def organize_players(
         if player is not goalkeeper
     ]
 
-    # ----------------------------------------------------
-    # تعداد موردنیاز
-    # ----------------------------------------------------
-
     defender_count = (
         formation_info["defenders"]
     )
@@ -1681,12 +1676,6 @@ def organize_players(
         formation_info["attackers"]
     )
 
-    # ----------------------------------------------------
-    # دفاع
-    #
-    # اول مدافع‌های قطعی را انتخاب می‌کنیم.
-    # ----------------------------------------------------
-
     defenders = [
         player
         for player in remaining
@@ -1695,9 +1684,6 @@ def organize_players(
         ) == "defender"
     ]
 
-    # اگر تعداد مدافع قطعی بیشتر از Formation بود،
-    # با layout عمقی نزدیک‌ترین‌ها به خط دفاعی را
-    # نگه می‌داریم.
     if len(defenders) > defender_count:
 
         defenders_with_depth = []
@@ -1740,7 +1726,6 @@ def organize_players(
                 :defender_count
             ]
 
-    # اگر مدافع کافی نداریم، unknown را اضافه می‌کنیم.
     if len(defenders) < defender_count:
 
         candidates = [
@@ -1771,14 +1756,6 @@ def organize_players(
 
     groups["defender"] = defenders
 
-    # ----------------------------------------------------
-    # مهاجم‌های قطعی
-    #
-    # فقط مهاجمان مرکزی قطعی را اینجا می‌گیریم.
-    # wide_attacker فعلاً آزاد می‌ماند تا Formation
-    # تعیین کند هافبک است یا مهاجم.
-    # ----------------------------------------------------
-
     pure_attackers = [
         player
         for player in remaining
@@ -1787,7 +1764,6 @@ def organize_players(
         ) == "attacker"
     ]
 
-    # تعداد مهاجم قطعی موردنیاز
     pure_attackers_to_take = min(
         len(pure_attackers),
         attacker_count,
@@ -1802,16 +1778,6 @@ def organize_players(
             remaining.remove(
                 player
             )
-
-    # ----------------------------------------------------
-    # حالا بازیکنان باقی‌مانده را داریم.
-    #
-    # معمولاً اینها ترکیبی از:
-    # - هافبک‌های قطعی
-    # - وینگرها
-    # - بازیکنان ناشناخته
-    # هستند.
-    # ----------------------------------------------------
 
     fixed_midfielders = [
         player
@@ -1837,10 +1803,6 @@ def organize_players(
         ) == "unknown"
     ]
 
-    # ----------------------------------------------------
-    # اول هافبک‌های قطعی را وارد خط هافبک می‌کنیم.
-    # ----------------------------------------------------
-
     midfielders = fixed_midfielders[
         :midfielder_count
     ]
@@ -1851,21 +1813,10 @@ def organize_players(
                 player
             )
 
-    # ----------------------------------------------------
-    # ظرفیت باقی‌مانده خط هافبک
-    # ----------------------------------------------------
-
     midfield_need = (
         midfielder_count
         - len(midfielders)
     )
-
-    # ----------------------------------------------------
-    # وینگرها را با توجه به Formation تقسیم می‌کنیم.
-    #
-    # این قسمت دقیقاً مشکل بازی KV Mechelen و
-    # Anderlecht را حل می‌کند.
-    # ----------------------------------------------------
 
     if midfield_need > 0:
 
@@ -1873,8 +1824,6 @@ def organize_players(
             wide_players
         )
 
-        # اگر verticalLayout داریم، بازیکنان
-        # عقب‌تر را برای تکمیل خط هافبک ترجیح می‌دهیم.
         wide_with_depth = []
 
         for player in wide_sorted:
@@ -1929,10 +1878,6 @@ def organize_players(
                     player
                 )
 
-    # ----------------------------------------------------
-    # حالا ظرفیت باقی‌مانده مهاجمان
-    # ----------------------------------------------------
-
     attacker_need = (
         attacker_count
         - len(attackers)
@@ -1940,7 +1885,6 @@ def organize_players(
 
     if attacker_need > 0:
 
-        # وینگرهای باقی‌مانده اولویت دارند.
         selected = wide_players[
             :attacker_need
         ]
@@ -1960,11 +1904,6 @@ def organize_players(
                 wide_players.remove(
                     player
                 )
-
-    # ----------------------------------------------------
-    # اگر هنوز خط هافبک کامل نشده،
-    # از unknown استفاده می‌کنیم.
-    # ----------------------------------------------------
 
     if len(midfielders) < midfielder_count:
 
@@ -1994,11 +1933,6 @@ def organize_players(
                     player
                 )
 
-    # ----------------------------------------------------
-    # اگر هنوز خط حمله کامل نشده،
-    # از unknown باقی‌مانده استفاده می‌کنیم.
-    # ----------------------------------------------------
-
     if len(attackers) < attacker_count:
 
         attacker_need = (
@@ -2027,11 +1961,6 @@ def organize_players(
                     player
                 )
 
-    # ----------------------------------------------------
-    # اگر هنوز بازیکنی باقی مانده،
-    # گم نمی‌شود.
-    # ----------------------------------------------------
-
     groups["midfielder"] = midfielders
     groups["attacker"] = attackers
 
@@ -2039,10 +1968,6 @@ def organize_players(
         player
         for player in remaining
     ]
-
-    # ----------------------------------------------------
-    # مرتب‌سازی داخل خطوط
-    # ----------------------------------------------------
 
     groups["goalkeeper"] = sort_line_players(
         groups["goalkeeper"]
@@ -2219,8 +2144,6 @@ def format_team_lineup(
     if line:
         lines.append(line)
 
-    # اگر به هر دلیل بازیکنی در هیچ خطی قرار نگرفت،
-    # آن را گم نمی‌کنیم.
     if groups["unknown"]:
 
         unknown_line = format_player_line(
