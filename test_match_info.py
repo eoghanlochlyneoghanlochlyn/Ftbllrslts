@@ -213,69 +213,6 @@ def recursive_find(data, wanted_keys):
 
 
 # --------------------------------------------------------
-# دیباگ مسیرهای Rating
-#
-# این تابع فقط برای پیدا کردن محل Rating در JSON است.
-# فعلاً هیچ مقداری را به بازیکنان نسبت نمی‌دهد.
-# --------------------------------------------------------
-
-def debug_rating_paths(data, path="root"):
-    if isinstance(data, dict):
-
-        for key, value in data.items():
-
-            current_path = (
-                f"{path}.{key}"
-            )
-
-            key_lower = str(key).lower()
-
-            if key_lower in (
-                "rating",
-                "ratingscore",
-                "matchrating",
-            ):
-
-                print("")
-                print("=" * 70)
-                print("RATING FOUND")
-                print("=" * 70)
-
-                print("PATH:")
-                print(current_path)
-
-                print("VALUE:")
-                print(value)
-
-                print("TYPE:")
-                print(
-                    type(value).__name__
-                )
-
-                print("=" * 70)
-
-            debug_rating_paths(
-                value,
-                current_path,
-            )
-
-    elif isinstance(data, list):
-
-        for index, value in enumerate(
-            data
-        ):
-
-            current_path = (
-                f"{path}[{index}]"
-            )
-
-            debug_rating_paths(
-                value,
-                current_path,
-            )
-
-
-# --------------------------------------------------------
 # پیدا کردن بخش مهم
 # --------------------------------------------------------
 
@@ -1036,6 +973,37 @@ def get_player_rating(player):
     if not isinstance(player, dict):
         return None
 
+    # ----------------------------------------------------
+    # Rating اصلی بازیکن در FotMob:
+    #
+    # player.performance.rating
+    # ----------------------------------------------------
+
+    performance = player.get(
+        "performance"
+    )
+
+    if isinstance(performance, dict):
+
+        rating = performance.get(
+            "rating"
+        )
+
+        if rating is not None:
+
+            try:
+                return float(rating)
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                pass
+
+    # ----------------------------------------------------
+    # fallback برای ساختارهای احتمالی دیگر
+    # ----------------------------------------------------
+
     candidates = [
         player.get("rating"),
         player.get("ratingScore"),
@@ -1047,6 +1015,31 @@ def get_player_rating(player):
     )
 
     if isinstance(nested_player, dict):
+
+        # ------------------------------------------------
+        # اگر performance داخل player باشد
+        # ------------------------------------------------
+
+        performance = nested_player.get(
+            "performance"
+        )
+
+        if isinstance(performance, dict):
+
+            rating = performance.get(
+                "rating"
+            )
+
+            if rating is not None:
+
+                try:
+                    return float(rating)
+
+                except (
+                    TypeError,
+                    ValueError,
+                ):
+                    pass
 
         candidates.extend(
             [
@@ -1069,6 +1062,7 @@ def get_player_rating(player):
 
         try:
             return float(value)
+
         except (
             TypeError,
             ValueError,
@@ -2744,31 +2738,6 @@ def main():
         "Raw JSON saved: "
         "match_5811755_raw.json"
     )
-
-    # ----------------------------------------------------
-    # دیباگ Rating
-    #
-    # اینجا تمام کلیدهای:
-    # rating
-    # ratingScore
-    # matchRating
-    #
-    # در کل JSON بررسی می‌شوند.
-    # ----------------------------------------------------
-
-    print("")
-    print("#" * 70)
-    print("SEARCHING FOR ALL RATING FIELDS")
-    print("#" * 70)
-
-    debug_rating_paths(
-        root
-    )
-
-    print("")
-    print("#" * 70)
-    print("END RATING SEARCH")
-    print("#" * 70)
 
     # ----------------------------------------------------
     # ساخت پیام
