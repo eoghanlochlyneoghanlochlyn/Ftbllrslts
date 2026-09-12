@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-MATCH_ID = "14u9ym"
+MATCH_ID = "2ey0nu"
 MATCH_URL = f"https://www.fotmob.com/matches/canada-vs-qatar/{MATCH_ID}"
 
 
