@@ -17,6 +17,249 @@ TELEGRAM_CHANNEL = os.getenv("TELEGRAMCHANNEL")
 
 
 # --------------------------------------------------------
+# نام فارسی رقابت‌ها
+# --------------------------------------------------------
+
+COMPETITION_NAMES_FA = {
+    "Premier League": "لیگ برتر انگلیس",
+    "English Premier League": "لیگ برتر انگلیس",
+    "LaLiga": "لالیگا",
+    "La Liga": "لالیگا",
+    "Serie A": "سری آ ایتالیا",
+    "Bundesliga": "بوندس‌لیگا",
+    "Ligue 1": "لیگ یک فرانسه",
+    "UEFA Champions League": "لیگ قهرمانان اروپا",
+    "Champions League": "لیگ قهرمانان اروپا",
+    "UEFA Europa League": "لیگ اروپا",
+    "Europa League": "لیگ اروپا",
+    "UEFA Conference League": "لیگ کنفرانس اروپا",
+    "Conference League": "لیگ کنفرانس اروپا",
+    "Belgian Pro League": "لیگ برتر بلژیک",
+    "Jupiler Pro League": "لیگ برتر بلژیک",
+    "Eredivisie": "اردیویسه هلند",
+    "Primeira Liga": "لیگ برتر پرتغال",
+    "Saudi Pro League": "لیگ حرفه‌ای عربستان",
+    "MLS": "لیگ آمریکا",
+    "Major League Soccer": "لیگ آمریکا",
+    "FA Cup": "جام حذفی انگلیس",
+    "EFL Cup": "جام اتحادیه انگلیس",
+    "Carabao Cup": "جام اتحادیه انگلیس",
+    "Copa del Rey": "جام حذفی اسپانیا",
+    "Copa Italia": "جام حذفی ایتالیا",
+    "Coppa Italia": "جام حذفی ایتالیا",
+    "DFB Pokal": "جام حذفی آلمان",
+    "Coupe de France": "جام حذفی فرانسه",
+    "FIFA World Cup": "جام جهانی",
+    "World Cup": "جام جهانی",
+    "UEFA Nations League": "لیگ ملت‌های اروپا",
+}
+
+
+# --------------------------------------------------------
+# نام فارسی باشگاه‌ها
+# --------------------------------------------------------
+
+TEAM_NAMES_FA = {
+    "KV Mechelen": "مِخلن",
+    "Mechelen": "مِخلن",
+    "Anderlecht": "اندرلخت",
+
+    "Liverpool": "لیورپول",
+    "Liverpool FC": "لیورپول",
+    "Arsenal": "آرسنال",
+    "Arsenal FC": "آرسنال",
+    "Manchester City": "منچسترسیتی",
+    "Manchester City FC": "منچسترسیتی",
+    "Manchester United": "منچستریونایتد",
+    "Manchester United FC": "منچستریونایتد",
+    "Chelsea": "چلسی",
+    "Chelsea FC": "چلسی",
+    "Tottenham Hotspur": "تاتنهام",
+    "Tottenham Hotspur FC": "تاتنهام",
+
+    "Juventus": "یوونتوس",
+    "Juventus Turin": "یوونتوس",
+    "AC Milan": "آث میلان",
+    "AC Milan FC": "آث میلان",
+    "Inter Milan": "اینتر",
+    "Inter Milano": "اینتر",
+    "Inter": "اینتر",
+
+    "Bayern Munich": "بایرن مونیخ",
+    "FC Bayern München": "بایرن مونیخ",
+    "Borussia Dortmund": "بوروسیا دورتموند",
+    "PSG": "پاری‌سن‌ژرمن",
+    "Paris Saint-Germain": "پاری‌سن‌ژرمن",
+    "Paris Saint-Germain FC": "پاری‌سن‌ژرمن",
+
+    "Real Madrid": "رئال مادرید",
+    "Real Madrid CF": "رئال مادرید",
+    "Barcelona": "بارسلونا",
+    "FC Barcelona": "بارسلونا",
+    "Atletico Madrid": "اتلتیکومادرید",
+    "Atlético Madrid": "اتلتیکومادرید",
+    "Club Atletico de Madrid": "اتلتیکومادرید",
+
+    "Everton": "اورتون",
+    "Everton FC": "اورتون",
+    "Fulham": "فولام",
+    "Fulham FC": "فولام",
+    "Crystal Palace": "کریستال پالاس",
+    "Crystal Palace FC": "کریستال پالاس",
+    "Newcastle United": "نیوکاسل",
+    "Newcastle United FC": "نیوکاسل",
+    "Aston Villa": "استون ویلا",
+    "Aston Villa FC": "استون ویلا",
+    "Nottingham Forest": "ناتینگهام فارست",
+    "Nottingham Forest FC": "ناتینگهام فارست",
+    "Sunderland": "ساندرلند",
+    "Sunderland AFC": "ساندرلند",
+    "Ipswich Town": "ایپسویچ",
+    "Ipswich Town FC": "ایپسویچ",
+    "Leeds United": "لیدز",
+    "Leeds United FC": "لیدز",
+    "Brentford": "برنتفورد",
+    "Brentford FC": "برنتفورد",
+    "Brighton": "برایتون",
+    "Brighton & Hove Albion": "برایتون",
+    "Brighton & Hove Albion FC": "برایتون",
+    "Bournemouth": "بورنموث",
+    "AFC Bournemouth": "بورنموث",
+    "Coventry City": "کاونتری",
+    "Coventry City FC": "کاونتری",
+    "Hull City": "هال سیتی",
+    "Hull City FC": "هال سیتی",
+
+    "Valencia": "والنسیا",
+    "Valencia CF": "والنسیا",
+    "Sevilla": "سویا",
+    "Sevilla FC": "سویا",
+    "Real Betis": "رئال بتیس",
+    "Real Betis Seville": "رئال بتیس",
+    "Athletic Bilbao": "اتلتیک بیلبائو",
+    "Athletic Club": "اتلتیک بیلبائو",
+    "Atletico Madrid": "اتلتیکومادرید",
+    "Rayo Vallecano": "رایو وایکانو",
+    "Villarreal": "ویارئال",
+    "Villarreal CF": "ویارئال",
+    "Osasuna": "اوساسونا",
+    "CA Osasuna": "اوساسونا",
+    "Espanyol": "اسپانیول",
+    "Espanyol Barcelona": "اسپانیول",
+    "Getafe": "ختافه",
+    "Getafe CF": "ختافه",
+    "Real Sociedad": "رئال سوسیداد",
+    "Real Sociedad San Sebastian": "رئال سوسیداد",
+    "Celta Vigo": "سلتاویگو",
+    "RC Celta de Vigo": "سلتاویگو",
+    "Levante": "لوانته",
+    "Levante UD": "لوانته",
+    "Elche": "الچه",
+    "Elche CF": "الچه",
+    "Malaga": "مالاگا",
+    "Malaga CF": "مالاگا",
+    "Deportivo Alaves": "آلاوس",
+    "Racing Santander": "راسينگ سانتاندر",
+    "RC Deportivo de La Coruna": "دپورتیوو لاکرونیا",
+
+    "Fiorentina": "فیورنتینا",
+    "ACF Fiorentina": "فیورنتینا",
+    "Torino": "تورینو",
+    "Torino FC": "تورینو",
+    "Napoli": "ناپولی",
+    "SSC Napoli": "ناپولی",
+    "Roma": "رم",
+    "AS Roma": "رم",
+    "Atalanta": "آتالانتا",
+    "Atalanta BC": "آتالانتا",
+    "Genoa": "جنوا",
+    "Genoa CFC": "جنوا",
+    "Como": "کومو",
+    "Como 1907": "کومو",
+    "Frosinone": "فروزینونه",
+    "Frosinone Calcio": "فروزینونه",
+    "Venezia": "ونتزیا",
+    "Venezia FC": "ونتزیا",
+    "Parma": "پارما",
+    "Parma Calcio": "پارما",
+    "Monza": "مونتزا",
+    "AC Monza": "مونتزا",
+    "Bologna": "بولونیا",
+    "Bologna FC": "بولونیا",
+    "Sassuolo": "ساسولو",
+    "Sassuolo Calcio": "ساسولو",
+    "Lazio": "لاتزیو",
+    "Lazio Rome": "لاتزیو",
+    "Udinese": "اودینزه",
+    "Udinese Calcio": "اودینزه",
+    "Cagliari": "کالیاری",
+    "Cagliari Calcio": "کالیاری",
+    "Lecce": "لچه",
+    "US Lecce": "لچه",
+
+    "Union Berlin": "اونیون برلین",
+    "1. FC Union Berlin": "اونیون برلین",
+    "Schalke 04": "شالکه",
+    "FC Schalke 04": "شالکه",
+    "Mainz 05": "ماینتس",
+    "1. FSV Mainz 05": "ماینتس",
+    "Hamburger SV": "هامبورگ",
+    "Hamburg": "هامبورگ",
+
+    "Rennes": "رن",
+    "Stade Rennais": "رن",
+    "Marseille": "مارسی",
+    "Olympique Marseille": "مارسی",
+}
+
+
+# --------------------------------------------------------
+# تبدیل نام رقابت به فارسی
+# --------------------------------------------------------
+
+def translate_competition_name(name):
+    name = clean_text(name)
+
+    if not name:
+        return "نامشخص"
+
+    if name in COMPETITION_NAMES_FA:
+        return COMPETITION_NAMES_FA[name]
+
+    normalized = name.lower().strip()
+
+    for original, translated in COMPETITION_NAMES_FA.items():
+
+        if normalized == original.lower():
+            return translated
+
+    return name
+
+
+# --------------------------------------------------------
+# تبدیل نام باشگاه به فارسی
+# --------------------------------------------------------
+
+def translate_team_name(name):
+    name = clean_text(name)
+
+    if not name:
+        return ""
+
+    if name in TEAM_NAMES_FA:
+        return TEAM_NAMES_FA[name]
+
+    normalized = name.lower().strip()
+
+    for original, translated in TEAM_NAMES_FA.items():
+
+        if normalized == original.lower():
+            return translated
+
+    return name
+
+
+# --------------------------------------------------------
 # ابزارهای عمومی
 # --------------------------------------------------------
 
@@ -24,6 +267,7 @@ def get_nested(data, *keys):
     current = data
 
     for key in keys:
+
         if not isinstance(current, dict):
             return None
 
@@ -40,17 +284,21 @@ def clean_text(value):
 
 
 def first_non_empty(*values):
+
     for value in values:
+
         if value is None:
             continue
 
         if isinstance(value, str):
+
             value = value.strip()
 
             if value:
                 return value
 
         elif value not in ("", None):
+
             return value
 
     return ""
@@ -61,6 +309,7 @@ def first_non_empty(*values):
 # --------------------------------------------------------
 
 def send_telegram(text):
+
     if not TELEGRAM_BOT_TOKEN:
         raise RuntimeError(
             "TELEGRAMBOT environment variable is missing."
@@ -103,6 +352,7 @@ def send_telegram(text):
 # --------------------------------------------------------
 
 def fetch_match_page():
+
     print("=" * 70)
     print("FETCHING FOTMOB MATCH")
     print("=" * 70)
@@ -136,6 +386,7 @@ def fetch_match_page():
 # --------------------------------------------------------
 
 def extract_next_data(html):
+
     pattern = (
         r'<script id="__NEXT_DATA__" '
         r'type="application/json">(.*?)</script>'
@@ -168,6 +419,7 @@ def extract_next_data(html):
 # --------------------------------------------------------
 
 def recursive_find(data, wanted_keys):
+
     results = []
 
     def walk(value, path="root"):
@@ -184,6 +436,7 @@ def recursive_find(data, wanted_keys):
                 )
 
                 if key in wanted_keys:
+
                     results.append(
                         (
                             current_path,
@@ -217,6 +470,7 @@ def recursive_find(data, wanted_keys):
 # --------------------------------------------------------
 
 def find_section(root, names):
+
     results = recursive_find(
         root,
         set(names),
@@ -231,6 +485,7 @@ def find_section(root, names):
             "pageProps.content" in path
             and isinstance(value, (dict, list))
         ):
+
             return value
 
     return results[0][1]
@@ -241,6 +496,7 @@ def find_section(root, names):
 # --------------------------------------------------------
 
 def get_content(root):
+
     content = get_nested(
         root,
         "props",
@@ -261,6 +517,7 @@ def get_content(root):
 # --------------------------------------------------------
 
 def get_team_name(team):
+
     if not isinstance(team, dict):
         return ""
 
@@ -279,6 +536,7 @@ def get_team_name(team):
 # --------------------------------------------------------
 
 def extract_basic_info(root):
+
     event_jsonld = get_nested(
         root,
         "props",
@@ -310,11 +568,13 @@ def extract_basic_info(root):
         )
 
         if isinstance(home_team, dict):
+
             info["home"] = clean_text(
                 home_team.get("name")
             )
 
         if isinstance(away_team, dict):
+
             info["away"] = clean_text(
                 away_team.get("name")
             )
@@ -344,7 +604,9 @@ def extract_basic_info(root):
                 )
 
                 if name:
+
                     info[side] = name
+
                     break
 
     league_keys = (
@@ -370,15 +632,19 @@ def extract_basic_info(root):
             )
 
             if name:
+
                 info["league"] = clean_text(
                     name
                 )
+
                 break
 
         elif isinstance(value, str):
 
             if value.strip():
+
                 info["league"] = value.strip()
+
                 break
 
     if not info["league"]:
@@ -399,7 +665,9 @@ def extract_basic_info(root):
                 value = value.strip()
 
                 if value:
+
                     info["league"] = value
+
                     break
 
     for key in (
@@ -417,15 +685,19 @@ def extract_basic_info(root):
             )
 
             if name:
+
                 info["venue"] = clean_text(
                     name
                 )
+
                 break
 
         elif isinstance(value, str):
 
             if value.strip():
+
                 info["venue"] = value.strip()
+
                 break
 
     return info
@@ -436,18 +708,27 @@ def extract_basic_info(root):
 # --------------------------------------------------------
 
 def format_match_time(value):
+
     if not value:
         return "نامشخص"
 
     try:
+
         value = str(value)
 
         if value.endswith("Z"):
-            value = value[:-1] + "+00:00"
 
-        dt = datetime.fromisoformat(value)
+            value = (
+                value[:-1]
+                + "+00:00"
+            )
+
+        dt = datetime.fromisoformat(
+            value
+        )
 
         if dt.tzinfo is None:
+
             dt = dt.replace(
                 tzinfo=timezone.utc
             )
@@ -461,6 +742,7 @@ def format_match_time(value):
         )
 
     except Exception:
+
         return str(value)
 
 
@@ -469,6 +751,7 @@ def format_match_time(value):
 # --------------------------------------------------------
 
 def get_match_start(root, content):
+
     event_jsonld = get_nested(
         root,
         "props",
@@ -501,6 +784,7 @@ def get_match_start(root, content):
             ):
 
                 if status.get(key):
+
                     return status[key]
 
         for key in (
@@ -510,6 +794,7 @@ def get_match_start(root, content):
         ):
 
             if content.get(key):
+
                 return content[key]
 
     return ""
@@ -520,6 +805,7 @@ def get_match_start(root, content):
 # --------------------------------------------------------
 
 def is_match_finished(root):
+
     general = get_nested(
         root,
         "props",
@@ -570,6 +856,7 @@ def is_match_finished(root):
                 "aet",
                 "pen",
             ):
+
                 return True
 
             if "full-time" in long:
@@ -580,23 +867,11 @@ def is_match_finished(root):
 
 # --------------------------------------------------------
 # استخراج نتیجه بازی
-#
-# فقط برای بازی تمام‌شده استفاده می‌شود.
-#
-# خروجی:
-#
-# {
-#     "home": 0,
-#     "away": 1
-# }
 # --------------------------------------------------------
 
 def get_match_score(root, content):
-    candidates = []
 
-    # ----------------------------------------------------
-    # 1. header.status.scoreStr
-    # ----------------------------------------------------
+    candidates = []
 
     status = get_nested(
         root,
@@ -615,10 +890,6 @@ def get_match_score(root, content):
             ]
         )
 
-    # ----------------------------------------------------
-    # 2. general.scoreStr / general.score
-    # ----------------------------------------------------
-
     general = get_nested(
         root,
         "props",
@@ -635,10 +906,6 @@ def get_match_score(root, content):
             ]
         )
 
-    # ----------------------------------------------------
-    # 3. content.status
-    # ----------------------------------------------------
-
     content_status = (
         content.get("status")
         if isinstance(content, dict)
@@ -654,10 +921,6 @@ def get_match_score(root, content):
             ]
         )
 
-    # ----------------------------------------------------
-    # 4. content.scoreStr / content.score
-    # ----------------------------------------------------
-
     if isinstance(content, dict):
 
         candidates.extend(
@@ -667,21 +930,10 @@ def get_match_score(root, content):
             ]
         )
 
-    # ----------------------------------------------------
-    # بررسی همه گزینه‌ها
-    # ----------------------------------------------------
-
     for candidate in candidates:
 
         if candidate is None:
             continue
-
-        # --------------------------------------------
-        # حالت:
-        # "0 - 1"
-        # "0-1"
-        # "0 : 1"
-        # --------------------------------------------
 
         if isinstance(candidate, str):
 
@@ -693,6 +945,7 @@ def get_match_score(root, content):
             if match:
 
                 try:
+
                     return {
                         "home": int(
                             match.group(1)
@@ -707,10 +960,6 @@ def get_match_score(root, content):
                     ValueError,
                 ):
                     pass
-
-        # --------------------------------------------
-        # حالت دیکشنری
-        # --------------------------------------------
 
         if isinstance(candidate, dict):
 
@@ -732,6 +981,7 @@ def get_match_score(root, content):
             ):
 
                 try:
+
                     return {
                         "home": int(
                             home_value
@@ -746,14 +996,6 @@ def get_match_score(root, content):
                     ValueError,
                 ):
                     pass
-
-    # ----------------------------------------------------
-    # اگر scoreStr پیدا نشد، از eventهای Goal
-    # نتیجه را بازسازی می‌کنیم.
-    #
-    # این fallback مخصوصاً برای مقاومت بیشتر
-    # در برابر تغییر ساختار FotMob است.
-    # ----------------------------------------------------
 
     events = get_match_events(
         root
@@ -823,6 +1065,7 @@ def get_match_score(root, content):
 # --------------------------------------------------------
 
 def get_lineup(content, root):
+
     lineup = content.get(
         "lineup"
     )
@@ -846,6 +1089,7 @@ def get_lineup(content, root):
 # --------------------------------------------------------
 
 def get_lineup_team(lineup, side):
+
     if not isinstance(lineup, dict):
         return None
 
@@ -887,7 +1131,8 @@ def get_lineup_team(lineup, side):
                 return team
 
     wanted_name = (
-        "home" if side == "home"
+        "home"
+        if side == "home"
         else "away"
     )
 
@@ -909,6 +1154,7 @@ def get_lineup_team(lineup, side):
 # --------------------------------------------------------
 
 def find_player_list(team):
+
     if not isinstance(team, dict):
         return []
 
@@ -948,6 +1194,7 @@ def find_player_list(team):
 # --------------------------------------------------------
 
 def is_player_starter(player):
+
     if not isinstance(player, dict):
         return False
 
@@ -972,13 +1219,17 @@ def is_player_starter(player):
                 "starter",
                 "starting",
             ):
+
                 return True
 
     nested_player = player.get(
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(
+        nested_player,
+        dict,
+    ):
 
         for key in (
             "isStarter",
@@ -1003,6 +1254,7 @@ def is_player_starter(player):
                     "starter",
                     "starting",
                 ):
+
                     return True
 
     return False
@@ -1013,6 +1265,7 @@ def is_player_starter(player):
 # --------------------------------------------------------
 
 def is_player_substitute(player):
+
     if not isinstance(player, dict):
         return False
 
@@ -1036,6 +1289,7 @@ def is_player_substitute(player):
                 "substitute",
                 "bench",
             ):
+
                 return True
 
     return False
@@ -1046,6 +1300,7 @@ def is_player_substitute(player):
 # --------------------------------------------------------
 
 def get_starters(team):
+
     if not isinstance(team, dict):
         return []
 
@@ -1083,6 +1338,7 @@ def get_starters(team):
 # --------------------------------------------------------
 
 def get_substitutes(team):
+
     if not isinstance(team, dict):
         return []
 
@@ -1123,6 +1379,7 @@ def get_substitutes(team):
 # --------------------------------------------------------
 
 def get_player_name(player):
+
     if not isinstance(player, dict):
         return ""
 
@@ -1146,7 +1403,10 @@ def get_player_name(player):
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(
+        nested_player,
+        dict,
+    ):
 
         for key in (
             "name",
@@ -1160,6 +1420,7 @@ def get_player_name(player):
             )
 
             if value:
+
                 return str(
                     value
                 ).strip()
@@ -1172,6 +1433,7 @@ def get_player_name(player):
 # --------------------------------------------------------
 
 def get_player_id(player):
+
     if not isinstance(player, dict):
         return None
 
@@ -1192,13 +1454,17 @@ def get_player_id(player):
                 TypeError,
                 ValueError,
             ):
+
                 return str(value)
 
     nested_player = player.get(
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(
+        nested_player,
+        dict,
+    ):
 
         for key in (
             "id",
@@ -1206,17 +1472,21 @@ def get_player_id(player):
             "playerID",
         ):
 
-            value = nested_player.get(key)
+            value = nested_player.get(
+                key
+            )
 
             if value is not None:
 
                 try:
+
                     return int(value)
 
                 except (
                     TypeError,
                     ValueError,
                 ):
+
                     return str(value)
 
     return None
@@ -1227,6 +1497,7 @@ def get_player_id(player):
 # --------------------------------------------------------
 
 def get_player_rating(player):
+
     if not isinstance(player, dict):
         return None
 
@@ -1261,13 +1532,19 @@ def get_player_rating(player):
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(
+        nested_player,
+        dict,
+    ):
 
         performance = nested_player.get(
             "performance"
         )
 
-        if isinstance(performance, dict):
+        if isinstance(
+            performance,
+            dict,
+        ):
 
             rating = performance.get(
                 "rating"
@@ -1276,7 +1553,10 @@ def get_player_rating(player):
             if rating is not None:
 
                 try:
-                    return float(rating)
+
+                    return float(
+                        rating
+                    )
 
                 except (
                     TypeError,
@@ -1304,12 +1584,14 @@ def get_player_rating(player):
             continue
 
         try:
+
             return float(value)
 
         except (
             TypeError,
             ValueError,
         ):
+
             pass
 
     return None
@@ -1320,6 +1602,7 @@ def get_player_rating(player):
 # --------------------------------------------------------
 
 def get_player_position_id(player):
+
     if not isinstance(player, dict):
         return None
 
@@ -1334,19 +1617,24 @@ def get_player_position_id(player):
         if value is not None:
 
             try:
+
                 return int(value)
 
             except (
                 TypeError,
                 ValueError,
             ):
+
                 pass
 
     nested_player = player.get(
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(
+        nested_player,
+        dict,
+    ):
 
         for key in (
             "positionId",
@@ -1354,17 +1642,21 @@ def get_player_position_id(player):
             "position_id",
         ):
 
-            value = nested_player.get(key)
+            value = nested_player.get(
+                key
+            )
 
             if value is not None:
 
                 try:
+
                     return int(value)
 
                 except (
                     TypeError,
                     ValueError,
                 ):
+
                     pass
 
     return None
@@ -1375,6 +1667,7 @@ def get_player_position_id(player):
 # --------------------------------------------------------
 
 def position_group(player):
+
     position_id = get_player_position_id(
         player
     )
@@ -1394,6 +1687,7 @@ def position_group(player):
         37,
         38,
     }:
+
         return "defender"
 
     if position_id in {
@@ -1413,6 +1707,7 @@ def position_group(player):
         77,
         79,
     }:
+
         return "midfielder"
 
     if position_id in {
@@ -1427,6 +1722,7 @@ def position_group(player):
         103,
         107,
     }:
+
         return "wide_attacker"
 
     if position_id in {
@@ -1435,6 +1731,7 @@ def position_group(player):
         106,
         115,
     }:
+
         return "attacker"
 
     return "unknown"
@@ -1445,6 +1742,7 @@ def position_group(player):
 # --------------------------------------------------------
 
 def get_player_layout(player):
+
     if not isinstance(player, dict):
         return None, None
 
@@ -1468,7 +1766,11 @@ def get_player_layout(player):
         ):
 
             if source.get(key) is not None:
-                horizontal = source.get(key)
+
+                horizontal = source.get(
+                    key
+                )
+
                 break
 
         for key in (
@@ -1478,7 +1780,11 @@ def get_player_layout(player):
         ):
 
             if source.get(key) is not None:
-                vertical = source.get(key)
+
+                vertical = source.get(
+                    key
+                )
+
                 break
 
         if (
@@ -1487,23 +1793,33 @@ def get_player_layout(player):
         ):
 
             try:
+
                 if horizontal is not None:
-                    horizontal = float(horizontal)
+
+                    horizontal = float(
+                        horizontal
+                    )
 
             except (
                 TypeError,
                 ValueError,
             ):
+
                 horizontal = None
 
             try:
+
                 if vertical is not None:
-                    vertical = float(vertical)
+
+                    vertical = float(
+                        vertical
+                    )
 
             except (
                 TypeError,
                 ValueError,
             ):
+
                 vertical = None
 
             return (
@@ -1519,6 +1835,7 @@ def get_player_layout(player):
 # --------------------------------------------------------
 
 def numeric_layout_value(value):
+
     if value is None:
         return None
 
@@ -1529,6 +1846,7 @@ def numeric_layout_value(value):
         TypeError,
         ValueError,
     ):
+
         return None
 
 
@@ -1537,6 +1855,7 @@ def numeric_layout_value(value):
 # --------------------------------------------------------
 
 def get_formation(team):
+
     if not isinstance(team, dict):
         return ""
 
@@ -1559,6 +1878,7 @@ def get_formation(team):
                 r"\d+(?:-\d+)+",
                 value,
             ):
+
                 return value
 
         elif isinstance(value, dict):
@@ -1579,6 +1899,7 @@ def get_formation(team):
                     r"\d+(?:-\d+)+",
                     name,
                 ):
+
                     return name
 
     results = recursive_find(
@@ -1601,6 +1922,7 @@ def get_formation(team):
                 r"\d+(?:-\d+)+",
                 value,
             ):
+
                 return value
 
         elif isinstance(value, dict):
@@ -1621,6 +1943,7 @@ def get_formation(team):
                     r"\d+(?:-\d+)+",
                     name,
                 ):
+
                     return name
 
     return ""
@@ -1631,6 +1954,7 @@ def get_formation(team):
 # --------------------------------------------------------
 
 def parse_formation(formation):
+
     if not formation:
         return None
 
@@ -1641,12 +1965,14 @@ def parse_formation(formation):
     for part in parts:
 
         try:
+
             number = int(part)
 
         except (
             TypeError,
             ValueError,
         ):
+
             return None
 
         if number <= 0:
@@ -1680,6 +2006,7 @@ def parse_formation(formation):
 # --------------------------------------------------------
 
 def get_coach(team):
+
     if not isinstance(team, dict):
         return ""
 
@@ -1745,6 +2072,7 @@ def get_coach(team):
 # --------------------------------------------------------
 
 def get_base_player_role(player):
+
     return position_group(
         player
     )
@@ -1755,6 +2083,7 @@ def get_base_player_role(player):
 # --------------------------------------------------------
 
 def role_priority(player, target_role):
+
     role = get_base_player_role(
         player
     )
@@ -1803,6 +2132,7 @@ def role_priority(player, target_role):
 # --------------------------------------------------------
 
 def get_depth(player):
+
     _, vertical = get_player_layout(
         player
     )
@@ -1817,6 +2147,7 @@ def get_depth(player):
 # --------------------------------------------------------
 
 def sort_line_players(players):
+
     if not players:
         return []
 
@@ -1872,6 +2203,7 @@ def organize_players(
     starters,
     formation,
 ):
+
     groups = {
         "goalkeeper": [],
         "defender": [],
@@ -1896,16 +2228,19 @@ def organize_players(
             )
 
             if role == "goalkeeper":
+
                 groups["goalkeeper"].append(
                     player
                 )
 
             elif role == "defender":
+
                 groups["defender"].append(
                     player
                 )
 
             elif role == "midfielder":
+
                 groups["midfielder"].append(
                     player
                 )
@@ -1914,11 +2249,13 @@ def organize_players(
                 "wide_attacker",
                 "attacker",
             ):
+
                 groups["attacker"].append(
                     player
                 )
 
             else:
+
                 groups["unknown"].append(
                     player
                 )
@@ -1934,6 +2271,7 @@ def organize_players(
         ) == "goalkeeper":
 
             goalkeeper = player
+
             break
 
     if goalkeeper is not None:
@@ -2035,6 +2373,7 @@ def organize_players(
     for player in defenders:
 
         if player in remaining:
+
             remaining.remove(
                 player
             )
@@ -2061,6 +2400,7 @@ def organize_players(
     for player in attackers:
 
         if player in remaining:
+
             remaining.remove(
                 player
             )
@@ -2096,6 +2436,7 @@ def organize_players(
     for player in midfielders:
 
         if player in remaining:
+
             remaining.remove(
                 player
             )
@@ -2156,11 +2497,13 @@ def organize_players(
         for player in selected:
 
             if player in remaining:
+
                 remaining.remove(
                     player
                 )
 
             if player in wide_players:
+
                 wide_players.remove(
                     player
                 )
@@ -2183,11 +2526,13 @@ def organize_players(
         for player in selected:
 
             if player in remaining:
+
                 remaining.remove(
                     player
                 )
 
             if player in wide_players:
+
                 wide_players.remove(
                     player
                 )
@@ -2216,6 +2561,7 @@ def organize_players(
         for player in selected:
 
             if player in remaining:
+
                 remaining.remove(
                     player
                 )
@@ -2244,6 +2590,7 @@ def organize_players(
         for player in selected:
 
             if player in remaining:
+
                 remaining.remove(
                     player
                 )
@@ -2284,6 +2631,7 @@ def organize_players(
 # --------------------------------------------------------
 
 def get_match_events(root):
+
     events = get_nested(
         root,
         "props",
@@ -2305,6 +2653,7 @@ def get_match_events(root):
 # --------------------------------------------------------
 
 def is_cancelled_goal_event(event):
+
     if not isinstance(event, dict):
         return False
 
@@ -2343,6 +2692,7 @@ def is_cancelled_goal_event(event):
             "var_goal_cancelled"
             in keys.lower()
         ):
+
             return True
 
     return False
@@ -2353,6 +2703,7 @@ def is_cancelled_goal_event(event):
 # --------------------------------------------------------
 
 def is_penalty_goal(event):
+
     if not isinstance(event, dict):
         return False
 
@@ -2400,12 +2751,14 @@ def is_penalty_goal(event):
 # --------------------------------------------------------
 
 def is_own_goal(event):
+
     if not isinstance(event, dict):
         return False
 
     if event.get(
         "ownGoal"
     ) is True:
+
         return True
 
     shotmap_event = event.get(
@@ -2420,6 +2773,7 @@ def is_own_goal(event):
         if shotmap_event.get(
             "isOwnGoal"
         ) is True:
+
             return True
 
     return False
@@ -2430,6 +2784,7 @@ def is_own_goal(event):
 # --------------------------------------------------------
 
 def is_red_card_event(event):
+
     if not isinstance(event, dict):
         return False
 
@@ -2449,6 +2804,7 @@ def is_red_card_event(event):
         "redcard",
         "red_card",
     ):
+
         return False
 
     card_description = event.get(
@@ -2486,6 +2842,7 @@ def is_red_card_event(event):
 # --------------------------------------------------------
 
 def get_event_player_id(event):
+
     if not isinstance(event, dict):
         return None
 
@@ -2496,12 +2853,14 @@ def get_event_player_id(event):
     if value is not None:
 
         try:
+
             return int(value)
 
         except (
             TypeError,
             ValueError,
         ):
+
             return str(value)
 
     player = event.get(
@@ -2520,12 +2879,14 @@ def get_event_player_id(event):
         if value is not None:
 
             try:
+
                 return int(value)
 
             except (
                 TypeError,
                 ValueError,
             ):
+
                 return str(value)
 
     return None
@@ -2536,6 +2897,7 @@ def get_event_player_id(event):
 # --------------------------------------------------------
 
 def get_event_assist_player_id(event):
+
     if not isinstance(event, dict):
         return None
 
@@ -2546,12 +2908,14 @@ def get_event_assist_player_id(event):
     if value is not None:
 
         try:
+
             return int(value)
 
         except (
             TypeError,
             ValueError,
         ):
+
             return str(value)
 
     return None
@@ -2562,6 +2926,7 @@ def get_event_assist_player_id(event):
 # --------------------------------------------------------
 
 def extract_player_events(root):
+
     events = get_match_events(
         root
     )
@@ -2569,6 +2934,7 @@ def extract_player_events(root):
     player_events = {}
 
     def ensure_player(player_id):
+
         if player_id is None:
             return None
 
@@ -2579,6 +2945,7 @@ def extract_player_events(root):
                 "penalty_goals": 0,
                 "assists": 0,
                 "red_cards": 0,
+                "own_goals": 0,
             }
 
         return player_events[player_id]
@@ -2600,6 +2967,7 @@ def extract_player_events(root):
         )
 
         if player_id is not None:
+
             cancelled_goal_player_ids.add(
                 player_id
             )
@@ -2625,19 +2993,28 @@ def extract_player_events(root):
             if event.get(
                 "isPenaltyShootoutEvent"
             ) is True:
+
                 continue
 
             if player_id in cancelled_goal_player_ids:
+
                 continue
 
             data = ensure_player(
                 player_id
             )
 
-            data["goals"] += 1
+            if is_own_goal(event):
 
-            if is_penalty_goal(event):
-                data["penalty_goals"] += 1
+                data["own_goals"] += 1
+
+            else:
+
+                data["goals"] += 1
+
+                if is_penalty_goal(event):
+
+                    data["penalty_goals"] += 1
 
             assist_player_id = (
                 get_event_assist_player_id(
@@ -2685,6 +3062,7 @@ def extract_scorers(
     home_players,
     away_players,
 ):
+
     events = get_match_events(
         root
     )
@@ -2704,8 +3082,6 @@ def extract_scorers(
     home_scorers = []
     away_scorers = []
 
-    cancelled_goal_indexes = set()
-
     cancelled_player_ids = set()
 
     for event in events:
@@ -2722,13 +3098,12 @@ def extract_scorers(
             )
 
             if player_id is not None:
+
                 cancelled_player_ids.add(
                     player_id
                 )
 
-    for event_index, event in enumerate(
-        events
-    ):
+    for event in events:
 
         if not isinstance(event, dict):
             continue
@@ -2743,6 +3118,7 @@ def extract_scorers(
         if event.get(
             "isPenaltyShootoutEvent"
         ) is True:
+
             continue
 
         player_id = get_event_player_id(
@@ -2753,9 +3129,7 @@ def extract_scorers(
             continue
 
         if player_id in cancelled_player_ids:
-            cancelled_goal_indexes.add(
-                event_index
-            )
+
             continue
 
         player = event.get(
@@ -2774,6 +3148,7 @@ def extract_scorers(
             )
 
         if not player_name:
+
             player_name = clean_text(
                 event.get(
                     "playerName"
@@ -2822,11 +3197,13 @@ def extract_scorers(
         else:
 
             if is_home is True:
+
                 home_scorers.append(
                     player_name
                 )
 
             elif is_home is False:
+
                 away_scorers.append(
                     player_name
                 )
@@ -2845,6 +3222,7 @@ def get_player_event_markers(
     player,
     player_events,
 ):
+
     player_id = get_player_id(
         player
     )
@@ -2893,27 +3271,51 @@ def get_player_event_markers(
         or 0
     )
 
+    own_goals = int(
+        data.get(
+            "own_goals",
+            0,
+        )
+        or 0
+    )
+
     normal_goals = (
         goals
         - penalty_goals
     )
 
+    if own_goals == 1:
+
+        markers.append(
+            "🔴"
+        )
+
+    elif own_goals > 1:
+
+        markers.append(
+            f"×{own_goals} 🔴"
+        )
+
     if penalty_goals == 1:
+
         markers.append(
             "P ⚽"
         )
 
     elif penalty_goals > 1:
+
         markers.append(
             f"P ⚽×{penalty_goals}"
         )
 
     if normal_goals == 1:
+
         markers.append(
             "⚽"
         )
 
     elif normal_goals > 1:
+
         markers.append(
             f"×{normal_goals} ⚽"
         )
@@ -2954,6 +3356,7 @@ def format_player(
     show_rating,
     player_events=None,
 ):
+
     name = get_player_name(
         player
     )
@@ -2995,6 +3398,13 @@ def format_player(
 
 # --------------------------------------------------------
 # فرمت یک خط بازیکنان
+#
+# اگر یک خط بیشتر از یک ردیف داشته باشد،
+# ایموجی فقط در ابتدای خط اول می‌آید.
+#
+# ردیف‌های بعدی با فاصله هم‌اندازه ایموجی
+# شروع می‌شوند تا نام بازیکن دقیقاً زیر نام
+# بازیکن قبلی قرار بگیرد.
 # --------------------------------------------------------
 
 def format_player_line(
@@ -3003,6 +3413,7 @@ def format_player_line(
     show_rating,
     player_events=None,
 ):
+
     names = []
 
     for player in players:
@@ -3014,6 +3425,7 @@ def format_player_line(
         )
 
         if name:
+
             names.append(
                 name
             )
@@ -3021,9 +3433,96 @@ def format_player_line(
     if not names:
         return ""
 
+    max_players_per_row = 3
+
+    rows = []
+
+    for index in range(
+        0,
+        len(names),
+        max_players_per_row,
+    ):
+
+        rows.append(
+            names[
+                index:index
+                + max_players_per_row
+            ]
+        )
+
+    formatted_rows = []
+
+    for row_index, row in enumerate(
+        rows
+    ):
+
+        content = " | ".join(row)
+
+        if row_index == 0:
+
+            formatted_rows.append(
+                f"{icon} {content}"
+            )
+
+        else:
+
+            formatted_rows.append(
+                f"  {content}"
+            )
+
+    return "\n".join(
+        formatted_rows
+    )
+
+
+# --------------------------------------------------------
+# فرمت گلزنان
+#
+# تیم سمت چپ → گلزن سمت چپ
+# تیم سمت راست → گلزن سمت راست
+#
+# اسم تیم‌ها اینجا تکرار نمی‌شوند.
+# --------------------------------------------------------
+
+def format_scorers_side_by_side(
+    home_scorers,
+    away_scorers,
+):
+
+    if (
+        not home_scorers
+        and not away_scorers
+    ):
+
+        return ""
+
+    left = (
+        " | ".join(home_scorers)
+        if home_scorers
+        else ""
+    )
+
+    right = (
+        " | ".join(away_scorers)
+        if away_scorers
+        else ""
+    )
+
+    if left and right:
+
+        return (
+            f"⚽️ {left}"
+            f"                 "
+            f"{right}"
+        )
+
+    if left:
+
+        return f"⚽️ {left}"
+
     return (
-        f"{icon} "
-        + " | ".join(names)
+        "                 "
+        f"{right} ⚽️"
     )
 
 
@@ -3037,11 +3536,20 @@ def format_team_lineup(
     show_rating,
     team_icon,
     player_events=None,
+    team_score=None,
 ):
+
     if not isinstance(team, dict):
 
+        if team_score is not None:
+
+            return (
+                f"{team_name} "
+                f"{team_score}\n"
+                "اطلاعات ترکیب پیدا نشد."
+            )
+
         return (
-            f"{team_icon} "
             f"{team_name}\n"
             "اطلاعات ترکیب پیدا نشد."
         )
@@ -3069,9 +3577,21 @@ def format_team_lineup(
 
     lines = []
 
-    lines.append(
-        f"{team_icon} {team_name}"
-    )
+    # ----------------------------------------------------
+    # نام تیم + نتیجه
+    # ----------------------------------------------------
+
+    if team_score is not None:
+
+        lines.append(
+            f"{team_name} {team_score}"
+        )
+
+    else:
+
+        lines.append(
+            team_name
+        )
 
     if coach:
 
@@ -3087,6 +3607,10 @@ def format_team_lineup(
 
     lines.append("")
 
+    # ----------------------------------------------------
+    # دروازه‌بان
+    # ----------------------------------------------------
+
     line = format_player_line(
         "🧤",
         groups["goalkeeper"],
@@ -3095,7 +3619,12 @@ def format_team_lineup(
     )
 
     if line:
+
         lines.append(line)
+
+    # ----------------------------------------------------
+    # مدافعان
+    # ----------------------------------------------------
 
     line = format_player_line(
         "🛡",
@@ -3105,7 +3634,12 @@ def format_team_lineup(
     )
 
     if line:
+
         lines.append(line)
+
+    # ----------------------------------------------------
+    # هافبک‌ها
+    # ----------------------------------------------------
 
     line = format_player_line(
         "⚙️",
@@ -3115,7 +3649,12 @@ def format_team_lineup(
     )
 
     if line:
+
         lines.append(line)
+
+    # ----------------------------------------------------
+    # مهاجمان
+    # ----------------------------------------------------
 
     line = format_player_line(
         "⚡",
@@ -3125,7 +3664,12 @@ def format_team_lineup(
     )
 
     if line:
+
         lines.append(line)
+
+    # ----------------------------------------------------
+    # بازیکنان ناشناخته
+    # ----------------------------------------------------
 
     if groups["unknown"]:
 
@@ -3143,6 +3687,10 @@ def format_team_lineup(
             )
 
     lines.append("")
+
+    # ----------------------------------------------------
+    # ذخیره‌ها
+    # ----------------------------------------------------
 
     substitute_names = []
 
@@ -3173,12 +3721,13 @@ def format_team_lineup(
 
 
 # --------------------------------------------------------
-# فرمت گلزنان
+# فرمت گلزنان قدیمی
 # --------------------------------------------------------
 
 def format_scorers(
     scorers,
 ):
+
     if not scorers:
         return ""
 
@@ -3192,6 +3741,7 @@ def format_scorers(
 # --------------------------------------------------------
 
 def build_message(root):
+
     content = get_content(
         root
     )
@@ -3200,19 +3750,31 @@ def build_message(root):
         root
     )
 
-    home_name = (
+    raw_home_name = (
         info["home"]
         or "Home"
     )
 
-    away_name = (
+    raw_away_name = (
         info["away"]
         or "Away"
     )
 
-    league = (
+    home_name = translate_team_name(
+        raw_home_name
+    )
+
+    away_name = translate_team_name(
+        raw_away_name
+    )
+
+    raw_league = (
         info["league"]
         or "نامشخص"
+    )
+
+    league = translate_competition_name(
+        raw_league
     )
 
     start_time = get_match_start(
@@ -3273,6 +3835,7 @@ def build_message(root):
         lineup,
         dict,
     ):
+
         raise RuntimeError(
             "LINEUP OBJECT NOT FOUND."
         )
@@ -3446,6 +4009,7 @@ def build_message(root):
                 f"(id={player_id}): "
                 f"goals={data['goals']} "
                 f"| penalty_goals={data['penalty_goals']} "
+                f"| own_goals={data.get('own_goals', 0)} "
                 f"| assists={data['assists']} "
                 f"| red_cards={data['red_cards']}"
             )
@@ -3610,82 +4174,92 @@ def build_message(root):
     # ----------------------------------------------------
     # نام تیم‌ها
     #
-    # فقط اگر بازی تمام شده باشد، نتیجه کنار اسم
-    # تیم قرار می‌گیرد.
+    # بدون ایموجی کنار نام تیم
+    # فقط 🆚 بین دو تیم
     # ----------------------------------------------------
 
-    if finished and match_score:
-
-        message.append(
-            f"⚽️ {home_name} "
-            f"{match_score['home']} "
-            f"🆚 "
-            f"{away_name} "
-            f"{match_score['away']}"
-        )
-
-    else:
-
-        message.append(
-            f"⚽️ {home_name} "
-            f"🆚 "
-            f"{away_name}"
-        )
+    message.append(
+        f"⚽️ {home_name} "
+        f"🆚 "
+        f"{away_name}"
+    )
 
     message.append(
         f"🕐 {kickoff} به وقت ایران"
     )
 
     # ----------------------------------------------------
-    # اگر بازی تمام شده:
-    # گلزنان هر تیم
+    # گلزنان
+    #
+    # اسم تیم‌ها تکرار نمی‌شوند.
+    # تیم سمت چپ → گلزن سمت چپ
+    # تیم سمت راست → گلزن سمت راست
     # ----------------------------------------------------
 
     if finished:
 
-        if home_scorers:
-
-            message.append("")
-
-            message.append(
-                f"⚽ {home_name}: "
-                + " | ".join(
-                    home_scorers
-                )
+        scorer_line = (
+            format_scorers_side_by_side(
+                home_scorers,
+                away_scorers,
             )
+        )
 
-        if away_scorers:
+        if scorer_line:
 
             message.append("")
 
             message.append(
-                f"⚽ {away_name}: "
-                + " | ".join(
-                    away_scorers
-                )
+                scorer_line
             )
 
     message.append("")
+
+    # ----------------------------------------------------
+    # ترکیب تیم اول
+    # ----------------------------------------------------
+
+    home_score = None
+
+    if finished and match_score:
+
+        home_score = match_score[
+            "home"
+        ]
 
     message.append(
         format_team_lineup(
             home_name,
             home_team,
             show_rating,
-            "🔴",
+            "",
             player_events,
+            home_score,
         )
     )
 
     message.append("")
+
+    # ----------------------------------------------------
+    # ترکیب تیم دوم
+    # ----------------------------------------------------
+
+    away_score = None
+
+    if finished and match_score:
+
+        away_score = match_score[
+            "away"
+        ]
 
     message.append(
         format_team_lineup(
             away_name,
             away_team,
             show_rating,
-            "🔵",
+            "",
             player_events,
+            away_score,
         )
     )
 
@@ -3700,6 +4274,7 @@ def split_message(
     message,
     max_length=4000,
 ):
+
     chunks = []
 
     remaining = message
@@ -3713,6 +4288,7 @@ def split_message(
         )
 
         if cut == -1:
+
             cut = max_length
 
         chunks.append(
@@ -3724,6 +4300,7 @@ def split_message(
         ].lstrip()
 
     if remaining:
+
         chunks.append(
             remaining
         )
