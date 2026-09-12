@@ -1,259 +1,130 @@
-import html
 import json
+import os
 import re
 from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
 
 import requests
 
-from match_cache import (
-    add_or_update_match,
-    save_matches_cache,
-)
+
+MATCH_ID = "5811755"
+MATCH_URL = f"https://www.fotmob.com/match/{MATCH_ID}"
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAMBOT")
+TELEGRAM_CHANNEL = os.getenv("TELEGRAMCHANNEL")
 
 
-# ============================================================
-# مسابقات تستی
-# ============================================================
+# --------------------------------------------------------
+# ابزارهای عمومی
+# --------------------------------------------------------
 
-TEST_MATCH_IDS = {
-    "5868059": "Sevilla vs Valencia",
-    "5749679": "Venezia vs Fiorentina",
-    "5881169": "Union Berlin vs Schalke 04",
-    "5802935": "Rennes vs Marseille",
-}
-
-
-# ============================================================
-# اطلاعات ثابت همین چهار مسابقه تستی
-#
-# این بخش فقط برای تست ساخت کش است.
-# در سیستم اصلی، مسابقات از FotMob دریافت می‌شوند.
-# ============================================================
-
-TEST_LEAGUES = {
-    "5868059": "LaLiga",
-    "5749679": "Serie A",
-    "5881169": "Bundesliga",
-    "5802935": "Ligue 1",
-}
-
-
-# ============================================================
-# تنظیمات
-# ============================================================
-
-IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
-
-FOTMOB_MATCH_URL = (
-    "https://www.fotmob.com/match/{}"
-)
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/140.0.0.0 Safari/537.36"
-    ),
-    "Accept": (
-        "text/html,application/xhtml+xml,"
-        "application/xml;q=0.9,image/avif,"
-        "image/webp,*/*;q=0.8"
-    ),
-    "Accept-Language": (
-        "en-US,en;q=0.9"
-    ),
-}
-
-REQUEST_TIMEOUT = 30
-
-
-# ============================================================
-# تبدیل UTC به ساعت ایران
-# ============================================================
-
-def utc_to_iran(utc_time):
-    if not utc_time:
-        return None
-
-    try:
-        value = str(
-            utc_time
-        ).strip()
-
-        dt = datetime.fromisoformat(
-            value.replace(
-                "Z",
-                "+00:00",
-            )
-        )
-
-        if dt.tzinfo is None:
-            dt = dt.replace(
-                tzinfo=timezone.utc
-            )
-
-        iran_dt = dt.astimezone(
-            IRAN_TIMEZONE
-        )
-
-        return iran_dt.strftime(
-            "%Y-%m-%d %H:%M"
-        )
-
-    except Exception as exc:
-        print(
-            "ERROR converting UTC time "
-            f"to Iran time: {exc}"
-        )
-
-        return None
-
-
-# ============================================================
-# وضعیت مسابقه
-# ============================================================
-
-def get_match_status(match_data):
-    if not isinstance(
-        match_data,
-        dict,
-    ):
-        return "Upcoming"
-
-    status = match_data.get(
-        "status"
-    )
-
-    if not isinstance(
-        status,
-        dict,
-    ):
-        return "Upcoming"
-
-    if status.get("cancelled"):
-        return "Cancelled"
-
-    if status.get("finished"):
-        return "Finished"
-
-    if status.get("started"):
-        return "Live"
-
-    return "Upcoming"
-
-
-# ============================================================
-# دریافت صفحه مسابقه
-# ============================================================
-
-def fetch_match_page(match_id):
-    url = FOTMOB_MATCH_URL.format(
-        match_id
-    )
-
-    print("")
-    print(
-        f"Fetching: {url}"
-    )
-
-    try:
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            timeout=REQUEST_TIMEOUT,
-        )
-
-        print(
-            f"HTTP status: "
-            f"{response.status_code}"
-        )
-
-        response.raise_for_status()
-
-        return response.text
-
-    except requests.RequestException as exc:
-        print(
-            f"ERROR fetching match "
-            f"{match_id}: {exc}"
-        )
-
-        return None
-
-
-# ============================================================
-# استخراج __NEXT_DATA__
-# ============================================================
-
-def extract_next_data(page_html):
-    if not page_html:
-        return None
-
-    match = re.search(
-        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>'
-        r'(.*?)'
-        r'</script>',
-        page_html,
-        re.DOTALL | re.IGNORECASE,
-    )
-
-    if not match:
-        print(
-            "ERROR: __NEXT_DATA__ not found."
-        )
-
-        return None
-
-    raw_json = html.unescape(
-        match.group(1)
-    )
-
-    try:
-        return json.loads(
-            raw_json
-        )
-
-    except json.JSONDecodeError as exc:
-        print(
-            "ERROR parsing __NEXT_DATA__: "
-            f"{exc}"
-        )
-
-        return None
-
-
-# ============================================================
-# دسترسی امن به مسیر تو در تو
-# ============================================================
-
-def get_nested(
-    data,
-    *keys,
-):
+def get_nested(data, *keys):
     current = data
 
     for key in keys:
-        if not isinstance(
-            current,
-            dict,
-        ):
+        if not isinstance(current, dict):
             return None
 
-        current = current.get(
-            key
-        )
+        current = current.get(key)
 
     return current
 
 
-# ============================================================
-# استخراج eventJSONLD
-#
-# FotMob اطلاعات پایه مسابقه را در این بخش قرار می‌دهد.
-# ============================================================
+def clean_text(value):
+    if value is None:
+        return ""
 
-def get_event_jsonld(root):
+    return str(value).strip()
+
+
+def send_telegram(text):
+    if not TELEGRAM_BOT_TOKEN:
+        raise RuntimeError("TELEGRAMBOT environment variable is missing.")
+
+    if not TELEGRAM_CHANNEL:
+        raise RuntimeError("TELEGRAMCHANNEL environment variable is missing.")
+
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+
+    response = requests.post(
+        url,
+        data={
+            "chat_id": TELEGRAM_CHANNEL,
+            "text": text,
+        },
+        timeout=30,
+    )
+
+    print("Telegram status:", response.status_code)
+
+    if not response.ok:
+        print(response.text)
+
+    response.raise_for_status()
+
+    return response.json()
+
+
+# --------------------------------------------------------
+# دریافت صفحه فوت‌موب
+# --------------------------------------------------------
+
+def fetch_match_page():
+    print("=" * 70)
+    print("FETCHING FOTMOB MATCH")
+    print("=" * 70)
+    print("Match ID:", MATCH_ID)
+    print("URL:", MATCH_URL)
+
+    response = requests.get(
+        MATCH_URL,
+        headers={
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 "
+                "(KHTML, like Gecko) "
+                "Chrome/131.0.0.0 Safari/537.36"
+            )
+        },
+        timeout=30,
+    )
+
+    print("HTTP:", response.status_code)
+    print("HTML:", len(response.text), "bytes")
+
+    response.raise_for_status()
+
+    return response.text
+
+
+# --------------------------------------------------------
+# استخراج __NEXT_DATA__
+# --------------------------------------------------------
+
+def extract_next_data(html):
+    pattern = (
+        r'<script id="__NEXT_DATA__" '
+        r'type="application/json">(.*?)</script>'
+    )
+
+    match = re.search(pattern, html, re.DOTALL)
+
+    if not match:
+        raise RuntimeError("__NEXT_DATA__ not found.")
+
+    raw_json = match.group(1)
+
+    data = json.loads(raw_json)
+
+    print("NEXT_DATA extracted successfully.")
+
+    return data
+
+
+# --------------------------------------------------------
+# پیدا کردن اطلاعات پایه بازی
+# --------------------------------------------------------
+
+def extract_basic_info(root):
     event_jsonld = get_nested(
         root,
         "props",
@@ -262,534 +133,631 @@ def get_event_jsonld(root):
         "eventJSONLD",
     )
 
-    if isinstance(
-        event_jsonld,
-        dict,
-    ):
-        return event_jsonld
-
-    # بعضی نسخه‌ها ممکن است JSON-LD را
-    # به صورت لیست برگردانند.
-    if isinstance(
-        event_jsonld,
-        list,
-    ):
-        for item in event_jsonld:
-            if not isinstance(
-                item,
-                dict,
-            ):
-                continue
-
-            if (
-                item.get("@type")
-                == "SportsEvent"
-            ):
-                return item
-
-            if (
-                "homeTeam" in item
-                and "awayTeam" in item
-            ):
-                return item
-
-    return None
-
-
-# ============================================================
-# استخراج نام تیم از JSON-LD
-# ============================================================
-
-def get_event_team_name(
-    team_data
-):
-    if isinstance(
-        team_data,
-        dict,
-    ):
-        return (
-            team_data.get("name")
-            or team_data.get("alternateName")
-        )
-
-    if isinstance(
-        team_data,
-        str,
-    ):
-        return team_data
-
-    return None
-
-
-# ============================================================
-# استخراج اطلاعات مسابقه
-# ============================================================
-
-def extract_match_info(
-    root,
-    match_id,
-):
-    event = get_event_jsonld(
-        root
+    content = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "content",
     )
 
-    if not event:
-        print(
-            "ERROR: eventJSONLD "
-            "not found."
+    info = {
+        "home": "",
+        "away": "",
+        "start": "",
+        "league": "",
+        "venue": "",
+        "status": "",
+        "score": "",
+    }
+
+    if isinstance(event_jsonld, dict):
+        home_team = event_jsonld.get("homeTeam")
+        away_team = event_jsonld.get("awayTeam")
+
+        if isinstance(home_team, dict):
+            info["home"] = clean_text(home_team.get("name"))
+
+        if isinstance(away_team, dict):
+            info["away"] = clean_text(away_team.get("name"))
+
+        info["start"] = clean_text(
+            event_jsonld.get("startDate")
         )
 
+    if isinstance(content, dict):
+
+        for key in (
+            "league",
+            "tournament",
+            "competition",
+        ):
+            value = content.get(key)
+
+            if isinstance(value, dict):
+                for name_key in (
+                    "name",
+                    "longName",
+                    "shortName",
+                ):
+                    if value.get(name_key):
+                        info["league"] = clean_text(
+                            value[name_key]
+                        )
+                        break
+
+            elif isinstance(value, str):
+                info["league"] = value
+
+            if info["league"]:
+                break
+
+        for key in (
+            "venue",
+            "stadium",
+        ):
+            value = content.get(key)
+
+            if isinstance(value, dict):
+                for name_key in (
+                    "name",
+                    "longName",
+                ):
+                    if value.get(name_key):
+                        info["venue"] = clean_text(
+                            value[name_key]
+                        )
+                        break
+
+            elif isinstance(value, str):
+                info["venue"] = value
+
+            if info["venue"]:
+                break
+
+    return info
+
+
+# --------------------------------------------------------
+# جستجوی بازگشتی
+# --------------------------------------------------------
+
+def recursive_find(data, wanted_keys):
+    results = []
+
+    def walk(value, path="root"):
+        if len(results) >= 100:
+            return
+
+        if isinstance(value, dict):
+            for key, child in value.items():
+
+                current_path = f"{path}.{key}"
+
+                if key in wanted_keys:
+                    results.append(
+                        (
+                            current_path,
+                            child,
+                        )
+                    )
+
+                walk(child, current_path)
+
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                walk(
+                    child,
+                    f"{path}[{index}]",
+                )
+
+    walk(data)
+
+    return results
+
+
+# --------------------------------------------------------
+# پیدا کردن بخش‌های مهم
+# --------------------------------------------------------
+
+def find_section(root, names):
+    results = recursive_find(
+        root,
+        set(names),
+    )
+
+    if not results:
         return None
 
-    print(
-        "eventJSONLD found."
-    )
+    # اولویت با مواردی که داخل content هستند
+    for path, value in results:
+        if "pageProps.content" in path:
+            return value
 
-    # --------------------------------------------------------
-    # تیم میزبان
-    # --------------------------------------------------------
+    return results[0][1]
 
-    home_name = get_event_team_name(
-        event.get("homeTeam")
-    )
 
-    # --------------------------------------------------------
-    # تیم مهمان
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# تبدیل زمان
+# --------------------------------------------------------
 
-    away_name = get_event_team_name(
-        event.get("awayTeam")
-    )
-
-    # --------------------------------------------------------
-    # زمان شروع
-    # --------------------------------------------------------
-
-    utc_time = (
-        event.get("startDate")
-    )
-
-    # --------------------------------------------------------
-    # لیگ
-    #
-    # برای این تست چهار مسابقه، نام رقابت مشخص است.
-    # --------------------------------------------------------
-
-    league = TEST_LEAGUES.get(
-        str(match_id)
-    )
-
-    # --------------------------------------------------------
-    # بررسی اطلاعات ضروری
-    # --------------------------------------------------------
-
-    if not home_name:
-        print(
-            "ERROR: Home team could "
-            "not be identified from "
-            "eventJSONLD."
-        )
-
-        return None
-
-    if not away_name:
-        print(
-            "ERROR: Away team could "
-            "not be identified from "
-            "eventJSONLD."
-        )
-
-        return None
-
-    if not utc_time:
-        print(
-            "ERROR: Kickoff time could "
-            "not be identified from "
-            "eventJSONLD."
-        )
-
-        return None
-
-    # --------------------------------------------------------
-    # ساعت ایران
-    # --------------------------------------------------------
-
-    iran_time = utc_to_iran(
-        utc_time
-    )
-
-    if not iran_time:
-        print(
-            "ERROR: Iran time could "
-            "not be calculated."
-        )
-
-        return None
-
-    # --------------------------------------------------------
-    # تاریخ ایران
-    # --------------------------------------------------------
+def format_match_time(value):
+    if not value:
+        return "نامشخص"
 
     try:
-        date_value = datetime.strptime(
-            iran_time,
-            "%Y-%m-%d %H:%M",
-        ).strftime(
-            "%Y-%m-%d"
+        dt = datetime.fromisoformat(
+            value.replace("Z", "+00:00")
+        )
+
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+
+        iran_time = dt.astimezone(
+            timezone.utc
+        )
+
+        return dt.strftime(
+            "%Y-%m-%d %H:%M UTC"
         )
 
     except Exception:
-        date_value = None
-
-    # --------------------------------------------------------
-    # رکورد اولیه
-    # --------------------------------------------------------
-
-    return {
-        "id": str(match_id),
-        "date": date_value,
-        "league": league,
-        "home": home_name,
-        "away": away_name,
-        "home_id": None,
-        "away_id": None,
-        "utc_time": utc_time,
-        "iran_time": iran_time,
-        "status": "Upcoming",
-        "score": "-",
-        "url": FOTMOB_MATCH_URL.format(
-            match_id
-        ),
-    }
+        return str(value)
 
 
-# ============================================================
-# نمایش اطلاعات
-# ============================================================
+# --------------------------------------------------------
+# تبدیل داده‌های مختلف به متن قابل خواندن
+# --------------------------------------------------------
 
-def print_match(
-    match_id,
-    match,
-):
-    print("")
-    print(
-        "-" * 70
-    )
+def format_value(value, indent=0):
+    prefix = " " * indent
 
-    print(
-        f"Match ID: {match_id}"
-    )
+    if value is None:
+        return ""
 
-    print(
-        f"Test name: "
-        f"{TEST_MATCH_IDS[match_id]}"
-    )
+    if isinstance(value, (str, int, float, bool)):
+        return str(value)
 
-    print(
-        f"Actual home: "
-        f"{match.get('home')}"
-    )
+    if isinstance(value, list):
 
-    print(
-        f"Actual away: "
-        f"{match.get('away')}"
-    )
+        lines = []
 
-    print(
-        f"League: "
-        f"{match.get('league')}"
-    )
+        for index, item in enumerate(value, 1):
+            if isinstance(item, (dict, list)):
+                lines.append(
+                    f"{prefix}{index}."
+                )
+                lines.append(
+                    format_value(
+                        item,
+                        indent + 2,
+                    )
+                )
+            else:
+                lines.append(
+                    f"{prefix}- {item}"
+                )
 
-    print(
-        f"Date: "
-        f"{match.get('date')}"
-    )
+        return "\n".join(lines)
 
-    print(
-        f"UTC time: "
-        f"{match.get('utc_time')}"
-    )
+    if isinstance(value, dict):
 
-    print(
-        f"Iran time: "
-        f"{match.get('iran_time')}"
-    )
+        lines = []
 
-    print(
-        f"Status: "
-        f"{match.get('status')}"
-    )
+        for key, child in value.items():
 
-    print(
-        f"URL: "
-        f"{match.get('url')}"
-    )
+            if isinstance(
+                child,
+                (dict, list),
+            ):
+                lines.append(
+                    f"{prefix}{key}:"
+                )
 
-    print(
-        "-" * 70
-    )
+                formatted = format_value(
+                    child,
+                    indent + 2,
+                )
+
+                if formatted:
+                    lines.append(formatted)
+
+            else:
+                lines.append(
+                    f"{prefix}{key}: {child}"
+                )
+
+        return "\n".join(lines)
+
+    return str(value)
 
 
-# ============================================================
-# پیدا کردن مستقیم مسابقات
-# ============================================================
+# --------------------------------------------------------
+# ساخت بخش ترکیب
+# --------------------------------------------------------
 
-def find_test_matches():
-    found_matches = {}
+def format_lineups(lineup):
+    if not lineup:
+        return "اطلاعات ترکیب پیدا نشد."
 
-    for match_id in TEST_MATCH_IDS:
-        print("")
-        print(
-            "=" * 70
+    text = []
+
+    text.append("👥 ترکیب‌ها")
+
+    if isinstance(lineup, dict):
+
+        lineup_type = lineup.get(
+            "lineupType"
         )
 
-        print(
-            f"Testing match "
-            f"{match_id}: "
-            f"{TEST_MATCH_IDS[match_id]}"
-        )
-
-        print(
-            "=" * 70
-        )
-
-        # ----------------------------------------------------
-        # دریافت صفحه
-        # ----------------------------------------------------
-
-        page_html = fetch_match_page(
-            match_id
-        )
-
-        if not page_html:
-            print(
-                "Could not download "
-                "the match page."
+        if lineup_type:
+            text.append(
+                f"نوع ترکیب: {lineup_type}"
             )
 
-            continue
-
-        # ----------------------------------------------------
-        # استخراج NEXT_DATA
-        # ----------------------------------------------------
-
-        root = extract_next_data(
-            page_html
+        home = (
+            lineup.get("home")
+            or lineup.get("homeTeam")
         )
 
-        if not root:
-            print(
-                "Could not extract "
-                "__NEXT_DATA__."
+        away = (
+            lineup.get("away")
+            or lineup.get("awayTeam")
+        )
+
+        for title, team in (
+            ("🏠 تیم میزبان", home),
+            ("✈️ تیم مهمان", away),
+        ):
+
+            if not isinstance(team, dict):
+                continue
+
+            text.append("")
+            text.append(title)
+
+            coach = (
+                team.get("coach")
+                or team.get("manager")
             )
 
-            continue
+            if isinstance(coach, dict):
+                coach = (
+                    coach.get("name")
+                    or coach.get("longName")
+                )
 
-        # ----------------------------------------------------
-        # استخراج اطلاعات
-        # ----------------------------------------------------
+            if coach:
+                text.append(
+                    f"مربی: {coach}"
+                )
 
-        match = extract_match_info(
-            root,
-            match_id,
-        )
-
-        if not match:
-            print(
-                "Could not extract "
-                "match information."
+            formation = team.get(
+                "formation"
             )
 
-            continue
+            if formation:
+                text.append(
+                    f"آرایش: {formation}"
+                )
 
-        # ----------------------------------------------------
-        # ذخیره
-        # ----------------------------------------------------
+            starters = (
+                team.get("starters")
+                or team.get("startingXI")
+                or team.get("players")
+            )
 
-        found_matches[
-            str(match_id)
-        ] = match
+            if isinstance(starters, list):
 
-        print(
-            "MATCH FOUND SUCCESSFULLY"
+                text.append(
+                    "بازیکنان:"
+                )
+
+                for player in starters:
+
+                    if not isinstance(
+                        player,
+                        dict,
+                    ):
+                        continue
+
+                    name = (
+                        player.get("name")
+                        or player.get(
+                            "playerName"
+                        )
+                        or player.get(
+                            "longName"
+                        )
+                    )
+
+                    number = (
+                        player.get("number")
+                        or player.get(
+                            "shirtNumber"
+                        )
+                    )
+
+                    rating = (
+                        player.get("rating")
+                        or player.get(
+                            "ratingScore"
+                        )
+                    )
+
+                    line = "-"
+
+                    if number:
+                        line += f" {number}"
+
+                    if name:
+                        line += f" {name}"
+
+                    if rating:
+                        line += (
+                            f" ⭐ {rating}"
+                        )
+
+                    text.append(line)
+
+    return "\n".join(text)
+
+
+# --------------------------------------------------------
+# ساخت پیام اصلی
+# --------------------------------------------------------
+
+def build_message(root):
+
+    info = extract_basic_info(root)
+
+    content = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "content",
+    )
+
+    lineup = find_section(
+        root,
+        [
+            "lineup",
+        ],
+    )
+
+    events = find_section(
+        root,
+        [
+            "events",
+            "incidents",
+            "matchEvents",
+        ],
+    )
+
+    stats = find_section(
+        root,
+        [
+            "stats",
+            "statistics",
+            "matchStats",
+        ],
+    )
+
+    shotmap = find_section(
+        root,
+        [
+            "shotmap",
+        ],
+    )
+
+    momentum = find_section(
+        root,
+        [
+            "momentum",
+        ],
+    )
+
+    message = []
+
+    message.append("⚽ KV Mechelen 🆚 Anderlecht")
+    message.append("")
+
+    message.append(
+        f"🏆 {info['league'] or 'نامشخص'}"
+    )
+
+    message.append(
+        f"🕐 {format_match_time(info['start'])}"
+    )
+
+    if info["venue"]:
+        message.append(
+            f"🏟 {info['venue']}"
         )
 
-        print_match(
-            match_id,
-            match,
+    message.append("")
+
+    message.append("━━━━━━━━━━━━━━")
+    message.append("📊 اطلاعات مسابقه")
+    message.append("━━━━━━━━━━━━━━")
+
+    if isinstance(content, dict):
+
+        for key in (
+            "status",
+            "score",
+            "round",
+            "matchStatus",
+        ):
+            value = content.get(key)
+
+            if value is not None:
+                message.append(
+                    f"{key}: "
+                    f"{format_value(value)}"
+                )
+
+    message.append("")
+    message.append(
+        format_lineups(lineup)
+    )
+
+    if events:
+        message.append("")
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            "🔥 رویدادهای بازی"
+        )
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            format_value(events)
         )
 
-    return found_matches
+    if stats:
+        message.append("")
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            "📈 آمار مسابقه"
+        )
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            format_value(stats)
+        )
+
+    if shotmap:
+        message.append("")
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            "🎯 Shotmap"
+        )
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            format_value(shotmap)
+        )
+
+    if momentum:
+        message.append("")
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            "📉 Momentum"
+        )
+        message.append(
+            "━━━━━━━━━━━━━━"
+        )
+        message.append(
+            format_value(momentum)
+        )
+
+    return "\n".join(message)
 
 
-# ============================================================
-# ساخت کش تستی
-# ============================================================
+# --------------------------------------------------------
+# اجرای تست
+# --------------------------------------------------------
 
 def main():
-    print("")
-    print(
-        "=" * 70
-    )
-    print(
-        "TEST PRE-MATCH CACHE"
-    )
-    print(
-        "=" * 70
-    )
 
     print("")
-    print(
-        "Directly checking the four "
-        "FotMob match pages..."
-    )
+    print("#" * 70)
+    print("FOTMOB → TELEGRAM MATCH STRUCTURE TEST")
+    print("#" * 70)
 
-    found_matches = (
-        find_test_matches()
-    )
+    html = fetch_match_page()
 
-    # --------------------------------------------------------
-    # خلاصه
-    # --------------------------------------------------------
+    root = extract_next_data(html)
 
-    print("")
-    print(
-        "=" * 70
-    )
+    # ذخیره JSON خام فقط برای بررسی
+    with open(
+        "match_5811755_raw.json",
+        "w",
+        encoding="utf-8",
+    ) as file:
 
-    print(
-        f"Found test matches: "
-        f"{len(found_matches)}/"
-        f"{len(TEST_MATCH_IDS)}"
-    )
-
-    print(
-        "=" * 70
-    )
-
-    # --------------------------------------------------------
-    # بررسی مسابقات گم‌شده
-    # --------------------------------------------------------
-
-    missing_matches = []
-
-    for match_id in TEST_MATCH_IDS:
-        if match_id not in found_matches:
-            missing_matches.append(
-                match_id
-            )
-
-    if missing_matches:
-        print("")
-        print(
-            "=" * 70
+        json.dump(
+            root,
+            file,
+            ensure_ascii=False,
+            indent=2,
         )
 
-        print(
-            "WARNING: Some test matches "
-            "were not found."
-        )
-
-        print(
-            "=" * 70
-        )
-
-        for match_id in missing_matches:
-            print(
-                f"{match_id}: "
-                f"{TEST_MATCH_IDS[match_id]}"
-            )
-
-        print("")
-        print(
-            "The cache was NOT changed."
-        )
-
-        return
-
-    # --------------------------------------------------------
-    # ساخت کش جدید
-    #
-    # عمداً کش قبلی را نمی‌خوانیم.
-    # این تست باید فقط چهار مسابقه را داشته باشد.
-    # --------------------------------------------------------
-
-    final_cache = {}
-
-    for match_id in TEST_MATCH_IDS:
-        match = found_matches[
-            match_id
-        ]
-
-        add_or_update_match(
-            final_cache,
-            match,
-        )
-
-    # --------------------------------------------------------
-    # ذخیره
-    # --------------------------------------------------------
-
-    save_matches_cache(
-        final_cache
+    print(
+        "Raw JSON saved: "
+        "match_5811755_raw.json"
     )
 
-    # --------------------------------------------------------
-    # نتیجه
-    # --------------------------------------------------------
+    message = build_message(root)
 
     print("")
-    print(
-        "=" * 70
-    )
+    print("=" * 70)
+    print("MESSAGE TO TELEGRAM")
+    print("=" * 70)
+    print(message)
+    print("=" * 70)
+
+    # Telegram محدودیت طول پیام دارد.
+    # اگر پیام خیلی بزرگ باشد آن را به چند پیام تقسیم می‌کنیم.
+
+    max_length = 4000
+
+    chunks = []
+
+    while len(message) > max_length:
+
+        cut = message.rfind(
+            "\n",
+            0,
+            max_length,
+        )
+
+        if cut == -1:
+            cut = max_length
+
+        chunks.append(
+            message[:cut]
+        )
+
+        message = message[
+            cut:
+        ].lstrip()
+
+    if message:
+        chunks.append(message)
 
     print(
-        "TEST CACHE CREATED SUCCESSFULLY"
+        f"Telegram messages to send: "
+        f"{len(chunks)}"
     )
 
-    print(
-        "=" * 70
-    )
-
-    print("")
-    print(
-        f"Total cached test matches: "
-        f"{len(final_cache)}"
-    )
-
-    print("")
-
-    for match_id in TEST_MATCH_IDS:
-        match = final_cache[
-            match_id
-        ]
+    for index, chunk in enumerate(
+        chunks,
+        1,
+    ):
 
         print(
-            f"{match_id}: "
-            f"{match.get('home')} 🆚 "
-            f"{match.get('away')} | "
-            f"{match.get('status')} | "
-            f"{match.get('iran_time')}"
+            f"Sending message "
+            f"{index}/{len(chunks)}..."
         )
 
+        send_telegram(chunk)
+
     print("")
-    print(
-        "=" * 70
-    )
+    print("=" * 70)
+    print("TEST SUCCESSFUL")
+    print("=" * 70)
 
-    print(
-        "matches_cache.json now contains "
-        "ONLY the four test matches."
-    )
-
-    print(
-        "=" * 70
-    )
-
-
-# ============================================================
-# اجرا
-# ============================================================
 
 if __name__ == "__main__":
     main()
