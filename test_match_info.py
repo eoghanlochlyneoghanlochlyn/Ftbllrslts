@@ -213,6 +213,69 @@ def recursive_find(data, wanted_keys):
 
 
 # --------------------------------------------------------
+# دیباگ مسیرهای Rating
+#
+# این تابع فقط برای پیدا کردن محل Rating در JSON است.
+# فعلاً هیچ مقداری را به بازیکنان نسبت نمی‌دهد.
+# --------------------------------------------------------
+
+def debug_rating_paths(data, path="root"):
+    if isinstance(data, dict):
+
+        for key, value in data.items():
+
+            current_path = (
+                f"{path}.{key}"
+            )
+
+            key_lower = str(key).lower()
+
+            if key_lower in (
+                "rating",
+                "ratingscore",
+                "matchrating",
+            ):
+
+                print("")
+                print("=" * 70)
+                print("RATING FOUND")
+                print("=" * 70)
+
+                print("PATH:")
+                print(current_path)
+
+                print("VALUE:")
+                print(value)
+
+                print("TYPE:")
+                print(
+                    type(value).__name__
+                )
+
+                print("=" * 70)
+
+            debug_rating_paths(
+                value,
+                current_path,
+            )
+
+    elif isinstance(data, list):
+
+        for index, value in enumerate(
+            data
+        ):
+
+            current_path = (
+                f"{path}[{index}]"
+            )
+
+            debug_rating_paths(
+                value,
+                current_path,
+            )
+
+
+# --------------------------------------------------------
 # پیدا کردن بخش مهم
 # --------------------------------------------------------
 
@@ -2681,6 +2744,31 @@ def main():
         "Raw JSON saved: "
         "match_5811755_raw.json"
     )
+
+    # ----------------------------------------------------
+    # دیباگ Rating
+    #
+    # اینجا تمام کلیدهای:
+    # rating
+    # ratingScore
+    # matchRating
+    #
+    # در کل JSON بررسی می‌شوند.
+    # ----------------------------------------------------
+
+    print("")
+    print("#" * 70)
+    print("SEARCHING FOR ALL RATING FIELDS")
+    print("#" * 70)
+
+    debug_rating_paths(
+        root
+    )
+
+    print("")
+    print("#" * 70)
+    print("END RATING SEARCH")
+    print("#" * 70)
 
     # ----------------------------------------------------
     # ساخت پیام
