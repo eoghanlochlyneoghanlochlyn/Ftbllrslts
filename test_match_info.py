@@ -537,122 +537,80 @@ def get_match_start(root, content):
 
 
 # --------------------------------------------------------
-# دیباگ وضعیت و نتیجه مسابقه در کل JSON
-# --------------------------------------------------------
-
-def debug_match_state(root):
-    print("")
-    print("=" * 70)
-    print("MATCH STATE / SCORE DEBUG")
-    print("=" * 70)
-
-    wanted_keys = {
-        "status",
-        "score",
-        "homeScore",
-        "awayScore",
-        "finished",
-        "statusId",
-        "period",
-        "currentPeriod",
-        "matchStatus",
-        "matchFacts",
-        "events",
-        "goals",
-        "header",
-        "match",
-        "result",
-    }
-
-    results = recursive_find(
-        root,
-        wanted_keys,
-    )
-
-    if not results:
-        print(
-            "No state/score related keys found."
-        )
-        print("=" * 70)
-        return
-
-    for path, value in results:
-
-        print("")
-        print("PATH:")
-        print(path)
-
-        print("VALUE:")
-
-        try:
-            text = json.dumps(
-                value,
-                ensure_ascii=False,
-                indent=2,
-            )
-        except Exception:
-            text = str(value)
-
-        # جلوگیری از انفجار لاگ GitHub
-        if len(text) > 3000:
-            text = (
-                text[:3000]
-                + "\n... [TRUNCATED]"
-            )
-
-        print(text)
-
-    print("")
-    print("=" * 70)
-    print("END MATCH STATE / SCORE DEBUG")
-    print("=" * 70)
-    print("")
-
-
-# --------------------------------------------------------
 # تشخیص پایان بازی
 # --------------------------------------------------------
 
-def is_match_finished(content):
-    status = content.get(
-        "status"
+def is_match_finished(root):
+    # ----------------------------------------------------
+    # منبع اصلی:
+    #
+    # root.props.pageProps.general.finished
+    # ----------------------------------------------------
+
+    general = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "general",
+    )
+
+    if isinstance(general, dict):
+
+        if general.get("finished") is True:
+            return True
+
+    # ----------------------------------------------------
+    # منبع پشتیبان:
+    #
+    # root.props.pageProps.header.status
+    # ----------------------------------------------------
+
+    status = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "header",
+        "status",
     )
 
     if isinstance(status, dict):
 
+        # وضعیت مستقیم
         if status.get("finished") is True:
             return True
 
-        values = []
+        # ------------------------------------------------
+        # بررسی reason
+        # ------------------------------------------------
 
-        for key in (
-            "reason",
-            "name",
-            "short",
-            "long",
-            "status",
-        ):
-
-            value = status.get(key)
-
-            if value is not None:
-                values.append(
-                    str(value).lower()
-                )
-
-        status_text = " ".join(values)
-
-        finished_words = (
-            "full time",
-            "finished",
-            "complete",
-            "completed",
-            "ft",
+        reason = status.get(
+            "reason"
         )
 
-        for word in finished_words:
+        if isinstance(reason, dict):
 
-            if word in status_text:
+            short = str(
+                reason.get(
+                    "short",
+                    "",
+                )
+            ).strip().lower()
+
+            long = str(
+                reason.get(
+                    "long",
+                    "",
+                )
+            ).strip().lower()
+
+            if short in (
+                "ft",
+                "aet",
+                "pen",
+            ):
+                return True
+
+            if "full-time" in long:
                 return True
 
     return False
@@ -1935,9 +1893,6 @@ def organize_players(
 
     # ----------------------------------------------------
     # وینگرها را با توجه به Formation تقسیم می‌کنیم.
-    #
-    # این قسمت دقیقاً مشکل بازی KV Mechelen و
-    # Anderlecht را حل می‌کند.
     # ----------------------------------------------------
 
     if midfield_need > 0:
@@ -2344,14 +2299,6 @@ def build_message(root):
         root
     )
 
-    # ----------------------------------------------------
-    # دیباگ موقت وضعیت و نتیجه
-    # ----------------------------------------------------
-
-    debug_match_state(
-        root
-    )
-
     info = extract_basic_info(
         root
     )
@@ -2380,8 +2327,25 @@ def build_message(root):
         start_time
     )
 
+    # ----------------------------------------------------
+    # بسیار مهم:
+    #
+    # is_match_finished باید root را دریافت کند،
+    # نه content را.
+    #
+    # چون وضعیت واقعی بازی در:
+    #
+    # pageProps.general.finished
+    #
+    # و:
+    #
+    # pageProps.header.status.finished
+    #
+    # قرار دارد.
+    # ----------------------------------------------------
+
     finished = is_match_finished(
-        content
+        root
     )
 
     print()
@@ -2390,6 +2354,7 @@ def build_message(root):
         finished,
     )
 
+    # فقط بعد از پایان بازی Rating نمایش داده می‌شود.
     show_rating = finished
 
     lineup = get_lineup(
