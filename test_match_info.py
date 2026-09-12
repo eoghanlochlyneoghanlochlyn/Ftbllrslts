@@ -7,18 +7,33 @@ from zoneinfo import ZoneInfo
 import requests
 
 
-MATCH_ID = "5811755"
-MATCH_URL = f"https://www.fotmob.com/match/{MATCH_ID}"
-
-IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
+# ============================================================
+# تنظیمات
+# ============================================================
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAMBOT")
 TELEGRAM_CHANNEL = os.getenv("TELEGRAMCHANNEL")
 
+MATCH_ID = "5811755"
 
-# --------------------------------------------------------
+FOTMOB_URL = f"https://www.fotmob.com/match/{MATCH_ID}"
+
+IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
+
+
+# ============================================================
 # ابزارهای عمومی
-# --------------------------------------------------------
+# ============================================================
+
+def clean_text(value):
+    if value is None:
+        return ""
+
+    if isinstance(value, str):
+        return re.sub(r"\s+", " ", value).strip()
+
+    return str(value).strip()
+
 
 def get_nested(data, *keys):
     current = data
@@ -32,214 +47,234 @@ def get_nested(data, *keys):
     return current
 
 
-def clean_text(value):
-    if value is None:
-        return ""
+# ============================================================
+# تلگرام
+# ============================================================
 
-    return str(value).strip()
-
-
-def first_non_empty(*values):
-    for value in values:
-        if value is None:
-            continue
-
-        if isinstance(value, str):
-            value = value.strip()
-
-            if value:
-                return value
-
-        elif value not in ("", None):
-            return value
-
-    return ""
-
-
-# --------------------------------------------------------
-# ارسال تلگرام
-# --------------------------------------------------------
-
-def send_telegram(text):
+def send_telegram(message):
     if not TELEGRAM_BOT_TOKEN:
-        raise RuntimeError(
-            "TELEGRAMBOT environment variable is missing."
-        )
+        print("TELEGRAMBOT پیدا نشد.")
+        return False
 
     if not TELEGRAM_CHANNEL:
-        raise RuntimeError(
-            "TELEGRAMCHANNEL environment variable is missing."
-        )
+        print("TELEGRAMCHANNEL پیدا نشد.")
+        return False
 
     url = (
         f"https://api.telegram.org/"
         f"bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     )
 
-    response = requests.post(
-        url,
-        data={
-            "chat_id": TELEGRAM_CHANNEL,
-            "text": text,
-        },
-        timeout=30,
-    )
+    payload = {
+        "chat_id": TELEGRAM_CHANNEL,
+        "text": message,
+    }
 
-    print(
-        "Telegram status:",
-        response.status_code,
-    )
+    try:
+        response = requests.post(
+            url,
+            json=payload,
+            timeout=30,
+        )
 
-    if not response.ok:
-        print(response.text)
+        print(
+            f"Telegram status: "
+            f"{response.status_code}"
+        )
 
-    response.raise_for_status()
+        if response.status_code != 200:
+            print(response.text)
 
-    return response.json()
+        return response.status_code == 200
+
+    except Exception as e:
+        print(f"Telegram error: {e}")
+        return False
 
 
-# --------------------------------------------------------
+# ============================================================
 # دریافت صفحه فوت‌موب
-# --------------------------------------------------------
+# ============================================================
 
 def fetch_match_page():
-    print("=" * 70)
-    print("FETCHING FOTMOB MATCH")
-    print("=" * 70)
-
-    print("Match ID:", MATCH_ID)
-    print("URL:", MATCH_URL)
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 "
+            "(KHTML, like Gecko) "
+            "Chrome/140.0 Safari/537.36"
+        ),
+        "Accept-Language": "en-US,en;q=0.9",
+    }
 
     response = requests.get(
-        MATCH_URL,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 "
-                "(KHTML, like Gecko) "
-                "Chrome/131.0.0.0 Safari/537.36"
-            )
-        },
+        FOTMOB_URL,
+        headers=headers,
         timeout=30,
     )
 
-    print("HTTP:", response.status_code)
-    print("HTML:", len(response.text), "bytes")
-
     response.raise_for_status()
+
+    print(
+        f"HTML دریافت شد: "
+        f"{len(response.text):,} bytes"
+    )
 
     return response.text
 
 
-# --------------------------------------------------------
-# استخراج __NEXT_DATA__
-# --------------------------------------------------------
+# ============================================================
+# استخراج NEXT_DATA
+# ============================================================
 
 def extract_next_data(html):
-    pattern = (
-        r'<script id="__NEXT_DATA__" '
-        r'type="application/json">(.*?)</script>'
-    )
-
     match = re.search(
-        pattern,
+        r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>',
         html,
         re.DOTALL,
     )
 
     if not match:
         raise RuntimeError(
-            "__NEXT_DATA__ not found."
+            "__NEXT_DATA__ پیدا نشد."
         )
 
-    raw_json = match.group(1)
+    raw = match.group(1)
 
-    data = json.loads(raw_json)
+    data = json.loads(raw)
 
-    print(
-        "NEXT_DATA extracted successfully."
-    )
+    print("NEXT_DATA با موفقیت استخراج شد.")
 
     return data
 
 
-# --------------------------------------------------------
+# ============================================================
 # جستجوی بازگشتی
-# --------------------------------------------------------
+# ============================================================
 
-def recursive_find(data, wanted_keys):
+def recursive_find(data, target_key):
+    if isinstance(data, dict):
+
+        if target_key in data:
+            return data[target_key]
+
+        for value in data.values():
+            result = recursive_find(
+                value,
+                target_key,
+            )
+
+            if result is not None:
+                return result
+
+    elif isinstance(data, list):
+
+        for item in data:
+            result = recursive_find(
+                item,
+                target_key,
+            )
+
+            if result is not None:
+                return result
+
+    return None
+
+
+def find_all_recursive(data, target_key):
     results = []
 
-    def walk(value, path="root"):
+    if isinstance(data, dict):
 
-        if len(results) >= 500:
-            return
+        if target_key in data:
+            results.append(data[target_key])
 
-        if isinstance(value, dict):
-
-            for key, child in value.items():
-
-                current_path = (
-                    f"{path}.{key}"
+        for value in data.values():
+            results.extend(
+                find_all_recursive(
+                    value,
+                    target_key,
                 )
+            )
 
-                if key in wanted_keys:
-                    results.append(
-                        (
-                            current_path,
-                            child,
-                        )
-                    )
+    elif isinstance(data, list):
 
-                walk(
-                    child,
-                    current_path,
+        for item in data:
+            results.extend(
+                find_all_recursive(
+                    item,
+                    target_key,
                 )
-
-        elif isinstance(value, list):
-
-            for index, child in enumerate(
-                value
-            ):
-
-                walk(
-                    child,
-                    f"{path}[{index}]",
-                )
-
-    walk(data)
+            )
 
     return results
 
 
-# --------------------------------------------------------
-# پیدا کردن بخش مهم
-# --------------------------------------------------------
+# ============================================================
+# اطلاعات اصلی مسابقه
+# ============================================================
 
-def find_section(root, names):
-    results = recursive_find(
+def extract_basic_info(root):
+    seo = get_nested(
         root,
-        set(names),
+        "props",
+        "pageProps",
+        "seo",
     )
 
-    if not results:
-        return None
+    event_json = None
 
-    # اولویت با content واقعی مسابقه
-    for path, value in results:
+    if isinstance(seo, dict):
+        event_json = seo.get(
+            "eventJSONLD"
+        )
 
-        if (
-            "pageProps.content" in path
-            and isinstance(value, (dict, list))
-        ):
-            return value
+    if isinstance(event_json, str):
+        try:
+            event_json = json.loads(
+                event_json
+            )
+        except Exception:
+            event_json = None
 
-    return results[0][1]
+    home = ""
+    away = ""
+    start_date = ""
+
+    if isinstance(event_json, dict):
+
+        home_team = event_json.get(
+            "homeTeam"
+        )
+
+        away_team = event_json.get(
+            "awayTeam"
+        )
+
+        if isinstance(home_team, dict):
+            home = clean_text(
+                home_team.get("name")
+            )
+
+        if isinstance(away_team, dict):
+            away = clean_text(
+                away_team.get("name")
+            )
+
+        start_date = clean_text(
+            event_json.get("startDate")
+        )
+
+    return {
+        "home": home,
+        "away": away,
+        "start_date": start_date,
+    }
 
 
-# --------------------------------------------------------
-# استخراج content واقعی
-# --------------------------------------------------------
+# ============================================================
+# پیدا کردن content
+# ============================================================
 
 def get_content(root):
     content = get_nested(
@@ -249,221 +284,31 @@ def get_content(root):
         "content",
     )
 
-    if not isinstance(content, dict):
-        raise RuntimeError(
-            "FotMob content not found."
-        )
+    if isinstance(content, dict):
+        return content
 
-    return content
-
-
-# --------------------------------------------------------
-# پیدا کردن اسم یک تیم
-# --------------------------------------------------------
-
-def get_team_name(team):
-    if not isinstance(team, dict):
-        return ""
-
-    return clean_text(
-        first_non_empty(
-            team.get("longName"),
-            team.get("name"),
-            team.get("shortName"),
-            team.get("title"),
-        )
-    )
-
-
-# --------------------------------------------------------
-# اطلاعات پایه بازی
-# --------------------------------------------------------
-
-def extract_basic_info(root):
-    event_jsonld = get_nested(
+    content = recursive_find(
         root,
-        "props",
-        "pageProps",
-        "seo",
-        "eventJSONLD",
+        "content",
     )
 
-    content = get_content(root)
+    if isinstance(content, dict):
+        return content
 
-    info = {
-        "home": "",
-        "away": "",
-        "start": "",
-        "league": "",
-        "venue": "",
-        "status": "",
-        "score": "",
-    }
-
-    # ----------------------------------------------------
-    # اسم تیم‌ها و زمان از eventJSONLD
-    # ----------------------------------------------------
-
-    if isinstance(event_jsonld, dict):
-
-        home_team = event_jsonld.get(
-            "homeTeam"
-        )
-
-        away_team = event_jsonld.get(
-            "awayTeam"
-        )
-
-        if isinstance(home_team, dict):
-            info["home"] = clean_text(
-                home_team.get("name")
-            )
-
-        if isinstance(away_team, dict):
-            info["away"] = clean_text(
-                away_team.get("name")
-            )
-
-        info["start"] = clean_text(
-            event_jsonld.get("startDate")
-        )
-
-    # ----------------------------------------------------
-    # اطلاعات تیم‌ها از content
-    # ----------------------------------------------------
-
-    for side in ("home", "away"):
-
-        if info[side]:
-            continue
-
-        possible_keys = (
-            f"{side}Team",
-            side,
-        )
-
-        for key in possible_keys:
-
-            value = content.get(key)
-
-            if isinstance(value, dict):
-
-                name = get_team_name(
-                    value
-                )
-
-                if name:
-                    info[side] = name
-                    break
-
-    # ----------------------------------------------------
-    # رقابت
-    # ----------------------------------------------------
-
-    league_keys = (
-        "league",
-        "tournament",
-        "competition",
-        "parentTournament",
-        "parentLeague",
-        "competitionName",
-        "leagueName",
-    )
-
-    for key in league_keys:
-
-        value = content.get(key)
-
-        if isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("longName"),
-                value.get("shortName"),
-            )
-
-            if name:
-                info["league"] = clean_text(
-                    name
-                )
-                break
-
-        elif isinstance(value, str):
-
-            if value.strip():
-                info["league"] = value.strip()
-                break
-
-    # ----------------------------------------------------
-    # fallback برای رقابت:
-    # جستجوی بازگشتی فقط در محدوده content
-    # ----------------------------------------------------
-
-    if not info["league"]:
-
-        league_results = recursive_find(
-            content,
-            {
-                "leagueName",
-                "competitionName",
-                "tournamentName",
-            },
-        )
-
-        for _, value in league_results:
-
-            if isinstance(value, str):
-
-                value = value.strip()
-
-                if value:
-                    info["league"] = value
-                    break
-
-    # ----------------------------------------------------
-    # ورزشگاه
-    # ----------------------------------------------------
-
-    for key in (
-        "venue",
-        "stadium",
-    ):
-
-        value = content.get(key)
-
-        if isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("longName"),
-            )
-
-            if name:
-                info["venue"] = clean_text(
-                    name
-                )
-                break
-
-        elif isinstance(value, str):
-
-            if value.strip():
-                info["venue"] = value.strip()
-                break
-
-    return info
+    return {}
 
 
-# --------------------------------------------------------
-# زمان بازی
-# --------------------------------------------------------
+# ============================================================
+# زمان مسابقه
+# ============================================================
 
-def format_match_time(value):
+def parse_datetime(value):
     if not value:
-        return "نامشخص"
+        return None
+
+    value = clean_text(value)
 
     try:
-        value = str(value)
-
         if value.endswith("Z"):
             value = value[:-1] + "+00:00"
 
@@ -474,329 +319,280 @@ def format_match_time(value):
                 tzinfo=timezone.utc
             )
 
-        iran_time = dt.astimezone(
-            IRAN_TIMEZONE
-        )
-
-        return iran_time.strftime(
-            "%H:%M"
-        )
+        return dt
 
     except Exception:
-        return str(value)
+        return None
 
 
-# --------------------------------------------------------
-# استخراج زمان
-# --------------------------------------------------------
+def format_match_time(value):
+    dt = parse_datetime(value)
 
-def get_match_start(root, content):
-    event_jsonld = get_nested(
+    if not dt:
+        return "نامشخص"
+
+    iran_time = dt.astimezone(
+        IRAN_TIMEZONE
+    )
+
+    return iran_time.strftime("%H:%M")
+
+
+def get_match_start(root, basic_info):
+    start_date = basic_info.get(
+        "start_date"
+    )
+
+    if start_date:
+        return start_date
+
+    seo = get_nested(
         root,
         "props",
         "pageProps",
         "seo",
-        "eventJSONLD",
     )
 
-    if isinstance(event_jsonld, dict):
-
-        value = event_jsonld.get(
-            "startDate"
+    if isinstance(seo, dict):
+        event_json = seo.get(
+            "eventJSONLD"
         )
 
-        if value:
-            return value
+        if isinstance(event_json, str):
+            try:
+                event_json = json.loads(
+                    event_json
+                )
+            except Exception:
+                event_json = None
 
-    if isinstance(content, dict):
-
-        status = content.get(
-            "status"
-        )
-
-        if isinstance(status, dict):
-
-            for key in (
-                "utcTime",
-                "startTime",
+        if isinstance(event_json, dict):
+            return event_json.get(
                 "startDate",
-            ):
-
-                if status.get(key):
-                    return status[key]
-
-        for key in (
-            "utcTime",
-            "startTime",
-            "startDate",
-        ):
-
-            if content.get(key):
-                return content[key]
+                "",
+            )
 
     return ""
 
 
-# --------------------------------------------------------
+# ============================================================
 # تشخیص پایان بازی
-# --------------------------------------------------------
+# ============================================================
 
 def is_match_finished(content):
-    status = content.get(
-        "status"
-    )
+    """
+    فقط برای تعیین اینکه rating نمایش داده شود یا نه.
 
-    if isinstance(status, dict):
+    rating فقط وقتی نمایش داده می‌شود که بازی
+    واقعاً تمام شده باشد.
+    """
 
-        if status.get("finished") is True:
+    possible_statuses = []
+
+    def collect_statuses(data):
+        if isinstance(data, dict):
+
+            for key in (
+                "status",
+                "matchStatus",
+                "state",
+                "shortStatus",
+            ):
+                value = data.get(key)
+
+                if isinstance(value, str):
+                    possible_statuses.append(
+                        value.lower().strip()
+                    )
+
+            for value in data.values():
+                collect_statuses(value)
+
+        elif isinstance(data, list):
+
+            for item in data:
+                collect_statuses(item)
+
+    collect_statuses(content)
+
+    finished_words = {
+        "finished",
+        "complete",
+        "completed",
+        "ft",
+        "full time",
+    }
+
+    for status in possible_statuses:
+        if status in finished_words:
             return True
 
-        values = []
-
-        for key in (
-            "reason",
-            "name",
-            "short",
-            "long",
-            "status",
+        if (
+            "finished" in status
+            or "full time" in status
         ):
-
-            value = status.get(key)
-
-            if value is not None:
-                values.append(
-                    str(value).lower()
-                )
-
-        status_text = " ".join(values)
-
-        finished_words = (
-            "full time",
-            "finished",
-            "complete",
-            "completed",
-            "ft",
-        )
-
-        for word in finished_words:
-
-            if word in status_text:
-                return True
+            return True
 
     return False
 
 
-# --------------------------------------------------------
+# ============================================================
 # پیدا کردن lineup
-# --------------------------------------------------------
+# ============================================================
 
 def get_lineup(content, root):
-    lineup = content.get(
-        "lineup"
+    lineup = None
+
+    if isinstance(content, dict):
+        lineup = content.get("lineup")
+
+    if isinstance(lineup, dict):
+        return lineup
+
+    lineup = recursive_find(
+        content,
+        "lineup",
     )
 
     if isinstance(lineup, dict):
         return lineup
 
-    lineup = find_section(
+    lineup = recursive_find(
         root,
-        ["lineup"],
+        "lineup",
     )
 
     if isinstance(lineup, dict):
         return lineup
 
-    return None
+    return {}
 
 
-# --------------------------------------------------------
-# پیدا کردن تیم داخل lineup
-# --------------------------------------------------------
+# ============================================================
+# پیدا کردن تیم‌های lineup
+# ============================================================
 
-def get_lineup_team(lineup, side):
-    if not isinstance(lineup, dict):
-        return None
+def get_lineup_team(lineup, team_index):
+    """
+    ساختار فوت‌موب ممکن است در نسخه‌های مختلف
+    کمی متفاوت باشد.
 
-    # حالت‌های رایج
-    aliases = {
-        "home": (
-            "home",
-            "homeTeam",
-            "homeTeamData",
-        ),
-        "away": (
-            "away",
-            "awayTeam",
-            "awayTeamData",
-        ),
-    }
+    ابتدا ساختارهای معمول را بررسی می‌کنیم.
+    """
 
-    for key in aliases.get(
-        side,
-        (),
-    ):
-
-        team = lineup.get(key)
-
-        if isinstance(team, dict):
-            return team
-
-    # بعضی نسخه‌ها تیم‌ها را داخل teams می‌گذارند
     teams = lineup.get("teams")
 
-    if isinstance(teams, dict):
+    if isinstance(teams, list):
+        if len(teams) > team_index:
+            return teams[team_index]
 
-        for key in aliases.get(
-            side,
-            (),
+    if team_index == 0:
+        for key in (
+            "homeTeam",
+            "home",
         ):
+            value = lineup.get(key)
 
-            team = teams.get(key)
+            if isinstance(value, dict):
+                return value
 
-            if isinstance(team, dict):
-                return team
+    if team_index == 1:
+        for key in (
+            "awayTeam",
+            "away",
+        ):
+            value = lineup.get(key)
 
-    # ----------------------------------------------------
-    # fallback:
-    # اگر ساختار شامل homeTeam/awayTeam باشد
-    # ولی نام کلید متفاوت باشد
-    # ----------------------------------------------------
+            if isinstance(value, dict):
+                return value
 
-    wanted_name = (
-        "home" if side == "home"
-        else "away"
-    )
-
-    for key, value in lineup.items():
-
-        if not isinstance(value, dict):
-            continue
-
-        key_lower = str(key).lower()
-
-        if wanted_name in key_lower:
-            return value
-
-    return None
+    return {}
 
 
-# --------------------------------------------------------
+# ============================================================
 # پیدا کردن لیست بازیکنان
-# --------------------------------------------------------
+# ============================================================
 
-def find_player_list(team):
-    if not isinstance(team, dict):
+def find_player_list(team_data):
+    if not isinstance(team_data, dict):
         return []
 
-    # اولویت با کلیدهای شناخته‌شده
-    for key in (
+    possible_keys = (
+        "starters",
         "players",
         "lineup",
         "playerList",
-        "startingXI",
-        "startingLineup",
-    ):
-
-        value = team.get(key)
-
-        if isinstance(value, list):
-            return value
-
-    # fallback: جستجوی بازگشتی
-    results = recursive_find(
-        team,
-        {
-            "players",
-            "playerList",
-            "startingXI",
-            "startingLineup",
-        },
     )
 
-    for _, value in results:
+    for key in possible_keys:
+        value = team_data.get(key)
 
         if isinstance(value, list):
             return value
+
+    for value in team_data.values():
+
+        if isinstance(value, dict):
+
+            result = find_player_list(
+                value
+            )
+
+            if result:
+                return result
+
+        elif isinstance(value, list):
+
+            player_like = []
+
+            for item in value:
+
+                if isinstance(item, dict):
+                    if (
+                        "name" in item
+                        or "player" in item
+                        or "id" in item
+                    ):
+                        player_like.append(
+                            item
+                        )
+
+            if player_like:
+                return player_like
 
     return []
 
 
-# --------------------------------------------------------
-# تشخیص اینکه بازیکن starter است یا نه
-# --------------------------------------------------------
+# ============================================================
+# تشخیص Starter / Substitute
+# ============================================================
 
 def is_player_starter(player):
     if not isinstance(player, dict):
         return False
 
-    # ----------------------------------------------------
-    # flagهای مستقیم
-    # ----------------------------------------------------
-
     for key in (
         "isStarter",
         "starter",
-        "starting",
         "isStarting",
-        "isStartingXI",
     ):
-
         value = player.get(key)
 
         if value is True:
             return True
 
-        if isinstance(value, str):
+    status = player.get("status")
 
-            if value.lower().strip() in (
-                "true",
-                "yes",
-                "starter",
-                "starting",
-            ):
-                return True
-
-    # ----------------------------------------------------
-    # nested player
-    # ----------------------------------------------------
-
-    nested_player = player.get(
-        "player"
-    )
-
-    if isinstance(nested_player, dict):
-
-        for key in (
-            "isStarter",
+    if isinstance(status, str):
+        if status.lower() in {
             "starter",
             "starting",
-            "isStarting",
-            "isStartingXI",
-        ):
-
-            value = nested_player.get(
-                key
-            )
-
-            if value is True:
-                return True
-
-            if isinstance(value, str):
-
-                if value.lower().strip() in (
-                    "true",
-                    "yes",
-                    "starter",
-                    "starting",
-                ):
-                    return True
+            "starting11",
+        }:
+            return True
 
     return False
 
-
-# --------------------------------------------------------
-# تشخیص substitute
-# --------------------------------------------------------
 
 def is_player_substitute(player):
     if not isinstance(player, dict):
@@ -805,621 +601,434 @@ def is_player_substitute(player):
     for key in (
         "isSubstitute",
         "substitute",
-        "isSub",
+        "isOnBench",
         "bench",
     ):
-
         value = player.get(key)
 
         if value is True:
             return True
 
-        if isinstance(value, str):
+    status = player.get("status")
 
-            if value.lower().strip() in (
-                "true",
-                "yes",
-                "substitute",
-                "bench",
-            ):
-                return True
+    if isinstance(status, str):
+        if status.lower() in {
+            "substitute",
+            "bench",
+            "sub",
+        }:
+            return True
 
     return False
 
 
-# --------------------------------------------------------
-# استخراج starter ها
-# --------------------------------------------------------
+# ============================================================
+# استخراج Starterها
+# ============================================================
 
-def get_starters(team):
-    if not isinstance(team, dict):
-        return []
-
-    # ----------------------------------------------------
-    # اگر FotMob مستقیماً starterها را داده باشد
-    # ----------------------------------------------------
-
-    for key in (
-        "starters",
-        "startingXI",
-        "startingLineup",
-    ):
-
-        value = team.get(key)
-
-        if isinstance(value, list) and value:
-            return value
-
-    # ----------------------------------------------------
-    # اگر همه بازیکنان داخل players باشند
-    # ----------------------------------------------------
-
+def get_starters(team_data):
     players = find_player_list(
-        team
+        team_data
     )
 
-    if players:
+    starters = [
+        player
+        for player in players
+        if is_player_starter(player)
+    ]
 
-        starters = [
-            player
-            for player in players
-            if is_player_starter(player)
-        ]
-
-        if starters:
-            return starters
-
-    return []
+    return starters
 
 
-# --------------------------------------------------------
-# استخراج substitute ها
-# --------------------------------------------------------
+# ============================================================
+# استخراج Substituteها
+# ============================================================
 
-def get_substitutes(team):
-    if not isinstance(team, dict):
-        return []
-
-    # ----------------------------------------------------
-    # کلیدهای مستقیم
-    # ----------------------------------------------------
-
-    for key in (
-        "substitutes",
-        "subs",
-        "bench",
-    ):
-
-        value = team.get(key)
-
-        if isinstance(value, list):
-            return value
-
-    # ----------------------------------------------------
-    # اگر همه بازیکنان داخل players باشند
-    # ----------------------------------------------------
-
+def get_substitutes(team_data):
     players = find_player_list(
-        team
+        team_data
     )
 
-    if players:
+    substitutes = [
+        player
+        for player in players
+        if is_player_substitute(player)
+        and not is_player_starter(player)
+    ]
 
-        substitutes = [
-            player
-            for player in players
-            if (
-                is_player_substitute(player)
-                and not is_player_starter(player)
-            )
-        ]
-
-        if substitutes:
-            return substitutes
-
-    return []
+    return substitutes
 
 
-# --------------------------------------------------------
-# پیدا کردن نام بازیکن
-# --------------------------------------------------------
+# ============================================================
+# نام بازیکن
+# ============================================================
 
 def get_player_name(player):
     if not isinstance(player, dict):
-        return ""
+        return "Unknown"
 
-    for key in (
-        "name",
-        "playerName",
-        "longName",
-        "shortName",
-    ):
+    name = player.get("name")
 
-        value = player.get(key)
+    if isinstance(name, str):
+        return clean_text(name)
 
-        if isinstance(value, str):
-
-            value = value.strip()
-
-            if value:
-                return value
-
-    nested_player = player.get(
+    player_data = player.get(
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(player_data, dict):
+        name = player_data.get("name")
 
-        for key in (
-            "name",
-            "playerName",
-            "longName",
-            "shortName",
-        ):
+        if isinstance(name, str):
+            return clean_text(name)
 
-            value = nested_player.get(
-                key
-            )
-
-            if value:
-                return str(
-                    value
-                ).strip()
-
-    return ""
+    return "Unknown"
 
 
-# --------------------------------------------------------
-# پیدا کردن rating
-# --------------------------------------------------------
+# ============================================================
+# Rating
+# ============================================================
 
 def get_player_rating(player):
     if not isinstance(player, dict):
         return None
 
-    candidates = [
-        player.get("rating"),
-        player.get("ratingScore"),
-        player.get("matchRating"),
-    ]
+    possible_keys = (
+        "rating",
+        "playerRating",
+        "score",
+    )
 
-    nested_player = player.get(
+    for key in possible_keys:
+        value = player.get(key)
+
+        if value is not None:
+            try:
+                return float(value)
+            except Exception:
+                pass
+
+    player_data = player.get(
         "player"
     )
 
-    if isinstance(nested_player, dict):
+    if isinstance(player_data, dict):
 
-        candidates.extend(
-            [
-                nested_player.get(
-                    "rating"
-                ),
-                nested_player.get(
-                    "ratingScore"
-                ),
-                nested_player.get(
-                    "matchRating"
-                ),
-            ]
-        )
+        for key in possible_keys:
+            value = player_data.get(key)
 
-    for value in candidates:
-
-        if value is None:
-            continue
-
-        try:
-            return float(value)
-        except (
-            TypeError,
-            ValueError,
-        ):
-            pass
+            if value is not None:
+                try:
+                    return float(value)
+                except Exception:
+                    pass
 
     return None
 
 
-# --------------------------------------------------------
-# پیدا کردن پست بازیکن
-# --------------------------------------------------------
+# ============================================================
+# استخراج positionId
+# ============================================================
 
-def get_player_position(player):
-    if not isinstance(player, dict):
-        return ""
+def find_position_id(data):
+    """
+    positionId را به صورت بازگشتی پیدا می‌کند.
 
-    candidates = []
+    اینجا عمداً به فیلد متنی position وابسته نیستیم.
+    منبع اصلی تشخیص پست = positionId
+    """
 
-    for key in (
-        "position",
-        "positionName",
-        "role",
-        "playerPosition",
-    ):
+    if isinstance(data, dict):
 
-        candidates.append(
-            player.get(key)
-        )
-
-    position = player.get(
-        "position"
-    )
-
-    if isinstance(position, dict):
-
-        candidates.extend(
-            [
-                position.get("name"),
-                position.get("shortName"),
-                position.get("abbreviation"),
-                position.get("code"),
-            ]
-        )
-
-    role = player.get(
-        "role"
-    )
-
-    if isinstance(role, dict):
-
-        candidates.extend(
-            [
-                role.get("name"),
-                role.get("shortName"),
-                role.get("abbreviation"),
-                role.get("code"),
-            ]
-        )
-
-    nested_player = player.get(
-        "player"
-    )
-
-    if isinstance(nested_player, dict):
-
+        # مهم‌ترین حالت
         for key in (
-            "position",
-            "positionName",
-            "role",
-            "playerPosition",
+            "positionId",
+            "positionID",
+            "position_id",
         ):
+            value = data.get(key)
 
-            value = nested_player.get(
-                key
-            )
+            if value is not None:
+                try:
+                    return int(value)
+                except Exception:
+                    pass
 
-            candidates.append(
+        # بعضی ساختارها position را به شکل object دارند
+        position = data.get("position")
+
+        if isinstance(position, dict):
+
+            for key in (
+                "positionId",
+                "positionID",
+                "position_id",
+                "id",
+            ):
+                value = position.get(key)
+
+                if value is not None:
+                    try:
+                        return int(value)
+                    except Exception:
+                        pass
+
+        # بررسی بازگشتی
+        for value in data.values():
+
+            result = find_position_id(
                 value
             )
 
-            if isinstance(
-                value,
-                dict,
-            ):
+            if result is not None:
+                return result
 
-                candidates.extend(
-                    [
-                        value.get("name"),
-                        value.get("shortName"),
-                        value.get("abbreviation"),
-                        value.get("code"),
-                    ]
-                )
+    elif isinstance(data, list):
 
-    for value in candidates:
+        for item in data:
 
-        if isinstance(value, str):
+            result = find_position_id(
+                item
+            )
 
-            value = value.strip()
+            if result is not None:
+                return result
 
-            if value:
-                return value.lower()
-
-    return ""
+    return None
 
 
-# --------------------------------------------------------
-# تبدیل پست به چهار گروه
-# --------------------------------------------------------
+def get_player_position_id(player):
+    return find_position_id(player)
 
-def position_group(player):
-    position = get_player_position(
-        player
-    )
 
-    position = position.lower().strip()
+# ============================================================
+# تبدیل positionId به گروه کلی
+# ============================================================
 
-    # ----------------------------------------------------
+def position_group(position_id):
+    """
+    نگاشت استخراج‌شده و تست‌شده قبلی FotMob.
+
+    هدف:
+        GK
+        DEF
+        MID
+        ATT
+
+    چپ/راست عمداً از positionId استخراج نمی‌شود.
+    """
+
+    if position_id is None:
+        return "UNKNOWN"
+
+    try:
+        position_id = int(position_id)
+    except Exception:
+        return "UNKNOWN"
+
+    # --------------------------------------------------------
     # دروازه‌بان
-    # ----------------------------------------------------
+    # --------------------------------------------------------
 
-    goalkeeper_terms = (
-        "goalkeeper",
-        "goal keeper",
-        "keeper",
-        "goalie",
-        "gk",
-    )
+    if position_id == 11:
+        return "GK"
 
-    if any(
-        term in position
-        for term in goalkeeper_terms
-    ):
-        return "goalkeeper"
-
-    # ----------------------------------------------------
+    # --------------------------------------------------------
     # مدافع
-    # ----------------------------------------------------
+    # --------------------------------------------------------
 
-    defender_terms = (
-        "defender",
-        "defence",
-        "defense",
-        "centre-back",
-        "center-back",
-        "central defender",
-        "left-back",
-        "right-back",
-        "wing-back",
-        "full-back",
-        "fullback",
-        "cb",
-        "lb",
-        "rb",
-        "lwb",
-        "rwb",
-    )
+    if position_id in {
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+    }:
+        return "DEF"
 
-    if any(
-        term in position
-        for term in defender_terms
-    ):
-        return "defender"
+    # --------------------------------------------------------
+    # هافبک / وینگ‌بک / بازیکن میانی
+    # --------------------------------------------------------
 
-    # ----------------------------------------------------
-    # هافبک
-    # ----------------------------------------------------
+    if position_id in {
+        51,
+        59,
+        62,
+        64,
+        65,
+        66,
+        68,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        79,
+    }:
+        return "MID"
 
-    midfielder_terms = (
-        "midfielder",
-        "midfield",
-        "central midfield",
-        "defensive midfield",
-        "attacking midfield",
-        "central midfielder",
-        "cm",
-        "cdm",
-        "dm",
-        "am",
-        "lm",
-        "rm",
-    )
+    # --------------------------------------------------------
+    # وینگر / بازیکن هجومی
+    # --------------------------------------------------------
 
-    if any(
-        term in position
-        for term in midfielder_terms
-    ):
-        return "midfielder"
+    if position_id in {
+        78,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        103,
+        107,
+    }:
+        return "ATT"
 
-    # ----------------------------------------------------
+    # --------------------------------------------------------
     # مهاجم
-    # ----------------------------------------------------
+    # --------------------------------------------------------
 
-    attacker_terms = (
-        "forward",
-        "attacker",
-        "striker",
-        "centre-forward",
-        "center-forward",
-        "central forward",
-        "winger",
-        "left wing",
-        "right wing",
-        "left winger",
-        "right winger",
-        "lw",
-        "rw",
-        "st",
-        "cf",
-    )
+    if position_id in {
+        104,
+        105,
+        106,
+        115,
+    }:
+        return "ATT"
 
-    if any(
-        term in position
-        for term in attacker_terms
+    return "UNKNOWN"
+
+
+# ============================================================
+# مختصات بازیکن
+# ============================================================
+
+def get_layout_value(player, key):
+    if not isinstance(player, dict):
+        return None
+
+    value = player.get(key)
+
+    if value is not None:
+        try:
+            return float(value)
+        except Exception:
+            pass
+
+    # بعضی ساختارها اطلاعات جایگاه را داخل
+    # position / layout نگه می‌دارند.
+
+    for container_key in (
+        "position",
+        "layout",
+        "coordinates",
     ):
-        return "attacker"
+        container = player.get(
+            container_key
+        )
 
-    return "unknown"
+        if isinstance(container, dict):
+
+            value = container.get(key)
+
+            if value is not None:
+                try:
+                    return float(value)
+                except Exception:
+                    pass
+
+    return None
 
 
-# --------------------------------------------------------
-# پیدا کردن مربی
-# --------------------------------------------------------
-
-def get_coach(team):
-    if not isinstance(team, dict):
-        return ""
-
-    # مسیرهای مستقیم
-    for key in (
-        "coach",
-        "manager",
-        "headCoach",
-        "headcoach",
-        "managerInfo",
-    ):
-
-        value = team.get(key)
-
-        if isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("longName"),
-                value.get("shortName"),
-            )
-
-            if name:
-                return clean_text(name)
-
-        elif isinstance(value, str):
-
-            if value.strip():
-                return value.strip()
-
-    # fallback بازگشتی
-    results = recursive_find(
-        team,
-        {
-            "coach",
-            "manager",
-            "headCoach",
-            "headcoach",
-        },
+def get_horizontal_layout(player):
+    return get_layout_value(
+        player,
+        "horizontalLayout",
     )
 
-    for _, value in results:
 
-        if isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("longName"),
-                value.get("shortName"),
-            )
-
-            if name:
-                return clean_text(name)
-
-        elif isinstance(value, str):
-
-            if value.strip():
-                return value.strip()
-
-    return ""
-
-
-# --------------------------------------------------------
-# پیدا کردن سیستم
-# --------------------------------------------------------
-
-def get_formation(team):
-    if not isinstance(team, dict):
-        return ""
-
-    direct_keys = (
-        "formation",
-        "formationName",
-        "system",
-        "shape",
+def get_vertical_layout(player):
+    return get_layout_value(
+        player,
+        "verticalLayout",
     )
 
-    for key in direct_keys:
 
-        value = team.get(key)
+# ============================================================
+# مرتب‌سازی بازیکنان
+# ============================================================
 
-        if isinstance(value, str):
-
-            value = value.strip()
-
-            if value:
-                return value
-
-        if isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("formation"),
-                value.get("value"),
-            )
-
-            if name:
-                return clean_text(name)
-
-    # fallback بازگشتی
-    results = recursive_find(
-        team,
-        {
-            "formation",
-            "formationName",
-            "system",
-            "shape",
-        },
-    )
-
-    for _, value in results:
-
-        if isinstance(value, str):
-
-            value = value.strip()
-
-            # سیستم فوتبال معمولاً حداقل یک خط تیره دارد
-            # یا شکل عددی مثل 343 / 442 است.
-            if (
-                re.fullmatch(
-                    r"\d{3,4}",
-                    value,
-                )
-                or re.fullmatch(
-                    r"\d-\d-\d(?:-\d)?",
-                    value,
-                )
-            ):
-                return value
-
-        elif isinstance(value, dict):
-
-            name = first_non_empty(
-                value.get("name"),
-                value.get("formation"),
-                value.get("value"),
-            )
-
-            if name:
-                return clean_text(name)
-
-    return ""
-
-
-# --------------------------------------------------------
-# مرتب کردن بازیکنان
-# --------------------------------------------------------
-
-def organize_players(starters):
+def organize_players(players):
     groups = {
-        "goalkeeper": [],
-        "defender": [],
-        "midfielder": [],
-        "attacker": [],
-        "unknown": [],
+        "GK": [],
+        "DEF": [],
+        "MID": [],
+        "ATT": [],
+        "UNKNOWN": [],
     }
 
-    for player in starters:
+    for player in players:
+
+        position_id = get_player_position_id(
+            player
+        )
 
         group = position_group(
-            player
+            position_id
         )
 
         groups[group].append(
             player
         )
 
+    # --------------------------------------------------------
+    # مرتب‌سازی هر خط
+    #
+    # horizontalLayout برای ترتیب چپ به راست
+    # و verticalLayout برای ترتیب عمودی استفاده می‌شود.
+    # --------------------------------------------------------
+
+    for group_players in groups.values():
+
+        group_players.sort(
+            key=lambda player: (
+                get_horizontal_layout(
+                    player
+                )
+                if get_horizontal_layout(
+                    player
+                ) is not None
+                else 9999,
+
+                get_vertical_layout(
+                    player
+                )
+                if get_vertical_layout(
+                    player
+                ) is not None
+                else 9999,
+            )
+        )
+
     return groups
 
 
-# --------------------------------------------------------
-# فرمت نام بازیکن
-# --------------------------------------------------------
+# ============================================================
+# فرمت بازیکن
+# ============================================================
 
 def format_player(
     player,
-    show_rating,
+    show_rating=False,
 ):
     name = get_player_name(
         player
     )
-
-    if not name:
-        return ""
 
     if not show_rating:
         return name
@@ -1431,198 +1040,369 @@ def format_player(
     if rating is None:
         return name
 
-    return f"{name} {rating:.1f}"
+    # مثل 8.4 / 7.1 / 6.0
+    rating_text = (
+        f"{rating:.1f}"
+    )
+
+    return (
+        f"{name} "
+        f"({rating_text})"
+    )
 
 
-# --------------------------------------------------------
-# فرمت یک خط بازیکنان
-# --------------------------------------------------------
+# ============================================================
+# فرمت هر خط
+# ============================================================
 
 def format_player_line(
     icon,
     players,
-    show_rating,
+    show_rating=False,
 ):
-    names = []
+    if not players:
+        return ""
 
-    for player in players:
-
-        name = format_player(
+    names = [
+        format_player(
             player,
             show_rating,
         )
-
-        if name:
-            names.append(
-                name
-            )
-
-    if not names:
-        return ""
+        for player in players
+    ]
 
     return (
         f"{icon} "
-        + " | ".join(names)
+        f"{' | '.join(names)}"
     )
 
 
-# --------------------------------------------------------
-# فرمت ترکیب یک تیم
-# --------------------------------------------------------
+# ============================================================
+# نام مربی
+# ============================================================
 
-def format_team_lineup(
-    team_name,
-    team,
-    show_rating,
-    team_icon,
+def get_coach(team_data):
+    if not isinstance(team_data, dict):
+        return ""
+
+    possible_keys = (
+        "coach",
+        "manager",
+        "headCoach",
+    )
+
+    for key in possible_keys:
+
+        value = team_data.get(key)
+
+        if isinstance(value, dict):
+
+            for name_key in (
+                "name",
+                "fullName",
+                "displayName",
+            ):
+                name = value.get(
+                    name_key
+                )
+
+                if isinstance(name, str):
+                    return clean_text(
+                        name
+                    )
+
+        elif isinstance(value, str):
+            return clean_text(value)
+
+    # جستجوی بازگشتی
+    for value in team_data.values():
+
+        if isinstance(value, dict):
+
+            result = get_coach(
+                value
+            )
+
+            if result:
+                return result
+
+    return ""
+
+
+# ============================================================
+# سیستم بازی
+# ============================================================
+
+def get_formation(team_data):
+    if not isinstance(team_data, dict):
+        return ""
+
+    possible_keys = (
+        "formation",
+        "formationName",
+    )
+
+    for key in possible_keys:
+
+        value = team_data.get(key)
+
+        if isinstance(value, str):
+            return clean_text(value)
+
+        if isinstance(value, dict):
+
+            for nested_key in (
+                "name",
+                "formation",
+                "value",
+            ):
+                nested = value.get(
+                    nested_key
+                )
+
+                if isinstance(
+                    nested,
+                    str,
+                ):
+                    return clean_text(
+                        nested
+                    )
+
+    return ""
+
+
+# ============================================================
+# نام رقابت
+# ============================================================
+
+def get_competition_name(
+    content,
+    root,
 ):
-    if not isinstance(team, dict):
-        return (
-            f"{team_icon} "
-            f"{team_name}\n"
-            "اطلاعات ترکیب پیدا نشد."
+    possible_keys = (
+        "league",
+        "competition",
+        "tournament",
+    )
+
+    for key in possible_keys:
+
+        value = content.get(key)
+
+        if isinstance(value, dict):
+
+            for name_key in (
+                "name",
+                "title",
+            ):
+                name = value.get(
+                    name_key
+                )
+
+                if isinstance(name, str):
+                    return clean_text(
+                        name
+                    )
+
+        elif isinstance(value, str):
+            return clean_text(value)
+
+    # جستجوی بازگشتی
+    for key in (
+        "league",
+        "competition",
+        "tournament",
+    ):
+
+        values = find_all_recursive(
+            content,
+            key,
         )
 
+        for value in values:
+
+            if isinstance(value, dict):
+
+                for name_key in (
+                    "name",
+                    "title",
+                ):
+                    name = value.get(
+                        name_key
+                    )
+
+                    if isinstance(name, str):
+                        return clean_text(
+                            name
+                        )
+
+            elif isinstance(value, str):
+                return clean_text(value)
+
+    return "Football"
+
+
+# ============================================================
+# نام تیم برای هدر
+# ============================================================
+
+def get_team_name(team_data):
+    if not isinstance(team_data, dict):
+        return ""
+
+    for key in (
+        "name",
+        "teamName",
+    ):
+        value = team_data.get(key)
+
+        if isinstance(value, str):
+            return clean_text(value)
+
+    team = team_data.get(
+        "team"
+    )
+
+    if isinstance(team, dict):
+
+        for key in (
+            "name",
+            "teamName",
+        ):
+            value = team.get(key)
+
+            if isinstance(value, str):
+                return clean_text(value)
+
+    return ""
+
+
+# ============================================================
+# فرمت ترکیب یک تیم
+# ============================================================
+
+def format_team_lineup(
+    team_data,
+    team_name,
+    show_rating=False,
+):
     starters = get_starters(
-        team
+        team_data
     )
 
     substitutes = get_substitutes(
-        team
-    )
-
-    coach = get_coach(
-        team
-    )
-
-    formation = get_formation(
-        team
+        team_data
     )
 
     groups = organize_players(
         starters
     )
 
-    lines = []
-
-    # ----------------------------------------------------
-    # نام تیم
-    # ----------------------------------------------------
-
-    lines.append(
-        f"{team_icon} {team_name}"
+    coach = get_coach(
+        team_data
     )
 
-    # ----------------------------------------------------
-    # مربی
-    # ----------------------------------------------------
+    formation = get_formation(
+        team_data
+    )
+
+    lines = []
+
+    lines.append(
+        team_name
+    )
 
     if coach:
         lines.append(
             f"👔 {coach}"
         )
 
-    # ----------------------------------------------------
-    # سیستم
-    # ----------------------------------------------------
-
     if formation:
         lines.append(
             f"📐 {formation}"
         )
 
-    lines.append("")
-
-    # ----------------------------------------------------
+    # --------------------------------------------------------
     # دروازه‌بان
-    # ----------------------------------------------------
+    # --------------------------------------------------------
 
     line = format_player_line(
         "🧤",
-        groups["goalkeeper"],
+        groups["GK"],
         show_rating,
     )
 
     if line:
         lines.append(line)
 
-    # ----------------------------------------------------
+    # --------------------------------------------------------
     # مدافعان
-    # ----------------------------------------------------
+    # --------------------------------------------------------
 
     line = format_player_line(
         "🛡",
-        groups["defender"],
+        groups["DEF"],
         show_rating,
     )
 
     if line:
         lines.append(line)
 
-    # ----------------------------------------------------
+    # --------------------------------------------------------
     # هافبک‌ها
-    # ----------------------------------------------------
+    # --------------------------------------------------------
 
     line = format_player_line(
         "⚙️",
-        groups["midfielder"],
+        groups["MID"],
         show_rating,
     )
 
     if line:
         lines.append(line)
 
-    # ----------------------------------------------------
-    # مهاجمان
-    # ----------------------------------------------------
+    # --------------------------------------------------------
+    # مهاجمان / وینگرهای هجومی
+    # --------------------------------------------------------
 
     line = format_player_line(
         "⚡",
-        groups["attacker"],
+        groups["ATT"],
         show_rating,
     )
 
     if line:
         lines.append(line)
 
-    # ----------------------------------------------------
-    # بازیکنان ناشناخته
-    # ----------------------------------------------------
+    # --------------------------------------------------------
+    # اگر بازیکنی positionId ناشناخته داشت
+    # فعلاً آن را به صورت خط جداگانه نشان می‌دهیم
+    # تا داده گم نشود.
+    # --------------------------------------------------------
 
-    if groups["unknown"]:
+    line = format_player_line(
+        "⚽️",
+        groups["UNKNOWN"],
+        show_rating,
+    )
 
-        unknown_line = format_player_line(
-            "⚽",
-            groups["unknown"],
-            show_rating,
-        )
+    if line:
+        lines.append(line)
 
-        if unknown_line:
-            lines.append(
-                unknown_line
+    # --------------------------------------------------------
+    # یک خط خالی قبل از ذخیره‌ها
+    # --------------------------------------------------------
+
+    if substitutes:
+        lines.append("")
+
+        substitute_names = [
+            format_player(
+                player,
+                show_rating,
             )
-
-    # ----------------------------------------------------
-    # دقیقاً یک خط خالی قبل از تعویضی‌ها
-    # ----------------------------------------------------
-
-    lines.append("")
-
-    substitute_names = []
-
-    for player in substitutes:
-
-        name = format_player(
-            player,
-            show_rating,
-        )
-
-        if name:
-            substitute_names.append(
-                name
-            )
-
-    if substitute_names:
+            for player in substitutes
+        ]
 
         lines.append(
             "🔄 "
@@ -1634,252 +1414,86 @@ def format_team_lineup(
     return "\n".join(lines)
 
 
-# --------------------------------------------------------
+# ============================================================
 # ساخت پیام نهایی
-# --------------------------------------------------------
+# ============================================================
 
-def build_message(root):
-    content = get_content(
-        root
+def build_message(
+    root,
+    content,
+    basic_info,
+    home_team_data,
+    away_team_data,
+):
+    home = basic_info.get(
+        "home"
     )
 
-    info = extract_basic_info(
-        root
+    away = basic_info.get(
+        "away"
     )
 
-    home_name = (
-        info["home"]
-        or "Home"
+    if not home:
+        home = get_team_name(
+            home_team_data
+        )
+
+    if not away:
+        away = get_team_name(
+            away_team_data
+        )
+
+    competition = (
+        get_competition_name(
+            content,
+            root,
+        )
     )
 
-    away_name = (
-        info["away"]
-        or "Away"
-    )
-
-    league = (
-        info["league"]
-        or "نامشخص"
-    )
-
-    # ----------------------------------------------------
-    # زمان
-    # ----------------------------------------------------
-
-    start_time = get_match_start(
+    start_date = get_match_start(
         root,
-        content,
+        basic_info,
     )
 
-    kickoff = format_match_time(
-        start_time
+    match_time = format_match_time(
+        start_date
     )
-
-    # ----------------------------------------------------
-    # وضعیت
-    # ----------------------------------------------------
 
     finished = is_match_finished(
         content
     )
 
-    print()
-    print(
-        "MATCH FINISHED:",
-        finished,
+    home_lineup = format_team_lineup(
+        home_team_data,
+        f"🔴 {home}",
+        show_rating=finished,
     )
 
-    show_rating = finished
-
-    # ----------------------------------------------------
-    # lineup
-    # ----------------------------------------------------
-
-    lineup = get_lineup(
-        content,
-        root,
+    away_lineup = format_team_lineup(
+        away_team_data,
+        f"🔵 {away}",
+        show_rating=finished,
     )
 
-    if not isinstance(
-        lineup,
-        dict,
-    ):
-        raise RuntimeError(
-            "LINEUP OBJECT NOT FOUND."
-        )
-
-    lineup_type = lineup.get(
-        "lineupType"
+    message = (
+        f"🏆 {competition}\n\n"
+        f"⚽️ {home} 🆚 {away}\n"
+        f"🕐 {match_time} به وقت ایران\n\n"
+        f"{home_lineup}\n\n"
+        f"{away_lineup}"
     )
 
-    print(
-        "LINEUP TYPE:",
-        lineup_type,
-    )
-
-    # ----------------------------------------------------
-    # تیم‌ها
-    # ----------------------------------------------------
-
-    home_team = get_lineup_team(
-        lineup,
-        "home",
-    )
-
-    away_team = get_lineup_team(
-        lineup,
-        "away",
-    )
-
-    if not home_team:
-        raise RuntimeError(
-            "HOME LINEUP NOT FOUND."
-        )
-
-    if not away_team:
-        raise RuntimeError(
-            "AWAY LINEUP NOT FOUND."
-        )
-
-    # ----------------------------------------------------
-    # اطلاعات تشخیصی
-    # ----------------------------------------------------
-
-    home_starters = get_starters(
-        home_team
-    )
-
-    away_starters = get_starters(
-        away_team
-    )
-
-    home_subs = get_substitutes(
-        home_team
-    )
-
-    away_subs = get_substitutes(
-        away_team
-    )
-
-    home_coach = get_coach(
-        home_team
-    )
-
-    away_coach = get_coach(
-        away_team
-    )
-
-    home_formation = get_formation(
-        home_team
-    )
-
-    away_formation = get_formation(
-        away_team
-    )
-
-    print(
-        f"{home_name}: "
-        f"{len(home_starters)} starters, "
-        f"{len(home_subs)} substitutes"
-    )
-
-    print(
-        f"{away_name}: "
-        f"{len(away_starters)} starters, "
-        f"{len(away_subs)} substitutes"
-    )
-
-    print(
-        f"{home_name} coach:",
-        home_coach or "NOT FOUND",
-    )
-
-    print(
-        f"{away_name} coach:",
-        away_coach or "NOT FOUND",
-    )
-
-    print(
-        f"{home_name} formation:",
-        home_formation or "NOT FOUND",
-    )
-
-    print(
-        f"{away_name} formation:",
-        away_formation or "NOT FOUND",
-    )
-
-    print(
-        "LEAGUE:",
-        league,
-    )
-
-    # ----------------------------------------------------
-    # پیام
-    # ----------------------------------------------------
-
-    message = []
-
-    message.append(
-        f"🏆 {league}"
-    )
-
-    message.append("")
-
-    message.append(
-        f"⚽️ {home_name} 🆚 {away_name}"
-    )
-
-    message.append(
-        f"🕐 {kickoff} به وقت ایران"
-    )
-
-    message.append("")
-
-    # ----------------------------------------------------
-    # میزبان
-    # ----------------------------------------------------
-
-    message.append(
-        format_team_lineup(
-            home_name,
-            home_team,
-            show_rating,
-            "🔴",
-        )
-    )
-
-    message.append("")
-
-    # ----------------------------------------------------
-    # مهمان
-    # ----------------------------------------------------
-
-    message.append(
-        format_team_lineup(
-            away_name,
-            away_team,
-            show_rating,
-            "🔵",
-        )
-    )
-
-    return "\n".join(message)
+    return message
 
 
-# --------------------------------------------------------
-# اجرای تست
-# --------------------------------------------------------
+# ============================================================
+# MAIN
+# ============================================================
 
 def main():
-
-    print("")
-    print("#" * 70)
     print(
-        "FOTMOB → TELEGRAM MATCH "
-        "STRUCTURE TEST"
+        f"شروع تست بازی {MATCH_ID}"
     )
-    print("#" * 70)
 
     html = fetch_match_page()
 
@@ -1887,104 +1501,140 @@ def main():
         html
     )
 
-    # ----------------------------------------------------
-    # ذخیره JSON خام
-    # ----------------------------------------------------
-
-    with open(
-        "match_5811755_raw.json",
-        "w",
-        encoding="utf-8",
-    ) as file:
-
-        json.dump(
-            root,
-            file,
-            ensure_ascii=False,
-            indent=2,
-        )
-
-    print(
-        "Raw JSON saved: "
-        "match_5811755_raw.json"
-    )
-
-    # ----------------------------------------------------
-    # ساخت پیام
-    # ----------------------------------------------------
-
-    message = build_message(
+    basic_info = extract_basic_info(
         root
     )
 
-    print("")
-    print("=" * 70)
-    print("MESSAGE TO TELEGRAM")
+    print(
+        f"Home: "
+        f"{basic_info.get('home')}"
+    )
+
+    print(
+        f"Away: "
+        f"{basic_info.get('away')}"
+    )
+
+    content = get_content(
+        root
+    )
+
+    lineup = get_lineup(
+        content,
+        root,
+    )
+
+    if not lineup:
+        raise RuntimeError(
+            "lineup پیدا نشد."
+        )
+
+    home_team_data = get_lineup_team(
+        lineup,
+        0,
+    )
+
+    away_team_data = get_lineup_team(
+        lineup,
+        1,
+    )
+
+    home_starters = get_starters(
+        home_team_data
+    )
+
+    away_starters = get_starters(
+        away_team_data
+    )
+
+    print(
+        f"Home starters: "
+        f"{len(home_starters)}"
+    )
+
+    print(
+        f"Away starters: "
+        f"{len(away_starters)}"
+    )
+
+    # --------------------------------------------------------
+    # Debug positionId
+    # --------------------------------------------------------
+
+    print("\n--- POSITION IDS ---")
+
+    for player in (
+        home_starters
+        + away_starters
+    ):
+        name = get_player_name(
+            player
+        )
+
+        position_id = (
+            get_player_position_id(
+                player
+            )
+        )
+
+        group = position_group(
+            position_id
+        )
+
+        horizontal = (
+            get_horizontal_layout(
+                player
+            )
+        )
+
+        vertical = (
+            get_vertical_layout(
+                player
+            )
+        )
+
+        print(
+            f"{name}: "
+            f"positionId={position_id}, "
+            f"group={group}, "
+            f"H={horizontal}, "
+            f"V={vertical}"
+        )
+
+    # --------------------------------------------------------
+    # ساخت پیام
+    # --------------------------------------------------------
+
+    message = build_message(
+        root,
+        content,
+        basic_info,
+        home_team_data,
+        away_team_data,
+    )
+
+    print("\n")
     print("=" * 70)
     print(message)
     print("=" * 70)
+    print("\n")
 
-    # ----------------------------------------------------
-    # تقسیم پیام
-    # ----------------------------------------------------
+    # --------------------------------------------------------
+    # ارسال
+    # --------------------------------------------------------
 
-    max_length = 4000
-
-    chunks = []
-
-    remaining = message
-
-    while len(remaining) > max_length:
-
-        cut = remaining.rfind(
-            "\n",
-            0,
-            max_length,
-        )
-
-        if cut == -1:
-            cut = max_length
-
-        chunks.append(
-            remaining[:cut]
-        )
-
-        remaining = remaining[
-            cut:
-        ].lstrip()
-
-    if remaining:
-        chunks.append(
-            remaining
-        )
-
-    print(
-        f"Telegram messages to send: "
-        f"{len(chunks)}"
+    success = send_telegram(
+        message
     )
 
-    # ----------------------------------------------------
-    # ارسال
-    # ----------------------------------------------------
-
-    for index, chunk in enumerate(
-        chunks,
-        1,
-    ):
-
+    if success:
         print(
-            f"Sending message "
-            f"{index}/{len(chunks)}..."
+            "پیام با موفقیت به تلگرام ارسال شد."
         )
-
-        send_telegram(
-            chunk
+    else:
+        print(
+            "ارسال پیام ناموفق بود."
         )
-
-    print("")
-    print("=" * 70)
-    print("TEST SUCCESSFUL")
-    print("=" * 70)
 
 
 if __name__ == "__main__":
