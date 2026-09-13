@@ -151,6 +151,7 @@ def process_live_events(
     root,
     snapshot,
     match_state,
+    state,
 ):
     changes = detect_state_changes(
         match_state,
@@ -201,10 +202,10 @@ def process_live_events(
     )
 
     sync_result = sync_goals_with_current_events(
-        state=_CURRENT_STATE,
-        match_id=match_id,
-        goals=new_goal_info,
-        cancelled_goals=cancelled_goals,
+        state,
+        match_id,
+        new_goal_info,
+        cancelled_goals,
     )
 
     added_goals = sync_result.get(
@@ -220,7 +221,7 @@ def process_live_events(
     score = sync_result.get(
         "score",
         get_current_score(
-            _CURRENT_STATE,
+            state,
             match_id,
         ),
     )
@@ -231,7 +232,10 @@ def process_live_events(
 
     if (
         changes.get("started", False)
-        and not match_state.get("started", False)
+        and not match_state.get(
+            "started",
+            False,
+        )
     ):
         message = build_start_message(
             snapshot
@@ -273,13 +277,8 @@ def process_live_events(
                 str(goal_key)
             )
 
-        # ----------------------------------------------------
-        # گل ثبت‌شده در state باید دوباره به فرمتی تبدیل شود
-        # که formatter بتواند آن را نمایش دهد.
-        # ----------------------------------------------------
-
-        event = (
-            saved_goal.get("event")
+        event = saved_goal.get(
+            "event"
         )
 
         if not isinstance(
@@ -339,17 +338,19 @@ def process_live_events(
         ):
             original_event = cancelled_goal
 
+        cancellation_data = {
+            "goal_event": original_event,
+            "minute": cancelled_goal.get(
+                "minute"
+            ),
+            "is_home": cancelled_goal.get(
+                "is_home"
+            ),
+        }
+
         message = build_cancelled_goal_message(
             snapshot,
-            {
-                "goal_event": original_event,
-                "minute": cancelled_goal.get(
-                    "minute"
-                ),
-                "is_home": cancelled_goal.get(
-                    "is_home"
-                ),
-            },
+            cancellation_data,
             score=score,
         )
 
@@ -365,12 +366,9 @@ def process_live_events(
         )
 
     # --------------------------------------------------------
-    # گل‌هایی که event_detector پیدا کرده ولی sync نشده‌اند
+    # گل‌هایی که event_detector پیدا کرده ولی در
+    # new_goal_info قرار نگرفته‌اند
     # --------------------------------------------------------
-    #
-    # این بخش برای سازگاری با تغییرات احتمالی ساختار
-    # event_detector نگه داشته شده است.
-    #
 
     detected_goals = changes.get(
         "new_goals",
@@ -396,9 +394,6 @@ def process_live_events(
             and str(goal_key) in sent_goal_keys
         ):
             continue
-
-        # اگر new_goal_info وجود نداشته باشد،
-        # اینجا از event خام استفاده می‌کنیم.
 
         if not added_goals:
 
@@ -569,10 +564,6 @@ def process_match(
     match,
     state,
 ):
-    global _CURRENT_STATE
-
-    _CURRENT_STATE = state
-
     match_id = str(
         match.get("id")
     )
@@ -676,6 +667,7 @@ def process_match(
                 root,
                 snapshot,
                 match_state,
+                state,
             )
 
         # ------------------------------------------------
