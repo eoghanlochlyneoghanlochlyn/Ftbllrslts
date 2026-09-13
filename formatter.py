@@ -27,21 +27,6 @@ def format_score(
     home_name="Home",
     away_name="Away",
 ):
-    """
-    نتیجه را به شکل:
-
-    Juventus 1 - 0 Milan
-
-    برمی‌گرداند.
-
-    score باید چیزی شبیه این باشد:
-
-    {
-        "home": 1,
-        "away": 0
-    }
-    """
-
     if not isinstance(
         score,
         dict,
@@ -83,10 +68,6 @@ def format_score(
         f"{away_name}"
     )
 
-
-# --------------------------------------------------------
-# بررسی معتبر بودن نتیجه
-# --------------------------------------------------------
 
 def has_valid_score(score):
     if not isinstance(
@@ -179,9 +160,7 @@ def get_player_event_markers(
     )
 
     if penalty_goals == 1:
-        markers.append(
-            "P ⚽"
-        )
+        markers.append("P ⚽")
 
     elif penalty_goals > 1:
         markers.append(
@@ -189,9 +168,7 @@ def get_player_event_markers(
         )
 
     if normal_goals == 1:
-        markers.append(
-            "⚽"
-        )
+        markers.append("⚽")
 
     elif normal_goals > 1:
         markers.append(
@@ -199,9 +176,7 @@ def get_player_event_markers(
         )
 
     if assists == 1:
-        markers.append(
-            "👟"
-        )
+        markers.append("👟")
 
     elif assists > 1:
         markers.append(
@@ -209,9 +184,7 @@ def get_player_event_markers(
         )
 
     if red_cards == 1:
-        markers.append(
-            "❌"
-        )
+        markers.append("❌")
 
     elif red_cards > 1:
         markers.append(
@@ -246,9 +219,7 @@ def format_player(
         )
 
         if rating is not None:
-            result += (
-                f" {rating:.1f}"
-            )
+            result += f" {rating:.1f}"
 
     if player_events is not None:
 
@@ -531,15 +502,11 @@ def build_lineup_message(
 
     if show_rating:
 
-        scorer_lines = (
-            format_scorers(
-                home_name,
-                away_name,
-                home_scorers
-                or [],
-                away_scorers
-                or [],
-            )
+        scorer_lines = format_scorers(
+            home_name,
+            away_name,
+            home_scorers or [],
+            away_scorers or [],
         )
 
         if scorer_lines:
@@ -579,7 +546,7 @@ def build_lineup_message(
 
 
 # --------------------------------------------------------
-# پیام شروع بازی
+# پیام شروع
 # --------------------------------------------------------
 
 def build_start_message(
@@ -603,7 +570,7 @@ def build_start_message(
 
 
 # --------------------------------------------------------
-# نام بازیکن یک event
+# نام بازیکن event
 # --------------------------------------------------------
 
 def get_event_player_name(
@@ -626,23 +593,19 @@ def get_event_player_name(
 
         name = (
             player.get("name")
-            or player.get(
-                "shortName"
-            )
+            or player.get("shortName")
             or ""
         )
 
         if name:
             return name
 
-    name = (
+    return (
         event.get(
             "playerName"
         )
         or ""
     )
-
-    return name
 
 
 # --------------------------------------------------------
@@ -671,9 +634,7 @@ def build_goal_message(
     )
 
     if not player_name:
-        player_name = (
-            "بازیکن نامشخص"
-        )
+        player_name = "بازیکن نامشخص"
 
     is_home = get_event_team(
         event
@@ -693,34 +654,20 @@ def build_goal_message(
     )
 
     if minute is not None:
-
         minute_text = (
             f"⏱ دقیقه {minute}"
         )
-
     else:
         minute_text = ""
 
-    if is_own_goal(
-        event
-    ):
-
-        title = (
-            "⚽️ گل به خودی"
-        )
-
+    if is_own_goal(event):
+        title = "⚽️ گل به خودی"
     else:
+        title = "⚽️ گل"
 
-        title = (
-            "⚽️ گل"
-        )
-
-    lines = [
-        title,
-    ]
+    lines = [title]
 
     if team_name:
-
         lines.append(
             f"برای {team_name}!"
         )
@@ -730,21 +677,10 @@ def build_goal_message(
             minute_text
         )
 
-    lines.append(
-        player_name
-    )
+    lines.append(player_name)
 
-    if is_penalty_goal(
-        event
-    ):
-
-        lines.append(
-            "🎯 پنالتی"
-        )
-
-    # ----------------------------------------------------
-    # نتیجه فعلی
-    # ----------------------------------------------------
+    if is_penalty_goal(event):
+        lines.append("🎯 پنالتی")
 
     score_text = format_score(
         score,
@@ -753,27 +689,14 @@ def build_goal_message(
     )
 
     if score_text:
-
         lines.append("")
-        lines.append(
-            score_text
-        )
+        lines.append(score_text)
 
-    else:
-
-        lines.append("")
-        lines.append(
-            f"{home_name} 🆚 "
-            f"{away_name}"
-        )
-
-    return "\n".join(
-        lines
-    )
+    return "\n".join(lines)
 
 
 # --------------------------------------------------------
-# پیام VAR و گل مردود
+# پیام گل مردود
 # --------------------------------------------------------
 
 def build_cancelled_goal_message(
@@ -797,10 +720,8 @@ def build_cancelled_goal_message(
     ):
         return ""
 
-    goal_event = (
-        cancelled_goal.get(
-            "goal_event"
-        )
+    goal_event = cancelled_goal.get(
+        "goal_event"
     )
 
     if not isinstance(
@@ -816,18 +737,13 @@ def build_cancelled_goal_message(
     )
 
     if not player_name:
-        player_name = (
-            "بازیکن نامشخص"
-        )
+        player_name = "بازیکن نامشخص"
 
-    is_home = (
-        cancelled_goal.get(
-            "is_home"
-        )
+    is_home = cancelled_goal.get(
+        "is_home"
     )
 
     if is_home is None:
-
         is_home = get_event_team(
             goal_event
         )
@@ -841,14 +757,11 @@ def build_cancelled_goal_message(
     else:
         team_name = ""
 
-    minute = (
-        cancelled_goal.get(
-            "minute"
-        )
+    minute = cancelled_goal.get(
+        "minute"
     )
 
     if minute is None:
-
         minute = get_goal_minute(
             goal_event
         )
@@ -858,20 +771,16 @@ def build_cancelled_goal_message(
     ]
 
     if team_name:
-
         lines.append(
             f"گل {team_name}"
         )
 
     if minute is not None:
-
         lines.append(
             f"⏱ دقیقه {minute}"
         )
 
-    lines.append(
-        player_name
-    )
+    lines.append(player_name)
 
     lines.append(
         "🖥 VAR گل را مردود اعلام کرد."
@@ -884,19 +793,14 @@ def build_cancelled_goal_message(
     )
 
     if score_text:
-
         lines.append("")
-        lines.append(
-            score_text
-        )
+        lines.append(score_text)
 
-    return "\n".join(
-        lines
-    )
+    return "\n".join(lines)
 
 
 # --------------------------------------------------------
-# پیام پایان نیمه اول
+# پایان نیمه اول
 # --------------------------------------------------------
 
 def build_half_time_message(
@@ -926,19 +830,58 @@ def build_half_time_message(
     )
 
     if score_text:
-
         lines.append("")
-        lines.append(
-            score_text
-        )
+        lines.append(score_text)
 
-    return "\n".join(
-        lines
-    )
+    return "\n".join(lines)
 
 
 # --------------------------------------------------------
-# پیام کارت قرمز
+# پایان بازی
+# --------------------------------------------------------
+
+def build_finish_message(
+    snapshot,
+    score=None,
+):
+    home_name = (
+        snapshot.get("home")
+        or "Home"
+    )
+
+    away_name = (
+        snapshot.get("away")
+        or "Away"
+    )
+
+    league = (
+        snapshot.get("league")
+        or "نامشخص"
+    )
+
+    lines = [
+        "🏁 پایان بازی",
+        "",
+        f"🏆 {league}",
+        "",
+        f"⚽️ {home_name} 🆚 {away_name}",
+    ]
+
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+    )
+
+    if score_text:
+        lines.append("")
+        lines.append(score_text)
+
+    return "\n".join(lines)
+
+
+# --------------------------------------------------------
+# کارت قرمز
 # --------------------------------------------------------
 
 def build_red_card_message(
@@ -962,9 +905,7 @@ def build_red_card_message(
     )
 
     if not player_name:
-        player_name = (
-            "بازیکن نامشخص"
-        )
+        player_name = "بازیکن نامشخص"
 
     minute = get_goal_minute(
         event
@@ -976,7 +917,6 @@ def build_red_card_message(
     ]
 
     if minute is not None:
-
         lines.append(
             f"⏱ دقیقه {minute}"
         )
@@ -985,9 +925,7 @@ def build_red_card_message(
         f"{home_name} 🆚 {away_name}"
     )
 
-    return "\n".join(
-        lines
-    )
+    return "\n".join(lines)
 
 
 # --------------------------------------------------------
@@ -999,12 +937,6 @@ def build_event_message(
     event,
     score=None,
 ):
-    """
-    برای سازگاری با ساختار قبلی نگه داشته شده.
-
-    eventهای goal و card را به پیام مناسب تبدیل می‌کند.
-    """
-
     if not isinstance(
         event,
         dict,
@@ -1019,7 +951,6 @@ def build_event_message(
     ).lower()
 
     if event_type == "goal":
-
         return build_goal_message(
             snapshot,
             event,
