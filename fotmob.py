@@ -1678,3 +1678,50 @@ def get_match_snapshot(root):
         "away_starters": away_starters,
         "events": get_match_events(root),
     }
+
+def get_event_player_id(event):
+    if not isinstance(event, dict):
+        return None
+
+    value = event.get("playerId")
+
+    if value is not None:
+
+        try:
+            return int(value)
+
+        except (TypeError, ValueError):
+            return str(value)
+
+    player = event.get("player")
+
+    if isinstance(player, dict):
+
+        value = player.get("id")
+
+        if value is not None:
+
+            try:
+                return int(value)
+
+            except (TypeError, ValueError):
+                return str(value)
+
+    return None
+
+
+def get_event_assist_player_id(event):
+    if not isinstance(event, dict):
+        return None
+
+    value = event.get("assistPlayerId")
+
+    if value is not None:
+
+        try:
+            return int(value)
+
+        except (TypeError, ValueError):
+            return str(value)
+
+    return None
