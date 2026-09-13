@@ -29,7 +29,8 @@ from event_detector import (
 
 from formatter import (
     build_cancelled_goal_message,
-    build_final_message,
+    build_final_lineup_message,
+    build_final_stats_message,
     build_goal_message,
     build_half_time_message,
     build_lineup_message,
@@ -125,7 +126,6 @@ def get_goal_score_after_event(
     goal_info,
 ):
 
-    # ابتدا گل را وارد state می‌کنیم
     add_goal(
         match_state,
         goal_info,
@@ -145,10 +145,6 @@ def process_live_events(
     match_state,
     changes,
 ):
-
-    # -----------------------------------------------------
-    # event keys
-    # -----------------------------------------------------
 
     new_event_keys = (
         changes.get(
@@ -186,8 +182,6 @@ def process_live_events(
         if goal_key is None:
             continue
 
-        # اگر قبلاً در state هست،
-        # دوباره ارسال نکن
         existing_goal = None
 
         for goal in (
@@ -216,12 +210,6 @@ def process_live_events(
 
         if existing_goal is not None:
             continue
-
-        # -------------------------------------------------
-        # مهم:
-        # گل را اول به state اضافه می‌کنیم
-        # تا نتیجه پیام همین گل درست باشد.
-        # -------------------------------------------------
 
         score_after = (
             get_goal_score_after_event(
@@ -291,8 +279,6 @@ def process_live_events(
         ):
             continue
 
-        # اگر گل در state وجود دارد،
-        # آن را مردود می‌کنیم.
         goal = None
 
         for item in (
@@ -588,6 +574,12 @@ def process_match(
         f"Events found: {len(events)}"
     )
 
+    # برای formatterهای نهایی و detector
+    # eventها را مستقیماً نگه می‌داریم.
+    snapshot[
+        "events"
+    ] = events
+
     # -----------------------------------------------------
     # تشخیص تغییرات
     # -----------------------------------------------------
@@ -662,9 +654,6 @@ def process_match(
             match_state
         )
 
-        # اگر state هنوز همه گل‌ها را ندارد،
-        # برای بازی‌ای که وسط کار به ربات اضافه شده
-        # از نتیجه FotMob استفاده می‌کنیم.
         if not score or (
             score.get("home", 0) == 0
             and score.get("away", 0) == 0
@@ -734,17 +723,17 @@ def process_match(
 
             print(
                 f"[{match_id}] "
-                "Final message sent."
+                "Sending final lineup/performance message."
             )
 
             # اگر state تمام گل‌ها را دارد،
-            # نتیجه را از state بگیر.
+            # نتیجه را از state می‌گیریم.
             final_score = get_current_score(
                 match_state
             )
 
             # اگر state خالی بوده ولی FotMob
-            # نتیجه نهایی دارد، از FotMob استفاده کن.
+            # نتیجه نهایی دارد، از FotMob استفاده می‌کنیم.
             if (
                 final_score.get("home", 0) == 0
                 and final_score.get("away", 0) == 0
@@ -755,20 +744,70 @@ def process_match(
                     "score"
                 )
 
-            message = build_final_message(
-                snapshot,
-                final_score,
+            # -------------------------------------------------
+            # پیام اول:
+            # ترکیب + امتیاز + گل + پاس گل + OG
+            # -------------------------------------------------
+
+            final_lineup_message = (
+                build_final_lineup_message(
+                    snapshot,
+                    events,
+                )
             )
 
-            if message:
+            lineup_sent = False
+
+            if final_lineup_message:
 
                 send_long_message(
-                    message
+                    final_lineup_message
                 )
+
+                lineup_sent = True
+
+            # -------------------------------------------------
+            # پیام دوم:
+            # آمار بازی
+            # -------------------------------------------------
+
+            print(
+                f"[{match_id}] "
+                "Sending final stats message."
+            )
+
+            final_stats_message = (
+                build_final_stats_message(
+                    snapshot,
+                    final_score,
+                )
+            )
+
+            stats_sent = False
+
+            if final_stats_message:
+
+                send_long_message(
+                    final_stats_message
+                )
+
+                stats_sent = True
+
+            # فقط وقتی هر دو پیام ساخته و ارسال شدند
+            # وضعیت نهایی ثبت می‌شود.
+            if (
+                lineup_sent
+                and stats_sent
+            ):
 
                 match_state[
                     "finished_sent"
                 ] = True
+
+                print(
+                    f"[{match_id}] "
+                    "Final messages sent."
+                )
 
 
 # =========================================================
