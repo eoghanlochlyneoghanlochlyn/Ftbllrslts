@@ -460,6 +460,169 @@ def format_match_time(value):
 
 
 # --------------------------------------------------------
+# وضعیت بازی
+# --------------------------------------------------------
+
+def get_match_status(root):
+    status = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "header",
+        "status",
+    )
+
+    if isinstance(status, dict):
+        return status
+
+    return {}
+
+
+def _status_value(status, keys):
+    if not isinstance(status, dict):
+        return None
+
+    for key in keys:
+
+        value = status.get(key)
+
+        if value is not None:
+            return value
+
+    return None
+
+
+def is_match_started(root):
+    """
+    تشخیص شروع بازی.
+
+    اولویت با فیلدهای صریح FotMob است.
+    در صورت نبودن آنها، از reason/status نیز استفاده می‌شود.
+    """
+
+    general = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "general",
+    )
+
+    if isinstance(general, dict):
+
+        for key in (
+            "started",
+            "isStarted",
+        ):
+
+            if general.get(key) is True:
+                return True
+
+    status = get_match_status(root)
+
+    for key in (
+        "started",
+        "isStarted",
+        "inProgress",
+        "live",
+    ):
+
+        if status.get(key) is True:
+            return True
+
+    reason = status.get("reason")
+
+    if isinstance(reason, dict):
+
+        short = clean_text(
+            reason.get("short")
+        ).lower()
+
+        long = clean_text(
+            reason.get("long")
+        ).lower()
+
+        key = clean_text(
+            reason.get("key")
+        ).lower()
+
+        if short in {
+            "1h",
+            "2h",
+            "ht",
+            "et",
+            "aet",
+            "live",
+            "in progress",
+            "ft",
+            "pen",
+        }:
+            return True
+
+        if key in {
+            "live",
+            "in_progress",
+            "match_started",
+            "halftime",
+            "full_time",
+        }:
+            return True
+
+        if (
+            "half" in long
+            or "live" in long
+            or "in progress" in long
+            or "full-time" in long
+        ):
+            return True
+
+    return False
+
+
+def is_half_time(root):
+    status = get_match_status(root)
+
+    for key in (
+        "halfTime",
+        "half_time",
+        "isHalfTime",
+    ):
+
+        if status.get(key) is True:
+            return True
+
+    reason = status.get("reason")
+
+    if isinstance(reason, dict):
+
+        values = [
+            reason.get("short"),
+            reason.get("long"),
+            reason.get("key"),
+        ]
+
+        for value in values:
+
+            value = clean_text(
+                value
+            ).lower()
+
+            if value in {
+                "ht",
+                "half time",
+                "halftime",
+            }:
+                return True
+
+            if (
+                "half time" in value
+                or "halftime" in value
+            ):
+                return True
+
+    return False
+
+
+# --------------------------------------------------------
 # وضعیت پایان بازی
 # --------------------------------------------------------
 
@@ -476,17 +639,17 @@ def is_match_finished(root):
         if general.get("finished") is True:
             return True
 
-    status = get_nested(
-        root,
-        "props",
-        "pageProps",
-        "header",
-        "status",
-    )
+        if general.get("isFinished") is True:
+            return True
+
+    status = get_match_status(root)
 
     if isinstance(status, dict):
 
         if status.get("finished") is True:
+            return True
+
+        if status.get("isFinished") is True:
             return True
 
         reason = status.get("reason")
@@ -501,10 +664,21 @@ def is_match_finished(root):
                 reason.get("long", "")
             ).strip().lower()
 
+            key = str(
+                reason.get("key", "")
+            ).strip().lower()
+
             if short in (
                 "ft",
                 "aet",
                 "pen",
+            ):
+                return True
+
+            if key in (
+                "full_time",
+                "finished",
+                "match_finished",
             ):
                 return True
 
@@ -1590,24 +1764,633 @@ def get_match_events(root):
     return []
 
 
+def get_event_type(event):
+    if not isinstance(event, dict):
+        return ""
+
+    for key in (
+        "type",
+        "eventType",
+        "event_type",
+        "incidentType",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+
+            if isinstance(value, dict):
+
+                value = first_non_empty(
+                    value.get("key"),
+                    value.get("name"),
+                    value.get("type"),
+                )
+
+            value = clean_text(value)
+
+            if value:
+                return value.lower()
+
+    return ""
+
+
+def get_event_time(event):
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "time",
+        "minute",
+        "matchMinute",
+        "timeElapsed",
+        "elapsed",
+        "minuteValue",
+    ):
+
+        value = event.get(key)
+
+        if value is None:
+            continue
+
+        if isinstance(value, dict):
+
+            value = first_non_empty(
+                value.get("value"),
+                value.get("minute"),
+                value.get("time"),
+            )
+
+        try:
+            return int(float(value))
+
+        except (TypeError, ValueError):
+            pass
+
+    return None
+
+
+def get_event_minute_text(event):
+    """
+    متن مناسب برای نمایش دقیقه رویداد.
+
+    برای مثال:
+    34
+    45+2
+    90+5
+    """
+
+    if not isinstance(event, dict):
+        return ""
+
+    for key in (
+        "time",
+        "minute",
+        "matchMinute",
+        "timeElapsed",
+        "elapsed",
+    ):
+
+        value = event.get(key)
+
+        if value is None:
+            continue
+
+        if isinstance(value, dict):
+
+            value = first_non_empty(
+                value.get("display"),
+                value.get("text"),
+                value.get("value"),
+                value.get("minute"),
+                value.get("time"),
+            )
+
+        value = clean_text(value)
+
+        if not value:
+            continue
+
+        if re.fullmatch(
+            r"\d+(?:\+\d+)?",
+            value,
+        ):
+            return value
+
+        match = re.search(
+            r"(\d+(?:\+\d+)?)",
+            value,
+        )
+
+        if match:
+            return match.group(1)
+
+    return ""
+
+
+def get_event_unique_id(event):
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "id",
+        "eventId",
+        "eventID",
+        "incidentId",
+        "incidentID",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+
+            value = clean_text(value)
+
+            if value:
+                return value
+
+    return None
+
+
+def _normalise_team_id(value):
+    if value is None:
+        return None
+
+    if isinstance(value, dict):
+
+        value = first_non_empty(
+            value.get("id"),
+            value.get("teamId"),
+            value.get("teamID"),
+        )
+
+    try:
+        return int(value)
+
+    except (TypeError, ValueError):
+        value = clean_text(value)
+
+        return value if value else None
+
+
+def get_event_team(event):
+    """
+    مشخص می‌کند رویداد مربوط به کدام تیم است.
+
+    خروجی:
+        {
+            "id": ...,
+            "name": ...,
+            "is_home": True/False/None
+        }
+
+    در صورتی که اطلاعات کامل موجود نباشد،
+    تا حد ممکن از فیلدهای مختلف FotMob استفاده می‌شود.
+    """
+
+    if not isinstance(event, dict):
+        return {
+            "id": None,
+            "name": "",
+            "is_home": None,
+        }
+
+    team_id = None
+    team_name = ""
+
+    for key in (
+        "teamId",
+        "teamID",
+        "team_id",
+    ):
+
+        if event.get(key) is not None:
+            team_id = _normalise_team_id(
+                event.get(key)
+            )
+            break
+
+    for key in (
+        "team",
+        "teamData",
+        "teamInfo",
+    ):
+
+        value = event.get(key)
+
+        if isinstance(value, dict):
+
+            if team_id is None:
+                team_id = _normalise_team_id(
+                    value
+                )
+
+            team_name = first_non_empty(
+                value.get("name"),
+                value.get("longName"),
+                value.get("shortName"),
+            )
+
+            if team_name:
+                break
+
+        elif isinstance(value, str):
+
+            if value.strip():
+                team_name = value.strip()
+                break
+
+    if not team_name:
+
+        team_name = clean_text(
+            first_non_empty(
+                event.get("teamName"),
+                event.get("teamLongName"),
+                event.get("teamShortName"),
+            )
+        )
+
+    is_home = None
+
+    for key in (
+        "isHome",
+        "home",
+        "isHomeTeam",
+    ):
+
+        value = event.get(key)
+
+        if isinstance(value, bool):
+            is_home = value
+            break
+
+    if is_home is None:
+
+        side = clean_text(
+            first_non_empty(
+                event.get("side"),
+                event.get("teamSide"),
+            )
+        ).lower()
+
+        if side in (
+            "home",
+            "h",
+        ):
+            is_home = True
+
+        elif side in (
+            "away",
+            "a",
+        ):
+            is_home = False
+
+    return {
+        "id": team_id,
+        "name": team_name,
+        "is_home": is_home,
+    }
+
+
+# --------------------------------------------------------
+# بازیکن رویداد
+# --------------------------------------------------------
+
+def get_event_player_id(event):
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "playerId",
+        "playerID",
+        "player_id",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+
+            try:
+                return int(value)
+
+            except (TypeError, ValueError):
+                return str(value)
+
+    player = event.get("player")
+
+    if isinstance(player, dict):
+
+        for key in (
+            "id",
+            "playerId",
+            "playerID",
+        ):
+
+            value = player.get(key)
+
+            if value is not None:
+
+                try:
+                    return int(value)
+
+                except (TypeError, ValueError):
+                    return str(value)
+
+    return None
+
+
+def get_event_assist_player_id(event):
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "assistPlayerId",
+        "assistPlayerID",
+        "assist_player_id",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+
+            try:
+                return int(value)
+
+            except (TypeError, ValueError):
+                return str(value)
+
+    assist_player = event.get(
+        "assistPlayer"
+    )
+
+    if isinstance(assist_player, dict):
+
+        for key in (
+            "id",
+            "playerId",
+            "playerID",
+        ):
+
+            value = assist_player.get(key)
+
+            if value is not None:
+
+                try:
+                    return int(value)
+
+                except (TypeError, ValueError):
+                    return str(value)
+
+    return None
+
+
+# --------------------------------------------------------
+# نوع گل
+# --------------------------------------------------------
+
+def is_cancelled_goal_event(event):
+    if not isinstance(event, dict):
+        return False
+
+    event_type = get_event_type(event)
+
+    decision = event.get("decision")
+
+    decision_values = []
+
+    if isinstance(decision, dict):
+
+        for key in (
+            "key",
+            "name",
+            "type",
+            "decision",
+            "value",
+        ):
+
+            value = decision.get(key)
+
+            if value is not None:
+                decision_values.append(
+                    clean_text(value).lower()
+                )
+
+    elif decision is not None:
+
+        decision_values.append(
+            clean_text(decision).lower()
+        )
+
+    for key in (
+        "decisionKey",
+        "decisionType",
+        "decisionName",
+        "varDecision",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+            decision_values.append(
+                clean_text(value).lower()
+            )
+
+    for value in decision_values:
+
+        if any(
+            token in value
+            for token in (
+                "var_goal_cancelled",
+                "goal_cancelled",
+                "goal_canceled",
+                "goal disallowed",
+                "goal disallowed",
+                "cancelled goal",
+                "canceled goal",
+            )
+        ):
+            return True
+
+    if event_type in (
+        "var",
+        "video_assistant_referee",
+    ):
+
+        combined = " ".join(
+            decision_values
+        )
+
+        if any(
+            token in combined
+            for token in (
+                "cancel",
+                "disallow",
+                "no goal",
+                "no_goal",
+                "overturn",
+            )
+        ):
+            return True
+
+    return False
+
+
+def is_penalty_goal(event):
+    if not isinstance(event, dict):
+        return False
+
+    goal_description_key = clean_text(
+        event.get("goalDescriptionKey")
+    ).lower()
+
+    goal_description = clean_text(
+        event.get("goalDescription")
+    ).lower()
+
+    if "penalty" in goal_description_key:
+        return True
+
+    if "penalty" in goal_description:
+        return True
+
+    shotmap = event.get(
+        "shotmapEvent"
+    )
+
+    if isinstance(shotmap, dict):
+
+        situation = clean_text(
+            shotmap.get("situation")
+        ).lower()
+
+        if situation == "penalty":
+            return True
+
+        if shotmap.get("isPenalty") is True:
+            return True
+
+    return False
+
+
+def is_own_goal(event):
+    if not isinstance(event, dict):
+        return False
+
+    if event.get("ownGoal") is True:
+        return True
+
+    if event.get("isOwnGoal") is True:
+        return True
+
+    shotmap = event.get(
+        "shotmapEvent"
+    )
+
+    if isinstance(shotmap, dict):
+
+        if shotmap.get("isOwnGoal") is True:
+            return True
+
+        if shotmap.get("ownGoal") is True:
+            return True
+
+    description = clean_text(
+        first_non_empty(
+            event.get("goalDescription"),
+            event.get("description"),
+        )
+    ).lower()
+
+    if (
+        "own goal" in description
+        or "own_goal" in description
+    ):
+        return True
+
+    return False
+
+
+def is_red_card_event(event):
+    if not isinstance(event, dict):
+        return False
+
+    event_type = get_event_type(event)
+
+    if event_type in (
+        "red_card",
+        "redcard",
+        "red card",
+    ):
+        return True
+
+    card = clean_text(
+        first_non_empty(
+            event.get("card"),
+            event.get("cardType"),
+            event.get("cardName"),
+        )
+    ).lower()
+
+    if card in (
+        "red",
+        "red card",
+        "redcard",
+    ):
+        return True
+
+    if "red" in card:
+        return True
+
+    return False
+
+
+# --------------------------------------------------------
+# اطلاعات کامل گل
+# --------------------------------------------------------
+
+def get_goal_info(event):
+    if not isinstance(event, dict):
+        return None
+
+    event_type = get_event_type(event)
+
+    if event_type not in (
+        "goal",
+        "goals",
+        "score",
+        "scored",
+    ):
+        return None
+
+    if is_cancelled_goal_event(event):
+        return None
+
+    player_id = get_event_player_id(event)
+
+    assist_player_id = (
+        get_event_assist_player_id(event)
+    )
+
+    team = get_event_team(event)
+
+    return {
+        "event": event,
+        "event_id": get_event_unique_id(event),
+        "player_id": player_id,
+        "assist_player_id": assist_player_id,
+        "minute": get_event_minute_text(event),
+        "minute_value": get_event_time(event),
+        "team_id": team.get("id"),
+        "team_name": team.get("name", ""),
+        "is_home": team.get("is_home"),
+        "penalty": is_penalty_goal(event),
+        "own_goal": is_own_goal(event),
+    }
+
+
 # --------------------------------------------------------
 # وضعیت کلی بازی
 # --------------------------------------------------------
-
-def get_match_status(root):
-    status = get_nested(
-        root,
-        "props",
-        "pageProps",
-        "header",
-        "status",
-    )
-
-    if isinstance(status, dict):
-        return status
-
-    return {}
-
 
 def get_lineup_type(root):
     content = get_content(root)
@@ -1663,6 +2446,8 @@ def get_match_snapshot(root):
         else []
     )
 
+    events = get_match_events(root)
+
     return {
         "home": info["home"],
         "away": info["away"],
@@ -1670,58 +2455,20 @@ def get_match_snapshot(root):
         "venue": info["venue"],
         "start": start,
         "start_formatted": format_match_time(start),
+
         "finished": is_match_finished(root),
+        "started": is_match_started(root),
+        "half_time": is_half_time(root),
+
         "lineup_type": get_lineup_type(root),
+
         "home_team": home_team,
         "away_team": away_team,
+
         "home_starters": home_starters,
         "away_starters": away_starters,
-        "events": get_match_events(root),
+
+        "events": events,
+
+        "status": get_match_status(root),
     }
-
-def get_event_player_id(event):
-    if not isinstance(event, dict):
-        return None
-
-    value = event.get("playerId")
-
-    if value is not None:
-
-        try:
-            return int(value)
-
-        except (TypeError, ValueError):
-            return str(value)
-
-    player = event.get("player")
-
-    if isinstance(player, dict):
-
-        value = player.get("id")
-
-        if value is not None:
-
-            try:
-                return int(value)
-
-            except (TypeError, ValueError):
-                return str(value)
-
-    return None
-
-
-def get_event_assist_player_id(event):
-    if not isinstance(event, dict):
-        return None
-
-    value = event.get("assistPlayerId")
-
-    if value is not None:
-
-        try:
-            return int(value)
-
-        except (TypeError, ValueError):
-            return str(value)
-
-    return None
