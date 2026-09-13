@@ -1,60 +1,101 @@
 import os
 
-from telegram import Bot
-from telegram.error import TelegramError
+import requests
 
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAMBOT")
-TELEGRAM_CHANNEL = os.getenv("TELEGRAMCHANNEL")
+TELEGRAM_BOT_TOKEN = os.getenv(
+    "TELEGRAMBOT"
+)
+
+TELEGRAM_CHANNEL = os.getenv(
+    "TELEGRAMCHANNEL"
+)
 
 
-async def send_telegram_message(text):
+def send_telegram(text):
     if not TELEGRAM_BOT_TOKEN:
-        print("ERROR: TELEGRAMBOT secret is not available.")
-        return False
+        raise RuntimeError(
+            "TELEGRAMBOT environment variable is missing."
+        )
 
     if not TELEGRAM_CHANNEL:
-        print("ERROR: TELEGRAMCHANNEL secret is not available.")
-        return False
+        raise RuntimeError(
+            "TELEGRAMCHANNEL environment variable is missing."
+        )
 
-    if not text or not text.strip():
-        print("ERROR: Telegram message is empty.")
-        return False
-
-    bot = Bot(
-        token=TELEGRAM_BOT_TOKEN
+    url = (
+        "https://api.telegram.org/"
+        f"bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     )
 
-    try:
-        sent_message = await bot.send_message(
-            chat_id=TELEGRAM_CHANNEL,
-            text=text,
+    response = requests.post(
+        url,
+        data={
+            "chat_id": TELEGRAM_CHANNEL,
+            "text": text,
+        },
+        timeout=30,
+    )
+
+    print(
+        "Telegram status:",
+        response.status_code,
+    )
+
+    if not response.ok:
+        print(response.text)
+
+    response.raise_for_status()
+
+    return response.json()
+
+
+def split_message(
+    message,
+    max_length=4000,
+):
+    chunks = []
+
+    remaining = message
+
+    while len(remaining) > max_length:
+
+        cut = remaining.rfind(
+            "\n",
+            0,
+            max_length,
         )
+
+        if cut == -1:
+            cut = max_length
+
+        chunks.append(
+            remaining[:cut]
+        )
+
+        remaining = remaining[
+            cut:
+        ].lstrip()
+
+    if remaining:
+        chunks.append(remaining)
+
+    return chunks
+
+
+def send_long_message(message):
+    chunks = split_message(message)
+
+    for index, chunk in enumerate(
+        chunks,
+        1,
+    ):
 
         print(
-            "Telegram message sent successfully."
+            f"Sending Telegram message "
+            f"{index}/{len(chunks)}..."
         )
 
-        print(
-            f"Telegram message ID: "
-            f"{sent_message.message_id}"
-        )
+        send_telegram(chunk)
 
-        return True
-
-    except TelegramError as exc:
-        print(
-            f"Telegram error: {exc}"
-        )
-
-        return False
-
-    except Exception as exc:
-        print(
-            f"Unexpected Telegram error: {exc}"
-        )
-
-        return False
-
-    finally:
-        await bot.shutdown()
+    return len(chunks)
