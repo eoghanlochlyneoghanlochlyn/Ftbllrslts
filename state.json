@@ -1,1 +1,14 @@
-
+{
+  "matches": {
+    "5749667": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
+    }
+  }
+}
