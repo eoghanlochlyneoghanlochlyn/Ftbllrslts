@@ -85,6 +85,36 @@ def format_score(
 
 
 # --------------------------------------------------------
+# بررسی معتبر بودن نتیجه
+# --------------------------------------------------------
+
+def has_valid_score(score):
+    if not isinstance(
+        score,
+        dict,
+    ):
+        return False
+
+    if score.get("home") is None:
+        return False
+
+    if score.get("away") is None:
+        return False
+
+    try:
+        int(score.get("home"))
+        int(score.get("away"))
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+        return False
+
+    return True
+
+
+# --------------------------------------------------------
 # نشان‌های رویداد بازیکن
 # --------------------------------------------------------
 
@@ -712,20 +742,22 @@ def build_goal_message(
             "🎯 پنالتی"
         )
 
-    if score:
+    # ----------------------------------------------------
+    # نتیجه فعلی
+    # ----------------------------------------------------
 
-        score_text = format_score(
-            score,
-            home_name,
-            away_name,
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+    )
+
+    if score_text:
+
+        lines.append("")
+        lines.append(
+            score_text
         )
-
-        if score_text:
-
-            lines.append("")
-            lines.append(
-                score_text
-            )
 
     else:
 
@@ -845,20 +877,18 @@ def build_cancelled_goal_message(
         "🖥 VAR گل را مردود اعلام کرد."
     )
 
-    if score:
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+    )
 
-        score_text = format_score(
-            score,
-            home_name,
-            away_name,
+    if score_text:
+
+        lines.append("")
+        lines.append(
+            score_text
         )
-
-        if score_text:
-
-            lines.append("")
-            lines.append(
-                score_text
-            )
 
     return "\n".join(
         lines
@@ -889,20 +919,18 @@ def build_half_time_message(
         f"{home_name} 🆚 {away_name}",
     ]
 
-    if score:
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+    )
 
-        score_text = format_score(
-            score,
-            home_name,
-            away_name,
+    if score_text:
+
+        lines.append("")
+        lines.append(
+            score_text
         )
-
-        if score_text:
-
-            lines.append("")
-            lines.append(
-                score_text
-            )
 
     return "\n".join(
         lines
