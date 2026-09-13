@@ -34,440 +34,300 @@ from formatter import (
     build_cancelled_goal_message,
     build_half_time_message,
     build_red_card_message,
-    build_event_message,
+    build_finish_message,
 )
 
-from telegram_sender import send_long_message
+from telegram_sender import (
+    send_long_message,
+)
 
-
-# ---------------------------------------------------------
-# تنظیمات
-# ---------------------------------------------------------
 
 POLL_INTERVAL = 60
 
 
-# ---------------------------------------------------------
-# ابزارهای کمکی
-# ---------------------------------------------------------
+# ============================================================
+# ابزارهای گل مردود
+# ============================================================
 
-def get_goal_key_from_cancellation(cancelled_goal):
-    """
-    کلید گل لغوشده را از اطلاعات VAR استخراج می‌کند.
-    """
-
-    if not isinstance(cancelled_goal, dict):
+def get_goal_key_from_cancellation(
+    cancelled_goal,
+):
+    if not isinstance(
+        cancelled_goal,
+        dict,
+    ):
         return None
 
-    return (
-        cancelled_goal.get("goal_key")
-        or cancelled_goal.get("event_key")
-        or cancelled_goal.get("id")
+    goal_key = cancelled_goal.get(
+        "goal_key"
+    )
+
+    if goal_key is not None:
+        return str(goal_key)
+
+    goal_event = cancelled_goal.get(
+        "goal_event"
+    )
+
+    if not isinstance(
+        goal_event,
+        dict,
+    ):
+        return None
+
+    return event_key(
+        goal_event
     )
 
 
-def get_goal_event_from_cancellation(cancelled_goal):
-    """
-    خود event مربوط به گل لغوشده را استخراج می‌کند.
-    """
-
-    if not isinstance(cancelled_goal, dict):
+def get_goal_event_from_cancellation(
+    cancelled_goal,
+):
+    if not isinstance(
+        cancelled_goal,
+        dict,
+    ):
         return None
 
-    return cancelled_goal.get("goal_event")
+    goal_event = cancelled_goal.get(
+        "goal_event"
+    )
 
+    if isinstance(
+        goal_event,
+        dict,
+    ):
+        return goal_event
+
+    return None
+
+
+# ============================================================
+# کلید event
+# ============================================================
 
 def get_event_key_safe(event):
-    """
-    گرفتن event key بدون اینکه خراب شدن یک event
-    کل پردازش را متوقف کند.
-    """
-
-    if event is None:
-        return None
-
     try:
         return event_key(event)
     except Exception:
         return None
 
 
-def get_goal_score_before_event(match_state, goal_info):
+# ============================================================
+# نتیجه قبل و بعد از گل
+# ============================================================
+
+def get_goal_score_before_event(
+    match_state,
+    goal_event,
+):
     """
-    نتیجه بازی را درست قبل از گل محاسبه می‌کند.
+    نتیجه قبل از ثبت گل را از state محاسبه می‌کند.
     """
 
-    goals = match_state.get("goals", [])
+    return get_current_score(
+        match_state
+    )
 
-    home_score = 0
-    away_score = 0
 
-    target_key = goal_info.get("event_key")
+def get_goal_score_after_event(
+    match_state,
+    goal_event,
+):
+    """
+    ابتدا گل را به صورت موقت به state اضافه می‌کند
+    و سپس نتیجه جدید را محاسبه می‌کند.
 
-    for goal in goals:
+    توجه:
+    این تابع برای محاسبه است و خودش گل را ثبت نمی‌کند.
+    """
 
-        if not isinstance(goal, dict):
-            continue
+    from copy import deepcopy
 
-        if goal.get("cancelled", False):
-            continue
+    temporary_state = deepcopy(
+        match_state
+    )
 
-        # خود گل فعلی را حساب نکن
-        if target_key is not None:
-            if str(goal.get("event_key")) == str(target_key):
-                continue
+    from event_detector import get_goal_info
 
-        is_home = goal.get("is_home")
+    goal_info = get_goal_info(
+        goal_event
+    )
 
-        if is_home is None:
-            continue
-
-        own_goal = bool(
-            goal.get("own_goal", False)
+    if goal_info is not None:
+        add_goal(
+            temporary_state,
+            goal_info,
         )
 
-        if own_goal:
-
-            if is_home:
-                away_score += 1
-            else:
-                home_score += 1
-
-        else:
-
-            if is_home:
-                home_score += 1
-            else:
-                away_score += 1
-
-    return {
-        "home": home_score,
-        "away": away_score,
-    }
-
-
-def get_goal_score_after_event(match_state, goal_info):
-    """
-    نتیجه بازی را بلافاصله بعد از گل محاسبه می‌کند.
-    """
-
-    score = get_goal_score_before_event(
-        match_state,
-        goal_info,
+    return get_current_score(
+        temporary_state
     )
 
-    is_home = goal_info.get("is_home")
 
-    if is_home is None:
-        return score
-
-    own_goal = bool(
-        goal_info.get("own_goal", False)
-    )
-
-    if own_goal:
-
-        if is_home:
-            score["away"] += 1
-        else:
-            score["home"] += 1
-
-    else:
-
-        if is_home:
-            score["home"] += 1
-        else:
-            score["away"] += 1
-
-    return score
-
-
-# ---------------------------------------------------------
-# پردازش رویدادهای بازی
-# ---------------------------------------------------------
+# ============================================================
+# پردازش eventهای زنده
+# ============================================================
 
 def process_live_events(
-    match_id,
     snapshot,
     match_state,
     changes,
 ):
-    """
-    رویدادهای جدید مسابقه را پردازش می‌کند.
-    """
+    # --------------------------------------------------------
+    # گل‌های جدید
+    # --------------------------------------------------------
 
-    new_events = changes.get(
-        "new_events",
-        [],
-    )
-
-    new_goal_info = changes.get(
-        "new_goal_info",
-        [],
-    )
-
-    cancelled_goals = changes.get(
-        "cancelled_goals",
-        [],
-    )
-
-    new_red_cards = changes.get(
-        "new_red_cards",
-        [],
-    )
-
-    # -----------------------------------------------------
-    # کلید گل‌های لغوشده
-    # -----------------------------------------------------
-
-    cancelled_goal_keys = set()
-
-    for cancelled_goal in cancelled_goals:
-
-        key = get_goal_key_from_cancellation(
-            cancelled_goal
-        )
-
-        if key is not None:
-            cancelled_goal_keys.add(
-                str(key)
-            )
-
-    # -----------------------------------------------------
-    # کلید گل‌های قبلی
-    # -----------------------------------------------------
-
-    previous_goal_keys = {
-        str(goal.get("event_key"))
-        for goal in match_state.get(
-            "goals",
+    for goal_event in (
+        changes.get(
+            "new_goals",
             [],
         )
-        if isinstance(goal, dict)
-        and goal.get("event_key") is not None
-    }
+    ):
 
-    # -----------------------------------------------------
-    # ثبت گل‌های جدید
-    # -----------------------------------------------------
-
-    newly_added_goals = []
-
-    for goal_info in new_goal_info:
-
-        if not isinstance(goal_info, dict):
-            continue
-
-        goal_key = goal_info.get(
-            "event_key"
+        goal_key = get_event_key_safe(
+            goal_event
         )
 
         if goal_key is None:
             continue
 
-        goal_key = str(goal_key)
-
+        # اگر قبلاً گل ثبت شده، دوباره ارسال نکن.
         existing_goal = find_goal(
             match_state,
             goal_key,
         )
 
-        if existing_goal is None:
+        if existing_goal is not None:
+            continue
 
-            added_goal = add_goal(
+        # نتیجه قبل از گل
+        score_before = (
+            get_goal_score_before_event(
                 match_state,
-                goal_info,
+                goal_event,
             )
-
-            if added_goal is not None:
-                newly_added_goals.append(
-                    goal_info
-                )
-
-        elif goal_key not in previous_goal_keys:
-
-            newly_added_goals.append(
-                goal_info
-            )
-
-    # -----------------------------------------------------
-    # اعمال لغو گل‌ها
-    # -----------------------------------------------------
-
-    for cancelled_goal in cancelled_goals:
-
-        goal_key = get_goal_key_from_cancellation(
-            cancelled_goal
         )
 
-        if goal_key is None:
-            continue
-
-        cancel_goal(
-            match_state,
-            str(goal_key),
+        from event_detector import (
+            get_goal_info,
         )
 
-    # -----------------------------------------------------
-    # ارسال گل‌های جدید
-    # -----------------------------------------------------
-
-    sent_goal_keys = set()
-
-    for goal_info in newly_added_goals:
-
-        goal_key = goal_info.get(
-            "event_key"
+        goal_info = get_goal_info(
+            goal_event
         )
 
-        if goal_key is None:
+        if goal_info is None:
             continue
 
-        goal_key = str(goal_key)
-
-        # اگر گل در همین poll لغو شده،
-        # پیام گل عادی نفرست.
-        if goal_key in cancelled_goal_keys:
-            continue
-
-        if goal_key in sent_goal_keys:
-            continue
-
-        event = goal_info.get(
-            "event"
-        )
-
-        if event is None:
-            continue
-
-        # نتیجه بلافاصله بعد از این گل
-        score_after = get_goal_score_after_event(
+        # ثبت گل
+        add_goal(
             match_state,
             goal_info,
         )
 
-        print(
-            f"[{match_id}] New goal detected."
+        # نتیجه بعد از گل
+        score_after = get_current_score(
+            match_state
         )
 
         message = build_goal_message(
             snapshot,
-            event,
-            score=score_after,
+            goal_event,
+            score_after,
         )
 
         if message:
-            send_long_message(message)
+            print(
+                f"[{snapshot.get('match_id')}] "
+                "Goal detected."
+            )
 
-        sent_goal_keys.add(
-            goal_key
+            send_long_message(
+                message
+            )
+
+    # --------------------------------------------------------
+    # گل‌های مردود شده توسط VAR
+    # --------------------------------------------------------
+
+    for cancelled_goal in (
+        changes.get(
+            "cancelled_goals",
+            [],
         )
+    ):
 
-    # -----------------------------------------------------
-    # VAR / گل‌های لغوشده
-    # -----------------------------------------------------
-
-    sent_cancelled_keys = set()
-
-    for cancelled_goal in cancelled_goals:
-
-        goal_key = get_goal_key_from_cancellation(
-            cancelled_goal
+        goal_key = (
+            get_goal_key_from_cancellation(
+                cancelled_goal
+            )
         )
 
         if goal_key is None:
             continue
 
-        goal_key = str(goal_key)
-
-        if goal_key in sent_cancelled_keys:
-            continue
-
-        saved_goal = find_goal(
+        goal = find_goal(
             match_state,
             goal_key,
         )
 
-        goal_event = get_goal_event_from_cancellation(
-            cancelled_goal
-        )
-
-        if goal_event is None and saved_goal is not None:
-            goal_event = saved_goal.get(
-                "event"
-            )
-
-        if goal_event is None:
+        # اگر گل در state وجود نداشته باشد،
+        # چیزی برای لغو کردن نداریم.
+        if goal is None:
             continue
 
-        # نتیجه بعد از حذف گل
-        score = get_current_score(
+        # VAR قبلاً پردازش شده.
+        if goal.get(
+            "cancelled",
+            False,
+        ):
+            continue
+
+        cancel_goal(
+            match_state,
+            goal_key,
+        )
+
+        current_score = get_current_score(
             match_state
         )
 
-        print(
-            f"[{match_id}] "
-            f"Cancelled goal detected."
-        )
-
-        cancellation_data = {
-            "goal_event": goal_event,
-            "goal_key": goal_key,
-            "minute": (
-                cancelled_goal.get("minute")
-                if isinstance(
-                    cancelled_goal,
-                    dict,
-                )
-                else None
-            ),
-            "is_home": (
-                cancelled_goal.get("is_home")
-                if isinstance(
-                    cancelled_goal,
-                    dict,
-                )
-                else None
-            ),
-        }
-
-        message = build_cancelled_goal_message(
-            snapshot,
-            cancellation_data,
-            score=score,
+        message = (
+            build_cancelled_goal_message(
+                snapshot,
+                cancelled_goal,
+                current_score,
+            )
         )
 
         if message:
-            send_long_message(message)
+            print(
+                f"[{snapshot.get('match_id')}] "
+                "Cancelled goal detected."
+            )
 
-        sent_cancelled_keys.add(
-            goal_key
-        )
+            send_long_message(
+                message
+            )
 
-    # -----------------------------------------------------
+    # --------------------------------------------------------
     # کارت قرمز
-    # -----------------------------------------------------
+    # --------------------------------------------------------
 
-    handled_red_card_keys = set()
+    for red_card in (
+        changes.get(
+            "new_red_cards",
+            [],
+        )
+    ):
 
-    for red_card in new_red_cards:
-
-        red_key = get_event_key_safe(
+        key = get_event_key_safe(
             red_card
         )
 
-        if red_key is None:
+        if key is None:
             continue
-
-        red_key = str(red_key)
-
-        if red_key in handled_red_card_keys:
-            continue
-
-        print(
-            f"[{match_id}] "
-            f"New red card detected."
-        )
 
         message = build_red_card_message(
             snapshot,
@@ -475,208 +335,160 @@ def process_live_events(
         )
 
         if message:
-            send_long_message(message)
-
-        handled_red_card_keys.add(
-            red_key
-        )
-
-    # -----------------------------------------------------
-    # رویدادهای عمومی
-    #
-    # گل، VAR و کارت قرمز قبلاً پردازش شده‌اند
-    # و نباید دوباره ارسال شوند.
-    # -----------------------------------------------------
-
-    handled_event_keys = set()
-
-    # گل‌ها
-    for goal_info in new_goal_info:
-
-        if not isinstance(goal_info, dict):
-            continue
-
-        key = goal_info.get(
-            "event_key"
-        )
-
-        if key is not None:
-            handled_event_keys.add(
-                str(key)
+            print(
+                f"[{snapshot.get('match_id')}] "
+                "Red card detected."
             )
 
-    # VAR و گل لغوشده
-    for cancelled_goal in cancelled_goals:
-
-        key = get_goal_key_from_cancellation(
-            cancelled_goal
-        )
-
-        if key is not None:
-            handled_event_keys.add(
-                str(key)
+            send_long_message(
+                message
             )
 
-        var_event = cancelled_goal.get(
-            "var_event"
-        )
 
-        if var_event is not None:
-
-            var_key = get_event_key_safe(
-                var_event
-            )
-
-            if var_key is not None:
-                handled_event_keys.add(
-                    str(var_key)
-                )
-
-    # کارت قرمز
-    for red_card in new_red_cards:
-
-        key = get_event_key_safe(
-            red_card
-        )
-
-        if key is not None:
-            handled_event_keys.add(
-                str(key)
-            )
-
-    # -----------------------------------------------------
-    # سایر رویدادها
-    # -----------------------------------------------------
-
-    for event in new_events:
-
-        key = get_event_key_safe(
-            event
-        )
-
-        if key is not None:
-
-            key = str(key)
-
-            if key in handled_event_keys:
-                continue
-
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
-
-        # گل قبلاً ارسال شده
-        if event_type == "goal":
-            continue
-
-        # VAR قبلاً پردازش شده
-        if event_type == "var":
-            continue
-
-        # کارت قرمز قبلاً پردازش شده
-        if event_type == "card":
-
-            card_type = str(
-                event.get(
-                    "card",
-                    "",
-                )
-            ).lower()
-
-            if card_type in {
-                "red",
-                "redcard",
-                "red_card",
-            }:
-                continue
-
-        print(
-            f"[{match_id}] "
-            f"New event detected."
-        )
-
-        message = build_event_message(
-            snapshot,
-            event,
-        )
-
-        if message:
-            send_long_message(message)
-
-
-# ---------------------------------------------------------
+# ============================================================
 # پردازش یک مسابقه
-# ---------------------------------------------------------
+# ============================================================
 
 def process_match(
-    match,
+    match_config,
     state,
 ):
-    """
-
-    یک مسابقه را پردازش می‌کند.
-    """
-
     match_id = get_match_id(
-        match
+        match_config
     )
 
     if match_id is None:
-        print("Match ID not found.")
+        print(
+            "Could not determine match ID."
+        )
         return
 
-    match_id = str(match_id)
+    match_id = str(
+        match_id
+    )
 
     match_url = get_match_url(
-        match
+        match_config
     )
 
     if not match_url:
         print(
             f"[{match_id}] "
-            f"Match URL not found."
+            "Could not determine match URL."
         )
         return
 
-    # -----------------------------------------------------
+    match_state = get_match_state(
+        state,
+        match_id,
+    )
+
+    # --------------------------------------------------------
     # دریافت snapshot
-    # -----------------------------------------------------
+    # --------------------------------------------------------
 
     snapshot = get_match_snapshot(
         match_url
     )
 
     if not snapshot:
-
         print(
             f"[{match_id}] "
-            f"Could not get match snapshot."
+            "Could not get match snapshot."
         )
-
         return
 
+    # ID را برای لاگ و سایر بخش‌ها نگه می‌داریم.
+    snapshot["match_id"] = match_id
+
+    # --------------------------------------------------------
+    # دریافت eventها
+    # --------------------------------------------------------
+
+    try:
+        events = get_match_events(
+            match_url
+        )
+
+    except Exception as exc:
+        print(
+            f"[{match_id}] "
+            f"Could not get events: {exc}"
+        )
+
+        events = []
+
+    if not isinstance(
+        events,
+        list,
+    ):
+        events = []
+
+    # --------------------------------------------------------
+    # مهم:
+    # eventها باید داخل snapshot قرار بگیرند.
+    # event_detector از snapshot["events"] می‌خواند.
+    # --------------------------------------------------------
+
+    snapshot["events"] = events
+
+    # --------------------------------------------------------
+    # اطلاعات لاگ
+    # --------------------------------------------------------
+
+    home_name = (
+        snapshot.get("home")
+        or "Home"
+    )
+
+    away_name = (
+        snapshot.get("away")
+        or "Away"
+    )
+
     print(
-        f"FotMob {match_id}: HTTP 200"
+        f"[{match_id}] "
+        f"{home_name} vs {away_name}"
     )
 
-    print()
-
-    home_name = snapshot.get(
-        "home_team",
-        "Home",
+    print(
+        f"Started: "
+        f"{snapshot.get('started', False)}"
     )
 
-    away_name = snapshot.get(
-        "away_team",
-        "Away",
+    print(
+        f"Half time: "
+        f"{snapshot.get('half_time', False)}"
     )
 
-    lineup_type = snapshot.get(
-        "lineup_type"
+    print(
+        f"Finished: "
+        f"{snapshot.get('finished', False)}"
     )
+
+    print(
+        f"Events: {len(events)}"
+    )
+
+    # --------------------------------------------------------
+    # تشخیص تغییرات
+    # --------------------------------------------------------
+
+    changes = detect_state_changes(
+        match_state,
+        snapshot,
+    )
+
+    # --------------------------------------------------------
+    # ترکیب رسمی
+    # --------------------------------------------------------
+
+    lineup_type = str(
+        snapshot.get(
+            "lineup_type",
+            "",
+        )
+    ).lower()
 
     home_starters = snapshot.get(
         "home_starters",
@@ -688,81 +500,18 @@ def process_match(
         [],
     )
 
-    started = bool(
-        snapshot.get(
-            "started",
-            False,
-        )
-    )
-
-    half_time = bool(
-        snapshot.get(
-            "half_time",
-            False,
-        )
-    )
-
-    finished = bool(
-        snapshot.get(
-            "finished",
-            False,
-        )
-    )
-
-    print(
-        f"{home_name} vs {away_name}"
-    )
-
-    print()
-
-    print(
-        f"Lineup type: {lineup_type}"
-    )
-
-    print(
-        f"Starters: "
-        f"{len(home_starters)} / "
-        f"{len(away_starters)}"
-    )
-
-    print(
-        f"Started: {started}"
-    )
-
-    print(
-        f"Half time: {half_time}"
-    )
-
-    print(
-        f"Finished: {finished}"
-    )
-
-    print()
-
-    # -----------------------------------------------------
-    # state مسابقه
-    # -----------------------------------------------------
-
-    match_state = get_match_state(
-        state,
-        match_id,
-    )
-
-    # -----------------------------------------------------
-    # ترکیب
-    # -----------------------------------------------------
-
-    has_lineup = (
-        lineup_type in {
+    valid_lineup = (
+        lineup_type
+        in (
             "standard",
             "confirmed",
-        }
+        )
         and len(home_starters) == 11
         and len(away_starters) == 11
     )
 
     if (
-        has_lineup
+        valid_lineup
         and not match_state.get(
             "lineup_sent",
             False,
@@ -771,11 +520,12 @@ def process_match(
 
         print(
             f"[{match_id}] "
-            f"Sending lineup message."
+            "Sending lineup message."
         )
 
         message = build_lineup_message(
-            snapshot
+            snapshot,
+            show_rating=False,
         )
 
         if message:
@@ -787,49 +537,18 @@ def process_match(
             "lineup_sent"
         ] = True
 
-    # -----------------------------------------------------
-    # eventهای فعلی
-    # -----------------------------------------------------
-
-    events = get_match_events(
-        match_url
-    )
-
-    if events is None:
-        events = []
-
-    # -----------------------------------------------------
-    # تشخیص تغییرات
-    # -----------------------------------------------------
-
-    changes = detect_state_changes(
-        match_state,
-        events,
-        snapshot,
-    )
-
-    # -----------------------------------------------------
+    # --------------------------------------------------------
     # شروع بازی
-    # -----------------------------------------------------
+    # --------------------------------------------------------
 
-    current_started = bool(
-        changes.get(
-            "current_started",
-            started,
-        )
-    )
-
-    if (
-        current_started
-        and not match_state.get(
-            "started",
-            False,
-        )
+    if changes.get(
+        "started",
+        False,
     ):
 
         print(
             f"[{match_id}] "
-            f"Match started."
+            "Match started."
         )
 
         message = build_start_message(
@@ -841,36 +560,27 @@ def process_match(
                 message
             )
 
-        match_state[
-            "started"
-        ] = True
+    # --------------------------------------------------------
+    # نیمه اول
+    # --------------------------------------------------------
 
-    # -----------------------------------------------------
-    # نیمه
-    # -----------------------------------------------------
-
-    current_half_time = bool(
-        changes.get(
-            "current_half_time",
-            half_time,
-        )
-    )
-
-    if (
-        current_half_time
-        and not match_state.get(
-            "half_time",
-            False,
-        )
+    if changes.get(
+        "half_time",
+        False,
     ):
 
         print(
             f"[{match_id}] "
-            f"Half time detected."
+            "Half time."
+        )
+
+        score = get_current_score(
+            match_state
         )
 
         message = build_half_time_message(
-            snapshot
+            snapshot,
+            score,
         )
 
         if message:
@@ -878,30 +588,72 @@ def process_match(
                 message
             )
 
-        match_state[
-            "half_time"
-        ] = True
-
-    # -----------------------------------------------------
-    # پردازش eventها
-    # -----------------------------------------------------
+    # --------------------------------------------------------
+    # eventهای زنده
+    # --------------------------------------------------------
 
     process_live_events(
-        match_id,
         snapshot,
         match_state,
         changes,
     )
 
-    # -----------------------------------------------------
-    # پایان بازی
-    # -----------------------------------------------------
+    # --------------------------------------------------------
+    # ثبت تمام eventهای فعلی
+    #
+    # این کار باعث می‌شود در poll بعدی eventهای قدیمی
+    # دوباره به عنوان event جدید شناخته نشوند.
+    # --------------------------------------------------------
 
-    current_finished = bool(
+    add_event_keys(
+        match_state,
         changes.get(
-            "current_finished",
-            finished,
-        )
+            "current_event_keys",
+            [],
+        ),
+    )
+
+    # --------------------------------------------------------
+    # به‌روزرسانی وضعیت بازی
+    # --------------------------------------------------------
+
+    match_state[
+        "started"
+    ] = changes.get(
+        "current_started",
+        match_state.get(
+            "started",
+            False,
+        ),
+    )
+
+    match_state[
+        "half_time"
+    ] = changes.get(
+        "current_half_time",
+        match_state.get(
+            "half_time",
+            False,
+        ),
+    )
+
+    match_state[
+        "finished"
+    ] = changes.get(
+        "current_finished",
+        match_state.get(
+            "finished",
+            False,
+        ),
+    )
+
+    # --------------------------------------------------------
+    # پایان بازی
+    # --------------------------------------------------------
+
+    current_finished = changes.get(
+        "current_finished",
+        False,
     )
 
     if (
@@ -914,110 +666,72 @@ def process_match(
 
         print(
             f"[{match_id}] "
-            f"Final message sent."
+            "Final message sent."
         )
 
-        message = build_lineup_message(
+        final_score = get_current_score(
+            match_state
+        )
+
+        message = build_finish_message(
             snapshot,
-            show_rating=True,
+            final_score,
         )
 
         if message:
             send_long_message(
-                messag
+                message
             )
-
-        match_state[
-            "finished"
-        ] = True
 
         match_state[
             "finished_sent"
         ] = True
 
-        score = get_current_score(
-            match_state
-        )
-
-        print(
-            f"[{match_id}] "
-            f"Current score: "
-            f"{score.get('home', 0)} - "
-            f"{score.get('away', 0)}"
-        )
-
-    # -----------------------------------------------------
-    # ذخیره event keyهای فعلی
-    # -----------------------------------------------------
-
-    current_event_keys = changes.get(
-        "current_event_keys",
-        [],
-    )
-
-    add_event_keys(
-        match_state,
-        current_event_keys,
-    )
-
-    # -----------------------------------------------------
-    # ذخیره state
-    # -----------------------------------------------------
-
-    state["matches"][match_id] = (
-        match_state
-    )
+        match_state[
+            "finished"
+        ] = True
 
 
-# ---------------------------------------------------------
-# main
-# ---------------------------------------------------------
+# ============================================================
+# اجرای اصلی
+# ============================================================
 
 def main():
-
-    # نکته مهم:
-    # get_enabled_matches در match_manager.py
-    # هیچ آرگومانی دریافت نمی‌کند.
-    enabled_matches = get_enabled_matches()
-
-    if not enabled_matches:
-
-        print(
-            "No enabled matches found."
-        )
-
-        return
-
     state = load_state()
 
-    for match in enabled_matches:
+    matches = get_enabled_matches()
+
+    if not matches:
+        print(
+            "No enabled matches."
+        )
+        save_state(state)
+        return
+
+    for match_config in matches:
 
         try:
 
             process_match(
-                match,
+                match_config,
                 state,
             )
 
-        except Exception as error:
+        except Exception as exc:
 
             match_id = get_match_id(
-                match
+                match_config
             )
 
             print(
                 f"[{match_id}] "
-                f"Error: {error}"
+                f"Error: {exc}"
             )
 
     save_state(
         state
     )
 
-
-# ---------------------------------------------------------
-# اجرای برنامه
-# ---------------------------------------------------------
 
 if __name__ == "__main__":
     main()
