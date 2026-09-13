@@ -2,7 +2,6 @@ from fotmob import (
     clean_text,
     get_event_assist_player_id,
     get_event_player_id,
-    get_match_events,
 )
 
 
@@ -38,12 +37,6 @@ def get_event_time(event):
 
 
 def get_event_team(event):
-    """
-    تعیین می‌کند رویداد مربوط به تیم میزبان است یا مهمان.
-
-    در فوت‌موب معمولاً isHome وجود دارد.
-    """
-
     if not isinstance(event, dict):
         return None
 
@@ -52,7 +45,6 @@ def get_event_team(event):
     if isinstance(value, bool):
         return value
 
-    # بعضی ساختارهای فوت‌موب ممکن است home داشته باشند.
     value = event.get("home")
 
     if isinstance(value, bool):
@@ -86,9 +78,7 @@ def is_cancelled_goal_event(event):
     if not isinstance(event, dict):
         return False
 
-    event_type = get_event_type(event)
-
-    if event_type != "var":
+    if get_event_type(event) != "var":
         return False
 
     decision = event.get("decision")
@@ -102,7 +92,9 @@ def is_cancelled_goal_event(event):
 
         for key in keys:
 
-            key = clean_text(key).lower()
+            key = clean_text(
+                key
+            ).lower()
 
             if key == "var_goal_cancelled":
                 return True
@@ -116,77 +108,86 @@ def is_cancelled_goal_event(event):
 
 
 def get_cancelled_var_events(events):
-    """
-    تمام رویدادهای VAR که گل را مردود کرده‌اند.
-    """
-
     return [
         event
-        for event in events
+        for event in events or []
         if is_cancelled_goal_event(event)
     ]
 
 
 def _same_team(first_event, second_event):
-    """
-    اگر برای هر دو رویداد اطلاعات تیم وجود داشته باشد،
-    بررسی می‌کند که مربوط به یک تیم هستند یا نه.
-    """
+    first_team = get_event_team(
+        first_event
+    )
 
-    first_team = get_event_team(first_event)
-    second_team = get_event_team(second_event)
+    second_team = get_event_team(
+        second_event
+    )
 
-    if first_team is None or second_team is None:
+    if (
+        first_team is None
+        or second_team is None
+    ):
         return True
 
     return first_team == second_team
 
 
 def _same_player(first_event, second_event):
-    first_player = get_event_player_id(first_event)
-    second_player = get_event_player_id(second_event)
+    first_player = get_event_player_id(
+        first_event
+    )
 
-    if first_player is None or second_player is None:
+    second_player = get_event_player_id(
+        second_event
+    )
+
+    if (
+        first_player is None
+        or second_player is None
+    ):
         return False
 
     return str(first_player) == str(second_player)
 
 
 def _time_difference(first_event, second_event):
-    first_time = get_event_time(first_event)
-    second_time = get_event_time(second_event)
+    first_time = get_event_time(
+        first_event
+    )
 
-    if first_time is None or second_time is None:
+    second_time = get_event_time(
+        second_event
+    )
+
+    if (
+        first_time is None
+        or second_time is None
+    ):
         return None
 
-    return abs(first_time - second_time)
+    return abs(
+        first_time - second_time
+    )
 
 
 def find_cancelled_goal(
     var_event,
     goal_events,
 ):
-    """
-    تلاش می‌کند مشخص کند VAR مربوط به کدام گل بوده است.
-
-    اولویت تشخیص:
-
-    1. شناسه بازیکن + تیم
-    2. تیم + زمان نزدیک
-    3. بازیکن + زمان نزدیک
-
-    عمداً فقط آخرین گل را حذف نمی‌کنیم؛
-    چون ممکن است بین گل و VAR گل دیگری هم ثبت شده باشد.
-    """
-
-    if not is_cancelled_goal_event(var_event):
+    if not is_cancelled_goal_event(
+        var_event
+    ):
         return None
 
     candidates = []
 
-    for goal in goal_events:
+    for goal in goal_events or []:
 
-        if not isinstance(goal, dict):
+        if not isinstance(
+            goal,
+            dict,
+        ):
             continue
 
         if get_event_type(goal) != "goal":
@@ -213,11 +214,6 @@ def find_cancelled_goal(
             goal,
         )
 
-        # ------------------------------------------------
-        # بهترین حالت:
-        # بازیکن یکسان است.
-        # ------------------------------------------------
-
         if same_player:
 
             if difference is None:
@@ -237,11 +233,6 @@ def find_cancelled_goal(
             )
 
             continue
-
-        # ------------------------------------------------
-        # اگر بازیکن در VAR مشخص نیست،
-        # از تیم + زمان استفاده می‌کنیم.
-        # ------------------------------------------------
 
         if difference is not None:
 
@@ -268,20 +259,6 @@ def find_cancelled_goal(
 
 
 def detect_cancelled_goals(events):
-    """
-    خروجی:
-
-    [
-        {
-            "var_event": ...,
-            "goal_event": ...
-        }
-    ]
-
-    این اطلاعات بعداً توسط state_manager برای
-    اصلاح وضعیت گل استفاده می‌شود.
-    """
-
     if not events:
         return []
 
@@ -322,10 +299,6 @@ def detect_cancelled_goals(events):
 
 
 def get_cancelled_goal_keys(events):
-    """
-    کلید گل‌هایی که در حال حاضر توسط VAR مردود شده‌اند.
-    """
-
     cancelled = detect_cancelled_goals(
         events
     )
@@ -357,21 +330,32 @@ def is_penalty_goal(event):
         return False
 
     if clean_text(
-        event.get("goalDescriptionKey")
+        event.get(
+            "goalDescriptionKey"
+        )
     ).lower() == "penalty":
         return True
 
     if clean_text(
-        event.get("goalDescription")
+        event.get(
+            "goalDescription"
+        )
     ).lower() == "penalty":
         return True
 
-    shotmap = event.get("shotmapEvent")
+    shotmap = event.get(
+        "shotmapEvent"
+    )
 
-    if isinstance(shotmap, dict):
+    if isinstance(
+        shotmap,
+        dict,
+    ):
 
         if clean_text(
-            shotmap.get("situation")
+            shotmap.get(
+                "situation"
+            )
         ).lower() == "penalty":
             return True
 
@@ -382,15 +366,24 @@ def is_own_goal(event):
     if not isinstance(event, dict):
         return False
 
-    if event.get("ownGoal") is True:
+    if event.get(
+        "ownGoal"
+    ) is True:
         return True
 
-    shotmap = event.get("shotmapEvent")
+    shotmap = event.get(
+        "shotmapEvent"
+    )
 
-    if isinstance(shotmap, dict):
+    if isinstance(
+        shotmap,
+        dict,
+    ):
 
         return (
-            shotmap.get("isOwnGoal")
+            shotmap.get(
+                "isOwnGoal"
+            )
             is True
         )
 
@@ -423,7 +416,10 @@ def is_red_card_event(event):
         "cardDescription"
     )
 
-    if isinstance(description, dict):
+    if isinstance(
+        description,
+        dict,
+    ):
 
         localized_key = clean_text(
             description.get(
@@ -451,24 +447,12 @@ def is_red_card_event(event):
 # --------------------------------------------------------
 
 def event_key(event):
-    """
-    یک کلید نسبتاً پایدار برای هر رویداد می‌سازد.
-
-    نکته مهم:
-    نسخه قبلی از index استفاده می‌کرد.
-    این کار خطرناک بود، چون با اضافه شدن یک event جدید،
-    index رویدادهای قبلی ممکن بود تغییر کند.
-
-    اولویت:
-    1. id خود رویداد
-    2. eventId
-    3. ترکیب type/player/time/team/description
-    """
-
     if not isinstance(event, dict):
         return "unknown"
 
-    event_id = get_event_unique_id(event)
+    event_id = get_event_unique_id(
+        event
+    )
 
     if event_id is not None:
         return f"id:{event_id}"
@@ -509,22 +493,31 @@ def event_key(event):
 
     decision_key = ""
 
-    if isinstance(decision, dict):
+    if isinstance(
+        decision,
+        dict,
+    ):
 
         value = decision.get(
             "key"
         )
 
-        if isinstance(value, list):
+        if isinstance(
+            value,
+            list,
+        ):
 
             decision_key = ",".join(
                 sorted(
-                    clean_text(item).lower()
+                    clean_text(
+                        item
+                    ).lower()
                     for item in value
                 )
             )
 
         else:
+
             decision_key = clean_text(
                 value
             ).lower()
@@ -544,20 +537,18 @@ def event_key(event):
 def get_event_keys(events):
     return [
         event_key(event)
-        for event in (events or [])
+        for event in (
+            events or []
+        )
     ]
 
 
 def detect_new_events(
-    previous_events,
+    previous_event_keys,
     current_events,
 ):
-    """
-    فقط eventهایی را برمی‌گرداند که قبلاً دیده نشده‌اند.
-    """
-
     previous = set(
-        previous_events or []
+        previous_event_keys or []
     )
 
     new_events = []
@@ -592,11 +583,6 @@ def is_valid_goal(event):
 
 
 def detect_goals(events):
-    """
-    تمام گل‌های معتبر موجود در لیست eventها.
-    گل‌های مردودشده توسط VAR حذف می‌شوند.
-    """
-
     if not events:
         return []
 
@@ -611,9 +597,10 @@ def detect_goals(events):
         if not is_valid_goal(event):
             continue
 
-        key = event_key(event)
-
-        if key in cancelled_goal_keys:
+        if (
+            event_key(event)
+            in cancelled_goal_keys
+        ):
             continue
 
         goals.append(event)
@@ -625,15 +612,6 @@ def detect_new_goals(
     previous_event_keys,
     current_events,
 ):
-    """
-    گل‌هایی که از آخرین بررسی جدید هستند.
-
-    نکته:
-    اگر یک گل در یک poll دیده شود و چند دقیقه بعد VAR
-    آن را لغو کند، خود گل قبلاً در state ثبت شده و
-    detect_cancelled_goals آن را پیدا می‌کند.
-    """
-
     new_events = detect_new_events(
         previous_event_keys,
         current_events,
@@ -653,43 +631,41 @@ def detect_new_goals(
 def detect_red_cards(events):
     return [
         event
-        for event in events
+        for event in events or []
         if is_red_card_event(event)
     ]
 
 
 # --------------------------------------------------------
-# اطلاعات رویداد برای formatter
+# اطلاعات گل
 # --------------------------------------------------------
 
 def get_goal_minute(event):
-    """
-    دقیقه گل را از event استخراج می‌کند.
-
-    در صورت وجود وقت اضافه، همان مقدار اصلی فوت‌موب
-    حفظ می‌شود.
-    """
-
     if not isinstance(event, dict):
         return None
 
-    value = get_event_time(event)
+    value = get_event_time(
+        event
+    )
 
     if value is not None:
         return value
 
-    # چند fallback احتمالی
     for key in (
         "minute",
         "elapsedTime",
         "matchTime",
     ):
 
-        value = event.get(key)
+        value = event.get(
+            key
+        )
 
         if value is not None:
+
             try:
                 return int(value)
+
             except (
                 TypeError,
                 ValueError,
@@ -718,10 +694,6 @@ def get_goal_team_is_home(event):
 
 
 def get_goal_info(event):
-    """
-    اطلاعات کامل یک گل برای formatter.
-    """
-
     if not is_valid_goal(event):
         return None
 
@@ -756,12 +728,7 @@ def get_goal_info(event):
 # --------------------------------------------------------
 
 def get_player_events(root):
-    """
-    آمار گل، پاس گل و کارت قرمز بازیکنان.
-
-    گل‌هایی که VAR آنها را مردود کرده، در آمار نهایی
-    بازیکن حساب نمی‌شوند.
-    """
+    from fotmob import get_match_events
 
     events = get_match_events(root)
 
@@ -789,7 +756,10 @@ def get_player_events(root):
 
     for event in events:
 
-        if not isinstance(event, dict):
+        if not isinstance(
+            event,
+            dict,
+        ):
             continue
 
         event_type = get_event_type(
@@ -803,7 +773,6 @@ def get_player_events(root):
             ) is True:
                 continue
 
-            # گل مردودشده نباید در آمار حساب شود.
             if (
                 event_key(event)
                 in cancelled_goal_keys
@@ -875,242 +844,65 @@ def get_player_events(root):
 # وضعیت بازی
 # --------------------------------------------------------
 
-def _find_status_objects(root):
-    """
-    چند مسیر احتمالی برای status فوت‌موب.
-    چون ساختار بعضی مسابقات ممکن است کمی متفاوت باشد.
-    """
-
-    objects = []
-
-    if not isinstance(root, dict):
-        return objects
-
-    props = root.get(
-        "props"
-    )
-
-    if isinstance(props, dict):
-
-        page_props = props.get(
-            "pageProps"
-        )
-
-        if isinstance(
-            page_props,
-            dict,
-        ):
-
-            content = page_props.get(
-                "content"
-            )
-
-            if isinstance(
-                content,
-                dict,
-            ):
-
-                header = content.get(
-                    "header"
-                )
-
-                if isinstance(
-                    header,
-                    dict,
-                ):
-                    status = header.get(
-                        "status"
-                    )
-
-                    if isinstance(
-                        status,
-                        dict,
-                    ):
-                        objects.append(
-                            status
-                        )
-
-                status = content.get(
-                    "status"
-                )
-
-                if isinstance(
-                    status,
-                    dict,
-                ):
-                    objects.append(
-                        status
-                    )
-
-    return objects
-
-
-def get_match_status_key(root):
-    """
-    وضعیت فعلی بازی را به یک کلید ساده تبدیل می‌کند.
-
-    مثال‌های احتمالی:
-    NOT_STARTED
-    LIVE
-    HT
-    FINISHED
-    """
-
-    for status in _find_status_objects(
-        root
-    ):
-
-        reason = status.get(
-            "reason"
-        )
-
-        if isinstance(
-            reason,
-            dict,
-        ):
-
-            short = clean_text(
-                reason.get(
-                    "short"
-                )
-            ).upper()
-
-            if short:
-                return short
-
-            long_text = clean_text(
-                reason.get(
-                    "long"
-                )
-            ).upper()
-
-            if long_text:
-                return long_text
-
-        short = clean_text(
-            status.get(
-                "short"
-            )
-        ).upper()
-
-        if short:
-            return short
-
-        name = clean_text(
-            status.get(
-                "name"
-            )
-        ).upper()
-
-        if name:
-            return name
-
-    return ""
-
-
 def is_match_started(
-    root,
-    snapshot=None,
+    snapshot,
 ):
-    """
-    بررسی شروع شدن بازی.
-
-    snapshot اگر شامل status ساده باشد، اول بررسی می‌شود.
-    """
-
-    if isinstance(
+    if not isinstance(
         snapshot,
         dict,
     ):
+        return False
 
-        status = clean_text(
-            snapshot.get(
-                "status"
-            )
-        ).lower()
-
-        if status in (
-            "live",
-            "started",
-            "inplay",
-            "in_play",
-        ):
-            return True
-
-        if snapshot.get(
-            "finished"
-        ) is True:
-            return True
-
-    status_key = get_match_status_key(
-        root
-    )
-
-    if status_key in (
-        "LIVE",
-        "1H",
-        "2H",
-        "ET",
-        "P",
-        "HT",
-        "FT",
-        "AET",
-        "PEN",
-        "FINISHED",
-    ):
+    if snapshot.get(
+        "started"
+    ) is True:
         return True
 
-    # بررسی چند وضعیت متنی احتمالی
-    status_lower = status_key.lower()
+    if snapshot.get(
+        "finished"
+    ) is True:
+        return True
 
-    if any(
-        word in status_lower
-        for word in (
-            "live",
-            "started",
-            "in progress",
-            "halftime",
-            "half time",
-            "finished",
+    status = clean_text(
+        snapshot.get(
+            "status"
         )
-    ):
-        return True
+    ).lower()
 
-    return False
-
-
-def is_half_time(
-    root,
-    snapshot=None,
-):
-    if isinstance(
-        snapshot,
-        dict,
-    ):
-
-        status = clean_text(
-            snapshot.get(
-                "status"
-            )
-        ).lower()
-
-        if status in (
-            "ht",
-            "halftime",
-            "half_time",
-        ):
-            return True
-
-    status_key = get_match_status_key(
-        root
-    )
-
-    normalized = status_key.lower()
-
-    return normalized in (
+    return status in (
+        "live",
+        "started",
+        "inplay",
+        "in_play",
         "ht",
         "halftime",
-        "half time",
+        "half_time",
+        "finished",
+        "ft",
+    )
+
+
+def is_half_time(snapshot):
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
+        return False
+
+    if snapshot.get(
+        "half_time"
+    ) is True:
+        return True
+
+    status = clean_text(
+        snapshot.get(
+            "status"
+        )
+    ).lower()
+
+    return status in (
+        "ht",
+        "halftime",
         "half_time",
     )
 
@@ -1121,18 +913,8 @@ def is_half_time(
 
 def detect_state_changes(
     previous_state,
-    root,
     snapshot,
 ):
-    """
-    تمام تغییرات مهم از آخرین poll را پیدا می‌کند.
-
-    previous_state باید از state_manager بیاید.
-
-    این تابع عمداً خودش state را تغییر نمی‌دهد.
-    فقط می‌گوید چه اتفاقی افتاده.
-    """
-
     previous_state = (
         previous_state
         or {}
@@ -1160,30 +942,11 @@ def detect_state_changes(
         current_events,
     )
 
-    previous_finished = (
-        previous_state.get(
-            "finished",
-            False,
-        )
-    )
-
-    current_finished = (
-        snapshot.get(
-            "finished",
-            False,
-        )
-    )
-
     previous_started = (
         previous_state.get(
             "started",
             False,
         )
-    )
-
-    current_started = is_match_started(
-        root,
-        snapshot,
     )
 
     previous_half_time = (
@@ -1193,24 +956,33 @@ def detect_state_changes(
         )
     )
 
-    current_half_time = is_half_time(
-        root,
-        snapshot,
+    previous_finished = (
+        previous_state.get(
+            "finished",
+            False,
+        )
     )
 
-    # ----------------------------------------------------
-    # گل‌های جدید
-    # ----------------------------------------------------
+    current_started = is_match_started(
+        snapshot
+    )
+
+    current_half_time = is_half_time(
+        snapshot
+    )
+
+    current_finished = bool(
+        snapshot.get(
+            "finished",
+            False,
+        )
+    )
 
     new_goals = [
         event
         for event in new_events
         if is_valid_goal(event)
     ]
-
-    # ----------------------------------------------------
-    # VARهایی که تازه آمده‌اند
-    # ----------------------------------------------------
 
     new_var_events = [
         event
@@ -1219,13 +991,6 @@ def detect_state_changes(
             event
         )
     ]
-
-    # ----------------------------------------------------
-    # گل‌های مردود شده
-    #
-    # فقط VARهای جدید بررسی می‌شوند تا یک VAR قدیمی
-    # در هر poll دوباره به عنوان اتفاق جدید برنگردد.
-    # ----------------------------------------------------
 
     cancelled_goals = []
 
@@ -1239,11 +1004,9 @@ def detect_state_changes(
 
         for var_event in new_var_events:
 
-            goal_event = (
-                find_cancelled_goal(
-                    var_event,
-                    goal_events,
-                )
+            goal_event = find_cancelled_goal(
+                var_event,
+                goal_events,
             )
 
             if goal_event is None:
@@ -1272,58 +1035,46 @@ def detect_state_changes(
                 }
             )
 
-    changes = {
-        # همه eventهای جدید
+    return {
         "new_events": new_events,
 
-        # گل‌های جدید
         "new_goals": new_goals,
 
-        # اطلاعات کامل گل‌های جدید
         "new_goal_info": [
             get_goal_info(event)
             for event in new_goals
         ],
 
-        # VARهای مربوط به لغو گل
         "cancelled_goals": cancelled_goals,
 
-        # کارت قرمز
         "new_red_cards": (
             detect_red_cards(
                 new_events
             )
         ),
 
-        # شروع بازی
         "started": (
             current_started
             and not previous_started
         ),
 
-        # نیمه اول تمام شده
         "half_time": (
             current_half_time
             and not previous_half_time
         ),
 
-        # بازی تمام شده
         "finished": (
             current_finished
             and not previous_finished
         ),
 
-        # وضعیت فعلی برای state_manager
         "current_started": current_started,
         "current_half_time": current_half_time,
         "current_finished": current_finished,
 
-        # کلیدهای فعلی eventها
         "current_event_keys": (
             get_event_keys(
                 current_events
             )
         ),
     }
-
-    return changes
