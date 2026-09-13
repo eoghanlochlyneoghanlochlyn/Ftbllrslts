@@ -9,6 +9,16 @@
       "finished_sent": false,
       "event_keys": [],
       "goals": []
+    },
+    "588762": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
     }
   }
 }
