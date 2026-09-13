@@ -919,12 +919,12 @@ def process_match(
 
         message = build_lineup_message(
             snapshot,
-            include_ratings=True,
+            show_rating=True,
         )
 
         if message:
             send_long_message(
-                message
+                messag
             )
 
         match_state[
