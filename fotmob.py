@@ -45,10 +45,6 @@ FOTMOB_HEADERS = {
 # =========================================================
 
 def clean_text(value):
-    """
-    متن را برای استفاده در پیام تمیز می‌کند.
-    """
-
     if value is None:
         return ""
 
@@ -65,22 +61,11 @@ def clean_text(value):
     )
 
     value = (
-        value.replace(
-            "\xa0",
-            " ",
-        )
-        .replace(
-            "\u200b",
-            "",
-        )
-        .replace(
-            "\r",
-            " ",
-        )
-        .replace(
-            "\n",
-            " ",
-        )
+        value
+        .replace("\xa0", " ")
+        .replace("\u200b", "")
+        .replace("\r", " ")
+        .replace("\n", " ")
     )
 
     return " ".join(
@@ -89,14 +74,9 @@ def clean_text(value):
 
 
 def get_nested(data, *keys):
-    """
-    دسترسی امن به مسیر تو در تو.
-    """
-
     current = data
 
     for key in keys:
-
         if not isinstance(
             current,
             dict,
@@ -109,11 +89,6 @@ def get_nested(data, *keys):
 
 
 def recursive_find(data, target_keys):
-    """
-    اولین مقدار قابل استفاده برای یکی از کلیدهای موردنظر
-    را در ساختار JSON پیدا می‌کند.
-    """
-
     if not isinstance(
         target_keys,
         (list, tuple, set),
@@ -127,7 +102,6 @@ def recursive_find(data, target_keys):
         for key, value in data.items():
 
             if key in target_keys:
-
                 if value is not None:
                     return value
 
@@ -157,11 +131,10 @@ def recursive_find(data, target_keys):
 
 
 def find_section(data, section_name):
-    """
-    پیدا کردن یک بخش مشخص در JSON.
-    """
-
-    if not isinstance(data, dict):
+    if not isinstance(
+        data,
+        dict,
+    ):
         return None
 
     if section_name in data:
@@ -174,13 +147,10 @@ def find_section(data, section_name):
 
 
 # =========================================================
-# استخراج Match ID
+# Match ID
 # =========================================================
 
 def extract_match_id(value):
-    """
-    Match ID را از عدد، URL یا متن استخراج می‌کند.
-    """
 
     if value is None:
         return None
@@ -191,7 +161,9 @@ def extract_match_id(value):
     ):
         return str(value)
 
-    value = str(value).strip()
+    value = str(
+        value
+    ).strip()
 
     if value.isdigit():
         return value
@@ -217,13 +189,10 @@ def extract_match_id(value):
 
 
 # =========================================================
-# دریافت داده از FotMob
+# دریافت API
 # =========================================================
 
 def fetch_match_api(match_id):
-    """
-    دریافت مستقیم matchDetails از API فوت‌موب.
-    """
 
     match_id = extract_match_id(
         match_id
@@ -271,10 +240,11 @@ def fetch_match_api(match_id):
         return None
 
 
+# =========================================================
+# دریافت صفحه
+# =========================================================
+
 def fetch_match_page(match_id):
-    """
-    دریافت صفحه مسابقه به عنوان روش پشتیبان.
-    """
 
     match_id = extract_match_id(
         match_id
@@ -327,22 +297,28 @@ def fetch_match_page(match_id):
         return None
 
 
+# =========================================================
+# __NEXT_DATA__
+# =========================================================
+
 def extract_next_data(html):
-    """
-    استخراج __NEXT_DATA__ از صفحه.
-    """
 
     if not html:
         return None
 
     patterns = [
-        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>'
-        r"(.*?)"
-        r"</script>",
-
-        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>'
-        r"(.*?)"
-        r"</script\s*>",
+        (
+            r'<script[^>]+id=["\']'
+            r'__NEXT_DATA__["\'][^>]*>'
+            r"(.*?)"
+            r"</script>"
+        ),
+        (
+            r'<script[^>]+id=["\']'
+            r'__NEXT_DATA__["\'][^>]*>'
+            r"(.*?)"
+            r"</script\s*>"
+        ),
     ]
 
     for pattern in patterns:
@@ -359,7 +335,9 @@ def extract_next_data(html):
         raw = match.group(1).strip()
 
         try:
-            return json.loads(raw)
+            return json.loads(
+                raw
+            )
 
         except Exception:
             continue
@@ -367,17 +345,21 @@ def extract_next_data(html):
     return None
 
 
+# =========================================================
+# JSON-LD
+# =========================================================
+
 def extract_event_jsonld(html):
-    """
-    استخراج Event JSON-LD در صورت وجود.
-    """
 
     if not html:
         return None
 
     pattern = (
-        r'<script[^>]+type=["\']application/ld\+json'
-        r'["\'][^>]*>(.*?)</script>'
+        r'<script[^>]+type=["\']'
+        r'application/ld\+json'
+        r'["\'][^>]*>'
+        r"(.*?)"
+        r"</script>"
     )
 
     matches = re.findall(
@@ -398,7 +380,15 @@ def extract_event_jsonld(html):
                 data,
                 dict,
             ):
-                return data
+
+                if (
+                    data.get("@type") == "SportsEvent"
+                    or
+                    data.get("homeTeam")
+                    or
+                    data.get("awayTeam")
+                ):
+                    return data
 
             if isinstance(
                 data,
@@ -407,9 +397,17 @@ def extract_event_jsonld(html):
 
                 for item in data:
 
-                    if isinstance(
+                    if not isinstance(
                         item,
                         dict,
+                    ):
+                        continue
+
+                    if (
+                        item.get("@type")
+                        == "SportsEvent"
+                        or item.get("homeTeam")
+                        or item.get("awayTeam")
                     ):
                         return item
 
@@ -419,10 +417,11 @@ def extract_event_jsonld(html):
     return None
 
 
+# =========================================================
+# content
+# =========================================================
+
 def get_content(data):
-    """
-    پیدا کردن بخش اصلی matchDetails.
-    """
 
     if not isinstance(
         data,
@@ -430,14 +429,12 @@ def get_content(data):
     ):
         return None
 
-    # API مستقیم FotMob
     if isinstance(
         data.get("content"),
         dict,
     ):
         return data["content"]
 
-    # ساختارهای احتمالی صفحه
     paths = [
         (
             "props",
@@ -470,9 +467,6 @@ def get_content(data):
             "pageProps",
             "content",
         ),
-        (
-            "content",
-        ),
     ]
 
     for path in paths:
@@ -488,88 +482,56 @@ def get_content(data):
         ):
             return value
 
-    found = recursive_find(
-        data,
-        {
-            "content",
-            "matchData",
-        },
-    )
-
-    if isinstance(
-        found,
-        dict,
-    ):
-        return found
-
-    return None
-
-
-def fetch_match_data(match_id):
-    """
-    دریافت داده مسابقه.
-
-    ابتدا API مستقیم.
-    در صورت شکست، صفحه مسابقه.
-    """
-
-    match_id = extract_match_id(
-        match_id
-    )
-
-    if not match_id:
-        return None
-
-    data = fetch_match_api(
-        match_id
-    )
-
-    if isinstance(
-        data,
-        dict,
-    ):
-        return data
-
-    html = fetch_match_page(
-        match_id
-    )
-
-    if not html:
-        return None
-
-    next_data = extract_next_data(
-        html
-    )
-
-    if isinstance(
-        next_data,
-        dict,
-    ):
-        return next_data
-
-    jsonld = extract_event_jsonld(
-        html
-    )
-
-    if isinstance(
-        jsonld,
-        dict,
-    ):
-        return {
-            "eventJSONLD": jsonld
-        }
-
     return None
 
 
 # =========================================================
-# اطلاعات پایه مسابقه
+# اطلاعات پایه
 # =========================================================
+
+def _get_team_name(team):
+
+    if not isinstance(
+        team,
+        dict,
+    ):
+        return ""
+
+    for key in (
+        "longName",
+        "name",
+        "shortName",
+        "title",
+    ):
+
+        value = team.get(
+            key
+        )
+
+        if value:
+            return clean_text(
+                value
+            )
+
+    return ""
+
+
+def _get_team_id(team):
+
+    if not isinstance(
+        team,
+        dict,
+    ):
+        return None
+
+    return (
+        team.get("id")
+        or team.get("teamId")
+        or team.get("teamID")
+    )
+
 
 def extract_basic_info(data):
-    """
-    اطلاعات پایه مسابقه را از ساختارهای مختلف استخراج می‌کند.
-    """
 
     if not isinstance(
         data,
@@ -597,13 +559,41 @@ def extract_basic_info(data):
     ):
         header = {}
 
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if not isinstance(
+        page_props,
+        dict,
+    ):
+        page_props = {}
+
+    page_general = page_props.get(
+        "general"
+    )
+
+    if not isinstance(
+        page_general,
+        dict,
+    ):
+        page_general = {}
+
+    # -----------------------------------------------------
+    # تیم‌ها
+    # -----------------------------------------------------
+
     home = (
         general.get("homeTeam")
+        or page_general.get("homeTeam")
         or header.get("homeTeam")
     )
 
     away = (
         general.get("awayTeam")
+        or page_general.get("awayTeam")
         or header.get("awayTeam")
     )
 
@@ -619,43 +609,142 @@ def extract_basic_info(data):
     ):
         away = {}
 
-    home_name = (
-        home.get("name")
-        or recursive_find(
-            data,
-            {"homeTeamName"},
-        )
-        or ""
+    home_name = _get_team_name(
+        home
     )
 
-    away_name = (
-        away.get("name")
-        or recursive_find(
-            data,
-            {"awayTeamName"},
-        )
-        or ""
+    away_name = _get_team_name(
+        away
     )
+
+    home_id = _get_team_id(
+        home
+    )
+
+    away_id = _get_team_id(
+        away
+    )
+
+    # -----------------------------------------------------
+    # JSON-LD
+    # -----------------------------------------------------
+
+    event_jsonld = get_nested(
+        page_props,
+        "seo",
+        "eventJSONLD",
+    )
+
+    if isinstance(
+        event_jsonld,
+        dict,
+    ):
+
+        if not home_name:
+
+            jsonld_home = (
+                event_jsonld.get(
+                    "homeTeam"
+                )
+            )
+
+            home_name = _get_team_name(
+                jsonld_home
+            )
+
+        if not away_name:
+
+            jsonld_away = (
+                event_jsonld.get(
+                    "awayTeam"
+                )
+            )
+
+            away_name = _get_team_name(
+                jsonld_away
+            )
+
+        if not home_id:
+
+            jsonld_home = (
+                event_jsonld.get(
+                    "homeTeam"
+                )
+            )
+
+            home_id = _get_team_id(
+                jsonld_home
+            )
+
+        if not away_id:
+
+            jsonld_away = (
+                event_jsonld.get(
+                    "awayTeam"
+                )
+            )
+
+            away_id = _get_team_id(
+                jsonld_away
+            )
+
+    # -----------------------------------------------------
+    # fallback بازگشتی
+    # -----------------------------------------------------
+
+    if not home_name:
+
+        home_name = clean_text(
+            recursive_find(
+                data,
+                {
+                    "homeTeamName",
+                },
+            )
+            or ""
+        )
+
+    if not away_name:
+
+        away_name = clean_text(
+            recursive_find(
+                data,
+                {
+                    "awayTeamName",
+                },
+            )
+            or ""
+        )
+
+    # -----------------------------------------------------
+    # لیگ
+    # -----------------------------------------------------
 
     league = ""
 
     tournament = (
-        general.get(
-            "tournament"
-        )
-        or general.get(
-            "league"
-        )
+        general.get("tournament")
+        or general.get("league")
+        or page_general.get("tournament")
+        or page_general.get("league")
     )
 
     if isinstance(
         tournament,
         dict,
     ):
+
         league = (
             tournament.get("name")
+            or tournament.get("title")
             or ""
         )
+
+    elif isinstance(
+        tournament,
+        str,
+    ):
+        league = tournament
 
     if not league:
 
@@ -670,6 +759,10 @@ def extract_basic_info(data):
             or ""
         )
 
+    # -----------------------------------------------------
+    # زمان
+    # -----------------------------------------------------
+
     start = (
         general.get(
             "matchTimeUTCDate"
@@ -680,7 +773,25 @@ def extract_basic_info(data):
         or general.get(
             "startDate"
         )
+        or page_general.get(
+            "matchTimeUTCDate"
+        )
+        or page_general.get(
+            "matchTimeUTC"
+        )
+        or page_general.get(
+            "startDate"
+        )
     )
+
+    if not start and isinstance(
+        event_jsonld,
+        dict,
+    ):
+
+        start = event_jsonld.get(
+            "startDate"
+        )
 
     if not start:
 
@@ -700,14 +811,8 @@ def extract_basic_info(data):
         "away_name": clean_text(
             away_name
         ),
-        "home_id": (
-            home.get("id")
-            or home.get("teamId")
-        ),
-        "away_id": (
-            away.get("id")
-            or away.get("teamId")
-        ),
+        "home_id": home_id,
+        "away_id": away_id,
         "league": clean_text(
             league
         ),
@@ -720,9 +825,6 @@ def extract_basic_info(data):
 # =========================================================
 
 def parse_datetime(value):
-    """
-    تبدیل تاریخ‌های رایج FotMob به datetime.
-    """
 
     if value is None:
         return None
@@ -731,6 +833,12 @@ def parse_datetime(value):
         value,
         datetime,
     ):
+
+        if value.tzinfo is None:
+            return value.replace(
+                tzinfo=timezone.utc
+            )
+
         return value
 
     if isinstance(
@@ -740,12 +848,8 @@ def parse_datetime(value):
 
         try:
 
-            # milliseconds
             if value > 100000000000:
-                return datetime.fromtimestamp(
-                    value / 1000,
-                    tz=timezone.utc,
-                )
+                value /= 1000
 
             return datetime.fromtimestamp(
                 value,
@@ -755,7 +859,9 @@ def parse_datetime(value):
         except Exception:
             return None
 
-    value = str(value).strip()
+    value = str(
+        value
+    ).strip()
 
     if not value:
         return None
@@ -805,9 +911,6 @@ def parse_datetime(value):
 
 
 def format_iran_datetime(value):
-    """
-    تبدیل زمان به ساعت ایران.
-    """
 
     dt = parse_datetime(
         value
@@ -824,10 +927,11 @@ def format_iran_datetime(value):
 
 
 # =========================================================
-# وضعیت مسابقه
+# وضعیت بازی
 # =========================================================
 
 def _find_status_objects(data):
+
     result = []
 
     if not isinstance(
@@ -853,7 +957,9 @@ def _find_status_objects(data):
             status,
             dict,
         ):
-            result.append(status)
+            result.append(
+                status
+            )
 
     general = data.get(
         "general"
@@ -872,7 +978,32 @@ def _find_status_objects(data):
             status,
             dict,
         ):
-            result.append(status)
+            result.append(
+                status
+            )
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(
+        page_props,
+        dict,
+    ):
+
+        status = page_props.get(
+            "status"
+        )
+
+        if isinstance(
+            status,
+            dict,
+        ):
+            result.append(
+                status
+            )
 
     found = recursive_find(
         data,
@@ -883,15 +1014,14 @@ def _find_status_objects(data):
         found,
         dict,
     ):
-        result.append(found)
+        result.append(
+            found
+        )
 
     return result
 
 
 def get_match_status(data):
-    """
-    وضعیت مسابقه را به شکل استاندارد برمی‌گرداند.
-    """
 
     statuses = _find_status_objects(
         data
@@ -904,21 +1034,54 @@ def get_match_status(data):
 
     for status in statuses:
 
-        if status.get("started") is True:
+        if status.get(
+            "started"
+        ) is True:
             started = True
 
-        if status.get("finished") is True:
+        if status.get(
+            "finished"
+        ) is True:
             finished = True
 
-        if status.get("cancelled") is True:
+        if status.get(
+            "cancelled"
+        ) is True:
             cancelled = True
 
-        reason = str(
-            status.get(
-                "reason",
-                "",
-            )
-        ).lower()
+        reason = status.get(
+            "reason"
+        )
+
+        reason_text = ""
+
+        if isinstance(
+            reason,
+            dict,
+        ):
+
+            reason_text = " ".join(
+                [
+                    str(
+                        reason.get(
+                            "short",
+                            "",
+                        )
+                    ),
+                    str(
+                        reason.get(
+                            "long",
+                            "",
+                        )
+                    ),
+                ]
+            ).lower()
+
+        else:
+
+            reason_text = str(
+                reason or ""
+            ).lower()
 
         name = str(
             status.get(
@@ -935,7 +1098,7 @@ def get_match_status(data):
         ).lower()
 
         status_text = (
-            reason
+            reason_text
             + " "
             + name
             + " "
@@ -953,7 +1116,13 @@ def get_match_status(data):
         ):
             half_time = True
 
-    # اگر finished است، بازی حتماً شروع شده
+        if short in {
+            "ht",
+            "half time",
+            "halftime",
+        }:
+            half_time = True
+
     if finished:
         started = True
 
@@ -966,6 +1135,7 @@ def get_match_status(data):
 
 
 def get_match_status_key(data):
+
     status = get_match_status(
         data
     )
@@ -986,6 +1156,7 @@ def get_match_status_key(data):
 
 
 def is_match_started(data):
+
     return bool(
         get_match_status(
             data
@@ -994,6 +1165,7 @@ def is_match_started(data):
 
 
 def is_half_time(data):
+
     return bool(
         get_match_status(
             data
@@ -1002,13 +1174,10 @@ def is_half_time(data):
 
 
 # =========================================================
-# استخراج lineup
+# Lineup
 # =========================================================
 
 def get_lineup_section(data):
-    """
-    بخش lineup را پیدا می‌کند.
-    """
 
     if not isinstance(
         data,
@@ -1026,12 +1195,34 @@ def get_lineup_section(data):
         content,
         dict,
     ):
+
         candidates.append(
-            content.get("lineup")
+            content.get(
+                "lineup"
+            )
+        )
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(
+        page_props,
+        dict,
+    ):
+
+        candidates.append(
+            page_props.get(
+                "lineup"
+            )
         )
 
     candidates.append(
-        data.get("lineup")
+        data.get(
+            "lineup"
+        )
     )
 
     for candidate in candidates:
@@ -1057,15 +1248,13 @@ def get_lineup_section(data):
 
 
 def get_lineup(data):
+
     return get_lineup_section(
         data
     )
 
 
 def get_lineup_teams(data):
-    """
-    دو تیم lineup را پیدا می‌کند.
-    """
 
     lineup = get_lineup_section(
         data
@@ -1077,24 +1266,53 @@ def get_lineup_teams(data):
     ):
         return []
 
-    candidates = [
-        lineup.get(
-            "lineup"
-        ),
-        lineup.get(
-            "lineups"
-        ),
-    ]
+    # اول ساختار رایج
+    for key in (
+        "lineup",
+        "lineups",
+        "teams",
+    ):
 
-    for candidate in candidates:
+        candidate = lineup.get(
+            key
+        )
 
         if isinstance(
             candidate,
             list,
         ):
+
             return candidate
 
-    # بعضی ساختارها ممکن است مستقیم team object داشته باشند
+        if isinstance(
+            candidate,
+            dict,
+        ):
+
+            result = []
+
+            for side in (
+                "home",
+                "away",
+                "homeTeam",
+                "awayTeam",
+            ):
+
+                team = candidate.get(
+                    side
+                )
+
+                if isinstance(
+                    team,
+                    dict,
+                ):
+                    result.append(
+                        team
+                    )
+
+            if result:
+                return result
+
     result = []
 
     for key in (
@@ -1102,6 +1320,8 @@ def get_lineup_teams(data):
         "away",
         "homeTeam",
         "awayTeam",
+        "homeTeamData",
+        "awayTeamData",
     ):
 
         team = lineup.get(
@@ -1112,12 +1332,15 @@ def get_lineup_teams(data):
             team,
             dict,
         ):
-            result.append(team)
+            result.append(
+                team
+            )
 
     return result
 
 
 def get_team_id(team):
+
     if not isinstance(
         team,
         dict,
@@ -1132,6 +1355,7 @@ def get_team_id(team):
 
 
 def get_team_players(team):
+
     if not isinstance(
         team,
         dict,
@@ -1158,9 +1382,6 @@ def get_team_players(team):
 
 
 def get_starters(team):
-    """
-    بازیکنان اصلی یک تیم.
-    """
 
     if not isinstance(
         team,
@@ -1195,6 +1416,7 @@ def get_starters(team):
         if player.get(
             "starter"
         ) is True:
+
             result.append(
                 player
             )
@@ -1203,24 +1425,33 @@ def get_starters(team):
         if player.get(
             "isStarter"
         ) is True:
+
             result.append(
                 player
             )
             continue
 
         if player.get(
-            "isSubstitute"
+            "bench"
         ) is True:
+
             continue
 
-        # در ساختار FotMob lineup معمولاً
-        # role/position برای بازیکن اصلی وجود دارد.
+        if player.get(
+            "isSubstitute"
+        ) is True:
+
+            continue
+
         if (
-            player.get("timeSubbedOn")
-            is None
-            and player.get("bench")
-            is not True
+            player.get(
+                "timeSubbedOn"
+            ) is None
+            and player.get(
+                "substitute"
+            ) is not True
         ):
+
             result.append(
                 player
             )
@@ -1229,9 +1460,6 @@ def get_starters(team):
 
 
 def get_substitutes(team):
-    """
-    بازیکنان ذخیره یک تیم.
-    """
 
     if not isinstance(
         team,
@@ -1274,7 +1502,7 @@ def get_substitutes(team):
                     nested,
                     list,
                 ):
-                    # اگر benchArr شامل دو لیست تیمی باشد
+
                     flattened = []
 
                     for item in nested:
@@ -1283,13 +1511,16 @@ def get_substitutes(team):
                             item,
                             list,
                         ):
+
                             flattened.extend(
                                 item
                             )
+
                         elif isinstance(
                             item,
                             dict,
                         ):
+
                             flattened.append(
                                 item
                             )
@@ -1311,25 +1542,34 @@ def get_substitutes(team):
         ):
             continue
 
-        if player.get(
-            "isSubstitute"
-        ) is True:
+        if (
+            player.get(
+                "isSubstitute"
+            ) is True
+        ):
+
             result.append(
                 player
             )
             continue
 
-        if player.get(
-            "substitute"
-        ) is True:
+        if (
+            player.get(
+                "substitute"
+            ) is True
+        ):
+
             result.append(
                 player
             )
             continue
 
-        if player.get(
-            "bench"
-        ) is True:
+        if (
+            player.get(
+                "bench"
+            ) is True
+        ):
+
             result.append(
                 player
             )
@@ -1338,9 +1578,6 @@ def get_substitutes(team):
 
 
 def get_lineup_type(data):
-    """
-    نوع lineup را پیدا می‌کند.
-    """
 
     lineup = get_lineup_section(
         data
@@ -1362,19 +1599,20 @@ def get_lineup_type(data):
             key
         )
 
-        if value is not None:
+        if value is None:
+            continue
 
-            value = str(
-                value
-            ).lower()
+        value = str(
+            value
+        ).lower()
 
-            if "confirm" in value:
-                return "confirmed"
+        if "confirm" in value:
+            return "confirmed"
 
-            if "standard" in value:
-                return "standard"
+        if "standard" in value:
+            return "standard"
 
-            return value
+        return value
 
     return None
 
@@ -1384,20 +1622,19 @@ def get_lineup_type(data):
 # =========================================================
 
 def get_player_id(player):
+
     if not isinstance(
         player,
         dict,
     ):
         return None
 
-    direct_keys = (
+    for key in (
         "id",
         "playerId",
         "player_id",
         "playerID",
-    )
-
-    for key in direct_keys:
+    ):
 
         value = player.get(
             key
@@ -1415,7 +1652,12 @@ def get_player_id(player):
         dict,
     ):
 
-        for key in direct_keys:
+        for key in (
+            "id",
+            "playerId",
+            "player_id",
+            "playerID",
+        ):
 
             value = nested.get(
                 key
@@ -1435,6 +1677,7 @@ def get_player_id(player):
 
 
 def get_player_name(player):
+
     if not isinstance(
         player,
         dict,
@@ -1487,6 +1730,7 @@ def get_player_name(player):
 
 
 def get_player_rating(player):
+
     if not isinstance(
         player,
         dict,
@@ -1531,13 +1775,10 @@ def get_player_rating(player):
 
 
 # =========================================================
-# مربی و آرایش
+# مربی / آرایش
 # =========================================================
 
 def get_coach(team):
-    """
-    نام مربی تیم را استخراج می‌کند.
-    """
 
     if not isinstance(
         team,
@@ -1559,6 +1800,7 @@ def get_coach(team):
             value,
             str,
         ):
+
             return clean_text(
                 value
             )
@@ -1583,9 +1825,6 @@ def get_coach(team):
 
 
 def get_formation(team):
-    """
-    آرایش تیم را استخراج می‌کند.
-    """
 
     if not isinstance(
         team,
@@ -1607,6 +1846,7 @@ def get_formation(team):
             value,
             str,
         ):
+
             return clean_text(
                 value
             )
@@ -1615,6 +1855,7 @@ def get_formation(team):
 
 
 def get_player_position(player):
+
     if not isinstance(
         player,
         dict,
@@ -1647,10 +1888,6 @@ def organize_players(
     players,
     formation=None,
 ):
-    """
-    بازیکنان را برای نمایش به دروازه‌بان،
-    مدافع، هافبک و مهاجم تقسیم می‌کند.
-    """
 
     groups = {
         "goalkeeper": [],
@@ -1674,7 +1911,6 @@ def organize_players(
 
         position = position.lower()
 
-        # دروازه‌بان
         if (
             "goal" in position
             or position in {
@@ -1688,7 +1924,6 @@ def organize_players(
                 "goalkeeper"
             ].append(player)
 
-        # مدافع
         elif any(
             word in position
             for word in (
@@ -1708,12 +1943,10 @@ def organize_players(
                 "defender"
             ].append(player)
 
-        # هافبک
         elif any(
             word in position
             for word in (
                 "mid",
-                "wing",
                 "dm",
                 "cm",
                 "am",
@@ -1726,7 +1959,6 @@ def organize_players(
                 "midfielder"
             ].append(player)
 
-        # مهاجم
         elif any(
             word in position
             for word in (
@@ -1737,6 +1969,7 @@ def organize_players(
                 "cf",
                 "lw",
                 "rw",
+                "wing",
             )
         ):
 
@@ -1754,10 +1987,11 @@ def organize_players(
 
 
 # =========================================================
-# Eventها
+# Event helpers
 # =========================================================
 
 def get_event_player_id(event):
+
     if not isinstance(
         event,
         dict,
@@ -1790,6 +2024,7 @@ def get_event_player_id(event):
             "id",
             "playerId",
             "player_id",
+            "playerID",
         ):
 
             value = player.get(
@@ -1810,6 +2045,7 @@ def get_event_player_id(event):
 
 
 def get_event_assist_player_id(event):
+
     if not isinstance(
         event,
         dict,
@@ -1861,6 +2097,7 @@ def get_event_assist_player_id(event):
 
 
 def get_event_unique_id(event):
+
     if not isinstance(
         event,
         dict,
@@ -1886,10 +2123,6 @@ def get_event_unique_id(event):
 
 
 def normalize_event(event):
-    """
-    یک event خام FotMob را تا حد ممکن
-    به ساختار قابل استفاده پروژه تبدیل می‌کند.
-    """
 
     if not isinstance(
         event,
@@ -1905,6 +2138,7 @@ def normalize_event(event):
         event.get("type")
         or event.get("eventType")
         or event.get("incidentType")
+        or event.get("incident")
         or ""
     )
 
@@ -1925,20 +2159,31 @@ def normalize_event(event):
 
     if (
         "goal" in event_type
-        or event.get("isGoal") is True
+        or event.get(
+            "isGoal"
+        ) is True
     ):
+
         result["type"] = "goal"
 
     elif (
         "card" in event_type
-        or event.get("card") is not None
+        or event.get(
+            "card"
+        ) is not None
+        or event.get(
+            "cardType"
+        ) is not None
     ):
+
         result["type"] = "card"
 
     elif "var" in event_type:
+
         result["type"] = "var"
 
     else:
+
         result["type"] = event_type
 
     player_id = get_event_player_id(
@@ -1946,7 +2191,10 @@ def normalize_event(event):
     )
 
     if player_id is not None:
-        result["playerId"] = player_id
+
+        result[
+            "playerId"
+        ] = player_id
 
     assist_id = (
         get_event_assist_player_id(
@@ -1955,18 +2203,24 @@ def normalize_event(event):
     )
 
     if assist_id is not None:
+
         result[
             "assistPlayerId"
         ] = assist_id
 
-    # home / away
     if "isHome" in event:
-        result["isHome"] = event[
+
+        result[
+            "isHome"
+        ] = event[
             "isHome"
         ]
 
     elif "home" in event:
-        result["isHome"] = event[
+
+        result[
+            "isHome"
+        ] = event[
             "home"
         ]
 
@@ -1982,17 +2236,55 @@ def normalize_event(event):
         ):
 
             if "isHome" in team:
-                result["isHome"] = team[
+
+                result[
                     "isHome"
+                ] = team[
+                    "isHome"
+                ]
+
+            elif "home" in team:
+
+                result[
+                    "isHome"
+                ] = team[
+                    "home"
                 ]
 
     return result
 
 
+# =========================================================
+# استخراج Eventها
+# =========================================================
+
+def _normalize_event_list(
+    candidate
+):
+
+    if not isinstance(
+        candidate,
+        list,
+    ):
+        return []
+
+    result = []
+
+    for event in candidate:
+
+        normalized = normalize_event(
+            event
+        )
+
+        if normalized is not None:
+            result.append(
+                normalized
+            )
+
+    return result
+
+
 def extract_events_from_data(data):
-    """
-    استخراج eventهای مسابقه از چند ساختار شناخته‌شده.
-    """
 
     if not isinstance(
         data,
@@ -2005,6 +2297,10 @@ def extract_events_from_data(data):
     )
 
     candidates = []
+
+    # -----------------------------------------------------
+    # content.matchFacts
+    # -----------------------------------------------------
 
     if isinstance(
         content,
@@ -2020,14 +2316,18 @@ def extract_events_from_data(data):
             dict,
         ):
 
+            events = match_facts.get(
+                "events"
+            )
+
+            incidents = match_facts.get(
+                "incidents"
+            )
+
             candidates.extend(
                 [
-                    match_facts.get(
-                        "events"
-                    ),
-                    match_facts.get(
-                        "incidents"
-                    ),
+                    events,
+                    incidents,
                 ]
             )
 
@@ -2051,6 +2351,10 @@ def extract_events_from_data(data):
                 ]
             )
 
+    # -----------------------------------------------------
+    # header.events
+    # -----------------------------------------------------
+
     header = data.get(
         "header"
     )
@@ -2059,15 +2363,52 @@ def extract_events_from_data(data):
         header,
         dict,
     ):
+
         candidates.append(
             header.get(
                 "events"
             )
         )
 
+    # -----------------------------------------------------
+    # root events
+    # -----------------------------------------------------
+
     candidates.append(
-        data.get("events")
+        data.get(
+            "events"
+        )
     )
+
+    # -----------------------------------------------------
+    # pageProps
+    # -----------------------------------------------------
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(
+        page_props,
+        dict,
+    ):
+
+        candidates.extend(
+            [
+                page_props.get(
+                    "events"
+                ),
+                page_props.get(
+                    "incidents"
+                ),
+            ]
+        )
+
+    # -----------------------------------------------------
+    # پردازش candidateها
+    # -----------------------------------------------------
 
     for candidate in candidates:
 
@@ -2076,18 +2417,9 @@ def extract_events_from_data(data):
             list,
         ):
 
-            result = []
-
-            for event in candidate:
-
-                normalized = normalize_event(
-                    event
-                )
-
-                if normalized is not None:
-                    result.append(
-                        normalized
-                    )
+            result = _normalize_event_list(
+                candidate
+            )
 
             if result:
                 return result
@@ -2113,25 +2445,19 @@ def extract_events_from_data(data):
                     list,
                 ):
 
-                    result = []
-
-                    for event in nested:
-
-                        normalized = (
-                            normalize_event(
-                                event
-                            )
+                    result = (
+                        _normalize_event_list(
+                            nested
                         )
-
-                        if normalized is not None:
-                            result.append(
-                                normalized
-                            )
+                    )
 
                     if result:
                         return result
 
-    # آخرین fallback
+    # -----------------------------------------------------
+    # fallback recursive chronological
+    # -----------------------------------------------------
+
     found = recursive_find(
         data,
         {
@@ -2144,30 +2470,17 @@ def extract_events_from_data(data):
         list,
     ):
 
-        result = []
+        result = _normalize_event_list(
+            found
+        )
 
-        for event in found:
-
-            normalized = normalize_event(
-                event
-            )
-
-            if normalized is not None:
-                result.append(
-                    normalized
-                )
-
-        return result
+        if result:
+            return result
 
     return []
 
 
 def get_match_events(match_url):
-    """
-    eventهای مسابقه را دریافت می‌کند.
-
-    این تابع برای event_detector استفاده می‌شود.
-    """
 
     match_id = extract_match_id(
         match_url
@@ -2185,29 +2498,32 @@ def get_match_events(match_url):
         dict,
     ):
 
-        return extract_events_from_data(
+        events = extract_events_from_data(
             data
         )
 
-    # fallback صفحه
+        if events:
+            return events
+
     page = fetch_match_page(
         match_id
     )
 
-    if page:
+    if not page:
+        return []
 
-        next_data = extract_next_data(
-            page
+    next_data = extract_next_data(
+        page
+    )
+
+    if isinstance(
+        next_data,
+        dict,
+    ):
+
+        return extract_events_from_data(
+            next_data
         )
-
-        if isinstance(
-            next_data,
-            dict,
-        ):
-
-            return extract_events_from_data(
-                next_data
-            )
 
     return []
 
@@ -2217,14 +2533,12 @@ def get_match_events(match_url):
 # =========================================================
 
 def get_score(data):
-    """
-    نتیجه فعلی مسابقه.
-    """
 
     if not isinstance(
         data,
         dict,
     ):
+
         return {
             "home": 0,
             "away": 0,
@@ -2251,36 +2565,57 @@ def get_score(data):
         ):
             status = {}
 
-    score = (
-        status.get("score")
-        or data.get("score")
-    )
+    candidates = [
+        status.get(
+            "score"
+        ),
+        data.get(
+            "score"
+        ),
+        get_nested(
+            data,
+            "props",
+            "pageProps",
+            "header",
+            "status",
+            "score",
+        ),
+    ]
 
-    if isinstance(
-        score,
-        dict,
-    ):
+    for score in candidates:
+
+        if not isinstance(
+            score,
+            dict,
+        ):
+            continue
 
         home = (
             score.get("home")
-            or score.get("homeScore")
+            if score.get("home")
+            is not None
+            else score.get(
+                "homeScore"
+            )
         )
 
         away = (
             score.get("away")
-            or score.get("awayScore")
+            if score.get("away")
+            is not None
+            else score.get(
+                "awayScore"
+            )
         )
 
         try:
 
-            return {
-                "home": int(
-                    home or 0
-                ),
-                "away": int(
-                    away or 0
-                ),
-            }
+            if home is not None and away is not None:
+
+                return {
+                    "home": int(home),
+                    "away": int(away),
+                }
 
         except (
             TypeError,
@@ -2288,31 +2623,43 @@ def get_score(data):
         ):
             pass
 
-    score_str = (
+    score_strings = [
         status.get(
             "scoreStr"
-        )
-        or data.get(
+        ),
+        data.get(
             "scoreStr"
+        ),
+        get_nested(
+            data,
+            "props",
+            "pageProps",
+            "header",
+            "status",
+            "scoreStr",
+        ),
+    ]
+
+    for score_str in score_strings:
+
+        if score_str is None:
+            continue
+
+        match = re.search(
+            r"(\d+)\s*[-:]\s*(\d+)",
+            str(score_str),
         )
-        or ""
-    )
 
-    match = re.search(
-        r"(\d+)\s*[-:]\s*(\d+)",
-        str(score_str),
-    )
+        if match:
 
-    if match:
-
-        return {
-            "home": int(
-                match.group(1)
-            ),
-            "away": int(
-                match.group(2)
-            ),
-        }
+            return {
+                "home": int(
+                    match.group(1)
+                ),
+                "away": int(
+                    match.group(2)
+                ),
+            }
 
     return {
         "home": 0,
@@ -2321,16 +2668,13 @@ def get_score(data):
 
 
 # =========================================================
-# ساخت Team object
+# Team object
 # =========================================================
 
 def build_team_object(
     team_data,
     lineup_team,
 ):
-    """
-    ساخت ساختار ساده‌ای که formatter انتظار دارد.
-    """
 
     if not isinstance(
         team_data,
@@ -2374,8 +2718,13 @@ def build_team_object(
         result
     )
 
-    result["starters"] = starters
-    result["substitutes"] = substitutes
+    result[
+        "starters"
+    ] = starters
+
+    result[
+        "substitutes"
+    ] = substitutes
 
     if not result.get(
         "formation"
@@ -2411,18 +2760,17 @@ def build_team_object(
 # =========================================================
 
 def get_match_snapshot(match_url):
-    """
-    snapshot استاندارد برای main.py و formatter.py.
-    """
 
     match_id = extract_match_id(
         match_url
     )
 
     if not match_id:
+
         print(
             "FotMob: Match ID not found."
         )
+
         return None
 
     data = fetch_match_api(
@@ -2449,6 +2797,12 @@ def get_match_snapshot(match_url):
             data,
             dict,
         ):
+
+            print(
+                f"FotMob {match_id}: "
+                "Could not extract NEXT_DATA."
+            )
+
             return None
 
     info = extract_basic_info(
@@ -2456,10 +2810,6 @@ def get_match_snapshot(match_url):
     )
 
     status = get_match_status(
-        data
-    )
-
-    lineup = get_lineup_section(
         data
     )
 
@@ -2502,7 +2852,56 @@ def get_match_snapshot(match_url):
 
             away_lineup = team
 
-    # اگر ID پیدا نشد، ترتیب معمول home/away را استفاده کن
+    if home_lineup is None:
+
+        for team in lineup_teams:
+
+            if isinstance(
+                team,
+                dict,
+            ):
+
+                name = _get_team_name(
+                    team
+                )
+
+                if (
+                    name
+                    and name.lower()
+                    == info.get(
+                        "home_name",
+                        "",
+                    ).lower()
+                ):
+
+                    home_lineup = team
+                    break
+
+    if away_lineup is None:
+
+        for team in lineup_teams:
+
+            if isinstance(
+                team,
+                dict,
+            ):
+
+                name = _get_team_name(
+                    team
+                )
+
+                if (
+                    name
+                    and name.lower()
+                    == info.get(
+                        "away_name",
+                        "",
+                    ).lower()
+                ):
+
+                    away_lineup = team
+                    break
+
     if home_lineup is None and len(
         lineup_teams
     ) >= 1:
@@ -2551,8 +2950,6 @@ def get_match_snapshot(match_url):
         data
     )
 
-    # اگر FotMob نوع lineup را صریح نگفته ولی
-    # 11 بازیکن اصلی هر تیم داریم، standard در نظر می‌گیریم.
     if (
         lineup_type is None
         and len(home_starters) == 11
@@ -2561,6 +2958,44 @@ def get_match_snapshot(match_url):
 
         lineup_type = "standard"
 
+    # -----------------------------------------------------
+    # اگر اسم از general نیامد، از lineup بگیر
+    # -----------------------------------------------------
+
+    home_name = (
+        info.get(
+            "home_name"
+        )
+        or _get_team_name(
+            home_lineup
+        )
+        or "Home"
+    )
+
+    away_name = (
+        info.get(
+            "away_name"
+        )
+        or _get_team_name(
+            away_lineup
+        )
+        or "Away"
+    )
+
+    # -----------------------------------------------------
+    # اگر ID از general نیامد
+    # -----------------------------------------------------
+
+    if home_id is None:
+        home_id = get_team_id(
+            home_lineup
+        )
+
+    if away_id is None:
+        away_id = get_team_id(
+            away_lineup
+        )
+
     score = get_score(
         data
     )
@@ -2568,15 +3003,9 @@ def get_match_snapshot(match_url):
     return {
         "match_id": match_id,
 
-        "home": info.get(
-            "home_name"
-        )
-        or "Home",
+        "home": home_name,
 
-        "away": info.get(
-            "away_name"
-        )
-        or "Away",
+        "away": away_name,
 
         "home_team": home_team,
 
@@ -2644,9 +3073,6 @@ def get_match_snapshot(match_url):
 # =========================================================
 
 def get_match(match_url):
-    """
-    نام قدیمی/عمومی برای دریافت snapshot.
-    """
 
     return get_match_snapshot(
         match_url
