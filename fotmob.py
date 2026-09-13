@@ -581,10 +581,6 @@ def extract_basic_info(data):
     ):
         page_general = {}
 
-    # -----------------------------------------------------
-    # تیم‌ها
-    # -----------------------------------------------------
-
     home = (
         general.get("homeTeam")
         or page_general.get("homeTeam")
@@ -624,10 +620,6 @@ def extract_basic_info(data):
     away_id = _get_team_id(
         away
     )
-
-    # -----------------------------------------------------
-    # JSON-LD
-    # -----------------------------------------------------
 
     event_jsonld = get_nested(
         page_props,
@@ -688,10 +680,6 @@ def extract_basic_info(data):
                 jsonld_away
             )
 
-    # -----------------------------------------------------
-    # fallback بازگشتی
-    # -----------------------------------------------------
-
     if not home_name:
 
         home_name = clean_text(
@@ -715,10 +703,6 @@ def extract_basic_info(data):
             )
             or ""
         )
-
-    # -----------------------------------------------------
-    # لیگ
-    # -----------------------------------------------------
 
     league = ""
 
@@ -758,10 +742,6 @@ def extract_basic_info(data):
             )
             or ""
         )
-
-    # -----------------------------------------------------
-    # زمان
-    # -----------------------------------------------------
 
     start = (
         general.get(
@@ -1266,7 +1246,6 @@ def get_lineup_teams(data):
     ):
         return []
 
-    # اول ساختار رایج
     for key in (
         "lineup",
         "lineups",
@@ -1729,6 +1708,72 @@ def get_player_name(player):
     return ""
 
 
+def _rating_from_value(value):
+
+    if value is None:
+        return None
+
+    if isinstance(
+        value,
+        dict,
+    ):
+
+        for key in (
+            "num",
+            "value",
+            "rating",
+            "score",
+        ):
+
+            nested = value.get(
+                key
+            )
+
+            if nested is not None:
+
+                result = _rating_from_value(
+                    nested
+                )
+
+                if result is not None:
+                    return result
+
+        return None
+
+    if isinstance(
+        value,
+        str,
+    ):
+
+        value = value.strip()
+
+        if not value:
+            return None
+
+        value = value.replace(
+            ",",
+            ".",
+        )
+
+    try:
+
+        number = float(
+            value
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        return None
+
+    if number < 0 or number > 10:
+        return None
+
+    return number
+
+
 def get_player_rating(player):
 
     if not isinstance(
@@ -1737,41 +1782,75 @@ def get_player_rating(player):
     ):
         return None
 
-    rating = player.get(
-        "rating"
+    # اولویت با فیلدهای مستقیم
+    for key in (
+        "rating",
+        "ratingNum",
+        "matchRating",
+        "performanceRating",
+    ):
+
+        if key in player:
+
+            rating = _rating_from_value(
+                player.get(key)
+            )
+
+            if rating is not None:
+                return rating
+
+    # ساختارهای رایج nested
+    for key in (
+        "stats",
+        "performance",
+        "matchStats",
+        "playerStats",
+        "ratingData",
+    ):
+
+        value = player.get(
+            key
+        )
+
+        if isinstance(
+            value,
+            dict,
+        ):
+
+            for rating_key in (
+                "rating",
+                "ratingNum",
+                "matchRating",
+                "performanceRating",
+            ):
+
+                rating = _rating_from_value(
+                    value.get(
+                        rating_key
+                    )
+                )
+
+                if rating is not None:
+                    return rating
+
+    # اگر rating داخل player باشد
+    nested_player = player.get(
+        "player"
     )
 
     if isinstance(
-        rating,
+        nested_player,
         dict,
     ):
 
-        rating = (
-            rating.get("num")
-            or rating.get("value")
-            or rating.get("rating")
+        rating = get_player_rating(
+            nested_player
         )
 
-    if rating is None:
+        if rating is not None:
+            return rating
 
-        rating = (
-            player.get("ratingNum")
-            or player.get("matchRating")
-        )
-
-    if rating is None:
-        return None
-
-    try:
-        return float(
-            rating
-        )
-
-    except (
-        TypeError,
-        ValueError,
-    ):
-        return None
+    return None
 
 
 # =========================================================
@@ -2298,10 +2377,6 @@ def extract_events_from_data(data):
 
     candidates = []
 
-    # -----------------------------------------------------
-    # content.matchFacts
-    # -----------------------------------------------------
-
     if isinstance(
         content,
         dict,
@@ -2351,10 +2426,6 @@ def extract_events_from_data(data):
                 ]
             )
 
-    # -----------------------------------------------------
-    # header.events
-    # -----------------------------------------------------
-
     header = data.get(
         "header"
     )
@@ -2370,19 +2441,11 @@ def extract_events_from_data(data):
             )
         )
 
-    # -----------------------------------------------------
-    # root events
-    # -----------------------------------------------------
-
     candidates.append(
         data.get(
             "events"
         )
     )
-
-    # -----------------------------------------------------
-    # pageProps
-    # -----------------------------------------------------
 
     page_props = get_nested(
         data,
@@ -2405,10 +2468,6 @@ def extract_events_from_data(data):
                 ),
             ]
         )
-
-    # -----------------------------------------------------
-    # پردازش candidateها
-    # -----------------------------------------------------
 
     for candidate in candidates:
 
@@ -2453,10 +2512,6 @@ def extract_events_from_data(data):
 
                     if result:
                         return result
-
-    # -----------------------------------------------------
-    # fallback recursive chronological
-    # -----------------------------------------------------
 
     found = recursive_find(
         data,
@@ -2665,6 +2720,423 @@ def get_score(data):
         "home": 0,
         "away": 0,
     }
+
+
+# =========================================================
+# آمار بازی
+# =========================================================
+
+STAT_ALIASES = {
+    "expected goals": "xG",
+    "expected goals (xg)": "xG",
+    "xg": "xG",
+    "shots": "شوت",
+    "total shots": "شوت",
+    "shots on target": "شوت در چارچوب",
+    "shots on target from inside the box": "شوت در چارچوب",
+    "possession": "مالکیت",
+    "passes": "پاس",
+    "total passes": "پاس",
+    "pass accuracy": "دقت پاس",
+    "accurate passes": "پاس دقیق",
+    "corners": "کرنر",
+    "corner kicks": "کرنر",
+    "fouls": "خطا",
+    "offsides": "آفساید",
+    "yellow cards": "کارت زرد",
+    "red cards": "کارت قرمز",
+}
+
+
+def _normalize_stat_label(value):
+
+    value = clean_text(
+        value
+    ).lower()
+
+    value = re.sub(
+        r"\s+",
+        " ",
+        value,
+    )
+
+    return STAT_ALIASES.get(
+        value,
+        None,
+    )
+
+
+def _stat_value(value):
+
+    if value is None:
+        return None
+
+    if isinstance(
+        value,
+        bool,
+    ):
+        return None
+
+    if isinstance(
+        value,
+        (int, float),
+    ):
+        return value
+
+    if isinstance(
+        value,
+        str,
+    ):
+
+        text = clean_text(
+            value
+        )
+
+        if not text:
+            return None
+
+        text = text.replace(
+            "%",
+            "",
+        )
+
+        try:
+            return float(
+                text
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            return text
+
+    return None
+
+
+def _team_name_matches(
+    value,
+    home_name,
+    away_name,
+):
+
+    if value is None:
+        return None
+
+    text = clean_text(
+        value
+    ).lower()
+
+    home = clean_text(
+        home_name
+    ).lower()
+
+    away = clean_text(
+        away_name
+    ).lower()
+
+    if text == home and home:
+        return "home"
+
+    if text == away and away:
+        return "away"
+
+    return None
+
+
+def _extract_stat_pair(
+    item,
+    home_name,
+    away_name,
+):
+
+    if not isinstance(
+        item,
+        dict,
+    ):
+        return None
+
+    label = (
+        item.get("title")
+        or item.get("name")
+        or item.get("label")
+        or item.get("stat")
+    )
+
+    normalized_label = _normalize_stat_label(
+        label
+    )
+
+    if normalized_label is None:
+        return None
+
+    values = item.get(
+        "stats"
+    )
+
+    if not isinstance(
+        values,
+        list,
+    ):
+        values = item.get(
+            "values"
+        )
+
+    if not isinstance(
+        values,
+        list,
+    ):
+        values = item.get(
+            "value"
+        )
+
+    if isinstance(
+        values,
+        list,
+    ):
+
+        home_value = None
+        away_value = None
+
+        for value_item in values:
+
+            if not isinstance(
+                value_item,
+                dict,
+            ):
+                continue
+
+            team_side = (
+                _team_name_matches(
+                    value_item.get(
+                        "name"
+                    )
+                    or value_item.get(
+                        "team"
+                    )
+                    or value_item.get(
+                        "teamName"
+                    ),
+                    home_name,
+                    away_name,
+                )
+            )
+
+            value = (
+                value_item.get("value")
+            )
+
+            if value is None:
+                value = value_item.get(
+                    "stat"
+                )
+
+            if value is None:
+                value = value_item.get(
+                    "displayValue"
+                )
+
+            value = _stat_value(
+                value
+            )
+
+            if team_side == "home":
+                home_value = value
+
+            elif team_side == "away":
+                away_value = value
+
+        if (
+            home_value is not None
+            and away_value is not None
+        ):
+
+            return (
+                normalized_label,
+                home_value,
+                away_value,
+            )
+
+    if isinstance(
+        values,
+        dict,
+    ):
+
+        home_value = None
+        away_value = None
+
+        for key, value in values.items():
+
+            side = _team_name_matches(
+                key,
+                home_name,
+                away_name,
+            )
+
+            value = _stat_value(
+                value
+            )
+
+            if side == "home":
+                home_value = value
+
+            elif side == "away":
+                away_value = value
+
+        if (
+            home_value is not None
+            and away_value is not None
+        ):
+
+            return (
+                normalized_label,
+                home_value,
+                away_value,
+            )
+
+    return None
+
+
+def _walk_stat_candidates(
+    data,
+    home_name,
+    away_name,
+    found,
+):
+
+    if isinstance(
+        data,
+        dict,
+    ):
+
+        result = _extract_stat_pair(
+            data,
+            home_name,
+            away_name,
+        )
+
+        if result is not None:
+
+            found[
+                result[0]
+            ] = {
+                "home": result[1],
+                "away": result[2],
+            }
+
+        for value in data.values():
+
+            _walk_stat_candidates(
+                value,
+                home_name,
+                away_name,
+                found,
+            )
+
+    elif isinstance(
+        data,
+        list,
+    ):
+
+        for item in data:
+
+            _walk_stat_candidates(
+                item,
+                home_name,
+                away_name,
+                found,
+            )
+
+
+def extract_match_stats(
+    data,
+    home_name,
+    away_name,
+):
+
+    if not isinstance(
+        data,
+        dict,
+    ):
+        return {}
+
+    found = {}
+
+    # ابتدا بخش‌های محتمل آمار را بررسی می‌کنیم.
+    preferred_sections = []
+
+    content = get_content(
+        data
+    )
+
+    if isinstance(
+        content,
+        dict,
+    ):
+
+        for key in (
+            "stats",
+            "statistics",
+            "teamStats",
+            "matchStats",
+        ):
+
+            value = content.get(
+                key
+            )
+
+            if value is not None:
+                preferred_sections.append(
+                    value
+                )
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(
+        page_props,
+        dict,
+    ):
+
+        for key in (
+            "stats",
+            "statistics",
+            "teamStats",
+            "matchStats",
+        ):
+
+            value = page_props.get(
+                key
+            )
+
+            if value is not None:
+                preferred_sections.append(
+                    value
+                )
+
+    for section in preferred_sections:
+
+        _walk_stat_candidates(
+            section,
+            home_name,
+            away_name,
+            found,
+        )
+
+    # اگر ساختار بالا نبود، کل داده را جست‌وجو می‌کنیم.
+    if not found:
+
+        _walk_stat_candidates(
+            data,
+            home_name,
+            away_name,
+            found,
+        )
+
+    return found
 
 
 # =========================================================
@@ -2958,10 +3430,6 @@ def get_match_snapshot(match_url):
 
         lineup_type = "standard"
 
-    # -----------------------------------------------------
-    # اگر اسم از general نیامد، از lineup بگیر
-    # -----------------------------------------------------
-
     home_name = (
         info.get(
             "home_name"
@@ -2982,10 +3450,6 @@ def get_match_snapshot(match_url):
         or "Away"
     )
 
-    # -----------------------------------------------------
-    # اگر ID از general نیامد
-    # -----------------------------------------------------
-
     if home_id is None:
         home_id = get_team_id(
             home_lineup
@@ -2998,6 +3462,12 @@ def get_match_snapshot(match_url):
 
     score = get_score(
         data
+    )
+
+    stats = extract_match_stats(
+        data,
+        home_name,
+        away_name,
     )
 
     return {
@@ -3057,6 +3527,8 @@ def get_match_snapshot(match_url):
         ],
 
         "score": score,
+
+        "stats": stats,
 
         "status_key": (
             get_match_status_key(
