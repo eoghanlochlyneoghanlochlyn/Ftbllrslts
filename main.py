@@ -1,434 +1,349 @@
-import json
-import os
-import requests
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+
+from event_detector import (
+    detect_state_changes,
+    get_player_events,
+)
+from formatter import (
+    build_event_message,
+    build_lineup_message,
+)
+from fotmob import (
+    fetch_match_data,
+    get_match_snapshot,
+)
+from match_manager import get_enabled_matches
+from state_manager import (
+    get_match_state,
+    load_state,
+    save_state,
+    update_match_state,
+)
+from telegram_sender import send_long_message
 
 
-# ============================================================
-# تنظیمات
-# ============================================================
-
-API_KEY = os.getenv("BIGBALLS_API_KEY")
-
-BASE_URL = "https://api.bigballsdata.com/v1"
-
-HEADERS = {
-    "Authorization": f"Bearer {API_KEY}"
-}
-
-CACHE_FILE = "cache.json"
+FALLBACK_MINUTES = 30
 
 
-# ============================================================
-# ۱۵ تیم موردنظر
-# ============================================================
+def is_lineup_confirmed(snapshot):
+    lineup_type = str(
+        snapshot.get(
+            "lineup_type",
+            "",
+        )
+    ).lower()
 
-TRACKED_TEAMS = {
-    "Liverpool",
-    "Arsenal",
-    "Manchester City",
-    "Manchester United",
-    "Chelsea",
-    "Tottenham Hotspur",
-    "Juventus",
-    "AC Milan",
-    "Inter Milan",
-    "Bayern Munich",
-    "Borussia Dortmund",
-    "Paris Saint-Germain",
-    "Real Madrid",
-    "Barcelona",
-    "Atlético Madrid",
-}
-
-
-# ============================================================
-# ارتباط با API
-# ============================================================
-
-def get_json(url, params=None):
-
-    response = requests.get(
-        url,
-        headers=HEADERS,
-        params=params,
-        timeout=30
+    home_starters = snapshot.get(
+        "home_starters",
+        [],
     )
 
-    response.raise_for_status()
-
-    return response.json()
-
-
-# ============================================================
-# دریافت مسابقات آینده فوتبال
-# ============================================================
-
-def get_upcoming_matches():
-
-    response = get_json(
-        f"{BASE_URL}/matches",
-        params={
-            "sport": "football",
-            "status": "scheduled",
-            "limit": 200
-        }
+    away_starters = snapshot.get(
+        "away_starters",
+        [],
     )
 
-    return response.get("data", [])
+    confirmed_type = lineup_type in (
+        "confirmed",
+        "standard",
+    )
+
+    return (
+        confirmed_type
+        and len(home_starters) >= 11
+        and len(away_starters) >= 11
+    )
 
 
-# ============================================================
-# بارگذاری کش
-# ============================================================
-
-def load_cache():
-
-    if not os.path.exists(CACHE_FILE):
-        return {}
+def parse_start_time(value):
+    if not value:
+        return None
 
     try:
 
-        with open(
-            CACHE_FILE,
-            "r",
-            encoding="utf-8"
-        ) as file:
+        value = str(value)
 
-            data = json.load(file)
+        if value.endswith("Z"):
+            value = value[:-1] + "+00:00"
 
-            if isinstance(data, dict):
-                return data
+        dt = datetime.fromisoformat(value)
 
-    except (json.JSONDecodeError, OSError):
-
-        print("⚠️ فایل cache.json قابل خواندن نیست.")
-        print("🔄 کش جدید ساخته می‌شود.")
-
-    return {}
-
-
-# ============================================================
-# ذخیره کش
-# ============================================================
-
-def save_cache(cache):
-
-    with open(
-        CACHE_FILE,
-        "w",
-        encoding="utf-8"
-    ) as file:
-
-        json.dump(
-            cache,
-            file,
-            ensure_ascii=False,
-            indent=2
-        )
-
-
-# ============================================================
-# بررسی اینکه مسابقه مربوط به یکی از ۱۵ تیم هست یا نه
-# ============================================================
-
-def get_tracked_team(match):
-
-    home = match.get("home") or {}
-    away = match.get("away") or {}
-
-    home_name = home.get("name")
-    away_name = away.get("name")
-
-    if home_name in TRACKED_TEAMS:
-        return home_name
-
-    if away_name in TRACKED_TEAMS:
-        return away_name
-
-    return None
-
-
-# ============================================================
-# حذف مسابقات تکراری بر اساس شناسه مسابقه
-# ============================================================
-
-def remove_duplicates(matches):
-
-    unique_matches = {}
-
-    for match in matches:
-
-        match_id = match.get("id")
-
-        if not match_id:
-            continue
-
-        unique_matches[match_id] = match
-
-    return list(unique_matches.values())
-
-
-# ============================================================
-# مرتب‌سازی بر اساس زمان شروع
-# ============================================================
-
-def sort_by_kickoff(matches):
-
-    def get_time(match):
-
-        kickoff = match.get("kickoff_utc")
-
-        if not kickoff:
-            return datetime.max.replace(tzinfo=timezone.utc)
-
-        try:
-            return datetime.fromisoformat(
-                kickoff.replace("Z", "+00:00")
-            )
-
-        except ValueError:
-            return datetime.max.replace(
+        if dt.tzinfo is None:
+            dt = dt.replace(
                 tzinfo=timezone.utc
             )
 
-    return sorted(
-        matches,
-        key=get_time
+        return dt
+
+    except Exception:
+        return None
+
+
+def fallback_time_reached(snapshot):
+    start = parse_start_time(
+        snapshot.get("start")
+    )
+
+    if start is None:
+        return False
+
+    now = datetime.now(timezone.utc)
+
+    return now >= (
+        start - timedelta(
+            minutes=FALLBACK_MINUTES
+        )
     )
 
 
-# ============================================================
-# اضافه کردن مسابقه جدید به کش
-# ============================================================
+def send_lineup_if_needed(
+    match_id,
+    snapshot,
+    match_state,
+):
+    if match_state.get("lineup_sent"):
+        return False
 
-def add_new_matches(matches, cache):
+    confirmed = is_lineup_confirmed(
+        snapshot
+    )
 
-    new_matches = []
+    fallback = fallback_time_reached(
+        snapshot
+    )
 
-    for match in matches:
+    if not confirmed and not fallback:
+        return False
 
-        match_id = match.get("id")
+    print(
+        f"[{match_id}] Sending lineup message."
+    )
 
-        if not match_id:
-            continue
+    message = build_lineup_message(
+        snapshot,
+        player_events={},
+        show_rating=False,
+    )
 
-        if match_id in cache:
-            continue
+    send_long_message(message)
 
-        home = match.get("home") or {}
-        away = match.get("away") or {}
+    match_state["lineup_sent"] = True
 
-        tracked_team = get_tracked_team(match)
+    if not confirmed:
+        match_state["fallback_sent"] = True
 
-        cache[match_id] = {
-            "home": home.get("name"),
-            "away": away.get("name"),
-            "league": match.get("league"),
-            "kickoff_utc": match.get("kickoff_utc"),
-            "status": match.get("status"),
-            "tracked_team": tracked_team,
-
-            "lineup_sent": False,
-
-            "goals": [],
-
-            "finished": False
-        }
-
-        new_matches.append(match)
-
-    return new_matches
+    return True
 
 
-# ============================================================
-# نمایش مسابقات جدید
-# ============================================================
+def process_live_events(
+    match_id,
+    root,
+    snapshot,
+    match_state,
+):
+    changes = detect_state_changes(
+        match_state,
+        root,
+        snapshot,
+    )
 
-def print_new_matches(matches):
+    new_events = changes.get(
+        "new_events",
+        [],
+    )
 
-    if not matches:
-
-        print()
-        print("ℹ️ مسابقه جدیدی پیدا نشد.")
+    if not new_events:
         return
 
-    print()
+    for event in new_events:
+
+        message = build_event_message(
+            snapshot,
+            event,
+        )
+
+        if not message:
+            continue
+
+        print(
+            f"[{match_id}] New event detected."
+        )
+
+        send_long_message(message)
+
+
+def process_match(
+    match,
+    state,
+):
+    match_id = str(
+        match.get("id")
+    )
+
+    if not match_id:
+        return
+
+    print("")
     print("=" * 70)
-    print("🆕 مسابقات جدید")
+    print(
+        f"PROCESSING MATCH {match_id}"
+    )
     print("=" * 70)
-
-    for match in matches:
-
-        home = match.get("home") or {}
-        away = match.get("away") or {}
-
-        print()
-
-        print(
-            f"⚽ {home.get('name', '-')} "
-            f"vs "
-            f"{away.get('name', '-')}"
-        )
-
-        print(
-            f"🏆 لیگ: "
-            f"{match.get('league', '-')}"
-        )
-
-        print(
-            f"🕐 زمان UTC: "
-            f"{match.get('kickoff_utc', '-')}"
-        )
-
-        print(
-            f"🎯 تیم موردنظر: "
-            f"{get_tracked_team(match) or '-'}"
-        )
-
-        print(
-            f"🆔 شناسه: "
-            f"{match.get('id', '-')}"
-        )
-
-    print()
-    print("=" * 70)
-
-
-# ============================================================
-# اجرای اصلی
-# ============================================================
-
-def main():
-
-    if not API_KEY:
-
-        print("❌ BIGBALLS_API_KEY پیدا نشد.")
-
-        raise SystemExit(1)
-
-    print("🔄 دریافت مسابقات آینده فوتبال...")
 
     try:
 
-        all_matches = get_upcoming_matches()
+        root = fetch_match_data(
+            match_id
+        )
 
-    except requests.HTTPError as error:
+        snapshot = get_match_snapshot(
+            root
+        )
 
-        print()
-        print("❌ خطای HTTP:")
-        print(error)
+        print(
+            f"{snapshot.get('home')} "
+            f"vs "
+            f"{snapshot.get('away')}"
+        )
 
-        raise SystemExit(1)
+        print(
+            "Lineup type:",
+            snapshot.get("lineup_type"),
+        )
 
-    except requests.RequestException as error:
+        print(
+            "Starters:",
+            len(snapshot.get("home_starters", [])),
+            "/",
+            len(snapshot.get("away_starters", [])),
+        )
 
-        print()
-        print("❌ خطای ارتباط با API:")
-        print(error)
+        match_state = get_match_state(
+            state,
+            match_id,
+        )
 
-        raise SystemExit(1)
+        # ------------------------------------------------
+        # ترکیب
+        # ------------------------------------------------
+
+        send_lineup_if_needed(
+            match_id,
+            snapshot,
+            match_state,
+        )
+
+        # ------------------------------------------------
+        # رویدادهای جدید
+        # ------------------------------------------------
+
+        if match_state.get("lineup_sent"):
+
+            process_live_events(
+                match_id,
+                root,
+                snapshot,
+                match_state,
+            )
+
+        # ------------------------------------------------
+        # پایان بازی
+        # ------------------------------------------------
+
+        finished = snapshot.get(
+            "finished",
+            False,
+        )
+
+        if finished:
+
+            if not match_state.get(
+                "finished_sent"
+            ):
+
+                player_events = (
+                    get_player_events(root)
+                )
+
+                final_message = build_lineup_message(
+                    snapshot,
+                    player_events=player_events,
+                    show_rating=True,
+                )
+
+                send_long_message(
+                    final_message
+                )
+
+                match_state[
+                    "finished_sent"
+                ] = True
+
+        # ------------------------------------------------
+        # ذخیره وضعیت رویدادها
+        # ------------------------------------------------
+
+        from event_detector import get_event_keys
+
+        match_state[
+            "event_keys"
+        ] = get_event_keys(
+            snapshot.get(
+                "events",
+                [],
+            )
+        )
+
+        match_state[
+            "finished"
+        ] = finished
+
+        update_match_state(
+            state,
+            match_id,
+            **match_state,
+        )
 
     except Exception as error:
 
-        print()
-        print("❌ خطای غیرمنتظره:")
-        print(error)
+        print(
+            f"[{match_id}] ERROR: "
+            f"{type(error).__name__}: {error}"
+        )
 
-        raise SystemExit(1)
 
+def main():
+    print("")
+    print("#" * 70)
+    print("FOOTBALL ALERTS")
+    print("#" * 70)
+
+    matches = get_enabled_matches()
+
+    if not matches:
+
+        print(
+            "No enabled matches."
+        )
+
+        return
+
+    state = load_state()
+
+    for match in matches:
+
+        process_match(
+            match,
+            state,
+        )
+
+    save_state(state)
+
+    print("")
     print(
-        f"📥 تعداد مسابقات دریافتی از API: "
-        f"{len(all_matches)}"
+        "State saved successfully."
     )
 
-    # --------------------------------------------------------
-    # حذف مسابقات تکراری
-    # --------------------------------------------------------
-
-    all_matches = remove_duplicates(
-        all_matches
-    )
-
-    print(
-        f"🧹 تعداد مسابقات یکتا: "
-        f"{len(all_matches)}"
-    )
-
-    # --------------------------------------------------------
-    # مرتب‌سازی
-    # --------------------------------------------------------
-
-    all_matches = sort_by_kickoff(
-        all_matches
-    )
-
-    # --------------------------------------------------------
-    # فقط مسابقات مربوط به ۱۵ تیم
-    # --------------------------------------------------------
-
-    tracked_matches = []
-
-    for match in all_matches:
-
-        if get_tracked_team(match):
-
-            tracked_matches.append(match)
-
-    print(
-        f"🎯 مسابقات مربوط به ۱۵ تیم: "
-        f"{len(tracked_matches)}"
-    )
-
-    # --------------------------------------------------------
-    # بارگذاری کش
-    # --------------------------------------------------------
-
-    cache = load_cache()
-
-    print(
-        f"💾 مسابقات موجود در کش: "
-        f"{len(cache)}"
-    )
-
-    # --------------------------------------------------------
-    # پیدا کردن مسابقات جدید
-    # --------------------------------------------------------
-
-    new_matches = add_new_matches(
-        tracked_matches,
-        cache
-    )
-
-    # --------------------------------------------------------
-    # ذخیره کش
-    # --------------------------------------------------------
-
-    save_cache(cache)
-
-    # --------------------------------------------------------
-    # نمایش نتیجه
-    # --------------------------------------------------------
-
-    print_new_matches(
-        new_matches
-    )
-
-    print()
-    print(
-        f"💾 تعداد مسابقات ذخیره‌شده در کش: "
-        f"{len(cache)}"
-    )
-
-    print()
-    print("=" * 70)
-    print("✅ بررسی مسابقات با موفقیت انجام شد.")
-    print("=" * 70)
-
-
-# ============================================================
-# اجرا
-# ============================================================
 
 if __name__ == "__main__":
     main()
