@@ -1,5 +1,7 @@
 import json
 import re
+import html as html_module
+
 import requests
 
 
@@ -36,11 +38,6 @@ def get_nested(data, *keys):
 
 
 def find_all_dicts_with_key(data, key, path="root"):
-    """
-    فقط برای تست:
-    تمام دیکشنری‌هایی را که کلید مشخص دارند پیدا می‌کند
-    و مسیرشان را هم چاپ می‌کند.
-    """
     results = []
 
     if isinstance(data, dict):
@@ -69,34 +66,90 @@ def find_all_dicts_with_key(data, key, path="root"):
     return results
 
 
-def fetch_api():
-    url = f"https://www.fotmob.com/api/matchDetails?matchId={MATCH_ID}"
+def extract_next_data(page_text):
+    """
+    استخراج __NEXT_DATA__ از HTML صفحه FotMob.
+    """
 
+    patterns = [
+        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
+        r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>',
+    ]
+
+    for pattern in patterns:
+        match = re.search(
+            pattern,
+            page_text,
+            flags=re.DOTALL | re.IGNORECASE,
+        )
+
+        if not match:
+            continue
+
+        raw_json = html_module.unescape(match.group(1))
+
+        try:
+            return json.loads(raw_json)
+        except Exception as exc:
+            print(f"Could not parse __NEXT_DATA__: {exc}")
+
+    return None
+
+
+def fetch_data():
     print("=" * 80)
     print("FETCHING API")
     print("=" * 80)
-    print(url)
+
+    api_url = (
+        f"https://www.fotmob.com/api/matchDetails"
+        f"?matchId={MATCH_ID}"
+    )
 
     response = requests.get(
-        url,
+        api_url,
         headers=HEADERS,
         timeout=30,
     )
 
-    print(f"HTTP status: {response.status_code}")
-    print(f"Response length: {len(response.text)}")
+    print(f"API URL: {api_url}")
+    print(f"API HTTP status: {response.status_code}")
+    print(f"API response length: {len(response.text)}")
 
-    if response.status_code != 200:
-        print("API did not return HTTP 200.")
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            print("Using API JSON.")
+            return data
+        except Exception as exc:
+            print(f"API JSON parse failed: {exc}")
+
+    print()
+    print("=" * 80)
+    print("FETCHING FOTMOB PAGE FALLBACK")
+    print("=" * 80)
+
+    page_response = requests.get(
+        MATCH_URL,
+        headers=HEADERS,
+        timeout=30,
+    )
+
+    print(f"Page HTTP status: {page_response.status_code}")
+    print(f"Final URL: {page_response.url}")
+    print(f"Page response length: {len(page_response.text)}")
+
+    if page_response.status_code != 200:
+        print("Page request failed.")
         return None
 
-    try:
-        data = response.json()
-    except Exception as exc:
-        print(f"Could not parse JSON: {exc}")
+    data = extract_next_data(page_response.text)
+
+    if data is None:
+        print("__NEXT_DATA__ not found or invalid.")
         return None
 
-    print("JSON parsed successfully.")
+    print("__NEXT_DATA__ extracted successfully.")
 
     return data
 
@@ -110,8 +163,6 @@ def print_basic_structure(data):
     if not isinstance(data, dict):
         print("Root is not a dictionary.")
         return
-
-    print("Top-level keys:")
 
     for key in data.keys():
         print(f"  - {key}")
@@ -130,14 +181,25 @@ def print_matchfacts_structure(data):
     )
 
     if not isinstance(matchfacts, dict):
-        print("content.matchFacts not found.")
+        print("content.matchFacts not found at direct path.")
+
+        # در NEXT_DATA ممکن است داده داخل pageProps باشد.
+        page_props = data.get("props", {}).get("pageProps", {})
+
+        if isinstance(page_props, dict):
+            matchfacts = get_nested(
+                page_props,
+                "content",
+                "matchFacts",
+            )
+
+    if not isinstance(matchfacts, dict):
+        print("Could not locate matchFacts.")
         return
 
     print("matchFacts keys:")
 
-    for key in matchfacts.keys():
-        value = matchfacts[key]
-
+    for key, value in matchfacts.items():
         if isinstance(value, list):
             print(f"  - {key}: list ({len(value)} items)")
         elif isinstance(value, dict):
@@ -146,17 +208,77 @@ def print_matchfacts_structure(data):
             print(f"  - {key}: {type(value).__name__}")
 
 
+def locate_content(data):
+    candidates = [
+        data,
+        get_nested(data, "props", "pageProps"),
+        get_nested(data, "pageProps"),
+    ]
+
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+
+        if isinstance(candidate.get("content"), dict):
+            return candidate["content"]
+
+    return None
+
+
+def locate_matchfacts(data):
+    content = locate_content(data)
+
+    if isinstance(content, dict):
+        matchfacts = content.get("matchFacts")
+
+        if isinstance(matchfacts, dict):
+            return matchfacts
+
+    candidates = [
+        data,
+        get_nested(data, "props", "pageProps"),
+        get_nested(data, "pageProps"),
+    ]
+
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+
+        if isinstance(candidate.get("matchFacts"), dict):
+            return candidate["matchFacts"]
+
+    return None
+
+
+def locate_stats(data):
+    content = locate_content(data)
+
+    if isinstance(content, dict) and "stats" in content:
+        return content["stats"]
+
+    candidates = [
+        data,
+        get_nested(data, "props", "pageProps"),
+        get_nested(data, "pageProps"),
+    ]
+
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+
+        if "stats" in candidate:
+            return candidate["stats"]
+
+    return None
+
+
 def print_event_periods(data):
     print()
     print("=" * 80)
     print("MATCH EVENT PERIODS")
     print("=" * 80)
 
-    matchfacts = get_nested(
-        data,
-        "content",
-        "matchFacts",
-    )
+    matchfacts = locate_matchfacts(data)
 
     if not isinstance(matchfacts, dict):
         print("matchFacts not found.")
@@ -166,6 +288,11 @@ def print_event_periods(data):
 
     if not isinstance(events, list):
         print("matchFacts.events is not a list.")
+
+        for key, value in matchfacts.items():
+            if isinstance(value, list) and value:
+                if isinstance(value[0], dict):
+                    print(f"Possible event list: {key}")
         return
 
     print(f"Events count: {len(events)}")
@@ -180,16 +307,16 @@ def print_event_periods(data):
         period = event.get("period")
         event_type = event.get("type")
         minute = event.get("time")
+        shootout = event.get("isPenaltyShootoutEvent")
 
-        periods.setdefault(str(period), 0)
-        periods[str(period)] += 1
+        periods[str(period)] = periods.get(str(period), 0) + 1
 
         print(
             f"[{index:02d}] "
             f"period={period!r} | "
             f"type={event_type!r} | "
             f"time={minute!r} | "
-            f"isPenaltyShootoutEvent={event.get('isPenaltyShootoutEvent')!r}"
+            f"isPenaltyShootoutEvent={shootout!r}"
         )
 
     print()
@@ -205,56 +332,43 @@ def print_penalty_data(data):
     print("PENALTY DATA")
     print("=" * 80)
 
-    # فقط بخش‌های مربوط به match اصلی را بررسی می‌کنیم.
-    locations = [
-        ("content.penalties", get_nested(data, "content", "penalties")),
-        (
-            "content.matchFacts.penalties",
-            get_nested(
-                data,
-                "content",
-                "matchFacts",
-                "penalties",
-            ),
-        ),
-        (
-            "content.matchFacts.events.penalties",
-            get_nested(
-                data,
-                "content",
-                "matchFacts",
-                "events",
-                "penalties",
-            ),
-        ),
-    ]
+    matchfacts = locate_matchfacts(data)
+    content = locate_content(data)
 
-    found = False
+    locations = []
+
+    if isinstance(content, dict):
+        locations.append(
+            ("content.penalties", content.get("penalties"))
+        )
+
+    if isinstance(matchfacts, dict):
+        locations.append(
+            (
+                "matchFacts.penalties",
+                matchfacts.get("penalties"),
+            )
+        )
 
     for name, value in locations:
         if value is not None:
-            found = True
             print(f"{name}:")
-            print(json.dumps(value, ensure_ascii=False, indent=2))
-
-    if not found:
-        print("No direct penalties field found in the expected locations.")
+            print(
+                json.dumps(
+                    value,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
 
     print()
-    print("Searching recursively ONLY inside content.matchFacts...")
-    print()
-
-    matchfacts = get_nested(
-        data,
-        "content",
-        "matchFacts",
-    )
+    print("Recursive search inside matchFacts only:")
 
     if isinstance(matchfacts, dict):
         results = find_all_dicts_with_key(
             matchfacts,
             "penalties",
-            "content.matchFacts",
+            "matchFacts",
         )
 
         if results:
@@ -269,7 +383,7 @@ def print_penalty_data(data):
                 )
                 print("-" * 80)
         else:
-            print("No 'penalties' key found inside matchFacts.")
+            print("No penalties key found inside matchFacts.")
 
 
 def print_stats_raw(data):
@@ -278,25 +392,21 @@ def print_stats_raw(data):
     print("RAW STATS")
     print("=" * 80)
 
-    stats = get_nested(
-        data,
-        "content",
-        "stats",
-    )
+    stats = locate_stats(data)
 
     if stats is None:
-        print("content.stats not found.")
+        print("Stats not found.")
         return
 
-    print(f"stats type: {type(stats).__name__}")
+    print(f"Stats type: {type(stats).__name__}")
 
     if isinstance(stats, dict):
-        print("stats keys:")
+        print("Stats keys:")
         for key in stats.keys():
             print(f"  - {key}")
 
     print()
-    print("Searching for stat objects with 'title'...")
+    print("All stat objects:")
     print()
 
     results = find_all_dicts_with_key(
@@ -306,16 +416,14 @@ def print_stats_raw(data):
     )
 
     if not results:
-        print("No objects with 'title' found.")
+        print("No stat objects with title found.")
         return
 
     for index, (path, obj) in enumerate(results, 1):
-        title = obj.get("title")
-
         print("-" * 80)
         print(f"STAT #{index}")
         print(f"Path: {path}")
-        print(f"Title: {title!r}")
+        print(f"Title: {obj.get('title')!r}")
 
         for key in (
             "stats",
@@ -330,88 +438,6 @@ def print_stats_raw(data):
             if key in obj:
                 print(f"{key}: {obj[key]!r}")
 
-        # برای اینکه خروجی بیش از حد شلوغ نشود،
-        # فقط کل object را برای statهای مهم چاپ می‌کنیم.
-        title_normalized = clean_text(title).lower()
-
-        important_titles = {
-            "shots",
-            "total shots",
-            "shots on target",
-            "possession",
-            "ball possession",
-            "expected goals",
-            "xg",
-            "big chances",
-            "accurate passes",
-            "passes",
-            "total passes",
-        }
-
-        if title_normalized in important_titles:
-            print()
-            print("FULL OBJECT:")
-            print(
-                json.dumps(
-                    obj,
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
-
-
-def print_specific_stat_search(data):
-    print()
-    print("=" * 80)
-    print("IMPORTANT STAT SEARCH")
-    print("=" * 80)
-
-    stats = get_nested(
-        data,
-        "content",
-        "stats",
-    )
-
-    if stats is None:
-        print("content.stats not found.")
-        return
-
-    wanted = {
-        "shots",
-        "total shots",
-        "shots on target",
-        "possession",
-        "ball possession",
-        "expected goals",
-        "xg",
-        "big chances",
-        "accurate passes",
-        "passes",
-        "total passes",
-    }
-
-    results = find_all_dicts_with_key(
-        stats,
-        "title",
-        "content.stats",
-    )
-
-    for path, obj in results:
-        title = clean_text(obj.get("title")).lower()
-
-        if title not in wanted:
-            continue
-
-        print()
-        print(f"TITLE: {obj.get('title')}")
-        print(f"PATH: {path}")
-
-        print("period:", repr(obj.get("period")))
-        print("stats:", repr(obj.get("stats")))
-        print("value:", repr(obj.get("value")))
-        print("values:", repr(obj.get("values")))
-
-        print("FULL:")
         print(
             json.dumps(
                 obj,
@@ -428,11 +454,11 @@ def main():
     print(f"Match ID: {MATCH_ID}")
     print(f"URL: {MATCH_URL}")
 
-    data = fetch_api()
+    data = fetch_data()
 
     if data is None:
         print()
-        print("Could not retrieve API data.")
+        print("Could not retrieve match data.")
         return
 
     print_basic_structure(data)
@@ -440,7 +466,6 @@ def main():
     print_event_periods(data)
     print_penalty_data(data)
     print_stats_raw(data)
-    print_specific_stat_search(data)
 
     print()
     print("=" * 80)
