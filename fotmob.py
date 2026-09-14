@@ -1434,11 +1434,17 @@ def _find_penalty_score_in_shootout_section(
     """
     فقط داخل ساختاری که واقعاً مربوط به shootout
     است، نتیجه پنالتی را پیدا می‌کند.
+
+    نکته مهم:
+    کلید عمومی "penalties" دیگر در اولویت نیست.
+    چون در بعضی ساختارهای FotMob ممکن است تعداد
+    پنالتی‌های زده‌شده/اطلاعات تجمعی باشد و نه
+    نتیجه نهایی شوت‌اوت.
     """
 
     if isinstance(section, dict):
 
-        # کلیدهای صریح نتیجه پنالتی.
+        # فقط کلیدهای اختصاصی نتیجه shootout.
         for key in (
             "penaltyScore",
             "penalty_score",
@@ -1455,16 +1461,6 @@ def _find_penalty_score_in_shootout_section(
                 if result is not None:
                     return result
 
-        # penalties فقط در همین بخش معتبر است.
-        if "penalties" in section:
-
-            result = _coerce_score_pair(
-                section.get("penalties")
-            )
-
-            if result is not None:
-                return result
-
         # ساختارهای nested اختصاصی.
         for key in (
             "penaltyShootout",
@@ -1479,6 +1475,8 @@ def _find_penalty_score_in_shootout_section(
             if nested is None:
                 continue
 
+            # فقط اگر خود nested یک score مستقیم
+            # داشته باشد آن را قبول می‌کنیم.
             result = _coerce_score_pair(
                 nested
             )
@@ -1490,6 +1488,25 @@ def _find_penalty_score_in_shootout_section(
                 _find_penalty_score_in_shootout_section(
                     nested
                 )
+            )
+
+            if result is not None:
+                return result
+
+        # درون یک ساختار shootout صریح، اگر
+        # "penalties" وجود داشت، فقط زمانی قبولش
+        # می‌کنیم که خودش ساختار score واقعی داشته باشد.
+        penalties = section.get(
+            "penalties"
+        )
+
+        if isinstance(
+            penalties,
+            dict,
+        ):
+
+            result = _coerce_score_pair(
+                penalties
             )
 
             if result is not None:
@@ -1669,7 +1686,6 @@ def _get_shootout_score_from_events(data):
                 continue
 
             if scored is None:
-
                 scored = True
 
             if not scored:
@@ -1767,7 +1783,7 @@ def _get_penalty_score_from_page(
         r"(\d+)\s*[-:]\s*(\d+)",
 
         r"\bPenalty\s+shootout"
-        r"[^0-9]{0,50}"
+        r"[^0-9]{0,100}"
         r"(\d+)\s*[-:]\s*(\d+)",
     ]
 
@@ -1813,6 +1829,31 @@ def get_penalty_shootout_score(data):
 
     # -----------------------------------------------------
     # مرحله 1:
+    # کلیدهای کاملاً اختصاصی score
+    # -----------------------------------------------------
+
+    exact_score_keys = (
+        "penaltyScore",
+        "penalty_score",
+        "shootoutScore",
+        "shootout_score",
+    )
+
+    for key in exact_score_keys:
+
+        value = content.get(key)
+
+        if value is not None:
+
+            result = _coerce_score_pair(
+                value
+            )
+
+            if result is not None:
+                return result
+
+    # -----------------------------------------------------
+    # مرحله 2:
     # ساختارهای صریح shootout
     # -----------------------------------------------------
 
@@ -1820,6 +1861,10 @@ def get_penalty_shootout_score(data):
         _collect_explicit_shootout_sections(
             content
         )
+    )
+
+    has_explicit_shootout = bool(
+        shootout_sections
     )
 
     for section in shootout_sections:
@@ -1831,10 +1876,43 @@ def get_penalty_shootout_score(data):
         )
 
         if result is not None:
+
+            # اگر نتیجه از یک کلید اختصاصی آمده،
+            # معتبر است.
             return result
 
     # -----------------------------------------------------
-    # مرحله 2:
+    # مرحله 3:
+    # اگر shootout صریح وجود دارد،
+    # صفحه خود FotMob منبع قابل‌اعتمادتر است.
+    #
+    # این قسمت عمداً قبل از شمارش eventهاست؛
+    # چون FotMob روی صفحه نتیجه رسمی:
+    #
+    # Pen: 4 - 2
+    #
+    # را نمایش می‌دهد و از قاطی‌شدن penaltyهای
+    # عادی بازی جلوگیری می‌کند.
+    # -----------------------------------------------------
+
+    if (
+        has_explicit_shootout
+        or _contains_shootout_marker(
+            content
+        )
+    ):
+
+        page_score = (
+            _get_penalty_score_from_page(
+                data
+            )
+        )
+
+        if page_score is not None:
+            return page_score
+
+    # -----------------------------------------------------
+    # مرحله 4:
     # eventهای واقعی shootout
     # -----------------------------------------------------
 
@@ -1848,7 +1926,7 @@ def get_penalty_shootout_score(data):
         return event_score
 
     # -----------------------------------------------------
-    # مرحله 3:
+    # مرحله 5:
     # matchFacts فقط اگر خودش نشانه صریح
     # Penalty Shootout داشته باشد.
     # -----------------------------------------------------
@@ -1872,25 +1950,22 @@ def get_penalty_shootout_score(data):
             if result is not None:
                 return result
 
-    # -----------------------------------------------------
-    # مرحله 4:
-    # fallback روی خود صفحه FotMob
-    #
-    # فقط اگر داده واقعاً نشانه shootout داشته باشد.
-    # -----------------------------------------------------
-
-    if _contains_shootout_marker(
-        content
-    ):
-
-        page_score = (
-            _get_penalty_score_from_page(
-                data
+            page_score = (
+                _get_penalty_score_from_page(
+                    data
+                )
             )
-        )
 
-        if page_score is not None:
-            return page_score
+            if page_score is not None:
+                return page_score
+
+    # -----------------------------------------------------
+    # هیچ نشانه معتبری از shootout وجود ندارد.
+    #
+    # بنابراین:
+    # Juventus 1 - 1 Milan
+    # باید penalty_score = None داشته باشد.
+    # -----------------------------------------------------
 
     return None
 
