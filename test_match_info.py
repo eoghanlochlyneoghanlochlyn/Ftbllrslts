@@ -1,15 +1,15 @@
 import json
 import re
 from html import unescape
-from urllib.parse import urljoin
 
 import requests
 
 
-MATCH_ID = "5749667"
+MATCH_URL = (
+    "https://www.fotmob.com/matches/"
+    "argentina-vs-france/1hox8a#3370572"
+)
 
-BASE_URL = "https://www.fotmob.com"
-MATCH_URL = f"{BASE_URL}/match/{MATCH_ID}"
 
 HEADERS = {
     "User-Agent": (
@@ -21,25 +21,13 @@ HEADERS = {
 }
 
 
-TARGET_STATS = [
-    "Ball possession",
-    "Expected goals (xG)",
-    "Total shots",
-    "Shots on target",
-    "Big chances",
-    "Passes",
-    "Accurate passes",
-    "Yellow cards",
-    "Red cards",
-]
-
-
 def clean_text(value):
     if value is None:
         return ""
 
     value = unescape(str(value))
     value = re.sub(r"\s+", " ", value)
+
     return value.strip()
 
 
@@ -83,7 +71,7 @@ def extract_next_data(html):
         try:
             return json.loads(raw_json)
         except json.JSONDecodeError as error:
-            print("Could not decode NEXT_DATA:", error)
+            print("JSON decode error:", error)
             return None
 
     return None
@@ -115,224 +103,345 @@ def get_content(page_props):
     return {}
 
 
-def get_general(page_props):
-    general = page_props.get("general")
+def recursive_find_all(value, target_key):
+    results = []
 
-    if isinstance(general, dict):
-        return general
+    if isinstance(value, dict):
+        for key, item in value.items():
 
-    return {}
+            if key == target_key:
+                results.append(item)
+
+            results.extend(
+                recursive_find_all(
+                    item,
+                    target_key,
+                )
+            )
+
+    elif isinstance(value, list):
+        for item in value:
+            results.extend(
+                recursive_find_all(
+                    item,
+                    target_key,
+                )
+            )
+
+    return results
 
 
-def get_team_name(team_data):
-    if isinstance(team_data, dict):
-        return (
-            team_data.get("name")
-            or team_data.get("shortName")
-            or team_data.get("title")
-            or ""
+def print_section(title):
+    print()
+    print("=" * 80)
+    print(title)
+    print("=" * 80)
+
+
+def print_basic_structure(page_props, content):
+    print_section("TOP-LEVEL PAGE PROPS KEYS")
+
+    print(
+        json.dumps(
+            list(page_props.keys()),
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
+    print_section("CONTENT TOP-LEVEL KEYS")
+
+    print(
+        json.dumps(
+            list(content.keys()),
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
+
+def inspect_status_objects(page_props, content):
+    print_section("STATUS-RELATED OBJECTS")
+
+    possible_keys = [
+        "status",
+        "matchStatus",
+        "match_status",
+        "state",
+        "statusId",
+        "statusKey",
+        "finished",
+        "period",
+        "periodName",
+        "isFinished",
+        "isLive",
+        "matchTime",
+    ]
+
+    found_any = False
+
+    for key in possible_keys:
+        values = recursive_find_all(
+            content,
+            key,
         )
 
-    if isinstance(team_data, str):
-        return team_data
-
-    return ""
-
-
-def extract_team_names(page_props, content):
-    general = get_general(page_props)
-
-    home_team = get_team_name(
-        general.get("homeTeam")
-    )
-
-    away_team = get_team_name(
-        general.get("awayTeam")
-    )
-
-    if home_team and away_team:
-        return home_team, away_team
-
-    # Fallbackهای احتمالی
-    general_teams = general.get("teams")
-
-    if isinstance(general_teams, list):
-        if len(general_teams) >= 2:
-            home_team = get_team_name(
-                general_teams[0]
+        if not values:
+            values = recursive_find_all(
+                page_props,
+                key,
             )
 
-            away_team = get_team_name(
-                general_teams[1]
+        if values:
+            found_any = True
+
+            print()
+            print(f"KEY: {key}")
+
+            print(
+                json.dumps(
+                    values[:20],
+                    ensure_ascii=False,
+                    indent=2,
+                )
             )
 
-            if home_team and away_team:
-                return home_team, away_team
-
-    return "Home", "Away"
+    if not found_any:
+        print("No obvious status keys found.")
 
 
-def get_all_stats(content):
+def inspect_score_objects(page_props, content):
+    print_section("SCORE-RELATED OBJECTS")
+
+    possible_keys = [
+        "score",
+        "scores",
+        "homeScore",
+        "awayScore",
+        "home_score",
+        "away_score",
+        "penalty",
+        "penalties",
+        "shootout",
+        "shootoutScore",
+        "penaltyShootout",
+    ]
+
+    found_any = False
+
+    for key in possible_keys:
+        values = recursive_find_all(
+            content,
+            key,
+        )
+
+        if not values:
+            values = recursive_find_all(
+                page_props,
+                key,
+            )
+
+        if values:
+            found_any = True
+
+            print()
+            print(f"KEY: {key}")
+
+            print(
+                json.dumps(
+                    values[:30],
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
+
+    if not found_any:
+        print("No obvious score keys found.")
+
+
+def inspect_event_containers(page_props, content):
+    print_section("EVENT-RELATED CONTAINERS")
+
+    possible_keys = [
+        "events",
+        "incidents",
+        "event",
+        "matchEvents",
+        "match_events",
+        "commentary",
+        "penaltyShootout",
+        "penalty-shootout",
+        "shootout",
+        "penalties",
+    ]
+
+    found_any = False
+
+    for key in possible_keys:
+        values = recursive_find_all(
+            content,
+            key,
+        )
+
+        if not values:
+            values = recursive_find_all(
+                page_props,
+                key,
+            )
+
+        if values:
+            found_any = True
+
+            print()
+            print(f"KEY: {key}")
+            print(f"Number of occurrences: {len(values)}")
+
+            for index, value in enumerate(values[:10]):
+                print()
+                print(f"Occurrence #{index + 1}")
+
+                try:
+                    print(
+                        json.dumps(
+                            value,
+                            ensure_ascii=False,
+                            indent=2,
+                        )[:12000]
+                    )
+                except TypeError:
+                    print(repr(value))
+
+    if not found_any:
+        print("No obvious event containers found.")
+
+
+def inspect_all_period_stats(content):
+    print_section("ALL PERIOD STATS")
+
     stats_root = content.get("stats")
 
     if not isinstance(stats_root, dict):
-        return []
+        print("content.stats not found.")
+        return
 
     periods = stats_root.get("Periods")
 
     if not isinstance(periods, dict):
-        return []
+        print("content.stats.Periods not found.")
+        return
 
-    all_period = periods.get("All")
+    print("Available periods:")
 
-    if not isinstance(all_period, dict):
-        return []
+    for period_name in periods.keys():
+        print(f"- {period_name}")
 
-    stats = all_period.get("stats")
+    for period_name, period_data in periods.items():
 
-    if not isinstance(stats, list):
-        return []
-
-    return stats
-
-
-def normalize_title(title):
-    title = clean_text(title).lower()
-
-    replacements = {
-        "ball possession": "Ball possession",
-        "expected goals (xg)": "Expected goals (xG)",
-        "total shots": "Total shots",
-        "shots": "Total shots",
-        "shots on target": "Shots on target",
-        "big chances": "Big chances",
-        "passes": "Passes",
-        "accurate passes": "Accurate passes",
-        "yellow cards": "Yellow cards",
-        "red cards": "Red cards",
-    }
-
-    return replacements.get(
-        title,
-        clean_text(title),
-    )
-
-
-def extract_value_pair(stat):
-    if not isinstance(stat, dict):
-        return None
-
-    values = stat.get("stats")
-
-    if not isinstance(values, list):
-        return None
-
-    if len(values) < 2:
-        return None
-
-    home_value = values[0]
-    away_value = values[1]
-
-    if home_value is None or away_value is None:
-        return None
-
-    return home_value, away_value
-
-
-def extract_requested_stats(content):
-    groups = get_all_stats(content)
-
-    found = {}
-
-    print()
-    print("Number of stat groups:", len(groups))
-    print()
-
-    for group in groups:
-        if not isinstance(group, dict):
+        if not isinstance(period_data, dict):
             continue
 
-        group_title = group.get("title") or group.get("key")
-
-        print(f"Stat group: {group_title}")
-
-        stats = group.get("stats")
+        stats = period_data.get("stats")
 
         if not isinstance(stats, list):
             continue
 
-        for stat in stats:
-            if not isinstance(stat, dict):
+        print()
+        print(f"Period: {period_name}")
+        print(f"Number of groups: {len(stats)}")
+
+        for group in stats:
+
+            if not isinstance(group, dict):
                 continue
 
-            title = stat.get("title") or stat.get("key") or ""
-            normalized = normalize_title(title)
-
-            pair = extract_value_pair(stat)
-
-            print(
-                f"  - {title!r} "
-                f"| key={stat.get('key')!r} "
-                f"| values={stat.get('stats')!r}"
+            group_title = (
+                group.get("title")
+                or group.get("key")
+                or ""
             )
 
-            if normalized not in TARGET_STATS:
+            print(f"  Group: {group_title}")
+
+            group_stats = group.get("stats")
+
+            if not isinstance(group_stats, list):
                 continue
 
-            if pair is None:
-                continue
+            for stat in group_stats:
 
-            found[normalized] = {
-                "home": pair[0],
-                "away": pair[1],
-                "original_title": title,
-                "key": stat.get("key"),
-                "format": stat.get("format"),
-                "type": stat.get("type"),
-            }
+                if not isinstance(stat, dict):
+                    continue
 
-    return found
+                print(
+                    "    "
+                    f"title={stat.get('title')!r}, "
+                    f"key={stat.get('key')!r}, "
+                    f"values={stat.get('stats')!r}"
+                )
 
 
-def print_result(
-    home_team,
-    away_team,
-    stats,
-):
-    print()
-    print("=" * 70)
-    print("FINAL EXTRACTED RESULT")
-    print("=" * 70)
-    print()
-    print(f"Home: {home_team}")
-    print(f"Away: {away_team}")
-    print()
+def inspect_events_from_content(content):
+    print_section("POSSIBLE EVENT DATA INSIDE CONTENT")
 
-    if not stats:
-        print("NO REQUESTED STATS WERE FOUND.")
-        return
+    for key, value in content.items():
 
-    for stat_name in TARGET_STATS:
-        item = stats.get(stat_name)
+        key_lower = str(key).lower()
 
-        if not item:
-            print(f"{stat_name}: NOT FOUND")
+        if (
+            "event" not in key_lower
+            and "incident" not in key_lower
+            and "comment" not in key_lower
+            and "penalty" not in key_lower
+            and "shoot" not in key_lower
+        ):
             continue
 
-        print(
-            f"{stat_name}: "
-            f"{item['home']} - {item['away']}"
+        print()
+        print(f"CONTENT KEY: {key}")
+
+        try:
+            print(
+                json.dumps(
+                    value,
+                    ensure_ascii=False,
+                    indent=2,
+                )[:20000]
+            )
+        except TypeError:
+            print(repr(value))
+
+
+def save_relevant_json(page_props, content):
+    output = {
+        "page_props_keys": list(page_props.keys()),
+        "content_keys": list(content.keys()),
+        "content": content,
+    }
+
+    with open(
+        "extra_time_penalty_raw.json",
+        "w",
+        encoding="utf-8",
+    ) as file:
+        json.dump(
+            output,
+            file,
+            ensure_ascii=False,
+            indent=2,
         )
 
     print()
-    print("=" * 70)
+    print(
+        "Full content saved to "
+        "extra_time_penalty_raw.json"
+    )
 
 
 def main():
     try:
         html = fetch_page(MATCH_URL)
     except Exception as error:
-        print("Could not fetch FotMob page:")
+        print("Could not fetch page:")
         print(error)
         return
 
@@ -351,46 +460,43 @@ def main():
     content = get_content(page_props)
 
     if not content:
-        print()
-        print("FotMob page has no embedded content.")
-        print("The page may require browser hydration.")
+        print("content was not found.")
         return
 
-    home_team, away_team = extract_team_names(
+    print_basic_structure(
         page_props,
         content,
     )
 
-    stats = extract_requested_stats(content)
-
-    print_result(
-        home_team,
-        away_team,
-        stats,
+    inspect_status_objects(
+        page_props,
+        content,
     )
 
-    with open(
-        "test_team_stats_output.json",
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            {
-                "match_id": MATCH_ID,
-                "home": home_team,
-                "away": away_team,
-                "stats": stats,
-            },
-            file,
-            ensure_ascii=False,
-            indent=2,
-        )
-
-    print()
-    print(
-        "Raw extracted result saved to "
-        "test_team_stats_output.json"
+    inspect_score_objects(
+        page_props,
+        content,
     )
+
+    inspect_event_containers(
+        page_props,
+        content,
+    )
+
+    inspect_events_from_content(
+        content,
+    )
+
+    inspect_all_period_stats(
+        content,
+    )
+
+    save_relevant_json(
+        page_props,
+        content,
+    )
+
+    print_section("TEST FINISHED")
 
 
 if __name__ == "__main__":
