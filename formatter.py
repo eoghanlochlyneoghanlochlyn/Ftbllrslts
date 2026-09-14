@@ -27,6 +27,7 @@ def format_score(
     score,
     home_name="Home",
     away_name="Away",
+    penalty_score=None,
 ):
 
     if not isinstance(
@@ -66,9 +67,67 @@ def format_score(
 
         return ""
 
+    penalty_home = None
+    penalty_away = None
+
+    if isinstance(
+        penalty_score,
+        dict,
+    ):
+
+        penalty_home = (
+            penalty_score.get(
+                "home"
+            )
+        )
+
+        penalty_away = (
+            penalty_score.get(
+                "away"
+            )
+        )
+
+        try:
+
+            if (
+                penalty_home is not None
+                and penalty_away is not None
+            ):
+
+                penalty_home = int(
+                    penalty_home
+                )
+
+                penalty_away = int(
+                    penalty_away
+                )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            penalty_home = None
+            penalty_away = None
+
+    if (
+        penalty_home is not None
+        and penalty_away is not None
+    ):
+
+        return (
+            f"{home_name} "
+            f"{home_score} ({penalty_home}) "
+            f"🆚 "
+            f"({penalty_away}) {away_score} "
+            f"{away_name}"
+        )
+
     return (
         f"{home_name} "
-        f"{home_score} - {away_score} "
+        f"{home_score} "
+        f"🆚 "
+        f"{away_score} "
         f"{away_name}"
     )
 
@@ -1234,6 +1293,18 @@ def build_final_lineup_message(
     events=None,
 ):
 
+    player_events = (
+        build_final_player_events(
+            events
+        )
+    )
+
+    message = build_lineup_message(
+        snapshot,
+        player_events=player_events,
+        show_rating=True,
+    )
+
     home_name = (
         snapshot.get("home")
         or "Home"
@@ -1244,29 +1315,30 @@ def build_final_lineup_message(
         or "Away"
     )
 
-    league = (
-        snapshot.get("league")
-        or "نامشخص"
+    score = snapshot.get(
+        "score"
     )
 
-    kickoff = (
-        snapshot.get(
-            "start_formatted"
+    penalty_score = snapshot.get(
+        "penalty_score"
+    )
+
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+        penalty_score,
+    )
+
+    if score_text:
+
+        message = (
+            message.rstrip()
+            + "\n\n"
+            + score_text
         )
-        or "نامشخص"
-    )
 
-    player_events = (
-        build_final_player_events(
-            events
-        )
-    )
-
-    return build_lineup_message(
-        snapshot,
-        player_events=player_events,
-        show_rating=True,
-    )
+    return message
 
 
 # --------------------------------------------------------
@@ -1335,10 +1407,21 @@ def build_final_stats_message(
         "",
     ]
 
+    if score is None:
+
+        score = snapshot.get(
+            "score"
+        )
+
+    penalty_score = snapshot.get(
+        "penalty_score"
+    )
+
     score_text = format_score(
         score,
         home_name,
         away_name,
+        penalty_score,
     )
 
     if score_text:
