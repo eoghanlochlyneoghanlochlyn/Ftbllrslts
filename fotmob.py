@@ -1302,13 +1302,153 @@ def _coerce_score_pair(value):
 # Penalty shootout score
 # =========================================================
 
-def _find_penalty_score_in_section(section):
+def _contains_shootout_marker(node):
+    """
+    بررسی می‌کند که یک ساختار واقعاً به
+    ضربات پنالتی‌شوت‌اوت مربوط است یا نه.
+
+    مهم:
+    صرف وجود کلیدهایی مثل "penalties" کافی نیست،
+    چون FotMob ممکن است چنین داده‌ای را در بخش‌های
+    دیگری از اطلاعات مسابقه هم قرار دهد.
+    """
+
+    if isinstance(node, dict):
+
+        for key in (
+            "penaltyShootout",
+            "penalty_shootout",
+            "shootout",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
+        ):
+
+            if key in node:
+                return True
+
+        for key in (
+            "period",
+            "periodName",
+            "periodType",
+            "matchPeriod",
+            "stage",
+            "stageName",
+        ):
+
+            value = node.get(key)
+
+            if isinstance(value, dict):
+
+                value = (
+                    value.get("name")
+                    or value.get("type")
+                    or value.get("key")
+                    or value.get("value")
+                )
+
+            text = clean_text(
+                value
+            ).lower()
+
+            compact = (
+                text
+                .replace(" ", "")
+                .replace("_", "")
+                .replace("-", "")
+            )
+
+            if (
+                "penaltyshootout" in compact
+                or compact in {
+                    "shootout",
+                    "penalties",
+                    "pen",
+                }
+            ):
+                return True
+
+        if (
+            node.get(
+                "isPenaltyShootoutEvent"
+            )
+            is True
+        ):
+            return True
+
+        for key in (
+            "incidentType",
+            "eventType",
+            "type",
+            "incidentClass",
+        ):
+
+            value = node.get(key)
+
+            if isinstance(value, dict):
+
+                value = (
+                    value.get("name")
+                    or value.get("type")
+                    or value.get("key")
+                    or value.get("value")
+                )
+
+            text = clean_text(
+                value
+            ).lower().replace(
+                " ",
+                "",
+            )
+
+            if (
+                "penaltyshootout" in text
+                or text in {
+                    "shootout",
+                    "penaltyshootout",
+                }
+            ):
+                return True
+
+        for value in node.values():
+
+            if isinstance(
+                value,
+                (dict, list),
+            ):
+
+                if _contains_shootout_marker(
+                    value
+                ):
+                    return True
+
+    elif isinstance(node, list):
+
+        for item in node:
+
+            if _contains_shootout_marker(
+                item
+            ):
+                return True
+
+    return False
+
+
+def _find_penalty_score_in_shootout_section(
+    section
+):
+    """
+    فقط داخل ساختاری که قبلاً مشخص شده مربوط
+    به shootout است، score پنالتی را پیدا می‌کند.
+
+    برخلاف نسخه قبلی، دیگر کل content را کورکورانه
+    recursive نمی‌گردد تا یک "penalties" نامرتبط
+    اشتباهاً به عنوان نتیجه پنالتی‌شوت‌اوت خوانده نشود.
+    """
 
     if isinstance(section, dict):
 
-        # اول خود کلیدهای اختصاصی.
+        # کلیدهای صریح نتیجه پنالتی
         for key in (
-            "penalties",
             "penaltyScore",
             "penalty_score",
             "shootoutScore",
@@ -1324,62 +1464,272 @@ def _find_penalty_score_in_section(section):
                 if result is not None:
                     return result
 
-        # سپس ساختارهای اختصاصی shootout.
+        # "penalties" فقط وقتی معتبر است که
+        # در همین بخش یا والد آن به shootout مربوط باشد.
+        if "penalties" in section:
+
+            result = _coerce_score_pair(
+                section.get("penalties")
+            )
+
+            if result is not None:
+                return result
+
+        # ساختارهای nested اختصاصی
         for key in (
             "penaltyShootout",
             "penalty_shootout",
             "shootout",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
         ):
 
             nested = section.get(key)
 
-            if nested is not None:
+            if nested is None:
+                continue
 
-                result = _coerce_score_pair(
+            result = _coerce_score_pair(
+                nested
+            )
+
+            if result is not None:
+                return result
+
+            result = (
+                _find_penalty_score_in_shootout_section(
                     nested
                 )
+            )
 
-                if result is not None:
-                    return result
-
-                result = (
-                    _find_penalty_score_in_section(
-                        nested
-                    )
-                )
-
-                if result is not None:
-                    return result
-
-        # fallback محدود به همین بخش.
-        for value in section.values():
-
-            if isinstance(
-                value,
-                (dict, list),
-            ):
-
-                result = (
-                    _find_penalty_score_in_section(
-                        value
-                    )
-                )
-
-                if result is not None:
-                    return result
+            if result is not None:
+                return result
 
     elif isinstance(section, list):
 
         for item in section:
 
             result = (
-                _find_penalty_score_in_section(
+                _find_penalty_score_in_shootout_section(
                     item
                 )
             )
 
             if result is not None:
                 return result
+
+    return None
+
+
+def _collect_explicit_shootout_sections(
+    node,
+    result=None,
+):
+    """
+    ساختارهایی را پیدا می‌کند که خودشان صراحتاً
+    shootout را نشان می‌دهند.
+    """
+
+    if result is None:
+        result = []
+
+    if isinstance(node, dict):
+
+        explicit_keys = (
+            "penaltyShootout",
+            "penalty_shootout",
+            "shootout",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
+        )
+
+        for key in explicit_keys:
+
+            if key in node:
+
+                value = node.get(key)
+
+                if isinstance(
+                    value,
+                    (dict, list),
+                ):
+
+                    result.append(value)
+
+                    _collect_explicit_shootout_sections(
+                        value,
+                        result,
+                    )
+
+        for key, value in node.items():
+
+            if key in explicit_keys:
+                continue
+
+            if isinstance(
+                value,
+                (dict, list),
+            ):
+
+                _collect_explicit_shootout_sections(
+                    value,
+                    result,
+                )
+
+    elif isinstance(node, list):
+
+        for item in node:
+
+            if isinstance(
+                item,
+                (dict, list),
+            ):
+
+                _collect_explicit_shootout_sections(
+                    item,
+                    result,
+                )
+
+    return result
+
+
+def _get_shootout_score_from_events(data):
+    """
+    اگر FotMob نتیجه نهایی shootout را مستقیماً
+    ندهد، ضربات پنالتی‌ای را که واقعاً به عنوان
+    shootout event علامت‌گذاری شده‌اند می‌شمارد.
+
+    این eventها به عنوان گل عادی استفاده نمی‌شوند.
+    """
+
+    candidates = (
+        _get_current_match_event_candidates(
+            data
+        )
+    )
+
+    home_score = 0
+    away_score = 0
+    found = False
+
+    for candidate in candidates:
+
+        for event in candidate:
+
+            if not isinstance(event, dict):
+                continue
+
+            if not _is_penalty_shootout_event(
+                event
+            ):
+                continue
+
+            found = True
+
+            # فقط ضربه موفق را بشمار.
+            scored = None
+
+            for key in (
+                "isGoal",
+                "isScored",
+                "scored",
+                "converted",
+                "success",
+                "successful",
+            ):
+
+                if key in event:
+
+                    value = event.get(key)
+
+                    if isinstance(
+                        value,
+                        bool,
+                    ):
+
+                        scored = value
+                        break
+
+            # اگر مشخصاً miss/save باشد،
+            # این ضربه گل نشده است.
+            event_text = " ".join(
+                str(event.get(key, ""))
+                for key in (
+                    "type",
+                    "eventType",
+                    "incidentType",
+                    "incidentClass",
+                    "description",
+                    "reason",
+                )
+            ).lower()
+
+            if any(
+                word in event_text
+                for word in (
+                    "miss",
+                    "saved",
+                    "save",
+                    "off target",
+                    "woodwork",
+                )
+            ):
+
+                scored = False
+
+            if scored is False:
+                continue
+
+            if scored is None:
+
+                # در بعضی داده‌های FotMob،
+                # خود event فقط در صورت گل‌شدن
+                # به شکل penalty/shootout ثبت می‌شود.
+                # در این حالت آن را موفق فرض می‌کنیم.
+                scored = True
+
+            if not scored:
+                continue
+
+            is_home = event.get(
+                "isHome"
+            )
+
+            if is_home is None:
+
+                team = event.get(
+                    "team"
+                )
+
+                if isinstance(
+                    team,
+                    dict,
+                ):
+
+                    is_home = (
+                        team.get("isHome")
+                        if "isHome" in team
+                        else team.get("home")
+                    )
+
+            if is_home is True:
+                home_score += 1
+
+            elif is_home is False:
+                away_score += 1
+
+    if (
+        found
+        and (
+            home_score > 0
+            or away_score > 0
+        )
+    ):
+
+        return {
+            "home": home_score,
+            "away": away_score,
+        }
 
     return None
 
@@ -1394,10 +1744,50 @@ def get_penalty_shootout_score(data):
     if not isinstance(content, dict):
         return None
 
-    # این بخش‌ها فقط متعلق به مسابقه اصلی هستند.
-    sections = [
-        content,
-    ]
+    # -----------------------------------------------------
+    # مرحله 1:
+    # فقط ساختارهای صریح shootout را بررسی می‌کنیم.
+    # -----------------------------------------------------
+
+    shootout_sections = (
+        _collect_explicit_shootout_sections(
+            content
+        )
+    )
+
+    for section in shootout_sections:
+
+        result = (
+            _find_penalty_score_in_shootout_section(
+                section
+            )
+        )
+
+        if result is not None:
+            return result
+
+    # -----------------------------------------------------
+    # مرحله 2:
+    # اگر eventهای واقعی shootout وجود دارند،
+    # از خود آنها نتیجه را می‌سازیم.
+    # -----------------------------------------------------
+
+    event_score = (
+        _get_shootout_score_from_events(
+            data
+        )
+    )
+
+    if event_score is not None:
+        return event_score
+
+    # -----------------------------------------------------
+    # مرحله 3:
+    # بعضی نسخه‌های FotMob ممکن است کل بخش
+    # matchFacts را به عنوان shootout مشخص کنند.
+    # فقط اگر خود آن بخش marker معتبر داشته باشد،
+    # "penalties" را می‌خوانیم.
+    # -----------------------------------------------------
 
     match_facts = content.get(
         "matchFacts"
@@ -1405,38 +1795,18 @@ def get_penalty_shootout_score(data):
 
     if isinstance(match_facts, dict):
 
-        sections.append(
+        if _contains_shootout_marker(
             match_facts
-        )
-
-        events = match_facts.get(
-            "events"
-        )
-
-        if isinstance(
-            events,
-            (dict, list),
         ):
 
-            sections.append(events)
-
-    header = content.get(
-        "header"
-    )
-
-    if isinstance(header, dict):
-        sections.append(header)
-
-    for section in sections:
-
-        result = (
-            _find_penalty_score_in_section(
-                section
+            result = (
+                _find_penalty_score_in_shootout_section(
+                    match_facts
+                )
             )
-        )
 
-        if result is not None:
-            return result
+            if result is not None:
+                return result
 
     return None
 
@@ -3104,6 +3474,58 @@ def _stat_value(value):
     return None
 
 
+def _team_name_matches(
+    value,
+    home_name,
+    away_name,
+):
+
+    if value is None:
+        return None
+
+    if isinstance(value, dict):
+
+        value = (
+            value.get("name")
+            or value.get("shortName")
+            or value.get("longName")
+            or value.get("title")
+        )
+
+    text = clean_text(
+        value
+    ).lower()
+
+    if not text:
+        return None
+
+    home = clean_text(
+        home_name
+    ).lower()
+
+    away = clean_text(
+        away_name
+    ).lower()
+
+    if (
+        text == home
+        or text in home
+        or home in text
+    ):
+
+        return "home"
+
+    if (
+        text == away
+        or text in away
+        or away in text
+    ):
+
+        return "away"
+
+    return None
+
+
 def _extract_stat_pair(
     item,
     home_name,
@@ -3290,9 +3712,7 @@ def _walk_final_stats(
 
                 label_key = result[0]
 
-                # آخرین occurrence را جایگزین
-                # نمی‌کنیم؛ اولین occurrence معتبر
-                # کافی است و duplicateها حذف می‌شوند.
+                # اولین occurrence معتبر کافی است.
                 if label_key not in found:
 
                     found[label_key] = {
