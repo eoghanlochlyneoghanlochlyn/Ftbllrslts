@@ -907,6 +907,704 @@ def format_iran_datetime(value):
 
 
 # =========================================================
+# ابزارهای اختصاصی وضعیت مسابقه
+# =========================================================
+
+def _get_match_facts(data):
+
+    content = get_content(
+        data
+    )
+
+    if not isinstance(
+        content,
+        dict,
+    ):
+        return {}
+
+    match_facts = content.get(
+        "matchFacts"
+    )
+
+    if isinstance(
+        match_facts,
+        dict,
+    ):
+        return match_facts
+
+    return {}
+
+
+def _get_match_facts_events_container(data):
+
+    match_facts = _get_match_facts(
+        data
+    )
+
+    events_container = match_facts.get(
+        "events"
+    )
+
+    if isinstance(
+        events_container,
+        dict,
+    ):
+        return events_container
+
+    return {}
+
+
+def _get_current_match_event_candidates(data):
+
+    content = get_content(
+        data
+    )
+
+    candidates = []
+
+    if isinstance(
+        content,
+        dict,
+    ):
+
+        match_facts = content.get(
+            "matchFacts"
+        )
+
+        if isinstance(
+            match_facts,
+            dict,
+        ):
+
+            events_container = match_facts.get(
+                "events"
+            )
+
+            if isinstance(
+                events_container,
+                dict,
+            ):
+
+                candidates.extend(
+                    [
+                        events_container.get(
+                            "events"
+                        ),
+                        events_container.get(
+                            "incidents"
+                        ),
+                        events_container.get(
+                            "chronological"
+                        ),
+                    ]
+                )
+
+            elif isinstance(
+                events_container,
+                list,
+            ):
+
+                candidates.append(
+                    events_container
+                )
+
+            incidents = match_facts.get(
+                "incidents"
+            )
+
+            if isinstance(
+                incidents,
+                list,
+            ):
+                candidates.append(
+                    incidents
+                )
+
+        liveticker = content.get(
+            "liveticker"
+        )
+
+        if isinstance(
+            liveticker,
+            dict,
+        ):
+
+            candidates.extend(
+                [
+                    liveticker.get(
+                        "events"
+                    ),
+                    liveticker.get(
+                        "incidents"
+                    ),
+                ]
+            )
+
+    result = []
+
+    for candidate in candidates:
+
+        if isinstance(
+            candidate,
+            list,
+        ):
+
+            result.extend(
+                candidate
+            )
+
+    return result
+
+
+def _event_period_name(event):
+
+    if not isinstance(
+        event,
+        dict,
+    ):
+        return ""
+
+    for key in (
+        "period",
+        "periodName",
+        "periodType",
+        "matchPeriod",
+        "stage",
+        "stageName",
+    ):
+
+        value = event.get(
+            key
+        )
+
+        if isinstance(
+            value,
+            dict,
+        ):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        if value is not None:
+
+            text = clean_text(
+                value
+            )
+
+            if text:
+                return text
+
+    return ""
+
+
+def _get_match_periods(data):
+
+    periods = []
+
+    events = _get_current_match_event_candidates(
+        data
+    )
+
+    for event in events:
+
+        period = _event_period_name(
+            event
+        )
+
+        if period:
+            periods.append(
+                period
+            )
+
+    events_container = (
+        _get_match_facts_events_container(
+            data
+        )
+    )
+
+    for key in (
+        "period",
+        "currentPeriod",
+        "currentStage",
+        "stage",
+        "stageName",
+    ):
+
+        value = events_container.get(
+            key
+        )
+
+        if isinstance(
+            value,
+            dict,
+        ):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        if value is not None:
+
+            text = clean_text(
+                value
+            )
+
+            if text:
+                periods.append(
+                    text
+                )
+
+    unique = []
+
+    for period in periods:
+
+        if period not in unique:
+            unique.append(
+                period
+            )
+
+    return unique
+
+
+def _period_flags(periods):
+
+    normalized = {
+        clean_text(period).lower()
+        for period in periods
+        if clean_text(period)
+    }
+
+    extra_period_names = {
+        "firsthalfextra",
+        "secondhalfextra",
+        "firstextra",
+        "secondextra",
+        "firstextrahalf",
+        "secondextrahalf",
+        "extratime",
+        "extra time",
+        "extra_time",
+        "et",
+        "aet",
+    }
+
+    shootout_period_names = {
+        "penaltyshootout",
+        "penalty shootout",
+        "penalty_shootout",
+        "shootout",
+        "penalties",
+        "penalty",
+        "pen",
+    }
+
+    has_extra_time = False
+    extra_time_started = False
+    extra_time_finished = False
+
+    for period in normalized:
+
+        compact = (
+            period
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            period in extra_period_names
+            or compact in extra_period_names
+            or "extrahalf" in compact
+            or "halfextra" in compact
+        ):
+
+            has_extra_time = True
+            extra_time_started = True
+
+            if (
+                "second" in compact
+                or "aet" in compact
+                or compact == "extratime"
+            ):
+                extra_time_finished = True
+
+    has_penalty_shootout = False
+
+    for period in normalized:
+
+        compact = (
+            period
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            period in shootout_period_names
+            or compact in {
+                "penaltyshootout",
+                "shootout",
+                "penalties",
+                "pen",
+            }
+            or "penaltyshootout" in compact
+        ):
+
+            has_penalty_shootout = True
+
+    return {
+        "has_extra_time": has_extra_time,
+        "extra_time_started": extra_time_started,
+        "extra_time_finished": extra_time_finished,
+        "has_penalty_shootout": has_penalty_shootout,
+    }
+
+
+def _coerce_score_pair(value):
+
+    if value is None:
+        return None
+
+    if isinstance(
+        value,
+        (list, tuple),
+    ):
+
+        if len(value) >= 2:
+
+            try:
+
+                return {
+                    "home": int(
+                        value[0]
+                    ),
+                    "away": int(
+                        value[1]
+                    ),
+                }
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                return None
+
+        return None
+
+    if isinstance(
+        value,
+        dict,
+    ):
+
+        home = None
+        away = None
+
+        for key in (
+            "home",
+            "homeScore",
+            "home_score",
+            "homeTeam",
+            "homeTeamScore",
+        ):
+
+            if key in value:
+
+                candidate = value.get(
+                    key
+                )
+
+                if isinstance(
+                    candidate,
+                    dict,
+                ):
+
+                    candidate = (
+                        candidate.get("score")
+                        or candidate.get("value")
+                        or candidate.get("goals")
+                    )
+
+                if candidate is not None:
+
+                    home = candidate
+                    break
+
+        for key in (
+            "away",
+            "awayScore",
+            "away_score",
+            "awayTeam",
+            "awayTeamScore",
+        ):
+
+            if key in value:
+
+                candidate = value.get(
+                    key
+                )
+
+                if isinstance(
+                    candidate,
+                    dict,
+                ):
+
+                    candidate = (
+                        candidate.get("score")
+                        or candidate.get("value")
+                        or candidate.get("goals")
+                    )
+
+                if candidate is not None:
+
+                    away = candidate
+                    break
+
+        if home is not None and away is not None:
+
+            try:
+
+                return {
+                    "home": int(home),
+                    "away": int(away),
+                }
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                pass
+
+        for key in (
+            "score",
+            "result",
+            "value",
+        ):
+
+            nested = value.get(
+                key
+            )
+
+            if nested is not None:
+
+                result = _coerce_score_pair(
+                    nested
+                )
+
+                if result is not None:
+                    return result
+
+        return None
+
+    if isinstance(
+        value,
+        str,
+    ):
+
+        match = re.search(
+            r"(\d+)\s*[-:]\s*(\d+)",
+            value,
+        )
+
+        if match:
+
+            return {
+                "home": int(
+                    match.group(1)
+                ),
+                "away": int(
+                    match.group(2)
+                ),
+            }
+
+    return None
+
+
+def _find_penalty_score_in_section(section):
+
+    if isinstance(
+        section,
+        dict,
+    ):
+
+        # اولویت با خود کلید penalties است.
+        for key in (
+            "penalties",
+            "penaltyScore",
+            "penalty_score",
+            "shootoutScore",
+            "shootout_score",
+        ):
+
+            if key in section:
+
+                result = _coerce_score_pair(
+                    section.get(key)
+                )
+
+                if result is not None:
+                    return result
+
+        # بعضی ساختارها ممکن است نتیجه را
+        # داخل shootout یا penaltyShootout نگه دارند.
+        for key in (
+            "penaltyShootout",
+            "penalty_shootout",
+            "shootout",
+        ):
+
+            nested = section.get(
+                key
+            )
+
+            if nested is not None:
+
+                result = _coerce_score_pair(
+                    nested
+                )
+
+                if result is not None:
+                    return result
+
+                result = _find_penalty_score_in_section(
+                    nested
+                )
+
+                if result is not None:
+                    return result
+
+        # فقط داخل همین بخش مشخص جست‌وجوی بازگشتی می‌کنیم.
+        # عمداً کل JSON را نمی‌گردیم تا H2H وارد نشود.
+        for value in section.values():
+
+            if isinstance(
+                value,
+                (dict, list),
+            ):
+
+                result = _find_penalty_score_in_section(
+                    value
+                )
+
+                if result is not None:
+                    return result
+
+    elif isinstance(
+        section,
+        list,
+    ):
+
+        for item in section:
+
+            result = _find_penalty_score_in_section(
+                item
+            )
+
+            if result is not None:
+                return result
+
+    return None
+
+
+def get_penalty_shootout_score(data):
+
+    if not isinstance(
+        data,
+        dict,
+    ):
+        return None
+
+    content = get_content(
+        data
+    )
+
+    if not isinstance(
+        content,
+        dict,
+    ):
+        return None
+
+    # ابتدا بخش‌های مستقیم و اختصاصی مسابقه.
+    direct_sections = [
+        content,
+        content.get("matchFacts"),
+        content.get("matchFacts", {}).get("events")
+        if isinstance(
+            content.get("matchFacts"),
+            dict,
+        )
+        else None,
+    ]
+
+    for section in direct_sections:
+
+        if section is None:
+            continue
+
+        result = _find_penalty_score_in_section(
+            section
+        )
+
+        if result is not None:
+            return result
+
+    return None
+
+
+def get_match_phase_info(data):
+
+    periods = _get_match_periods(
+        data
+    )
+
+    flags = _period_flags(
+        periods
+    )
+
+    penalty_score = (
+        get_penalty_shootout_score(
+            data
+        )
+    )
+
+    if penalty_score is not None:
+
+        flags[
+            "has_penalty_shootout"
+        ] = True
+
+    current_period = (
+        periods[-1]
+        if periods
+        else None
+    )
+
+    return {
+        "periods": periods,
+        "current_period": current_period,
+        "has_extra_time": flags[
+            "has_extra_time"
+        ],
+        "extra_time_started": flags[
+            "extra_time_started"
+        ],
+        "extra_time_finished": flags[
+            "extra_time_finished"
+        ],
+        "penalty_shootout": flags[
+            "has_penalty_shootout"
+        ],
+        "penalty_score": penalty_score,
+    }
+
+
+# =========================================================
 # وضعیت بازی
 # =========================================================
 
@@ -985,20 +1683,182 @@ def _find_status_objects(data):
                 status
             )
 
-    found = recursive_find(
-        data,
-        {"status"},
+        page_header = page_props.get(
+            "header"
+        )
+
+        if isinstance(
+            page_header,
+            dict,
+        ):
+
+            status = page_header.get(
+                "status"
+            )
+
+            if isinstance(
+                status,
+                dict,
+            ):
+                result.append(
+                    status
+                )
+
+    content = get_content(
+        data
     )
 
     if isinstance(
-        found,
+        content,
         dict,
     ):
-        result.append(
-            found
+
+        status = content.get(
+            "status"
         )
 
+        if isinstance(
+            status,
+            dict,
+        ):
+            result.append(
+                status
+            )
+
+        match_facts = content.get(
+            "matchFacts"
+        )
+
+        if isinstance(
+            match_facts,
+            dict,
+        ):
+
+            status = match_facts.get(
+                "status"
+            )
+
+            if isinstance(
+                status,
+                dict,
+            ):
+                result.append(
+                    status
+                )
+
+            events_container = match_facts.get(
+                "events"
+            )
+
+            if isinstance(
+                events_container,
+                dict,
+            ):
+
+                status = events_container.get(
+                    "status"
+                )
+
+                if isinstance(
+                    status,
+                    dict,
+                ):
+                    result.append(
+                        status
+                    )
+
+    # عمداً دیگر recursive_find روی کل JSON انجام نمی‌دهیم.
+    # چون H2H و بازی‌های قبلی نیز status دارند.
+
     return result
+
+
+def _status_text(status):
+
+    if not isinstance(
+        status,
+        dict,
+    ):
+        return ""
+
+    parts = []
+
+    reason = status.get(
+        "reason"
+    )
+
+    if isinstance(
+        reason,
+        dict,
+    ):
+
+        parts.extend(
+            [
+                reason.get(
+                    "short",
+                    "",
+                ),
+                reason.get(
+                    "long",
+                    "",
+                ),
+                reason.get(
+                    "shortKey",
+                    "",
+                ),
+            ]
+        )
+
+    else:
+
+        parts.append(
+            reason or ""
+        )
+
+    for key in (
+        "name",
+        "short",
+        "long",
+        "description",
+        "type",
+    ):
+
+        parts.append(
+            status.get(
+                key,
+                "",
+            )
+        )
+
+    return " ".join(
+        str(part)
+        for part in parts
+        if part is not None
+    ).lower()
+
+
+def _get_match_events_ongoing(data):
+
+    events_container = (
+        _get_match_facts_events_container(
+            data
+        )
+    )
+
+    if not events_container:
+        return None
+
+    ongoing = events_container.get(
+        "ongoing"
+    )
+
+    if isinstance(
+        ongoing,
+        bool,
+    ):
+        return ongoing
+
+    return None
 
 
 def get_match_status(data):
@@ -1029,81 +1889,76 @@ def get_match_status(data):
         ) is True:
             cancelled = True
 
-        reason = status.get(
-            "reason"
-        )
-
-        reason_text = ""
-
-        if isinstance(
-            reason,
-            dict,
-        ):
-
-            reason_text = " ".join(
-                [
-                    str(
-                        reason.get(
-                            "short",
-                            "",
-                        )
-                    ),
-                    str(
-                        reason.get(
-                            "long",
-                            "",
-                        )
-                    ),
-                ]
-            ).lower()
-
-        else:
-
-            reason_text = str(
-                reason or ""
-            ).lower()
-
-        name = str(
-            status.get(
-                "name",
-                "",
-            )
-        ).lower()
-
-        short = str(
-            status.get(
-                "short",
-                "",
-            )
-        ).lower()
-
-        status_text = (
-            reason_text
-            + " "
-            + name
-            + " "
-            + short
+        status_text = _status_text(
+            status
         )
 
         if (
-            "half" in status_text
+            "half time" in status_text
             or "halftime" in status_text
-            or status_text.strip()
-            in {
-                "ht",
-                "1st half",
-            }
+            or re.search(
+                r"\bht\b",
+                status_text,
+            )
+            or "first break" in status_text
+            or "second break" in status_text
         ):
             half_time = True
 
-        if short in {
-            "ht",
-            "half time",
-            "halftime",
-        }:
-            half_time = True
+        if (
+            "suspended" in status_text
+            or "postponed" in status_text
+            or "interrupted" in status_text
+        ):
+            continue
+
+    phase = get_match_phase_info(
+        data
+    )
+
+    if (
+        phase["periods"]
+        and not started
+    ):
+
+        started = True
 
     if finished:
+        started = True
+
+    events_ongoing = (
+        _get_match_events_ongoing(
+            data
+        )
+    )
+
+    # اگر FotMob در بخش eventهای همین مسابقه
+    # صراحتاً بگوید مسابقه دیگر ongoing نیست،
+    # می‌توانیم آن را پایان‌یافته در نظر بگیریم.
+    #
+    # فقط وقتی استفاده می‌شود که بازی شروع شده باشد
+    # و نشانه‌ای از suspended/postponed وجود نداشته باشد.
+    if (
+        not finished
+        and started
+        and not cancelled
+        and events_ongoing is False
+    ):
+
+        finished = True
+
+    # اگر نتیجه نهایی ضربات پنالتی موجود باشد،
+    # خود این داده یک سیگنال بسیار قوی برای
+    # پایان واقعی مسابقه است.
+    #
+    # این فقط برای shootout است و score اصلی
+    # مسابقه را تغییر نمی‌دهد.
+    if (
+        not finished
+        and phase["penalty_score"] is not None
+    ):
+
+        finished = True
         started = True
 
     return {
@@ -1111,6 +1966,27 @@ def get_match_status(data):
         "finished": finished,
         "cancelled": cancelled,
         "half_time": half_time,
+        "has_extra_time": phase[
+            "has_extra_time"
+        ],
+        "extra_time_started": phase[
+            "extra_time_started"
+        ],
+        "extra_time_finished": phase[
+            "extra_time_finished"
+        ],
+        "penalty_shootout": phase[
+            "penalty_shootout"
+        ],
+        "penalty_score": phase[
+            "penalty_score"
+        ],
+        "current_period": phase[
+            "current_period"
+        ],
+        "periods": phase[
+            "periods"
+        ],
     }
 
 
@@ -1125,6 +2001,15 @@ def get_match_status_key(data):
 
     if status["finished"]:
         return "finished"
+
+    if status["penalty_shootout"]:
+        return "penalty_shootout"
+
+    if (
+        status["has_extra_time"]
+        and status["extra_time_started"]
+    ):
+        return "extra_time"
 
     if status["half_time"]:
         return "half_time"
@@ -2201,6 +3086,91 @@ def get_event_unique_id(event):
     return None
 
 
+def _is_penalty_shootout_event(event):
+
+    if not isinstance(
+        event,
+        dict,
+    ):
+        return False
+
+    if event.get(
+        "isPenaltyShootoutEvent"
+    ) is True:
+
+        return True
+
+    for key in (
+        "period",
+        "periodName",
+        "periodType",
+        "matchPeriod",
+        "stage",
+        "stageName",
+    ):
+
+        value = event.get(
+            key
+        )
+
+        if isinstance(
+            value,
+            dict,
+        ):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        text = clean_text(
+            value
+        ).lower()
+
+        compact = (
+            text
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            "penaltyshootout" in compact
+            or compact in {
+                "shootout",
+                "penalties",
+                "pen",
+            }
+        ):
+
+            return True
+
+    event_type = str(
+        event.get(
+            "incidentType",
+            ""
+        )
+    ).lower()
+
+    event_class = str(
+        event.get(
+            "incidentClass",
+            ""
+        )
+    ).lower()
+
+    if (
+        "penaltyshootout" in event_type
+        or "penaltyshootout" in event_class
+    ):
+
+        return True
+
+    return False
+
+
 def normalize_event(event):
 
     if not isinstance(
@@ -2213,57 +3183,78 @@ def normalize_event(event):
         event
     )
 
-    event_type = (
-        event.get("type")
-        or event.get("eventType")
-        or event.get("incidentType")
-        or event.get("incident")
-        or ""
+    is_shootout = (
+        _is_penalty_shootout_event(
+            event
+        )
     )
 
-    if isinstance(
-        event_type,
-        dict,
-    ):
+    if is_shootout:
 
-        event_type = (
-            event_type.get("name")
-            or event_type.get("type")
-            or ""
-        )
+        result[
+            "isPenaltyShootoutEvent"
+        ] = True
 
-    event_type = str(
-        event_type
-    ).lower()
-
-    if (
-        "goal" in event_type
-        or event.get(
-            "isGoal"
-        ) is True
-    ):
-
-        result["type"] = "goal"
-
-    elif (
-        "card" in event_type
-        or event.get(
-            "card"
-        ) is not None
-        or event.get(
-            "cardType"
-        ) is not None
-    ):
-
-        result["type"] = "card"
-
-    elif "var" in event_type:
-
-        result["type"] = "var"
+        # بسیار مهم:
+        # ضربه پنالتی در shootout نباید به عنوان
+        # گل معمولی وارد سیستم شود.
+        result[
+            "type"
+        ] = "penalty_shootout"
 
     else:
 
-        result["type"] = event_type
+        event_type = (
+            event.get("type")
+            or event.get("eventType")
+            or event.get("incidentType")
+            or event.get("incident")
+            or ""
+        )
+
+        if isinstance(
+            event_type,
+            dict,
+        ):
+
+            event_type = (
+                event_type.get("name")
+                or event_type.get("type")
+                or ""
+            )
+
+        event_type = str(
+            event_type
+        ).lower()
+
+        if (
+            "goal" in event_type
+            or event.get(
+                "isGoal"
+            ) is True
+        ):
+
+            result["type"] = "goal"
+
+        elif (
+            "card" in event_type
+            or event.get(
+                "card"
+            ) is not None
+            or event.get(
+                "cardType"
+            ) is not None
+        ):
+
+            result["type"] = "card"
+
+        elif "var" in event_type:
+
+            result["type"] = "var"
+
+        else:
+
+            result["type"] = event_type
 
     player_id = get_event_player_id(
         event
@@ -2399,11 +3390,36 @@ def extract_events_from_data(data):
                 "incidents"
             )
 
-            candidates.extend(
-                [
-                    events,
-                    incidents,
-                ]
+            if isinstance(
+                events,
+                dict,
+            ):
+
+                candidates.extend(
+                    [
+                        events.get(
+                            "events"
+                        ),
+                        events.get(
+                            "incidents"
+                        ),
+                        events.get(
+                            "chronological"
+                        ),
+                    ]
+                )
+
+            elif isinstance(
+                events,
+                list,
+            ):
+
+                candidates.append(
+                    events
+                )
+
+            candidates.append(
+                incidents
             )
 
         liveticker = content.get(
@@ -2513,24 +3529,35 @@ def extract_events_from_data(data):
                     if result:
                         return result
 
-    found = recursive_find(
-        data,
-        {
-            "chronological",
-        },
-    )
-
+    # فقط fallback محدود به content است.
+    # دیگر کل JSON را recursive نمی‌گردیم،
+    # چون H2H می‌تواند eventهای خودش را داشته باشد.
     if isinstance(
-        found,
-        list,
+        content,
+        dict,
     ):
 
-        result = _normalize_event_list(
-            found
-        )
+        for key in (
+            "chronological",
+            "events",
+            "incidents",
+        ):
 
-        if result:
-            return result
+            found = content.get(
+                key
+            )
+
+            if isinstance(
+                found,
+                list,
+            ):
+
+                result = _normalize_event_list(
+                    found
+                )
+
+                if result:
+                    return result
 
     return []
 
@@ -2730,19 +3757,34 @@ STAT_ALIASES = {
     "expected goals": "xG",
     "expected goals (xg)": "xG",
     "xg": "xG",
+
     "shots": "شوت",
     "total shots": "شوت",
+
     "shots on target": "شوت در چارچوب",
     "shots on target from inside the box": "شوت در چارچوب",
+
     "possession": "مالکیت",
+    "ball possession": "مالکیت",
+
     "passes": "پاس",
     "total passes": "پاس",
+
     "pass accuracy": "دقت پاس",
+
     "accurate passes": "پاس دقیق",
+    "accurate passes (%)": "پاس دقیق",
+
+    "big chances": "موقعیت بزرگ",
+
     "corners": "کرنر",
     "corner kicks": "کرنر",
+
     "fouls": "خطا",
+    "fouls committed": "خطا",
+
     "offsides": "آفساید",
+
     "yellow cards": "کارت زرد",
     "red cards": "کارت قرمز",
 }
@@ -2795,20 +3837,27 @@ def _stat_value(value):
         if not text:
             return None
 
-        text = text.replace(
+        # مقدارهایی مثل:
+        # 324 (81%)
+        # 377 (81%)
+        # را عمداً به صورت string نگه می‌داریم
+        # تا formatter بتواند همان نمایش FotMob
+        # را حفظ کند.
+        numeric_only = text.replace(
             "%",
             "",
         )
 
         try:
             return float(
-                text
+                numeric_only
             )
 
         except (
             TypeError,
             ValueError,
         ):
+
             return text
 
     return None
@@ -2822,6 +3871,17 @@ def _team_name_matches(
 
     if value is None:
         return None
+
+    if isinstance(
+        value,
+        dict,
+    ):
+
+        value = (
+            value.get("name")
+            or value.get("teamName")
+            or value.get("shortName")
+        )
 
     text = clean_text(
         value
@@ -2876,25 +3936,68 @@ def _extract_stat_pair(
 
     if not isinstance(
         values,
-        list,
+        (list, dict),
     ):
+
         values = item.get(
             "values"
         )
 
     if not isinstance(
         values,
-        list,
+        (list, dict),
     ):
+
         values = item.get(
             "value"
         )
+
+    # -----------------------------------------------------
+    # ساختار رایج FotMob:
+    #
+    # {
+    #     "title": "Big chances",
+    #     "stats": [1, 0]
+    # }
+    # -----------------------------------------------------
 
     if isinstance(
         values,
         list,
     ):
 
+        # اگر دو مقدار مستقیم داریم.
+        if (
+            len(values) >= 2
+            and not all(
+                isinstance(
+                    value,
+                    dict,
+                )
+                for value in values[:2]
+            )
+        ):
+
+            home_value = _stat_value(
+                values[0]
+            )
+
+            away_value = _stat_value(
+                values[1]
+            )
+
+            if (
+                home_value is not None
+                and away_value is not None
+            ):
+
+                return (
+                    normalized_label,
+                    home_value,
+                    away_value,
+                )
+
+        # ساختارهای قدیمی‌تر/تودرتو
         home_value = None
         away_value = None
 
@@ -2923,7 +4026,9 @@ def _extract_stat_pair(
             )
 
             value = (
-                value_item.get("value")
+                value_item.get(
+                    "value"
+                )
             )
 
             if value is None:
@@ -2956,6 +4061,10 @@ def _extract_stat_pair(
                 home_value,
                 away_value,
             )
+
+    # -----------------------------------------------------
+    # ساختار dict
+    # -----------------------------------------------------
 
     if isinstance(
         values,
@@ -3127,6 +4236,9 @@ def extract_match_stats(
         )
 
     # اگر ساختار بالا نبود، کل داده را جست‌وجو می‌کنیم.
+    #
+    # این fallback قبلی حفظ شده، اما فقط وقتی
+    # هیچ stat معتبری از بخش‌های اختصاصی پیدا نشده.
     if not found:
 
         _walk_stat_candidates(
@@ -3282,6 +4394,10 @@ def get_match_snapshot(match_url):
     )
 
     status = get_match_status(
+        data
+    )
+
+    phase = get_match_phase_info(
         data
     )
 
@@ -3464,6 +4580,10 @@ def get_match_snapshot(match_url):
         data
     )
 
+    penalty_score = (
+        phase["penalty_score"]
+    )
+
     stats = extract_match_stats(
         data,
         home_name,
@@ -3526,7 +4646,40 @@ def get_match_snapshot(match_url):
             "cancelled"
         ],
 
+        # نتیجه واقعی بازی
+        # مثال آرژانتین - فرانسه:
+        # 3 - 3
         "score": score,
+
+        # نتیجه ضربات پنالتی، جدا از score
+        # مثال:
+        # 4 - 2
+        "penalty_score": penalty_score,
+
+        # اطلاعات مرحله بازی
+        "has_extra_time": status[
+            "has_extra_time"
+        ],
+
+        "extra_time_started": status[
+            "extra_time_started"
+        ],
+
+        "extra_time_finished": status[
+            "extra_time_finished"
+        ],
+
+        "penalty_shootout": status[
+            "penalty_shootout"
+        ],
+
+        "current_period": status[
+            "current_period"
+        ],
+
+        "periods": status[
+            "periods"
+        ],
 
         "stats": stats,
 
