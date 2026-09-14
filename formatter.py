@@ -644,6 +644,7 @@ def build_lineup_message(
     home_scorers=None,
     away_scorers=None,
     show_rating=False,
+    show_final_score=False,
 ):
 
     home_name = (
@@ -679,15 +680,57 @@ def build_lineup_message(
     message = [
         f"🏆 {league}",
         "",
-        (
-            f"⚽️ {home_name} "
-            f"🆚 {away_name}"
-        ),
-        (
-            f"🕐 {kickoff} "
-            f"به وقت ایران"
-        ),
     ]
+
+    if show_final_score:
+
+        score = snapshot.get(
+            "score"
+        )
+
+        penalty_score = snapshot.get(
+            "penalty_score"
+        )
+
+        score_text = format_score(
+            score,
+            home_name,
+            away_name,
+            penalty_score,
+        )
+
+        if score_text:
+
+            message.append(
+                score_text
+            )
+
+            message.append("")
+
+    else:
+
+        message.append(
+            (
+                f"⚽️ {home_name} "
+                f"🆚 {away_name}"
+            )
+        )
+
+        message.append(
+            (
+                f"🕐 {kickoff} "
+                f"به وقت ایران"
+            )
+        )
+
+    if show_final_score:
+
+        message.append(
+            (
+                f"🕐 {kickoff} "
+                f"به وقت ایران"
+            )
+        )
 
     if show_rating:
 
@@ -847,6 +890,18 @@ def build_goal_message(
     else:
         team_name = ""
 
+    # در گل به خودی، تیم ثبت‌شده در event
+    # تیم صاحب بازیکن است، نه تیمی که گل به سود آن ثبت شده.
+    if is_own_goal(
+        event
+    ):
+
+        if is_home is True:
+            team_name = away_name
+
+        elif is_home is False:
+            team_name = home_name
+
     minute = get_goal_minute(
         event
     )
@@ -881,9 +936,19 @@ def build_goal_message(
 
     if team_name:
 
-        lines.append(
-            f"برای {team_name}!"
-        )
+        if is_own_goal(
+            event
+        ):
+
+            lines.append(
+                f"به سود {team_name}!"
+            )
+
+        else:
+
+            lines.append(
+                f"برای {team_name}!"
+            )
 
     if minute_text:
 
@@ -1303,40 +1368,8 @@ def build_final_lineup_message(
         snapshot,
         player_events=player_events,
         show_rating=True,
+        show_final_score=True,
     )
-
-    home_name = (
-        snapshot.get("home")
-        or "Home"
-    )
-
-    away_name = (
-        snapshot.get("away")
-        or "Away"
-    )
-
-    score = snapshot.get(
-        "score"
-    )
-
-    penalty_score = snapshot.get(
-        "penalty_score"
-    )
-
-    score_text = format_score(
-        score,
-        home_name,
-        away_name,
-        penalty_score,
-    )
-
-    if score_text:
-
-        message = (
-            message.rstrip()
-            + "\n\n"
-            + score_text
-        )
 
     return message
 
