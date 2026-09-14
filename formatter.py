@@ -707,6 +707,13 @@ def build_lineup_message(
 
             message.append("")
 
+        message.append(
+            (
+                f"🕐 {kickoff} "
+                f"به وقت ایران"
+            )
+        )
+
     else:
 
         message.append(
@@ -715,15 +722,6 @@ def build_lineup_message(
                 f"🆚 {away_name}"
             )
         )
-
-        message.append(
-            (
-                f"🕐 {kickoff} "
-                f"به وقت ایران"
-            )
-        )
-
-    if show_final_score:
 
         message.append(
             (
@@ -890,16 +888,20 @@ def build_goal_message(
     else:
         team_name = ""
 
-    # در گل به خودی، تیم ثبت‌شده در event
-    # تیم صاحب بازیکن است، نه تیمی که گل به سود آن ثبت شده.
-    if is_own_goal(
+    own_goal = is_own_goal(
         event
-    ):
+    )
+
+    # در گل به خودی، بازیکن متعلق به یک تیم است،
+    # اما گل برای تیم مقابل ثبت می‌شود.
+    if own_goal:
 
         if is_home is True:
+
             team_name = away_name
 
         elif is_home is False:
+
             team_name = home_name
 
     minute = get_goal_minute(
@@ -916,9 +918,7 @@ def build_goal_message(
 
         minute_text = ""
 
-    if is_own_goal(
-        event
-    ):
+    if own_goal:
 
         title = (
             "⚽️ گل به خودی"
@@ -936,9 +936,7 @@ def build_goal_message(
 
     if team_name:
 
-        if is_own_goal(
-            event
-        ):
+        if own_goal:
 
             lines.append(
                 f"به سود {team_name}!"
@@ -968,8 +966,67 @@ def build_goal_message(
             "🎯 پنالتی"
         )
 
-    score_text = format_score(
+    # ----------------------------------------------------
+    # نتیجه‌ی قابل نمایش
+    # ----------------------------------------------------
+
+    score_for_display = score
+
+    # score ورودی برای event، نتیجه قبل از گل است.
+    # در گل به خودی باید گل به تیم مقابل اضافه شود.
+    if own_goal and isinstance(
         score,
+        dict,
+    ):
+
+        score_for_display = dict(
+            score
+        )
+
+        if is_home is True:
+
+            try:
+
+                score_for_display["away"] = (
+                    int(
+                        score_for_display.get(
+                            "away",
+                            0,
+                        )
+                    )
+                    + 1
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                score_for_display = score
+
+        elif is_home is False:
+
+            try:
+
+                score_for_display["home"] = (
+                    int(
+                        score_for_display.get(
+                            "home",
+                            0,
+                        )
+                    )
+                    + 1
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                score_for_display = score
+
+    score_text = format_score(
+        score_for_display,
         home_name,
         away_name,
     )
@@ -977,6 +1034,7 @@ def build_goal_message(
     if score_text:
 
         lines.append("")
+
         lines.append(
             score_text
         )
