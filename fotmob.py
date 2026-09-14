@@ -1141,12 +1141,11 @@ def _period_flags(periods):
 
                 extra_time_finished = True
 
+        # فقط عبارت‌های صریح مربوط به shootout.
         if (
             "penaltyshootout" in compact
             or compact in {
                 "shootout",
-                "penalties",
-                "pen",
             }
         ):
 
@@ -1304,17 +1303,17 @@ def _coerce_score_pair(value):
 
 def _contains_shootout_marker(node):
     """
-    بررسی می‌کند که یک ساختار واقعاً به
-    ضربات پنالتی‌شوت‌اوت مربوط است یا نه.
+    فقط نشانه‌های صریح Penalty Shootout را بررسی می‌کند.
 
     مهم:
-    صرف وجود کلیدهایی مثل "penalties" کافی نیست،
-    چون FotMob ممکن است چنین داده‌ای را در بخش‌های
-    دیگری از اطلاعات مسابقه هم قرار دهد.
+    عبارت‌هایی مثل "penalty" یا "pen" به تنهایی
+    نشانه shootout نیستند؛ چون ممکن است یک پنالتی
+    معمولی در جریان 90/120 دقیقه باشند.
     """
 
     if isinstance(node, dict):
 
+        # کلیدهای صریح.
         for key in (
             "penaltyShootout",
             "penalty_shootout",
@@ -1326,6 +1325,7 @@ def _contains_shootout_marker(node):
             if key in node:
                 return True
 
+        # دوره باید واقعاً PenaltyShootout باشد.
         for key in (
             "period",
             "periodName",
@@ -1359,26 +1359,20 @@ def _contains_shootout_marker(node):
 
             if (
                 "penaltyshootout" in compact
-                or compact in {
-                    "shootout",
-                    "penalties",
-                    "pen",
-                }
+                or compact == "shootout"
             ):
                 return True
 
-        if (
-            node.get(
-                "isPenaltyShootoutEvent"
-            )
-            is True
-        ):
+        if node.get(
+            "isPenaltyShootoutEvent"
+        ) is True:
+
             return True
 
+        # فقط event typeهای صریح shootout.
         for key in (
             "incidentType",
             "eventType",
-            "type",
             "incidentClass",
         ):
 
@@ -1395,17 +1389,18 @@ def _contains_shootout_marker(node):
 
             text = clean_text(
                 value
-            ).lower().replace(
-                " ",
-                "",
+            ).lower()
+
+            compact = (
+                text
+                .replace(" ", "")
+                .replace("_", "")
+                .replace("-", "")
             )
 
             if (
-                "penaltyshootout" in text
-                or text in {
-                    "shootout",
-                    "penaltyshootout",
-                }
+                "penaltyshootout" in compact
+                or compact == "shootout"
             ):
                 return True
 
@@ -1437,17 +1432,13 @@ def _find_penalty_score_in_shootout_section(
     section
 ):
     """
-    فقط داخل ساختاری که قبلاً مشخص شده مربوط
-    به shootout است، score پنالتی را پیدا می‌کند.
-
-    برخلاف نسخه قبلی، دیگر کل content را کورکورانه
-    recursive نمی‌گردد تا یک "penalties" نامرتبط
-    اشتباهاً به عنوان نتیجه پنالتی‌شوت‌اوت خوانده نشود.
+    فقط داخل ساختاری که واقعاً مربوط به shootout
+    است، نتیجه پنالتی را پیدا می‌کند.
     """
 
     if isinstance(section, dict):
 
-        # کلیدهای صریح نتیجه پنالتی
+        # کلیدهای صریح نتیجه پنالتی.
         for key in (
             "penaltyScore",
             "penalty_score",
@@ -1464,8 +1455,7 @@ def _find_penalty_score_in_shootout_section(
                 if result is not None:
                     return result
 
-        # "penalties" فقط وقتی معتبر است که
-        # در همین بخش یا والد آن به shootout مربوط باشد.
+        # penalties فقط در همین بخش معتبر است.
         if "penalties" in section:
 
             result = _coerce_score_pair(
@@ -1475,7 +1465,7 @@ def _find_penalty_score_in_shootout_section(
             if result is not None:
                 return result
 
-        # ساختارهای nested اختصاصی
+        # ساختارهای nested اختصاصی.
         for key in (
             "penaltyShootout",
             "penalty_shootout",
@@ -1595,11 +1585,11 @@ def _collect_explicit_shootout_sections(
 
 def _get_shootout_score_from_events(data):
     """
-    اگر FotMob نتیجه نهایی shootout را مستقیماً
-    ندهد، ضربات پنالتی‌ای را که واقعاً به عنوان
-    shootout event علامت‌گذاری شده‌اند می‌شمارد.
+    اگر نتیجه shootout مستقیماً در داده وجود نداشته باشد،
+    فقط eventهایی را می‌شمارد که واقعاً متعلق به
+    Penalty Shootout هستند.
 
-    این eventها به عنوان گل عادی استفاده نمی‌شوند.
+    پنالتی‌های عادی بازی در اینجا به هیچ وجه شمرده نمی‌شوند.
     """
 
     candidates = (
@@ -1650,8 +1640,6 @@ def _get_shootout_score_from_events(data):
                         scored = value
                         break
 
-            # اگر مشخصاً miss/save باشد،
-            # این ضربه گل نشده است.
             event_text = " ".join(
                 str(event.get(key, ""))
                 for key in (
@@ -1682,10 +1670,6 @@ def _get_shootout_score_from_events(data):
 
             if scored is None:
 
-                # در بعضی داده‌های FotMob،
-                # خود event فقط در صورت گل‌شدن
-                # به شکل penalty/shootout ثبت می‌شود.
-                # در این حالت آن را موفق فرض می‌کنیم.
                 scored = True
 
             if not scored:
@@ -1734,6 +1718,89 @@ def _get_shootout_score_from_events(data):
     return None
 
 
+def _get_penalty_score_from_page(
+    data
+):
+    """
+    fallback نهایی:
+
+    اگر داده ساختاری FotMob نتیجه shootout را
+    در اختیارمان نگذارد، ولی خود مسابقه واقعاً
+    نشانه Penalty Shootout داشته باشد، صفحه مسابقه
+    را بررسی می‌کنیم.
+
+    FotMob روی صفحه نتیجه را به شکل:
+        Pen: 4 - 2
+    نمایش می‌دهد.
+    """
+
+    if not isinstance(data, dict):
+        return None
+
+    match_id = recursive_find(
+        data,
+        {
+            "matchId",
+            "matchID",
+            "match_id",
+        },
+    )
+
+    match_id = extract_match_id(
+        match_id
+    )
+
+    if not match_id:
+        return None
+
+    html = fetch_match_page(
+        match_id
+    )
+
+    if not html:
+        return None
+
+    # شکل فعلی FotMob:
+    # Pen: 4 - 2
+    patterns = [
+        r"\bPen(?:alties)?\s*:\s*"
+        r"(\d+)\s*[-:]\s*(\d+)",
+
+        r"\bPenalty\s+shootout"
+        r"[^0-9]{0,50}"
+        r"(\d+)\s*[-:]\s*(\d+)",
+    ]
+
+    for pattern in patterns:
+
+        match = re.search(
+            pattern,
+            html,
+            re.IGNORECASE | re.DOTALL,
+        )
+
+        if match:
+
+            try:
+
+                return {
+                    "home": int(
+                        match.group(1)
+                    ),
+                    "away": int(
+                        match.group(2)
+                    ),
+                }
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                continue
+
+    return None
+
+
 def get_penalty_shootout_score(data):
 
     if not isinstance(data, dict):
@@ -1746,7 +1813,7 @@ def get_penalty_shootout_score(data):
 
     # -----------------------------------------------------
     # مرحله 1:
-    # فقط ساختارهای صریح shootout را بررسی می‌کنیم.
+    # ساختارهای صریح shootout
     # -----------------------------------------------------
 
     shootout_sections = (
@@ -1768,8 +1835,7 @@ def get_penalty_shootout_score(data):
 
     # -----------------------------------------------------
     # مرحله 2:
-    # اگر eventهای واقعی shootout وجود دارند،
-    # از خود آنها نتیجه را می‌سازیم.
+    # eventهای واقعی shootout
     # -----------------------------------------------------
 
     event_score = (
@@ -1783,10 +1849,8 @@ def get_penalty_shootout_score(data):
 
     # -----------------------------------------------------
     # مرحله 3:
-    # بعضی نسخه‌های FotMob ممکن است کل بخش
-    # matchFacts را به عنوان shootout مشخص کنند.
-    # فقط اگر خود آن بخش marker معتبر داشته باشد،
-    # "penalties" را می‌خوانیم.
+    # matchFacts فقط اگر خودش نشانه صریح
+    # Penalty Shootout داشته باشد.
     # -----------------------------------------------------
 
     match_facts = content.get(
@@ -1807,6 +1871,26 @@ def get_penalty_shootout_score(data):
 
             if result is not None:
                 return result
+
+    # -----------------------------------------------------
+    # مرحله 4:
+    # fallback روی خود صفحه FotMob
+    #
+    # فقط اگر داده واقعاً نشانه shootout داشته باشد.
+    # -----------------------------------------------------
+
+    if _contains_shootout_marker(
+        content
+    ):
+
+        page_score = (
+            _get_penalty_score_from_page(
+                data
+            )
+        )
+
+        if page_score is not None:
+            return page_score
 
     return None
 
@@ -2924,6 +3008,9 @@ def _is_penalty_shootout_event(event):
 
         return True
 
+    # بسیار مهم:
+    # "penalty" یا "pen" به تنهایی shootout نیست.
+    # اینها ممکن است پنالتی عادی داخل بازی باشند.
     for key in (
         "period",
         "periodName",
@@ -2955,35 +3042,49 @@ def _is_penalty_shootout_event(event):
 
         if (
             "penaltyshootout" in compact
-            or compact in {
-                "shootout",
-                "penalties",
-                "pen",
-            }
+            or compact == "shootout"
         ):
 
             return True
 
-    event_type = str(
-        event.get(
-            "incidentType",
-            ""
-        )
-    ).lower()
-
-    event_class = str(
-        event.get(
-            "incidentClass",
-            ""
-        )
-    ).lower()
-
-    if (
-        "penaltyshootout" in event_type
-        or "penaltyshootout" in event_class
+    # فقط event type صریح.
+    for key in (
+        "incidentType",
+        "eventType",
+        "incidentClass",
     ):
 
-        return True
+        value = event.get(
+            key,
+            "",
+        )
+
+        if isinstance(value, dict):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        text = clean_text(
+            value
+        ).lower()
+
+        compact = (
+            text
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            "penaltyshootout" in compact
+            or compact == "shootout"
+        ):
+
+            return True
 
     return False
 
