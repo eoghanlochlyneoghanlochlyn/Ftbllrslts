@@ -1,744 +1,4264 @@
-{
-  "matches": {
-    "5749667": {
-      "lineup_sent": true,
-      "fallback_sent": false,
-      "started": true,
-      "half_time": false,
-      "finished": true,
-      "finished_sent": true,
-      "event_keys": [
-        "addedtime|None|None|45.0|",
-        "half|None|None|45.0|",
-        "substitution|None|False|61.0|",
-        "substitution|None|True|64.0|",
-        "substitution|None|True|65.0|",
-        "id:14404408",
-        "substitution|None|True|76.0|",
-        "id:14404521",
-        "substitution|None|False|82.0|",
-        "substitution|None|False|88.0|",
-        "substitution|None|True|88.0|",
-        "substitution|None|True|89.0|",
-        "addedtime|None|None|90.0|",
-        "id:14404630",
-        "id:14404633",
-        "id:14404671",
-        "id:14404673",
-        "half|None|None|90.0|"
-      ],
-      "goals": [
-        {
-          "event_key": "id:14404408",
-          "player_id": 1445650,
-          "assist_player_id": 688300,
-          "is_home": false,
-          "minute": "68",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "1440440868Goal1445650undefinedfalse",
-            "timeStr": 68,
-            "type": "goal",
-            "time": 68,
-            "overloadTime": null,
-            "eventId": 14404408,
-            "player": {
-              "id": 1445650,
-              "name": "Alphadjo Cissè",
-              "profileUrl": "/players/1445650/alphadjo-cisse"
-            },
-            "homeScore": 0,
-            "awayScore": 0,
-            "profileUrl": "/players/1445650/alphadjo-cisse",
-            "overloadTimeStr": false,
-            "isHome": false,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Alphadjo Cissè",
-            "firstName": "Alphadjo",
-            "lastName": "Cissè",
-            "fullName": "Alphadjo Cissè",
-            "playerId": 1445650,
-            "newScore": [
-              0,
-              1
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2965953933,
-              "eventType": "Goal",
-              "teamId": 8564,
-              "playerId": 1445650,
-              "playerName": "Alphadjo Cissè",
-              "x": 94.8684210512,
-              "y": 47.50394904150001,
-              "min": 68,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 32.474999999999994,
-              "goalCrossedZ": 0.28252631440000003,
-              "expectedGoals": 0.04927796497941017,
-              "expectedGoalsOnTarget": 0.14448203146457672,
-              "shotType": "RightFoot",
-              "situation": "FastBreak",
-              "period": "SecondHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.4034391534391548,
-                "y": 0.07474241121693122,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": true,
-              "keeperId": 538501,
-              "firstName": "Alphadjo",
-              "lastName": "Cissè",
-              "fullName": "Alphadjo Cissè",
-              "teamColor": "#CF2C27"
-            },
-            "assistStr": "assist by Samuel Chukwueze",
-            "assistProfileUrl": "/players/688300/samuel-chukwueze",
-            "assistPlayerId": 688300,
-            "assistKey": "assist_by",
-            "assistInput": "Samuel Chukwueze"
-          }
-        },
-        {
-          "event_key": "id:14404633",
-          "player_id": 1189288,
-          "assist_player_id": 866516,
-          "is_home": true,
-          "minute": "90 + 2",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "1440463390Goal1189288undefinedtrue",
-            "timeStr": "90 + 2",
-            "type": "goal",
-            "time": 90,
-            "overloadTime": 2,
-            "eventId": 14404633,
-            "player": {
-              "id": 1189288,
-              "name": "Federico Gatti",
-              "profileUrl": "/players/1189288/federico-gatti"
-            },
-            "homeScore": 0,
-            "awayScore": 1,
-            "profileUrl": "/players/1189288/federico-gatti",
-            "overloadTimeStr": "+2",
-            "isHome": true,
-            "ownGoal": null,
-            "goalDescription": "Header",
-            "goalDescriptionKey": "header",
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Federico Gatti",
-            "firstName": "Federico",
-            "lastName": "Gatti",
-            "fullName": "Federico Gatti",
-            "playerId": 1189288,
-            "newScore": [
-              1,
-              1
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2965976271,
-              "eventType": "Goal",
-              "teamId": 9885,
-              "playerId": 1189288,
-              "playerName": "Federico Gatti",
-              "x": 98.7280701752,
-              "y": 33.31375,
-              "min": 90,
-              "minAdded": 2,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 34,
-              "goalCrossedZ": 2.0354736742,
-              "expectedGoals": 0.2659679353237152,
-              "expectedGoalsOnTarget": 0.11009491235017776,
-              "shotType": "Header",
-              "situation": "SetPiece",
-              "period": "SecondHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1,
-                "y": 0.538485098994709,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": true,
-              "keeperId": 466439,
-              "firstName": "Federico",
-              "lastName": "Gatti",
-              "fullName": "Federico Gatti",
-              "teamColor": "#000001"
-            },
-            "assistStr": "assist by Teun Koopmeiners",
-            "assistProfileUrl": "/players/866516/teun-koopmeiners",
-            "assistPlayerId": 866516,
-            "assistKey": "assist_by",
-            "assistInput": "Teun Koopmeiners"
-          }
-        }
-      ]
-    },
-    "588762": {
-      "lineup_sent": false,
-      "fallback_sent": false,
-      "started": false,
-      "half_time": false,
-      "finished": false,
-      "finished_sent": false,
-      "event_keys": [],
-      "goals": []
-    },
-    "3370572": {
-      "lineup_sent": true,
-      "fallback_sent": false,
-      "started": true,
-      "half_time": false,
-      "finished": true,
-      "finished_sent": true,
-      "event_keys": [
-        "id:9691160",
-        "id:9691180",
-        "substitution|None|False|41.0|",
-        "addedtime|None|None|45.0|",
-        "id:9691204",
-        "half|None|None|45.0|",
-        "id:9691255",
-        "substitution|None|True|64.0|",
-        "substitution|None|False|71.0|",
-        "id:9691297",
-        "id:9691298",
-        "id:9691303",
-        "addedtime|None|None|90.0|",
-        "id:9691308",
-        "id:9691312",
-        "half|None|None|90.0|",
-        "substitution|None|True|91.0|",
-        "substitution|None|False|96.0|",
-        "substitution|None|True|102.0|",
-        "addedtime|None|None|105.0|",
-        "id:9691365",
-        "substitution|None|False|113.0|",
-        "id:9691376",
-        "substitution|None|True|116.0|",
-        "id:9691383",
-        "id:9691385",
-        "addedtime|None|None|120.0|",
-        "substitution|None|False|120.0|",
-        "substitution|None|True|120.0|",
-        "half|None|None|120.0|",
-        "id:9691423",
-        "penaltyshootout|None|None|121.0|",
-        "id:9691410",
-        "id:9691425",
-        "id:9691414",
-        "id:9691415",
-        "id:9691416",
-        "id:9691417",
-        "id:9691419",
-        "id:9691422"
-      ],
-      "goals": [
-        {
-          "event_key": "id:9691160",
-          "player_id": 30981,
-          "assist_player_id": null,
-          "is_home": true,
-          "minute": "23",
-          "penalty": true,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "969116023Goal30981undefinedtrue",
-            "timeStr": 23,
-            "type": "goal",
-            "time": 23,
-            "overloadTime": null,
-            "eventId": 9691160,
-            "player": {
-              "id": 30981,
-              "name": "Lionel Messi",
-              "profileUrl": "/players/30981/lionel-messi"
-            },
-            "homeScore": 0,
-            "awayScore": 0,
-            "profileUrl": "/players/30981/lionel-messi",
-            "overloadTimeStr": false,
-            "isHome": true,
-            "ownGoal": null,
-            "goalDescription": "Penalty",
-            "goalDescriptionKey": "penalty",
-            "suffix": "Pen",
-            "suffixKey": "penalties_short",
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Lionel Messi",
-            "firstName": "Lionel",
-            "lastName": "Messi",
-            "fullName": "Lionel Messi",
-            "playerId": 30981,
-            "newScore": [
-              1,
-              0
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2492351383,
-              "eventType": "Goal",
-              "teamId": 6706,
-              "playerId": 30981,
-              "playerName": "Lionel Messi",
-              "x": 94,
-              "y": 34,
-              "min": 23,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 31.941249999999997,
-              "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.7884,
-              "expectedGoalsOnTarget": 0.9852,
-              "shotType": "LeftFoot",
-              "situation": "Penalty",
-              "period": "FirstHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.544642857142858,
-                "y": 0.032275132116402115,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "firstName": "Lionel",
-              "lastName": "Messi",
-              "fullName": "Lionel Messi",
-              "teamColor": "#63addf"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        },
-        {
-          "event_key": "id:9691180",
-          "player_id": 46509,
-          "assist_player_id": 831489,
-          "is_home": true,
-          "minute": "36",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "969118036Goal46509undefinedtrue",
-            "timeStr": 36,
-            "type": "goal",
-            "time": 36,
-            "overloadTime": null,
-            "eventId": 9691180,
-            "player": {
-              "id": 46509,
-              "name": "Ángel Di Maria",
-              "profileUrl": "/players/46509/angel-di-maria"
-            },
-            "homeScore": 1,
-            "awayScore": 0,
-            "profileUrl": "/players/46509/angel-di-maria",
-            "overloadTimeStr": false,
-            "isHome": true,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Ángel Di Maria",
-            "firstName": "Ángel",
-            "lastName": "Di Maria",
-            "fullName": "Ángel Di Maria",
-            "playerId": 46509,
-            "newScore": [
-              2,
-              0
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2492351847,
-              "eventType": "Goal",
-              "teamId": 6706,
-              "playerId": 46509,
-              "playerName": "Ángel Di Maria",
-              "x": 97.95614035039999,
-              "y": 41.772499999999994,
-              "min": 36,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 32.551249999999996,
-              "goalCrossedZ": 0.20547368320000003,
-              "expectedGoals": 0.3824625313282013,
-              "expectedGoalsOnTarget": 0.8957,
-              "shotType": "LeftFoot",
-              "situation": "FastBreak",
-              "period": "FirstHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.3832671957671967,
-                "y": 0.05435811724867726,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "firstName": "Ángel",
-              "lastName": "Di Maria",
-              "fullName": "Ángel Di Maria",
-              "teamColor": "#63addf"
-            },
-            "assistStr": "assist by Alexis Mac Allister",
-            "assistProfileUrl": "/players/831489/alexis-mac-allister",
-            "assistPlayerId": 831489,
-            "assistKey": "assist_by",
-            "assistInput": "Alexis Mac Allister"
-          }
-        },
-        {
-          "event_key": "id:9691297",
-          "player_id": 701154,
-          "assist_player_id": null,
-          "is_home": false,
-          "minute": "80",
-          "penalty": true,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "969129780Goal701154undefinedfalse",
-            "timeStr": 80,
-            "type": "goal",
-            "time": 80,
-            "overloadTime": null,
-            "eventId": 9691297,
-            "player": {
-              "id": 701154,
-              "name": "Kylian Mbappé",
-              "profileUrl": "/players/701154/kylian-mbappe"
-            },
-            "homeScore": 2,
-            "awayScore": 0,
-            "profileUrl": "/players/701154/kylian-mbappe",
-            "overloadTimeStr": false,
-            "isHome": false,
-            "ownGoal": null,
-            "goalDescription": "Penalty",
-            "goalDescriptionKey": "penalty",
-            "suffix": "Pen",
-            "suffixKey": "penalties_short",
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Kylian Mbappé",
-            "firstName": "Kylian",
-            "lastName": "Mbappé",
-            "fullName": "Kylian Mbappé",
-            "playerId": 701154,
-            "newScore": [
-              2,
-              1
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2492353919,
-              "eventType": "Goal",
-              "teamId": 6723,
-              "playerId": 701154,
-              "playerName": "Kylian Mbappé",
-              "x": 94,
-              "y": 34,
-              "min": 80,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 36.51625,
-              "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.7884,
-              "expectedGoalsOnTarget": 0.991,
-              "shotType": "RightFoot",
-              "situation": "Penalty",
-              "period": "SecondHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 0.33432539682539697,
-                "y": 0.032275132116402115,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "firstName": "Kylian",
-              "lastName": "Mbappé",
-              "fullName": "Kylian Mbappé",
-              "teamColor": "#26406A"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        },
-        {
-          "event_key": "id:9691298",
-          "player_id": 701154,
-          "assist_player_id": 621562,
-          "is_home": false,
-          "minute": "81",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "969129881Goal701154undefinedfalse",
-            "timeStr": 81,
-            "type": "goal",
-            "time": 81,
-            "overloadTime": null,
-            "eventId": 9691298,
-            "player": {
-              "id": 701154,
-              "name": "Kylian Mbappé",
-              "profileUrl": "/players/701154/kylian-mbappe"
-            },
-            "homeScore": 2,
-            "awayScore": 1,
-            "profileUrl": "/players/701154/kylian-mbappe",
-            "overloadTimeStr": false,
-            "isHome": false,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Kylian Mbappé",
-            "firstName": "Kylian",
-            "lastName": "Mbappé",
-            "fullName": "Kylian Mbappé",
-            "playerId": 701154,
-            "newScore": [
-              2,
-              2
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2492353989,
-              "eventType": "Goal",
-              "teamId": 6723,
-              "playerId": 701154,
-              "playerName": "Kylian Mbappé",
-              "x": 91.3,
-              "y": 44.2109554094,
-              "min": 81,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 31.865,
-              "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.12022535502910614,
-              "expectedGoalsOnTarget": 0.2757,
-              "shotType": "RightFoot",
-              "situation": "RegularPlay",
-              "period": "SecondHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.5648148148148162,
-                "y": 0.032275132116402115,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "firstName": "Kylian",
-              "lastName": "Mbappé",
-              "fullName": "Kylian Mbappé",
-              "teamColor": "#26406A"
-            },
-            "assistStr": "assist by Marcus Thuram",
-            "assistProfileUrl": "/players/621562/marcus-thuram",
-            "assistPlayerId": 621562,
-            "assistKey": "assist_by",
-            "assistInput": "Marcus Thuram"
-          }
-        },
-        {
-          "event_key": "id:9691365",
-          "player_id": 30981,
-          "assist_player_id": null,
-          "is_home": true,
-          "minute": "108",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "9691365108Goal30981undefinedtrue",
-            "timeStr": 108,
-            "type": "goal",
-            "time": 108,
-            "overloadTime": null,
-            "eventId": 9691365,
-            "player": {
-              "id": 30981,
-              "name": "Lionel Messi",
-              "profileUrl": "/players/30981/lionel-messi"
-            },
-            "homeScore": 2,
-            "awayScore": 2,
-            "profileUrl": "/players/30981/lionel-messi",
-            "overloadTimeStr": false,
-            "isHome": true,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Lionel Messi",
-            "firstName": "Lionel",
-            "lastName": "Messi",
-            "fullName": "Lionel Messi",
-            "playerId": 30981,
-            "newScore": [
-              3,
-              2
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2492355325,
-              "eventType": "Goal",
-              "teamId": 6706,
-              "playerId": 30981,
-              "playerName": "Lionel Messi",
-              "x": 102.06034482780001,
-              "y": 32.6275,
-              "min": 108,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 33.31375,
-              "goalCrossedZ": 0.3274736826,
-              "expectedGoals": 0.864634096622467,
-              "expectedGoalsOnTarget": 0.9229,
-              "shotType": "RightFoot",
-              "situation": "RegularPlay",
-              "period": "SecondHalfExtra",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.1815476190476193,
-                "y": 0.08663324936507935,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "firstName": "Lionel",
-              "lastName": "Messi",
-              "fullName": "Lionel Messi",
-              "teamColor": "#63addf"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        },
-        {
-          "event_key": "id:9691385",
-          "player_id": 701154,
-          "assist_player_id": null,
-          "is_home": false,
-          "minute": "118",
-          "penalty": true,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "9691385118Goal701154undefinedfalse",
-            "timeStr": 118,
-            "type": "goal",
-            "time": 118,
-            "overloadTime": null,
-            "eventId": 9691385,
-            "player": {
-              "id": 701154,
-              "name": "Kylian Mbappé",
-              "profileUrl": "/players/701154/kylian-mbappe"
-            },
-            "homeScore": 3,
-            "awayScore": 2,
-            "profileUrl": "/players/701154/kylian-mbappe",
-            "overloadTimeStr": false,
-            "isHome": false,
-            "ownGoal": null,
-            "goalDescription": "Penalty",
-            "goalDescriptionKey": "penalty",
-            "suffix": "Pen",
-            "suffixKey": "penalties_short",
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Kylian Mbappé",
-            "firstName": "Kylian",
-            "lastName": "Mbappé",
-            "fullName": "Kylian Mbappé",
-            "playerId": 701154,
-            "newScore": [
-              3,
-              3
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2492355519,
-              "eventType": "Goal",
-              "teamId": 6723,
-              "playerId": 701154,
-              "playerName": "Kylian Mbappé",
-              "x": 94,
-              "y": 34,
-              "min": 118,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 37.12625,
-              "goalCrossedZ": 1.0594736790000001,
-              "expectedGoals": 0.7884,
-              "expectedGoalsOnTarget": 0.993,
-              "shotType": "RightFoot",
-              "situation": "Penalty",
-              "period": "SecondHalfExtra",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 0.1729497354497358,
-                "y": 0.28028404206349206,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "firstName": "Kylian",
-              "lastName": "Mbappé",
-              "fullName": "Kylian Mbappé",
-              "teamColor": "#26406A"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        }
-      ]
-    }
-  }
+import json
+import re
+from datetime import datetime, timezone
+from urllib.parse import urlparse
+from zoneinfo import ZoneInfo
+
+import requests
+
+
+# =========================================================
+# تنظیمات
+# =========================================================
+
+IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
+
+FOTMOB_BASE_URL = "https://www.fotmob.com"
+
+FOTMOB_API_URL = (
+    "https://www.fotmob.com/api/matchDetails"
+)
+
+FOTMOB_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 "
+        "(KHTML, like Gecko) "
+        "Chrome/131.0.0.0 Safari/537.36"
+    ),
+    "Accept": (
+        "application/json,text/plain,*/*"
+    ),
+    "Accept-Language": (
+        "en-US,en;q=0.9"
+    ),
+    "Referer": (
+        "https://www.fotmob.com/"
+    ),
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache",
 }
+
+
+# =========================================================
+# ابزارهای عمومی
+# =========================================================
+
+def clean_text(value):
+    if value is None:
+        return ""
+
+    if isinstance(value, (int, float)):
+        return str(value)
+
+    if not isinstance(value, str):
+        return str(value)
+
+    value = re.sub(
+        r"<[^>]+>",
+        "",
+        value,
+    )
+
+    value = (
+        value
+        .replace("\xa0", " ")
+        .replace("\u200b", "")
+        .replace("\r", " ")
+        .replace("\n", " ")
+    )
+
+    return " ".join(
+        value.split()
+    ).strip()
+
+
+def get_nested(data, *keys):
+    current = data
+
+    for key in keys:
+        if not isinstance(current, dict):
+            return None
+
+        current = current.get(key)
+
+    return current
+
+
+def recursive_find(data, target_keys):
+    if not isinstance(
+        target_keys,
+        (list, tuple, set),
+    ):
+        target_keys = {target_keys}
+
+    if isinstance(data, dict):
+
+        for key, value in data.items():
+
+            if key in target_keys:
+                if value is not None:
+                    return value
+
+        for value in data.values():
+
+            result = recursive_find(
+                value,
+                target_keys,
+            )
+
+            if result is not None:
+                return result
+
+    elif isinstance(data, list):
+
+        for item in data:
+
+            result = recursive_find(
+                item,
+                target_keys,
+            )
+
+            if result is not None:
+                return result
+
+    return None
+
+
+def find_section(data, section_name):
+    if not isinstance(data, dict):
+        return None
+
+    if section_name in data:
+        return data[section_name]
+
+    return recursive_find(
+        data,
+        {section_name},
+    )
+
+
+# =========================================================
+# Match ID
+# =========================================================
+
+def extract_match_id(value):
+
+    if value is None:
+        return None
+
+    if isinstance(value, int):
+        return str(value)
+
+    value = str(value).strip()
+
+    if value.isdigit():
+        return value
+
+    # مهم:
+    # این الگو هم /3370572 و هم #3370572 را می‌گیرد.
+    patterns = [
+        r"[#/]([0-9]{5,})",
+        r"match(?:Id)?[=/]([0-9]{5,})",
+        r"([0-9]{5,})",
+    ]
+
+    for pattern in patterns:
+
+        match = re.search(
+            pattern,
+            value,
+            re.IGNORECASE,
+        )
+
+        if match:
+            return match.group(1)
+
+    return None
+
+
+# =========================================================
+# دریافت API
+# =========================================================
+
+def fetch_match_api(match_id):
+
+    match_id = extract_match_id(match_id)
+
+    if not match_id:
+        return None
+
+    try:
+
+        response = requests.get(
+            FOTMOB_API_URL,
+            params={
+                "matchId": match_id,
+            },
+            headers=FOTMOB_HEADERS,
+            timeout=30,
+        )
+
+        print(
+            f"FotMob {match_id}: "
+            f"API HTTP {response.status_code}"
+        )
+
+        if response.status_code != 200:
+            return None
+
+        data = response.json()
+
+        if not isinstance(data, dict):
+            return None
+
+        return data
+
+    except Exception as error:
+
+        print(
+            f"FotMob {match_id}: "
+            f"API error: {error}"
+        )
+
+        return None
+
+
+# =========================================================
+# دریافت صفحه
+# =========================================================
+
+def fetch_match_page(match_id):
+
+    match_id = extract_match_id(match_id)
+
+    if not match_id:
+        return None
+
+    url = (
+        f"{FOTMOB_BASE_URL}/match/"
+        f"{match_id}"
+    )
+
+    try:
+
+        response = requests.get(
+            url,
+            headers=FOTMOB_HEADERS,
+            timeout=30,
+        )
+
+        print(
+            f"FotMob {match_id}: "
+            f"Page HTTP {response.status_code}"
+        )
+
+        print(
+            f"FotMob {match_id}: "
+            f"Final URL = {response.url}"
+        )
+
+        print(
+            f"FotMob {match_id}: "
+            f"Response length = "
+            f"{len(response.text)}"
+        )
+
+        if response.status_code != 200:
+            return None
+
+        return response.text
+
+    except Exception as error:
+
+        print(
+            f"FotMob {match_id}: "
+            f"Page error: {error}"
+        )
+
+        return None
+
+
+# =========================================================
+# __NEXT_DATA__
+# =========================================================
+
+def extract_next_data(html):
+
+    if not html:
+        return None
+
+    pattern = (
+        r'<script[^>]+id=["\']'
+        r'__NEXT_DATA__["\'][^>]*>'
+        r"(.*?)"
+        r"</script\s*>"
+    )
+
+    match = re.search(
+        pattern,
+        html,
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    if not match:
+        return None
+
+    raw = match.group(1).strip()
+
+    try:
+        return json.loads(raw)
+
+    except Exception:
+        return None
+
+
+# =========================================================
+# JSON-LD
+# =========================================================
+
+def extract_event_jsonld(html):
+
+    if not html:
+        return None
+
+    pattern = (
+        r'<script[^>]+type=["\']'
+        r'application/ld\+json'
+        r'["\'][^>]*>'
+        r"(.*?)"
+        r"</script>"
+    )
+
+    matches = re.findall(
+        pattern,
+        html,
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    for raw in matches:
+
+        try:
+
+            data = json.loads(
+                raw.strip()
+            )
+
+            if isinstance(data, dict):
+
+                if (
+                    data.get("@type") == "SportsEvent"
+                    or data.get("homeTeam")
+                    or data.get("awayTeam")
+                ):
+                    return data
+
+            if isinstance(data, list):
+
+                for item in data:
+
+                    if not isinstance(item, dict):
+                        continue
+
+                    if (
+                        item.get("@type")
+                        == "SportsEvent"
+                        or item.get("homeTeam")
+                        or item.get("awayTeam")
+                    ):
+                        return item
+
+        except Exception:
+            continue
+
+    return None
+
+
+# =========================================================
+# content
+# =========================================================
+
+def _is_match_content(candidate):
+    if not isinstance(candidate, dict):
+        return False
+
+    return any(
+        key in candidate
+        for key in (
+            "matchFacts",
+            "stats",
+            "lineup",
+            "header",
+            "general",
+        )
+    )
+
+
+def get_content(data):
+
+    if not isinstance(data, dict):
+        return None
+
+    direct_content = data.get("content")
+
+    if isinstance(direct_content, dict):
+        return direct_content
+
+    paths = [
+        (
+            "props",
+            "pageProps",
+            "content",
+        ),
+        (
+            "props",
+            "pageProps",
+            "data",
+            "content",
+        ),
+        (
+            "props",
+            "pageProps",
+            "match",
+            "content",
+        ),
+        (
+            "props",
+            "pageProps",
+            "matchData",
+        ),
+        (
+            "props",
+            "pageProps",
+            "data",
+        ),
+        (
+            "pageProps",
+            "content",
+        ),
+    ]
+
+    for path in paths:
+
+        value = get_nested(
+            data,
+            *path,
+        )
+
+        if (
+            isinstance(value, dict)
+            and _is_match_content(value)
+        ):
+            return value
+
+    # fallback محدود:
+    # فقط pageProps را بررسی می‌کنیم.
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(page_props, dict):
+
+        for key in (
+            "content",
+            "data",
+            "match",
+            "matchData",
+        ):
+
+            value = page_props.get(key)
+
+            if (
+                isinstance(value, dict)
+                and _is_match_content(value)
+            ):
+                return value
+
+    return None
+
+
+# =========================================================
+# اطلاعات پایه
+# =========================================================
+
+def _get_team_name(team):
+
+    if not isinstance(team, dict):
+        return ""
+
+    for key in (
+        "longName",
+        "name",
+        "shortName",
+        "title",
+    ):
+
+        value = team.get(key)
+
+        if value:
+            return clean_text(value)
+
+    return ""
+
+
+def _get_team_id(team):
+
+    if not isinstance(team, dict):
+        return None
+
+    return (
+        team.get("id")
+        or team.get("teamId")
+        or team.get("teamID")
+    )
+
+
+def extract_basic_info(data):
+
+    if not isinstance(data, dict):
+        return {}
+
+    general = data.get("general")
+
+    if not isinstance(general, dict):
+        general = {}
+
+    header = data.get("header")
+
+    if not isinstance(header, dict):
+        header = {}
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if not isinstance(page_props, dict):
+        page_props = {}
+
+    page_general = page_props.get("general")
+
+    if not isinstance(page_general, dict):
+        page_general = {}
+
+    home = (
+        general.get("homeTeam")
+        or page_general.get("homeTeam")
+        or header.get("homeTeam")
+    )
+
+    away = (
+        general.get("awayTeam")
+        or page_general.get("awayTeam")
+        or header.get("awayTeam")
+    )
+
+    if not isinstance(home, dict):
+        home = {}
+
+    if not isinstance(away, dict):
+        away = {}
+
+    home_name = _get_team_name(home)
+    away_name = _get_team_name(away)
+
+    home_id = _get_team_id(home)
+    away_id = _get_team_id(away)
+
+    event_jsonld = get_nested(
+        page_props,
+        "seo",
+        "eventJSONLD",
+    )
+
+    if isinstance(event_jsonld, dict):
+
+        if not home_name:
+
+            home_name = _get_team_name(
+                event_jsonld.get("homeTeam")
+            )
+
+        if not away_name:
+
+            away_name = _get_team_name(
+                event_jsonld.get("awayTeam")
+            )
+
+        if not home_id:
+
+            home_id = _get_team_id(
+                event_jsonld.get("homeTeam")
+            )
+
+        if not away_id:
+
+            away_id = _get_team_id(
+                event_jsonld.get("awayTeam")
+            )
+
+    if not home_name:
+
+        home_name = clean_text(
+            recursive_find(
+                data,
+                {"homeTeamName"},
+            )
+            or ""
+        )
+
+    if not away_name:
+
+        away_name = clean_text(
+            recursive_find(
+                data,
+                {"awayTeamName"},
+            )
+            or ""
+        )
+
+    league = ""
+
+    tournament = (
+        general.get("tournament")
+        or general.get("league")
+        or page_general.get("tournament")
+        or page_general.get("league")
+    )
+
+    if isinstance(tournament, dict):
+
+        league = (
+            tournament.get("name")
+            or tournament.get("title")
+            or ""
+        )
+
+    elif isinstance(tournament, str):
+
+        league = tournament
+
+    if not league:
+
+        league = (
+            recursive_find(
+                data,
+                {
+                    "leagueName",
+                    "tournamentName",
+                },
+            )
+            or ""
+        )
+
+    start = (
+        general.get("matchTimeUTCDate")
+        or general.get("matchTimeUTC")
+        or general.get("startDate")
+        or page_general.get("matchTimeUTCDate")
+        or page_general.get("matchTimeUTC")
+        or page_general.get("startDate")
+    )
+
+    if not start and isinstance(
+        event_jsonld,
+        dict,
+    ):
+
+        start = event_jsonld.get(
+            "startDate"
+        )
+
+    if not start:
+
+        start = recursive_find(
+            data,
+            {
+                "matchTimeUTCDate",
+                "startDate",
+                "utcTime",
+            },
+        )
+
+    return {
+        "home_name": clean_text(home_name),
+        "away_name": clean_text(away_name),
+        "home_id": home_id,
+        "away_id": away_id,
+        "league": clean_text(league),
+        "start": start,
+    }
+
+
+# =========================================================
+# زمان
+# =========================================================
+
+def parse_datetime(value):
+
+    if value is None:
+        return None
+
+    if isinstance(value, datetime):
+
+        if value.tzinfo is None:
+            return value.replace(
+                tzinfo=timezone.utc
+            )
+
+        return value
+
+    if isinstance(value, (int, float)):
+
+        try:
+
+            if value > 100000000000:
+                value /= 1000
+
+            return datetime.fromtimestamp(
+                value,
+                tz=timezone.utc,
+            )
+
+        except Exception:
+            return None
+
+    value = str(value).strip()
+
+    if not value:
+        return None
+
+    value = value.replace(
+        "Z",
+        "+00:00",
+    )
+
+    try:
+
+        result = datetime.fromisoformat(
+            value
+        )
+
+        if result.tzinfo is None:
+            result = result.replace(
+                tzinfo=timezone.utc
+            )
+
+        return result
+
+    except Exception:
+        pass
+
+    formats = [
+        "%Y-%m-%dT%H:%M:%S.%fZ",
+        "%Y-%m-%dT%H:%M:%SZ",
+        "%Y-%m-%dT%H:%M:%S",
+    ]
+
+    for fmt in formats:
+
+        try:
+
+            return datetime.strptime(
+                value,
+                fmt,
+            ).replace(
+                tzinfo=timezone.utc
+            )
+
+        except Exception:
+            continue
+
+    return None
+
+
+def format_iran_datetime(value):
+
+    dt = parse_datetime(value)
+
+    if dt is None:
+        return "نامشخص"
+
+    return dt.astimezone(
+        IRAN_TIMEZONE
+    ).strftime(
+        "%Y/%m/%d - %H:%M"
+    )
+
+
+# =========================================================
+# Match facts
+# =========================================================
+
+def _get_match_facts(data):
+
+    content = get_content(data)
+
+    if not isinstance(content, dict):
+        return {}
+
+    match_facts = content.get(
+        "matchFacts"
+    )
+
+    if isinstance(match_facts, dict):
+        return match_facts
+
+    return {}
+
+
+def _get_match_facts_events_container(data):
+
+    match_facts = _get_match_facts(data)
+
+    events_container = match_facts.get(
+        "events"
+    )
+
+    if isinstance(events_container, dict):
+        return events_container
+
+    return {}
+
+
+# =========================================================
+# Event container recursive
+# =========================================================
+
+def _collect_event_lists(node, result=None):
+
+    if result is None:
+        result = []
+
+    if isinstance(node, list):
+
+        if node and all(
+            isinstance(item, dict)
+            for item in node
+        ):
+            result.append(node)
+
+        for item in node:
+            if isinstance(item, (dict, list)):
+                _collect_event_lists(
+                    item,
+                    result,
+                )
+
+        return result
+
+    if isinstance(node, dict):
+
+        # فقط کلیدهایی که احتمالاً مربوط به event هستند.
+        preferred_keys = (
+            "events",
+            "incidents",
+            "chronological",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
+            "periods",
+            "timeline",
+            "items",
+        )
+
+        for key in preferred_keys:
+
+            value = node.get(key)
+
+            if isinstance(value, (dict, list)):
+                _collect_event_lists(
+                    value,
+                    result,
+                )
+
+        # اگر خودش دیکشنری event مانند باشد،
+        # آن را به لیست تبدیل می‌کنیم.
+        if any(
+            key in node
+            for key in (
+                "eventType",
+                "incidentType",
+                "incidentClass",
+                "isGoal",
+                "playerId",
+                "time",
+                "minute",
+            )
+        ):
+            result.append([node])
+
+    return result
+
+
+def _get_current_match_event_candidates(data):
+
+    content = get_content(data)
+
+    if not isinstance(content, dict):
+        return []
+
+    candidates = []
+
+    match_facts = content.get(
+        "matchFacts"
+    )
+
+    if isinstance(match_facts, dict):
+
+        events_container = match_facts.get(
+            "events"
+        )
+
+        if isinstance(
+            events_container,
+            (dict, list),
+        ):
+
+            candidates.extend(
+                _collect_event_lists(
+                    events_container
+                )
+            )
+
+        incidents = match_facts.get(
+            "incidents"
+        )
+
+        if isinstance(
+            incidents,
+            (dict, list),
+        ):
+
+            candidates.extend(
+                _collect_event_lists(
+                    incidents
+                )
+            )
+
+    liveticker = content.get(
+        "liveticker"
+    )
+
+    if isinstance(liveticker, dict):
+
+        for key in (
+            "events",
+            "incidents",
+            "timeline",
+        ):
+
+            value = liveticker.get(key)
+
+            if isinstance(
+                value,
+                (dict, list),
+            ):
+
+                candidates.extend(
+                    _collect_event_lists(
+                        value
+                    )
+                )
+
+    # بعضی نسخه‌های FotMob داده‌ها را
+    # مستقیماً در content نگه می‌دارند.
+    for key in (
+        "events",
+        "incidents",
+        "chronological",
+    ):
+
+        value = content.get(key)
+
+        if isinstance(
+            value,
+            (dict, list),
+        ):
+
+            candidates.extend(
+                _collect_event_lists(
+                    value
+                )
+            )
+
+    return candidates
+
+
+# =========================================================
+# Period
+# =========================================================
+
+def _event_period_name(event):
+
+    if not isinstance(event, dict):
+        return ""
+
+    for key in (
+        "period",
+        "periodName",
+        "periodType",
+        "matchPeriod",
+        "stage",
+        "stageName",
+    ):
+
+        value = event.get(key)
+
+        if isinstance(value, dict):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        if value is not None:
+
+            text = clean_text(value)
+
+            if text:
+                return text
+
+    return ""
+
+
+def _get_match_periods(data):
+
+    periods = []
+
+    candidates = _get_current_match_event_candidates(
+        data
+    )
+
+    for candidate in candidates:
+
+        for event in candidate:
+
+            period = _event_period_name(
+                event
+            )
+
+            if period:
+                periods.append(period)
+
+    events_container = (
+        _get_match_facts_events_container(data)
+    )
+
+    for key in (
+        "period",
+        "currentPeriod",
+        "currentStage",
+        "stage",
+        "stageName",
+    ):
+
+        value = events_container.get(key)
+
+        if isinstance(value, dict):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        if value is not None:
+
+            text = clean_text(value)
+
+            if text:
+                periods.append(text)
+
+    unique = []
+
+    for period in periods:
+
+        normalized = clean_text(
+            period
+        ).lower()
+
+        if normalized not in {
+            clean_text(item).lower()
+            for item in unique
+        }:
+
+            unique.append(period)
+
+    return unique
+
+
+def _period_flags(periods):
+
+    normalized = {
+        clean_text(period).lower()
+        for period in periods
+        if clean_text(period)
+    }
+
+    has_extra_time = False
+    extra_time_started = False
+    extra_time_finished = False
+    has_penalty_shootout = False
+
+    for period in normalized:
+
+        compact = (
+            period
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            "extrahalf" in compact
+            or "halfextra" in compact
+            or compact in {
+                "extratime",
+                "aet",
+                "firstextra",
+                "secondextra",
+            }
+        ):
+
+            has_extra_time = True
+            extra_time_started = True
+
+            if (
+                "second" in compact
+                or compact in {
+                    "extratime",
+                    "aet",
+                    "secondextra",
+                    "secondextrahalf",
+                }
+            ):
+
+                extra_time_finished = True
+
+        # فقط عبارت‌های صریح مربوط به shootout.
+        if (
+            "penaltyshootout" in compact
+            or compact in {
+                "shootout",
+            }
+        ):
+
+            has_penalty_shootout = True
+
+    return {
+        "has_extra_time": has_extra_time,
+        "extra_time_started": extra_time_started,
+        "extra_time_finished": extra_time_finished,
+        "has_penalty_shootout": has_penalty_shootout,
+    }
+
+
+# =========================================================
+# Score helpers
+# =========================================================
+
+def _coerce_score_pair(value):
+
+    if value is None:
+        return None
+
+    if isinstance(value, (list, tuple)):
+
+        if len(value) >= 2:
+
+            try:
+
+                return {
+                    "home": int(value[0]),
+                    "away": int(value[1]),
+                }
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                return None
+
+        return None
+
+    if isinstance(value, dict):
+
+        home = None
+        away = None
+
+        for key in (
+            "home",
+            "homeScore",
+            "home_score",
+            "homeTeamScore",
+        ):
+
+            if key in value:
+
+                candidate = value.get(key)
+
+                if isinstance(
+                    candidate,
+                    dict,
+                ):
+
+                    candidate = (
+                        candidate.get("score")
+                        or candidate.get("value")
+                        or candidate.get("goals")
+                    )
+
+                if candidate is not None:
+
+                    home = candidate
+                    break
+
+        for key in (
+            "away",
+            "awayScore",
+            "away_score",
+            "awayTeamScore",
+        ):
+
+            if key in value:
+
+                candidate = value.get(key)
+
+                if isinstance(
+                    candidate,
+                    dict,
+                ):
+
+                    candidate = (
+                        candidate.get("score")
+                        or candidate.get("value")
+                        or candidate.get("goals")
+                    )
+
+                if candidate is not None:
+
+                    away = candidate
+                    break
+
+        if home is not None and away is not None:
+
+            try:
+
+                return {
+                    "home": int(home),
+                    "away": int(away),
+                }
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                pass
+
+        for key in (
+            "score",
+            "result",
+            "value",
+        ):
+
+            nested = value.get(key)
+
+            if nested is not None:
+
+                result = _coerce_score_pair(
+                    nested
+                )
+
+                if result is not None:
+                    return result
+
+        return None
+
+    if isinstance(value, str):
+
+        match = re.search(
+            r"(\d+)\s*[-:]\s*(\d+)",
+            value,
+        )
+
+        if match:
+
+            return {
+                "home": int(match.group(1)),
+                "away": int(match.group(2)),
+            }
+
+    return None
+
+
+# =========================================================
+# Penalty shootout score
+# =========================================================
+
+def _contains_shootout_marker(node):
+    """
+    فقط نشانه‌های صریح Penalty Shootout را بررسی می‌کند.
+
+    مهم:
+    عبارت‌هایی مثل "penalty" یا "pen" به تنهایی
+    نشانه shootout نیستند؛ چون ممکن است یک پنالتی
+    معمولی در جریان 90/120 دقیقه باشند.
+    """
+
+    if isinstance(node, dict):
+
+        # کلیدهای صریح.
+        for key in (
+            "penaltyShootout",
+            "penalty_shootout",
+            "shootout",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
+        ):
+
+            if key in node:
+                return True
+
+        # دوره باید واقعاً PenaltyShootout باشد.
+        for key in (
+            "period",
+            "periodName",
+            "periodType",
+            "matchPeriod",
+            "stage",
+            "stageName",
+        ):
+
+            value = node.get(key)
+
+            if isinstance(value, dict):
+
+                value = (
+                    value.get("name")
+                    or value.get("type")
+                    or value.get("key")
+                    or value.get("value")
+                )
+
+            text = clean_text(
+                value
+            ).lower()
+
+            compact = (
+                text
+                .replace(" ", "")
+                .replace("_", "")
+                .replace("-", "")
+            )
+
+            if (
+                "penaltyshootout" in compact
+                or compact == "shootout"
+            ):
+                return True
+
+        if node.get(
+            "isPenaltyShootoutEvent"
+        ) is True:
+
+            return True
+
+        # فقط event typeهای صریح shootout.
+        for key in (
+            "incidentType",
+            "eventType",
+            "incidentClass",
+        ):
+
+            value = node.get(key)
+
+            if isinstance(value, dict):
+
+                value = (
+                    value.get("name")
+                    or value.get("type")
+                    or value.get("key")
+                    or value.get("value")
+                )
+
+            text = clean_text(
+                value
+            ).lower()
+
+            compact = (
+                text
+                .replace(" ", "")
+                .replace("_", "")
+                .replace("-", "")
+            )
+
+            if (
+                "penaltyshootout" in compact
+                or compact == "shootout"
+            ):
+                return True
+
+        for value in node.values():
+
+            if isinstance(
+                value,
+                (dict, list),
+            ):
+
+                if _contains_shootout_marker(
+                    value
+                ):
+                    return True
+
+    elif isinstance(node, list):
+
+        for item in node:
+
+            if _contains_shootout_marker(
+                item
+            ):
+                return True
+
+    return False
+
+
+def _find_penalty_score_in_shootout_section(
+    section
+):
+    """
+    فقط داخل ساختاری که واقعاً مربوط به shootout
+    است، نتیجه پنالتی را پیدا می‌کند.
+    """
+
+    if isinstance(section, dict):
+
+        # کلیدهای صریح نتیجه پنالتی.
+        for key in (
+            "penaltyScore",
+            "penalty_score",
+            "shootoutScore",
+            "shootout_score",
+        ):
+
+            if key in section:
+
+                result = _coerce_score_pair(
+                    section.get(key)
+                )
+
+                if result is not None:
+                    return result
+
+        # penalties فقط در همین بخش معتبر است.
+        if "penalties" in section:
+
+            result = _coerce_score_pair(
+                section.get("penalties")
+            )
+
+            if result is not None:
+                return result
+
+        # ساختارهای nested اختصاصی.
+        for key in (
+            "penaltyShootout",
+            "penalty_shootout",
+            "shootout",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
+        ):
+
+            nested = section.get(key)
+
+            if nested is None:
+                continue
+
+            result = _coerce_score_pair(
+                nested
+            )
+
+            if result is not None:
+                return result
+
+            result = (
+                _find_penalty_score_in_shootout_section(
+                    nested
+                )
+            )
+
+            if result is not None:
+                return result
+
+    elif isinstance(section, list):
+
+        for item in section:
+
+            result = (
+                _find_penalty_score_in_shootout_section(
+                    item
+                )
+            )
+
+            if result is not None:
+                return result
+
+    return None
+
+
+def _collect_explicit_shootout_sections(
+    node,
+    result=None,
+):
+    """
+    ساختارهایی را پیدا می‌کند که خودشان صراحتاً
+    shootout را نشان می‌دهند.
+    """
+
+    if result is None:
+        result = []
+
+    if isinstance(node, dict):
+
+        explicit_keys = (
+            "penaltyShootout",
+            "penalty_shootout",
+            "shootout",
+            "penaltyShootoutEvents",
+            "penalty_shootout_events",
+        )
+
+        for key in explicit_keys:
+
+            if key in node:
+
+                value = node.get(key)
+
+                if isinstance(
+                    value,
+                    (dict, list),
+                ):
+
+                    result.append(value)
+
+                    _collect_explicit_shootout_sections(
+                        value,
+                        result,
+                    )
+
+        for key, value in node.items():
+
+            if key in explicit_keys:
+                continue
+
+            if isinstance(
+                value,
+                (dict, list),
+            ):
+
+                _collect_explicit_shootout_sections(
+                    value,
+                    result,
+                )
+
+    elif isinstance(node, list):
+
+        for item in node:
+
+            if isinstance(
+                item,
+                (dict, list),
+            ):
+
+                _collect_explicit_shootout_sections(
+                    item,
+                    result,
+                )
+
+    return result
+
+
+def _get_shootout_score_from_events(data):
+    """
+    اگر نتیجه shootout مستقیماً در داده وجود نداشته باشد،
+    فقط eventهایی را می‌شمارد که واقعاً متعلق به
+    Penalty Shootout هستند.
+
+    پنالتی‌های عادی بازی در اینجا به هیچ وجه شمرده نمی‌شوند.
+    """
+
+    candidates = (
+        _get_current_match_event_candidates(
+            data
+        )
+    )
+
+    home_score = 0
+    away_score = 0
+    found = False
+
+    for candidate in candidates:
+
+        for event in candidate:
+
+            if not isinstance(event, dict):
+                continue
+
+            if not _is_penalty_shootout_event(
+                event
+            ):
+                continue
+
+            found = True
+
+            # فقط ضربه موفق را بشمار.
+            scored = None
+
+            for key in (
+                "isGoal",
+                "isScored",
+                "scored",
+                "converted",
+                "success",
+                "successful",
+            ):
+
+                if key in event:
+
+                    value = event.get(key)
+
+                    if isinstance(
+                        value,
+                        bool,
+                    ):
+
+                        scored = value
+                        break
+
+            event_text = " ".join(
+                str(event.get(key, ""))
+                for key in (
+                    "type",
+                    "eventType",
+                    "incidentType",
+                    "incidentClass",
+                    "description",
+                    "reason",
+                )
+            ).lower()
+
+            if any(
+                word in event_text
+                for word in (
+                    "miss",
+                    "saved",
+                    "save",
+                    "off target",
+                    "woodwork",
+                )
+            ):
+
+                scored = False
+
+            if scored is False:
+                continue
+
+            if scored is None:
+
+                scored = True
+
+            if not scored:
+                continue
+
+            is_home = event.get(
+                "isHome"
+            )
+
+            if is_home is None:
+
+                team = event.get(
+                    "team"
+                )
+
+                if isinstance(
+                    team,
+                    dict,
+                ):
+
+                    is_home = (
+                        team.get("isHome")
+                        if "isHome" in team
+                        else team.get("home")
+                    )
+
+            if is_home is True:
+                home_score += 1
+
+            elif is_home is False:
+                away_score += 1
+
+    if (
+        found
+        and (
+            home_score > 0
+            or away_score > 0
+        )
+    ):
+
+        return {
+            "home": home_score,
+            "away": away_score,
+        }
+
+    return None
+
+
+def _get_penalty_score_from_page(
+    data
+):
+    """
+    fallback نهایی:
+
+    اگر داده ساختاری FotMob نتیجه shootout را
+    در اختیارمان نگذارد، ولی خود مسابقه واقعاً
+    نشانه Penalty Shootout داشته باشد، صفحه مسابقه
+    را بررسی می‌کنیم.
+
+    FotMob روی صفحه نتیجه را به شکل:
+        Pen: 4 - 2
+    نمایش می‌دهد.
+    """
+
+    if not isinstance(data, dict):
+        return None
+
+    match_id = recursive_find(
+        data,
+        {
+            "matchId",
+            "matchID",
+            "match_id",
+        },
+    )
+
+    match_id = extract_match_id(
+        match_id
+    )
+
+    if not match_id:
+        return None
+
+    html = fetch_match_page(
+        match_id
+    )
+
+    if not html:
+        return None
+
+    # شکل فعلی FotMob:
+    # Pen: 4 - 2
+    patterns = [
+        r"\bPen(?:alties)?\s*:\s*"
+        r"(\d+)\s*[-:]\s*(\d+)",
+
+        r"\bPenalty\s+shootout"
+        r"[^0-9]{0,50}"
+        r"(\d+)\s*[-:]\s*(\d+)",
+    ]
+
+    for pattern in patterns:
+
+        match = re.search(
+            pattern,
+            html,
+            re.IGNORECASE | re.DOTALL,
+        )
+
+        if match:
+
+            try:
+
+                return {
+                    "home": int(
+                        match.group(1)
+                    ),
+                    "away": int(
+                        match.group(2)
+                    ),
+                }
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+                continue
+
+    return None
+
+
+def get_penalty_shootout_score(data):
+
+    if not isinstance(data, dict):
+        return None
+
+    content = get_content(data)
+
+    if not isinstance(content, dict):
+        return None
+
+    # -----------------------------------------------------
+    # مرحله 1:
+    # ساختارهای صریح shootout
+    # -----------------------------------------------------
+
+    shootout_sections = (
+        _collect_explicit_shootout_sections(
+            content
+        )
+    )
+
+    for section in shootout_sections:
+
+        result = (
+            _find_penalty_score_in_shootout_section(
+                section
+            )
+        )
+
+        if result is not None:
+            return result
+
+    # -----------------------------------------------------
+    # مرحله 2:
+    # eventهای واقعی shootout
+    # -----------------------------------------------------
+
+    event_score = (
+        _get_shootout_score_from_events(
+            data
+        )
+    )
+
+    if event_score is not None:
+        return event_score
+
+    # -----------------------------------------------------
+    # مرحله 3:
+    # matchFacts فقط اگر خودش نشانه صریح
+    # Penalty Shootout داشته باشد.
+    # -----------------------------------------------------
+
+    match_facts = content.get(
+        "matchFacts"
+    )
+
+    if isinstance(match_facts, dict):
+
+        if _contains_shootout_marker(
+            match_facts
+        ):
+
+            result = (
+                _find_penalty_score_in_shootout_section(
+                    match_facts
+                )
+            )
+
+            if result is not None:
+                return result
+
+    # -----------------------------------------------------
+    # مرحله 4:
+    # fallback روی خود صفحه FotMob
+    #
+    # فقط اگر داده واقعاً نشانه shootout داشته باشد.
+    # -----------------------------------------------------
+
+    if _contains_shootout_marker(
+        content
+    ):
+
+        page_score = (
+            _get_penalty_score_from_page(
+                data
+            )
+        )
+
+        if page_score is not None:
+            return page_score
+
+    return None
+
+
+def get_match_phase_info(data):
+
+    periods = _get_match_periods(data)
+
+    flags = _period_flags(periods)
+
+    penalty_score = (
+        get_penalty_shootout_score(data)
+    )
+
+    if penalty_score is not None:
+
+        flags[
+            "has_penalty_shootout"
+        ] = True
+
+    current_period = (
+        periods[-1]
+        if periods
+        else None
+    )
+
+    return {
+        "periods": periods,
+        "current_period": current_period,
+        "has_extra_time": flags[
+            "has_extra_time"
+        ],
+        "extra_time_started": flags[
+            "extra_time_started"
+        ],
+        "extra_time_finished": flags[
+            "extra_time_finished"
+        ],
+        "penalty_shootout": flags[
+            "has_penalty_shootout"
+        ],
+        "penalty_score": penalty_score,
+    }
+
+
+# =========================================================
+# وضعیت بازی
+# =========================================================
+
+def _find_status_objects(data):
+
+    result = []
+
+    if not isinstance(data, dict):
+        return result
+
+    header = data.get("header")
+
+    if isinstance(header, dict):
+
+        status = header.get("status")
+
+        if isinstance(status, dict):
+            result.append(status)
+
+    general = data.get("general")
+
+    if isinstance(general, dict):
+
+        status = general.get("status")
+
+        if isinstance(status, dict):
+            result.append(status)
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(page_props, dict):
+
+        status = page_props.get("status")
+
+        if isinstance(status, dict):
+            result.append(status)
+
+        page_header = page_props.get(
+            "header"
+        )
+
+        if isinstance(page_header, dict):
+
+            status = page_header.get(
+                "status"
+            )
+
+            if isinstance(status, dict):
+                result.append(status)
+
+    content = get_content(data)
+
+    if isinstance(content, dict):
+
+        status = content.get("status")
+
+        if isinstance(status, dict):
+            result.append(status)
+
+        match_facts = content.get(
+            "matchFacts"
+        )
+
+        if isinstance(match_facts, dict):
+
+            status = match_facts.get(
+                "status"
+            )
+
+            if isinstance(status, dict):
+                result.append(status)
+
+            events_container = match_facts.get(
+                "events"
+            )
+
+            if isinstance(
+                events_container,
+                dict,
+            ):
+
+                status = events_container.get(
+                    "status"
+                )
+
+                if isinstance(status, dict):
+                    result.append(status)
+
+    return result
+
+
+def _status_text(status):
+
+    if not isinstance(status, dict):
+        return ""
+
+    parts = []
+
+    reason = status.get("reason")
+
+    if isinstance(reason, dict):
+
+        parts.extend(
+            [
+                reason.get("short", ""),
+                reason.get("long", ""),
+                reason.get("shortKey", ""),
+            ]
+        )
+
+    else:
+
+        parts.append(reason or "")
+
+    for key in (
+        "name",
+        "short",
+        "long",
+        "description",
+        "type",
+    ):
+
+        parts.append(
+            status.get(key, "")
+        )
+
+    return " ".join(
+        str(part)
+        for part in parts
+        if part is not None
+    ).lower()
+
+
+def _get_match_events_ongoing(data):
+
+    events_container = (
+        _get_match_facts_events_container(data)
+    )
+
+    if not events_container:
+        return None
+
+    ongoing = events_container.get(
+        "ongoing"
+    )
+
+    if isinstance(ongoing, bool):
+        return ongoing
+
+    return None
+
+
+def get_match_status(data):
+
+    statuses = _find_status_objects(data)
+
+    started = False
+    finished = False
+    cancelled = False
+    half_time = False
+    suspended = False
+
+    for status in statuses:
+
+        if status.get("started") is True:
+            started = True
+
+        if status.get("finished") is True:
+            finished = True
+
+        if status.get("cancelled") is True:
+            cancelled = True
+
+        status_text = _status_text(status)
+
+        if (
+            "half time" in status_text
+            or "halftime" in status_text
+            or re.search(
+                r"\bht\b",
+                status_text,
+            )
+            or "first break" in status_text
+            or "second break" in status_text
+        ):
+
+            half_time = True
+
+        if any(
+            text in status_text
+            for text in (
+                "suspended",
+                "postponed",
+                "interrupted",
+            )
+        ):
+
+            suspended = True
+
+    phase = get_match_phase_info(data)
+
+    if phase["periods"] and not started:
+        started = True
+
+    if finished:
+        started = True
+
+    events_ongoing = (
+        _get_match_events_ongoing(data)
+    )
+
+    # پایان بر اساس ongoing فقط در صورتی معتبر است
+    # که بازی شروع شده و وضعیت خاصی مثل suspended
+    # وجود نداشته باشد.
+    if (
+        not finished
+        and started
+        and not cancelled
+        and not suspended
+        and events_ongoing is False
+    ):
+
+        finished = True
+
+    # وجود نتیجه پنالتی‌شوت‌اوت یعنی مسابقه
+    # واقعاً به پایان رسیده است.
+    if (
+        not finished
+        and phase["penalty_score"] is not None
+    ):
+
+        finished = True
+        started = True
+
+    return {
+        "started": started,
+        "finished": finished,
+        "cancelled": cancelled,
+        "half_time": half_time,
+        "suspended": suspended,
+        "has_extra_time": phase[
+            "has_extra_time"
+        ],
+        "extra_time_started": phase[
+            "extra_time_started"
+        ],
+        "extra_time_finished": phase[
+            "extra_time_finished"
+        ],
+        "penalty_shootout": phase[
+            "penalty_shootout"
+        ],
+        "penalty_score": phase[
+            "penalty_score"
+        ],
+        "current_period": phase[
+            "current_period"
+        ],
+        "periods": phase[
+            "periods"
+        ],
+    }
+
+
+def get_match_status_key(data):
+
+    status = get_match_status(data)
+
+    if status["cancelled"]:
+        return "cancelled"
+
+    if status["finished"]:
+        return "finished"
+
+    if status["penalty_shootout"]:
+        return "penalty_shootout"
+
+    if (
+        status["has_extra_time"]
+        and status["extra_time_started"]
+    ):
+        return "extra_time"
+
+    if status["half_time"]:
+        return "half_time"
+
+    if status["started"]:
+        return "started"
+
+    return "not_started"
+
+
+def is_match_started(data):
+
+    return bool(
+        get_match_status(data).get(
+            "started"
+        )
+    )
+
+
+def is_half_time(data):
+
+    return bool(
+        get_match_status(data).get(
+            "half_time"
+        )
+    )
+
+
+# =========================================================
+# Lineup
+# =========================================================
+
+def get_lineup_section(data):
+
+    if not isinstance(data, dict):
+        return None
+
+    content = get_content(data)
+
+    candidates = []
+
+    if isinstance(content, dict):
+        candidates.append(
+            content.get("lineup")
+        )
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(page_props, dict):
+        candidates.append(
+            page_props.get("lineup")
+        )
+
+    candidates.append(
+        data.get("lineup")
+    )
+
+    for candidate in candidates:
+
+        if isinstance(candidate, dict):
+            return candidate
+
+    found = recursive_find(
+        data,
+        {"lineup"},
+    )
+
+    if isinstance(found, dict):
+        return found
+
+    return None
+
+
+def get_lineup(data):
+    return get_lineup_section(data)
+
+
+def get_lineup_teams(data):
+
+    lineup = get_lineup_section(data)
+
+    if not isinstance(lineup, dict):
+        return []
+
+    for key in (
+        "lineup",
+        "lineups",
+        "teams",
+    ):
+
+        candidate = lineup.get(key)
+
+        if isinstance(candidate, list):
+            return candidate
+
+        if isinstance(candidate, dict):
+
+            result = []
+
+            for side in (
+                "home",
+                "away",
+                "homeTeam",
+                "awayTeam",
+            ):
+
+                team = candidate.get(side)
+
+                if isinstance(team, dict):
+                    result.append(team)
+
+            if result:
+                return result
+
+    result = []
+
+    for key in (
+        "home",
+        "away",
+        "homeTeam",
+        "awayTeam",
+        "homeTeamData",
+        "awayTeamData",
+    ):
+
+        team = lineup.get(key)
+
+        if isinstance(team, dict):
+            result.append(team)
+
+    return result
+
+
+def get_team_id(team):
+
+    if not isinstance(team, dict):
+        return None
+
+    return (
+        team.get("teamId")
+        or team.get("id")
+        or team.get("teamID")
+    )
+
+
+def get_team_players(team):
+
+    if not isinstance(team, dict):
+        return []
+
+    for key in (
+        "players",
+        "lineup",
+        "starters",
+    ):
+
+        value = team.get(key)
+
+        if isinstance(value, list):
+            return value
+
+    return []
+
+
+def get_starters(team):
+
+    if not isinstance(team, dict):
+        return []
+
+    starters = team.get("starters")
+
+    if isinstance(starters, list):
+        return starters
+
+    players = get_team_players(team)
+
+    result = []
+
+    for player in players:
+
+        if not isinstance(player, dict):
+            continue
+
+        if player.get("starter") is True:
+            result.append(player)
+            continue
+
+        if player.get("isStarter") is True:
+            result.append(player)
+            continue
+
+        if player.get("bench") is True:
+            continue
+
+        if player.get("isSubstitute") is True:
+            continue
+
+        if (
+            player.get("timeSubbedOn") is None
+            and player.get("substitute") is not True
+        ):
+
+            result.append(player)
+
+    return result
+
+
+def get_substitutes(team):
+
+    if not isinstance(team, dict):
+        return []
+
+    for key in (
+        "substitutes",
+        "bench",
+        "subs",
+    ):
+
+        value = team.get(key)
+
+        if isinstance(value, list):
+            return value
+
+        if isinstance(value, dict):
+
+            for nested_key in (
+                "players",
+                "benchArr",
+                "substitutes",
+            ):
+
+                nested = value.get(
+                    nested_key
+                )
+
+                if isinstance(nested, list):
+
+                    flattened = []
+
+                    for item in nested:
+
+                        if isinstance(item, list):
+                            flattened.extend(item)
+
+                        elif isinstance(item, dict):
+                            flattened.append(item)
+
+                    if flattened:
+                        return flattened
+
+    players = get_team_players(team)
+
+    result = []
+
+    for player in players:
+
+        if not isinstance(player, dict):
+            continue
+
+        if player.get("isSubstitute") is True:
+            result.append(player)
+            continue
+
+        if player.get("substitute") is True:
+            result.append(player)
+            continue
+
+        if player.get("bench") is True:
+            result.append(player)
+
+    return result
+
+
+def get_lineup_type(data):
+
+    lineup = get_lineup_section(data)
+
+    if not isinstance(lineup, dict):
+        return None
+
+    for key in (
+        "lineupType",
+        "type",
+        "lineupStatus",
+    ):
+
+        value = lineup.get(key)
+
+        if value is None:
+            continue
+
+        value = str(value).lower()
+
+        if "confirm" in value:
+            return "confirmed"
+
+        if "standard" in value:
+            return "standard"
+
+        return value
+
+    return None
+
+
+# =========================================================
+# بازیکنان
+# =========================================================
+
+def get_player_id(player):
+
+    if not isinstance(player, dict):
+        return None
+
+    for key in (
+        "id",
+        "playerId",
+        "player_id",
+        "playerID",
+    ):
+
+        value = player.get(key)
+
+        if value is not None:
+            return value
+
+    nested = player.get("player")
+
+    if isinstance(nested, dict):
+
+        for key in (
+            "id",
+            "playerId",
+            "player_id",
+            "playerID",
+        ):
+
+            value = nested.get(key)
+
+            if value is not None:
+                return value
+
+    return recursive_find(
+        player,
+        {
+            "playerId",
+            "player_id",
+            "playerID",
+        },
+    )
+
+
+def get_player_name(player):
+
+    if not isinstance(player, dict):
+        return ""
+
+    name = (
+        player.get("name")
+        or player.get("playerName")
+        or player.get("shortName")
+    )
+
+    if isinstance(name, dict):
+
+        name = (
+            name.get("full")
+            or name.get("display")
+            or name.get("name")
+        )
+
+    if name:
+        return clean_text(name)
+
+    nested = player.get("player")
+
+    if isinstance(nested, dict):
+
+        name = (
+            nested.get("name")
+            or nested.get("shortName")
+            or nested.get("playerName")
+        )
+
+        if name:
+            return clean_text(name)
+
+    return ""
+
+
+def _rating_from_value(value):
+
+    if value is None:
+        return None
+
+    if isinstance(value, dict):
+
+        for key in (
+            "num",
+            "value",
+            "rating",
+            "score",
+        ):
+
+            nested = value.get(key)
+
+            if nested is not None:
+
+                result = _rating_from_value(
+                    nested
+                )
+
+                if result is not None:
+                    return result
+
+        return None
+
+    if isinstance(value, str):
+
+        value = value.strip()
+
+        if not value:
+            return None
+
+        value = value.replace(",", ".")
+
+    try:
+        number = float(value)
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        return None
+
+    if number < 0 or number > 10:
+        return None
+
+    return number
+
+
+def get_player_rating(player):
+
+    if not isinstance(player, dict):
+        return None
+
+    for key in (
+        "rating",
+        "ratingNum",
+        "matchRating",
+        "performanceRating",
+    ):
+
+        if key in player:
+
+            rating = _rating_from_value(
+                player.get(key)
+            )
+
+            if rating is not None:
+                return rating
+
+    for key in (
+        "stats",
+        "performance",
+        "matchStats",
+        "playerStats",
+        "ratingData",
+    ):
+
+        value = player.get(key)
+
+        if isinstance(value, dict):
+
+            for rating_key in (
+                "rating",
+                "ratingNum",
+                "matchRating",
+                "performanceRating",
+            ):
+
+                rating = _rating_from_value(
+                    value.get(rating_key)
+                )
+
+                if rating is not None:
+                    return rating
+
+    nested_player = player.get("player")
+
+    if isinstance(nested_player, dict):
+
+        rating = get_player_rating(
+            nested_player
+        )
+
+        if rating is not None:
+            return rating
+
+    return None
+
+
+# =========================================================
+# مربی / آرایش
+# =========================================================
+
+def get_coach(team):
+
+    if not isinstance(team, dict):
+        return ""
+
+    for key in (
+        "coach",
+        "manager",
+        "headCoach",
+    ):
+
+        value = team.get(key)
+
+        if isinstance(value, str):
+            return clean_text(value)
+
+        if isinstance(value, dict):
+
+            name = (
+                value.get("name")
+                or value.get("fullName")
+                or value.get("shortName")
+            )
+
+            if name:
+                return clean_text(name)
+
+    return ""
+
+
+def get_formation(team):
+
+    if not isinstance(team, dict):
+        return ""
+
+    for key in (
+        "formation",
+        "formationString",
+        "displayFormation",
+    ):
+
+        value = team.get(key)
+
+        if isinstance(value, str):
+            return clean_text(value)
+
+    return ""
+
+
+def get_player_position(player):
+
+    if not isinstance(player, dict):
+        return ""
+
+    position = (
+        player.get("position")
+        or player.get("role")
+        or player.get("positionStringShort")
+    )
+
+    if isinstance(position, dict):
+
+        position = (
+            position.get("name")
+            or position.get("short")
+            or position.get("value")
+        )
+
+    return str(position or "").lower()
+
+
+def organize_players(players, formation=None):
+
+    groups = {
+        "goalkeeper": [],
+        "defender": [],
+        "midfielder": [],
+        "attacker": [],
+        "unknown": [],
+    }
+
+    if not isinstance(players, list):
+        return groups
+
+    for player in players:
+
+        position = get_player_position(
+            player
+        )
+
+        if (
+            "goal" in position
+            or position in {
+                "gk",
+                "keeper",
+                "goalkeeper",
+            }
+        ):
+
+            groups["goalkeeper"].append(player)
+
+        elif any(
+            word in position
+            for word in (
+                "def",
+                "back",
+                "centre-back",
+                "center-back",
+                "cb",
+                "lb",
+                "rb",
+                "lwb",
+                "rwb",
+            )
+        ):
+
+            groups["defender"].append(player)
+
+        elif any(
+            word in position
+            for word in (
+                "mid",
+                "dm",
+                "cm",
+                "am",
+                "lm",
+                "rm",
+            )
+        ):
+
+            groups["midfielder"].append(player)
+
+        elif any(
+            word in position
+            for word in (
+                "attack",
+                "forward",
+                "striker",
+                "st",
+                "cf",
+                "lw",
+                "rw",
+                "wing",
+            )
+        ):
+
+            groups["attacker"].append(player)
+
+        else:
+
+            groups["unknown"].append(player)
+
+    return groups
+
+
+# =========================================================
+# Event helpers
+# =========================================================
+
+def get_event_player_id(event):
+
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "playerId",
+        "player_id",
+        "playerID",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+            return value
+
+    player = event.get("player")
+
+    if isinstance(player, dict):
+
+        for key in (
+            "id",
+            "playerId",
+            "player_id",
+            "playerID",
+        ):
+
+            value = player.get(key)
+
+            if value is not None:
+                return value
+
+    return recursive_find(
+        event,
+        {
+            "playerId",
+            "player_id",
+            "playerID",
+        },
+    )
+
+
+def get_event_assist_player_id(event):
+
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "assistPlayerId",
+        "assist_player_id",
+        "assistantPlayerId",
+        "assistant_player_id",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+            return value
+
+    for key in (
+        "assist",
+        "assistant",
+    ):
+
+        value = event.get(key)
+
+        if isinstance(value, dict):
+
+            for id_key in (
+                "id",
+                "playerId",
+                "player_id",
+            ):
+
+                player_id = value.get(
+                    id_key
+                )
+
+                if player_id is not None:
+                    return player_id
+
+    return None
+
+
+def get_event_unique_id(event):
+
+    if not isinstance(event, dict):
+        return None
+
+    for key in (
+        "id",
+        "eventId",
+        "eventID",
+        "incidentId",
+        "incidentID",
+    ):
+
+        value = event.get(key)
+
+        if value is not None:
+            return value
+
+    return None
+
+
+def _is_penalty_shootout_event(event):
+
+    if not isinstance(event, dict):
+        return False
+
+    if event.get(
+        "isPenaltyShootoutEvent"
+    ) is True:
+
+        return True
+
+    # بسیار مهم:
+    # "penalty" یا "pen" به تنهایی shootout نیست.
+    # اینها ممکن است پنالتی عادی داخل بازی باشند.
+    for key in (
+        "period",
+        "periodName",
+        "periodType",
+        "matchPeriod",
+        "stage",
+        "stageName",
+    ):
+
+        value = event.get(key)
+
+        if isinstance(value, dict):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        text = clean_text(value).lower()
+
+        compact = (
+            text
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            "penaltyshootout" in compact
+            or compact == "shootout"
+        ):
+
+            return True
+
+    # فقط event type صریح.
+    for key in (
+        "incidentType",
+        "eventType",
+        "incidentClass",
+    ):
+
+        value = event.get(
+            key,
+            "",
+        )
+
+        if isinstance(value, dict):
+
+            value = (
+                value.get("name")
+                or value.get("type")
+                or value.get("key")
+                or value.get("value")
+            )
+
+        text = clean_text(
+            value
+        ).lower()
+
+        compact = (
+            text
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        )
+
+        if (
+            "penaltyshootout" in compact
+            or compact == "shootout"
+        ):
+
+            return True
+
+    return False
+
+
+def normalize_event(event):
+
+    if not isinstance(event, dict):
+        return None
+
+    result = dict(event)
+
+    is_shootout = (
+        _is_penalty_shootout_event(event)
+    )
+
+    if is_shootout:
+
+        result[
+            "isPenaltyShootoutEvent"
+        ] = True
+
+        result["type"] = (
+            "penalty_shootout"
+        )
+
+    else:
+
+        event_type = (
+            event.get("type")
+            or event.get("eventType")
+            or event.get("incidentType")
+            or event.get("incident")
+            or ""
+        )
+
+        if isinstance(
+            event_type,
+            dict,
+        ):
+
+            event_type = (
+                event_type.get("name")
+                or event_type.get("type")
+                or ""
+            )
+
+        event_type = str(
+            event_type
+        ).lower()
+
+        if (
+            "goal" in event_type
+            or event.get("isGoal") is True
+        ):
+
+            result["type"] = "goal"
+
+        elif (
+            "card" in event_type
+            or event.get("card") is not None
+            or event.get("cardType") is not None
+        ):
+
+            result["type"] = "card"
+
+        elif "var" in event_type:
+
+            result["type"] = "var"
+
+        else:
+
+            result["type"] = event_type
+
+    player_id = get_event_player_id(
+        event
+    )
+
+    if player_id is not None:
+        result["playerId"] = player_id
+
+    assist_id = get_event_assist_player_id(
+        event
+    )
+
+    if assist_id is not None:
+        result["assistPlayerId"] = assist_id
+
+    if "isHome" in event:
+
+        result["isHome"] = event["isHome"]
+
+    elif "home" in event:
+
+        result["isHome"] = event["home"]
+
+    elif "team" in event:
+
+        team = event["team"]
+
+        if isinstance(team, dict):
+
+            if "isHome" in team:
+                result["isHome"] = team["isHome"]
+
+            elif "home" in team:
+                result["isHome"] = team["home"]
+
+    return result
+
+
+# =========================================================
+# استخراج Eventها
+# =========================================================
+
+def _normalize_event_list(candidate):
+
+    if not isinstance(candidate, list):
+        return []
+
+    result = []
+
+    for event in candidate:
+
+        normalized = normalize_event(
+            event
+        )
+
+        if normalized is not None:
+            result.append(normalized)
+
+    return result
+
+
+def _dedupe_events(events):
+
+    result = []
+    seen = set()
+
+    for event in events:
+
+        event_id = get_event_unique_id(
+            event
+        )
+
+        if event_id is not None:
+
+            key = (
+                "id",
+                str(event_id),
+            )
+
+        else:
+
+            key = (
+                "fallback",
+                str(event.get("type", "")),
+                str(event.get("playerId", "")),
+                str(event.get("time", "")),
+                str(event.get("minute", "")),
+                str(event.get("isHome", "")),
+            )
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        result.append(event)
+
+    return result
+
+
+def extract_events_from_data(data):
+
+    if not isinstance(data, dict):
+        return []
+
+    candidates = (
+        _get_current_match_event_candidates(
+            data
+        )
+    )
+
+    all_events = []
+
+    for candidate in candidates:
+
+        normalized = _normalize_event_list(
+            candidate
+        )
+
+        if normalized:
+            all_events.extend(normalized)
+
+    if all_events:
+
+        return _dedupe_events(
+            all_events
+        )
+
+    return []
+
+
+def get_match_events(match_url):
+
+    match_id = extract_match_id(
+        match_url
+    )
+
+    if not match_id:
+        return []
+
+    data = fetch_match_api(
+        match_id
+    )
+
+    if isinstance(data, dict):
+
+        events = extract_events_from_data(
+            data
+        )
+
+        if events:
+            return events
+
+    page = fetch_match_page(
+        match_id
+    )
+
+    if not page:
+        return []
+
+    next_data = extract_next_data(
+        page
+    )
+
+    if isinstance(next_data, dict):
+
+        return extract_events_from_data(
+            next_data
+        )
+
+    return []
+
+
+# =========================================================
+# Score
+# =========================================================
+
+def get_score(data):
+
+    if not isinstance(data, dict):
+
+        return {
+            "home": 0,
+            "away": 0,
+        }
+
+    header = data.get("header")
+
+    status = {}
+
+    if isinstance(header, dict):
+
+        status = header.get("status")
+
+        if not isinstance(status, dict):
+            status = {}
+
+    candidates = [
+        status.get("score"),
+        data.get("score"),
+        get_nested(
+            data,
+            "props",
+            "pageProps",
+            "header",
+            "status",
+            "score",
+        ),
+    ]
+
+    for score in candidates:
+
+        if not isinstance(score, dict):
+            continue
+
+        home = (
+            score.get("home")
+            if score.get("home") is not None
+            else score.get("homeScore")
+        )
+
+        away = (
+            score.get("away")
+            if score.get("away") is not None
+            else score.get("awayScore")
+        )
+
+        try:
+
+            if (
+                home is not None
+                and away is not None
+            ):
+
+                return {
+                    "home": int(home),
+                    "away": int(away),
+                }
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+            pass
+
+    score_strings = [
+        status.get("scoreStr"),
+        data.get("scoreStr"),
+        get_nested(
+            data,
+            "props",
+            "pageProps",
+            "header",
+            "status",
+            "scoreStr",
+        ),
+    ]
+
+    for score_str in score_strings:
+
+        if score_str is None:
+            continue
+
+        match = re.search(
+            r"(\d+)\s*[-:]\s*(\d+)",
+            str(score_str),
+        )
+
+        if match:
+
+            return {
+                "home": int(match.group(1)),
+                "away": int(match.group(2)),
+            }
+
+    return {
+        "home": 0,
+        "away": 0,
+    }
+
+
+# =========================================================
+# آمار بازی
+# =========================================================
+
+STAT_ALIASES = {
+    "expected goals": "xG",
+    "expected goals (xg)": "xG",
+    "xg": "xG",
+
+    "xg on target": "xGOT",
+    "xg on target (xgot)": "xGOT",
+    "expected goals on target": "xGOT",
+
+    "shots": "شوت",
+    "total shots": "شوت",
+
+    "shots on target": "شوت در چارچوب",
+
+    "shots off target": "شوت خارج از چارچوب",
+
+    "blocked shots": "شوت بلوکه‌شده",
+
+    "hit woodwork": "تیرک",
+
+    "shots inside box": "شوت داخل محوطه",
+
+    "shots outside box": "شوت خارج محوطه",
+
+    "possession": "مالکیت",
+    "ball possession": "مالکیت",
+
+    "passes": "پاس",
+    "total passes": "پاس",
+
+    "accurate passes": "پاس دقیق",
+    "accurate passes (%)": "پاس دقیق",
+
+    "pass accuracy": "دقت پاس",
+
+    "own half": "پاس در نیمه خودی",
+    "own half passes": "پاس در نیمه خودی",
+
+    "opposition half": "پاس در نیمه حریف",
+    "opposition half passes": "پاس در نیمه حریف",
+
+    "accurate long balls": "پاس بلند دقیق",
+    "accurate crosses": "سانتر دقیق",
+
+    "throws": "پرتاب",
+
+    "touches in opposition box": (
+        "لمس توپ در محوطه حریف"
+    ),
+
+    "big chances": "موقعیت بزرگ",
+    "big chances missed": "موقعیت بزرگ از دست‌رفته",
+
+    "corners": "کرنر",
+    "corner kicks": "کرنر",
+
+    "tackles": "تکل",
+    "interceptions": "قطع توپ",
+    "blocks": "بلاک",
+    "clearances": "دفع توپ",
+    "keeper saves": "مهار دروازه‌بان",
+
+    "duels won": "دوئل‌های برده‌شده",
+    "ground duels won": "دوئل زمینی برده‌شده",
+    "aerial duels won": "دوئل هوایی برده‌شده",
+    "successful dribbles": "دریبل موفق",
+
+    "fouls": "خطا",
+    "fouls committed": "خطا",
+
+    "offsides": "آفساید",
+
+    "yellow cards": "کارت زرد",
+    "red cards": "کارت قرمز",
+}
+
+
+def _normalize_stat_label(value):
+
+    value = clean_text(value).lower()
+
+    value = re.sub(
+        r"\s+",
+        " ",
+        value,
+    )
+
+    return STAT_ALIASES.get(
+        value
+    )
+
+
+def _stat_value(value):
+
+    if value is None:
+        return None
+
+    if isinstance(value, bool):
+        return None
+
+    if isinstance(value, (int, float)):
+        return value
+
+    if isinstance(value, str):
+
+        text = clean_text(value)
+
+        if not text:
+            return None
+
+        # مقادیری مثل:
+        # 525 (83%)
+        # باید string باقی بمانند.
+        if "(" in text or "%" in text:
+            return text
+
+        try:
+            number = float(text)
+
+            if number.is_integer():
+                return int(number)
+
+            return number
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            return text
+
+    return None
+
+
+def _team_name_matches(
+    value,
+    home_name,
+    away_name,
+):
+
+    if value is None:
+        return None
+
+    if isinstance(value, dict):
+
+        value = (
+            value.get("name")
+            or value.get("shortName")
+            or value.get("longName")
+            or value.get("title")
+        )
+
+    text = clean_text(
+        value
+    ).lower()
+
+    if not text:
+        return None
+
+    home = clean_text(
+        home_name
+    ).lower()
+
+    away = clean_text(
+        away_name
+    ).lower()
+
+    if (
+        text == home
+        or text in home
+        or home in text
+    ):
+
+        return "home"
+
+    if (
+        text == away
+        or text in away
+        or away in text
+    ):
+
+        return "away"
+
+    return None
+
+
+def _extract_stat_pair(
+    item,
+    home_name,
+    away_name,
+):
+
+    if not isinstance(item, dict):
+        return None
+
+    label = (
+        item.get("title")
+        or item.get("name")
+        or item.get("label")
+        or item.get("stat")
+    )
+
+    normalized_label = _normalize_stat_label(
+        label
+    )
+
+    if normalized_label is None:
+        return None
+
+    values = item.get("stats")
+
+    if not isinstance(values, (list, dict)):
+        values = item.get("values")
+
+    if not isinstance(values, (list, dict)):
+        values = item.get("value")
+
+    if isinstance(values, list):
+
+        # ساختار اصلی FotMob:
+        # stats = [home, away]
+        if (
+            len(values) == 2
+            and not all(
+                isinstance(value, dict)
+                for value in values
+            )
+        ):
+
+            home_value = _stat_value(
+                values[0]
+            )
+
+            away_value = _stat_value(
+                values[1]
+            )
+
+            # [عدد, None] معتبر است.
+            if (
+                home_value is not None
+                or away_value is not None
+            ):
+
+                return (
+                    normalized_label,
+                    home_value,
+                    away_value,
+                )
+
+        # ساختارهای قدیمی‌تر
+        home_value = None
+        away_value = None
+
+        for value_item in values:
+
+            if not isinstance(
+                value_item,
+                dict,
+            ):
+                continue
+
+            team_side = _team_name_matches(
+                value_item.get("name")
+                or value_item.get("team")
+                or value_item.get("teamName"),
+                home_name,
+                away_name,
+            )
+
+            value = (
+                value_item.get("value")
+            )
+
+            if value is None:
+                value = value_item.get("stat")
+
+            if value is None:
+                value = value_item.get(
+                    "displayValue"
+                )
+
+            value = _stat_value(value)
+
+            if team_side == "home":
+                home_value = value
+
+            elif team_side == "away":
+                away_value = value
+
+        if (
+            home_value is not None
+            or away_value is not None
+        ):
+
+            return (
+                normalized_label,
+                home_value,
+                away_value,
+            )
+
+    if isinstance(values, dict):
+
+        home_value = None
+        away_value = None
+
+        for key, value in values.items():
+
+            side = _team_name_matches(
+                key,
+                home_name,
+                away_name,
+            )
+
+            value = _stat_value(value)
+
+            if side == "home":
+                home_value = value
+
+            elif side == "away":
+                away_value = value
+
+        if (
+            home_value is not None
+            or away_value is not None
+        ):
+
+            return (
+                normalized_label,
+                home_value,
+                away_value,
+            )
+
+    return None
+
+
+def _walk_final_stats(
+    node,
+    home_name,
+    away_name,
+    found,
+):
+
+    if isinstance(node, dict):
+
+        # فقط leafهایی که stats دقیقاً
+        # دو مقدار دارند، آمار واقعی هستند.
+        values = node.get("stats")
+
+        is_leaf = (
+            isinstance(values, list)
+            and len(values) == 2
+            and not all(
+                isinstance(value, dict)
+                for value in values
+            )
+        )
+
+        if (
+            is_leaf
+            and node.get("type") != "title"
+        ):
+
+            result = _extract_stat_pair(
+                node,
+                home_name,
+                away_name,
+            )
+
+            if result is not None:
+
+                label_key = result[0]
+
+                # اولین occurrence معتبر کافی است.
+                if label_key not in found:
+
+                    found[label_key] = {
+                        "home": result[1],
+                        "away": result[2],
+                    }
+
+        for value in node.values():
+
+            _walk_final_stats(
+                value,
+                home_name,
+                away_name,
+                found,
+            )
+
+    elif isinstance(node, list):
+
+        for item in node:
+
+            _walk_final_stats(
+                item,
+                home_name,
+                away_name,
+                found,
+            )
+
+
+def _find_periods_all(stats):
+
+    if not isinstance(stats, dict):
+        return None
+
+    periods = stats.get("Periods")
+
+    if not isinstance(periods, dict):
+        return None
+
+    all_period = periods.get("All")
+
+    if isinstance(all_period, dict):
+        return all_period
+
+    return None
+
+
+def extract_match_stats(
+    data,
+    home_name,
+    away_name,
+):
+
+    if not isinstance(data, dict):
+        return {}
+
+    content = get_content(data)
+
+    if not isinstance(content, dict):
+        return {}
+
+    stats = content.get("stats")
+
+    if not isinstance(stats, dict):
+
+        stats = content.get(
+            "statistics"
+        )
+
+    if not isinstance(stats, dict):
+        return {}
+
+    periods_all = _find_periods_all(
+        stats
+    )
+
+    if not isinstance(periods_all, dict):
+        return {}
+
+    found = {}
+
+    _walk_final_stats(
+        periods_all,
+        home_name,
+        away_name,
+        found,
+    )
+
+    return found
+
+
+# =========================================================
+# Team object
+# =========================================================
+
+def build_team_object(
+    team_data,
+    lineup_team,
+):
+
+    if not isinstance(team_data, dict):
+        team_data = {}
+
+    if not isinstance(lineup_team, dict):
+        lineup_team = {}
+
+    result = dict(lineup_team)
+
+    if not result.get("id"):
+
+        result["id"] = (
+            team_data.get("id")
+            or team_data.get("teamId")
+        )
+
+    if not result.get("name"):
+
+        result["name"] = (
+            team_data.get("name")
+            or ""
+        )
+
+    starters = get_starters(result)
+    substitutes = get_substitutes(result)
+
+    result["starters"] = starters
+    result["substitutes"] = substitutes
+
+    if not result.get("formation"):
+
+        formation = get_formation(
+            lineup_team
+        )
+
+        if formation:
+            result["formation"] = formation
+
+    if not result.get("coach"):
+
+        coach = get_coach(
+            lineup_team
+        )
+
+        if coach:
+            result["coach"] = coach
+
+    return result
+
+
+# =========================================================
+# Snapshot
+# =========================================================
+
+def get_match_snapshot(match_url):
+
+    match_id = extract_match_id(
+        match_url
+    )
+
+    if not match_id:
+
+        print(
+            "FotMob: Match ID not found."
+        )
+
+        return None
+
+    data = fetch_match_api(
+        match_id
+    )
+
+    if not isinstance(data, dict):
+
+        page = fetch_match_page(
+            match_id
+        )
+
+        if not page:
+            return None
+
+        data = extract_next_data(
+            page
+        )
+
+        if not isinstance(data, dict):
+
+            print(
+                f"FotMob {match_id}: "
+                "Could not extract NEXT_DATA."
+            )
+
+            return None
+
+    info = extract_basic_info(data)
+
+    status = get_match_status(data)
+
+    phase = get_match_phase_info(data)
+
+    lineup_teams = get_lineup_teams(data)
+
+    home_id = info.get("home_id")
+    away_id = info.get("away_id")
+
+    home_lineup = None
+    away_lineup = None
+
+    for team in lineup_teams:
+
+        team_id = get_team_id(team)
+
+        if (
+            home_id is not None
+            and team_id is not None
+            and str(team_id) == str(home_id)
+        ):
+
+            home_lineup = team
+
+        elif (
+            away_id is not None
+            and team_id is not None
+            and str(team_id) == str(away_id)
+        ):
+
+            away_lineup = team
+
+    if home_lineup is None:
+
+        for team in lineup_teams:
+
+            if not isinstance(team, dict):
+                continue
+
+            name = _get_team_name(team)
+
+            if (
+                name
+                and name.lower()
+                == info.get(
+                    "home_name",
+                    "",
+                ).lower()
+            ):
+
+                home_lineup = team
+                break
+
+    if away_lineup is None:
+
+        for team in lineup_teams:
+
+            if not isinstance(team, dict):
+                continue
+
+            name = _get_team_name(team)
+
+            if (
+                name
+                and name.lower()
+                == info.get(
+                    "away_name",
+                    "",
+                ).lower()
+            ):
+
+                away_lineup = team
+                break
+
+    if (
+        home_lineup is None
+        and len(lineup_teams) >= 1
+    ):
+
+        home_lineup = lineup_teams[0]
+
+    if (
+        away_lineup is None
+        and len(lineup_teams) >= 2
+    ):
+
+        away_lineup = lineup_teams[1]
+
+    home_team_data = {
+        "id": home_id,
+        "name": info.get(
+            "home_name"
+        ),
+    }
+
+    away_team_data = {
+        "id": away_id,
+        "name": info.get(
+            "away_name"
+        ),
+    }
+
+    home_team = build_team_object(
+        home_team_data,
+        home_lineup or {},
+    )
+
+    away_team = build_team_object(
+        away_team_data,
+        away_lineup or {},
+    )
+
+    home_starters = get_starters(
+        home_team
+    )
+
+    away_starters = get_starters(
+        away_team
+    )
+
+    lineup_type = get_lineup_type(data)
+
+    if (
+        lineup_type is None
+        and len(home_starters) == 11
+        and len(away_starters) == 11
+    ):
+
+        lineup_type = "standard"
+
+    home_name = (
+        info.get("home_name")
+        or _get_team_name(home_lineup)
+        or "Home"
+    )
+
+    away_name = (
+        info.get("away_name")
+        or _get_team_name(away_lineup)
+        or "Away"
+    )
+
+    if home_id is None:
+        home_id = get_team_id(home_lineup)
+
+    if away_id is None:
+        away_id = get_team_id(away_lineup)
+
+    score = get_score(data)
+
+    penalty_score = phase[
+        "penalty_score"
+    ]
+
+    stats = extract_match_stats(
+        data,
+        home_name,
+        away_name,
+    )
+
+    return {
+        "match_id": match_id,
+
+        "home": home_name,
+
+        "away": away_name,
+
+        "home_team": home_team,
+
+        "away_team": away_team,
+
+        "home_team_id": home_id,
+
+        "away_team_id": away_id,
+
+        "league": (
+            info.get("league")
+            or "نامشخص"
+        ),
+
+        "start": info.get("start"),
+
+        "start_formatted": (
+            format_iran_datetime(
+                info.get("start")
+            )
+        ),
+
+        "lineup_type": lineup_type,
+
+        "home_starters": home_starters,
+
+        "away_starters": away_starters,
+
+        "started": status["started"],
+
+        "half_time": status["half_time"],
+
+        "finished": status["finished"],
+
+        "cancelled": status["cancelled"],
+
+        # نتیجه عادی بازی.
+        # در فینال آرژانتین - فرانسه:
+        # 3 - 3
+        "score": score,
+
+        # نتیجه ضربات پنالتی:
+        # 4 - 2
+        "penalty_score": penalty_score,
+
+        "has_extra_time": status[
+            "has_extra_time"
+        ],
+
+        "extra_time_started": status[
+            "extra_time_started"
+        ],
+
+        "extra_time_finished": status[
+            "extra_time_finished"
+        ],
+
+        "penalty_shootout": status[
+            "penalty_shootout"
+        ],
+
+        "current_period": status[
+            "current_period"
+        ],
+
+        "periods": status[
+            "periods"
+        ],
+
+        "stats": stats,
+
+        "status_key": (
+            get_match_status_key(data)
+        ),
+
+        "raw": data,
+    }
+
+
+# =========================================================
+# تابع سازگاری
+# =========================================================
+
+def get_match(match_url):
+
+    return get_match_snapshot(
+        match_url
+    )
