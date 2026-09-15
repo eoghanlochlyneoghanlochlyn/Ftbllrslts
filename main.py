@@ -211,6 +211,70 @@ def process_live_events(
         if existing_goal is not None:
             continue
 
+        # -------------------------------------------------
+        # event خام گل
+        # -------------------------------------------------
+
+        event = goal_info.get(
+            "event"
+        )
+
+        print(
+            "\n"
+            "=================================================="
+        )
+
+        print(
+            "[GOAL DEBUG]"
+        )
+
+        print(
+            "Goal key:",
+            goal_key,
+        )
+
+        print(
+            "Goal info:",
+            goal_info,
+        )
+
+        print(
+            "Raw event:",
+            event,
+        )
+
+        print(
+            "Snapshot home:",
+            snapshot.get(
+                "home"
+            ),
+        )
+
+        print(
+            "Snapshot away:",
+            snapshot.get(
+                "away"
+            ),
+        )
+
+        print(
+            "Snapshot score:",
+            snapshot.get(
+                "score"
+            ),
+        )
+
+        print(
+            "Score BEFORE:",
+            get_current_score(
+                match_state
+            ),
+        )
+
+        # -------------------------------------------------
+        # ثبت گل و محاسبه نتیجه بعد از گل
+        # -------------------------------------------------
+
         score_after = (
             get_goal_score_after_event(
                 match_state,
@@ -218,8 +282,21 @@ def process_live_events(
             )
         )
 
-        event = goal_info.get(
-            "event"
+        print(
+            "Score AFTER:",
+            score_after,
+        )
+
+        print(
+            "State goals:",
+            match_state.get(
+                "goals",
+                [],
+            ),
+        )
+
+        print(
+            "=================================================="
         )
 
         if not isinstance(
