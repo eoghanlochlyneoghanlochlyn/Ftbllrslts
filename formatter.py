@@ -892,18 +892,6 @@ def build_goal_message(
         event
     )
 
-    # در گل به خودی، بازیکن متعلق به یک تیم است،
-    # اما گل برای تیم مقابل ثبت می‌شود.
-    if own_goal:
-
-        if is_home is True:
-
-            team_name = away_name
-
-        elif is_home is False:
-
-            team_name = home_name
-
     minute = get_goal_minute(
         event
     )
