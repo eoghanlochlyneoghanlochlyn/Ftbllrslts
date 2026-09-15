@@ -1,216 +1,153 @@
 import json
 import time
+from typing import Any
+
 import requests
 
-
-# ============================================================
-# تنظیمات ثابت
-# ============================================================
 
 SEARCH_URL = "https://www.fotmob.com/api/data/search/suggest"
 
 REQUEST_DELAY = 0.4
 TIMEOUT = 15
 
-COUNTRY = "England"
+COUNTRY = "Spain"
 
-
-# ============================================================
-# فقط این بخش برای هر کشور عوض می‌شود
-# ============================================================
 
 TEAMS_TO_FIND = [
-    # Premier League
-    "Arsenal",
-    "Aston Villa",
-    "AFC Bournemouth",
-    "Brentford",
-    "Brighton & Hove Albion",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Fulham",
-    "Leeds United",
-    "Liverpool",
-    "Manchester City",
-    "Manchester United",
-    "Newcastle United",
-    "Nottingham Forest",
-    "Sunderland",
-    "Tottenham Hotspur",
+    # LaLiga
+    "Athletic Club",
+    "Atlético de Madrid",
+    "CA Osasuna",
+    "Celta",
+    "Deportivo Alavés",
+    "Elche CF",
+    "FC Barcelona",
+    "Getafe CF",
+    "Levante UD",
+    "Málaga CF",
+    "R. Racing Club",
+    "Rayo Vallecano",
+    "RC Deportivo",
+    "RCD Espanyol de Barcelona",
+    "Real Betis",
+    "Real Madrid",
+    "Real Sociedad",
+    "Sevilla FC",
+    "Valencia CF",
+    "Villarreal CF",
 
-    # Championship
-    "Birmingham City",
-    "Blackburn Rovers",
-    "Bristol City",
-    "Charlton Athletic",
-    "Coventry City",
-    "Derby County",
-    "Hull City",
-    "Ipswich Town",
-    "Leicester City",
-    "Middlesbrough",
-    "Millwall",
-    "Norwich City",
-    "Oxford United",
-    "Portsmouth",
-    "Preston North End",
-    "Queens Park Rangers",
-    "Sheffield United",
-    "Sheffield Wednesday",
-    "Southampton",
-    "Stoke City",
-    "Swansea City",
-    "Watford",
-    "West Bromwich Albion",
-    "Wrexham",
-
-    # League One
-    "AFC Wimbledon",
-    "Barnsley",
-    "Blackpool",
-    "Bradford City",
-    "Bromley",
-    "Burton Albion",
-    "Cambridge United",
-    "Doncaster Rovers",
-    "Exeter City",
-    "Huddersfield Town",
-    "Leyton Orient",
-    "Lincoln City",
-    "Luton Town",
-    "Mansfield Town",
-    "Milton Keynes Dons",
-    "Northampton Town",
-    "Notts County",
-    "Peterborough United",
-    "Plymouth Argyle",
-    "Reading",
-    "Rotherham United",
-    "Stevenage",
-    "Stockport County",
-    "Wigan Athletic",
-    "Wycombe Wanderers",
+    # Segunda División
+    "AD Ceuta FC",
+    "Albacete BP",
+    "Burgos CF",
+    "Cádiz CF",
+    "CD Castellón",
+    "CD Eldense",
+    "CD Leganés",
+    "CD Tenerife",
+    "CE Sabadell",
+    "Celta Fortuna",
+    "Córdoba CF",
+    "FC Andorra",
+    "Girona FC",
+    "Granada CF",
+    "R. Sociedad B",
+    "RCD Mallorca",
+    "Real Oviedo",
+    "Real Sporting",
+    "Real Valladolid CF",
+    "SD Eibar",
+    "UD Almería",
+    "UD Las Palmas",
 ]
 
 
-# ============================================================
-# نام فارسی
-#
-# این بخش فقط برای نمایش خروجی است و هیچ نقشی در پیدا کردن ID
-# ندارد.
-# ============================================================
+# --------------------------------------------------------
+# نام فارسی تیم‌ها
+# --------------------------------------------------------
 
 PERSIAN_NAMES = {
-    "Arsenal": "آرسنال",
-    "Aston Villa": "استون ویلا",
-    "AFC Bournemouth": "بورنموث",
-    "Brentford": "برنتفورد",
-    "Brighton & Hove Albion": "برایتون",
-    "Chelsea": "چلسی",
-    "Crystal Palace": "کریستال پالاس",
-    "Everton": "اورتون",
-    "Fulham": "فولام",
-    "Leeds United": "لیدز",
-    "Liverpool": "لیورپول",
-    "Manchester City": "منچسترسیتی",
-    "Manchester United": "منچستریونایتد",
-    "Newcastle United": "نیوکاسل",
-    "Nottingham Forest": "ناتینگهام فارست",
-    "Sunderland": "ساندرلند",
-    "Tottenham Hotspur": "تاتنهام",
+    "Athletic Club": "اتلتیک بیلبائو",
+    "Atlético de Madrid": "اتلتیکومادرید",
+    "CA Osasuna": "اوساسونا",
+    "Celta": "سلتاویگو",
+    "Deportivo Alavés": "آلاوس",
+    "Elche CF": "الچه",
+    "FC Barcelona": "بارسلونا",
+    "Getafe CF": "ختافه",
+    "Levante UD": "لوانته",
+    "Málaga CF": "مالاگا",
+    "R. Racing Club": "راسينگ سانتاندر",
+    "Rayo Vallecano": "رایو وایکانو",
+    "RC Deportivo": "دپورتیوو لاکرونیا",
+    "RCD Espanyol de Barcelona": "اسپانیول",
+    "Real Betis": "رئال بتیس",
+    "Real Madrid": "رئال مادرید",
+    "Real Sociedad": "رئال سوسیداد",
+    "Sevilla FC": "سویا",
+    "Valencia CF": "والنسیا",
+    "Villarreal CF": "ویارئال",
 
-    "Birmingham City": "بیرمنگام سیتی",
-    "Blackburn Rovers": "بلکبرن",
-    "Bristol City": "بریستول سیتی",
-    "Charlton Athletic": "چارلتون",
-    "Coventry City": "کاونتری",
-    "Derby County": "دربی کانتی",
-    "Hull City": "هال سیتی",
-    "Ipswich Town": "ایپسویچ",
-    "Leicester City": "لسترسیتی",
-    "Middlesbrough": "میدلزبورو",
-    "Millwall": "میلوال",
-    "Norwich City": "نورویچ",
-    "Oxford United": "آکسفورد یونایتد",
-    "Portsmouth": "پورتسموث",
-    "Preston North End": "پرستون",
-    "Queens Park Rangers": "کوئینز پارک رنجرز",
-    "Sheffield United": "شفیلد یونایتد",
-    "Sheffield Wednesday": "شفیلد ونزدی",
-    "Southampton": "ساوتهمپتون",
-    "Stoke City": "استوک سیتی",
-    "Swansea City": "سوانزی",
-    "Watford": "واتفورد",
-    "West Bromwich Albion": "وست برومویچ",
-    "Wrexham": "رکسام",
-
-    "AFC Wimbledon": "ای‌اف‌سی ویمبلدون",
-    "Barnsley": "بارنزلی",
-    "Blackpool": "بلکپول",
-    "Bradford City": "بردفورد سیتی",
-    "Bromley": "بروملی",
-    "Burton Albion": "برتون آلبیون",
-    "Cambridge United": "کمبریج یونایتد",
-    "Doncaster Rovers": "دانکستر",
-    "Exeter City": "اکستر سیتی",
-    "Huddersfield Town": "هادرسفیلد",
-    "Leyton Orient": "لیتون اورینت",
-    "Lincoln City": "لینکلن سیتی",
-    "Luton Town": "لوتون",
-    "Mansfield Town": "منسفیلد",
-    "Milton Keynes Dons": "میلتون کینز دونز",
-    "Northampton Town": "نورث‌همپتون",
-    "Notts County": "ناتس کانتی",
-    "Peterborough United": "پیتربورو یونایتد",
-    "Plymouth Argyle": "پلیموث آرگایل",
-    "Reading": "ردینگ",
-    "Rotherham United": "روترهام یونایتد",
-    "Stevenage": "استیونج",
-    "Stockport County": "استاکپورت کانتی",
-    "Wigan Athletic": "ویگان اتلتیک",
-    "Wycombe Wanderers": "وایکام واندررز",
+    "AD Ceuta FC": "سئوتا",
+    "Albacete BP": "آلباسته",
+    "Burgos CF": "بورگوس",
+    "Cádiz CF": "کادیز",
+    "CD Castellón": "کاستیون",
+    "CD Eldense": "الدنسه",
+    "CD Leganés": "لگانس",
+    "CD Tenerife": "تنریف",
+    "CE Sabadell": "سابادل",
+    "Celta Fortuna": "سلتا فورتونا",
+    "Córdoba CF": "کوردوبا",
+    "FC Andorra": "آندورا",
+    "Girona FC": "ژیرونا",
+    "Granada CF": "گرانادا",
+    "R. Sociedad B": "رئال سوسیداد بی",
+    "RCD Mallorca": "مایورکا",
+    "Real Oviedo": "رئال اوویدو",
+    "Real Sporting": "اسپورتینگ خیخون",
+    "Real Valladolid CF": "وایادولید",
+    "SD Eibar": "ایبار",
+    "UD Almería": "آلمریا",
+    "UD Las Palmas": "لاس پالماس",
 }
 
 
-# ============================================================
-# ابزارهای عمومی
-# ============================================================
+# --------------------------------------------------------
+# ابزارها
+# --------------------------------------------------------
 
-def clean_text(value):
+def clean_text(value: Any) -> str:
     if value is None:
         return ""
 
     return " ".join(str(value).split()).strip()
 
 
-def normalize(value):
-    return clean_text(value).casefold()
+def normalize_name(value: Any) -> str:
+    value = clean_text(value).lower()
+
+    replacements = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "ü": "u",
+        "ñ": "n",
+        "’": "'",
+    }
+
+    for old, new in replacements.items():
+        value = value.replace(old, new)
+
+    return value
 
 
-def get_team_id(team):
-    if not isinstance(team, dict):
-        return None
-
-    value = (
-        team.get("id")
-        or team.get("teamId")
-        or team.get("teamID")
-    )
-
-    if value is None:
-        return None
-
-    return str(value)
-
-
-def get_team_name(team):
-    if not isinstance(team, dict):
-        return ""
-
+def get_team_name(team: dict) -> str:
     for key in (
-        "name",
         "longName",
+        "name",
         "shortName",
         "title",
     ):
@@ -222,24 +159,25 @@ def get_team_name(team):
     return ""
 
 
-def get_team_country(team):
-    if not isinstance(team, dict):
-        return ""
+def get_team_id(team: dict):
+    return (
+        team.get("id")
+        or team.get("teamId")
+        or team.get("teamID")
+    )
 
+
+def get_country(team: dict) -> str:
     country = team.get("country")
 
     if isinstance(country, dict):
-        for key in (
-            "name",
-            "title",
-            "shortName",
-        ):
-            value = country.get(key)
+        return clean_text(
+            country.get("name")
+            or country.get("longName")
+            or country.get("shortName")
+        )
 
-            if value:
-                return clean_text(value)
-
-    if isinstance(country, str):
+    if country:
         return clean_text(country)
 
     for key in (
@@ -254,258 +192,206 @@ def get_team_country(team):
     return ""
 
 
-def get_league_name(team):
-    if not isinstance(team, dict):
-        return ""
+def is_team_result(item: Any) -> bool:
+    if not isinstance(item, dict):
+        return False
 
-    for key in (
-        "leagueName",
-        "competitionName",
-        "tournamentName",
-    ):
-        value = team.get(key)
+    item_type = str(item.get("type", "")).lower()
 
-        if value:
-            return clean_text(value)
-
-    league = team.get("league")
-
-    if isinstance(league, dict):
-        for key in (
-            "name",
-            "title",
-        ):
-            value = league.get(key)
-
-            if value:
-                return clean_text(value)
-
-    return ""
+    return item_type == "team"
 
 
-def get_gender(team):
-    if not isinstance(team, dict):
-        return ""
+def extract_team_objects(obj: Any) -> list[dict]:
+    """
+    به‌صورت بازگشتی تمام objectهایی که type=team دارند
+    پیدا می‌کند.
+    """
 
-    for key in (
-        "gender",
-        "teamGender",
-    ):
-        value = team.get(key)
-
-        if value:
-            return clean_text(value).casefold()
-
-    return ""
-
-
-# ============================================================
-# استخراج تمام آبجکت‌های team
-# ============================================================
-
-def find_team_objects(obj):
     found = []
 
     if isinstance(obj, dict):
 
-        if obj.get("type") == "team":
+        if is_team_result(obj):
             found.append(obj)
 
         for value in obj.values():
-            found.extend(find_team_objects(value))
+            found.extend(extract_team_objects(value))
 
     elif isinstance(obj, list):
 
         for item in obj:
-            found.extend(find_team_objects(item))
+            found.extend(extract_team_objects(item))
 
     return found
 
 
-# ============================================================
-# جست‌وجوی FotMob
-# ============================================================
+def is_women_or_youth(team: dict) -> bool:
+    """
+    حذف تیم‌های زنان، جوانان، B / II / U21 / U23 و موارد مشابه.
+    """
 
-def search_team(query):
+    text_parts = []
 
+    for key in (
+        "name",
+        "longName",
+        "shortName",
+        "title",
+    ):
+        value = team.get(key)
+
+        if value:
+            text_parts.append(str(value))
+
+    text = " ".join(text_parts).lower()
+
+    blocked_words = [
+        "women",
+        "woman",
+        "femenino",
+        "femeni",
+        "female",
+        "ladies",
+        "girls",
+        "youth",
+        "juvenil",
+        "juvenile",
+        "u19",
+        "u20",
+        "u21",
+        "u23",
+        "under-19",
+        "under-20",
+        "under-21",
+        "under-23",
+    ]
+
+    for word in blocked_words:
+        if word in text:
+            return True
+
+    return False
+
+
+def search_team(query: str) -> list[dict]:
     params = {
         "term": query,
         "hits": 50,
         "lang": "en",
     }
 
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 "
-            "(Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 "
-            "(KHTML, like Gecko) "
-            "Chrome/140 Safari/537.36"
-        ),
-        "Accept": "application/json",
-    }
-
-    try:
-
-        response = requests.get(
-            SEARCH_URL,
-            params=params,
-            headers=headers,
-            timeout=TIMEOUT,
-        )
-
-        response.raise_for_status()
-
-        data = response.json()
-
-        return find_team_objects(data)
-
-    except Exception as e:
-
-        print(f"    ❌ Request error: {e}")
-
-        return []
-
-
-# ============================================================
-# تشخیص تیم اصلی مردان
-# ============================================================
-
-def is_women_team(team):
-
-    name = normalize(get_team_name(team))
-    gender = normalize(get_gender(team))
-
-    women_markers = (
-        "(w)",
-        "women",
-        "woman",
-        "femen",
-        "fem",
+    response = requests.get(
+        SEARCH_URL,
+        params=params,
+        timeout=TIMEOUT,
+        headers={
+            "User-Agent": (
+                "Mozilla/5.0 "
+                "(Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 "
+                "(KHTML, like Gecko) "
+                "Chrome/140.0 Safari/537.36"
+            )
+        },
     )
 
-    if any(marker in name for marker in women_markers):
-        return True
+    response.raise_for_status()
 
-    if gender in (
-        "female",
-        "women",
-        "woman",
-    ):
-        return True
+    data = response.json()
 
-    return False
+    teams = extract_team_objects(data)
+
+    # حذف موارد تکراری
+    unique = {}
+
+    for team in teams:
+
+        team_id = get_team_id(team)
+
+        if team_id is None:
+            continue
+
+        unique[str(team_id)] = team
+
+    return list(unique.values())
 
 
-def is_youth_team(team):
+def score_candidate(
+    candidate: dict,
+    requested_name: str,
+) -> int:
 
-    name = normalize(get_team_name(team))
-
-    youth_markers = (
-        " u21",
-        " u23",
-        " u18",
-        " u19",
-        " u17",
-        " u16",
-        " u20",
-        " ii",
-        " youth",
-        "academy",
+    name = normalize_name(
+        get_team_name(candidate)
     )
 
-    for marker in youth_markers:
-
-        if marker in name:
-            return True
-
-    return False
-
-
-# ============================================================
-# امتیازدهی به نتیجه
-#
-# لیگ در اینجا هیچ نقشی ندارد.
-# فقط برای انتخاب تیم اصلی از نام و مشخصات نتیجه استفاده می‌شود.
-# ============================================================
-
-def candidate_score(team, requested_name):
-
-    score = 0
-
-    actual_name = normalize(
-        get_team_name(team)
-    )
-
-    requested = normalize(
+    requested = normalize_name(
         requested_name
     )
 
+    score = 0
+
     # نام دقیق
-    if actual_name == requested:
+    if name == requested:
         score += 100
 
-    # تیم اصلی
-    if not is_women_team(team):
-        score += 20
+    # نام اصلی شامل عبارت جستجو
+    elif requested in name:
+        score += 70
 
-    if not is_youth_team(team):
-        score += 20
+    # عبارت جستجو شامل نام نتیجه
+    elif name in requested:
+        score += 50
+
+    # کشور
+    country = normalize_name(
+        get_country(candidate)
+    )
+
+    if country == normalize_name(COUNTRY):
+        score += 30
+
+    # حذف زنان / پایه
+    if is_women_or_youth(candidate):
+        score -= 200
 
     return score
 
 
-# ============================================================
-# انتخاب کاندیدای مناسب
-# ============================================================
+def choose_best_team(
+    candidates: list[dict],
+    requested_name: str,
+):
+    valid = []
 
-def select_candidate(results, requested_name):
+    for candidate in candidates:
 
-    # حذف نتایج بدون ID
-    candidates = []
-
-    for team in results:
-
-        if not get_team_id(team):
+        if is_women_or_youth(candidate):
             continue
 
-        candidates.append(team)
+        team_id = get_team_id(candidate)
 
-    # حذف زنان و تیم‌های پایه
-    candidates = [
-        team
-        for team in candidates
-        if not is_women_team(team)
-        and not is_youth_team(team)
-    ]
+        if team_id is None:
+            continue
 
-    if not candidates:
+        valid.append(candidate)
+
+    if not valid:
         return None, []
 
-    # فقط نام دقیق
-    exact = [
-        team
-        for team in candidates
-        if normalize(
-            get_team_name(team)
-        ) == normalize(requested_name)
-    ]
-
-    if not exact:
-        return None, candidates
-
-    # امتیازدهی
     scored = []
 
-    for team in exact:
+    for candidate in valid:
+
+        score = score_candidate(
+            candidate,
+            requested_name,
+        )
 
         scored.append(
             (
-                candidate_score(
-                    team,
-                    requested_name,
-                ),
-                team,
+                score,
+                candidate,
             )
         )
 
@@ -517,53 +403,56 @@ def select_candidate(results, requested_name):
     best_score = scored[0][0]
 
     best = [
-        team
-        for score, team in scored
+        candidate
+        for score, candidate in scored
         if score == best_score
     ]
 
-    # اگر چند تیم دقیقاً هم‌امتیاز باشند،
-    # انتخاب خودکار خطرناک است.
+    # اگر چند نتیجه دقیقاً هم‌امتیاز باشند،
+    # نمی‌خواهیم حدس بزنیم.
     if len(best) > 1:
-        return None, best
+        return None, scored
 
-    return best[0], []
+    # حداقل اطمینان
+    if best_score < 100:
+        return None, scored
 
-
-# ============================================================
-# نمایش نتیجه
-# ============================================================
-
-def print_candidate(team):
-
-    print(
-        f"       "
-        f"ID={get_team_id(team)} | "
-        f"name={get_team_name(team)!r} | "
-        f"country={get_team_country(team)!r} | "
-        f"league={get_league_name(team)!r} | "
-        f"gender={get_gender(team)!r}"
-    )
+    return best[0], scored
 
 
-# ============================================================
-# برنامه اصلی
-# ============================================================
+def make_output(
+    requested_name: str,
+    team: dict,
+) -> dict:
+
+    team_name = get_team_name(team)
+    team_id = get_team_id(team)
+
+    return {
+        "id": str(team_id),
+        "name": team_name,
+        "country": COUNTRY,
+        "persian": PERSIAN_NAMES.get(
+            requested_name,
+            requested_name,
+        ),
+    }
+
+
+# --------------------------------------------------------
+# اجرای اصلی
+# --------------------------------------------------------
 
 def main():
 
-    total = len(TEAMS_TO_FIND)
+    print("FotMob Team ID Extractor")
+    print(f"Country: {COUNTRY}")
+    print(f"Total teams: {len(TEAMS_TO_FIND)}")
+    print()
 
     confirmed = []
     ambiguous = []
     not_found = []
-
-    print("=" * 70)
-    print("FotMob Team ID Extractor")
-    print("=" * 70)
-    print(f"Country: {COUNTRY}")
-    print(f"Total teams: {total}")
-    print("=" * 70)
 
     for index, requested_name in enumerate(
         TEAMS_TO_FIND,
@@ -571,143 +460,118 @@ def main():
     ):
 
         print(
-            f"[{index}/{total}] "
+            f"[{index}/{len(TEAMS_TO_FIND)}] "
             f"{requested_name}"
         )
 
-        results = search_team(
-            requested_name
-        )
+        try:
 
-        # حذف IDهای تکراری
-        unique_results = {}
+            candidates = search_team(
+                requested_name
+            )
 
-        for team in results:
-
-            team_id = get_team_id(team)
-
-            if team_id:
-                unique_results[team_id] = team
-
-        results = list(
-            unique_results.values()
-        )
-
-        candidate, alternatives = select_candidate(
-            results,
-            requested_name,
-        )
-
-        # ----------------------------------------------------
-        # CONFIRMED
-        # ----------------------------------------------------
-
-        if candidate is not None:
-
-            team_id = get_team_id(candidate)
-            team_name = get_team_name(candidate)
-
-            persian = PERSIAN_NAMES.get(
-                requested_name,
+            team, scored = choose_best_team(
+                candidates,
                 requested_name,
             )
 
-            item = {
-                "id": team_id,
-                "name": team_name,
-                "country": COUNTRY,
-                "persian": persian,
-            }
+            if team is not None:
 
-            confirmed.append(item)
-
-            print(
-                f"    ✅ {team_name} "
-                f"→ {team_id}"
-            )
-
-        # ----------------------------------------------------
-        # AMBIGUOUS
-        # ----------------------------------------------------
-
-        elif alternatives:
-
-            print(
-                f"    ⚠️ AMBIGUOUS "
-                f"({len(alternatives)} candidates)"
-            )
-
-            for team in alternatives:
-                print_candidate(team)
-
-            ambiguous.append({
-                "requested": requested_name,
-                "results": alternatives,
-            })
-
-        # ----------------------------------------------------
-        # NOT FOUND
-        # ----------------------------------------------------
-
-        else:
-
-            print("    ❌ NOT FOUND")
-
-            if results:
-
-                print(
-                    "       Relevant results:"
+                result = make_output(
+                    requested_name,
+                    team,
                 )
 
-                for team in results[:10]:
-                    print_candidate(team)
+                confirmed.append(result)
 
-            not_found.append({
-                "requested": requested_name,
-                "results": results,
-            })
+                print(
+                    f"    ✅ "
+                    f"{result['name']} "
+                    f"→ {result['id']}"
+                )
 
-        time.sleep(REQUEST_DELAY)
+            elif scored:
 
-    # ========================================================
-    # حذف IDهای تکراری از confirmed
-    # ========================================================
+                ambiguous.append(
+                    (
+                        requested_name,
+                        scored,
+                    )
+                )
 
-    unique_confirmed = {}
+                print(
+                    "    ⚠️ AMBIGUOUS"
+                )
 
-    for team in confirmed:
+                for score, candidate in scored[:10]:
 
-        unique_confirmed[
-            team["id"]
-        ] = team
+                    print(
+                        f"       - "
+                        f"{get_team_name(candidate)} "
+                        f"→ {get_team_id(candidate)} "
+                        f"| country={get_country(candidate)} "
+                        f"| score={score}"
+                    )
 
-    confirmed = list(
-        unique_confirmed.values()
+            else:
+
+                not_found.append(
+                    requested_name
+                )
+
+                print(
+                    "    ❌ NOT FOUND"
+                )
+
+        except Exception as exc:
+
+            print(
+                f"    ❌ ERROR: {exc}"
+            )
+
+            not_found.append(
+                requested_name
+            )
+
+        print()
+
+        time.sleep(
+            REQUEST_DELAY
+        )
+
+    # ----------------------------------------------------
+    # گزارش نهایی
+    # ----------------------------------------------------
+
+    print("=" * 60)
+    print("FINAL REPORT")
+    print("=" * 60)
+
+    print(
+        f"Requested : {len(TEAMS_TO_FIND)}"
     )
 
-    # ========================================================
-    # گزارش نهایی
-    # ========================================================
+    print(
+        f"Confirmed : {len(confirmed)}"
+    )
+
+    print(
+        f"Ambiguous : {len(ambiguous)}"
+    )
+
+    print(
+        f"Not found : {len(not_found)}"
+    )
+
+    # ----------------------------------------------------
+    # خروجی استاندارد
+    # ----------------------------------------------------
 
     print()
-    print("=" * 70)
-    print("FINAL REPORT")
-    print("=" * 70)
-
-    print(f"Requested : {total}")
-    print(f"Confirmed : {len(confirmed)}")
-    print(f"Ambiguous : {len(ambiguous)}")
-    print(f"Not found : {len(not_found)}")
-    print("=" * 70)
-
-    # ========================================================
-    # خروجی TEAMS
-    # ========================================================
-
+    print("=" * 60)
+    print("STANDARD OUTPUT")
+    print("=" * 60)
     print()
-    print("=" * 70)
-    print("TEAMS = [")
-    print("=" * 70)
 
     print("TEAMS = [")
 
@@ -716,96 +580,68 @@ def main():
         print("    {")
 
         print(
-            f'        "id": '
-            f'"{team["id"]}",'
+            f'        "id": "{team["id"]}",'
         )
 
         print(
-            f'        "name": '
-            f'{team["name"]!r},'
+            f'        "name": "{team["name"]}",'
         )
 
         print(
-            f'        "country": '
-            f'"{team["country"]}",'
+            f'        "country": "{team["country"]}",'
         )
 
         print(
-            f'        "persian": '
-            f'{team["persian"]!r},'
+            f'        "persian": "{team["persian"]}",'
         )
 
         print("    },")
 
     print("]")
 
-    # ========================================================
+    # ----------------------------------------------------
     # موارد مبهم
-    # ========================================================
+    # ----------------------------------------------------
 
     if ambiguous:
 
         print()
-        print("=" * 70)
+        print("=" * 60)
         print("AMBIGUOUS TEAMS")
-        print("=" * 70)
+        print("=" * 60)
 
-        for item in ambiguous:
+        for requested_name, scored in ambiguous:
 
+            print()
             print(
-                f'\n{item["requested"]}'
+                f"{requested_name}:"
             )
 
-            for team in item["results"]:
-                print_candidate(team)
+            for score, candidate in scored[:10]:
 
-    # ========================================================
-    # موارد پیدا نشده
-    # ========================================================
+                print(
+                    f"    "
+                    f"{get_team_name(candidate)} "
+                    f"→ {get_team_id(candidate)} "
+                    f"| country={get_country(candidate)} "
+                    f"| score={score}"
+                )
+
+    # ----------------------------------------------------
+    # پیدا نشد
+    # ----------------------------------------------------
 
     if not_found:
 
         print()
-        print("=" * 70)
+        print("=" * 60)
         print("NOT FOUND")
-        print("=" * 70)
+        print("=" * 60)
 
-        for item in not_found:
-
+        for name in not_found:
             print(
-                f'- {item["requested"]}'
+                f"    - {name}"
             )
-
-    # ========================================================
-    # ذخیره نتیجه کامل در JSON
-    # ========================================================
-
-    output = {
-        "country": COUNTRY,
-        "requested": total,
-        "confirmed": confirmed,
-        "ambiguous": ambiguous,
-        "not_found": not_found,
-    }
-
-    with open(
-        "team_ids_result.json",
-        "w",
-        encoding="utf-8",
-    ) as file:
-
-        json.dump(
-            output,
-            file,
-            ensure_ascii=False,
-            indent=4,
-        )
-
-    print()
-    print(
-        "📁 Full result saved to "
-        "team_ids_result.json"
-    )
 
 
 if __name__ == "__main__":
