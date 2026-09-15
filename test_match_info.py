@@ -66,76 +66,55 @@ def find_competition_data(obj):
     return None
 
 
-def find_paths(obj, target_keys, path="root"):
+def print_value(title, value, max_items=30):
     """
-    تمام مسیرهایی را که کلیدهای موردنظر در JSON دارند پیدا می‌کند.
+    چاپ ساختار داده بدون ایجاد لاگ خیلی بزرگ.
     """
 
-    results = []
-
-    if isinstance(obj, dict):
-
-        for key, value in obj.items():
-
-            current_path = f"{path}.{key}"
-
-            if key in target_keys:
-
-                results.append(
-                    (current_path, value)
-                )
-
-            results.extend(
-                find_paths(
-                    value,
-                    target_keys,
-                    current_path
-                )
-            )
-
-    elif isinstance(obj, list):
-
-        for index, item in enumerate(obj):
-
-            current_path = f"{path}[{index}]"
-
-            results.extend(
-                find_paths(
-                    item,
-                    target_keys,
-                    current_path
-                )
-            )
-
-    return results
-
-
-def print_value_sample(value, max_items=10):
-    """
-    چاپ نمونه‌ای کوچک از داده،
-    تا لاگ GitHub بیش از حد بزرگ نشود.
-    """
+    print("\n")
+    print("=" * 70)
+    print(title)
+    print("=" * 70)
 
     if isinstance(value, dict):
 
         print(
-            f"نوع: dict | تعداد: {len(value)}"
+            "نوع: dict"
         )
 
-        for i, (key, item) in enumerate(value.items()):
+        print(
+            "تعداد:",
+            len(value)
+        )
 
-            if i >= max_items:
+        print(
+            "\nنمونه داده:"
+        )
+
+        for index, (key, item) in enumerate(
+            value.items()
+        ):
+
+            if index >= max_items:
+
                 print(
                     f"... و {len(value) - max_items} مورد دیگر"
                 )
+
                 break
 
-            if isinstance(item, (dict, list)):
+            if isinstance(item, dict):
 
                 print(
-                    f"{key} | "
-                    f"{type(item).__name__} | "
-                    f"{len(item)} مورد"
+                    f"{key} | dict | "
+                    f"keys={list(item.keys())[:20]}"
+                )
+
+            elif isinstance(item, list):
+
+                print(
+                    f"{key} | list | "
+                    f"count={len(item)}"
                 )
 
             else:
@@ -147,22 +126,40 @@ def print_value_sample(value, max_items=10):
     elif isinstance(value, list):
 
         print(
-            f"نوع: list | تعداد: {len(value)}"
+            "نوع: list"
         )
 
-        for i, item in enumerate(value[:max_items]):
+        print(
+            "تعداد:",
+            len(value)
+        )
+
+        print(
+            "\nنمونه داده:"
+        )
+
+        for index, item in enumerate(
+            value[:max_items]
+        ):
 
             if isinstance(item, dict):
 
                 print(
-                    f"[{i}] dict | "
-                    f"کلیدها: {list(item.keys())[:20]}"
+                    f"[{index}] dict | "
+                    f"keys={list(item.keys())[:20]}"
+                )
+
+            elif isinstance(item, list):
+
+                print(
+                    f"[{index}] list | "
+                    f"count={len(item)}"
                 )
 
             else:
 
                 print(
-                    f"[{i}] {item}"
+                    f"[{index}] {item}"
                 )
 
         if len(value) > max_items:
@@ -174,10 +171,72 @@ def print_value_sample(value, max_items=10):
     else:
 
         print(
-            f"نوع: {type(value).__name__}"
+            "نوع:",
+            type(value).__name__
         )
 
-        print(value)
+        print(
+            value
+        )
+
+
+def inspect_dict_structure(obj, path="root", depth=0, max_depth=4):
+    """
+    پیدا کردن مسیرهای مربوط به CountryCodes و Participants
+    و نمایش ساختار داخلی آنها.
+    """
+
+    if depth > max_depth:
+        return
+
+    if isinstance(obj, dict):
+
+        for key, value in obj.items():
+
+            current_path = f"{path}.{key}"
+
+            if key in {
+                "CountryCodes",
+                "Participants"
+            }:
+
+                print(
+                    "\n"
+                    + "-" * 70
+                )
+
+                print(
+                    "FOUND:",
+                    current_path
+                )
+
+                print(
+                    "-" * 70
+                )
+
+                print_value(
+                    current_path,
+                    value,
+                    max_items=20
+                )
+
+            inspect_dict_structure(
+                value,
+                current_path,
+                depth + 1,
+                max_depth
+            )
+
+    elif isinstance(obj, list):
+
+        for index, item in enumerate(obj[:20]):
+
+            inspect_dict_structure(
+                item,
+                f"{path}[{index}]",
+                depth + 1,
+                max_depth
+            )
 
 
 def main():
@@ -218,10 +277,6 @@ def main():
                 "\n❌ دریافت صفحه FotMob ناموفق بود."
             )
 
-            print(
-                response.text[:2000]
-            )
-
             return
 
         print(
@@ -260,108 +315,45 @@ def main():
             "✅ بخش اطلاعات رقابت‌ها پیدا شد."
         )
 
-        print(
-            "\n"
-            + "=" * 70
+        # --------------------------------------------------
+        # اطلاعات مستقیم
+        # --------------------------------------------------
+
+        country_codes = competition_data.get(
+            "CountryCodes"
         )
 
-        print(
-            "جستجوی اطلاعات کشور / منطقه / رقابت"
+        participants = competition_data.get(
+            "Participants"
         )
 
-        print(
-            "=" * 70
+        tournament_prefixes = competition_data.get(
+            "TournamentPrefixes"
         )
 
-        target_keys = {
-            "Country",
-            "Countries",
-            "CountryName",
-            "CountryId",
-            "Region",
-            "Regions",
-            "RegionName",
-            "RegionId",
-            "League",
-            "Leagues",
-            "LeagueName",
-            "LeagueId",
-            "Tournament",
-            "Tournaments",
-            "Tournament",
-            "TournamentId",
-            "TournamentName",
-            "Competition",
-            "Competitions",
-            "CompetitionId",
-            "CompetitionName",
-        }
+        # --------------------------------------------------
+        # CountryCodes
+        # --------------------------------------------------
 
-        results = find_paths(
-            data,
-            target_keys
+        print_value(
+            "COUNTRY CODES",
+            country_codes,
+            max_items=40
         )
 
-        print(
-            "\nتعداد مسیرهای پیدا شده:",
-            len(results)
+        # --------------------------------------------------
+        # Participants
+        # --------------------------------------------------
+
+        print_value(
+            "PARTICIPANTS",
+            participants,
+            max_items=40
         )
 
-        if not results:
-
-            print(
-                "\n⚠️ هیچ‌کدام از کلیدهای موردنظر پیدا نشد."
-            )
-
-            print(
-                "\nدر حال بررسی کلیدهای سطح داده رقابت‌ها..."
-            )
-
-            print(
-                "\nکلیدهای موجود:"
-            )
-
-            for key in competition_data.keys():
-
-                print(
-                    "-",
-                    key
-                )
-
-            return
-
-        shown = set()
-
-        for path, value in results:
-
-            """
-            بعضی کلیدها ممکن است چند بار
-            در ساختار تودرتو ظاهر شوند.
-            """
-
-            if path in shown:
-                continue
-
-            shown.add(path)
-
-            print(
-                "\n"
-                + "-" * 70
-            )
-
-            print(
-                "PATH:",
-                path
-            )
-
-            print(
-                "-" * 70
-            )
-
-            print_value_sample(
-                value,
-                max_items=15
-            )
+        # --------------------------------------------------
+        # بررسی ساختار داخلی
+        # --------------------------------------------------
 
         print(
             "\n"
@@ -369,46 +361,53 @@ def main():
         )
 
         print(
-            "بررسی ساختار مستقیم بخش رقابت‌ها"
+            "بررسی مسیرهای CountryCodes و Participants"
         )
 
         print(
             "=" * 70
         )
 
-        for key, value in competition_data.items():
+        inspect_dict_structure(
+            data
+        )
 
-            key_lower = key.lower()
+        # --------------------------------------------------
+        # نمونه TournamentPrefixes
+        # --------------------------------------------------
 
-            if any(
-                word in key_lower
-                for word in [
-                    "country",
-                    "region",
-                    "league",
-                    "tournament",
-                    "competition",
-                    "sport"
-                ]
+        print(
+            "\n"
+            + "=" * 70
+        )
+
+        print(
+            "نمونه TournamentPrefixes"
+        )
+
+        print(
+            "=" * 70
+        )
+
+        if isinstance(
+            tournament_prefixes,
+            dict
+        ):
+
+            for index, (
+                tournament_id,
+                tournament_name
+            ) in enumerate(
+                tournament_prefixes.items()
             ):
 
-                print(
-                    "\n"
-                    + "-" * 70
-                )
+                if index >= 20:
+                    break
 
                 print(
-                    "KEY:",
-                    key
-                )
-
-                print(
-                    "-" * 70
-                )
-
-                print_value_sample(
-                    value,
-                    max_items=15
+                    tournament_id,
+                    "|",
+                    tournament_name
                 )
 
         print(
