@@ -6,12 +6,7 @@ from pathlib import Path
 import requests
 
 
-# ============================================================
-# تنظیمات
-# ============================================================
-
 BASE_URL = "https://www.fotmob.com/leagues/{league_id}/overview"
-
 OUTPUT_FILE = "teams.json"
 
 HEADERS = {
@@ -25,45 +20,36 @@ HEADERS = {
 TIMEOUT = 30
 
 
-# ============================================================
-# لیگ‌ها
-# ============================================================
-
 LEAGUES = [
     {
-        "name": "Serie A",
-        "country": "Italy",
-        "league_id": 55,
+        "name": "LaLiga",
+        "country": "Spain",
+        "league_id": 87,
         "expected_teams": 20,
     },
     {
-        "name": "Serie B",
-        "country": "Italy",
-        "league_id": 86,
+        "name": "LaLiga2",
+        "country": "Spain",
+        "league_id": 140,
         "expected_teams": 20,
     },
     {
-        "name": "Ligue 1",
-        "country": "France",
-        "league_id": 53,
+        "name": "Bundesliga",
+        "country": "Germany",
+        "league_id": 54,
         "expected_teams": 18,
     },
     {
-        "name": "Ligue 2",
-        "country": "France",
-        "league_id": 110,
+        "name": "2. Bundesliga",
+        "country": "Germany",
+        "league_id": 146,
         "expected_teams": 18,
     },
 ]
 
 
-# ============================================================
-# دریافت صفحه لیگ
-# ============================================================
-
 def fetch_league_page(league_id):
     url = BASE_URL.format(league_id=league_id)
-
     print(f"  دریافت: {url}")
 
     response = requests.get(
@@ -71,15 +57,9 @@ def fetch_league_page(league_id):
         headers=HEADERS,
         timeout=TIMEOUT,
     )
-
     response.raise_for_status()
-
     return response.text
 
-
-# ============================================================
-# استخراج __NEXT_DATA__
-# ============================================================
 
 def extract_next_data(html):
     match = re.search(
@@ -101,10 +81,6 @@ def extract_next_data(html):
         )
 
 
-# ============================================================
-# دسترسی امن به مسیرهای تو در تو
-# ============================================================
-
 def get_nested(data, path):
     current = data
 
@@ -119,10 +95,6 @@ def get_nested(data, path):
 
     return current
 
-
-# ============================================================
-# پیدا کردن لیست تیم‌ها
-# ============================================================
 
 def extract_teams_list(data):
     possible_paths = [
@@ -160,10 +132,6 @@ def extract_teams_list(data):
     )
 
 
-# ============================================================
-# استخراج فصل
-# ============================================================
-
 def extract_season(data):
     possible_paths = [
         (
@@ -188,20 +156,12 @@ def extract_season(data):
     return None
 
 
-# ============================================================
-# تمیز کردن نام تیم
-# ============================================================
-
 def clean_team_name(name):
     if not isinstance(name, str):
         return ""
 
     return " ".join(name.split()).strip()
 
-
-# ============================================================
-# استخراج ID و نام تیم
-# ============================================================
 
 def normalize_team(team):
     if not isinstance(team, dict):
@@ -234,10 +194,6 @@ def normalize_team(team):
     }
 
 
-# ============================================================
-# حذف تیم‌های تکراری
-# ============================================================
-
 def deduplicate_teams(teams):
     result = []
     seen_ids = set()
@@ -253,10 +209,6 @@ def deduplicate_teams(teams):
 
     return result
 
-
-# ============================================================
-# استخراج یک لیگ
-# ============================================================
 
 def extract_league(league):
     league_name = league["name"]
@@ -305,10 +257,6 @@ def extract_league(league):
 
     print(f"  تعداد تیم استخراج‌شده: {len(teams)}")
 
-    # --------------------------------------------------------
-    # بررسی تعداد مورد انتظار
-    # --------------------------------------------------------
-
     if expected_teams is not None:
         if len(teams) != expected_teams:
             raise ValueError(
@@ -320,10 +268,6 @@ def extract_league(league):
         print(
             f"  ✅ تعداد تیم‌ها درست است: {expected_teams}"
         )
-
-    # --------------------------------------------------------
-    # خروجی استاندارد
-    # --------------------------------------------------------
 
     normalized = []
 
@@ -350,10 +294,6 @@ def extract_league(league):
     }
 
 
-# ============================================================
-# چاپ نتیجه
-# ============================================================
-
 def print_league_result(result):
     print()
     print(f"--- {result['league']} ---")
@@ -365,10 +305,6 @@ def print_league_result(result):
             f"{team['name']}"
         )
 
-
-# ============================================================
-# ذخیره JSON
-# ============================================================
 
 def save_results(results):
     output = {
@@ -389,10 +325,6 @@ def save_results(results):
     print(f"✅ خروجی ذخیره شد: {OUTPUT_FILE}")
     print("=" * 60)
 
-
-# ============================================================
-# اجرای اصلی
-# ============================================================
 
 def main():
     results = []
