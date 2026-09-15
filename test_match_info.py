@@ -5,10 +5,18 @@ import requests
 
 URL = "https://www.fotmob.com"
 
+TARGET_IDS = {
+    "38",
+    "40",
+    "42",
+    "45",
+    "246",
+}
+
 
 def extract_data(html):
     """
-    پیدا کردن script حاوی اطلاعات رقابت‌ها
+    پیدا کردن script اصلی حاوی JSON
     """
 
     scripts = re.findall(
@@ -34,159 +42,38 @@ def extract_data(html):
     return None
 
 
-def find_competition_data(obj):
+def value_preview(value, max_length=500):
     """
-    پیدا کردن آبجکتی که اطلاعات رقابت‌ها را دارد.
-    """
-
-    if isinstance(obj, dict):
-
-        if (
-            "TournamentPrefixes" in obj
-            or "TournamentTemplates" in obj
-        ):
-            return obj
-
-        for value in obj.values():
-
-            result = find_competition_data(value)
-
-            if result is not None:
-                return result
-
-    elif isinstance(obj, list):
-
-        for item in obj:
-
-            result = find_competition_data(item)
-
-            if result is not None:
-                return result
-
-    return None
-
-
-def print_value(title, value, max_items=30):
-    """
-    چاپ ساختار داده بدون ایجاد لاگ خیلی بزرگ.
+    تبدیل مقدار به متن کوتاه برای لاگ
     """
 
-    print("\n")
-    print("=" * 70)
-    print(title)
-    print("=" * 70)
+    try:
 
-    if isinstance(value, dict):
-
-        print(
-            "نوع: dict"
+        text = json.dumps(
+            value,
+            ensure_ascii=False
         )
 
-        print(
-            "تعداد:",
-            len(value)
-        )
+    except Exception:
 
-        print(
-            "\nنمونه داده:"
-        )
+        text = str(value)
 
-        for index, (key, item) in enumerate(
-            value.items()
-        ):
+    if len(text) > max_length:
 
-            if index >= max_items:
+        return text[:max_length] + " ..."
 
-                print(
-                    f"... و {len(value) - max_items} مورد دیگر"
-                )
-
-                break
-
-            if isinstance(item, dict):
-
-                print(
-                    f"{key} | dict | "
-                    f"keys={list(item.keys())[:20]}"
-                )
-
-            elif isinstance(item, list):
-
-                print(
-                    f"{key} | list | "
-                    f"count={len(item)}"
-                )
-
-            else:
-
-                print(
-                    f"{key} | {item}"
-                )
-
-    elif isinstance(value, list):
-
-        print(
-            "نوع: list"
-        )
-
-        print(
-            "تعداد:",
-            len(value)
-        )
-
-        print(
-            "\nنمونه داده:"
-        )
-
-        for index, item in enumerate(
-            value[:max_items]
-        ):
-
-            if isinstance(item, dict):
-
-                print(
-                    f"[{index}] dict | "
-                    f"keys={list(item.keys())[:20]}"
-                )
-
-            elif isinstance(item, list):
-
-                print(
-                    f"[{index}] list | "
-                    f"count={len(item)}"
-                )
-
-            else:
-
-                print(
-                    f"[{index}] {item}"
-                )
-
-        if len(value) > max_items:
-
-            print(
-                f"... و {len(value) - max_items} مورد دیگر"
-            )
-
-    else:
-
-        print(
-            "نوع:",
-            type(value).__name__
-        )
-
-        print(
-            value
-        )
+    return text
 
 
-def inspect_dict_structure(obj, path="root", depth=0, max_depth=4):
+def search_target_ids(obj, path="root", depth=0, max_depth=8):
     """
-    پیدا کردن مسیرهای مربوط به CountryCodes و Participants
-    و نمایش ساختار داخلی آنها.
+    تمام جاهایی که یکی از شناسه‌های هدف دیده می‌شود را پیدا می‌کند.
+
+    فقط ساختار JSON را بررسی می‌کنیم.
     """
 
     if depth > max_depth:
+
         return
 
     if isinstance(obj, dict):
@@ -195,32 +82,92 @@ def inspect_dict_structure(obj, path="root", depth=0, max_depth=4):
 
             current_path = f"{path}.{key}"
 
-            if key in {
-                "CountryCodes",
-                "Participants"
-            }:
+            # --------------------------------------------------
+            # اگر خود کلید یکی از IDهای هدف باشد
+            # --------------------------------------------------
+
+            if str(key) in TARGET_IDS:
+
+                print()
+                print("=" * 80)
+                print("🎯 شناسه پیدا شد")
+                print("=" * 80)
 
                 print(
-                    "\n"
-                    + "-" * 70
+                    "ID:",
+                    key
                 )
 
                 print(
-                    "FOUND:",
+                    "مسیر:",
                     current_path
                 )
 
                 print(
-                    "-" * 70
+                    "نوع مقدار:",
+                    type(value).__name__
                 )
 
-                print_value(
-                    current_path,
-                    value,
-                    max_items=20
+                print(
+                    "مقدار:"
                 )
 
-            inspect_dict_structure(
+                print(
+                    value_preview(
+                        value,
+                        1200
+                    )
+                )
+
+            # --------------------------------------------------
+            # اگر مقدار دقیقاً یکی از IDهای هدف باشد
+            # --------------------------------------------------
+
+            if isinstance(
+                value,
+                (str, int)
+            ):
+
+                if str(value) in TARGET_IDS:
+
+                    print()
+                    print("-" * 80)
+
+                    print(
+                        "🔎 مقدار شناسه پیدا شد"
+                    )
+
+                    print(
+                        "ID:",
+                        value
+                    )
+
+                    print(
+                        "مسیر:",
+                        current_path
+                    )
+
+                    print(
+                        "کلید:",
+                        key
+                    )
+
+                    print(
+                        "والد:"
+                    )
+
+                    print(
+                        value_preview(
+                            obj,
+                            1500
+                        )
+                    )
+
+            # --------------------------------------------------
+            # ادامه جستجو
+            # --------------------------------------------------
+
+            search_target_ids(
                 value,
                 current_path,
                 depth + 1,
@@ -229,9 +176,132 @@ def inspect_dict_structure(obj, path="root", depth=0, max_depth=4):
 
     elif isinstance(obj, list):
 
-        for index, item in enumerate(obj[:20]):
+        for index, item in enumerate(obj):
 
-            inspect_dict_structure(
+            current_path = f"{path}[{index}]"
+
+            # --------------------------------------------------
+            # اگر خود آیتم یکی از IDها باشد
+            # --------------------------------------------------
+
+            if isinstance(
+                item,
+                (str, int)
+            ):
+
+                if str(item) in TARGET_IDS:
+
+                    print()
+                    print("-" * 80)
+
+                    print(
+                        "🔎 شناسه داخل لیست پیدا شد"
+                    )
+
+                    print(
+                        "ID:",
+                        item
+                    )
+
+                    print(
+                        "مسیر:",
+                        current_path
+                    )
+
+            # --------------------------------------------------
+            # ادامه جستجو
+            # --------------------------------------------------
+
+            search_target_ids(
+                item,
+                current_path,
+                depth + 1,
+                max_depth
+            )
+
+
+def inspect_relevant_objects(
+    obj,
+    path="root",
+    depth=0,
+    max_depth=8
+):
+    """
+    دنبال آبجکت‌هایی می‌گردد که کلیدهای مرتبط
+    با رقابت، لیگ، کشور یا تورنمنت دارند.
+    """
+
+    if depth > max_depth:
+
+        return
+
+    relevant_keys = {
+        "league",
+        "leagueId",
+        "leagueName",
+        "tournament",
+        "tournamentId",
+        "tournamentName",
+        "country",
+        "countryCode",
+        "countryName",
+        "region",
+        "regionName",
+        "competition",
+        "competitionId",
+        "competitionName",
+    }
+
+    if isinstance(obj, dict):
+
+        found_keys = [
+            key
+            for key in obj.keys()
+            if key in relevant_keys
+        ]
+
+        if found_keys:
+
+            print()
+            print("=" * 80)
+            print("📌 آبجکت مرتبط پیدا شد")
+            print("=" * 80)
+
+            print(
+                "مسیر:",
+                path
+            )
+
+            print(
+                "کلیدهای مرتبط:",
+                found_keys
+            )
+
+            print(
+                "داده:"
+            )
+
+            print(
+                value_preview(
+                    obj,
+                    2000
+                )
+            )
+
+        for key, value in obj.items():
+
+            inspect_relevant_objects(
+                value,
+                f"{path}.{key}",
+                depth + 1,
+                max_depth
+            )
+
+    elif isinstance(obj, list):
+
+        for index, item in enumerate(obj[:100]):
+
+            inspect_relevant_objects(
                 item,
                 f"{path}[{index}]",
                 depth + 1,
@@ -273,14 +343,16 @@ def main():
 
         if response.status_code != 200:
 
+            print()
             print(
-                "\n❌ دریافت صفحه FotMob ناموفق بود."
+                "❌ دریافت صفحه FotMob ناموفق بود."
             )
 
             return
 
+        print()
         print(
-            "\nدر حال استخراج JSON..."
+            "در حال استخراج JSON..."
         )
 
         data = extract_data(
@@ -289,8 +361,9 @@ def main():
 
         if data is None:
 
+            print()
             print(
-                "\n❌ داده اصلی پیدا نشد."
+                "❌ JSON اصلی پیدا نشد."
             )
 
             return
@@ -299,134 +372,64 @@ def main():
             "✅ داده اصلی پیدا شد."
         )
 
-        competition_data = find_competition_data(
-            data
+        # ------------------------------------------------------
+        # تست اول:
+        # پیدا کردن خود IDها
+        # ------------------------------------------------------
+
+        print()
+        print("=" * 80)
+        print(
+            "جستجوی شناسه‌های رقابت"
         )
-
-        if competition_data is None:
-
-            print(
-                "\n❌ بخش اطلاعات رقابت‌ها پیدا نشد."
-            )
-
-            return
+        print("=" * 80)
 
         print(
-            "✅ بخش اطلاعات رقابت‌ها پیدا شد."
-        )
-
-        # --------------------------------------------------
-        # اطلاعات مستقیم
-        # --------------------------------------------------
-
-        country_codes = competition_data.get(
-            "CountryCodes"
-        )
-
-        participants = competition_data.get(
-            "Participants"
-        )
-
-        tournament_prefixes = competition_data.get(
-            "TournamentPrefixes"
-        )
-
-        # --------------------------------------------------
-        # CountryCodes
-        # --------------------------------------------------
-
-        print_value(
-            "COUNTRY CODES",
-            country_codes,
-            max_items=40
-        )
-
-        # --------------------------------------------------
-        # Participants
-        # --------------------------------------------------
-
-        print_value(
-            "PARTICIPANTS",
-            participants,
-            max_items=40
-        )
-
-        # --------------------------------------------------
-        # بررسی ساختار داخلی
-        # --------------------------------------------------
-
-        print(
-            "\n"
-            + "=" * 70
-        )
-
-        print(
-            "بررسی مسیرهای CountryCodes و Participants"
-        )
-
-        print(
-            "=" * 70
-        )
-
-        inspect_dict_structure(
-            data
-        )
-
-        # --------------------------------------------------
-        # نمونه TournamentPrefixes
-        # --------------------------------------------------
-
-        print(
-            "\n"
-            + "=" * 70
-        )
-
-        print(
-            "نمونه TournamentPrefixes"
-        )
-
-        print(
-            "=" * 70
-        )
-
-        if isinstance(
-            tournament_prefixes,
-            dict
-        ):
-
-            for index, (
-                tournament_id,
-                tournament_name
-            ) in enumerate(
-                tournament_prefixes.items()
-            ):
-
-                if index >= 20:
-                    break
-
-                print(
-                    tournament_id,
-                    "|",
-                    tournament_name
+            "شناسه‌های مورد جستجو:",
+            ", ".join(
+                sorted(
+                    TARGET_IDS,
+                    key=int
                 )
-
-        print(
-            "\n"
-            + "=" * 70
+            )
         )
 
+        search_target_ids(
+            data
+        )
+
+        # ------------------------------------------------------
+        # تست دوم:
+        # پیدا کردن آبجکت‌های مرتبط
+        # ------------------------------------------------------
+
+        print()
+        print("=" * 80)
+        print(
+            "جستجوی آبجکت‌های دارای اطلاعات رقابت / کشور"
+        )
+        print("=" * 80)
+
+        inspect_relevant_objects(
+            data
+        )
+
+        # ------------------------------------------------------
+        # پایان
+        # ------------------------------------------------------
+
+        print()
+        print("=" * 80)
         print(
             "پایان تست"
         )
-
-        print(
-            "=" * 70
-        )
+        print("=" * 80)
 
     except requests.RequestException as e:
 
+        print()
         print(
-            "\n❌ خطا در ارتباط با FotMob:"
+            "❌ خطا در ارتباط با FotMob:"
         )
 
         print(
@@ -435,8 +438,9 @@ def main():
 
     except Exception as e:
 
+        print()
         print(
-            "\n❌ خطای غیرمنتظره:"
+            "❌ خطای غیرمنتظره:"
         )
 
         print(
@@ -445,4 +449,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
