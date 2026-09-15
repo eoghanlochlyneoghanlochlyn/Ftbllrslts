@@ -6,8 +6,8 @@ from pathlib import Path
 import requests
 
 
-BASE_URL = "https://www.fotmob.com/leagues/{league_id}/overview"
-OUTPUT_FILE = "teams.json"
+BASE_URL = "https://www.fotmob.com/fifaranking/men"
+OUTPUT_FILE = "national_teams.json"
 
 HEADERS = {
     "User-Agent": (
@@ -20,60 +20,16 @@ HEADERS = {
 TIMEOUT = 30
 
 
-LEAGUES = [
-    {
-        "name": "Champions League",
-        "country": "International",
-        "league_id": 42,
-    },
-    {
-        "name": "Europa League",
-        "country": "International",
-        "league_id": 73,
-    },
-    {
-        "name": "Conference League",
-        "country": "International",
-        "league_id": 10216,
-    },
-    {
-        "name": "Copa Libertadores",
-        "country": "International",
-        "league_id": 45,
-    },
-    {
-        "name": "AFC Champions League Elite",
-        "country": "International",
-        "league_id": 525,
-    },
-    {
-        "name": "AFC Champions League Two",
-        "country": "International",
-        "league_id": 9469,
-    },
-    {
-        "name": "CAF Champions League",
-        "country": "International",
-        "league_id": 526,
-    },
-    {
-        "name": "CONCACAF Champions Cup",
-        "country": "International",
-        "league_id": 297,
-    },
-]
-
-
-def fetch_league_page(league_id):
-    url = BASE_URL.format(league_id=league_id)
-    print(f"  دریافت: {url}")
+def fetch_ranking_page():
+    print(f"  دریافت: {BASE_URL}")
 
     response = requests.get(
-        url,
+        BASE_URL,
         headers=HEADERS,
         timeout=TIMEOUT,
     )
     response.raise_for_status()
+
     return response.text
 
 
@@ -95,81 +51,6 @@ def extract_next_data(html):
         raise ValueError(
             f"JSON مربوط به __NEXT_DATA__ قابل خواندن نیست: {exc}"
         )
-
-
-def get_nested(data, path):
-    current = data
-
-    for key in path:
-        if not isinstance(current, dict):
-            return None
-
-        current = current.get(key)
-
-        if current is None:
-            return None
-
-    return current
-
-
-def extract_teams_list(data):
-    possible_paths = [
-        (
-            "props",
-            "pageProps",
-            "overview",
-            "matches",
-            "fixtureInfo",
-            "teams",
-        ),
-        (
-            "props",
-            "pageProps",
-            "overview",
-            "fixtureInfo",
-            "teams",
-        ),
-        (
-            "props",
-            "pageProps",
-            "overview",
-            "teams",
-        ),
-    ]
-
-    for path in possible_paths:
-        teams = get_nested(data, path)
-
-        if isinstance(teams, list) and teams:
-            return teams, path
-
-    raise ValueError(
-        "لیست teams در هیچ‌کدام از مسیرهای شناخته‌شده پیدا نشد."
-    )
-
-
-def extract_season(data):
-    possible_paths = [
-        (
-            "props",
-            "pageProps",
-            "overview",
-            "season",
-        ),
-        (
-            "props",
-            "pageProps",
-            "season",
-        ),
-    ]
-
-    for path in possible_paths:
-        season = get_nested(data, path)
-
-        if season:
-            return str(season)
-
-    return None
 
 
 def clean_team_name(name):
@@ -226,52 +107,88 @@ def deduplicate_teams(teams):
     return result
 
 
-def extract_league(league):
-    league_name = league["name"]
-    country = league["country"]
-    league_id = league["league_id"]
+def find_national_teams(data):
+    found = []
 
-    print()
-    print("=" * 60)
-    print(f"لیگ: {league_name}")
-    print(f"کشور: {country}")
-    print(f"League ID: {league_id}")
-    print("=" * 60)
+    def walk(value, path=""):
+        if isinstance(value, dict):
 
-    html = fetch_league_page(league_id)
+            team_id = (
+                value.get("id")
+                or value.get("teamId")
+                or value.get("teamID")
+            )
 
-    print(f"  حجم صفحه: {len(html):,} کاراکتر")
+            name = (
+                value.get("name")
+                or value.get("longName")
+                or value.get("shortName")
+                or value.get("title")
+            )
 
-    data = extract_next_data(html)
+            if team_id is not None and isinstance(name, str):
+                name = clean_team_name(name)
 
-    print("  __NEXT_DATA__: OK")
+                if name:
+                    found.append(
+                        {
+                            "id": str(team_id),
+                            "name": name,
+                            "path": path,
+                        }
+                    )
 
-    season = extract_season(data)
+            for key, child in value.items():
+                child_path = (
+                    f"{path}.{key}"
+                    if path
+                    else key
+                )
 
-    if season:
-        print(f"  فصل: {season}")
-    else:
-        print("  ⚠️ فصل پیدا نشد.")
+                walk(child, child_path)
 
-    teams_raw, path = extract_teams_list(data)
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                child_path = f"{path}[{index}]"
+                walk(child, child_path)
+
+    walk(data)
+
+    return found
+
+
+def extract_ranking_teams(data):
+    candidates = find_national_teams(data)
+
+    if not candidates:
+        raise ValueError(
+            "هیچ تیمی در داده‌های FIFA Ranking پیدا نشد."
+        )
 
     print(
-        "  مسیر تیم‌ها: "
-        + ".".join(path)
+        f"  تعداد رکوردهای تیمی پیدا‌شده: "
+        f"{len(candidates)}"
     )
 
     teams = []
 
-    for raw_team in teams_raw:
-        team = normalize_team(raw_team)
+    for candidate in candidates:
+        team = normalize_team(candidate)
 
         if team is not None:
             teams.append(team)
 
     teams = deduplicate_teams(teams)
 
-    print(f"  تعداد تیم استخراج‌شده: {len(teams)}")
+    if not teams:
+        raise ValueError(
+            "بعد از نرمال‌سازی، هیچ تیمی باقی نماند."
+        )
 
+    return teams
+
+
+def build_result(teams):
     normalized = []
 
     for team in teams:
@@ -279,7 +196,7 @@ def extract_league(league):
             {
                 "id": team["id"],
                 "name": team["name"],
-                "country": country,
+                "country": team["name"],
                 "persian": "",
             }
         )
@@ -289,29 +206,38 @@ def extract_league(league):
     )
 
     return {
-        "league": league_name,
-        "country": country,
-        "league_id": str(league_id),
-        "season": season,
+        "source": "FotMob FIFA Ranking Men",
+        "url": BASE_URL,
         "teams": normalized,
     }
 
 
-def print_league_result(result):
+def print_result(result):
     print()
-    print(f"--- {result['league']} ({result['country']}) ---")
+    print("=" * 60)
+    print("تیم‌های ملی مردان")
+    print("=" * 60)
 
-    for index, team in enumerate(result["teams"], start=1):
+    for index, team in enumerate(
+        result["teams"],
+        start=1,
+    ):
         print(
-            f"{index:02d}. "
-            f"{team['id']:>6} | "
+            f"{index:03d}. "
+            f"{team['id']:>8} | "
             f"{team['name']}"
         )
 
+    print()
+    print(
+        f"تعداد کل تیم‌های ملی: "
+        f"{len(result['teams'])}"
+    )
 
-def save_results(results):
+
+def save_results(result):
     output = {
-        "leagues": results
+        "national_teams": result["teams"]
     }
 
     Path(OUTPUT_FILE).write_text(
@@ -330,27 +256,35 @@ def save_results(results):
 
 
 def main():
-    results = []
-
     try:
-        for league in LEAGUES:
-            result = extract_league(league)
+        print("=" * 60)
+        print("استخراج تیم‌های ملی از FotMob FIFA Ranking")
+        print("=" * 60)
 
-            print_league_result(result)
+        html = fetch_ranking_page()
 
-            results.append(result)
-
-        save_results(results)
-
-        total_teams = sum(
-            len(league["teams"])
-            for league in results
+        print(
+            f"  حجم صفحه: "
+            f"{len(html):,} کاراکتر"
         )
+
+        data = extract_next_data(html)
+
+        print("  __NEXT_DATA__: OK")
+
+        teams = extract_ranking_teams(data)
+
+        result = build_result(teams)
+
+        print_result(result)
+
+        save_results(result)
 
         print()
         print(
             f"✅ تمام شد. "
-            f"تعداد کل تیم‌ها: {total_teams}"
+            f"تعداد کل تیم‌های ملی: "
+            f"{len(result['teams'])}"
         )
 
     except Exception as exc:
