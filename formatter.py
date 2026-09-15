@@ -18,6 +18,57 @@ from event_detector import (
     is_penalty_goal,
 )
 
+from team_translations import (
+    get_persian_team_name,
+)
+
+
+# --------------------------------------------------------
+# نام فارسی تیم
+# --------------------------------------------------------
+
+def get_display_team_name(
+    snapshot,
+    side,
+):
+
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
+        return ""
+
+    if side == "home":
+
+        team_id = snapshot.get(
+            "home_team_id"
+        )
+
+        team_name = (
+            snapshot.get("home")
+            or ""
+        )
+
+    elif side == "away":
+
+        team_id = snapshot.get(
+            "away_team_id"
+        )
+
+        team_name = (
+            snapshot.get("away")
+            or ""
+        )
+
+    else:
+
+        return ""
+
+    return get_persian_team_name(
+        team_id,
+        team_name,
+    )
+
 
 # --------------------------------------------------------
 # ابزارهای نتیجه
@@ -647,15 +698,23 @@ def build_lineup_message(
     show_final_score=False,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     league = (
         snapshot.get("league")
@@ -787,15 +846,23 @@ def build_start_message(
     snapshot,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     return (
         "🔴 بازی شروع شد\n"
@@ -854,15 +921,23 @@ def build_goal_message(
     score=None,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     player_name = (
         get_event_player_name(
@@ -991,15 +1066,23 @@ def build_cancelled_goal_message(
     score=None,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     if not isinstance(
         cancelled_goal,
@@ -1115,15 +1198,23 @@ def build_half_time_message(
     score=None,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     lines = [
         "⏸️ پایان نیمه اول",
@@ -1158,15 +1249,23 @@ def build_red_card_message(
     event,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     player_name = (
         get_event_player_name(
@@ -1410,15 +1509,23 @@ def build_final_stats_message(
     score=None,
 ):
 
-    home_name = (
-        snapshot.get("home")
-        or "Home"
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
     )
 
-    away_name = (
-        snapshot.get("away")
-        or "Away"
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
     )
+
+    if not away_name:
+
+        away_name = "Away"
 
     stats = snapshot.get(
         "stats"
