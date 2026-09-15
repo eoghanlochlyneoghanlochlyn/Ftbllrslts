@@ -219,6 +219,41 @@ def process_live_events(
             "event"
         )
 
+        # -------------------------------------------------
+        # اصلاح is_home برای گل به خودی
+        #
+        # در FotMob، برای Own Goal مقدار event.isHome
+        # سمت تیمی را نشان می‌دهد که گل به سودش ثبت شده،
+        # نه تیم بازیکنی که گل به خودی زده است.
+        #
+        # state_manager برای own goal انتظار دارد
+        # is_home متعلق به تیم زننده باشد.
+        # بنابراین در OG باید مقدار برعکس شود.
+        # -------------------------------------------------
+
+        if goal_info.get(
+            "own_goal",
+            False,
+        ):
+
+            if isinstance(
+                event,
+                dict,
+            ):
+
+                event_is_home = event.get(
+                    "isHome"
+                )
+
+                if isinstance(
+                    event_is_home,
+                    bool,
+                ):
+
+                    goal_info[
+                        "is_home"
+                    ] = not event_is_home
+
         print(
             "\n"
             "=================================================="
