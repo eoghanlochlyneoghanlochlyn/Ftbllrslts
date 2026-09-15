@@ -1,42 +1,68 @@
 import requests
 
 
-URL = "https://www.fotmob.com/api/leagues"
+URL = "https://www.fotmob.com"
 
 
 def main():
-    print("در حال دریافت فهرست رقابت‌ها از FotMob...")
+    print("در حال بررسی صفحه اصلی FotMob...")
 
-    try:
-        response = requests.get(
-            URL,
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            },
-            timeout=20
+    response = requests.get(
+        URL,
+        headers={
+            "User-Agent": "Mozilla/5.0"
+        },
+        timeout=20
+    )
+
+    print("Status:", response.status_code)
+    print("Length:", len(response.text))
+
+    if response.status_code != 200:
+        print(response.text[:1000])
+        return
+
+    text = response.text
+
+    keywords = [
+        "Premier League",
+        "Champions League",
+        "Serie A",
+        "LaLiga",
+        "leagues",
+        "competitions",
+    ]
+
+    print("\n--- جستجوی کلمات کلیدی ---")
+
+    for keyword in keywords:
+        print(
+            keyword,
+            "=>",
+            keyword.lower() in text.lower()
         )
 
-        print("Status:", response.status_code)
+    print("\n--- اسکریپت‌های صفحه ---")
 
-        if response.status_code != 200:
-            print("خطا در دریافت اطلاعات")
-            print(response.text[:1000])
-            return
+    import re
 
-        data = response.json()
+    scripts = re.findall(
+        r'<script[^>]*>(.*?)</script>',
+        text,
+        re.DOTALL
+    )
 
-        print("\nنوع داده:", type(data))
+    print("تعداد script:", len(scripts))
 
-        if isinstance(data, dict):
-            print("کلیدهای اصلی:")
-            for key in data.keys():
-                print(" -", key)
-
-        print("\n--- RAW DATA ---")
-        print(data)
-
-    except Exception as e:
-        print("خطا:", repr(e))
+    for i, script in enumerate(scripts):
+        if any(
+            keyword.lower() in script.lower()
+            for keyword in keywords
+        ):
+            print(
+                f"\n### Script {i} contains competition data ###"
+            )
+            print(script[:5000])
 
 
 if __name__ == "__main__":
