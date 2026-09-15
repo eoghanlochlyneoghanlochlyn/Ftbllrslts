@@ -22,24 +22,54 @@ TIMEOUT = 30
 
 LEAGUES = [
     {
-        "name": "LaLiga",
-        "country": "Spain",
-        "league_id": 87,
+        "name": "Eredivisie",
+        "country": "Netherlands",
+        "league_id": 57,
     },
     {
-        "name": "LaLiga2",
-        "country": "Spain",
-        "league_id": 140,
+        "name": "Primeira Liga",
+        "country": "Portugal",
+        "league_id": 61,
+    },
+    {
+        "name": "Belgian Pro League",
+        "country": "Belgium",
+        "league_id": 40,
+    },
+    {
+        "name": "Süper Lig",
+        "country": "Turkey",
+        "league_id": 71,
+    },
+    {
+        "name": "Super League 1",
+        "country": "Greece",
+        "league_id": 135,
     },
     {
         "name": "Bundesliga",
-        "country": "Germany",
-        "league_id": 54,
+        "country": "Austria",
+        "league_id": 38,
     },
     {
-        "name": "2. Bundesliga",
-        "country": "Germany",
-        "league_id": 146,
+        "name": "Super League",
+        "country": "Switzerland",
+        "league_id": 69,
+    },
+    {
+        "name": "Premier League",
+        "country": "Ukraine",
+        "league_id": 441,
+    },
+    {
+        "name": "Premier League",
+        "country": "Russia",
+        "league_id": 63,
+    },
+    {
+        "name": "Ekstraklasa",
+        "country": "Poland",
+        "league_id": 196,
     },
 ]
 
@@ -279,7 +309,7 @@ def extract_league(league):
 
 def print_league_result(result):
     print()
-    print(f"--- {result['league']} ---")
+    print(f"--- {result['league']} ({result['country']}) ---")
 
     for index, team in enumerate(result["teams"], start=1):
         print(
