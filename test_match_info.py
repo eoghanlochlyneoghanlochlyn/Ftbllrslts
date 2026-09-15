@@ -1,59 +1,30 @@
-from fotmob import get_match_snapshot
-
-
-MATCH_URL = (
-    "https://www.fotmob.com/matches/"
-    "osasuna-vs-real-sociedad/2dcesm#5125328"
-)
+from team_translations import get_persian_team_name
 
 
 def main():
 
     print("=" * 60)
-    print("TEST TEAM ID")
+    print("TEST TEAM TRANSLATION")
     print("=" * 60)
 
-    snapshot = get_match_snapshot(
-        MATCH_URL
-    )
+    tests = [
+        (8560, "Real Sociedad"),
+        (8371, "Osasuna"),
+        (999999, "Real Sociedad"),
+        (999999, "Unknown Team"),
+    ]
 
-    if not snapshot:
-        print("❌ Snapshot دریافت نشد.")
-        return
+    for team_id, team_name in tests:
 
-    print()
-    print("🏠 HOME")
-    print("-" * 60)
-    print(
-        f"Name: {snapshot.get('home')}"
-    )
-    print(
-        f"ID:   {snapshot.get('home_team_id')}"
-    )
+        result = get_persian_team_name(
+            team_id,
+            team_name
+        )
 
-    print()
-    print("✈️ AWAY")
-    print("-" * 60)
-    print(
-        f"Name: {snapshot.get('away')}"
-    )
-    print(
-        f"ID:   {snapshot.get('away_team_id')}"
-    )
-
-    print()
-    print("📦 HOME TEAM OBJECT")
-    print("-" * 60)
-    print(
-        snapshot.get("home_team")
-    )
-
-    print()
-    print("📦 AWAY TEAM OBJECT")
-    print("-" * 60)
-    print(
-        snapshot.get("away_team")
-    )
+        print()
+        print(f"ID:   {team_id}")
+        print(f"Name: {team_name}")
+        print(f"➡️    {result}")
 
     print()
     print("=" * 60)
