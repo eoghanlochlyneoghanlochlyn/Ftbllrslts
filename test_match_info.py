@@ -22,79 +22,44 @@ TIMEOUT = 30
 
 LEAGUES = [
     {
-        "name": "Liga Profesional",
-        "country": "Argentina",
-        "league_id": 112,
+        "name": "Champions League",
+        "country": "International",
+        "league_id": 42,
     },
     {
-        "name": "Serie A",
-        "country": "Brazil",
-        "league_id": 268,
+        "name": "Europa League",
+        "country": "International",
+        "league_id": 73,
     },
     {
-        "name": "Primera División",
-        "country": "Uruguay",
-        "league_id": 161,
+        "name": "Conference League",
+        "country": "International",
+        "league_id": 10216,
     },
     {
-        "name": "Primera A",
-        "country": "Colombia",
-        "league_id": 274,
+        "name": "Copa Libertadores",
+        "country": "International",
+        "league_id": 45,
     },
     {
-        "name": "Primera División",
-        "country": "Chile",
-        "league_id": 273,
+        "name": "AFC Champions League Elite",
+        "country": "International",
+        "league_id": 525,
     },
     {
-        "name": "MLS",
-        "country": "United States",
-        "league_id": 130,
+        "name": "AFC Champions League Two",
+        "country": "International",
+        "league_id": 9469,
     },
     {
-        "name": "Liga MX",
-        "country": "Mexico",
-        "league_id": 230,
+        "name": "CAF Champions League",
+        "country": "International",
+        "league_id": 526,
     },
     {
-        "name": "Saudi Pro League",
-        "country": "Saudi Arabia",
-        "league_id": 536,
-    },
-    {
-        "name": "J1 League",
-        "country": "Japan",
-        "league_id": 223,
-    },
-    {
-        "name": "K League 1",
-        "country": "South Korea",
-        "league_id": 9080,
-    },
-    {
-        "name": "Qatar Stars League",
-        "country": "Qatar",
-        "league_id": 535,
-    },
-    {
-        "name": "Pro League",
-        "country": "United Arab Emirates",
-        "league_id": 538,
-    },
-    {
-        "name": "A-League",
-        "country": "Australia",
-        "league_id": 113,
-    },
-    {
-        "name": "Persian Gulf Pro League",
-        "country": "Iran",
-        "league_id": 523,
-    },
-    {
-        "name": "Chinese Super League",
-        "country": "China",
-        "league_id": 120,
+        "name": "CONCACAF Champions Cup",
+        "country": "International",
+        "league_id": 297,
     },
 ]
 
