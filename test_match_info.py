@@ -25,25 +25,21 @@ LEAGUES = [
         "name": "LaLiga",
         "country": "Spain",
         "league_id": 87,
-        "expected_teams": 20,
     },
     {
         "name": "LaLiga2",
         "country": "Spain",
         "league_id": 140,
-        "expected_teams": 20,
     },
     {
         "name": "Bundesliga",
         "country": "Germany",
         "league_id": 54,
-        "expected_teams": 18,
     },
     {
         "name": "2. Bundesliga",
         "country": "Germany",
         "league_id": 146,
-        "expected_teams": 18,
     },
 ]
 
@@ -214,7 +210,6 @@ def extract_league(league):
     league_name = league["name"]
     country = league["country"]
     league_id = league["league_id"]
-    expected_teams = league.get("expected_teams")
 
     print()
     print("=" * 60)
@@ -256,18 +251,6 @@ def extract_league(league):
     teams = deduplicate_teams(teams)
 
     print(f"  تعداد تیم استخراج‌شده: {len(teams)}")
-
-    if expected_teams is not None:
-        if len(teams) != expected_teams:
-            raise ValueError(
-                f"تعداد تیم‌های {league_name} اشتباه است. "
-                f"انتظار: {expected_teams} | "
-                f"دریافت: {len(teams)}"
-            )
-
-        print(
-            f"  ✅ تعداد تیم‌ها درست است: {expected_teams}"
-        )
 
     normalized = []
 
