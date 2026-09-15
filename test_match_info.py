@@ -1,244 +1,448 @@
 import json
 import re
+import sys
+from pathlib import Path
+
 import requests
 
 
-URL = "https://www.fotmob.com/leagues/47/overview"
+# ============================================================
+# تنظیمات
+# ============================================================
+
+BASE_URL = "https://www.fotmob.com/leagues/{league_id}/overview"
+
+OUTPUT_FILE = "teams.json"
 
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/140.0.0.0 Safari/537.36"
-    ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
-              "image/avif,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
+    )
 }
 
+TIMEOUT = 30
 
-def main():
-    print("=" * 70)
-    print("FotMob League Page Structure Test")
-    print("=" * 70)
 
-    print()
-    print(f"URL: {URL}")
-    print()
+# ============================================================
+# لیگ‌هایی که فعلاً می‌خواهیم استخراج کنیم
+#
+# برای لیگ‌های دیگر فقط این قسمت را تغییر بده.
+# expected_teams = تعداد مورد انتظار تیم‌هاست.
+# اگر None باشد، فقط استخراج انجام می‌شود و تعداد بررسی نمی‌شود.
+# ============================================================
 
-    try:
-        response = requests.get(
-            URL,
-            headers=HEADERS,
-            timeout=30,
-        )
+LEAGUES = [
+    {
+        "name": "Premier League",
+        "country": "England",
+        "league_id": 47,
+        "expected_teams": 20,
+    },
+    {
+        "name": "Championship",
+        "country": "England",
+        "league_id": 48,
+        "expected_teams": 24,
+    },
+    {
+        "name": "League One",
+        "country": "England",
+        "league_id": 108,
+        "expected_teams": 24,
+    },
+]
 
-        print(f"HTTP Status: {response.status_code}")
-        print(f"Content-Type: {response.headers.get('content-type')}")
-        print(f"HTML Length: {len(response.text)}")
 
-        response.raise_for_status()
+# ============================================================
+# دریافت صفحه لیگ
+# ============================================================
 
-    except Exception as e:
-        print(f"❌ Request failed: {e}")
-        return
+def fetch_league_page(league_id):
+    url = BASE_URL.format(league_id=league_id)
 
-    html = response.text
+    print(f"  دریافت: {url}")
 
-    # --------------------------------------------------------
-    # بررسی وجود __NEXT_DATA__
-    # --------------------------------------------------------
+    response = requests.get(
+        url,
+        headers=HEADERS,
+        timeout=TIMEOUT,
+    )
 
-    print()
-    print("=" * 70)
-    print("Checking __NEXT_DATA__")
-    print("=" * 70)
+    response.raise_for_status()
 
+    return response.text
+
+
+# ============================================================
+# استخراج __NEXT_DATA__
+# ============================================================
+
+def extract_next_data(html):
     match = re.search(
-        r'<script[^>]+id="__NEXT_DATA__"[^>]*>(.*?)</script>',
+        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>(.*?)</script>',
         html,
         re.DOTALL,
     )
 
     if not match:
-        print("❌ __NEXT_DATA__ پیدا نشد.")
-    else:
-        print("✅ __NEXT_DATA__ پیدا شد.")
+        raise ValueError("__NEXT_DATA__ پیدا نشد.")
 
-        raw_json = match.group(1)
+    raw_json = match.group(1).strip()
 
-        print(f"NEXT_DATA length: {len(raw_json)}")
-
-        try:
-            data = json.loads(raw_json)
-
-            print("✅ JSON با موفقیت parse شد.")
-
-        except Exception as e:
-            print(f"❌ JSON parse failed: {e}")
-            data = None
-
-    # --------------------------------------------------------
-    # جست‌وجوی teamId
-    # --------------------------------------------------------
-
-    print()
-    print("=" * 70)
-    print("Searching for teamId / team IDs")
-    print("=" * 70)
-
-    team_ids = sorted(
-        set(
-            re.findall(
-                r'"(?:teamId|teamID|team_id)"\s*:\s*(\d+)',
-                html,
-            )
+    try:
+        return json.loads(raw_json)
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"JSON مربوط به __NEXT_DATA__ قابل خواندن نیست: {exc}"
         )
+
+
+# ============================================================
+# دسترسی امن به مسیرهای تو در تو
+# ============================================================
+
+def get_nested(data, path):
+    current = data
+
+    for key in path:
+        if not isinstance(current, dict):
+            return None
+
+        current = current.get(key)
+
+        if current is None:
+            return None
+
+    return current
+
+
+# ============================================================
+# پیدا کردن لیست تیم‌ها
+#
+# مسیر اصلی فعلی FotMob:
+#
+# props
+#   -> pageProps
+#      -> overview
+#         -> matches
+#            -> fixtureInfo
+#               -> teams
+#
+# اگر FotMob در آینده ساختار را کمی تغییر دهد،
+# چند مسیر جایگزین هم بررسی می‌شود.
+# ============================================================
+
+def extract_teams_list(data):
+    possible_paths = [
+        (
+            "props",
+            "pageProps",
+            "overview",
+            "matches",
+            "fixtureInfo",
+            "teams",
+        ),
+        (
+            "props",
+            "pageProps",
+            "overview",
+            "fixtureInfo",
+            "teams",
+        ),
+        (
+            "props",
+            "pageProps",
+            "overview",
+            "teams",
+        ),
+    ]
+
+    for path in possible_paths:
+        teams = get_nested(data, path)
+
+        if isinstance(teams, list) and teams:
+            return teams, path
+
+    raise ValueError(
+        "لیست teams در هیچ‌کدام از مسیرهای شناخته‌شده پیدا نشد."
     )
 
-    if team_ids:
-        print(f"✅ تعداد IDهای پیدا شده: {len(team_ids)}")
-        print()
 
-        for team_id in team_ids[:100]:
-            print(team_id)
+# ============================================================
+# استخراج فصل
+# ============================================================
 
-    else:
-        print("❌ هیچ teamIdای در HTML پیدا نشد.")
+def extract_season(data):
+    possible_paths = [
+        (
+            "props",
+            "pageProps",
+            "overview",
+            "season",
+        ),
+        (
+            "props",
+            "pageProps",
+            "season",
+        ),
+    ]
 
-    # --------------------------------------------------------
-    # جست‌وجوی ساختارهای teams
-    # --------------------------------------------------------
+    for path in possible_paths:
+        season = get_nested(data, path)
+
+        if season:
+            return str(season)
+
+    return None
+
+
+# ============================================================
+# تمیز کردن نام تیم
+# ============================================================
+
+def clean_team_name(name):
+    if not isinstance(name, str):
+        return ""
+
+    return " ".join(name.split()).strip()
+
+
+# ============================================================
+# استخراج ID و نام هر تیم
+# ============================================================
+
+def normalize_team(team):
+    if not isinstance(team, dict):
+        return None
+
+    team_id = (
+        team.get("id")
+        or team.get("teamId")
+        or team.get("teamID")
+    )
+
+    name = (
+        team.get("name")
+        or team.get("longName")
+        or team.get("shortName")
+        or team.get("title")
+    )
+
+    if team_id is None or not name:
+        return None
+
+    name = clean_team_name(name)
+
+    if not name:
+        return None
+
+    return {
+        "id": str(team_id),
+        "name": name,
+    }
+
+
+# ============================================================
+# حذف تیم‌های تکراری
+# ============================================================
+
+def deduplicate_teams(teams):
+    result = []
+    seen_ids = set()
+
+    for team in teams:
+        team_id = team["id"]
+
+        if team_id in seen_ids:
+            continue
+
+        seen_ids.add(team_id)
+        result.append(team)
+
+    return result
+
+
+# ============================================================
+# استخراج تیم‌های یک لیگ
+# ============================================================
+
+def extract_league(league):
+    league_name = league["name"]
+    country = league["country"]
+    league_id = league["league_id"]
+    expected_teams = league.get("expected_teams")
 
     print()
-    print("=" * 70)
-    print("Searching for 'teams' structures")
-    print("=" * 70)
+    print("=" * 60)
+    print(f"لیگ: {league_name}")
+    print(f"کشور: {country}")
+    print(f"League ID: {league_id}")
+    print("=" * 60)
 
-    teams_positions = []
+    html = fetch_league_page(league_id)
 
-    for match in re.finditer(r'"teams"\s*:', html):
-        teams_positions.append(match.start())
+    print(f"  حجم صفحه: {len(html):,} کاراکتر")
 
-    print(f"تعداد occurrences برای \"teams\": {len(teams_positions)}")
+    data = extract_next_data(html)
 
-    for index, position in enumerate(teams_positions[:20], start=1):
+    print("  __NEXT_DATA__: OK")
 
-        start = max(0, position - 300)
-        end = min(len(html), position + 1200)
+    season = extract_season(data)
 
-        print()
-        print("-" * 70)
-        print(f"Occurrence #{index}")
-        print("-" * 70)
+    if season:
+        print(f"  فصل: {season}")
+    else:
+        print("  ⚠️ فصل پیدا نشد.")
 
-        snippet = html[start:end]
+    teams_raw, path = extract_teams_list(data)
 
-        print(snippet)
+    print(
+        "  مسیر تیم‌ها: "
+        + ".".join(path)
+    )
+
+    teams = []
+
+    for raw_team in teams_raw:
+        team = normalize_team(raw_team)
+
+        if team is not None:
+            teams.append(team)
+
+    teams = deduplicate_teams(teams)
+
+    print(f"  تعداد تیم استخراج‌شده: {len(teams)}")
 
     # --------------------------------------------------------
-    # اگر __NEXT_DATA__ وجود داشت، مسیرهای محتمل را بررسی کنیم
+    # بررسی تعداد تیم‌ها
     # --------------------------------------------------------
 
-    if data is not None:
-
-        print()
-        print("=" * 70)
-        print("Recursive search inside __NEXT_DATA__")
-        print("=" * 70)
-
-        found = []
-
-        def recursive_search(obj, path="root"):
-
-            if isinstance(obj, dict):
-
-                for key, value in obj.items():
-
-                    current_path = f"{path}.{key}"
-
-                    # کلیدهای جالب
-                    if key.lower() in {
-                        "teams",
-                        "teamid",
-                        "team_id",
-                        "teamid",
-                        "standings",
-                        "table",
-                        "league",
-                        "season",
-                    }:
-
-                        if isinstance(value, (list, dict)):
-
-                            found.append(
-                                (
-                                    current_path,
-                                    type(value).__name__,
-                                    len(value),
-                                )
-                            )
-
-                        else:
-
-                            found.append(
-                                (
-                                    current_path,
-                                    type(value).__name__,
-                                    value,
-                                )
-                            )
-
-                    recursive_search(
-                        value,
-                        current_path,
-                    )
-
-            elif isinstance(obj, list):
-
-                for index, value in enumerate(obj):
-
-                    recursive_search(
-                        value,
-                        f"{path}[{index}]",
-                    )
-
-        recursive_search(data)
-
-        if not found:
-
-            print("❌ ساختار مرتبطی پیدا نشد.")
-
-        else:
-
-            print(
-                f"✅ تعداد ساختارهای مرتبط پیدا شده: {len(found)}"
+    if expected_teams is not None:
+        if len(teams) != expected_teams:
+            raise ValueError(
+                f"تعداد تیم‌های {league_name} اشتباه است. "
+                f"انتظار: {expected_teams} | "
+                f"دریافت: {len(teams)}"
             )
 
-            for item in found[:100]:
-
-                print(item)
+        print(
+            f"  ✅ تعداد تیم‌ها درست است: {expected_teams}"
+        )
 
     # --------------------------------------------------------
-    # ذخیره HTML برای بررسی در صورت نیاز
+    # ساخت خروجی استاندارد
+    #
+    # فعلاً persian را خالی می‌گذاریم.
+    # اسم فارسی بعداً به‌صورت دستی تعیین می‌شود.
     # --------------------------------------------------------
 
-    with open(
-        "fotmob_premier_league.html",
-        "w",
-        encoding="utf-8",
-    ) as f:
+    normalized = []
 
-        f.write(html)
+    for team in teams:
+        normalized.append(
+            {
+                "id": team["id"],
+                "name": team["name"],
+                "country": country,
+                "persian": "",
+            }
+        )
 
-    print()
-    print("=" * 70)
-    print("پایان تست")
-    print("=" * 70)
-    print()
-    print(
-        "📁 HTML خام در fotmob_premier_league.html ذخیره شد."
+    # مرتب‌سازی بر اساس نام انگلیسی
+    normalized.sort(
+        key=lambda item: item["name"].lower()
     )
+
+    return {
+        "league": league_name,
+        "country": country,
+        "league_id": str(league_id),
+        "season": season,
+        "teams": normalized,
+    }
+
+
+# ============================================================
+# چاپ نتیجه
+# ============================================================
+
+def print_league_result(result):
+    print()
+    print(f"--- {result['league']} ---")
+
+    for index, team in enumerate(result["teams"], start=1):
+        print(
+            f"{index:02d}. "
+            f"{team['id']:>6} | "
+            f"{team['name']}"
+        )
+
+
+# ============================================================
+# ذخیره JSON
+# ============================================================
+
+def save_results(results):
+    output = {
+        "leagues": results
+    }
+
+    Path(OUTPUT_FILE).write_text(
+        json.dumps(
+            output,
+            ensure_ascii=False,
+            indent=4,
+        ),
+        encoding="utf-8",
+    )
+
+    print()
+    print("=" * 60)
+    print(f"✅ خروجی ذخیره شد: {OUTPUT_FILE}")
+    print("=" * 60)
+
+
+# ============================================================
+# اجرای اصلی
+# ============================================================
+
+def main():
+    results = []
+
+    try:
+        for league in LEAGUES:
+            result = extract_league(league)
+
+            print_league_result(result)
+
+            results.append(result)
+
+        save_results(results)
+
+        total_teams = sum(
+            len(league["teams"])
+            for league in results
+        )
+
+        print()
+        print(
+            f"✅ تمام شد. "
+            f"تعداد کل تیم‌ها: {total_teams}"
+        )
+
+    except Exception as exc:
+        print()
+        print("=" * 60)
+        print("❌ استخراج با خطا متوقف شد.")
+        print("=" * 60)
+        print(str(exc))
+
+        # بسیار مهم برای GitHub Actions:
+        # اگر تعداد تیم‌ها یا ساختار صفحه غلط باشد،
+        # Workflow نباید سبز و موفق گزارش شود.
+        sys.exit(1)
 
 
 if __name__ == "__main__":
