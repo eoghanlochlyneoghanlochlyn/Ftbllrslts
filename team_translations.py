@@ -1,4 +1,3 @@
-```python
 import json
 from pathlib import Path
 
@@ -65,4 +64,3 @@ def get_persian_team_name(
             return translated
 
     return fallback_name or ""
-```
