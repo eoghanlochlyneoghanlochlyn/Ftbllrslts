@@ -1,3 +1,5 @@
+from datetime import datetime, timezone, timedelta
+
 from fotmob import (
     get_coach,
     get_formation,
@@ -6,7 +8,6 @@ from fotmob import (
     get_player_rating,
     get_starters,
     get_substitutes,
-    organize_players,
 )
 
 from event_detector import (
@@ -74,17 +75,224 @@ def get_display_team_name(
 
         return ""
 
-    # اولویت با ترجمه‌ای است که خود fotmob.py
-    # داخل snapshot قرار داده است.
     if translated_name:
 
         return translated_name
 
-    # اگر home_fa / away_fa موجود نبود،
-    # از فایل teams.json استفاده می‌کنیم.
     return get_persian_team_name(
         team_id,
         team_name,
+    )
+
+
+# --------------------------------------------------------
+# تبدیل میلادی به شمسی
+# --------------------------------------------------------
+
+def gregorian_to_jalali(
+    gy,
+    gm,
+    gd,
+):
+
+    g_days_in_month = [
+        31,
+        28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
+    ]
+
+    j_days_in_month = [
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        30,
+        30,
+        30,
+        30,
+        30,
+        29,
+    ]
+
+    gy2 = gy - 1600
+    jy = 979
+    days = (
+        365 * gy2
+        + (gy2 + 3) // 4
+        - (gy2 + 99) // 100
+        + (gy2 + 399) // 400
+        - 80
+    )
+
+    for i in range(
+        gm - 1
+    ):
+        days += g_days_in_month[i]
+
+    if (
+        gm > 2
+        and (
+            gy % 4 == 0
+            and (
+                gy % 100 != 0
+                or gy % 400 == 0
+            )
+        )
+    ):
+        days += 1
+
+    days += gd - 1
+
+    jy += 33 * (days // 12053)
+    days %= 12053
+
+    jy += 4 * (days // 1461)
+    days %= 1461
+
+    if days > 365:
+
+        jy += (days - 1) // 365
+        days = (
+            days - 1
+        ) % 365
+
+    if days < 186:
+
+        jm = 1 + days // 31
+        jd = 1 + days % 31
+
+    else:
+
+        jm = (
+            7
+            + (days - 186) // 30
+        )
+
+        jd = (
+            1
+            + (days - 186) % 30
+        )
+
+    return jy, jm, jd
+
+
+def format_iran_datetime_jalali(
+    value,
+):
+
+    if value is None:
+
+        return "نامشخص"
+
+    dt = None
+
+    if isinstance(
+        value,
+        (int, float),
+    ):
+
+        try:
+
+            dt = datetime.fromtimestamp(
+                value,
+                tz=timezone.utc,
+            )
+
+        except (
+            TypeError,
+            ValueError,
+            OSError,
+        ):
+
+            dt = None
+
+    elif isinstance(
+        value,
+        str,
+    ):
+
+        text = value.strip()
+
+        if text:
+
+            try:
+
+                normalized = text
+
+                if normalized.endswith(
+                    "Z"
+                ):
+
+                    normalized = (
+                        normalized[:-1]
+                        + "+00:00"
+                    )
+
+                dt = datetime.fromisoformat(
+                    normalized
+                )
+
+            except ValueError:
+
+                try:
+
+                    dt = datetime.fromtimestamp(
+                        float(text),
+                        tz=timezone.utc,
+                    )
+
+                except (
+                    TypeError,
+                    ValueError,
+                    OSError,
+                ):
+
+                    dt = None
+
+    if dt is None:
+
+        return "نامشخص"
+
+    if dt.tzinfo is None:
+
+        dt = dt.replace(
+            tzinfo=timezone.utc
+        )
+
+    iran_timezone = timezone(
+        timedelta(
+            hours=3,
+            minutes=30,
+        )
+    )
+
+    dt = dt.astimezone(
+        iran_timezone
+    )
+
+    jy, jm, jd = (
+        gregorian_to_jalali(
+            dt.year,
+            dt.month,
+            dt.day,
+        )
+    )
+
+    return (
+        f"{jy:04d}/{jm:02d}/{jd:02d}"
+        f" - "
+        f"{dt.hour:02d}:{dt.minute:02d}"
     )
 
 
@@ -201,7 +409,9 @@ def format_score(
     )
 
 
-def has_valid_score(score):
+def has_valid_score(
+    score,
+):
 
     if not isinstance(
         score,
@@ -563,13 +773,8 @@ def format_team_lineup(
         team
     )
 
-    groups = organize_players(
-        starters,
-        formation,
-    )
-
     lines = [
-        f"{team_icon} {team_name}"
+        f"🔘 {team_name}"
     ]
 
     if coach:
@@ -586,59 +791,18 @@ def format_team_lineup(
 
     lines.append("")
 
-    line = format_player_line(
-        "🧤",
-        groups["goalkeeper"],
+    starter_line = format_player_line(
+        "🔲",
+        starters,
         show_rating,
         player_events,
     )
 
-    if line:
-        lines.append(line)
+    if starter_line:
 
-    line = format_player_line(
-        "🛡",
-        groups["defender"],
-        show_rating,
-        player_events,
-    )
-
-    if line:
-        lines.append(line)
-
-    line = format_player_line(
-        "⚙️",
-        groups["midfielder"],
-        show_rating,
-        player_events,
-    )
-
-    if line:
-        lines.append(line)
-
-    line = format_player_line(
-        "⚡",
-        groups["attacker"],
-        show_rating,
-        player_events,
-    )
-
-    if line:
-        lines.append(line)
-
-    if groups["unknown"]:
-
-        line = format_player_line(
-            "⚽",
-            groups["unknown"],
-            show_rating,
-            player_events,
+        lines.append(
+            starter_line
         )
-
-        if line:
-            lines.append(line)
-
-    lines.append("")
 
     substitute_names = []
 
@@ -651,11 +815,14 @@ def format_team_lineup(
         )
 
         if name:
+
             substitute_names.append(
                 name
             )
 
     if substitute_names:
+
+        lines.append("")
 
         lines.append(
             "🔄 "
@@ -673,31 +840,227 @@ def format_team_lineup(
 # گل‌زنان
 # --------------------------------------------------------
 
-def format_scorers(
-    home_name,
-    away_name,
+def _get_scorer_text(
+    event,
+):
+
+    player_name = get_event_player_name(
+        event
+    )
+
+    if not player_name:
+
+        return ""
+
+    minute = get_goal_minute(
+        event
+    )
+
+    if minute is None:
+
+        return player_name
+
+    return (
+        f"{player_name} "
+        f"({minute}')"
+    )
+
+
+def _get_goal_events(
+    events,
+    home_or_away,
+):
+
+    result = []
+
+    if not isinstance(
+        events,
+        list,
+    ):
+        return result
+
+    for index, event in enumerate(
+        events
+    ):
+
+        if not isinstance(
+            event,
+            dict,
+        ):
+            continue
+
+        event_type = str(
+            event.get(
+                "type",
+                "",
+            )
+        ).lower()
+
+        if event_type != "goal":
+            continue
+
+        if is_penalty_goal(
+            event
+        ):
+            continue
+
+        event_team = get_event_team(
+            event
+        )
+
+        if home_or_away == "home":
+
+            if event_team is not True:
+                continue
+
+        else:
+
+            if event_team is not False:
+                continue
+
+        scorer_text = _get_scorer_text(
+            event
+        )
+
+        if not scorer_text:
+            continue
+
+        minute = get_goal_minute(
+            event
+        )
+
+        result.append(
+            (
+                minute
+                if minute is not None
+                else 9999,
+                index,
+                scorer_text,
+            )
+        )
+
+    result.sort(
+        key=lambda item: (
+            item[0],
+            item[1],
+        )
+    )
+
+    return [
+        item[2]
+        for item in result
+    ]
+
+
+def _build_scorer_lines(
     home_scorers,
     away_scorers,
 ):
 
     lines = []
 
-    if home_scorers:
+    count = max(
+        len(home_scorers),
+        len(away_scorers),
+    )
+
+    for index in range(
+        count
+    ):
+
+        home_text = ""
+
+        away_text = ""
+
+        if index < len(
+            home_scorers
+        ):
+
+            home_text = (
+                home_scorers[index]
+            )
+
+        if index < len(
+            away_scorers
+        ):
+
+            away_text = (
+                away_scorers[index]
+            )
 
         lines.append(
-            f"⚽ {home_name}: "
-            + " | ".join(
-                home_scorers
+            (
+                home_text
+                + " " * 4
+                + away_text
             )
         )
 
-    if away_scorers:
+    return lines
+
+
+def format_scorers(
+    home_scorers,
+    away_scorers,
+):
+
+    if not home_scorers and not away_scorers:
+
+        return []
+
+    max_home_width = max(
+        [
+            len(item)
+            for item in home_scorers
+        ]
+        or [0]
+    )
+
+    lines = []
+
+    count = max(
+        len(home_scorers),
+        len(away_scorers),
+    )
+
+    for index in range(
+        count
+    ):
+
+        home_text = ""
+
+        away_text = ""
+
+        if index < len(
+            home_scorers
+        ):
+
+            home_text = (
+                home_scorers[index]
+            )
+
+        if index < len(
+            away_scorers
+        ):
+
+            away_text = (
+                away_scorers[index]
+            )
+
+        if away_text:
+
+            line = (
+                f"{home_text:<{max_home_width}}"
+                f"    "
+                f"{away_text}"
+            )
+
+        else:
+
+            line = home_text
 
         lines.append(
-            f"⚽ {away_name}: "
-            + " | ".join(
-                away_scorers
-            )
+            line.rstrip()
         )
 
     return lines
@@ -734,7 +1097,6 @@ def build_lineup_message(
 
         away_name = "Away"
 
-    # نام فارسی رقابت
     league = (
         snapshot.get("league_fa")
         or snapshot.get("league")
@@ -742,10 +1104,9 @@ def build_lineup_message(
     )
 
     kickoff = (
-        snapshot.get(
-            "start_formatted"
+        format_iran_datetime_jalali(
+            snapshot.get("start")
         )
-        or "نامشخص"
     )
 
     home_team = snapshot.get(
@@ -784,6 +1145,26 @@ def build_lineup_message(
                 score_text
             )
 
+            if (
+                home_scorers
+                or away_scorers
+            ):
+
+                scorer_lines = (
+                    format_scorers(
+                        home_scorers
+                        or [],
+                        away_scorers
+                        or [],
+                    )
+                )
+
+                if scorer_lines:
+
+                    message.extend(
+                        scorer_lines
+                    )
+
             message.append("")
 
         message.append(
@@ -797,8 +1178,9 @@ def build_lineup_message(
 
         message.append(
             (
-                f"⚽️ {home_name} "
-                f"🆚 {away_name}"
+                f"{home_name} "
+                f"🆚 "
+                f"{away_name}"
             )
         )
 
@@ -809,26 +1191,6 @@ def build_lineup_message(
             )
         )
 
-    if show_rating:
-
-        scorer_lines = (
-            format_scorers(
-                home_name,
-                away_name,
-                home_scorers
-                or [],
-                away_scorers
-                or [],
-            )
-        )
-
-        if scorer_lines:
-
-            message.append("")
-            message.extend(
-                scorer_lines
-            )
-
     message.append("")
 
     message.append(
@@ -836,7 +1198,7 @@ def build_lineup_message(
             home_name,
             home_team,
             show_rating,
-            "🔴",
+            "🔘",
             player_events,
         )
     )
@@ -848,7 +1210,7 @@ def build_lineup_message(
             away_name,
             away_team,
             show_rating,
-            "🔵",
+            "🔘",
             player_events,
         )
     )
@@ -966,6 +1328,7 @@ def build_goal_message(
     )
 
     if not player_name:
+
         player_name = (
             "بازیکن نامشخص"
         )
@@ -975,12 +1338,15 @@ def build_goal_message(
     )
 
     if is_home is True:
+
         team_name = home_name
 
     elif is_home is False:
+
         team_name = away_name
 
     else:
+
         team_name = ""
 
     own_goal = is_own_goal(
@@ -1049,12 +1415,6 @@ def build_goal_message(
             "🎯 پنالتی"
         )
 
-    # ----------------------------------------------------
-    # نتیجه‌ی قابل نمایش
-    # ----------------------------------------------------
-
-    # score از main.py نتیجه‌ی بعد از ثبت گل است.
-    # بنابراین برای گل به خودی نباید دوباره گل اضافه شود.
     score_for_display = score
 
     score_text = format_score(
@@ -1147,12 +1507,15 @@ def build_cancelled_goal_message(
         )
 
     if is_home is True:
+
         team_name = home_name
 
     elif is_home is False:
+
         team_name = away_name
 
     else:
+
         team_name = ""
 
     minute = (
@@ -1200,6 +1563,7 @@ def build_cancelled_goal_message(
     if score_text:
 
         lines.append("")
+
         lines.append(
             score_text
         )
@@ -1251,6 +1615,7 @@ def build_half_time_message(
     if score_text:
 
         lines.append("")
+
         lines.append(
             score_text
         )
@@ -1414,20 +1779,33 @@ def format_stat_value(
     if value is None:
         return ""
 
-    if label == "xG":
+    normalized_label = str(
+        label
+    ).strip().lower()
+
+    if normalized_label in (
+        "xg",
+        "ایکس جی",
+    ):
 
         try:
+
             return f"{float(value):.2f}"
 
         except (
             TypeError,
             ValueError,
         ):
+
             return str(value)
 
-    if label == "مالکیت":
+    if normalized_label in (
+        "مالکیت",
+        "possession",
+    ):
 
         try:
+
             number = float(
                 value
             )
@@ -1440,6 +1818,7 @@ def format_stat_value(
             TypeError,
             ValueError,
         ):
+
             return str(value)
 
     if isinstance(
@@ -1448,6 +1827,7 @@ def format_stat_value(
     ):
 
         if value.is_integer():
+
             return str(
                 int(value)
             )
@@ -1461,6 +1841,217 @@ def format_stat_value(
     return str(
         value
     )
+
+
+# --------------------------------------------------------
+# نام و آیکون آمار
+# --------------------------------------------------------
+
+FINAL_STAT_ORDER = [
+    (
+        "xG",
+        "ایکس جی",
+        "🎯",
+    ),
+    (
+        "شوت",
+        "شوت",
+        "💥",
+    ),
+    (
+        "شوت در چارچوب",
+        "شوت در چارچوب",
+        "🥅",
+    ),
+    (
+        "مالکیت",
+        "مالکیت",
+        "⚽️",
+    ),
+    (
+        "پاس",
+        "پاس",
+        "🔄",
+    ),
+    (
+        "دقت پاس",
+        "دقت",
+        "✅",
+    ),
+    (
+        "پاس دقیق",
+        "پاس دقیق",
+        "✅",
+    ),
+    (
+        "کرنر",
+        "کرنر",
+        "🚩",
+    ),
+    (
+        "خطا",
+        "خطا",
+        "⚠️",
+    ),
+    (
+        "آفساید",
+        "آفساید",
+        "🚫",
+    ),
+    (
+        "کارت زرد",
+        "کارت زرد",
+        "🟨",
+    ),
+    (
+        "کارت قرمز",
+        "کارت قرمز",
+        "🟥",
+    ),
+]
+
+
+def _get_stat_data(
+    stats,
+    possible_keys,
+):
+
+    for key in possible_keys:
+
+        data = stats.get(
+            key
+        )
+
+        if isinstance(
+            data,
+            dict,
+        ):
+
+            home_value = data.get(
+                "home"
+            )
+
+            away_value = data.get(
+                "away"
+            )
+
+            if (
+                home_value is not None
+                and away_value is not None
+            ):
+
+                return data
+
+    return None
+
+
+def _get_stat_rows(
+    stats,
+):
+
+    rows = []
+
+    stat_aliases = {
+        "xG": [
+            "xG",
+            "ایکس جی",
+        ],
+        "شوت": [
+            "شوت",
+        ],
+        "شوت در چارچوب": [
+            "شوت در چارچوب",
+            "در چارچوب",
+        ],
+        "مالکیت": [
+            "مالکیت",
+        ],
+        "پاس": [
+            "پاس",
+        ],
+        "دقت پاس": [
+            "دقت پاس",
+            "دقت",
+            "دقت ",
+        ],
+        "پاس دقیق": [
+            "پاس دقیق",
+        ],
+        "کرنر": [
+            "کرنر",
+        ],
+        "خطا": [
+            "خطا",
+        ],
+        "آفساید": [
+            "آفساید",
+        ],
+        "کارت زرد": [
+            "کارت زرد",
+        ],
+        "کارت قرمز": [
+            "کارت قرمز",
+        ],
+    }
+
+    display_names = {
+        "xG": "ایکس جی",
+        "شوت": "شوت",
+        "شوت در چارچوب": "در چارچوب",
+        "مالکیت": "مالکیت",
+        "پاس": "پاس",
+        "دقت پاس": "دقت",
+        "پاس دقیق": "پاس دقیق",
+        "کرنر": "کرنر",
+        "خطا": "خطا",
+        "آفساید": "آفساید",
+        "کارت زرد": "کارت زرد",
+        "کارت قرمز": "کارت قرمز",
+    }
+
+    icons = {
+        "xG": "🎯",
+        "شوت": "💥",
+        "شوت در چارچوب": "🥅",
+        "مالکیت": "⚽️",
+        "پاس": "🔄",
+        "دقت پاس": "✅",
+        "پاس دقیق": "✅",
+        "کرنر": "🚩",
+        "خطا": "⚠️",
+        "آفساید": "🚫",
+        "کارت زرد": "🟨",
+        "کارت قرمز": "🟥",
+    }
+
+    for stat_name in [
+        item[0]
+        for item in FINAL_STAT_ORDER
+    ]:
+
+        data = _get_stat_data(
+            stats,
+            stat_aliases.get(
+                stat_name,
+                [stat_name],
+            ),
+        )
+
+        if data is None:
+            continue
+
+        rows.append(
+            (
+                icons[stat_name],
+                display_names[
+                    stat_name
+                ],
+                data.get("home"),
+                data.get("away"),
+            )
+        )
+
+    return rows
 
 
 # --------------------------------------------------------
@@ -1478,51 +2069,33 @@ def build_final_lineup_message(
         )
     )
 
-    message = build_lineup_message(
+    home_scorers = (
+        _get_goal_events(
+            events,
+            "home",
+        )
+    )
+
+    away_scorers = (
+        _get_goal_events(
+            events,
+            "away",
+        )
+    )
+
+    return build_lineup_message(
         snapshot,
         player_events=player_events,
+        home_scorers=home_scorers,
+        away_scorers=away_scorers,
         show_rating=True,
         show_final_score=True,
     )
-
-    return message
 
 
 # --------------------------------------------------------
 # پیام نهایی آمار
 # --------------------------------------------------------
-
-FINAL_STAT_ORDER = [
-    "xG",
-    "شوت",
-    "شوت در چارچوب",
-    "مالکیت",
-    "پاس",
-    "دقت پاس",
-    "پاس دقیق",
-    "کرنر",
-    "خطا",
-    "آفساید",
-    "کارت زرد",
-    "کارت قرمز",
-]
-
-
-FINAL_STAT_ICONS = {
-    "ایکس جی": "🎯",
-    "شوت": "💥",
-    "در چارچوب": "🥅",
-    "مالکیت": "⚽️",
-    "پاس": "🔄",
-    "دقت ": "✅",
-    "دقت": "✅",
-    "کرنر": "🚩",
-    "خطا": "⚠️",
-    "آفساید": "🚫",
-    "کارت زرد": "🟨",
-    "کارت قرمز": "🟥",
-}
-
 
 def build_final_stats_message(
     snapshot,
@@ -1555,6 +2128,7 @@ def build_final_stats_message(
         stats,
         dict,
     ):
+
         stats = {}
 
     lines = [
@@ -1587,43 +2161,11 @@ def build_final_stats_message(
 
         lines.append("")
 
-    available_stats = []
+    stat_rows = _get_stat_rows(
+        stats
+    )
 
-    for label in FINAL_STAT_ORDER:
-
-        data = stats.get(
-            label
-        )
-
-        if not isinstance(
-            data,
-            dict,
-        ):
-            continue
-
-        home_value = data.get(
-            "home"
-        )
-
-        away_value = data.get(
-            "away"
-        )
-
-        if (
-            home_value is None
-            or away_value is None
-        ):
-            continue
-
-        available_stats.append(
-            (
-                label,
-                home_value,
-                away_value,
-            )
-        )
-
-    if not available_stats:
+    if not stat_rows:
 
         lines.append(
             "آمار بازی در داده‌های FotMob پیدا نشد."
@@ -1633,70 +2175,109 @@ def build_final_stats_message(
             lines
         )
 
-    # عرض ستون‌ها را بر اساس نام تیم تنظیم می‌کنیم.
+    home_values = [
+        format_stat_value(
+            label,
+            home_value,
+        )
+        for (
+            icon,
+            label,
+            home_value,
+            away_value,
+        ) in stat_rows
+    ]
+
+    away_values = [
+        format_stat_value(
+            label,
+            away_value,
+        )
+        for (
+            icon,
+            label,
+            home_value,
+            away_value,
+        ) in stat_rows
+    ]
+
+    label_width = max(
+        [
+            len(
+                f"{icon} {label}"
+            )
+            for (
+                icon,
+                label,
+                _,
+                _,
+            ) in stat_rows
+        ]
+        or [0]
+    )
+
     home_width = max(
-        8,
         len(home_name),
+        max(
+            [
+                len(value)
+                for value in home_values
+            ]
+            or [0]
+        ),
     )
 
     away_width = max(
-        8,
         len(away_name),
+        max(
+            [
+                len(value)
+                for value in away_values
+            ]
+            or [0]
+        ),
     )
 
-    label_width = max(
-        14,
-        max(
-            len(
-                label
-            )
-            for label, _, _ in available_stats
-        )
-        + 2,
-    )
+    column_gap = 4
 
     lines.append(
         " "
-        * label_width
-        + f"{home_name:>{home_width}}"
-        + "    "
-        + f"{away_name:>{away_width}}"
+        * (
+            label_width
+            + column_gap
+            + home_width
+            - len(home_name)
+        )
+        + home_name
+        + " "
+        * column_gap
+        + away_name
     )
 
-    for (
-        label,
-        home_value,
-        away_value,
-    ) in available_stats:
+    for index, row in enumerate(
+        stat_rows
+    ):
 
-        icon = FINAL_STAT_ICONS.get(
-            label,
-            "•",
-        )
+        icon, label, _, _ = row
 
         display_label = (
             f"{icon} {label}"
         )
 
-        home_text = (
-            format_stat_value(
-                label,
-                home_value,
-            )
-        )
+        home_text = home_values[
+            index
+        ]
 
-        away_text = (
-            format_stat_value(
-                label,
-                away_value,
-            )
-        )
+        away_text = away_values[
+            index
+        ]
 
         lines.append(
             f"{display_label:<{label_width}}"
             f"{home_text:>{home_width}}"
-            "    "
-            f"{away_text:>{away_width}}"
+            + " "
+            * column_gap
+            + f"{away_text:>{away_width}}"
         )
 
     return "\n".join(
