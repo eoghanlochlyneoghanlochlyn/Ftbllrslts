@@ -9,6 +9,8 @@ from competition_translations import (
     get_persian_competition_name,
 )
 
+import team_translations as _team_translations
+
 from team_translations import (
     get_persian_team_name,
 )
@@ -1090,20 +1092,38 @@ def extract_basic_info(data):
     # نام فارسی تیم‌ها
     # -----------------------------------------------------
 
+    home_lookup = get_persian_team_name(
+        home_id,
+        home_name,
+    )
+
+    away_lookup = get_persian_team_name(
+        away_id,
+        away_name,
+    )
+
     home_name_fa = (
-        get_persian_team_name(
-            home_id,
-            home_name,
-        )
+        home_lookup
         or home_name
     )
 
     away_name_fa = (
-        get_persian_team_name(
-            away_id,
-            away_name,
-        )
+        away_lookup
         or away_name
+    )
+
+    print(
+        "TEAM TRANSLATION DEBUG | extract_basic_info | "
+        f"translations_file={_team_translations.TEAMS_FILE} | "
+        f"loaded_count={len(_team_translations._TEAM_TRANSLATIONS)} | "
+        f"home_id={home_id!r} | "
+        f"home_name={home_name!r} | "
+        f"home_lookup={home_lookup!r} | "
+        f"home_fa={home_name_fa!r} | "
+        f"away_id={away_id!r} | "
+        f"away_name={away_name!r} | "
+        f"away_lookup={away_lookup!r} | "
+        f"away_fa={away_name_fa!r}"
     )
 
     # -----------------------------------------------------
@@ -4615,20 +4635,37 @@ def get_match_snapshot(match_url):
     # ID فقط در lineup موجود بود، ترجمه باز هم انجام شود.
     # -----------------------------------------------------
 
+    home_lookup = get_persian_team_name(
+        home_id,
+        home_name,
+    )
+
+    away_lookup = get_persian_team_name(
+        away_id,
+        away_name,
+    )
+
     home_name_fa = (
-        get_persian_team_name(
-            home_id,
-            home_name,
-        )
+        home_lookup
         or home_name
     )
 
     away_name_fa = (
-        get_persian_team_name(
-            away_id,
-            away_name,
-        )
+        away_lookup
         or away_name
+    )
+
+    print(
+        "TEAM TRANSLATION DEBUG | get_match_snapshot | "
+        f"match_id={match_id!r} | "
+        f"home_id={home_id!r} | "
+        f"home_name={home_name!r} | "
+        f"home_lookup={home_lookup!r} | "
+        f"home_fa={home_name_fa!r} | "
+        f"away_id={away_id!r} | "
+        f"away_name={away_name!r} | "
+        f"away_lookup={away_lookup!r} | "
+        f"away_fa={away_name_fa!r}"
     )
 
     # -----------------------------------------------------
