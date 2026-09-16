@@ -7,7 +7,7 @@ CHANNEL = os.environ["TELEGRAMCHANNEL"]
 text = """🏆 جام حذفی اسپانیا
 رئال سوسیداد 2 (4) 🆚 (3) 2 اوساسونا
 
-<pre>رئال سوسیداد             اوساسونا
+<pre dir="ltr">رئال سوسیداد             اوساسونا
 ────────────────────────────────────────
                          Jon Moncayola (4')
                          Mikel Oyarzabal (17' OG)
