@@ -1717,4 +1717,3 @@ def build_final_message(
         snapshot,
         score,
     )
-این نسخه یک تغییر اصلی دارد
