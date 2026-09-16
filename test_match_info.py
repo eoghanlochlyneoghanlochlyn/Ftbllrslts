@@ -3,20 +3,28 @@ import re
 import requests
 
 
-URL = "https://www.fotmob.com"
-
-TARGET_IDS = {
-    "38",
-    "40",
-    "42",
-    "45",
-    "246",
+TEST_PAGES = {
+    "Bundesliga": "https://www.fotmob.com/leagues/54/overview/bundesliga",
+    "Serie A": "https://www.fotmob.com/leagues/55/overview/serie-a",
+    "Belgian First Division A": "https://www.fotmob.com/leagues/40/overview/belgian-first-division-a",
+    "Champions League": "https://www.fotmob.com/leagues/42/overview/champions-league",
 }
 
 
-def extract_data(html):
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 "
+        "(Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 "
+        "(KHTML, like Gecko) "
+        "Chrome/140.0 Safari/537.36"
+    )
+}
+
+
+def extract_json_scripts(html):
     """
-    پیدا کردن script اصلی حاوی JSON
+    تمام scriptهای JSON موجود در صفحه را استخراج می‌کند.
     """
 
     scripts = re.findall(
@@ -25,242 +33,55 @@ def extract_data(html):
         re.DOTALL
     )
 
+    results = []
+
     for script in scripts:
 
-        if (
-            "TournamentPrefixes" not in script
-            and "TournamentTemplates" not in script
-        ):
+        script = script.strip()
+
+        if not script:
             continue
 
         try:
-            return json.loads(script)
+
+            data = json.loads(
+                script
+            )
+
+            results.append(
+                data
+            )
 
         except json.JSONDecodeError:
+
             continue
 
-    return None
+    return results
 
 
-def value_preview(value, max_length=500):
-    """
-    تبدیل مقدار به متن کوتاه برای لاگ
-    """
-
-    try:
-
-        text = json.dumps(
-            value,
-            ensure_ascii=False
-        )
-
-    except Exception:
-
-        text = str(value)
-
-    if len(text) > max_length:
-
-        return text[:max_length] + " ..."
-
-    return text
-
-
-def search_target_ids(obj, path="root", depth=0, max_depth=8):
-    """
-    تمام جاهایی که یکی از شناسه‌های هدف دیده می‌شود را پیدا می‌کند.
-
-    فقط ساختار JSON را بررسی می‌کنیم.
-    """
-
-    if depth > max_depth:
-
-        return
-
-    if isinstance(obj, dict):
-
-        for key, value in obj.items():
-
-            current_path = f"{path}.{key}"
-
-            # --------------------------------------------------
-            # اگر خود کلید یکی از IDهای هدف باشد
-            # --------------------------------------------------
-
-            if str(key) in TARGET_IDS:
-
-                print()
-                print("=" * 80)
-                print("🎯 شناسه پیدا شد")
-                print("=" * 80)
-
-                print(
-                    "ID:",
-                    key
-                )
-
-                print(
-                    "مسیر:",
-                    current_path
-                )
-
-                print(
-                    "نوع مقدار:",
-                    type(value).__name__
-                )
-
-                print(
-                    "مقدار:"
-                )
-
-                print(
-                    value_preview(
-                        value,
-                        1200
-                    )
-                )
-
-            # --------------------------------------------------
-            # اگر مقدار دقیقاً یکی از IDهای هدف باشد
-            # --------------------------------------------------
-
-            if isinstance(
-                value,
-                (str, int)
-            ):
-
-                if str(value) in TARGET_IDS:
-
-                    print()
-                    print("-" * 80)
-
-                    print(
-                        "🔎 مقدار شناسه پیدا شد"
-                    )
-
-                    print(
-                        "ID:",
-                        value
-                    )
-
-                    print(
-                        "مسیر:",
-                        current_path
-                    )
-
-                    print(
-                        "کلید:",
-                        key
-                    )
-
-                    print(
-                        "والد:"
-                    )
-
-                    print(
-                        value_preview(
-                            obj,
-                            1500
-                        )
-                    )
-
-            # --------------------------------------------------
-            # ادامه جستجو
-            # --------------------------------------------------
-
-            search_target_ids(
-                value,
-                current_path,
-                depth + 1,
-                max_depth
-            )
-
-    elif isinstance(obj, list):
-
-        for index, item in enumerate(obj):
-
-            current_path = f"{path}[{index}]"
-
-            # --------------------------------------------------
-            # اگر خود آیتم یکی از IDها باشد
-            # --------------------------------------------------
-
-            if isinstance(
-                item,
-                (str, int)
-            ):
-
-                if str(item) in TARGET_IDS:
-
-                    print()
-                    print("-" * 80)
-
-                    print(
-                        "🔎 شناسه داخل لیست پیدا شد"
-                    )
-
-                    print(
-                        "ID:",
-                        item
-                    )
-
-                    print(
-                        "مسیر:",
-                        current_path
-                    )
-
-            # --------------------------------------------------
-            # ادامه جستجو
-            # --------------------------------------------------
-
-            search_target_ids(
-                item,
-                current_path,
-                depth + 1,
-                max_depth
-            )
-
-
-def inspect_relevant_objects(
+def find_objects_with_keys(
     obj,
+    wanted_keys,
     path="root",
     depth=0,
-    max_depth=8
+    max_depth=10
 ):
     """
-    دنبال آبجکت‌هایی می‌گردد که کلیدهای مرتبط
-    با رقابت، لیگ، کشور یا تورنمنت دارند.
+    آبجکت‌هایی را پیدا می‌کند که حداقل یکی از کلیدهای موردنظر را دارند.
     """
 
     if depth > max_depth:
-
         return
-
-    relevant_keys = {
-        "league",
-        "leagueId",
-        "leagueName",
-        "tournament",
-        "tournamentId",
-        "tournamentName",
-        "country",
-        "countryCode",
-        "countryName",
-        "region",
-        "regionName",
-        "competition",
-        "competitionId",
-        "competitionName",
-    }
 
     if isinstance(obj, dict):
 
-        found_keys = [
+        matched_keys = [
             key
             for key in obj.keys()
-            if key in relevant_keys
+            if key in wanted_keys
         ]
 
-        if found_keys:
+        if matched_keys:
 
             print()
             print("=" * 80)
@@ -274,24 +95,34 @@ def inspect_relevant_objects(
 
             print(
                 "کلیدهای مرتبط:",
-                found_keys
+                matched_keys
             )
 
             print(
-                "داده:"
+                "\nداده:"
             )
 
-            print(
-                value_preview(
-                    obj,
-                    2000
+            try:
+
+                print(
+                    json.dumps(
+                        obj,
+                        ensure_ascii=False,
+                        indent=2
+                    )[:5000]
                 )
-            )
+
+            except Exception:
+
+                print(
+                    str(obj)[:5000]
+                )
 
         for key, value in obj.items():
 
-            inspect_relevant_objects(
+            find_objects_with_keys(
                 value,
+                wanted_keys,
                 f"{path}.{key}",
                 depth + 1,
                 max_depth
@@ -301,151 +132,288 @@ def inspect_relevant_objects(
 
         for index, item in enumerate(obj[:100]):
 
-            inspect_relevant_objects(
+            find_objects_with_keys(
                 item,
+                wanted_keys,
                 f"{path}[{index}]",
                 depth + 1,
                 max_depth
             )
 
 
-def main():
+def find_values(
+    obj,
+    wanted_keys,
+    path="root",
+    depth=0,
+    max_depth=10
+):
+    """
+    تمام مقادیر مربوط به کلیدهای مهم را پیدا می‌کند.
+    """
+
+    if depth > max_depth:
+        return
+
+    if isinstance(obj, dict):
+
+        for key, value in obj.items():
+
+            current_path = (
+                f"{path}.{key}"
+            )
+
+            if key in wanted_keys:
+
+                print()
+                print("-" * 80)
+
+                print(
+                    "🔎 فیلد پیدا شد:",
+                    key
+                )
+
+                print(
+                    "مسیر:",
+                    current_path
+                )
+
+                print(
+                    "مقدار:"
+                )
+
+                try:
+
+                    print(
+                        json.dumps(
+                            value,
+                            ensure_ascii=False,
+                            indent=2
+                        )[:3000]
+                    )
+
+                except Exception:
+
+                    print(
+                        str(value)[:3000]
+                    )
+
+            find_values(
+                value,
+                wanted_keys,
+                current_path,
+                depth + 1,
+                max_depth
+            )
+
+    elif isinstance(obj, list):
+
+        for index, item in enumerate(obj[:100]):
+
+            find_values(
+                item,
+                wanted_keys,
+                f"{path}[{index}]",
+                depth + 1,
+                max_depth
+            )
+
+
+def test_page(
+    page_name,
+    url
+):
+    """
+    یک صفحه لیگ را بررسی می‌کند.
+    """
+
+    print()
+    print()
+    print("#" * 80)
+    print(
+        f"🏆 بررسی: {page_name}"
+    )
+    print("#" * 80)
 
     print(
-        "در حال دریافت اطلاعات از FotMob..."
+        "URL:",
+        url
     )
 
     try:
 
         response = requests.get(
-            URL,
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 "
-                    "(Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) "
-                    "Chrome/140.0 Safari/537.36"
-                )
-            },
+            url,
+            headers=HEADERS,
             timeout=30
         )
-
-        print(
-            "Status:",
-            response.status_code
-        )
-
-        print(
-            "Length:",
-            len(response.text)
-        )
-
-        if response.status_code != 200:
-
-            print()
-            print(
-                "❌ دریافت صفحه FotMob ناموفق بود."
-            )
-
-            return
-
-        print()
-        print(
-            "در حال استخراج JSON..."
-        )
-
-        data = extract_data(
-            response.text
-        )
-
-        if data is None:
-
-            print()
-            print(
-                "❌ JSON اصلی پیدا نشد."
-            )
-
-            return
-
-        print(
-            "✅ داده اصلی پیدا شد."
-        )
-
-        # ------------------------------------------------------
-        # تست اول:
-        # پیدا کردن خود IDها
-        # ------------------------------------------------------
-
-        print()
-        print("=" * 80)
-        print(
-            "جستجوی شناسه‌های رقابت"
-        )
-        print("=" * 80)
-
-        print(
-            "شناسه‌های مورد جستجو:",
-            ", ".join(
-                sorted(
-                    TARGET_IDS,
-                    key=int
-                )
-            )
-        )
-
-        search_target_ids(
-            data
-        )
-
-        # ------------------------------------------------------
-        # تست دوم:
-        # پیدا کردن آبجکت‌های مرتبط
-        # ------------------------------------------------------
-
-        print()
-        print("=" * 80)
-        print(
-            "جستجوی آبجکت‌های دارای اطلاعات رقابت / کشور"
-        )
-        print("=" * 80)
-
-        inspect_relevant_objects(
-            data
-        )
-
-        # ------------------------------------------------------
-        # پایان
-        # ------------------------------------------------------
-
-        print()
-        print("=" * 80)
-        print(
-            "پایان تست"
-        )
-        print("=" * 80)
 
     except requests.RequestException as e:
 
         print()
         print(
-            "❌ خطا در ارتباط با FotMob:"
+            "❌ خطا در دریافت صفحه:"
         )
 
         print(
             repr(e)
         )
 
-    except Exception as e:
+        return
+
+    print()
+    print(
+        "Status:",
+        response.status_code
+    )
+
+    print(
+        "Length:",
+        len(response.text)
+    )
+
+    if response.status_code != 200:
 
         print()
         print(
-            "❌ خطای غیرمنتظره:"
+            "❌ صفحه با موفقیت دریافت نشد."
         )
 
+        return
+
+    print()
+    print(
+        "در حال استخراج JSONها..."
+    )
+
+    json_objects = extract_json_scripts(
+        response.text
+    )
+
+    print(
+        "تعداد JSONهای معتبر:",
+        len(json_objects)
+    )
+
+    if not json_objects:
+
+        print()
         print(
-            repr(e)
+            "❌ هیچ JSON معتبری پیدا نشد."
         )
+
+        return
+
+    # ----------------------------------------------------------
+    # کلیدهای مهم
+    # ----------------------------------------------------------
+
+    wanted_keys = {
+        "leagueId",
+        "leagueName",
+        "league",
+        "tournamentId",
+        "tournamentName",
+        "tournament",
+        "competitionId",
+        "competitionName",
+        "competition",
+        "countryCode",
+        "country",
+        "countryName",
+        "region",
+        "regionName",
+        "name",
+        "id",
+    }
+
+    # ----------------------------------------------------------
+    # جستجوی فیلدهای مهم
+    # ----------------------------------------------------------
+
+    print()
+    print("=" * 80)
+    print(
+        "جستجوی فیلدهای مربوط به لیگ / تورنمنت / کشور"
+    )
+    print("=" * 80)
+
+    for index, data in enumerate(
+        json_objects
+    ):
+
+        print()
+        print(
+            f"--- JSON شماره {index + 1} ---"
+        )
+
+        find_values(
+            data,
+            {
+                "leagueId",
+                "leagueName",
+                "tournamentId",
+                "tournamentName",
+                "competitionId",
+                "competitionName",
+                "countryCode",
+                "countryName",
+                "region",
+                "regionName",
+            }
+        )
+
+    # ----------------------------------------------------------
+    # آبجکت‌های مرتبط
+    # ----------------------------------------------------------
+
+    print()
+    print("=" * 80)
+    print(
+        "جستجوی آبجکت‌های مرتبط"
+    )
+    print("=" * 80)
+
+    for index, data in enumerate(
+        json_objects
+    ):
+
+        print()
+        print(
+            f"--- JSON شماره {index + 1} ---"
+        )
+
+        find_objects_with_keys(
+            data,
+            wanted_keys
+        )
+
+
+def main():
+
+    print(
+        "شروع تست صفحات واقعی رقابت‌های FotMob"
+    )
+
+    print(
+        "تعداد صفحات:",
+        len(TEST_PAGES)
+    )
+
+    for page_name, url in TEST_PAGES.items():
+
+        test_page(
+            page_name,
+            url
+        )
+
+    print()
+    print()
+    print("#" * 80)
+    print(
+        "پایان تست"
+    )
+    print("#" * 80)
 
 
 if __name__ == "__main__":
