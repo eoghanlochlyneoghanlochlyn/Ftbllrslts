@@ -33,7 +33,7 @@ snapshot,
 side,
 ):
 
-```
+
 if not isinstance(
     snapshot,
     dict,
@@ -857,7 +857,6 @@ if not away_name:
 
     away_name = "Away"
 
-# نام فارسی رقابت
 league = (
     snapshot.get("league_fa")
     or snapshot.get("league")
@@ -1181,12 +1180,6 @@ if is_penalty_goal(
         "🎯 پنالتی"
     )
 
-# ----------------------------------------------------
-# نتیجه‌ی قابل نمایش
-# ----------------------------------------------------
-
-# score از main.py نتیجه‌ی بعد از ثبت گل است.
-# بنابراین برای گل به خودی نباید دوباره گل اضافه شود.
 score_for_display = score
 
 score_text = format_score(
@@ -1784,7 +1777,6 @@ if not available_stats:
         lines
     )
 
-# عرض ستون‌ها را بر اساس نام تیم تنظیم می‌کنیم.
 home_width = max(
     8,
     len(home_name),
