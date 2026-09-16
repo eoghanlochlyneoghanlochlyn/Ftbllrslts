@@ -83,10 +83,6 @@ else:
 
     return ""
 
-# ----------------------------------------------------
-# استخراج اطلاعات از home_team / away_team
-# ----------------------------------------------------
-
 if isinstance(
     team_data,
     dict,
@@ -119,10 +115,6 @@ if isinstance(
             or ""
         )
 
-# ----------------------------------------------------
-# DEBUG
-# ----------------------------------------------------
-
 print(
     "\n========== FORMATTER TEAM DEBUG =========="
 )
@@ -151,19 +143,9 @@ print(
     "==========================================\n"
 )
 
-# ----------------------------------------------------
-# اولویت اول:
-# ترجمه‌ای که خود snapshot دارد
-# ----------------------------------------------------
-
 if translated_name:
 
     return translated_name
-
-# ----------------------------------------------------
-# اولویت دوم:
-# ترجمه بر اساس ID از teams.json
-# ----------------------------------------------------
 
 if team_id is not None:
 
@@ -177,11 +159,6 @@ if team_id is not None:
     if translated_name:
 
         return translated_name
-
-# ----------------------------------------------------
-# آخرین fallback:
-# نام خام تیم
-# ----------------------------------------------------
 
 return team_name
 ```
@@ -301,7 +278,9 @@ return (
 )
 ```
 
-def has_valid_score(score):
+def has_valid_score(
+score,
+):
 if not isinstance(
 score,
 dict,
@@ -354,7 +333,7 @@ return {
 }
 
 def build_final_player_events(
-events
+events,
 ):
 result = {}
 
@@ -391,6 +370,7 @@ for event in events:
         continue
 
     if player_id not in result:
+
         result[player_id] = (
             _empty_player_event_data()
         )
@@ -428,6 +408,7 @@ for event in events:
     if assist_id is not None:
 
         if assist_id not in result:
+
             result[assist_id] = (
                 _empty_player_event_data()
             )
@@ -613,6 +594,7 @@ for player in players:
     )
 
     if name:
+
         names.append(
             name
         )
@@ -700,7 +682,10 @@ line = format_player_line(
 )
 
 if line:
-    lines.append(line)
+
+    lines.append(
+        line
+    )
 
 line = format_player_line(
     "🛡",
@@ -710,7 +695,10 @@ line = format_player_line(
 )
 
 if line:
-    lines.append(line)
+
+    lines.append(
+        line
+    )
 
 line = format_player_line(
     "⚙️",
@@ -720,7 +708,10 @@ line = format_player_line(
 )
 
 if line:
-    lines.append(line)
+
+    lines.append(
+        line
+    )
 
 line = format_player_line(
     "⚡",
@@ -730,7 +721,10 @@ line = format_player_line(
 )
 
 if line:
-    lines.append(line)
+
+    lines.append(
+        line
+    )
 
 if groups["unknown"]:
 
@@ -742,7 +736,10 @@ if groups["unknown"]:
     )
 
     if line:
-        lines.append(line)
+
+        lines.append(
+            line
+        )
 
 lines.append("")
 
@@ -757,6 +754,7 @@ for player in substitutes:
     )
 
     if name:
+
         substitute_names.append(
             name
         )
@@ -1034,6 +1032,7 @@ if isinstance(
     )
 
     if name:
+
         return name
 
 return (
@@ -1081,6 +1080,7 @@ player_name = (
 )
 
 if not player_name:
+
     player_name = (
         "بازیکن نامشخص"
     )
@@ -1090,12 +1090,15 @@ is_home = get_event_team(
 )
 
 if is_home is True:
+
     team_name = home_name
 
 elif is_home is False:
+
     team_name = away_name
 
 else:
+
     team_name = ""
 
 own_goal = is_own_goal(
@@ -1219,6 +1222,7 @@ if not isinstance(
     cancelled_goal,
     dict,
 ):
+
     return ""
 
 goal_event = (
@@ -1231,6 +1235,7 @@ if not isinstance(
     goal_event,
     dict,
 ):
+
     return ""
 
 player_name = (
@@ -1258,12 +1263,15 @@ if is_home is None:
     )
 
 if is_home is True:
+
     team_name = home_name
 
 elif is_home is False:
+
     team_name = away_name
 
 else:
+
     team_name = ""
 
 minute = (
@@ -1536,17 +1544,20 @@ return ""
 if label == "xG":
 
     try:
+
         return f"{float(value):.2f}"
 
     except (
         TypeError,
         ValueError,
     ):
+
         return str(value)
 
 if label == "مالکیت":
 
     try:
+
         number = float(
             value
         )
@@ -1559,6 +1570,7 @@ if label == "مالکیت":
         TypeError,
         ValueError,
     ):
+
         return str(value)
 
 if isinstance(
@@ -1567,6 +1579,7 @@ if isinstance(
 ):
 
     if value.is_integer():
+
         return str(
             int(value)
         )
@@ -1676,6 +1689,7 @@ if not isinstance(
     stats,
     dict,
 ):
+
     stats = {}
 
 lines = [
@@ -1720,6 +1734,7 @@ for label in FINAL_STAT_ORDER:
         data,
         dict,
     ):
+
         continue
 
     home_value = data.get(
@@ -1734,6 +1749,7 @@ for label in FINAL_STAT_ORDER:
         home_value is None
         or away_value is None
     ):
+
         continue
 
     available_stats.append(
