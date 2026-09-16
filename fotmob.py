@@ -1,13 +1,16 @@
 import json
 import re
 from datetime import datetime, timezone
-from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
 import requests
 
 from competition_translations import (
     get_persian_competition_name,
+)
+
+from team_translations import (
+    get_persian_team_name,
 )
 
 
@@ -159,8 +162,6 @@ def extract_match_id(value):
     if value.isdigit():
         return value
 
-    # مهم:
-    # این الگو هم /3370572 و هم #3370572 را می‌گیرد.
     patterns = [
         r"[#/]([0-9]{5,})",
         r"match(?:Id)?[=/]([0-9]{5,})",
@@ -455,8 +456,6 @@ def get_content(data):
         ):
             return value
 
-    # fallback محدود:
-    # فقط pageProps را بررسی می‌کنیم.
     page_props = get_nested(
         data,
         "props",
@@ -512,11 +511,19 @@ def _get_team_id(team):
     if not isinstance(team, dict):
         return None
 
-    return (
-        team.get("id")
-        or team.get("teamId")
-        or team.get("teamID")
-    )
+    for key in (
+        "id",
+        "teamId",
+        "teamID",
+        "team_id",
+    ):
+
+        value = team.get(key)
+
+        if value is not None:
+            return value
+
+    return None
 
 
 def _get_competition_id(tournament):
@@ -524,18 +531,153 @@ def _get_competition_id(tournament):
     if not isinstance(tournament, dict):
         return None
 
+    # شناسه‌های مستقیم
     for key in (
-        "id",
         "tournamentId",
         "leagueId",
         "uniqueTournamentId",
         "competitionId",
+        "competitionID",
+        "tournamentID",
+        "leagueID",
     ):
 
         value = tournament.get(key)
 
         if value is not None:
             return value
+
+    # در بعضی ساختارها خود id متعلق به tournament است.
+    value = tournament.get("id")
+
+    if value is not None:
+        return value
+
+    # ساختارهای تو در تو
+    for key in (
+        "tournament",
+        "league",
+        "uniqueTournament",
+        "competition",
+    ):
+
+        nested = tournament.get(key)
+
+        if isinstance(nested, dict):
+
+            result = _get_competition_id(
+                nested
+            )
+
+            if result is not None:
+                return result
+
+    return None
+
+
+def _find_competition_object(data):
+
+    if not isinstance(data, dict):
+        return None
+
+    direct_candidates = [
+        data.get("tournament"),
+        data.get("league"),
+        data.get("competition"),
+        data.get("uniqueTournament"),
+    ]
+
+    for candidate in direct_candidates:
+
+        if isinstance(candidate, dict):
+
+            competition_id = (
+                _get_competition_id(
+                    candidate
+                )
+            )
+
+            if competition_id is not None:
+                return candidate
+
+            if (
+                candidate.get("name")
+                or candidate.get("title")
+            ):
+                return candidate
+
+    # مسیرهای مشخص FotMob
+    general = data.get("general")
+
+    if isinstance(general, dict):
+
+        for key in (
+            "tournament",
+            "league",
+            "competition",
+            "uniqueTournament",
+        ):
+
+            candidate = general.get(key)
+
+            if isinstance(candidate, dict):
+                return candidate
+
+    header = data.get("header")
+
+    if isinstance(header, dict):
+
+        for key in (
+            "tournament",
+            "league",
+            "competition",
+            "uniqueTournament",
+        ):
+
+            candidate = header.get(key)
+
+            if isinstance(candidate, dict):
+                return candidate
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(page_props, dict):
+
+        for key in (
+            "tournament",
+            "league",
+            "competition",
+            "uniqueTournament",
+        ):
+
+            candidate = page_props.get(key)
+
+            if isinstance(candidate, dict):
+                return candidate
+
+        page_general = page_props.get(
+            "general"
+        )
+
+        if isinstance(page_general, dict):
+
+            for key in (
+                "tournament",
+                "league",
+                "competition",
+                "uniqueTournament",
+            ):
+
+                candidate = page_general.get(
+                    key
+                )
+
+                if isinstance(candidate, dict):
+                    return candidate
 
     return None
 
@@ -569,6 +711,10 @@ def extract_basic_info(data):
     if not isinstance(page_general, dict):
         page_general = {}
 
+    # -----------------------------------------------------
+    # تیم‌ها
+    # -----------------------------------------------------
+
     home = (
         general.get("homeTeam")
         or page_general.get("homeTeam")
@@ -593,11 +739,24 @@ def extract_basic_info(data):
     home_id = _get_team_id(home)
     away_id = _get_team_id(away)
 
+    # -----------------------------------------------------
+    # JSON-LD
+    # -----------------------------------------------------
+
     event_jsonld = get_nested(
         page_props,
         "seo",
         "eventJSONLD",
     )
+
+    if not isinstance(
+        event_jsonld,
+        dict,
+    ):
+
+        event_jsonld = extract_event_jsonld(
+            ""
+        )
 
     if isinstance(event_jsonld, dict):
 
@@ -625,6 +784,10 @@ def extract_basic_info(data):
                 event_jsonld.get("awayTeam")
             )
 
+    # -----------------------------------------------------
+    # fallback نام تیم
+    # -----------------------------------------------------
+
     if not home_name:
 
         home_name = clean_text(
@@ -645,14 +808,26 @@ def extract_basic_info(data):
             or ""
         )
 
+    # -----------------------------------------------------
+    # رقابت
+    # -----------------------------------------------------
+
     league = ""
     competition_id = None
 
     tournament = (
         general.get("tournament")
         or general.get("league")
+        or general.get("competition")
+        or general.get("uniqueTournament")
         or page_general.get("tournament")
         or page_general.get("league")
+        or page_general.get("competition")
+        or page_general.get("uniqueTournament")
+        or header.get("tournament")
+        or header.get("league")
+        or header.get("competition")
+        or header.get("uniqueTournament")
     )
 
     if isinstance(tournament, dict):
@@ -671,6 +846,33 @@ def extract_basic_info(data):
 
         league = tournament
 
+    # اگر هنوز شناسه پیدا نشده،
+    # چند ساختار مشخص دیگر را بررسی می‌کنیم.
+    if competition_id is None:
+
+        competition_object = (
+            _find_competition_object(data)
+        )
+
+        if isinstance(
+            competition_object,
+            dict,
+        ):
+
+            if not league:
+
+                league = (
+                    competition_object.get("name")
+                    or competition_object.get("title")
+                    or ""
+                )
+
+            competition_id = (
+                _get_competition_id(
+                    competition_object
+                )
+            )
+
     if not league:
 
         league = (
@@ -679,37 +881,15 @@ def extract_basic_info(data):
                 {
                     "leagueName",
                     "tournamentName",
+                    "competitionName",
                 },
             )
             or ""
         )
 
-    # اگر ساختار اصلی competition ID را نداشت،
-    # چند مسیر مشخص و محدود دیگر را بررسی می‌کنیم.
-    if competition_id is None:
-
-        competition_candidates = [
-            general.get("tournament"),
-            general.get("league"),
-            page_general.get("tournament"),
-            page_general.get("league"),
-        ]
-
-        for candidate in competition_candidates:
-
-            if isinstance(
-                candidate,
-                dict,
-            ):
-
-                competition_id = (
-                    _get_competition_id(
-                        candidate
-                    )
-                )
-
-                if competition_id is not None:
-                    break
+    # -----------------------------------------------------
+    # نام فارسی رقابت
+    # -----------------------------------------------------
 
     league_clean = clean_text(
         league
@@ -719,6 +899,33 @@ def extract_basic_info(data):
         competition_id,
         league_clean,
     )
+
+    # -----------------------------------------------------
+    # نام فارسی تیم‌ها
+    #
+    # مهم:
+    # نام خام home/away دست‌نخورده می‌ماند.
+    # -----------------------------------------------------
+
+    home_name_fa = (
+        get_persian_team_name(
+            home_id,
+            home_name,
+        )
+        or home_name
+    )
+
+    away_name_fa = (
+        get_persian_team_name(
+            away_id,
+            away_name,
+        )
+        or away_name
+    )
+
+    # -----------------------------------------------------
+    # زمان
+    # -----------------------------------------------------
 
     start = (
         general.get("matchTimeUTCDate")
@@ -752,11 +959,18 @@ def extract_basic_info(data):
     return {
         "home_name": clean_text(home_name),
         "away_name": clean_text(away_name),
+
+        "home_name_fa": home_name_fa,
+        "away_name_fa": away_name_fa,
+
         "home_id": home_id,
         "away_id": away_id,
+
         "league": league_clean,
         "league_fa": league_fa,
+
         "competition_id": competition_id,
+
         "start": start,
     }
 
@@ -920,7 +1134,6 @@ def _collect_event_lists(node, result=None):
 
     if isinstance(node, dict):
 
-        # فقط کلیدهایی که احتمالاً مربوط به event هستند.
         preferred_keys = (
             "events",
             "incidents",
@@ -942,8 +1155,6 @@ def _collect_event_lists(node, result=None):
                     result,
                 )
 
-        # اگر خودش دیکشنری event مانند باشد،
-        # آن را به لیست تبدیل می‌کنیم.
         if any(
             key in node
             for key in (
@@ -1031,8 +1242,6 @@ def _get_current_match_event_candidates(data):
                     )
                 )
 
-    # بعضی نسخه‌های FotMob داده‌ها را
-    # مستقیماً در content نگه می‌دارند.
     for key in (
         "events",
         "incidents",
@@ -1209,7 +1418,6 @@ def _period_flags(periods):
 
                 extra_time_finished = True
 
-        # فقط عبارت‌های صریح مربوط به shootout.
         if (
             "penaltyshootout" in compact
             or compact in {
@@ -1370,18 +1578,9 @@ def _coerce_score_pair(value):
 # =========================================================
 
 def _contains_shootout_marker(node):
-    """
-    فقط نشانه‌های صریح Penalty Shootout را بررسی می‌کند.
-
-    مهم:
-    عبارت‌هایی مثل "penalty" یا "pen" به تنهایی
-    نشانه shootout نیستند؛ چون ممکن است یک پنالتی
-    معمولی در جریان 90/120 دقیقه باشند.
-    """
 
     if isinstance(node, dict):
 
-        # کلیدهای صریح.
         for key in (
             "penaltyShootout",
             "penalty_shootout",
@@ -1393,7 +1592,6 @@ def _contains_shootout_marker(node):
             if key in node:
                 return True
 
-        # دوره باید واقعاً PenaltyShootout باشد.
         for key in (
             "period",
             "periodName",
@@ -1437,7 +1635,6 @@ def _contains_shootout_marker(node):
 
             return True
 
-        # فقط event typeهای صریح shootout.
         for key in (
             "incidentType",
             "eventType",
@@ -1499,20 +1696,9 @@ def _contains_shootout_marker(node):
 def _find_penalty_score_in_shootout_section(
     section
 ):
-    """
-    فقط داخل ساختاری که واقعاً مربوط به shootout
-    است، نتیجه پنالتی را پیدا می‌کند.
-
-    نکته مهم:
-    کلید عمومی "penalties" دیگر در اولویت نیست.
-    چون در بعضی ساختارهای FotMob ممکن است تعداد
-    پنالتی‌های زده‌شده/اطلاعات تجمعی باشد و نه
-    نتیجه نهایی شوت‌اوت.
-    """
 
     if isinstance(section, dict):
 
-        # فقط کلیدهای اختصاصی نتیجه shootout.
         for key in (
             "penaltyScore",
             "penalty_score",
@@ -1529,7 +1715,6 @@ def _find_penalty_score_in_shootout_section(
                 if result is not None:
                     return result
 
-        # ساختارهای nested اختصاصی.
         for key in (
             "penaltyShootout",
             "penalty_shootout",
@@ -1543,8 +1728,6 @@ def _find_penalty_score_in_shootout_section(
             if nested is None:
                 continue
 
-            # فقط اگر خود nested یک score مستقیم
-            # داشته باشد آن را قبول می‌کنیم.
             result = _coerce_score_pair(
                 nested
             )
@@ -1561,9 +1744,6 @@ def _find_penalty_score_in_shootout_section(
             if result is not None:
                 return result
 
-        # درون یک ساختار shootout صریح، اگر
-        # "penalties" وجود داشت، فقط زمانی قبولش
-        # می‌کنیم که خودش ساختار score واقعی داشته باشد.
         penalties = section.get(
             "penalties"
         )
@@ -1600,10 +1780,6 @@ def _collect_explicit_shootout_sections(
     node,
     result=None,
 ):
-    """
-    ساختارهایی را پیدا می‌کند که خودشان صراحتاً
-    shootout را نشان می‌دهند.
-    """
 
     if result is None:
         result = []
@@ -1669,13 +1845,6 @@ def _collect_explicit_shootout_sections(
 
 
 def _get_shootout_score_from_events(data):
-    """
-    اگر نتیجه shootout مستقیماً در داده وجود نداشته باشد،
-    فقط eventهایی را می‌شمارد که واقعاً متعلق به
-    Penalty Shootout هستند.
-
-    پنالتی‌های عادی بازی در اینجا به هیچ وجه شمرده نمی‌شوند.
-    """
 
     candidates = (
         _get_current_match_event_candidates(
@@ -1701,7 +1870,6 @@ def _get_shootout_score_from_events(data):
 
             found = True
 
-            # فقط ضربه موفق را بشمار.
             scored = None
 
             for key in (
@@ -1805,18 +1973,6 @@ def _get_shootout_score_from_events(data):
 def _get_penalty_score_from_page(
     data
 ):
-    """
-    fallback نهایی:
-
-    اگر داده ساختاری FotMob نتیجه shootout را
-    در اختیارمان نگذارد، ولی خود مسابقه واقعاً
-    نشانه Penalty Shootout داشته باشد، صفحه مسابقه
-    را بررسی می‌کنیم.
-
-    FotMob روی صفحه نتیجه را به شکل:
-        Pen: 4 - 2
-    نمایش می‌دهد.
-    """
 
     if not isinstance(data, dict):
         return None
@@ -1844,8 +2000,6 @@ def _get_penalty_score_from_page(
     if not html:
         return None
 
-    # شکل فعلی FotMob:
-    # Pen: 4 - 2
     patterns = [
         r"\bPen(?:alties)?\s*:\s*"
         r"(\d+)\s*[-:]\s*(\d+)",
@@ -1895,11 +2049,6 @@ def get_penalty_shootout_score(data):
     if not isinstance(content, dict):
         return None
 
-    # -----------------------------------------------------
-    # مرحله 1:
-    # کلیدهای کاملاً اختصاصی score
-    # -----------------------------------------------------
-
     exact_score_keys = (
         "penaltyScore",
         "penalty_score",
@@ -1920,11 +2069,6 @@ def get_penalty_shootout_score(data):
             if result is not None:
                 return result
 
-    # -----------------------------------------------------
-    # مرحله 2:
-    # ساختارهای صریح shootout
-    # -----------------------------------------------------
-
     shootout_sections = (
         _collect_explicit_shootout_sections(
             content
@@ -1944,24 +2088,7 @@ def get_penalty_shootout_score(data):
         )
 
         if result is not None:
-
-            # اگر نتیجه از یک کلید اختصاصی آمده،
-            # معتبر است.
             return result
-
-    # -----------------------------------------------------
-    # مرحله 3:
-    # اگر shootout صریح وجود دارد،
-    # صفحه خود FotMob منبع قابل‌اعتمادتر است.
-    #
-    # این قسمت عمداً قبل از شمارش eventهاست؛
-    # چون FotMob روی صفحه نتیجه رسمی:
-    #
-    # Pen: 4 - 2
-    #
-    # را نمایش می‌دهد و از قاطی‌شدن penaltyهای
-    # عادی بازی جلوگیری می‌کند.
-    # -----------------------------------------------------
 
     if (
         has_explicit_shootout
@@ -1979,11 +2106,6 @@ def get_penalty_shootout_score(data):
         if page_score is not None:
             return page_score
 
-    # -----------------------------------------------------
-    # مرحله 4:
-    # eventهای واقعی shootout
-    # -----------------------------------------------------
-
     event_score = (
         _get_shootout_score_from_events(
             data
@@ -1992,12 +2114,6 @@ def get_penalty_shootout_score(data):
 
     if event_score is not None:
         return event_score
-
-    # -----------------------------------------------------
-    # مرحله 5:
-    # matchFacts فقط اگر خودش نشانه صریح
-    # Penalty Shootout داشته باشد.
-    # -----------------------------------------------------
 
     match_facts = content.get(
         "matchFacts"
@@ -2026,14 +2142,6 @@ def get_penalty_shootout_score(data):
 
             if page_score is not None:
                 return page_score
-
-    # -----------------------------------------------------
-    # هیچ نشانه معتبری از shootout وجود ندارد.
-    #
-    # بنابراین:
-    # Juventus 1 - 1 Milan
-    # باید penalty_score = None داشته باشد.
-    # -----------------------------------------------------
 
     return None
 
@@ -2295,9 +2403,6 @@ def get_match_status(data):
         _get_match_events_ongoing(data)
     )
 
-    # پایان بر اساس ongoing فقط در صورتی معتبر است
-    # که بازی شروع شده و وضعیت خاصی مثل suspended
-    # وجود نداشته باشد.
     if (
         not finished
         and started
@@ -2308,8 +2413,6 @@ def get_match_status(data):
 
         finished = True
 
-    # وجود نتیجه پنالتی‌شوت‌اوت یعنی مسابقه
-    # واقعاً به پایان رسیده است.
     if (
         not finished
         and phase["penalty_score"] is not None
@@ -2512,6 +2615,7 @@ def get_team_id(team):
         team.get("teamId")
         or team.get("id")
         or team.get("teamID")
+        or team.get("team_id")
     )
 
 
@@ -3151,9 +3255,6 @@ def _is_penalty_shootout_event(event):
 
         return True
 
-    # بسیار مهم:
-    # "penalty" یا "pen" به تنهایی shootout نیست.
-    # اینها ممکن است پنالتی عادی داخل بازی باشند.
     for key in (
         "period",
         "periodName",
@@ -3190,7 +3291,6 @@ def _is_penalty_shootout_event(event):
 
             return True
 
-    # فقط event type صریح.
     for key in (
         "incidentType",
         "eventType",
@@ -3694,9 +3794,6 @@ def _stat_value(value):
         if not text:
             return None
 
-        # مقادیری مثل:
-        # 525 (83%)
-        # باید string باقی بمانند.
         if "(" in text or "%" in text:
             return text
 
@@ -3803,8 +3900,6 @@ def _extract_stat_pair(
 
     if isinstance(values, list):
 
-        # ساختار اصلی FotMob:
-        # stats = [home, away]
         if (
             len(values) == 2
             and not all(
@@ -3821,7 +3916,6 @@ def _extract_stat_pair(
                 values[1]
             )
 
-            # [عدد, None] معتبر است.
             if (
                 home_value is not None
                 or away_value is not None
@@ -3833,7 +3927,6 @@ def _extract_stat_pair(
                     away_value,
                 )
 
-        # ساختارهای قدیمی‌تر
         home_value = None
         away_value = None
 
@@ -3928,8 +4021,6 @@ def _walk_final_stats(
 
     if isinstance(node, dict):
 
-        # فقط leafهایی که stats دقیقاً
-        # دو مقدار دارند، آمار واقعی هستند.
         values = node.get("stats")
 
         is_leaf = (
@@ -3956,7 +4047,6 @@ def _walk_final_stats(
 
                 label_key = result[0]
 
-                # اولین occurrence معتبر کافی است.
                 if label_key not in found:
 
                     found[label_key] = {
@@ -4293,11 +4383,43 @@ def get_match_snapshot(match_url):
         or "Away"
     )
 
+    # -----------------------------------------------------
+    # اگر ID از اطلاعات پایه پیدا نشده بود،
+    # از lineup می‌گیریم.
+    # -----------------------------------------------------
+
     if home_id is None:
         home_id = get_team_id(home_lineup)
 
     if away_id is None:
         away_id = get_team_id(away_lineup)
+
+    # -----------------------------------------------------
+    # نام فارسی تیم‌ها
+    #
+    # این قسمت عمداً بعد از نهایی‌شدن IDهاست تا اگر
+    # ID فقط در lineup موجود بود، ترجمه باز هم انجام شود.
+    # -----------------------------------------------------
+
+    home_name_fa = (
+        get_persian_team_name(
+            home_id,
+            home_name,
+        )
+        or home_name
+    )
+
+    away_name_fa = (
+        get_persian_team_name(
+            away_id,
+            away_name,
+        )
+        or away_name
+    )
+
+    # -----------------------------------------------------
+    # نتیجه
+    # -----------------------------------------------------
 
     score = get_score(data)
 
@@ -4311,12 +4433,37 @@ def get_match_snapshot(match_url):
         away_name,
     )
 
+    # -----------------------------------------------------
+    # نام فارسی رقابت
+    #
+    # دوباره بر اساس competition_id نهایی می‌شود تا
+    # اگر در مرحله اول اطلاعات ناقص بود، fallback درست باشد.
+    # -----------------------------------------------------
+
+    league = (
+        info.get("league")
+        or "نامشخص"
+    )
+
+    league_fa = (
+        get_persian_competition_name(
+            info.get("competition_id"),
+            league,
+        )
+        or info.get("league_fa")
+        or league
+    )
+
     return {
         "match_id": match_id,
 
+        # نام خام برای منطق داخلی
         "home": home_name,
-
         "away": away_name,
+
+        # نام فارسی برای نمایش
+        "home_fa": home_name_fa,
+        "away_fa": away_name_fa,
 
         "home_team": home_team,
 
@@ -4326,20 +4473,12 @@ def get_match_snapshot(match_url):
 
         "away_team_id": away_id,
 
-        # نام خام مسابقه
-        "league": (
-            info.get("league")
-            or "نامشخص"
-        ),
+        # نام خام رقابت
+        "league": league,
 
-        # نام فارسی مسابقه
-        "league_fa": (
-            info.get("league_fa")
-            or info.get("league")
-            or "نامشخص"
-        ),
+        # نام فارسی رقابت
+        "league_fa": league_fa,
 
-        # شناسه مسابقه/لیگ
         "competition_id": (
             info.get("competition_id")
         ),
@@ -4366,13 +4505,10 @@ def get_match_snapshot(match_url):
 
         "cancelled": status["cancelled"],
 
-        # نتیجه عادی بازی.
-        # در فینال آرژانتین - فرانسه:
-        # 3 - 3
+        # نتیجه عادی بازی
         "score": score,
 
-        # نتیجه ضربات پنالتی:
-        # 4 - 2
+        # نتیجه ضربات پنالتی
         "penalty_score": penalty_score,
 
         "has_extra_time": status[
