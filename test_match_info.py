@@ -4,17 +4,12 @@ import requests
 BOT_TOKEN = os.environ["TELEGRAMBOT"]
 CHANNEL = os.environ["TELEGRAMCHANNEL"]
 
-text = """🏆 جام حذفی اسپانیا
-رئال سوسیداد 2 (4) 🆚 (3) 2 اوساسونا
-
-<pre dir="ltr">رئال سوسیداد             اوساسونا
+text = """<pre>Real Sociedad            Osasuna
 ────────────────────────────────────────
                          Jon Moncayola (4')
                          Mikel Oyarzabal (17' OG)
 Beñat Turrientes (75')
-Igor Zubeldia (90')</pre>
-
-🕐 1404/10/22 - 23:30 به وقت ایران"""
+Igor Zubeldia (90')</pre>"""
 
 url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
