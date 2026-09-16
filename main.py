@@ -535,6 +535,70 @@ def process_match(
         match_url
     )
 
+    # -----------------------------------------------------
+    # تست تشخیصی ترجمه
+    # -----------------------------------------------------
+
+    if snapshot:
+
+        print(
+            "\n"
+            "========== TRANSLATION DEBUG =========="
+        )
+
+        print(
+            "home:",
+            snapshot.get(
+                "home"
+            )
+        )
+
+        print(
+            "home_team_id:",
+            snapshot.get(
+                "home_team_id"
+            )
+        )
+
+        print(
+            "away:",
+            snapshot.get(
+                "away"
+            )
+        )
+
+        print(
+            "away_team_id:",
+            snapshot.get(
+                "away_team_id"
+            )
+        )
+
+        print(
+            "league:",
+            snapshot.get(
+                "league"
+            )
+        )
+
+        print(
+            "league_fa:",
+            snapshot.get(
+                "league_fa"
+            )
+        )
+
+        print(
+            "competition_id:",
+            snapshot.get(
+                "competition_id"
+            )
+        )
+
+        print(
+            "========================================\n"
+        )
+
     if not snapshot:
 
         print(
