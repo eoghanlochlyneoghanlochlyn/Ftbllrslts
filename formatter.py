@@ -716,8 +716,10 @@ def build_lineup_message(
 
         away_name = "Away"
 
+    # نام فارسی رقابت
     league = (
-        snapshot.get("league")
+        snapshot.get("league_fa")
+        or snapshot.get("league")
         or "نامشخص"
     )
 
