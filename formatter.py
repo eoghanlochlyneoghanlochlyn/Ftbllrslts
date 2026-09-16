@@ -29,110 +29,53 @@ get_persian_team_name,
 # --------------------------------------------------------
 
 def get_display_team_name(
-snapshot,
-side,
-):
-
-```
-if not isinstance(
     snapshot,
-    dict,
-):
-    return ""
-
-if side == "home":
-
-    team_id = snapshot.get(
-        "home_team_id"
-    )
-
-    translated_name = (
-        snapshot.get("home_fa")
-        or ""
-    )
-
-    team_name = (
-        snapshot.get("home")
-        or ""
-    )
-
-    team_data = snapshot.get(
-        "home_team"
-    )
-
-elif side == "away":
-
-    team_id = snapshot.get(
-        "away_team_id"
-    )
-
-    translated_name = (
-        snapshot.get("away_fa")
-        or ""
-    )
-
-    team_name = (
-        snapshot.get("away")
-        or ""
-    )
-
-    team_data = snapshot.get(
-        "away_team"
-    )
-
-else:
-
-    return ""
-
-# ----------------------------------------------------
-# 1. ترجمه‌ی مستقیم home_fa / away_fa
-# ----------------------------------------------------
-
-if translated_name:
-
-    return translated_name
-
-# ----------------------------------------------------
-# 2. اطلاعات تیم داخل home_team / away_team
-# ----------------------------------------------------
-
-if isinstance(
-    team_data,
-    dict,
+    side,
 ):
 
-    team_fa = (
-        team_data.get("name_fa")
-        or team_data.get("fa_name")
-        or team_data.get("persian_name")
-        or team_data.get("nameFa")
-        or ""
+    if not isinstance(snapshot, dict):
+        return ""
+
+    if side == "home":
+        team_id = snapshot.get("home_team_id")
+        translated_name = snapshot.get("home_fa") or ""
+        team_name = snapshot.get("home") or ""
+        team_data = snapshot.get("home_team")
+
+    elif side == "away":
+        team_id = snapshot.get("away_team_id")
+        translated_name = snapshot.get("away_fa") or ""
+        team_name = snapshot.get("away") or ""
+        team_data = snapshot.get("away_team")
+
+    else:
+        return ""
+
+    if translated_name:
+        return translated_name
+
+    if isinstance(team_data, dict):
+        team_fa = (
+            team_data.get("name_fa")
+            or team_data.get("fa_name")
+            or team_data.get("persian_name")
+            or team_data.get("nameFa")
+            or ""
+        )
+
+        if team_fa:
+            return team_fa
+
+    translated_name = get_persian_team_name(
+        team_id,
+        team_name,
     )
 
-    if team_fa:
+    if translated_name:
+        return translated_name
 
-        return team_fa
-
-# ----------------------------------------------------
-# 3. team_id و teams.json
-# ----------------------------------------------------
-
-translated_name = get_persian_team_name(
-    team_id,
-    team_name,
-)
-
-if translated_name:
-
-    return translated_name
-
-# ----------------------------------------------------
-# 4. نام انگلیسی به‌عنوان پشتیبان نهایی
-# ----------------------------------------------------
-
-return team_name
-```
-
+    return team_name
+    
 # --------------------------------------------------------
 
 # ابزارهای نتیجه
@@ -803,7 +746,6 @@ if not away_name:
 
     away_name = "Away"
 
-# نام فارسی رقابت
 league = (
     snapshot.get("league_fa")
     or snapshot.get("league")
@@ -1127,12 +1069,6 @@ if is_penalty_goal(
         "🎯 پنالتی"
     )
 
-# ----------------------------------------------------
-# نتیجه‌ی قابل نمایش
-# ----------------------------------------------------
-
-# score از main.py نتیجه‌ی بعد از ثبت گل است.
-# بنابراین برای گل به خودی نباید دوباره گل اضافه شود.
 score_for_display = score
 
 score_text = format_score(
@@ -1730,7 +1666,6 @@ if not available_stats:
         lines
     )
 
-# عرض ستون‌ها را بر اساس نام تیم تنظیم می‌کنیم.
 home_width = max(
     8,
     len(home_name),
