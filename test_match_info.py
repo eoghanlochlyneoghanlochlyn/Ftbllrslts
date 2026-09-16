@@ -6,20 +6,15 @@ BOT_TOKEN = os.environ["TELEGRAMBOT"]
 CHANNEL = os.environ["TELEGRAMCHANNEL"]
 
 rich_message = {
+    "is_rtl": True,
     "blocks": [
         {
             "type": "paragraph",
-            "text": {
-                "type": "plain",
-                "text": "🏆 جام حذفی اسپانیا"
-            }
+            "text": "🏆 جام حذفی اسپانیا"
         },
         {
             "type": "paragraph",
-            "text": {
-                "type": "plain",
-                "text": "رئال سوسیداد 2 (4) 🆚 (3) 2 اوساسونا"
-            }
+            "text": "رئال سوسیداد 2 (4) 🆚 (3) 2 اوساسونا"
         },
         {
             "type": "table",
@@ -28,83 +23,53 @@ rich_message = {
             "cells": [
                 [
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": "رئال سوسیداد"
-                        },
+                        "text": "رئال سوسیداد",
                         "is_header": True,
                         "align": "center"
                     },
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": "اوساسونا"
-                        },
+                        "text": "اوساسونا",
                         "is_header": True,
                         "align": "center"
                     }
                 ],
                 [
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": ""
-                        },
+                        "text": "",
                         "align": "right"
                     },
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": "Jon Moncayola (4')"
-                        },
+                        "text": "Jon Moncayola (4')",
                         "align": "left"
                     }
                 ],
                 [
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": ""
-                        },
+                        "text": "",
                         "align": "right"
                     },
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": "Mikel Oyarzabal (17' OG)"
-                        },
+                        "text": "Mikel Oyarzabal (17' OG)",
                         "align": "left"
                     }
                 ],
                 [
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": "Beñat Turrientes (75')"
-                        },
+                        "text": "Beñat Turrientes (75')",
                         "align": "right"
                     },
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": ""
-                        },
+                        "text": "",
                         "align": "left"
                     }
                 ],
                 [
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": "Igor Zubeldia (90')"
-                        },
+                        "text": "Igor Zubeldia (90')",
                         "align": "right"
                     },
                     {
-                        "text": {
-                            "type": "plain",
-                            "text": ""
-                        },
+                        "text": "",
                         "align": "left"
                     }
                 ]
@@ -112,10 +77,7 @@ rich_message = {
         },
         {
             "type": "paragraph",
-            "text": {
-                "type": "plain",
-                "text": "🕐 1404/10/22 - 23:30 به وقت ایران"
-            }
+            "text": "🕐 1404/10/22 - 23:30 به وقت ایران"
         }
     ]
 }
