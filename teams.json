@@ -1,0 +1,6789 @@
+[
+    {
+        "id": "8678",
+        "name": "AFC Bournemouth",
+        "country": "England",
+        "persian": "بورنموث"
+    },
+    {
+        "id": "9825",
+        "name": "Arsenal",
+        "country": "England",
+        "persian": "آرسنال"
+    },
+    {
+        "id": "10252",
+        "name": "Aston Villa",
+        "country": "England",
+        "persian": "استون ویلا"
+    },
+    {
+        "id": "9937",
+        "name": "Brentford",
+        "country": "England",
+        "persian": "برنتفورد"
+    },
+    {
+        "id": "10204",
+        "name": "Brighton & Hove Albion",
+        "country": "England",
+        "persian": "برایتون"
+    },
+    {
+        "id": "8455",
+        "name": "Chelsea",
+        "country": "England",
+        "persian": "چلسی"
+    },
+    {
+        "id": "8669",
+        "name": "Coventry City",
+        "country": "England",
+        "persian": "کاونتری سیتی"
+    },
+    {
+        "id": "9826",
+        "name": "Crystal Palace",
+        "country": "England",
+        "persian": "کریستال پالاس"
+    },
+    {
+        "id": "8668",
+        "name": "Everton",
+        "country": "England",
+        "persian": "اورتون"
+    },
+    {
+        "id": "9879",
+        "name": "Fulham",
+        "country": "England",
+        "persian": "فولام"
+    },
+    {
+        "id": "8667",
+        "name": "Hull City",
+        "country": "England",
+        "persian": "هال سیتی"
+    },
+    {
+        "id": "9902",
+        "name": "Ipswich Town",
+        "country": "England",
+        "persian": "ایپسویچ تاون"
+    },
+    {
+        "id": "8463",
+        "name": "Leeds United",
+        "country": "England",
+        "persian": "لیدز یونایتد"
+    },
+    {
+        "id": "8650",
+        "name": "Liverpool",
+        "country": "England",
+        "persian": "لیورپول"
+    },
+    {
+        "id": "8456",
+        "name": "Manchester City",
+        "country": "England",
+        "persian": "منچسترسیتی"
+    },
+    {
+        "id": "10260",
+        "name": "Manchester United",
+        "country": "England",
+        "persian": "منچستریونایتد"
+    },
+    {
+        "id": "10261",
+        "name": "Newcastle United",
+        "country": "England",
+        "persian": "نیوکاسل یونایتد"
+    },
+    {
+        "id": "10203",
+        "name": "Nottingham Forest",
+        "country": "England",
+        "persian": "ناتینگهام فارست"
+    },
+    {
+        "id": "8472",
+        "name": "Sunderland",
+        "country": "England",
+        "persian": "ساندرلند"
+    },
+    {
+        "id": "8586",
+        "name": "Tottenham Hotspur",
+        "country": "England",
+        "persian": "تاتنهام"
+    },
+    {
+        "id": "8658",
+        "name": "Birmingham City",
+        "country": "England",
+        "persian": "بیرمنگام سیتی"
+    },
+    {
+        "id": "8655",
+        "name": "Blackburn Rovers",
+        "country": "England",
+        "persian": "بلکبرن روورز"
+    },
+    {
+        "id": "8559",
+        "name": "Bolton Wanderers",
+        "country": "England",
+        "persian": "بولتون واندررز"
+    },
+    {
+        "id": "8427",
+        "name": "Bristol City",
+        "country": "England",
+        "persian": "بریستول سیتی"
+    },
+    {
+        "id": "8191",
+        "name": "Burnley",
+        "country": "England",
+        "persian": "برنلی"
+    },
+    {
+        "id": "8344",
+        "name": "Cardiff City",
+        "country": "Wales",
+        "persian": "کاردیف سیتی"
+    },
+    {
+        "id": "8451",
+        "name": "Charlton Athletic",
+        "country": "England",
+        "persian": "چارلتون اتلتیک"
+    },
+    {
+        "id": "10170",
+        "name": "Derby County",
+        "country": "England",
+        "persian": "دربی کانتی"
+    },
+    {
+        "id": "8430",
+        "name": "Lincoln City",
+        "country": "England",
+        "persian": "لینکلن سیتی"
+    },
+    {
+        "id": "8549",
+        "name": "Middlesbrough",
+        "country": "England",
+        "persian": "میدلزبورو"
+    },
+    {
+        "id": "10004",
+        "name": "Millwall",
+        "country": "England",
+        "persian": "میلوال"
+    },
+    {
+        "id": "9850",
+        "name": "Norwich City",
+        "country": "England",
+        "persian": "نورویچ سیتی"
+    },
+    {
+        "id": "8462",
+        "name": "Portsmouth",
+        "country": "England",
+        "persian": "پورتسموث"
+    },
+    {
+        "id": "8411",
+        "name": "Preston North End",
+        "country": "England",
+        "persian": "پرستون نورث اند"
+    },
+    {
+        "id": "10172",
+        "name": "Queens Park Rangers",
+        "country": "England",
+        "persian": "کوئینز پارک رنجرز"
+    },
+    {
+        "id": "8657",
+        "name": "Sheffield United",
+        "country": "England",
+        "persian": "شفیلد یونایتد"
+    },
+    {
+        "id": "8466",
+        "name": "Southampton",
+        "country": "England",
+        "persian": "ساوتهمپتون"
+    },
+    {
+        "id": "10194",
+        "name": "Stoke City",
+        "country": "England",
+        "persian": "استوک سیتی"
+    },
+    {
+        "id": "10003",
+        "name": "Swansea City",
+        "country": "Wales",
+        "persian": "سوانزی سیتی"
+    },
+    {
+        "id": "9817",
+        "name": "Watford",
+        "country": "England",
+        "persian": "واتفورد"
+    },
+    {
+        "id": "8659",
+        "name": "West Bromwich Albion",
+        "country": "England",
+        "persian": "وست برومویچ"
+    },
+    {
+        "id": "8654",
+        "name": "West Ham United",
+        "country": "England",
+        "persian": "وستهم یونایتد"
+    },
+    {
+        "id": "8602",
+        "name": "Wolverhampton Wanderers",
+        "country": "England",
+        "persian": "ولورهمپتون"
+    },
+    {
+        "id": "9841",
+        "name": "Wrexham",
+        "country": "Wales",
+        "persian": "رکسهم"
+    },
+    {
+        "id": "158319",
+        "name": "AFC Wimbledon",
+        "country": "England",
+        "persian": "ای‌اف‌سی ویمبلدون"
+    },
+    {
+        "id": "8283",
+        "name": "Barnsley",
+        "country": "England",
+        "persian": "بارنزلی"
+    },
+    {
+        "id": "8483",
+        "name": "Blackpool",
+        "country": "England",
+        "persian": "بلکپول"
+    },
+    {
+        "id": "8484",
+        "name": "Bradford City",
+        "country": "England",
+        "persian": "بردفورد سیتی"
+    },
+    {
+        "id": "45729",
+        "name": "Bromley",
+        "country": "England",
+        "persian": "بروملی"
+    },
+    {
+        "id": "9792",
+        "name": "Burton Albion",
+        "country": "England",
+        "persian": "برتون آلبیون"
+    },
+    {
+        "id": "9834",
+        "name": "Cambridge United",
+        "country": "England",
+        "persian": "کمبریج یونایتد"
+    },
+    {
+        "id": "9903",
+        "name": "Doncaster Rovers",
+        "country": "England",
+        "persian": "دانکستر روورز"
+    },
+    {
+        "id": "9796",
+        "name": "Huddersfield Town",
+        "country": "England",
+        "persian": "هادرسفیلد تاون"
+    },
+    {
+        "id": "8197",
+        "name": "Leicester City",
+        "country": "England",
+        "persian": "لسترسیتی"
+    },
+    {
+        "id": "8351",
+        "name": "Leyton Orient",
+        "country": "England",
+        "persian": "لیتون اورینت"
+    },
+    {
+        "id": "8346",
+        "name": "Luton Town",
+        "country": "England",
+        "persian": "لوتون تاون"
+    },
+    {
+        "id": "9818",
+        "name": "Mansfield Town",
+        "country": "England",
+        "persian": "منسفیلد تاون"
+    },
+    {
+        "id": "8645",
+        "name": "Milton Keynes Dons",
+        "country": "England",
+        "persian": "میلتون کینز دونز"
+    },
+    {
+        "id": "9819",
+        "name": "Notts County",
+        "country": "England",
+        "persian": "ناتس کانتی"
+    },
+    {
+        "id": "8653",
+        "name": "Oxford United",
+        "country": "England",
+        "persian": "آکسفورد یونایتد"
+    },
+    {
+        "id": "8677",
+        "name": "Peterborough United",
+        "country": "England",
+        "persian": "پیترزبورو یونایتد"
+    },
+    {
+        "id": "8401",
+        "name": "Plymouth Argyle",
+        "country": "England",
+        "persian": "پلیموث آرگایل"
+    },
+    {
+        "id": "9798",
+        "name": "Reading",
+        "country": "England",
+        "persian": "ردینگ"
+    },
+    {
+        "id": "10163",
+        "name": "Sheffield Wednesday",
+        "country": "England",
+        "persian": "شفیلد ونزدی"
+    },
+    {
+        "id": "10253",
+        "name": "Stevenage",
+        "country": "England",
+        "persian": "استیونج"
+    },
+    {
+        "id": "10007",
+        "name": "Stockport County",
+        "country": "England",
+        "persian": "استاکپورت کانتی"
+    },
+    {
+        "id": "8528",
+        "name": "Wigan Athletic",
+        "country": "England",
+        "persian": "ویگان اتلتیک"
+    },
+    {
+        "id": "8676",
+        "name": "Wycombe Wanderers",
+        "country": "England",
+        "persian": "وایکام واندررز"
+    }
+
+  {
+    "id": "8524",
+    "name": "Atalanta",
+    "country": "Italy",
+    "persian": "آتالانتا"
+  },
+  {
+    "id": "9857",
+    "name": "Bologna",
+    "country": "Italy",
+    "persian": "بولونیا"
+  },
+  {
+    "id": "8529",
+    "name": "Cagliari",
+    "country": "Italy",
+    "persian": "کالیاری"
+  },
+  {
+    "id": "10171",
+    "name": "Como",
+    "country": "Italy",
+    "persian": "کومو"
+  },
+  {
+    "id": "8535",
+    "name": "Fiorentina",
+    "country": "Italy",
+    "persian": "فیورنتینا"
+  },
+  {
+    "id": "9891",
+    "name": "Frosinone",
+    "country": "Italy",
+    "persian": "فروزینونه"
+  },
+  {
+    "id": "10233",
+    "name": "Genoa",
+    "country": "Italy",
+    "persian": "جنوا"
+  },
+  {
+    "id": "8636",
+    "name": "Inter",
+    "country": "Italy",
+    "persian": "اینتر"
+  },
+  {
+    "id": "9885",
+    "name": "Juventus",
+    "country": "Italy",
+    "persian": "یوونتوس"
+  },
+  {
+    "id": "8543",
+    "name": "Lazio",
+    "country": "Italy",
+    "persian": "لاتزیو"
+  },
+  {
+    "id": "9888",
+    "name": "Lecce",
+    "country": "Italy",
+    "persian": "لچه"
+  },
+  {
+    "id": "8564",
+    "name": "Milan",
+    "country": "Italy",
+    "persian": "میلان"
+  },
+  {
+    "id": "6504",
+    "name": "Monza",
+    "country": "Italy",
+    "persian": "مونتزا"
+  },
+  {
+    "id": "9875",
+    "name": "Napoli",
+    "country": "Italy",
+    "persian": "ناپولی"
+  },
+  {
+    "id": "10167",
+    "name": "Parma",
+    "country": "Italy",
+    "persian": "پارما"
+  },
+  {
+    "id": "8686",
+    "name": "Roma",
+    "country": "Italy",
+    "persian": "رم"
+  },
+  {
+    "id": "7943",
+    "name": "Sassuolo",
+    "country": "Italy",
+    "persian": "ساسولو"
+  },
+  {
+    "id": "9804",
+    "name": "Torino",
+    "country": "Italy",
+    "persian": "تورینو"
+  },
+  {
+    "id": "8600",
+    "name": "Udinese",
+    "country": "Italy",
+    "persian": "اودینزه"
+  },
+  {
+    "id": "7881",
+    "name": "Venezia",
+    "country": "Italy",
+    "persian": "ونتزیا"
+  },
+  {
+    "id": "9849",
+    "name": "Arezzo",
+    "country": "Italy",
+    "persian": "آرتزو"
+  },
+  {
+    "id": "8522",
+    "name": "Ascoli",
+    "country": "Italy",
+    "persian": "آسکولی"
+  },
+  {
+    "id": "6722",
+    "name": "Avellino",
+    "country": "Italy",
+    "persian": "آولینو"
+  },
+  {
+    "id": "6266",
+    "name": "Benevento",
+    "country": "Italy",
+    "persian": "بنه‌ونتو"
+  },
+  {
+    "id": "6488",
+    "name": "Carrarese",
+    "country": "Italy",
+    "persian": "کارارزه"
+  },
+  {
+    "id": "10168",
+    "name": "Catanzaro",
+    "country": "Italy",
+    "persian": "کاتانزارو"
+  },
+  {
+    "id": "584022",
+    "name": "Cesena",
+    "country": "Italy",
+    "persian": "چزنا"
+  },
+  {
+    "id": "7801",
+    "name": "Cremonese",
+    "country": "Italy",
+    "persian": "کرمونزه"
+  },
+  {
+    "id": "8534",
+    "name": "Empoli",
+    "country": "Italy",
+    "persian": "امپولی"
+  },
+  {
+    "id": "9876",
+    "name": "Hellas Verona",
+    "country": "Italy",
+    "persian": "هلاس ورونا"
+  },
+  {
+    "id": "6106",
+    "name": "Juve Stabia",
+    "country": "Italy",
+    "persian": "یووه استابیا"
+  },
+  {
+    "id": "145007",
+    "name": "LR Vicenza",
+    "country": "Italy",
+    "persian": "ویچنزا"
+  },
+  {
+    "id": "9889",
+    "name": "Mantova",
+    "country": "Italy",
+    "persian": "مانتووا"
+  },
+  {
+    "id": "9887",
+    "name": "Modena",
+    "country": "Italy",
+    "persian": "مودنا"
+  },
+  {
+    "id": "583944",
+    "name": "Padova",
+    "country": "Italy",
+    "persian": "پادوا"
+  },
+  {
+    "id": "8540",
+    "name": "Palermo",
+    "country": "Italy",
+    "persian": "پالرمو"
+  },
+  {
+    "id": "6479",
+    "name": "Pisa",
+    "country": "Italy",
+    "persian": "پیزا"
+  },
+  {
+    "id": "9882",
+    "name": "Sampdoria",
+    "country": "Italy",
+    "persian": "سمپدوریا"
+  },
+  {
+    "id": "189475",
+    "name": "Südtirol",
+    "country": "Italy",
+    "persian": "سودتیرول"
+  },
+  {
+    "id": "208932",
+    "name": "Virtus Entella",
+    "country": "Italy",
+    "persian": "ویرتوس انتلا"
+  },
+  {
+    "id": "8121",
+    "name": "Angers",
+    "country": "France",
+    "persian": "آنژه"
+  },
+  {
+    "id": "8583",
+    "name": "Auxerre",
+    "country": "France",
+    "persian": "اوسر"
+  },
+  {
+    "id": "8521",
+    "name": "Brest",
+    "country": "France",
+    "persian": "برست"
+  },
+  {
+    "id": "9746",
+    "name": "Le Havre",
+    "country": "France",
+    "persian": "لو آور"
+  },
+  {
+    "id": "8682",
+    "name": "Le Mans",
+    "country": "France",
+    "persian": "لو مان"
+  },
+  {
+    "id": "8588",
+    "name": "Lens",
+    "country": "France",
+    "persian": "لانس"
+  },
+  {
+    "id": "8639",
+    "name": "Lille",
+    "country": "France",
+    "persian": "لیل"
+  },
+  {
+    "id": "8689",
+    "name": "Lorient",
+    "country": "France",
+    "persian": "لوریان"
+  },
+  {
+    "id": "9748",
+    "name": "Lyon",
+    "country": "France",
+    "persian": "لیون"
+  },
+  {
+    "id": "8592",
+    "name": "Marseille",
+    "country": "France",
+    "persian": "مارسی"
+  },
+  {
+    "id": "9829",
+    "name": "Monaco",
+    "country": "Monaco",
+    "persian": "موناکو"
+  },
+  {
+    "id": "9831",
+    "name": "Nice",
+    "country": "France",
+    "persian": "نیس"
+  },
+  {
+    "id": "6379",
+    "name": "Paris FC",
+    "country": "France",
+    "persian": "پاریس اف‌سی"
+  },
+  {
+    "id": "9847",
+    "name": "Paris Saint-Germain",
+    "country": "France",
+    "persian": "پاری سن ژرمن"
+  },
+  {
+    "id": "9851",
+    "name": "Rennes",
+    "country": "France",
+    "persian": "رن"
+  },
+  {
+    "id": "9848",
+    "name": "Strasbourg",
+    "country": "France",
+    "persian": "استراسبورگ"
+  },
+  {
+    "id": "9941",
+    "name": "Toulouse",
+    "country": "France",
+    "persian": "تولوز"
+  },
+  {
+    "id": "10242",
+    "name": "Troyes",
+    "country": "France",
+    "persian": "تروا"
+  },
+  {
+    "id": "293352",
+    "name": "Annecy FC",
+    "country": "France",
+    "persian": "آنسی"
+  },
+  {
+    "id": "4170",
+    "name": "Boulogne",
+    "country": "France",
+    "persian": "بولونی"
+  },
+  {
+    "id": "8311",
+    "name": "Clermont Foot",
+    "country": "France",
+    "persian": "کلرمون فوت"
+  },
+  {
+    "id": "9836",
+    "name": "Dijon",
+    "country": "France",
+    "persian": "دیژون"
+  },
+  {
+    "id": "47214",
+    "name": "Dunkerque",
+    "country": "France",
+    "persian": "دانکرک"
+  },
+  {
+    "id": "9855",
+    "name": "Grenoble",
+    "country": "France",
+    "persian": "گرونوبل"
+  },
+  {
+    "id": "9747",
+    "name": "Guingamp",
+    "country": "France",
+    "persian": "گنگام"
+  },
+  {
+    "id": "7853",
+    "name": "Laval",
+    "country": "France",
+    "persian": "لاوال"
+  },
+  {
+    "id": "8550",
+    "name": "Metz",
+    "country": "France",
+    "persian": "متز"
+  },
+  {
+    "id": "10249",
+    "name": "Montpellier",
+    "country": "France",
+    "persian": "مون‌پلیه"
+  },
+  {
+    "id": "8481",
+    "name": "Nancy",
+    "country": "France",
+    "persian": "نانسی"
+  },
+  {
+    "id": "9830",
+    "name": "Nantes",
+    "country": "France",
+    "persian": "نانت"
+  },
+  {
+    "id": "6355",
+    "name": "Pau",
+    "country": "France",
+    "persian": "پو"
+  },
+  {
+    "id": "6390",
+    "name": "Red Star",
+    "country": "France",
+    "persian": "رد استار"
+  },
+  {
+    "id": "9837",
+    "name": "Reims",
+    "country": "France",
+    "persian": "رنس"
+  },
+  {
+    "id": "4120",
+    "name": "Rodez",
+    "country": "France",
+    "persian": "رودز"
+  },
+  {
+    "id": "9853",
+    "name": "Saint-Étienne",
+    "country": "France",
+    "persian": "سن‌اتین"
+  },
+  {
+    "id": "9874",
+    "name": "Sochaux",
+    "country": "France",
+    "persian": "سوشو"
+  }
+
+  {
+    "id": "8315",
+    "name": "Athletic Club",
+    "country": "Spain",
+    "persian": "اتلتیک بیلبائو"
+  },
+  {
+    "id": "9906",
+    "name": "Atlético Madrid",
+    "country": "Spain",
+    "persian": "اتلتیکو مادرید"
+  },
+  {
+    "id": "8634",
+    "name": "Barcelona",
+    "country": "Spain",
+    "persian": "بارسلونا"
+  },
+  {
+    "id": "9910",
+    "name": "Celta Vigo",
+    "country": "Spain",
+    "persian": "سلتاویگو"
+  },
+  {
+    "id": "9783",
+    "name": "Deportivo A Coruña",
+    "country": "Spain",
+    "persian": "دپورتیوو لاکرونیا"
+  },
+  {
+    "id": "9866",
+    "name": "Deportivo Alavés",
+    "country": "Spain",
+    "persian": "آلاوس"
+  },
+  {
+    "id": "10268",
+    "name": "Elche",
+    "country": "Spain",
+    "persian": "الچه"
+  },
+  {
+    "id": "8558",
+    "name": "Espanyol",
+    "country": "Spain",
+    "persian": "اسپانیول"
+  },
+  {
+    "id": "8305",
+    "name": "Getafe",
+    "country": "Spain",
+    "persian": "ختافه"
+  },
+  {
+    "id": "8581",
+    "name": "Levante",
+    "country": "Spain",
+    "persian": "لوانته"
+  },
+  {
+    "id": "9864",
+    "name": "Málaga",
+    "country": "Spain",
+    "persian": "مالاگا"
+  },
+  {
+    "id": "8371",
+    "name": "Osasuna",
+    "country": "Spain",
+    "persian": "اوساسونا"
+  },
+  {
+    "id": "8696",
+    "name": "Racing Santander",
+    "country": "Spain",
+    "persian": "رِیسینگ سانتاندر"
+  },
+  {
+    "id": "8370",
+    "name": "Rayo Vallecano",
+    "country": "Spain",
+    "persian": "رایو وایکانو"
+  },
+  {
+    "id": "8603",
+    "name": "Real Betis",
+    "country": "Spain",
+    "persian": "رئال بتیس"
+  },
+  {
+    "id": "8633",
+    "name": "Real Madrid",
+    "country": "Spain",
+    "persian": "رئال مادرید"
+  },
+  {
+    "id": "8560",
+    "name": "Real Sociedad",
+    "country": "Spain",
+    "persian": "رئال سوسیداد"
+  },
+  {
+    "id": "8302",
+    "name": "Sevilla",
+    "country": "Spain",
+    "persian": "سویا"
+  },
+  {
+    "id": "10267",
+    "name": "Valencia",
+    "country": "Spain",
+    "persian": "والنسیا"
+  },
+  {
+    "id": "10205",
+    "name": "Villarreal",
+    "country": "Spain",
+    "persian": "ویارئال"
+  },
+  {
+    "id": "357259",
+    "name": "AD Ceuta FC",
+    "country": "Spain",
+    "persian": "سبتا"
+  },
+  {
+    "id": "8393",
+    "name": "Albacete",
+    "country": "Spain",
+    "persian": "آلباسته"
+  },
+  {
+    "id": "9865",
+    "name": "Almería",
+    "country": "Spain",
+    "persian": "آلمریا"
+  },
+  {
+    "id": "7876",
+    "name": "Burgos CF",
+    "country": "Spain",
+    "persian": "بورگوس"
+  },
+  {
+    "id": "10279",
+    "name": "Castellón",
+    "country": "Spain",
+    "persian": "کاستیون"
+  },
+  {
+    "id": "161743",
+    "name": "Celta Fortuna",
+    "country": "Spain",
+    "persian": "سلتا فورتونا"
+  },
+  {
+    "id": "8385",
+    "name": "Cádiz",
+    "country": "Spain",
+    "persian": "کادیز"
+  },
+  {
+    "id": "7869",
+    "name": "Córdoba",
+    "country": "Spain",
+    "persian": "کوردوبا"
+  },
+  {
+    "id": "8372",
+    "name": "Eibar",
+    "country": "Spain",
+    "persian": "ایبار"
+  },
+  {
+    "id": "8288",
+    "name": "Eldense",
+    "country": "Spain",
+    "persian": "الدنسه"
+  },
+  {
+    "id": "494050",
+    "name": "FC Andorra",
+    "country": "Andorra",
+    "persian": "اف‌سی آندورا"
+  },
+  {
+    "id": "7732",
+    "name": "Girona",
+    "country": "Spain",
+    "persian": "ژیرونا"
+  },
+  {
+    "id": "7878",
+    "name": "Granada",
+    "country": "Spain",
+    "persian": "گرانادا"
+  },
+  {
+    "id": "8306",
+    "name": "Las Palmas",
+    "country": "Spain",
+    "persian": "لاس پالماس"
+  },
+  {
+    "id": "7854",
+    "name": "Leganés",
+    "country": "Spain",
+    "persian": "لگانس"
+  },
+  {
+    "id": "8661",
+    "name": "Mallorca",
+    "country": "Spain",
+    "persian": "مایورکا"
+  },
+  {
+    "id": "8670",
+    "name": "Real Oviedo",
+    "country": "Spain",
+    "persian": "رئال اوویدو"
+  },
+  {
+    "id": "161744",
+    "name": "Real Sociedad B",
+    "country": "Spain",
+    "persian": "رئال سوسیداد B"
+  },
+  {
+    "id": "10281",
+    "name": "Real Valladolid",
+    "country": "Spain",
+    "persian": "رئال وایادولید"
+  },
+  {
+    "id": "4033",
+    "name": "Sabadell",
+    "country": "Spain",
+    "persian": "سابادل"
+  },
+  {
+    "id": "9869",
+    "name": "Sporting Gijón",
+    "country": "Spain",
+    "persian": "اسپورتینگ خیخون"
+  },
+  {
+    "id": "9867",
+    "name": "Tenerife",
+    "country": "Spain",
+    "persian": "تنریف"
+  },
+  {
+    "id": "8722",
+    "name": "1. FC Köln",
+    "country": "Germany",
+    "persian": "کلن"
+  },
+  {
+    "id": "8406",
+    "name": "Augsburg",
+    "country": "Germany",
+    "persian": "آگزبورگ"
+  },
+  {
+    "id": "8178",
+    "name": "Bayer Leverkusen",
+    "country": "Germany",
+    "persian": "بایر لورکوزن"
+  },
+  {
+    "id": "9823",
+    "name": "Bayern München",
+    "country": "Germany",
+    "persian": "بایرن مونیخ"
+  },
+  {
+    "id": "9789",
+    "name": "Borussia Dortmund",
+    "country": "Germany",
+    "persian": "بوروسیا دورتموند"
+  },
+  {
+    "id": "9788",
+    "name": "Borussia Mönchengladbach",
+    "country": "Germany",
+    "persian": "بوروسیا مونشن‌گلادباخ"
+  },
+  {
+    "id": "9810",
+    "name": "Eintracht Frankfurt",
+    "country": "Germany",
+    "persian": "آینتراخت فرانکفورت"
+  },
+  {
+    "id": "8232",
+    "name": "Elversberg",
+    "country": "Germany",
+    "persian": "الورزبرگ"
+  },
+  {
+    "id": "8358",
+    "name": "Freiburg",
+    "country": "Germany",
+    "persian": "فرایبورگ"
+  },
+  {
+    "id": "9790",
+    "name": "Hamburger SV",
+    "country": "Germany",
+    "persian": "هامبورگ"
+  },
+  {
+    "id": "8226",
+    "name": "Hoffenheim",
+    "country": "Germany",
+    "persian": "هوفنهایم"
+  },
+  {
+    "id": "9905",
+    "name": "Mainz 05",
+    "country": "Germany",
+    "persian": "ماینتس"
+  },
+  {
+    "id": "8460",
+    "name": "Paderborn",
+    "country": "Germany",
+    "persian": "پادربورن"
+  },
+  {
+    "id": "178475",
+    "name": "RB Leipzig",
+    "country": "Germany",
+    "persian": "لایپزیگ"
+  },
+  {
+    "id": "10189",
+    "name": "Schalke 04",
+    "country": "Germany",
+    "persian": "شالکه ۰۴"
+  },
+  {
+    "id": "8149",
+    "name": "Union Berlin",
+    "country": "Germany",
+    "persian": "اونیون برلین"
+  },
+  {
+    "id": "10269",
+    "name": "VfB Stuttgart",
+    "country": "Germany",
+    "persian": "اشتوتگارت"
+  },
+  {
+    "id": "8697",
+    "name": "Werder Bremen",
+    "country": "Germany",
+    "persian": "وردربرمن"
+  },
+  {
+    "id": "8165",
+    "name": "1. FC Nürnberg",
+    "country": "Germany",
+    "persian": "نورنبرگ"
+  },
+  {
+    "id": "9912",
+    "name": "Arminia Bielefeld",
+    "country": "Germany",
+    "persian": "آرمینیا بیله‌فلد"
+  },
+  {
+    "id": "9911",
+    "name": "Bochum",
+    "country": "Germany",
+    "persian": "بوخوم"
+  },
+  {
+    "id": "8262",
+    "name": "Darmstadt",
+    "country": "Germany",
+    "persian": "دارمشتات"
+  },
+  {
+    "id": "8480",
+    "name": "Dynamo Dresden",
+    "country": "Germany",
+    "persian": "دینامو درسدن"
+  },
+  {
+    "id": "9776",
+    "name": "Eintracht Braunschweig",
+    "country": "Germany",
+    "persian": "آینتراخت براونشوایگ"
+  },
+  {
+    "id": "8398",
+    "name": "Energie Cottbus",
+    "country": "Germany",
+    "persian": "انرژی کوتبوس"
+  },
+  {
+    "id": "94937",
+    "name": "FC Heidenheim",
+    "country": "Germany",
+    "persian": "هایدنهایم"
+  },
+  {
+    "id": "8357",
+    "name": "Greuther Fürth",
+    "country": "Germany",
+    "persian": "گروتر فورث"
+  },
+  {
+    "id": "9904",
+    "name": "Hannover 96",
+    "country": "Germany",
+    "persian": "هانوفر ۹۶"
+  },
+  {
+    "id": "8177",
+    "name": "Hertha BSC",
+    "country": "Germany",
+    "persian": "هرتابرلین"
+  },
+  {
+    "id": "8150",
+    "name": "Holstein Kiel",
+    "country": "Germany",
+    "persian": "هولشتاین کیل"
+  },
+  {
+    "id": "8350",
+    "name": "Kaiserslautern",
+    "country": "Germany",
+    "persian": "کایزرسلاوترن"
+  },
+  {
+    "id": "8295",
+    "name": "Karlsruher SC",
+    "country": "Germany",
+    "persian": "کارلسروهه"
+  },
+  {
+    "id": "8188",
+    "name": "Magdeburg",
+    "country": "Germany",
+    "persian": "ماگدبورگ"
+  },
+  {
+    "id": "8152",
+    "name": "St. Pauli",
+    "country": "Germany",
+    "persian": "سن پائولی"
+  },
+  {
+    "id": "9775",
+    "name": "VfL Osnabrück",
+    "country": "Germany",
+    "persian": "اوسنابروک"
+  },
+  {
+    "id": "8721",
+    "name": "Wolfsburg",
+    "country": "Germany",
+    "persian": "ولفسبورگ"
+  }
+
+  {
+    "id": "10217",
+    "name": "ADO Den Haag",
+    "country": "Netherlands",
+    "persian": "آدو دن هاخ"
+  },
+  {
+    "id": "8593",
+    "name": "Ajax",
+    "country": "Netherlands",
+    "persian": "آژاکس"
+  },
+  {
+    "id": "10229",
+    "name": "AZ Alkmaar",
+    "country": "Netherlands",
+    "persian": "آلکمار"
+  },
+  {
+    "id": "7788",
+    "name": "Cambuur",
+    "country": "Netherlands",
+    "persian": "کامبور"
+  },
+  {
+    "id": "10218",
+    "name": "Excelsior",
+    "country": "Netherlands",
+    "persian": "اکسلسior"
+  },
+  {
+    "id": "8674",
+    "name": "FC Groningen",
+    "country": "Netherlands",
+    "persian": "خرونینگن"
+  },
+  {
+    "id": "8611",
+    "name": "FC Twente",
+    "country": "Netherlands",
+    "persian": "توئنته"
+  },
+  {
+    "id": "9908",
+    "name": "FC Utrecht",
+    "country": "Netherlands",
+    "persian": "اوترخت"
+  },
+  {
+    "id": "10235",
+    "name": "Feyenoord",
+    "country": "Netherlands",
+    "persian": "فاینورد"
+  },
+  {
+    "id": "6422",
+    "name": "Fortuna Sittard",
+    "country": "Netherlands",
+    "persian": "فورتونا سیتارد"
+  },
+  {
+    "id": "6433",
+    "name": "Go Ahead Eagles",
+    "country": "Netherlands",
+    "persian": "گو اهد ایگلز"
+  },
+  {
+    "id": "8464",
+    "name": "NEC Nijmegen",
+    "country": "Netherlands",
+    "persian": "نایمخن"
+  },
+  {
+    "id": "6413",
+    "name": "PEC Zwolle",
+    "country": "Netherlands",
+    "persian": "زوله"
+  },
+  {
+    "id": "8640",
+    "name": "PSV Eindhoven",
+    "country": "Netherlands",
+    "persian": "آیندهوون"
+  },
+  {
+    "id": "10228",
+    "name": "SC Heerenveen",
+    "country": "Netherlands",
+    "persian": "هیرنفین"
+  },
+  {
+    "id": "8614",
+    "name": "Sparta Rotterdam",
+    "country": "Netherlands",
+    "persian": "اسپارتا روتردام"
+  },
+  {
+    "id": "6414",
+    "name": "Telstar",
+    "country": "Netherlands",
+    "persian": "تلستار"
+  },
+  {
+    "id": "8525",
+    "name": "Willem II",
+    "country": "Netherlands",
+    "persian": "ویلم دوم"
+  },
+  {
+    "id": "1786",
+    "name": "Académico Viseu",
+    "country": "Portugal",
+    "persian": "آکادمیکو ویزئو"
+  },
+  {
+    "id": "9780",
+    "name": "Alverca",
+    "country": "Portugal",
+    "persian": "آلوِرکا"
+  },
+  {
+    "id": "158085",
+    "name": "Arouca",
+    "country": "Portugal",
+    "persian": "آروکا"
+  },
+  {
+    "id": "9772",
+    "name": "Benfica",
+    "country": "Portugal",
+    "persian": "بنفیکا"
+  },
+  {
+    "id": "10264",
+    "name": "Braga",
+    "country": "Portugal",
+    "persian": "براگا"
+  },
+  {
+    "id": "212821",
+    "name": "Casa Pia AC",
+    "country": "Portugal",
+    "persian": "کاسا پیا"
+  },
+  {
+    "id": "7842",
+    "name": "Estoril",
+    "country": "Portugal",
+    "persian": "اشتوریل"
+  },
+  {
+    "id": "1074320",
+    "name": "Estrela da Amadora",
+    "country": "Portugal",
+    "persian": "استرلا آمادورا"
+  },
+  {
+    "id": "1634",
+    "name": "Famalicão",
+    "country": "Portugal",
+    "persian": "فامالیکائو"
+  },
+  {
+    "id": "9773",
+    "name": "FC Porto",
+    "country": "Portugal",
+    "persian": "پورتو"
+  },
+  {
+    "id": "9764",
+    "name": "Gil Vicente",
+    "country": "Portugal",
+    "persian": "ژیل ویسنته"
+  },
+  {
+    "id": "10212",
+    "name": "Marítimo",
+    "country": "Portugal",
+    "persian": "ماریتیمو"
+  },
+  {
+    "id": "8348",
+    "name": "Moreirense",
+    "country": "Portugal",
+    "persian": "موریرنزه"
+  },
+  {
+    "id": "10214",
+    "name": "Nacional",
+    "country": "Portugal",
+    "persian": "ناسیونال"
+  },
+  {
+    "id": "7841",
+    "name": "Rio Ave",
+    "country": "Portugal",
+    "persian": "ریو آوه"
+  },
+  {
+    "id": "1567",
+    "name": "Santa Clara",
+    "country": "Portugal",
+    "persian": "سانتا کلارا"
+  },
+  {
+    "id": "9768",
+    "name": "Sporting CP",
+    "country": "Portugal",
+    "persian": "اسپورتینگ"
+  },
+  {
+    "id": "7844",
+    "name": "Vitória de Guimarães",
+    "country": "Portugal",
+    "persian": "ویتوریا گیمارش"
+  },
+  {
+    "id": "8635",
+    "name": "Anderlecht",
+    "country": "Belgium",
+    "persian": "اندرلخت"
+  },
+  {
+    "id": "9984",
+    "name": "Cercle Brugge",
+    "country": "Belgium",
+    "persian": "سرکل بروژ"
+  },
+  {
+    "id": "8342",
+    "name": "Club Brugge",
+    "country": "Belgium",
+    "persian": "کلوب بروژ"
+  },
+  {
+    "id": "9987",
+    "name": "Genk",
+    "country": "Belgium",
+    "persian": "خنک"
+  },
+  {
+    "id": "9991",
+    "name": "Gent",
+    "country": "Belgium",
+    "persian": "خنت"
+  },
+  {
+    "id": "8571",
+    "name": "Kortrijk",
+    "country": "Belgium",
+    "persian": "کورتریک"
+  },
+  {
+    "id": "8203",
+    "name": "KV Mechelen",
+    "country": "Belgium",
+    "persian": "مشیلن"
+  },
+  {
+    "id": "6702",
+    "name": "Lommel",
+    "country": "Belgium",
+    "persian": "لومل"
+  },
+  {
+    "id": "1773",
+    "name": "OH Leuven",
+    "country": "Belgium",
+    "persian": "لوون"
+  },
+  {
+    "id": "1218969",
+    "name": "RAAL La Louvière",
+    "country": "Belgium",
+    "persian": "لالووییر"
+  },
+  {
+    "id": "9988",
+    "name": "Royal Antwerp",
+    "country": "Belgium",
+    "persian": "رویال آنتورپ"
+  },
+  {
+    "id": "8475",
+    "name": "SK Beveren",
+    "country": "Belgium",
+    "persian": "بِفِرِن"
+  },
+  {
+    "id": "9986",
+    "name": "Sporting Charleroi",
+    "country": "Belgium",
+    "persian": "شارلروا"
+  },
+  {
+    "id": "9997",
+    "name": "St.Truiden",
+    "country": "Belgium",
+    "persian": "سنت ترویدن"
+  },
+  {
+    "id": "9985",
+    "name": "Standard Liège",
+    "country": "Belgium",
+    "persian": "استاندارد لیژ"
+  },
+  {
+    "id": "7978",
+    "name": "Union St.Gilloise",
+    "country": "Belgium",
+    "persian": "یونیون سن‌ژیلواز"
+  },
+  {
+    "id": "10001",
+    "name": "Westerlo",
+    "country": "Belgium",
+    "persian": "وسترلو"
+  },
+  {
+    "id": "10000",
+    "name": "Zulte Waregem",
+    "country": "Belgium",
+    "persian": "زولته وارخم"
+  },
+  {
+    "id": "4678",
+    "name": "Alanyaspor",
+    "country": "Turkey",
+    "persian": "آلانیااسپور"
+  },
+  {
+    "id": "96498",
+    "name": "Amed Sportif",
+    "country": "Turkey",
+    "persian": "آمد اسپور"
+  },
+  {
+    "id": "1933",
+    "name": "Başakşehir",
+    "country": "Turkey",
+    "persian": "باشاک‌شهیر"
+  },
+  {
+    "id": "10188",
+    "name": "Beşiktaş",
+    "country": "Turkey",
+    "persian": "بشیکتاش"
+  },
+  {
+    "id": "281467",
+    "name": "Erzurumspor FK",
+    "country": "Turkey",
+    "persian": "ارزروم‌اسپور"
+  },
+  {
+    "id": "4681",
+    "name": "Eyüpspor",
+    "country": "Turkey",
+    "persian": "ایوپ‌اسپور"
+  },
+  {
+    "id": "8695",
+    "name": "Fenerbahçe",
+    "country": "Turkey",
+    "persian": "فنرباغچه"
+  },
+  {
+    "id": "8637",
+    "name": "Galatasaray",
+    "country": "Turkey",
+    "persian": "گالاتاسرای"
+  },
+  {
+    "id": "4081",
+    "name": "Gaziantep FK",
+    "country": "Turkey",
+    "persian": "گازیانتپ"
+  },
+  {
+    "id": "7800",
+    "name": "Gençlerbirliği",
+    "country": "Turkey",
+    "persian": "گنچلربیرلیغی"
+  },
+  {
+    "id": "1925",
+    "name": "Göztepe",
+    "country": "Turkey",
+    "persian": "گوزتپه"
+  },
+  {
+    "id": "4685",
+    "name": "Kasımpaşa",
+    "country": "Turkey",
+    "persian": "قاسم‌پاشا"
+  },
+  {
+    "id": "1569",
+    "name": "Kocaelispor",
+    "country": "Turkey",
+    "persian": "کوجالی‌اسپور"
+  },
+  {
+    "id": "8622",
+    "name": "Konyaspor",
+    "country": "Turkey",
+    "persian": "قونیه‌اسپور"
+  },
+  {
+    "id": "2166",
+    "name": "Rizespor",
+    "country": "Turkey",
+    "persian": "ریزه‌اسپور"
+  },
+  {
+    "id": "9750",
+    "name": "Samsunspor",
+    "country": "Turkey",
+    "persian": "سامسون‌اسپور"
+  },
+  {
+    "id": "9752",
+    "name": "Trabzonspor",
+    "country": "Turkey",
+    "persian": "ترابزون‌اسپور"
+  },
+  {
+    "id": "357274",
+    "name": "Çorum FK",
+    "country": "Turkey",
+    "persian": "چوروم"
+  },
+  {
+    "id": "8563",
+    "name": "AEK Athens",
+    "country": "Greece",
+    "persian": "آاِک آتن"
+  },
+  {
+    "id": "8239",
+    "name": "Aris Thessaloniki",
+    "country": "Greece",
+    "persian": "آریس سالونیک"
+  },
+  {
+    "id": "80654",
+    "name": "Asteras Tripolis",
+    "country": "Greece",
+    "persian": "آستراس تریپولیس"
+  },
+  {
+    "id": "10187",
+    "name": "Atromitos",
+    "country": "Greece",
+    "persian": "آترومیتوس"
+  },
+  {
+    "id": "8675",
+    "name": "Iraklis",
+    "country": "Greece",
+    "persian": "ایراکلیس"
+  },
+  {
+    "id": "1585",
+    "name": "Kalamata",
+    "country": "Greece",
+    "persian": "کالاماتا"
+  },
+  {
+    "id": "488099",
+    "name": "Kifisia FC",
+    "country": "Greece",
+    "persian": "کیفیسیاس"
+  },
+  {
+    "id": "4493",
+    "name": "Levadiakos",
+    "country": "Greece",
+    "persian": "لواندیاکوس"
+  },
+  {
+    "id": "885256",
+    "name": "NFC Volos",
+    "country": "Greece",
+    "persian": "ولوس"
+  },
+  {
+    "id": "7753",
+    "name": "OFI Crete",
+    "country": "Greece",
+    "persian": "اُفی کرت"
+  },
+  {
+    "id": "8638",
+    "name": "Olympiacos",
+    "country": "Greece",
+    "persian": "المپیاکوس"
+  },
+  {
+    "id": "10200",
+    "name": "Panathinaikos",
+    "country": "Greece",
+    "persian": "پاناتینایکوس"
+  },
+  {
+    "id": "162386",
+    "name": "Panetolikos",
+    "country": "Greece",
+    "persian": "پانتولیکوس"
+  },
+  {
+    "id": "8619",
+    "name": "PAOK Thessaloniki",
+    "country": "Greece",
+    "persian": "پائوک"
+  },
+  {
+    "id": "10008",
+    "name": "Altach",
+    "country": "Austria",
+    "persian": "آلتاخ"
+  },
+  {
+    "id": "9982",
+    "name": "Austria Lustenau",
+    "country": "Austria",
+    "persian": "آوستریا لوستنائو"
+  },
+  {
+    "id": "10011",
+    "name": "Austria Wien",
+    "country": "Austria",
+    "persian": "آوستریا وین"
+  },
+  {
+    "id": "10012",
+    "name": "Grazer AK",
+    "country": "Austria",
+    "persian": "گِراتسر آک"
+  },
+  {
+    "id": "10056",
+    "name": "Hartberg",
+    "country": "Austria",
+    "persian": "هارتبرگ"
+  },
+  {
+    "id": "9977",
+    "name": "LASK",
+    "country": "Austria",
+    "persian": "لاسک"
+  },
+  {
+    "id": "10015",
+    "name": "Rapid Wien",
+    "country": "Austria",
+    "persian": "راپید وین"
+  },
+  {
+    "id": "10017",
+    "name": "Ried",
+    "country": "Austria",
+    "persian": "رید"
+  },
+  {
+    "id": "10013",
+    "name": "Salzburg",
+    "country": "Austria",
+    "persian": "سالزبورگ"
+  },
+  {
+    "id": "10014",
+    "name": "Sturm Graz",
+    "country": "Austria",
+    "persian": "اشتورم گراتس"
+  },
+  {
+    "id": "1954",
+    "name": "Wolfsberger AC",
+    "country": "Austria",
+    "persian": "ولفسبرگر"
+  },
+  {
+    "id": "1583",
+    "name": "WSG Tirol",
+    "country": "Austria",
+    "persian": "تیرول"
+  },
+  {
+    "id": "9931",
+    "name": "Basel",
+    "country": "Switzerland",
+    "persian": "بازل"
+  },
+  {
+    "id": "9824",
+    "name": "FC Vaduz",
+    "country": "Liechtenstein",
+    "persian": "فادوتس"
+  },
+  {
+    "id": "10243",
+    "name": "FC Zürich",
+    "country": "Switzerland",
+    "persian": "زوریخ"
+  },
+  {
+    "id": "9956",
+    "name": "Grasshopper",
+    "country": "Switzerland",
+    "persian": "گراس‌هاپر"
+  },
+  {
+    "id": "7730",
+    "name": "Lausanne",
+    "country": "Switzerland",
+    "persian": "لوزان"
+  },
+  {
+    "id": "7896",
+    "name": "Lugano",
+    "country": "Switzerland",
+    "persian": "لوگانو"
+  },
+  {
+    "id": "10199",
+    "name": "Luzern",
+    "country": "Switzerland",
+    "persian": "لوتسرن"
+  },
+  {
+    "id": "9777",
+    "name": "Servette",
+    "country": "Switzerland",
+    "persian": "سروت"
+  },
+  {
+    "id": "10179",
+    "name": "Sion",
+    "country": "Switzerland",
+    "persian": "سیون"
+  },
+  {
+    "id": "10190",
+    "name": "St. Gallen",
+    "country": "Switzerland",
+    "persian": "سن گالن"
+  },
+  {
+    "id": "10191",
+    "name": "Thun",
+    "country": "Switzerland",
+    "persian": "تون"
+  },
+  {
+    "id": "10192",
+    "name": "Young Boys",
+    "country": "Switzerland",
+    "persian": "یانگ بویز"
+  },
+  {
+    "id": "205684",
+    "name": "Bukovyna Chernivtsi",
+    "country": "Ukraine",
+    "persian": "بوکووینا چرنیوتسی"
+  },
+  {
+    "id": "8666",
+    "name": "Chornomorets Odesa",
+    "country": "Ukraine",
+    "persian": "چورنومورتس اودسا"
+  },
+  {
+    "id": "8688",
+    "name": "Dynamo Kyiv",
+    "country": "Ukraine",
+    "persian": "دینامو کی‌یف"
+  },
+  {
+    "id": "1395678",
+    "name": "Epitsentr Kamianets-Podilskyi",
+    "country": "Ukraine",
+    "persian": "اپی‌سنتر کامینتس-پودیلسکی"
+  },
+  {
+    "id": "949030",
+    "name": "FC Kharkiv",
+    "country": "Ukraine",
+    "persian": "اف‌سی خارکیف"
+  },
+  {
+    "id": "599924",
+    "name": "FC Kolos Kovalivka",
+    "country": "Ukraine",
+    "persian": "کولوس کووالیفکا"
+  },
+  {
+    "id": "8691",
+    "name": "Karpaty",
+    "country": "Ukraine",
+    "persian": "کارپاتی"
+  },
+  {
+    "id": "558259",
+    "name": "Kryvbas",
+    "country": "Ukraine",
+    "persian": "کریوباس"
+  },
+  {
+    "id": "1763072",
+    "name": "Kudrivka",
+    "country": "Ukraine",
+    "persian": "کودریوکا"
+  },
+  {
+    "id": "1507991",
+    "name": "Liviy Bereh",
+    "country": "Ukraine",
+    "persian": "لیوی بریخ"
+  },
+  {
+    "id": "2143",
+    "name": "LNZ Cherkasy",
+    "country": "Ukraine",
+    "persian": "ال‌ان‌زد چرکاسی"
+  },
+  {
+    "id": "583129",
+    "name": "Obolon Kyiv",
+    "country": "Ukraine",
+    "persian": "اوبولون کی‌یف"
+  },
+  {
+    "id": "1181312",
+    "name": "Polissya Zhytomyr",
+    "country": "Ukraine",
+    "persian": "پولیسیا ژیتومیر"
+  },
+  {
+    "id": "9728",
+    "name": "Shakhtar Donetsk",
+    "country": "Ukraine",
+    "persian": "شاختار دونتسک"
+  },
+  {
+    "id": "1175395",
+    "name": "Veres Rivne",
+    "country": "Ukraine",
+    "persian": "ورس ریونه"
+  },
+  {
+    "id": "7770",
+    "name": "Zorya",
+    "country": "Ukraine",
+    "persian": "زوریا"
+  },
+  {
+    "id": "1068364",
+    "name": "Akron Togliatti",
+    "country": "Russia",
+    "persian": "آکرون تولیاتی"
+  },
+  {
+    "id": "49694",
+    "name": "Baltika",
+    "country": "Russia",
+    "persian": "بالтика"
+  },
+  {
+    "id": "9760",
+    "name": "CSKA Moscow",
+    "country": "Russia",
+    "persian": "زسکا مسکو"
+  },
+  {
+    "id": "9763",
+    "name": "Dinamo Moscow",
+    "country": "Russia",
+    "persian": "دینامو مسکو"
+  },
+  {
+    "id": "1068353",
+    "name": "Dynamo Makhachkala",
+    "country": "Russia",
+    "persian": "دینامو مخاچ‌قلعه"
+  },
+  {
+    "id": "1692",
+    "name": "Fakel",
+    "country": "Russia",
+    "persian": "فاکل"
+  },
+  {
+    "id": "168719",
+    "name": "FC Krasnodar",
+    "country": "Russia",
+    "persian": "کراسنودار"
+  },
+  {
+    "id": "132286",
+    "name": "FC Orenburg",
+    "country": "Russia",
+    "persian": "اورنبورگ"
+  },
+  {
+    "id": "8705",
+    "name": "FC Rostov",
+    "country": "Russia",
+    "persian": "روستوف"
+  },
+  {
+    "id": "8708",
+    "name": "FK Akhmat",
+    "country": "Russia",
+    "persian": "آخمات گروزنی"
+  },
+  {
+    "id": "8709",
+    "name": "Krylya Sovetov Samara",
+    "country": "Russia",
+    "persian": "کریلیا سووتوف سامارا"
+  },
+  {
+    "id": "8710",
+    "name": "Lokomotiv Moscow",
+    "country": "Russia",
+    "persian": "لوکوموتیو مسکو"
+  },
+  {
+    "id": "1066681",
+    "name": "Rodina",
+    "country": "Russia",
+    "persian": "رودینا"
+  },
+  {
+    "id": "8683",
+    "name": "Rubin Kazan",
+    "country": "Russia",
+    "persian": "روبین کازان"
+  },
+  {
+    "id": "8643",
+    "name": "Spartak Moscow",
+    "country": "Russia",
+    "persian": "اسپارتاک مسکو"
+  },
+  {
+    "id": "8698",
+    "name": "Zenit St. Petersburg",
+    "country": "Russia",
+    "persian": "زنیت سن‌پترزبورگ"
+  },
+  {
+    "id": "2186",
+    "name": "Cracovia",
+    "country": "Poland",
+    "persian": "کراکوفیا"
+  },
+  {
+    "id": "4023",
+    "name": "GKS Katowice",
+    "country": "Poland",
+    "persian": "گاکس کاتوویتسه"
+  },
+  {
+    "id": "8020",
+    "name": "Górnik Zabrze",
+    "country": "Poland",
+    "persian": "گورنیک زابژه"
+  },
+  {
+    "id": "1957",
+    "name": "Jagiellonia Białystok",
+    "country": "Poland",
+    "persian": "یاگیلونیا بیالیستوک"
+  },
+  {
+    "id": "8245",
+    "name": "Korona Kielce",
+    "country": "Poland",
+    "persian": "کرونا کیلچه"
+  },
+  {
+    "id": "2182",
+    "name": "Lech Poznań",
+    "country": "Poland",
+    "persian": "لخ پوزنان"
+  },
+  {
+    "id": "8673",
+    "name": "Legia Warszawa",
+    "country": "Poland",
+    "persian": "لژیا ورشو"
+  },
+  {
+    "id": "89466",
+    "name": "Motor Lublin",
+    "country": "Poland",
+    "persian": "موتور لوبلین"
+  },
+  {
+    "id": "8028",
+    "name": "Piast Gliwice",
+    "country": "Poland",
+    "persian": "پیاسْت گلیویتسه"
+  },
+  {
+    "id": "8023",
+    "name": "Pogoń Szczecin",
+    "country": "Poland",
+    "persian": "پوگون شچچین"
+  },
+  {
+    "id": "5769",
+    "name": "Radomiak Radom",
+    "country": "Poland",
+    "persian": "رادومیاک رادوم"
+  },
+  {
+    "id": "4024",
+    "name": "Raków Częstochowa",
+    "country": "Poland",
+    "persian": "راکوف چنستوخوفا"
+  },
+  {
+    "id": "8024",
+    "name": "Widzew Łódź",
+    "country": "Poland",
+    "persian": "ویدزف ووچ"
+  },
+  {
+    "id": "1286895",
+    "name": "Wieczysta Kraków",
+    "country": "Poland",
+    "persian": "ویچیشتا کراکوف"
+  },
+  {
+    "id": "10265",
+    "name": "Wisła Kraków",
+    "country": "Poland",
+    "persian": "ویسوا کراکوف"
+  },
+  {
+    "id": "8243",
+    "name": "Wisła Płock",
+    "country": "Poland",
+    "persian": "ویسوا ووک"
+  },
+  {
+    "id": "8021",
+    "name": "Zagłębie Lubin",
+    "country": "Poland",
+    "persian": "زاگومبیه لوبین"
+  },
+  {
+    "id": "8025",
+    "name": "Śląsk Wrocław",
+    "country": "Poland",
+    "persian": "شلاسک وروتسواف"
+  }
+
+
+  {
+    "id": "161728",
+    "name": "Aldosivi",
+    "country": "Argentina",
+    "persian": "آلدو سیوی"
+  },
+  {
+    "id": "10086",
+    "name": "Argentinos Juniors",
+    "country": "Argentina",
+    "persian": "آرژانتینوس جونیورز"
+  },
+  {
+    "id": "161727",
+    "name": "Atlético Tucumán",
+    "country": "Argentina",
+    "persian": "اتلتیکو توکومان"
+  },
+  {
+    "id": "10087",
+    "name": "Banfield",
+    "country": "Argentina",
+    "persian": "بانفیلد"
+  },
+  {
+    "id": "213534",
+    "name": "Barracas Central",
+    "country": "Argentina",
+    "persian": "باراکاس سنترال"
+  },
+  {
+    "id": "10092",
+    "name": "Belgrano",
+    "country": "Argentina",
+    "persian": "بلگرانو"
+  },
+  {
+    "id": "10077",
+    "name": "Boca Juniors",
+    "country": "Argentina",
+    "persian": "بوکا جونیورز"
+  },
+  {
+    "id": "213596",
+    "name": "Central Córdoba de Santiago",
+    "country": "Argentina",
+    "persian": "سنترال کوردوبا"
+  },
+  {
+    "id": "10089",
+    "name": "Club Atlético Platense",
+    "country": "Argentina",
+    "persian": "پلاتنسه"
+  },
+  {
+    "id": "161730",
+    "name": "Defensa y Justicia",
+    "country": "Argentina",
+    "persian": "دفنسا ای خوستیسیا"
+  },
+  {
+    "id": "298629",
+    "name": "Deportivo Riestra",
+    "country": "Argentina",
+    "persian": "دپورتیوو ریسترا"
+  },
+  {
+    "id": "10094",
+    "name": "Estudiantes",
+    "country": "Argentina",
+    "persian": "استودیانتس"
+  },
+  {
+    "id": "213591",
+    "name": "Estudiantes de Río Cuarto",
+    "country": "Argentina",
+    "persian": "استودیانتس ریو کوارتو"
+  },
+  {
+    "id": "10103",
+    "name": "Gimnasia LP",
+    "country": "Argentina",
+    "persian": "خیمناسیا لاپلاتا"
+  },
+  {
+    "id": "568727",
+    "name": "Gimnasia Mendoza",
+    "country": "Argentina",
+    "persian": "خیمناسیا مندوزا"
+  },
+  {
+    "id": "10081",
+    "name": "Huracán",
+    "country": "Argentina",
+    "persian": "هوراکان"
+  },
+  {
+    "id": "10078",
+    "name": "Independiente",
+    "country": "Argentina",
+    "persian": "ایندیپندینته"
+  },
+  {
+    "id": "161729",
+    "name": "Independiente Rivadavia",
+    "country": "Argentina",
+    "persian": "ایندیپندینته ریواداویا"
+  },
+  {
+    "id": "10090",
+    "name": "Instituto",
+    "country": "Argentina",
+    "persian": "اینستیتوتو"
+  },
+  {
+    "id": "10082",
+    "name": "Lanús",
+    "country": "Argentina",
+    "persian": "لانوس"
+  },
+  {
+    "id": "10201",
+    "name": "Newell's Old Boys",
+    "country": "Argentina",
+    "persian": "نیولز اولد بویز"
+  },
+  {
+    "id": "10080",
+    "name": "Racing Club",
+    "country": "Argentina",
+    "persian": "راسینگ کلاب"
+  },
+  {
+    "id": "10076",
+    "name": "River Plate",
+    "country": "Argentina",
+    "persian": "ریور پلاته"
+  },
+  {
+    "id": "10084",
+    "name": "Rosario Central",
+    "country": "Argentina",
+    "persian": "روساریو سنترال"
+  },
+  {
+    "id": "10083",
+    "name": "San Lorenzo",
+    "country": "Argentina",
+    "persian": "سن لورنزو"
+  },
+  {
+    "id": "202757",
+    "name": "Sarmiento",
+    "country": "Argentina",
+    "persian": "سارمینتو"
+  },
+  {
+    "id": "10101",
+    "name": "Talleres",
+    "country": "Argentina",
+    "persian": "تایرس"
+  },
+  {
+    "id": "89396",
+    "name": "Tigre",
+    "country": "Argentina",
+    "persian": "تیگره"
+  },
+  {
+    "id": "10096",
+    "name": "Unión",
+    "country": "Argentina",
+    "persian": "یونیون"
+  },
+  {
+    "id": "10079",
+    "name": "Vélez Sarsfield",
+    "country": "Argentina",
+    "persian": "ولز سارسفیلد"
+  },
+  {
+    "id": "10273",
+    "name": "Athletico Paranaense",
+    "country": "Brazil",
+    "persian": "اتلتیکو پارانائنزه"
+  },
+  {
+    "id": "10272",
+    "name": "Atlético-MG",
+    "country": "Brazil",
+    "persian": "اتلتیکو مینیرو"
+  },
+  {
+    "id": "7877",
+    "name": "Bahia",
+    "country": "Brazil",
+    "persian": "باهیا"
+  },
+  {
+    "id": "8517",
+    "name": "Botafogo",
+    "country": "Brazil",
+    "persian": "بوتافوگو"
+  },
+  {
+    "id": "197693",
+    "name": "Chapecoense",
+    "country": "Brazil",
+    "persian": "شاپه‌کوئنزه"
+  },
+  {
+    "id": "9808",
+    "name": "Corinthians",
+    "country": "Brazil",
+    "persian": "کورینتیانس"
+  },
+  {
+    "id": "9767",
+    "name": "Coritiba",
+    "country": "Brazil",
+    "persian": "کوریتیبا"
+  },
+  {
+    "id": "9781",
+    "name": "Cruzeiro",
+    "country": "Brazil",
+    "persian": "کروزیرو"
+  },
+  {
+    "id": "9770",
+    "name": "Flamengo",
+    "country": "Brazil",
+    "persian": "فلامنگو"
+  },
+  {
+    "id": "9863",
+    "name": "Fluminense",
+    "country": "Brazil",
+    "persian": "فلومیننزه"
+  },
+  {
+    "id": "9769",
+    "name": "Grêmio",
+    "country": "Brazil",
+    "persian": "گرمیو"
+  },
+  {
+    "id": "8702",
+    "name": "Internacional",
+    "country": "Brazil",
+    "persian": "اینترناسیونال"
+  },
+  {
+    "id": "163782",
+    "name": "Mirassol",
+    "country": "Brazil",
+    "persian": "میراسول"
+  },
+  {
+    "id": "10283",
+    "name": "Palmeiras",
+    "country": "Brazil",
+    "persian": "پالمیراس"
+  },
+  {
+    "id": "109705",
+    "name": "RB Bragantino",
+    "country": "Brazil",
+    "persian": "ردبول براگانتیـنو"
+  },
+  {
+    "id": "1626",
+    "name": "Remo",
+    "country": "Brazil",
+    "persian": "رمو"
+  },
+  {
+    "id": "8514",
+    "name": "Santos",
+    "country": "Brazil",
+    "persian": "سانتوس"
+  },
+  {
+    "id": "10277",
+    "name": "São Paulo",
+    "country": "Brazil",
+    "persian": "سائو پائولو"
+  },
+  {
+    "id": "10276",
+    "name": "Vasco da Gama",
+    "country": "Brazil",
+    "persian": "واسکو دوگاما"
+  },
+  {
+    "id": "7733",
+    "name": "Vitória",
+    "country": "Brazil",
+    "persian": "ویتوریا"
+  },
+  {
+    "id": "924934",
+    "name": "Albion",
+    "country": "Uruguay",
+    "persian": "آلبیون اروگوئه"
+  },
+  {
+    "id": "188313",
+    "name": "Boston River",
+    "country": "Uruguay",
+    "persian": "بوستون ریور"
+  },
+  {
+    "id": "1834",
+    "name": "Central Español",
+    "country": "Uruguay",
+    "persian": "سنترال اسپانیول"
+  },
+  {
+    "id": "1836",
+    "name": "Cerro",
+    "country": "Uruguay",
+    "persian": "سرو"
+  },
+  {
+    "id": "148967",
+    "name": "Cerro Largo",
+    "country": "Uruguay",
+    "persian": "سرو لارگو"
+  },
+  {
+    "id": "8450",
+    "name": "Club Atletico Peñarol",
+    "country": "Uruguay",
+    "persian": "پنیارول"
+  },
+  {
+    "id": "1838",
+    "name": "Club Atlético Progreso",
+    "country": "Uruguay",
+    "persian": "پروگرسو"
+  },
+  {
+    "id": "8562",
+    "name": "Danubio",
+    "country": "Uruguay",
+    "persian": "دانوبیو"
+  },
+  {
+    "id": "7796",
+    "name": "Defensor Sporting",
+    "country": "Uruguay",
+    "persian": "دفنسور اسپورتینگ"
+  },
+  {
+    "id": "1833",
+    "name": "Deportivo Maldonado",
+    "country": "Uruguay",
+    "persian": "دپورتیوو مالدونادو"
+  },
+  {
+    "id": "9883",
+    "name": "Juventud de las Piedras",
+    "country": "Uruguay",
+    "persian": "خوونتود لاس پیه‌دراس"
+  },
+  {
+    "id": "2219",
+    "name": "Liverpool FC",
+    "country": "Uruguay",
+    "persian": "لیورپول اروگوئه"
+  },
+  {
+    "id": "395613",
+    "name": "Montevideo City Torque",
+    "country": "Uruguay",
+    "persian": "مونته‌ویدئو سیتی تورکه"
+  },
+  {
+    "id": "7863",
+    "name": "Montevideo Wanderers",
+    "country": "Uruguay",
+    "persian": "مونته‌ویدئو واندررز"
+  },
+  {
+    "id": "8304",
+    "name": "Nacional",
+    "country": "Uruguay",
+    "persian": "ناسیونال اروگوئه"
+  },
+  {
+    "id": "6043",
+    "name": "Racing",
+    "country": "Uruguay",
+    "persian": "راسینگ اروگوئه"
+  },
+  {
+    "id": "193029",
+    "name": "Alianza FC",
+    "country": "Colombia",
+    "persian": "آلیانزا کلمبیا"
+  },
+  {
+    "id": "10280",
+    "name": "América de Cali",
+    "country": "Colombia",
+    "persian": "آمریکا د کالی"
+  },
+  {
+    "id": "6368",
+    "name": "Atlético Nacional",
+    "country": "Colombia",
+    "persian": "اتلتیکو ناسیونال"
+  },
+  {
+    "id": "4401",
+    "name": "Bucaramanga",
+    "country": "Colombia",
+    "persian": "بوکارامانگا"
+  },
+  {
+    "id": "424270",
+    "name": "CD Jaguares",
+    "country": "Colombia",
+    "persian": "خاگوارس کلمبیا"
+  },
+  {
+    "id": "6255",
+    "name": "Chicó FC",
+    "country": "Colombia",
+    "persian": "چیکو"
+  },
+  {
+    "id": "6254",
+    "name": "Cúcuta",
+    "country": "Colombia",
+    "persian": "کوکوتا"
+  },
+  {
+    "id": "6387",
+    "name": "Deportivo Cali",
+    "country": "Colombia",
+    "persian": "دپورتیوو کالی"
+  },
+  {
+    "id": "4405",
+    "name": "Deportivo Pasto",
+    "country": "Colombia",
+    "persian": "دپورتیوو پاستو"
+  },
+  {
+    "id": "4404",
+    "name": "Deportivo Pereira",
+    "country": "Colombia",
+    "persian": "دپورتیوو پریرا"
+  },
+  {
+    "id": "244167",
+    "name": "Fortaleza FC",
+    "country": "Colombia",
+    "persian": "فورتالسا کلمبیا"
+  },
+  {
+    "id": "2528",
+    "name": "Independiente Medellín",
+    "country": "Colombia",
+    "persian": "ایندیپندینته مدئین"
+  },
+  {
+    "id": "47240",
+    "name": "Internacional de Bogotá",
+    "country": "Colombia",
+    "persian": "اینترناسیونال بوگوتا"
+  },
+  {
+    "id": "2254",
+    "name": "Junior FC",
+    "country": "Colombia",
+    "persian": "جونیور بارانکییا"
+  },
+  {
+    "id": "348397",
+    "name": "Llaneros FC",
+    "country": "Colombia",
+    "persian": "یانروس"
+  },
+  {
+    "id": "4403",
+    "name": "Millonarios",
+    "country": "Colombia",
+    "persian": "می‌یوناریوس"
+  },
+  {
+    "id": "6024",
+    "name": "Once Caldas",
+    "country": "Colombia",
+    "persian": "اونسه کالداس"
+  },
+  {
+    "id": "7818",
+    "name": "Santa Fe",
+    "country": "Colombia",
+    "persian": "سانتافه کلمبیا"
+  },
+  {
+    "id": "1894",
+    "name": "Tolima",
+    "country": "Colombia",
+    "persian": "تولیما"
+  },
+  {
+    "id": "193025",
+    "name": "Águilas Doradas",
+    "country": "Colombia",
+    "persian": "آگیلاس دوراداس"
+  },
+  {
+    "id": "4058",
+    "name": "Audax Italiano",
+    "country": "Chile",
+    "persian": "آوداکس ایتالیانو"
+  },
+  {
+    "id": "4055",
+    "name": "Cobresal",
+    "country": "Chile",
+    "persian": "کوبریسال"
+  },
+  {
+    "id": "7815",
+    "name": "Colo Colo",
+    "country": "Chile",
+    "persian": "کولو-کولو"
+  },
+  {
+    "id": "4062",
+    "name": "Coquimbo Unido",
+    "country": "Chile",
+    "persian": "کوکیمبو اونیدو"
+  },
+  {
+    "id": "4134",
+    "name": "Deportes Concepción",
+    "country": "Chile",
+    "persian": "دپورته‌س کونثپسیون"
+  },
+  {
+    "id": "584840",
+    "name": "Deportes Limache",
+    "country": "Chile",
+    "persian": "دپورته‌س لیماچه"
+  },
+  {
+    "id": "1890",
+    "name": "Everton CD",
+    "country": "Chile",
+    "persian": "اورتون شیلی"
+  },
+  {
+    "id": "4056",
+    "name": "Huachipato",
+    "country": "Chile",
+    "persian": "واچیپاتو"
+  },
+  {
+    "id": "1891",
+    "name": "La Serena",
+    "country": "Chile",
+    "persian": "لا سرنا"
+  },
+  {
+    "id": "6296",
+    "name": "O'Higgins",
+    "country": "Chile",
+    "persian": "او'هیگینز"
+  },
+  {
+    "id": "6455",
+    "name": "Palestino",
+    "country": "Chile",
+    "persian": "پالستینو شیلی"
+  },
+  {
+    "id": "6458",
+    "name": "Universidad Católica",
+    "country": "Chile",
+    "persian": "یونیورسیداد کاتولیکا"
+  },
+  {
+    "id": "6310",
+    "name": "Universidad de Chile",
+    "country": "Chile",
+    "persian": "یونیورسیداد شیلی"
+  },
+  {
+    "id": "4054",
+    "name": "Universidad de Concepción",
+    "country": "Chile",
+    "persian": "یونیورسیداد د کونثپسیون"
+  },
+  {
+    "id": "192435",
+    "name": "Unión La Calera",
+    "country": "Chile",
+    "persian": "اونیون لا کالرا"
+  },
+  {
+    "id": "49559",
+    "name": "Ñublense",
+    "country": "Chile",
+    "persian": "نیوبلنسه"
+  },
+  {
+    "id": "773958",
+    "name": "Atlanta United",
+    "country": "United States",
+    "persian": "آتلانتا یونایتد"
+  },
+  {
+    "id": "1218886",
+    "name": "Austin FC",
+    "country": "United States",
+    "persian": "آستین اف‌سی"
+  },
+  {
+    "id": "161195",
+    "name": "CF Montréal",
+    "country": "Canada",
+    "persian": "مونترال"
+  },
+  {
+    "id": "1323940",
+    "name": "Charlotte FC",
+    "country": "United States",
+    "persian": "شارلوت اف‌سی"
+  },
+  {
+    "id": "6397",
+    "name": "Chicago Fire FC",
+    "country": "United States",
+    "persian": "شیکاگو فایر"
+  },
+  {
+    "id": "8314",
+    "name": "Colorado Rapids",
+    "country": "United States",
+    "persian": "کلرادو رپیدز"
+  },
+  {
+    "id": "6001",
+    "name": "Columbus Crew",
+    "country": "United States",
+    "persian": "کلمبوس کرو"
+  },
+  {
+    "id": "6602",
+    "name": "DC United",
+    "country": "United States",
+    "persian": "دی‌سی یونایتد"
+  },
+  {
+    "id": "722265",
+    "name": "FC Cincinnati",
+    "country": "United States",
+    "persian": "سینسیناتی"
+  },
+  {
+    "id": "6399",
+    "name": "FC Dallas",
+    "country": "United States",
+    "persian": "اف‌سی دالاس"
+  },
+  {
+    "id": "8259",
+    "name": "Houston Dynamo FC",
+    "country": "United States",
+    "persian": "هیوستون دینامو"
+  },
+  {
+    "id": "960720",
+    "name": "Inter Miami CF",
+    "country": "United States",
+    "persian": "اینتر میامی"
+  },
+  {
+    "id": "6637",
+    "name": "LA Galaxy",
+    "country": "United States",
+    "persian": "لس‌آنجلس گلکسی"
+  },
+  {
+    "id": "867280",
+    "name": "Los Angeles FC",
+    "country": "United States",
+    "persian": "لس‌آنجلس اف‌سی"
+  },
+  {
+    "id": "207242",
+    "name": "Minnesota United",
+    "country": "United States",
+    "persian": "مینه‌سوتا یونایتد"
+  },
+  {
+    "id": "915807",
+    "name": "Nashville SC",
+    "country": "United States",
+    "persian": "نشویل"
+  },
+  {
+    "id": "6580",
+    "name": "New England Revolution",
+    "country": "United States",
+    "persian": "نیوانگلند رولوشن"
+  },
+  {
+    "id": "546238",
+    "name": "New York City FC",
+    "country": "United States",
+    "persian": "نیویورک سیتی"
+  },
+  {
+    "id": "267810",
+    "name": "Orlando City",
+    "country": "United States",
+    "persian": "اورلاندو سیتی"
+  },
+  {
+    "id": "191716",
+    "name": "Philadelphia Union",
+    "country": "United States",
+    "persian": "فیلادلفیا یونیون"
+  },
+  {
+    "id": "307690",
+    "name": "Portland Timbers",
+    "country": "United States",
+    "persian": "پورتلند تیمبرز"
+  },
+  {
+    "id": "6606",
+    "name": "Real Salt Lake",
+    "country": "United States",
+    "persian": "رئال سالت لیک"
+  },
+  {
+    "id": "6514",
+    "name": "Red Bull New York",
+    "country": "United States",
+    "persian": "ردبول نیویورک"
+  },
+  {
+    "id": "1701119",
+    "name": "San Diego FC",
+    "country": "United States",
+    "persian": "سن دیگو اف‌سی"
+  },
+  {
+    "id": "6603",
+    "name": "San Jose Earthquakes",
+    "country": "United States",
+    "persian": "سن‌خوزه ارث‌کوئیکز"
+  },
+  {
+    "id": "130394",
+    "name": "Seattle Sounders FC",
+    "country": "United States",
+    "persian": "سیاتل ساوندرز"
+  },
+  {
+    "id": "6604",
+    "name": "Sporting Kansas City",
+    "country": "United States",
+    "persian": "اسپورتینگ کانزاس‌سیتی"
+  },
+  {
+    "id": "1427963",
+    "name": "St. Louis City",
+    "country": "United States",
+    "persian": "سنت لوئیس سیتی"
+  },
+  {
+    "id": "56453",
+    "name": "Toronto FC",
+    "country": "Canada",
+    "persian": "تورنتو اف‌سی"
+  },
+  {
+    "id": "307691",
+    "name": "Vancouver Whitecaps",
+    "country": "Canada",
+    "persian": "ونکوور وایتکپس"
+  },
+  {
+    "id": "1942",
+    "name": "Atlante",
+    "country": "Mexico",
+    "persian": "آتلانته"
+  },
+  {
+    "id": "6577",
+    "name": "Atlas",
+    "country": "Mexico",
+    "persian": "اطلس"
+  },
+  {
+    "id": "6358",
+    "name": "Atlético de San Luis",
+    "country": "Mexico",
+    "persian": "اتلتیکو سن لوئیس"
+  },
+  {
+    "id": "6576",
+    "name": "CF América",
+    "country": "Mexico",
+    "persian": "کلوب آمریکا"
+  },
+  {
+    "id": "7807",
+    "name": "Chivas",
+    "country": "Mexico",
+    "persian": "چیواس"
+  },
+  {
+    "id": "6578",
+    "name": "Cruz Azul",
+    "country": "Mexico",
+    "persian": "کروز آزول"
+  },
+  {
+    "id": "649424",
+    "name": "FC Juárez",
+    "country": "Mexico",
+    "persian": "خوآرز"
+  },
+  {
+    "id": "1841",
+    "name": "León",
+    "country": "Mexico",
+    "persian": "لئون"
+  },
+  {
+    "id": "7849",
+    "name": "Monterrey",
+    "country": "Mexico",
+    "persian": "مونتری"
+  },
+  {
+    "id": "1842",
+    "name": "Necaxa",
+    "country": "Mexico",
+    "persian": "نکاکسا"
+  },
+  {
+    "id": "7848",
+    "name": "Pachuca",
+    "country": "Mexico",
+    "persian": "پاچوکا"
+  },
+  {
+    "id": "7847",
+    "name": "Puebla",
+    "country": "Mexico",
+    "persian": "پوئبلا"
+  },
+  {
+    "id": "1946",
+    "name": "Pumas",
+    "country": "Mexico",
+    "persian": "پوماس"
+  },
+  {
+    "id": "1943",
+    "name": "Querétaro FC",
+    "country": "Mexico",
+    "persian": "کِرِتارو"
+  },
+  {
+    "id": "7857",
+    "name": "Santos Laguna",
+    "country": "Mexico",
+    "persian": "سانتوس لاگونا"
+  },
+  {
+    "id": "8561",
+    "name": "Tigres",
+    "country": "Mexico",
+    "persian": "تایگرس"
+  },
+  {
+    "id": "162418",
+    "name": "Tijuana",
+    "country": "Mexico",
+    "persian": "تیخوانا"
+  },
+  {
+    "id": "6618",
+    "name": "Toluca",
+    "country": "Mexico",
+    "persian": "تولوکا"
+  },
+  {
+    "id": "150414",
+    "name": "Abha",
+    "country": "Saudi Arabia",
+    "persian": "ابها"
+  },
+  {
+    "id": "2530",
+    "name": "Al Ahli",
+    "country": "Saudi Arabia",
+    "persian": "الاهلی عربستان"
+  },
+  {
+    "id": "1787233",
+    "name": "Al Diriyah",
+    "country": "Saudi Arabia",
+    "persian": "الدرعیه"
+  },
+  {
+    "id": "177356",
+    "name": "Al Fateh FC",
+    "country": "Saudi Arabia",
+    "persian": "الفتح عربستان"
+  },
+  {
+    "id": "101911",
+    "name": "Al Hazem",
+    "country": "Saudi Arabia",
+    "persian": "الحزم"
+  },
+  {
+    "id": "2529",
+    "name": "Al Hilal",
+    "country": "Saudi Arabia",
+    "persian": "الهلال عربستان"
+  },
+  {
+    "id": "8577",
+    "name": "Al Ittihad",
+    "country": "Saudi Arabia",
+    "persian": "الاتحاد عربستان"
+  },
+  {
+    "id": "550433",
+    "name": "Al Khaleej",
+    "country": "Saudi Arabia",
+    "persian": "الخلیج عربستان"
+  },
+  {
+    "id": "1523706",
+    "name": "Al Kholood",
+    "country": "Saudi Arabia",
+    "persian": "الخلود"
+  },
+  {
+    "id": "101918",
+    "name": "Al Nassr FC",
+    "country": "Saudi Arabia",
+    "persian": "النصر عربستان"
+  },
+  {
+    "id": "101919",
+    "name": "Al Qadsiah",
+    "country": "Saudi Arabia",
+    "persian": "القادسیه"
+  },
+  {
+    "id": "582739",
+    "name": "Al Riyadh",
+    "country": "Saudi Arabia",
+    "persian": "الریاض"
+  },
+  {
+    "id": "101916",
+    "name": "Al Shabab",
+    "country": "Saudi Arabia",
+    "persian": "الشباب عربستان"
+  },
+  {
+    "id": "101915",
+    "name": "Al-Ettifaq",
+    "country": "Saudi Arabia",
+    "persian": "الاتفاق"
+  },
+  {
+    "id": "205687",
+    "name": "Al-Faisaly",
+    "country": "Saudi Arabia",
+    "persian": "الفيصلی"
+  },
+  {
+    "id": "582749",
+    "name": "Al-Fayha",
+    "country": "Saudi Arabia",
+    "persian": "الفیحاء"
+  },
+  {
+    "id": "205686",
+    "name": "Al-Taawoun",
+    "country": "Saudi Arabia",
+    "persian": "التعاون"
+  },
+  {
+    "id": "1699505",
+    "name": "Neom SC",
+    "country": "Saudi Arabia",
+    "persian": "نئوم"
+  },
+  {
+    "id": "8270",
+    "name": "Avispa Fukuoka",
+    "country": "Japan",
+    "persian": "آویسپا فوکوئوکا"
+  },
+  {
+    "id": "4692",
+    "name": "Cerezo Osaka",
+    "country": "Japan",
+    "persian": "سرزو اوساکا"
+  },
+  {
+    "id": "164739",
+    "name": "Fagiano Okayama FC",
+    "country": "Japan",
+    "persian": "فاگیانو اوکایاما"
+  },
+  {
+    "id": "4399",
+    "name": "FC Tokyo",
+    "country": "Japan",
+    "persian": "اف‌سی توکیو"
+  },
+  {
+    "id": "6582",
+    "name": "Gamba Osaka",
+    "country": "Japan",
+    "persian": "گامبا اوساکا"
+  },
+  {
+    "id": "9756",
+    "name": "JEF United Chiba",
+    "country": "Japan",
+    "persian": "جف یونایتد چیبا"
+  },
+  {
+    "id": "4397",
+    "name": "Kashima Antlers",
+    "country": "Japan",
+    "persian": "کاشیما آنتلرز"
+  },
+  {
+    "id": "8699",
+    "name": "Kashiwa Reysol",
+    "country": "Japan",
+    "persian": "کاشیوا ریسول"
+  },
+  {
+    "id": "6304",
+    "name": "Kawasaki Frontale",
+    "country": "Japan",
+    "persian": "کاوازاکی فرونتاله"
+  },
+  {
+    "id": "8542",
+    "name": "Kyoto Sanga FC",
+    "country": "Japan",
+    "persian": "کیوتو سانگا"
+  },
+  {
+    "id": "194011",
+    "name": "Machida Zelvia",
+    "country": "Japan",
+    "persian": "ماچیدا زلویا"
+  },
+  {
+    "id": "162195",
+    "name": "Mito Hollyhock",
+    "country": "Japan",
+    "persian": "میتو هالی‌هاک"
+  },
+  {
+    "id": "8006",
+    "name": "Nagoya Grampus",
+    "country": "Japan",
+    "persian": "ناگویا گرامپوس"
+  },
+  {
+    "id": "6224",
+    "name": "Sanfrecce Hiroshima",
+    "country": "Japan",
+    "persian": "سانفرچه هیروشیما"
+  },
+  {
+    "id": "4426",
+    "name": "Shimizu S-Pulse",
+    "country": "Japan",
+    "persian": "شیمیزو اس‌پالس"
+  },
+  {
+    "id": "6223",
+    "name": "Tokyo Verdy",
+    "country": "Japan",
+    "persian": "توکیو وردی"
+  },
+  {
+    "id": "6244",
+    "name": "Urawa Red Diamonds",
+    "country": "Japan",
+    "persian": "اوراوا رد دایموندز"
+  },
+  {
+    "id": "194016",
+    "name": "V-Varen Nagasaki",
+    "country": "Japan",
+    "persian": "وی-وارن ناگاساکی"
+  },
+  {
+    "id": "4688",
+    "name": "Vissel Kobe",
+    "country": "Japan",
+    "persian": "ویسل کوبه"
+  },
+  {
+    "id": "6581",
+    "name": "Yokohama F.Marinos",
+    "country": "Japan",
+    "persian": "یوکوهاما مارینوس"
+  },
+  {
+    "id": "429441",
+    "name": "Bucheon FC 1995",
+    "country": "South Korea",
+    "persian": "بوچئون ۱۹۹۵"
+  },
+  {
+    "id": "133900",
+    "name": "Daejeon Hana Citizen",
+    "country": "South Korea",
+    "persian": "دائجئون هانا سیتی‌زن"
+  },
+  {
+    "id": "429440",
+    "name": "FC Anyang",
+    "country": "South Korea",
+    "persian": "آن‌یانگ"
+  },
+  {
+    "id": "92630",
+    "name": "FC Seoul",
+    "country": "South Korea",
+    "persian": "اف‌سی سئول"
+  },
+  {
+    "id": "164734",
+    "name": "Gangwon FC",
+    "country": "South Korea",
+    "persian": "گانگ‌وون"
+  },
+  {
+    "id": "133901",
+    "name": "Gimcheon Sangmu",
+    "country": "South Korea",
+    "persian": "گیمچئون سانگمو"
+  },
+  {
+    "id": "245905",
+    "name": "Gwangju FC",
+    "country": "South Korea",
+    "persian": "گوانگجو"
+  },
+  {
+    "id": "133895",
+    "name": "Incheon United",
+    "country": "South Korea",
+    "persian": "اینچئون یونایتد"
+  },
+  {
+    "id": "133898",
+    "name": "Jeju SK",
+    "country": "South Korea",
+    "persian": "ججو اس‌کی"
+  },
+  {
+    "id": "46038",
+    "name": "Jeonbuk Hyundai Motors FC",
+    "country": "South Korea",
+    "persian": "جئونبوک هیوندای موتورز"
+  },
+  {
+    "id": "109373",
+    "name": "Pohang Steelers",
+    "country": "South Korea",
+    "persian": "پوهانگ استیلرز"
+  },
+  {
+    "id": "133896",
+    "name": "Ulsan HD FC",
+    "country": "South Korea",
+    "persian": "اولسان اچ‌دی"
+  },
+  {
+    "id": "179097",
+    "name": "Al-Ahli",
+    "country": "Qatar",
+    "persian": "الاهلی قطر"
+  },
+  {
+    "id": "101899",
+    "name": "Al-Arabi",
+    "country": "Qatar",
+    "persian": "العربی قطر"
+  },
+  {
+    "id": "203826",
+    "name": "Al-Duhail SC",
+    "country": "Qatar",
+    "persian": "الدحیل قطر"
+  },
+  {
+    "id": "101897",
+    "name": "Al-Gharafa",
+    "country": "Qatar",
+    "persian": "الغرافه قطر"
+  },
+  {
+    "id": "101898",
+    "name": "Al-Rayyan",
+    "country": "Qatar",
+    "persian": "الریان قطر"
+  },
+  {
+    "id": "101895",
+    "name": "Al-Sadd",
+    "country": "Qatar",
+    "persian": "السد قطر"
+  },
+  {
+    "id": "101905",
+    "name": "Al-Sailiya",
+    "country": "Qatar",
+    "persian": "السیلیه قطر"
+  },
+  {
+    "id": "568590",
+    "name": "Al-Shahaniya",
+    "country": "Qatar",
+    "persian": "الشحانیه قطر"
+  },
+  {
+    "id": "101904",
+    "name": "Al-Shamal",
+    "country": "Qatar",
+    "persian": "الشمال قطر"
+  },
+  {
+    "id": "101901",
+    "name": "Al-Wakrah",
+    "country": "Qatar",
+    "persian": "الوکرا قطر"
+  },
+  {
+    "id": "1803049",
+    "name": "Lusail SC",
+    "country": "Qatar",
+    "persian": "لوسیل قطر"
+  },
+  {
+    "id": "101900",
+    "name": "Qatar SC",
+    "country": "Qatar",
+    "persian": "قطر اس‌سی"
+  },
+  {
+    "id": "149994",
+    "name": "Ajman",
+    "country": "United Arab Emirates",
+    "persian": "عجمان"
+  },
+  {
+    "id": "102117",
+    "name": "Al-Ain",
+    "country": "United Arab Emirates",
+    "persian": "العین"
+  },
+  {
+    "id": "102118",
+    "name": "Al-Dhafra",
+    "country": "United Arab Emirates",
+    "persian": "الظفره"
+  },
+  {
+    "id": "102101",
+    "name": "Al-Jazira",
+    "country": "United Arab Emirates",
+    "persian": "الجزیره امارات"
+  },
+  {
+    "id": "102123",
+    "name": "Al-Nasr SC",
+    "country": "United Arab Emirates",
+    "persian": "النصر امارات"
+  },
+  {
+    "id": "102122",
+    "name": "Al-Wahda",
+    "country": "United Arab Emirates",
+    "persian": "الوحده امارات"
+  },
+  {
+    "id": "102111",
+    "name": "Al-Wasl",
+    "country": "United Arab Emirates",
+    "persian": "الوصل"
+  },
+  {
+    "id": "182933",
+    "name": "Baniyas",
+    "country": "United Arab Emirates",
+    "persian": "بنی‌یاس"
+  },
+  {
+    "id": "102113",
+    "name": "Hatta",
+    "country": "United Arab Emirates",
+    "persian": "حتا"
+  },
+  {
+    "id": "209190",
+    "name": "Kalba FC",
+    "country": "United Arab Emirates",
+    "persian": "کلبا"
+  },
+  {
+    "id": "149993",
+    "name": "Khorfakkan",
+    "country": "United Arab Emirates",
+    "persian": "خورفکان"
+  },
+  {
+    "id": "102119",
+    "name": "Shabab Al-Ahli Dubai FC",
+    "country": "United Arab Emirates",
+    "persian": "شباب الاهلی دبی"
+  },
+  {
+    "id": "102124",
+    "name": "Sharjah Cultural Club",
+    "country": "United Arab Emirates",
+    "persian": "شارجه"
+  },
+  {
+    "id": "1552577",
+    "name": "United FC",
+    "country": "United Arab Emirates",
+    "persian": "یونایتد امارات"
+  },
+  {
+    "id": "8008",
+    "name": "Adelaide United",
+    "country": "Australia",
+    "persian": "آدلاید یونایتد"
+  },
+  {
+    "id": "1642068",
+    "name": "Auckland FC",
+    "country": "New Zealand",
+    "persian": "آکلند اف‌سی"
+  },
+  {
+    "id": "8118",
+    "name": "Brisbane Roar FC",
+    "country": "Australia",
+    "persian": "بریزبن رور"
+  },
+  {
+    "id": "8164",
+    "name": "Central Coast Mariners",
+    "country": "Australia",
+    "persian": "سنترال کوست مارینرز"
+  },
+  {
+    "id": "1209973",
+    "name": "Macarthur FC",
+    "country": "Australia",
+    "persian": "مک‌آرتور"
+  },
+  {
+    "id": "203576",
+    "name": "Melbourne City FC",
+    "country": "Australia",
+    "persian": "ملبورن سیتی"
+  },
+  {
+    "id": "6230",
+    "name": "Melbourne Victory",
+    "country": "Australia",
+    "persian": "ملبورن ویکتوری"
+  },
+  {
+    "id": "6454",
+    "name": "Newcastle Jets",
+    "country": "Australia",
+    "persian": "نیوکاسل جتس"
+  },
+  {
+    "id": "7961",
+    "name": "Perth Glory",
+    "country": "Australia",
+    "persian": "پرت گلوری"
+  },
+  {
+    "id": "10164",
+    "name": "Sydney FC",
+    "country": "Australia",
+    "persian": "سیدنی اف‌سی"
+  },
+  {
+    "id": "78785",
+    "name": "Wellington Phoenix",
+    "country": "New Zealand",
+    "persian": "ولینگتون فونیکس"
+  },
+  {
+    "id": "323834",
+    "name": "Western Sydney Wanderers FC",
+    "country": "Australia",
+    "persian": "وسترن سیدنی واندررز"
+  },
+  {
+    "id": "664861",
+    "name": "Aluminium Arak",
+    "country": "Iran",
+    "persian": "آلومینیوم اراک"
+  },
+  {
+    "id": "1396532",
+    "name": "Chadormalu Ardakan SC",
+    "country": "Iran",
+    "persian": "چادرملو اردکان"
+  },
+  {
+    "id": "101614",
+    "name": "Esteghlal",
+    "country": "Iran",
+    "persian": "استقلال"
+  },
+  {
+    "id": "394619",
+    "name": "Esteghlal Khuzestan",
+    "country": "Iran",
+    "persian": "استقلال خوزستان"
+  },
+  {
+    "id": "101623",
+    "name": "Fajr Sepasi",
+    "country": "Iran",
+    "persian": "فجر سپاسی"
+  },
+  {
+    "id": "139914",
+    "name": "Foolad Khuzestan",
+    "country": "Iran",
+    "persian": "فولاد خوزستان"
+  },
+  {
+    "id": "389880",
+    "name": "Gol Gohar",
+    "country": "Iran",
+    "persian": "گل‌گهر"
+  },
+  {
+    "id": "664862",
+    "name": "Kheybar Khorramabad",
+    "country": "Iran",
+    "persian": "خیبر خرم‌آباد"
+  },
+  {
+    "id": "101612",
+    "name": "Malavan",
+    "country": "Iran",
+    "persian": "ملوان"
+  },
+  {
+    "id": "961464",
+    "name": "Mes Shahr Babak",
+    "country": "Iran",
+    "persian": "مس شهر بابک"
+  },
+  {
+    "id": "392200",
+    "name": "Nassaji Mazandaran FC",
+    "country": "Iran",
+    "persian": "نساجی مازندران"
+  },
+  {
+    "id": "101619",
+    "name": "Paykan",
+    "country": "Iran",
+    "persian": "پیکان"
+  },
+  {
+    "id": "101610",
+    "name": "Persepolis",
+    "country": "Iran",
+    "persian": "پرسپولیس"
+  },
+  {
+    "id": "101624",
+    "name": "Sanat Naft Abadan",
+    "country": "Iran",
+    "persian": "صنعت نفت آبادان"
+  },
+  {
+    "id": "101611",
+    "name": "Sepahan",
+    "country": "Iran",
+    "persian": "سپاهان"
+  },
+  {
+    "id": "1303998",
+    "name": "Shams Azar Qazvin",
+    "country": "Iran",
+    "persian": "شمس‌آذر قزوین"
+  },
+  {
+    "id": "176352",
+    "name": "Tractor",
+    "country": "Iran",
+    "persian": "تراکتور"
+  },
+  {
+    "id": "101618",
+    "name": "Zob Ahan",
+    "country": "Iran",
+    "persian": "ذوب‌آهن"
+  },
+  {
+    "id": "4177",
+    "name": "Beijing Guoan",
+    "country": "China",
+    "persian": "بیجینگ گوان"
+  },
+  {
+    "id": "737052",
+    "name": "Chengdu Rongcheng FC",
+    "country": "China",
+    "persian": "چنگدو رونگچنگ"
+  },
+  {
+    "id": "1477050",
+    "name": "Chongqing Tongliang Long",
+    "country": "China",
+    "persian": "چونگ‌چینگ تونگلیانگ لونگ"
+  },
+  {
+    "id": "1477043",
+    "name": "Dalian Yingbo",
+    "country": "China",
+    "persian": "دالیان اینگبو"
+  },
+  {
+    "id": "51442",
+    "name": "Henan FC",
+    "country": "China",
+    "persian": "هنان"
+  },
+  {
+    "id": "737054",
+    "name": "Liaoning Tieren",
+    "country": "China",
+    "persian": "لیائونینگ تیرن"
+  },
+  {
+    "id": "4183",
+    "name": "Qingdao Hainiu",
+    "country": "China",
+    "persian": "چینگ‌دائو هاینیو"
+  },
+  {
+    "id": "1283248",
+    "name": "Qingdao West Coast",
+    "country": "China",
+    "persian": "چینگ‌دائو وست کوست"
+  },
+  {
+    "id": "8623",
+    "name": "Shandong Taishan",
+    "country": "China",
+    "persian": "شاندونگ تایشان"
+  },
+  {
+    "id": "198616",
+    "name": "Shanghai Port",
+    "country": "China",
+    "persian": "شانگهای پورت"
+  },
+  {
+    "id": "6628",
+    "name": "Shanghai Shenhua",
+    "country": "China",
+    "persian": "شانگهای شنهوا"
+  },
+  {
+    "id": "930027",
+    "name": "Shenzhen Peng City",
+    "country": "China",
+    "persian": "شنژن پنگ سیتی"
+  },
+  {
+    "id": "4189",
+    "name": "Tianjin Jinmen Tiger",
+    "country": "China",
+    "persian": "تیانجین جینمن تایگر"
+  },
+  {
+    "id": "1029687",
+    "name": "Wuhan Three Towns",
+    "country": "China",
+    "persian": "ووهان تری تاونز"
+  },
+  {
+    "id": "1477056",
+    "name": "Yunnan Yukun",
+    "country": "China",
+    "persian": "یوننان یوکون"
+  },
+  {
+    "id": "51443",
+    "name": "Zhejiang Professional",
+    "country": "China",
+    "persian": "ژجیانگ پروفشنال"
+  }
+
+  {
+    "id": "8563",
+    "name": "AEK Athens",
+    "country": "Greece",
+    "persian": "آ.ا.ک آتن"
+  },
+  {
+    "id": "9825",
+    "name": "Arsenal",
+    "country": "England",
+    "persian": "آرسنال"
+  },
+  {
+    "id": "10252",
+    "name": "Aston Villa",
+    "country": "England",
+    "persian": "استون ویلا"
+  },
+  {
+    "id": "9906",
+    "name": "Atlético Madrid",
+    "country": "Spain",
+    "persian": "اتلتیکو مادرید"
+  },
+  {
+    "id": "8634",
+    "name": "Barcelona",
+    "country": "Spain",
+    "persian": "بارسلونا"
+  },
+  {
+    "id": "9823",
+    "name": "Bayern München",
+    "country": "Germany",
+    "persian": "بایرن مونیخ"
+  },
+  {
+    "id": "8402",
+    "name": "Bodø/Glimt",
+    "country": "Norway",
+    "persian": "بودو/گلیمت"
+  },
+  {
+    "id": "9789",
+    "name": "Borussia Dortmund",
+    "country": "Germany",
+    "persian": "بوروسیا دورتموند"
+  },
+  {
+    "id": "8342",
+    "name": "Club Brugge",
+    "country": "Belgium",
+    "persian": "کلوب بروژ"
+  },
+  {
+    "id": "10171",
+    "name": "Como",
+    "country": "Italy",
+    "persian": "کومو"
+  },
+  {
+    "id": "9773",
+    "name": "FC Porto",
+    "country": "Portugal",
+    "persian": "پورتو"
+  },
+  {
+    "id": "8695",
+    "name": "Fenerbahçe",
+    "country": "Turkey",
+    "persian": "فنرباغچه"
+  },
+  {
+    "id": "10235",
+    "name": "Feyenoord",
+    "country": "Netherlands",
+    "persian": "فاینورد"
+  },
+  {
+    "id": "8637",
+    "name": "Galatasaray",
+    "country": "Turkey",
+    "persian": "گالاتاسرای"
+  },
+  {
+    "id": "8636",
+    "name": "Inter",
+    "country": "Italy",
+    "persian": "اینتر"
+  },
+  {
+    "id": "9977",
+    "name": "LASK",
+    "country": "Austria",
+    "persian": "لاسک"
+  },
+  {
+    "id": "8588",
+    "name": "Lens",
+    "country": "France",
+    "persian": "لانس"
+  },
+  {
+    "id": "8639",
+    "name": "Lille",
+    "country": "France",
+    "persian": "لیل"
+  },
+  {
+    "id": "8650",
+    "name": "Liverpool",
+    "country": "England",
+    "persian": "لیورپول"
+  },
+  {
+    "id": "8456",
+    "name": "Manchester City",
+    "country": "England",
+    "persian": "منچسترسیتی"
+  },
+  {
+    "id": "10260",
+    "name": "Manchester United",
+    "country": "England",
+    "persian": "منچستریونایتد"
+  },
+  {
+    "id": "9875",
+    "name": "Napoli",
+    "country": "Italy",
+    "persian": "ناپولی"
+  },
+  {
+    "id": "9847",
+    "name": "Paris Saint-Germain",
+    "country": "France",
+    "persian": "پاری سن ژرمن"
+  },
+  {
+    "id": "8640",
+    "name": "PSV Eindhoven",
+    "country": "Netherlands",
+    "persian": "پی‌اس‌وی آیندهوون"
+  },
+  {
+    "id": "178475",
+    "name": "RB Leipzig",
+    "country": "Germany",
+    "persian": "لایپزیگ"
+  },
+  {
+    "id": "8603",
+    "name": "Real Betis",
+    "country": "Spain",
+    "persian": "رئال بتیس"
+  },
+  {
+    "id": "8633",
+    "name": "Real Madrid",
+    "country": "Spain",
+    "persian": "رئال مادرید"
+  },
+  {
+    "id": "8686",
+    "name": "Roma",
+    "country": "Italy",
+    "persian": "رم"
+  },
+  {
+    "id": "951893",
+    "name": "Sabah FK",
+    "country": "Azerbaijan",
+    "persian": "صباح"
+  },
+  {
+    "id": "9728",
+    "name": "Shakhtar Donetsk",
+    "country": "Ukraine",
+    "persian": "شاختار دونتسک"
+  },
+  {
+    "id": "7787",
+    "name": "Slavia Prague",
+    "country": "Czech Republic",
+    "persian": "اسلاویا پراگ"
+  },
+  {
+    "id": "6019",
+    "name": "Slovan Bratislava",
+    "country": "Slovakia",
+    "persian": "اسلوان براتیسلاوا"
+  },
+  {
+    "id": "9768",
+    "name": "Sporting CP",
+    "country": "Portugal",
+    "persian": "اسپورتینگ"
+  },
+  {
+    "id": "10269",
+    "name": "VfB Stuttgart",
+    "country": "Germany",
+    "persian": "اشتوتگارت"
+  },
+  {
+    "id": "8478",
+    "name": "Viking",
+    "country": "Norway",
+    "persian": "وایکینگ نروژ"
+  },
+  {
+    "id": "10205",
+    "name": "Villarreal",
+    "country": "Spain",
+    "persian": "ویارئال"
+  },
+  {
+    "id": "8678",
+    "name": "AFC Bournemouth",
+    "country": "England",
+    "persian": "بورنموث"
+  },
+  {
+    "id": "8635",
+    "name": "Anderlecht",
+    "country": "Belgium",
+    "persian": "اندرلخت"
+  },
+  {
+    "id": "866109",
+    "name": "Ararat Armenia",
+    "country": "Armenia",
+    "persian": "آرارات ارمنستان"
+  },
+  {
+    "id": "10229",
+    "name": "AZ Alkmaar",
+    "country": "Netherlands",
+    "persian": "آلکمار"
+  },
+  {
+    "id": "8178",
+    "name": "Bayer Leverkusen",
+    "country": "Germany",
+    "persian": "بایر لورکوزن"
+  },
+  {
+    "id": "9772",
+    "name": "Benfica",
+    "country": "Portugal",
+    "persian": "بنفیکا"
+  },
+  {
+    "id": "10188",
+    "name": "Beşiktaş",
+    "country": "Turkey",
+    "persian": "بشیکتاش"
+  },
+  {
+    "id": "9910",
+    "name": "Celta Vigo",
+    "country": "Spain",
+    "persian": "سلتاویگو"
+  },
+  {
+    "id": "9925",
+    "name": "Celtic",
+    "country": "Scotland",
+    "persian": "سلتیک"
+  },
+  {
+    "id": "9826",
+    "name": "Crystal Palace",
+    "country": "England",
+    "persian": "کریستال پالاس"
+  },
+  {
+    "id": "10156",
+    "name": "Dinamo Zagreb",
+    "country": "Croatia",
+    "persian": "دینامو زاگرب"
+  },
+  {
+    "id": "8222",
+    "name": "Ferencváros",
+    "country": "Hungary",
+    "persian": "فرنتس‌واروش"
+  },
+  {
+    "id": "9754",
+    "name": "Hapoel Beer Sheva",
+    "country": "Israel",
+    "persian": "هاپوئل بئرشبع"
+  },
+  {
+    "id": "8226",
+    "name": "Hoffenheim",
+    "country": "Germany",
+    "persian": "هوفنهایم"
+  },
+  {
+    "id": "1957",
+    "name": "Jagiellonia Białystok",
+    "country": "Poland",
+    "persian": "یاگیلونیا بیالیستوک"
+  },
+  {
+    "id": "9885",
+    "name": "Juventus",
+    "country": "Italy",
+    "persian": "یوونتوس"
+  },
+  {
+    "id": "2182",
+    "name": "Lech Poznań",
+    "country": "Poland",
+    "persian": "لخ پوزنان"
+  },
+  {
+    "id": "8632",
+    "name": "Levski Sofia",
+    "country": "Bulgaria",
+    "persian": "لِوسکی صوفیه"
+  },
+  {
+    "id": "8476",
+    "name": "Lillestrøm",
+    "country": "Norway",
+    "persian": "لیله‌ستروم"
+  },
+  {
+    "id": "9748",
+    "name": "Lyon",
+    "country": "France",
+    "persian": "لیون"
+  },
+  {
+    "id": "8592",
+    "name": "Marseille",
+    "country": "France",
+    "persian": "مارسی"
+  },
+  {
+    "id": "8564",
+    "name": "Milan",
+    "country": "Italy",
+    "persian": "میلان"
+  },
+  {
+    "id": "8464",
+    "name": "NEC Nijmegen",
+    "country": "Netherlands",
+    "persian": "ان‌ای‌سی نایمخن"
+  },
+  {
+    "id": "4622",
+    "name": "NK Celje",
+    "country": "Slovenia",
+    "persian": "ان‌کا تسلیه"
+  },
+  {
+    "id": "7753",
+    "name": "OFI Crete",
+    "country": "Greece",
+    "persian": "اُفی کرت"
+  },
+  {
+    "id": "8638",
+    "name": "Olympiacos",
+    "country": "Greece",
+    "persian": "المپیاکوس"
+  },
+  {
+    "id": "8044",
+    "name": "Omonia Nicosia",
+    "country": "Cyprus",
+    "persian": "اومونیا نیکوزیا"
+  },
+  {
+    "id": "8560",
+    "name": "Real Sociedad",
+    "country": "Spain",
+    "persian": "رئال سوسیداد"
+  },
+  {
+    "id": "9851",
+    "name": "Rennes",
+    "country": "France",
+    "persian": "رن"
+  },
+  {
+    "id": "10013",
+    "name": "Salzburg",
+    "country": "Austria",
+    "persian": "سالزبورگ"
+  },
+  {
+    "id": "10247",
+    "name": "Sparta Prague",
+    "country": "Czech Republic",
+    "persian": "اسپارتا پراگ"
+  },
+  {
+    "id": "10014",
+    "name": "Sturm Graz",
+    "country": "Austria",
+    "persian": "اشتورم گراتس"
+  },
+  {
+    "id": "8472",
+    "name": "Sunderland",
+    "country": "England",
+    "persian": "ساندرلند"
+  },
+  {
+    "id": "212820",
+    "name": "Torreense",
+    "country": "Portugal",
+    "persian": "تورنزه"
+  },
+  {
+    "id": "7978",
+    "name": "Union St.Gilloise",
+    "country": "Belgium",
+    "persian": "یونیون سن ژیلواز"
+  },
+  {
+    "id": "6033",
+    "name": "Viktoria Plzeň",
+    "country": "Czech Republic",
+    "persian": "ویکتوریا پلزن"
+  },
+  {
+    "id": "8071",
+    "name": "AGF",
+    "country": "Denmark",
+    "persian": "آرهوس"
+  },
+  {
+    "id": "8593",
+    "name": "Ajax",
+    "country": "Netherlands",
+    "persian": "آژاکس"
+  },
+  {
+    "id": "8524",
+    "name": "Atalanta",
+    "country": "Italy",
+    "persian": "آتالانتا"
+  },
+  {
+    "id": "10116",
+    "name": "Borac Banja Luka",
+    "country": "Bosnia and Herzegovina",
+    "persian": "بوراتس بانیا لوکا"
+  },
+  {
+    "id": "10264",
+    "name": "Braga",
+    "country": "Portugal",
+    "persian": "براگا"
+  },
+  {
+    "id": "8468",
+    "name": "Brann",
+    "country": "Norway",
+    "persian": "بران"
+  },
+  {
+    "id": "10204",
+    "name": "Brighton & Hove Albion",
+    "country": "England",
+    "persian": "برایتون"
+  },
+  {
+    "id": "10144",
+    "name": "CSKA Sofia",
+    "country": "Bulgaria",
+    "persian": "زسکا صوفیه"
+  },
+  {
+    "id": "10039",
+    "name": "Egnatia",
+    "country": "Albania",
+    "persian": "اگناتیا"
+  },
+  {
+    "id": "8391",
+    "name": "FC København",
+    "country": "Denmark",
+    "persian": "کپنهاگ"
+  },
+  {
+    "id": "8113",
+    "name": "FC Midtjylland",
+    "country": "Denmark",
+    "persian": "میتیلند"
+  },
+  {
+    "id": "8611",
+    "name": "FC Twente",
+    "country": "Netherlands",
+    "persian": "توئنته"
+  },
+  {
+    "id": "8687",
+    "name": "FK Crvena Zvezda",
+    "country": "Serbia",
+    "persian": "ستاره سرخ"
+  },
+  {
+    "id": "439132",
+    "name": "FK Kauno Žalgiris",
+    "country": "Lithuania",
+    "persian": "ژالگیریس کائوناس"
+  },
+  {
+    "id": "8358",
+    "name": "Freiburg",
+    "country": "Germany",
+    "persian": "فرایبورگ"
+  },
+  {
+    "id": "9991",
+    "name": "Gent",
+    "country": "Belgium",
+    "persian": "خنت"
+  },
+  {
+    "id": "8305",
+    "name": "Getafe",
+    "country": "Spain",
+    "persian": "ختافه"
+  },
+  {
+    "id": "10154",
+    "name": "Hajduk Split",
+    "country": "Croatia",
+    "persian": "هایدوک اسپلیت"
+  },
+  {
+    "id": "9860",
+    "name": "Heart of Midlothian",
+    "country": "Scotland",
+    "persian": "هارتس"
+  },
+  {
+    "id": "480291",
+    "name": "Iberia 1999",
+    "country": "Georgia",
+    "persian": "ایبریا ۱۹۹۹"
+  },
+  {
+    "id": "10050",
+    "name": "Inter Club d'Escaldes",
+    "country": "Andorra",
+    "persian": "اینتر کلوب دسکالدس"
+  },
+  {
+    "id": "7758",
+    "name": "Jablonec",
+    "country": "Czech Republic",
+    "persian": "یابلونتس"
+  },
+  {
+    "id": "8037",
+    "name": "Kairat Almaty",
+    "country": "Kazakhstan",
+    "persian": "کایرات آلماتی"
+  },
+  {
+    "id": "1693",
+    "name": "KuPS",
+    "country": "Finland",
+    "persian": "کوپی‌اس"
+  },
+  {
+    "id": "545012",
+    "name": "Lincoln Red Imps FC",
+    "country": "Gibraltar",
+    "persian": "لینکلن رد ایمپس"
+  },
+  {
+    "id": "7896",
+    "name": "Lugano",
+    "country": "Switzerland",
+    "persian": "لوگانو"
+  },
+  {
+    "id": "8127",
+    "name": "Mjällby",
+    "country": "Sweden",
+    "persian": "میالبی"
+  },
+  {
+    "id": "9829",
+    "name": "Monaco",
+    "country": "Monaco",
+    "persian": "موناکو"
+  },
+  {
+    "id": "10202",
+    "name": "Nordsjælland",
+    "country": "Denmark",
+    "persian": "نوردشلند"
+  },
+  {
+    "id": "2137",
+    "name": "Pafos FC",
+    "country": "Cyprus",
+    "persian": "پافوس"
+  },
+  {
+    "id": "10200",
+    "name": "Panathinaikos",
+    "country": "Greece",
+    "persian": "پاناتینایکوس"
+  },
+  {
+    "id": "624924",
+    "name": "Riga FC",
+    "country": "Latvia",
+    "persian": "ریگا"
+  },
+  {
+    "id": "9997",
+    "name": "St.Truiden",
+    "country": "Belgium",
+    "persian": "سنت ترویدن"
+  },
+  {
+    "id": "10191",
+    "name": "Thun",
+    "country": "Switzerland",
+    "persian": "تون"
+  },
+  {
+    "id": "9752",
+    "name": "Trabzonspor",
+    "country": "Turkey",
+    "persian": "ترابزون‌اسپور"
+  },
+  {
+    "id": "480286",
+    "name": "Universitatea Craiova",
+    "country": "Romania",
+    "persian": "یونیورسیتاتیا کرایووا"
+  },
+  {
+    "id": "49688",
+    "name": "2 de Mayo",
+    "country": "Paraguay",
+    "persian": "۲ د مایو"
+  },
+  {
+    "id": "6398",
+    "name": "Alianza Lima",
+    "country": "Peru",
+    "persian": "آلیانزا لیما"
+  },
+  {
+    "id": "805913",
+    "name": "Always Ready",
+    "country": "Bolivia",
+    "persian": "آلویز ردی"
+  },
+  {
+    "id": "10086",
+    "name": "Argentinos Juniors",
+    "country": "Argentina",
+    "persian": "آرژانتینوس جونیورز"
+  },
+  {
+    "id": "7877",
+    "name": "Bahia",
+    "country": "Brazil",
+    "persian": "باهیا"
+  },
+  {
+    "id": "6453",
+    "name": "Barcelona SC",
+    "country": "Ecuador",
+    "persian": "بارسلونا اکوادور"
+  },
+  {
+    "id": "10077",
+    "name": "Boca Juniors",
+    "country": "Argentina",
+    "persian": "بوکا جونیورز"
+  },
+  {
+    "id": "5983",
+    "name": "Bolívar",
+    "country": "Bolivia",
+    "persian": "بولیوار"
+  },
+  {
+    "id": "8517",
+    "name": "Botafogo",
+    "country": "Brazil",
+    "persian": "بوتافوگو"
+  },
+  {
+    "id": "49681",
+    "name": "Carabobo FC",
+    "country": "Venezuela",
+    "persian": "کارابوبو"
+  },
+  {
+    "id": "6295",
+    "name": "Cerro Porteño",
+    "country": "Paraguay",
+    "persian": "سرو پورتنیو"
+  },
+  {
+    "id": "8450",
+    "name": "Club Atletico Peñarol",
+    "country": "Uruguay",
+    "persian": "پنیارول"
+  },
+  {
+    "id": "10089",
+    "name": "Club Atlético Platense",
+    "country": "Argentina",
+    "persian": "پلاتنسه"
+  },
+  {
+    "id": "4062",
+    "name": "Coquimbo Unido",
+    "country": "Chile",
+    "persian": "کوکیمبو اونیدو"
+  },
+  {
+    "id": "9808",
+    "name": "Corinthians",
+    "country": "Brazil",
+    "persian": "کورینتیانس"
+  },
+  {
+    "id": "9781",
+    "name": "Cruzeiro",
+    "country": "Brazil",
+    "persian": "کروزیرو"
+  },
+  {
+    "id": "305171",
+    "name": "Cusco FC",
+    "country": "Peru",
+    "persian": "کوسکو"
+  },
+  {
+    "id": "176496",
+    "name": "Deportivo La Guaira",
+    "country": "Venezuela",
+    "persian": "دپورتیوو لا گوایرا"
+  },
+  {
+    "id": "1896",
+    "name": "Deportivo Táchira",
+    "country": "Venezuela",
+    "persian": "دپورتیوو تاچیرا"
+  },
+  {
+    "id": "10094",
+    "name": "Estudiantes",
+    "country": "Argentina",
+    "persian": "استودیانتس"
+  },
+  {
+    "id": "9770",
+    "name": "Flamengo",
+    "country": "Brazil",
+    "persian": "فلامنگو"
+  },
+  {
+    "id": "9863",
+    "name": "Fluminense",
+    "country": "Brazil",
+    "persian": "فلومیننزه"
+  },
+  {
+    "id": "1893",
+    "name": "Guaraní",
+    "country": "Paraguay",
+    "persian": "گوارانی"
+  },
+  {
+    "id": "4056",
+    "name": "Huachipato",
+    "country": "Chile",
+    "persian": "واچیپاتو"
+  },
+  {
+    "id": "192875",
+    "name": "Independiente del Valle",
+    "country": "Ecuador",
+    "persian": "ایندیپندینته دل‌وایه"
+  },
+  {
+    "id": "2528",
+    "name": "Independiente Medellín",
+    "country": "Colombia",
+    "persian": "ایندیپندینته مدئین"
+  },
+  {
+    "id": "161729",
+    "name": "Independiente Rivadavia",
+    "country": "Argentina",
+    "persian": "ایندیپندینته ریواداویا"
+  },
+  {
+    "id": "2254",
+    "name": "Junior FC",
+    "country": "Colombia",
+    "persian": "جونیور بارانکییا"
+  },
+  {
+    "id": "9883",
+    "name": "Juventud de las Piedras",
+    "country": "Uruguay",
+    "persian": "خوونتود لاس پیه‌دراس"
+  },
+  {
+    "id": "10082",
+    "name": "Lanús",
+    "country": "Argentina",
+    "persian": "لانوس"
+  },
+  {
+    "id": "6721",
+    "name": "LDU de Quito",
+    "country": "Ecuador",
+    "persian": "ال‌دی‌یو کیتو"
+  },
+  {
+    "id": "6620",
+    "name": "Libertad",
+    "country": "Paraguay",
+    "persian": "لیبرتاد"
+  },
+  {
+    "id": "2219",
+    "name": "Liverpool FC",
+    "country": "Uruguay",
+    "persian": "لیورپول اروگوئه"
+  },
+  {
+    "id": "163782",
+    "name": "Mirassol",
+    "country": "Brazil",
+    "persian": "میراسول"
+  },
+  {
+    "id": "8304",
+    "name": "Nacional",
+    "country": "Uruguay",
+    "persian": "ناسیونال اروگوئه"
+  },
+  {
+    "id": "164353",
+    "name": "Nacional Potosí",
+    "country": "Bolivia",
+    "persian": "ناسیونال پوتوسی"
+  },
+  {
+    "id": "6296",
+    "name": "O'Higgins",
+    "country": "Chile",
+    "persian": "او'هیگینز"
+  },
+  {
+    "id": "10283",
+    "name": "Palmeiras",
+    "country": "Brazil",
+    "persian": "پالمیراس"
+  },
+  {
+    "id": "10084",
+    "name": "Rosario Central",
+    "country": "Argentina",
+    "persian": "روساریو سنترال"
+  },
+  {
+    "id": "7818",
+    "name": "Santa Fe",
+    "country": "Colombia",
+    "persian": "سانتافه کلمبیا"
+  },
+  {
+    "id": "1848",
+    "name": "Sporting Cristal",
+    "country": "Peru",
+    "persian": "اسپورتینگ کریستال"
+  },
+  {
+    "id": "2527",
+    "name": "The Strongest",
+    "country": "Bolivia",
+    "persian": "تِ استرانگست"
+  },
+  {
+    "id": "1894",
+    "name": "Tolima",
+    "country": "Colombia",
+    "persian": "تولیما"
+  },
+  {
+    "id": "113053",
+    "name": "Universidad Católica",
+    "country": "Ecuador",
+    "persian": "یونیورسیداد کاتولیکا اکوادور"
+  },
+  {
+    "id": "6458",
+    "name": "Universidad Católica",
+    "country": "Chile",
+    "persian": "یونیورسیداد کاتولیکا شیلی"
+  },
+  {
+    "id": "188213",
+    "name": "Universidad Central",
+    "country": "Venezuela",
+    "persian": "یونیورسیداد سنترال"
+  },
+  {
+    "id": "4409",
+    "name": "Universitario de Deportes",
+    "country": "Peru",
+    "persian": "یونیورسیتاریو"
+  },
+  {
+    "id": "2530",
+    "name": "Al Ahli",
+    "country": "Saudi Arabia",
+    "persian": "الاهلی عربستان"
+  },
+  {
+    "id": "2529",
+    "name": "Al Hilal",
+    "country": "Saudi Arabia",
+    "persian": "الهلال عربستان"
+  },
+  {
+    "id": "8577",
+    "name": "Al Ittihad",
+    "country": "Saudi Arabia",
+    "persian": "الاتحاد عربستان"
+  },
+  {
+    "id": "101918",
+    "name": "Al Nassr FC",
+    "country": "Saudi Arabia",
+    "persian": "النصر عربستان"
+  },
+  {
+    "id": "101919",
+    "name": "Al Qadsiah",
+    "country": "Saudi Arabia",
+    "persian": "القادسیه عربستان"
+  },
+  {
+    "id": "101656",
+    "name": "Al Quwa Al Jawiya",
+    "country": "Iraq",
+    "persian": "القوه الجویه"
+  },
+  {
+    "id": "102117",
+    "name": "Al-Ain",
+    "country": "United Arab Emirates",
+    "persian": "العین"
+  },
+  {
+    "id": "101897",
+    "name": "Al-Gharafa",
+    "country": "Qatar",
+    "persian": "الغرافه"
+  },
+  {
+    "id": "101895",
+    "name": "Al-Sadd",
+    "country": "Qatar",
+    "persian": "السد"
+  },
+  {
+    "id": "101904",
+    "name": "Al-Shamal",
+    "country": "Qatar",
+    "persian": "الشمال"
+  },
+  {
+    "id": "102111",
+    "name": "Al-Wasl",
+    "country": "United Arab Emirates",
+    "persian": "الوصل"
+  },
+  {
+    "id": "4177",
+    "name": "Beijing Guoan",
+    "country": "China",
+    "persian": "بیجینگ گوان"
+  },
+  {
+    "id": "165243",
+    "name": "Buriram United",
+    "country": "Thailand",
+    "persian": "بوریرام یونایتد"
+  },
+  {
+    "id": "614354",
+    "name": "Công An Hà Nội",
+    "country": "Vietnam",
+    "persian": "کونگ آن هانوی"
+  },
+  {
+    "id": "133900",
+    "name": "Daejeon Hana Citizen",
+    "country": "South Korea",
+    "persian": "دائجئون هانا سیتی‌زن"
+  },
+  {
+    "id": "101614",
+    "name": "Esteghlal",
+    "country": "Iran",
+    "persian": "استقلال"
+  },
+  {
+    "id": "6582",
+    "name": "Gamba Osaka",
+    "country": "Japan",
+    "persian": "گامبا اوساکا"
+  },
+  {
+    "id": "46038",
+    "name": "Jeonbuk Hyundai Motors FC",
+    "country": "South Korea",
+    "persian": "جئونبوک هیوندای موتورز"
+  },
+  {
+    "id": "165228",
+    "name": "Johor Darul Ta'zim",
+    "country": "Malaysia",
+    "persian": "جوهور دارالتعظیم"
+  },
+  {
+    "id": "4397",
+    "name": "Kashima Antlers",
+    "country": "Japan",
+    "persian": "کاشیما آنتلرز"
+  },
+  {
+    "id": "8699",
+    "name": "Kashiwa Reysol",
+    "country": "Japan",
+    "persian": "کاشیوا ریسول"
+  },
+  {
+    "id": "8542",
+    "name": "Kyoto Sanga FC",
+    "country": "Japan",
+    "persian": "کیوتو سانگا"
+  },
+  {
+    "id": "102145",
+    "name": "Neftchi Fargona",
+    "country": "Uzbekistan",
+    "persian": "نفتچی فرغانه"
+  },
+  {
+    "id": "6454",
+    "name": "Newcastle Jets",
+    "country": "Australia",
+    "persian": "نیوکاسل جتس"
+  },
+  {
+    "id": "102141",
+    "name": "Pakhtakor Tashkent",
+    "country": "Uzbekistan",
+    "persian": "پاختاکور تاشکند"
+  },
+  {
+    "id": "109373",
+    "name": "Pohang Steelers",
+    "country": "South Korea",
+    "persian": "پوهانگ استیلرز"
+  },
+  {
+    "id": "165255",
+    "name": "Port FC",
+    "country": "Thailand",
+    "persian": "پورت اف‌سی"
+  },
+  {
+    "id": "421346",
+    "name": "Ratchaburi FC",
+    "country": "Thailand",
+    "persian": "راتچابوری"
+  },
+  {
+    "id": "102119",
+    "name": "Shabab Al-Ahli Dubai FC",
+    "country": "United Arab Emirates",
+    "persian": "شباب الاهلی دبی"
+  },
+  {
+    "id": "198616",
+    "name": "Shanghai Port",
+    "country": "China",
+    "persian": "شانگهای پورت"
+  },
+  {
+    "id": "176352",
+    "name": "Tractor",
+    "country": "Iran",
+    "persian": "تراکتور"
+  },
+  {
+    "id": "4688",
+    "name": "Vissel Kobe",
+    "country": "Japan",
+    "persian": "ویسل کوبه"
+  },
+  {
+    "id": "8008",
+    "name": "Adelaide United",
+    "country": "Australia",
+    "persian": "آدلاید یونایتد"
+  },
+  {
+    "id": "1288463",
+    "name": "Al Khalidiyah",
+    "country": "Bahrain",
+    "persian": "الخالدیه"
+  },
+  {
+    "id": "101655",
+    "name": "Al Shorta",
+    "country": "Iraq",
+    "persian": "الشرطه"
+  },
+  {
+    "id": "101711",
+    "name": "Al-Arabi",
+    "country": "Kuwait",
+    "persian": "العربی کویت"
+  },
+  {
+    "id": "101665",
+    "name": "Al-Faisaly",
+    "country": "Jordan",
+    "persian": "الفيصلی اردن"
+  },
+  {
+    "id": "101688",
+    "name": "Al-Hussein SC",
+    "country": "Jordan",
+    "persian": "الحسین اربد"
+  },
+  {
+    "id": "102101",
+    "name": "Al-Jazira",
+    "country": "United Arab Emirates",
+    "persian": "الجزیره امارات"
+  },
+  {
+    "id": "101748",
+    "name": "Al-Nahda",
+    "country": "Oman",
+    "persian": "النهضه عمان"
+  },
+  {
+    "id": "101898",
+    "name": "Al-Rayyan",
+    "country": "Qatar",
+    "persian": "الریان قطر"
+  },
+  {
+    "id": "101759",
+    "name": "Al-Seeb",
+    "country": "Oman",
+    "persian": "السِیب"
+  },
+  {
+    "id": "205686",
+    "name": "Al-Taawoun",
+    "country": "Saudi Arabia",
+    "persian": "التعاون عربستان"
+  },
+  {
+    "id": "102122",
+    "name": "Al-Wahda",
+    "country": "United Arab Emirates",
+    "persian": "الوحده امارات"
+  },
+  {
+    "id": "1689659",
+    "name": "Arkadag",
+    "country": "Turkmenistan",
+    "persian": "آرکاداغ"
+  },
+  {
+    "id": "165250",
+    "name": "BG Pathum United",
+    "country": "Thailand",
+    "persian": "بی‌جی پاتوم یونایتد"
+  },
+  {
+    "id": "165184",
+    "name": "East Bengal FC",
+    "country": "India",
+    "persian": "ایست بنگال"
+  },
+  {
+    "id": "578650",
+    "name": "FC Goa",
+    "country": "India",
+    "persian": "اف‌سی گوا"
+  },
+  {
+    "id": "92630",
+    "name": "FC Seoul",
+    "country": "South Korea",
+    "persian": "اف‌سی سئول"
+  },
+  {
+    "id": "164734",
+    "name": "Gangwon FC",
+    "country": "South Korea",
+    "persian": "گانگ‌وون"
+  },
+  {
+    "id": "389880",
+    "name": "Gol Gohar",
+    "country": "Iran",
+    "persian": "گل‌گهر"
+  },
+  {
+    "id": "165165",
+    "name": "Kitchee",
+    "country": "Hong Kong",
+    "persian": "کیتچی"
+  },
+  {
+    "id": "1114226",
+    "name": "Kuching City",
+    "country": "Malaysia",
+    "persian": "کوچینگ سیتی"
+  },
+  {
+    "id": "101713",
+    "name": "Kuwait SC",
+    "country": "Kuwait",
+    "persian": "کویت اس‌سی"
+  },
+  {
+    "id": "67366",
+    "name": "Lion City Sailors FC",
+    "country": "Singapore",
+    "persian": "لایون سیتی سیلرز"
+  },
+  {
+    "id": "194011",
+    "name": "Machida Zelvia",
+    "country": "Japan",
+    "persian": "ماچیدا زلویا"
+  },
+  {
+    "id": "1628001",
+    "name": "Manila Digger",
+    "country": "Philippines",
+    "persian": "مانیلا دیگر"
+  },
+  {
+    "id": "6230",
+    "name": "Melbourne Victory",
+    "country": "Australia",
+    "persian": "ملبورن ویکتوری"
+  },
+  {
+    "id": "101598",
+    "name": "Muharraq",
+    "country": "Bahrain",
+    "persian": "المحرّق"
+  },
+  {
+    "id": "102153",
+    "name": "Nasaf Qarshi",
+    "country": "Uzbekistan",
+    "persian": "نسف قارشی"
+  },
+  {
+    "id": "165196",
+    "name": "Persib Bandung",
+    "country": "Indonesia",
+    "persian": "پرسـیب باندونگ"
+  },
+  {
+    "id": "202520",
+    "name": "Phnom Penh",
+    "country": "Cambodia",
+    "persian": "پنوم پن"
+  },
+  {
+    "id": "6628",
+    "name": "Shanghai Shenhua",
+    "country": "China",
+    "persian": "شانگهای شنهوا"
+  },
+  {
+    "id": "542025",
+    "name": "Svay Rieng",
+    "country": "Cambodia",
+    "persian": "سوی رینگ"
+  },
+  {
+    "id": "165169",
+    "name": "Tai Po",
+    "country": "Hong Kong",
+    "persian": "تای پو"
+  },
+  {
+    "id": "67386",
+    "name": "Tampines Rovers FC",
+    "country": "Singapore",
+    "persian": "تامپینس روورز"
+  },
+  {
+    "id": "743070",
+    "name": "Viettel",
+    "country": "Vietnam",
+    "persian": "ویتتل"
+  },
+  {
+    "id": "101745",
+    "name": "Al Ahly SC",
+    "country": "Egypt",
+    "persian": "الاهلی مصر"
+  },
+  {
+    "id": "102769",
+    "name": "Al Hilal Omdurman",
+    "country": "Sudan",
+    "persian": "الهلال ام‌درمان"
+  },
+  {
+    "id": "8153",
+    "name": "Espérance",
+    "country": "Tunisia",
+    "persian": "اسپرانس"
+  },
+  {
+    "id": "102035",
+    "name": "FAR Rabat",
+    "country": "Morocco",
+    "persian": "فَتح رباط"
+  },
+  {
+    "id": "101630",
+    "name": "JS Kabylie",
+    "country": "Algeria",
+    "persian": "شبیبه کابلی"
+  },
+  {
+    "id": "4530",
+    "name": "Mamelodi Sundowns FC",
+    "country": "South Africa",
+    "persian": "مامیلودی سانداونز"
+  },
+  {
+    "id": "6353",
+    "name": "MC Alger",
+    "country": "Algeria",
+    "persian": "مولودیه الجزایر"
+  },
+  {
+    "id": "101668",
+    "name": "Petro Atlético",
+    "country": "Angola",
+    "persian": "پترو اتلتیکو"
+  },
+  {
+    "id": "102130",
+    "name": "Power Dynamos",
+    "country": "Zambia",
+    "persian": "پاور دیناموز"
+  },
+  {
+    "id": "517894",
+    "name": "Pyramids FC",
+    "country": "Egypt",
+    "persian": "پیرامیدز"
+  },
+  {
+    "id": "184466",
+    "name": "Rivers United FC",
+    "country": "Nigeria",
+    "persian": "ریورز یونایتد"
+  },
+  {
+    "id": "316652",
+    "name": "RS Berkane",
+    "country": "Morocco",
+    "persian": "نهضت برکان"
+  },
+  {
+    "id": "164855",
+    "name": "Saint-Eloi Lupopo",
+    "country": "DR Congo",
+    "persian": "سن‌الوا لوپوپو"
+  },
+  {
+    "id": "165086",
+    "name": "Simba SC",
+    "country": "Tanzania",
+    "persian": "سیمبا"
+  },
+  {
+    "id": "164991",
+    "name": "Stade Malien",
+    "country": "Mali",
+    "persian": "استاد مالی"
+  },
+  {
+    "id": "165084",
+    "name": "Young Africans",
+    "country": "Tanzania",
+    "persian": "یانگ آفریکنز"
+  },
+  {
+    "id": "1135780",
+    "name": "Atlético Ottawa",
+    "country": "Canada",
+    "persian": "اتلتیکو اتاوا"
+  },
+  {
+    "id": "49732",
+    "name": "C.S. Cartaginés",
+    "country": "Costa Rica",
+    "persian": "کارتاخینس"
+  },
+  {
+    "id": "6336",
+    "name": "CD Olimpia",
+    "country": "Honduras",
+    "persian": "المپیا هندوراس"
+  },
+  {
+    "id": "6576",
+    "name": "CF América",
+    "country": "Mexico",
+    "persian": "کلوب آمریکا"
+  },
+  {
+    "id": "49758",
+    "name": "Club Xelajú",
+    "country": "Guatemala",
+    "persian": "زلاخو"
+  },
+  {
+    "id": "6578",
+    "name": "Cruz Azul",
+    "country": "Mexico",
+    "persian": "کروز آزول"
+  },
+  {
+    "id": "165465",
+    "name": "Defence Force",
+    "country": "Trinidad and Tobago",
+    "persian": "دفنس فورس"
+  },
+  {
+    "id": "722265",
+    "name": "FC Cincinnati",
+    "country": "United States",
+    "persian": "سینسیناتی"
+  },
+  {
+    "id": "1022955",
+    "name": "Forge FC",
+    "country": "Canada",
+    "persian": "فورج"
+  },
+  {
+    "id": "960720",
+    "name": "Inter Miami CF",
+    "country": "United States",
+    "persian": "اینتر میامی"
+  },
+  {
+    "id": "6637",
+    "name": "LA Galaxy",
+    "country": "United States",
+    "persian": "لس‌آنجلس گلکسی"
+  },
+  {
+    "id": "6335",
+    "name": "LD Alajuelense",
+    "country": "Costa Rica",
+    "persian": "آلاخوئلنزه"
+  },
+  {
+    "id": "867280",
+    "name": "Los Angeles FC",
+    "country": "United States",
+    "persian": "لس‌آنجلس اف‌سی"
+  },
+  {
+    "id": "7849",
+    "name": "Monterrey",
+    "country": "Mexico",
+    "persian": "مونتری"
+  },
+  {
+    "id": "962034",
+    "name": "Mount Pleasant",
+    "country": "Jamaica",
+    "persian": "مانت پلیزنت"
+  },
+  {
+    "id": "915807",
+    "name": "Nashville SC",
+    "country": "United States",
+    "persian": "نشویل"
+  },
+  {
+    "id": "1237060",
+    "name": "O&M FC",
+    "country": "Dominican Republic",
+    "persian": "او اند ام"
+  },
+  {
+    "id": "191716",
+    "name": "Philadelphia Union",
+    "country": "United States",
+    "persian": "فیلادلفیا یونیون"
+  },
+  {
+    "id": "1946",
+    "name": "Pumas",
+    "country": "Mexico",
+    "persian": "پوماس"
+  },
+  {
+    "id": "49783",
+    "name": "Real España",
+    "country": "Honduras",
+    "persian": "رئال اسپانیا"
+  },
+  {
+    "id": "1701119",
+    "name": "San Diego FC",
+    "country": "United States",
+    "persian": "سن دیگو اف‌سی"
+  },
+  {
+    "id": "130394",
+    "name": "Seattle Sounders FC",
+    "country": "United States",
+    "persian": "سیاتل ساوندرز"
+  },
+  {
+    "id": "165472",
+    "name": "Sporting San Miguelito",
+    "country": "Panama",
+    "persian": "اسپورتینگ سن میگل‌ایتو"
+  },
+  {
+    "id": "8561",
+    "name": "Tigres",
+    "country": "Mexico",
+    "persian": "تایگرس"
+  },
+  {
+    "id": "6618",
+    "name": "Toluca",
+    "country": "Mexico",
+    "persian": "تولوکا"
+  },
+  {
+    "id": "1436202",
+    "name": "Vancouver FC",
+    "country": "Canada",
+    "persian": "ونکوور اف‌سی"
+  },
+  {
+    "id": "307691",
+    "name": "Vancouver Whitecaps",
+    "country": "Canada",
+    "persian": "ونکوور وایتکپس"
+  }
+
+  {
+    "id": "95796",
+    "name": "Afghanistan",
+    "country": "Afghanistan",
+    "persian": "افغانستان"
+  },
+  {
+    "id": "10024",
+    "name": "Albania",
+    "country": "Albania",
+    "persian": "آلبانی"
+  },
+  {
+    "id": "6317",
+    "name": "Algeria",
+    "country": "Algeria",
+    "persian": "الجزایر"
+  },
+  {
+    "id": "287879",
+    "name": "American Samoa",
+    "country": "American Samoa",
+    "persian": "ساموآی آمریکا"
+  },
+  {
+    "id": "10045",
+    "name": "Andorra",
+    "country": "Andorra",
+    "persian": "آندورا"
+  },
+  {
+    "id": "6712",
+    "name": "Angola",
+    "country": "Angola",
+    "persian": "آنگولا"
+  },
+  {
+    "id": "262132",
+    "name": "Anguilla",
+    "country": "Anguilla",
+    "persian": "آنگویلا"
+  },
+  {
+    "id": "6101",
+    "name": "Antigua and Barbuda",
+    "country": "Antigua and Barbuda",
+    "persian": "آنتیگوا و باربودا"
+  },
+  {
+    "id": "6706",
+    "name": "Argentina",
+    "country": "Argentina",
+    "persian": "آرژانتین"
+  },
+  {
+    "id": "6583",
+    "name": "Armenia",
+    "country": "Armenia",
+    "persian": "ارمنستان"
+  },
+  {
+    "id": "262131",
+    "name": "Aruba",
+    "country": "Aruba",
+    "persian": "آروبا"
+  },
+  {
+    "id": "6716",
+    "name": "Australia",
+    "country": "Australia",
+    "persian": "استرالیا"
+  },
+  {
+    "id": "8255",
+    "name": "Austria",
+    "country": "Austria",
+    "persian": "اتریش"
+  },
+  {
+    "id": "8566",
+    "name": "Azerbaijan",
+    "country": "Azerbaijan",
+    "persian": "آذربایجان"
+  },
+  {
+    "id": "73596",
+    "name": "Bahamas",
+    "country": "Bahamas",
+    "persian": "باهاما"
+  },
+  {
+    "id": "5901",
+    "name": "Bahrain",
+    "country": "Bahrain",
+    "persian": "بحرین"
+  },
+  {
+    "id": "95797",
+    "name": "Bangladesh",
+    "country": "Bangladesh",
+    "persian": "بنگلادش"
+  },
+  {
+    "id": "5886",
+    "name": "Barbados",
+    "country": "Barbados",
+    "persian": "باربادوس"
+  },
+  {
+    "id": "10057",
+    "name": "Belarus",
+    "country": "Belarus",
+    "persian": "بلاروس"
+  },
+  {
+    "id": "8263",
+    "name": "Belgium",
+    "country": "Belgium",
+    "persian": "بلژیک"
+  },
+  {
+    "id": "127409",
+    "name": "Belize",
+    "country": "Belize",
+    "persian": "بلیز"
+  },
+  {
+    "id": "5883",
+    "name": "Benin",
+    "country": "Benin",
+    "persian": "بنین"
+  },
+  {
+    "id": "5943",
+    "name": "Bermuda",
+    "country": "Bermuda",
+    "persian": "برمودا"
+  },
+  {
+    "id": "95800",
+    "name": "Bhutan",
+    "country": "Bhutan",
+    "persian": "بوتان"
+  },
+  {
+    "id": "5797",
+    "name": "Bolivia",
+    "country": "Bolivia",
+    "persian": "بولیوی"
+  },
+  {
+    "id": "10106",
+    "name": "Bosnia and Herzegovina",
+    "country": "Bosnia and Herzegovina",
+    "persian": "بوسنی و هرزگوین"
+  },
+  {
+    "id": "5887",
+    "name": "Botswana",
+    "country": "Botswana",
+    "persian": "بوتسوانا"
+  },
+  {
+    "id": "8256",
+    "name": "Brazil",
+    "country": "Brazil",
+    "persian": "برزیل"
+  },
+  {
+    "id": "262135",
+    "name": "British Virgin Islands",
+    "country": "British Virgin Islands",
+    "persian": "جزایر ویرجین بریتانیا"
+  },
+  {
+    "id": "178671",
+    "name": "Brunei",
+    "country": "Brunei",
+    "persian": "برونئی"
+  },
+  {
+    "id": "10150",
+    "name": "Bulgaria",
+    "country": "Bulgaria",
+    "persian": "بلغارستان"
+  },
+  {
+    "id": "6323",
+    "name": "Burkina Faso",
+    "country": "Burkina Faso",
+    "persian": "بورکینافاسو"
+  },
+  {
+    "id": "121284",
+    "name": "Burundi",
+    "country": "Burundi",
+    "persian": "بوروندی"
+  },
+  {
+    "id": "6332",
+    "name": "Cambodia",
+    "country": "Cambodia",
+    "persian": "کامبوج"
+  },
+  {
+    "id": "6629",
+    "name": "Cameroon",
+    "country": "Cameroon",
+    "persian": "کامرون"
+  },
+  {
+    "id": "5810",
+    "name": "Canada",
+    "country": "Canada",
+    "persian": "کانادا"
+  },
+  {
+    "id": "5888",
+    "name": "Cape Verde",
+    "country": "Cape Verde",
+    "persian": "کیپ ورد"
+  },
+  {
+    "id": "287982",
+    "name": "Cayman Islands",
+    "country": "Cayman Islands",
+    "persian": "جزایر کیمن"
+  },
+  {
+    "id": "230693",
+    "name": "Central African Republic",
+    "country": "Central African Republic",
+    "persian": "جمهوری آفریقای مرکزی"
+  },
+  {
+    "id": "4432",
+    "name": "Chad",
+    "country": "Chad",
+    "persian": "چاد"
+  },
+  {
+    "id": "9762",
+    "name": "Chile",
+    "country": "Chile",
+    "persian": "شیلی"
+  },
+  {
+    "id": "5822",
+    "name": "China",
+    "country": "China",
+    "persian": "چین"
+  },
+  {
+    "id": "5896",
+    "name": "Chinese Taipei",
+    "country": "Chinese Taipei",
+    "persian": "تایوان"
+  },
+  {
+    "id": "8258",
+    "name": "Colombia",
+    "country": "Colombia",
+    "persian": "کلمبیا"
+  },
+  {
+    "id": "230692",
+    "name": "Comoros",
+    "country": "Comoros",
+    "persian": "کومور"
+  },
+  {
+    "id": "5801",
+    "name": "Congo",
+    "country": "Congo",
+    "persian": "کنگو"
+  },
+  {
+    "id": "287880",
+    "name": "Cook Islands",
+    "country": "Cook Islands",
+    "persian": "جزایر کوک"
+  },
+  {
+    "id": "6705",
+    "name": "Costa Rica",
+    "country": "Costa Rica",
+    "persian": "کاستاریکا"
+  },
+  {
+    "id": "10155",
+    "name": "Croatia",
+    "country": "Croatia",
+    "persian": "کرواسی"
+  },
+  {
+    "id": "5857",
+    "name": "Cuba",
+    "country": "Cuba",
+    "persian": "کوبا"
+  },
+  {
+    "id": "287981",
+    "name": "Curacao",
+    "country": "Curacao",
+    "persian": "کوراسائو"
+  },
+  {
+    "id": "5793",
+    "name": "Cyprus",
+    "country": "Cyprus",
+    "persian": "قبرس"
+  },
+  {
+    "id": "8496",
+    "name": "Czechia",
+    "country": "Czechia",
+    "persian": "جمهوری چک"
+  },
+  {
+    "id": "8238",
+    "name": "Denmark",
+    "country": "Denmark",
+    "persian": "دانمارک"
+  },
+  {
+    "id": "121285",
+    "name": "Djibouti",
+    "country": "Djibouti",
+    "persian": "جیبوتی"
+  },
+  {
+    "id": "287980",
+    "name": "Dominica",
+    "country": "Dominica",
+    "persian": "دومینیکا"
+  },
+  {
+    "id": "262134",
+    "name": "Dominican Republic",
+    "country": "Dominican Republic",
+    "persian": "جمهوری دومینیکن"
+  },
+  {
+    "id": "6321",
+    "name": "DR Congo",
+    "country": "DR Congo",
+    "persian": "کنگو دموکراتیک"
+  },
+  {
+    "id": "6707",
+    "name": "Ecuador",
+    "country": "Ecuador",
+    "persian": "اکوادور"
+  },
+  {
+    "id": "10255",
+    "name": "Egypt",
+    "country": "Egypt",
+    "persian": "مصر"
+  },
+  {
+    "id": "6327",
+    "name": "El Salvador",
+    "country": "El Salvador",
+    "persian": "السالوادور"
+  },
+  {
+    "id": "8491",
+    "name": "England",
+    "country": "England",
+    "persian": "انگلیس"
+  },
+  {
+    "id": "8323",
+    "name": "Equatorial Guinea",
+    "country": "Equatorial Guinea",
+    "persian": "گینه استوایی"
+  },
+  {
+    "id": "6011",
+    "name": "Eritrea",
+    "country": "Eritrea",
+    "persian": "اریتره"
+  },
+  {
+    "id": "8261",
+    "name": "Estonia",
+    "country": "Estonia",
+    "persian": "استونی"
+  },
+  {
+    "id": "4433",
+    "name": "Eswatini",
+    "country": "Eswatini",
+    "persian": "اسواتینی"
+  },
+  {
+    "id": "121282",
+    "name": "Ethiopia",
+    "country": "Ethiopia",
+    "persian": "اتیوپی"
+  },
+  {
+    "id": "8269",
+    "name": "Faroe Islands",
+    "country": "Faroe Islands",
+    "persian": "جزایر فارو"
+  },
+  {
+    "id": "5925",
+    "name": "Fiji",
+    "country": "Fiji",
+    "persian": "فیجی"
+  },
+  {
+    "id": "7871",
+    "name": "Finland",
+    "country": "Finland",
+    "persian": "فنلاند"
+  },
+  {
+    "id": "6723",
+    "name": "France",
+    "country": "France",
+    "persian": "فرانسه"
+  },
+  {
+    "id": "5889",
+    "name": "Gabon",
+    "country": "Gabon",
+    "persian": "گابن"
+  },
+  {
+    "id": "5979",
+    "name": "Gambia",
+    "country": "Gambia",
+    "persian": "گامبیا"
+  },
+  {
+    "id": "8268",
+    "name": "Georgia",
+    "country": "Georgia",
+    "persian": "گرجستان"
+  },
+  {
+    "id": "8570",
+    "name": "Germany",
+    "country": "Germany",
+    "persian": "آلمان"
+  },
+  {
+    "id": "6714",
+    "name": "Ghana",
+    "country": "Ghana",
+    "persian": "غنا"
+  },
+  {
+    "id": "507764",
+    "name": "Gibraltar",
+    "country": "Gibraltar",
+    "persian": "جبل‌الطارق"
+  },
+  {
+    "id": "6383",
+    "name": "Greece",
+    "country": "Greece",
+    "persian": "یونان"
+  },
+  {
+    "id": "6548",
+    "name": "Grenada",
+    "country": "Grenada",
+    "persian": "گرنادا"
+  },
+  {
+    "id": "95798",
+    "name": "Guam",
+    "country": "Guam",
+    "persian": "گوام"
+  },
+  {
+    "id": "5858",
+    "name": "Guatemala",
+    "country": "Guatemala",
+    "persian": "گواتمالا"
+  },
+  {
+    "id": "6289",
+    "name": "Guinea",
+    "country": "Guinea",
+    "persian": "گینه"
+  },
+  {
+    "id": "230700",
+    "name": "Guinea-Bissau",
+    "country": "Guinea-Bissau",
+    "persian": "گینه بیسائو"
+  },
+  {
+    "id": "6222",
+    "name": "Guyana",
+    "country": "Guyana",
+    "persian": "گویان"
+  },
+  {
+    "id": "5934",
+    "name": "Haiti",
+    "country": "Haiti",
+    "persian": "هائیتی"
+  },
+  {
+    "id": "5808",
+    "name": "Honduras",
+    "country": "Honduras",
+    "persian": "هندوراس"
+  },
+  {
+    "id": "6322",
+    "name": "Hong Kong",
+    "country": "Hong Kong",
+    "persian": "هنگ کنگ"
+  },
+  {
+    "id": "8565",
+    "name": "Hungary",
+    "country": "Hungary",
+    "persian": "مجارستان"
+  },
+  {
+    "id": "8536",
+    "name": "Iceland",
+    "country": "Iceland",
+    "persian": "ایسلند"
+  },
+  {
+    "id": "6329",
+    "name": "India",
+    "country": "India",
+    "persian": "هند"
+  },
+  {
+    "id": "6324",
+    "name": "Indonesia",
+    "country": "Indonesia",
+    "persian": "اندونزی"
+  },
+  {
+    "id": "6711",
+    "name": "Iran",
+    "country": "Iran",
+    "persian": "ایران"
+  },
+  {
+    "id": "5819",
+    "name": "Iraq",
+    "country": "Iraq",
+    "persian": "عراق"
+  },
+  {
+    "id": "5791",
+    "name": "Ireland",
+    "country": "Ireland",
+    "persian": "ایرلند"
+  },
+  {
+    "id": "8567",
+    "name": "Israel",
+    "country": "Israel",
+    "persian": "اسرائیل"
+  },
+  {
+    "id": "8204",
+    "name": "Italy",
+    "country": "Italy",
+    "persian": "ایتالیا"
+  },
+  {
+    "id": "6709",
+    "name": "Ivory Coast",
+    "country": "Ivory Coast",
+    "persian": "ساحل عاج"
+  },
+  {
+    "id": "5806",
+    "name": "Jamaica",
+    "country": "Jamaica",
+    "persian": "جامائیکا"
+  },
+  {
+    "id": "6715",
+    "name": "Japan",
+    "country": "Japan",
+    "persian": "ژاپن"
+  },
+  {
+    "id": "5816",
+    "name": "Jordan",
+    "country": "Jordan",
+    "persian": "اردن"
+  },
+  {
+    "id": "8265",
+    "name": "Kazakhstan",
+    "country": "Kazakhstan",
+    "persian": "قزاقستان"
+  },
+  {
+    "id": "5884",
+    "name": "Kenya",
+    "country": "Kenya",
+    "persian": "کنیا"
+  },
+  {
+    "id": "430156",
+    "name": "Kosovo",
+    "country": "Kosovo",
+    "persian": "کوزوو"
+  },
+  {
+    "id": "5821",
+    "name": "Kuwait",
+    "country": "Kuwait",
+    "persian": "کویت"
+  },
+  {
+    "id": "5893",
+    "name": "Kyrgyzstan",
+    "country": "Kyrgyzstan",
+    "persian": "قرقیزستان"
+  },
+  {
+    "id": "5891",
+    "name": "Laos",
+    "country": "Laos",
+    "persian": "لائوس"
+  },
+  {
+    "id": "5795",
+    "name": "Latvia",
+    "country": "Latvia",
+    "persian": "لتونی"
+  },
+  {
+    "id": "5897",
+    "name": "Lebanon",
+    "country": "Lebanon",
+    "persian": "لبنان"
+  },
+  {
+    "id": "4167",
+    "name": "Lesotho",
+    "country": "Lesotho",
+    "persian": "لسوتو"
+  },
+  {
+    "id": "5804",
+    "name": "Liberia",
+    "country": "Liberia",
+    "persian": "لیبریا"
+  },
+  {
+    "id": "6328",
+    "name": "Libya",
+    "country": "Libya",
+    "persian": "لیبی"
+  },
+  {
+    "id": "5799",
+    "name": "Liechtenstein",
+    "country": "Liechtenstein",
+    "persian": "لیختن‌اشتاین"
+  },
+  {
+    "id": "8254",
+    "name": "Lithuania",
+    "country": "Lithuania",
+    "persian": "لیتوانی"
+  },
+  {
+    "id": "5792",
+    "name": "Luxembourg",
+    "country": "Luxembourg",
+    "persian": "لوکزامبورگ"
+  },
+  {
+    "id": "4175",
+    "name": "Macao",
+    "country": "Macao",
+    "persian": "ماکائو"
+  },
+  {
+    "id": "5809",
+    "name": "Madagascar",
+    "country": "Madagascar",
+    "persian": "ماداگاسکار"
+  },
+  {
+    "id": "6020",
+    "name": "Malawi",
+    "country": "Malawi",
+    "persian": "مالاوی"
+  },
+  {
+    "id": "5823",
+    "name": "Malaysia",
+    "country": "Malaysia",
+    "persian": "مالزی"
+  },
+  {
+    "id": "5899",
+    "name": "Maldives",
+    "country": "Maldives",
+    "persian": "مالدیو"
+  },
+  {
+    "id": "5815",
+    "name": "Mali",
+    "country": "Mali",
+    "persian": "مالی"
+  },
+  {
+    "id": "8495",
+    "name": "Malta",
+    "country": "Malta",
+    "persian": "مالت"
+  },
+  {
+    "id": "68374",
+    "name": "Mauritania",
+    "country": "Mauritania",
+    "persian": "موریتانی"
+  },
+  {
+    "id": "5750",
+    "name": "Mauritius",
+    "country": "Mauritius",
+    "persian": "موریس"
+  },
+  {
+    "id": "6710",
+    "name": "Mexico",
+    "country": "Mexico",
+    "persian": "مکزیک"
+  },
+  {
+    "id": "5794",
+    "name": "Moldova",
+    "country": "Moldova",
+    "persian": "مولداوی"
+  },
+  {
+    "id": "95971",
+    "name": "Mongolia",
+    "country": "Mongolia",
+    "persian": "مغولستان"
+  },
+  {
+    "id": "49437",
+    "name": "Montenegro",
+    "country": "Montenegro",
+    "persian": "مونته‌نگرو"
+  },
+  {
+    "id": "262133",
+    "name": "Montserrat",
+    "country": "Montserrat",
+    "persian": "مونتسرات"
+  },
+  {
+    "id": "6262",
+    "name": "Morocco",
+    "country": "Morocco",
+    "persian": "مراکش"
+  },
+  {
+    "id": "5965",
+    "name": "Mozambique",
+    "country": "Mozambique",
+    "persian": "موزامبیک"
+  },
+  {
+    "id": "8307",
+    "name": "Myanmar",
+    "country": "Myanmar",
+    "persian": "میانمار"
+  },
+  {
+    "id": "5802",
+    "name": "Namibia",
+    "country": "Namibia",
+    "persian": "نامیبیا"
+  },
+  {
+    "id": "95799",
+    "name": "Nepal",
+    "country": "Nepal",
+    "persian": "نپال"
+  },
+  {
+    "id": "6708",
+    "name": "Netherlands",
+    "country": "Netherlands",
+    "persian": "هلند"
+  },
+  {
+    "id": "101595",
+    "name": "New Caledonia",
+    "country": "New Caledonia",
+    "persian": "کالدونیای جدید"
+  },
+  {
+    "id": "5820",
+    "name": "New Zealand",
+    "country": "New Zealand",
+    "persian": "نیوزیلند"
+  },
+  {
+    "id": "5807",
+    "name": "Nicaragua",
+    "country": "Nicaragua",
+    "persian": "نیکاراگوئه"
+  },
+  {
+    "id": "121281",
+    "name": "Niger",
+    "country": "Niger",
+    "persian": "نیجر"
+  },
+  {
+    "id": "6346",
+    "name": "Nigeria",
+    "country": "Nigeria",
+    "persian": "نیجریه"
+  },
+  {
+    "id": "6330",
+    "name": "North Korea",
+    "country": "North Korea",
+    "persian": "کره شمالی"
+  },
+  {
+    "id": "8260",
+    "name": "North Macedonia",
+    "country": "North Macedonia",
+    "persian": "مقدونیه شمالی"
+  },
+  {
+    "id": "10259",
+    "name": "Northern Ireland",
+    "country": "Northern Ireland",
+    "persian": "ایرلند شمالی"
+  },
+  {
+    "id": "8492",
+    "name": "Norway",
+    "country": "Norway",
+    "persian": "نروژ"
+  },
+  {
+    "id": "5824",
+    "name": "Oman",
+    "country": "Oman",
+    "persian": "عمان"
+  },
+  {
+    "id": "5910",
+    "name": "Pakistan",
+    "country": "Pakistan",
+    "persian": "پاکستان"
+  },
+  {
+    "id": "6333",
+    "name": "Palestine",
+    "country": "Palestine",
+    "persian": "فلسطین"
+  },
+  {
+    "id": "5922",
+    "name": "Panama",
+    "country": "Panama",
+    "persian": "پاناما"
+  },
+  {
+    "id": "287876",
+    "name": "Papua New Guinea",
+    "country": "Papua New Guinea",
+    "persian": "پاپوآ گینه نو"
+  },
+  {
+    "id": "6724",
+    "name": "Paraguay",
+    "country": "Paraguay",
+    "persian": "پاراگوئه"
+  },
+  {
+    "id": "5798",
+    "name": "Peru",
+    "country": "Peru",
+    "persian": "پرو"
+  },
+  {
+    "id": "230139",
+    "name": "Philippines",
+    "country": "Philippines",
+    "persian": "فیلیپین"
+  },
+  {
+    "id": "8568",
+    "name": "Poland",
+    "country": "Poland",
+    "persian": "لهستان"
+  },
+  {
+    "id": "8361",
+    "name": "Portugal",
+    "country": "Portugal",
+    "persian": "پرتغال"
+  },
+  {
+    "id": "5756",
+    "name": "Puerto Rico",
+    "country": "Puerto Rico",
+    "persian": "پورتوریکو"
+  },
+  {
+    "id": "5902",
+    "name": "Qatar",
+    "country": "Qatar",
+    "persian": "قطر"
+  },
+  {
+    "id": "9730",
+    "name": "Romania",
+    "country": "Romania",
+    "persian": "رومانی"
+  },
+  {
+    "id": "8713",
+    "name": "Russia",
+    "country": "Russia",
+    "persian": "روسیه"
+  },
+  {
+    "id": "5885",
+    "name": "Rwanda",
+    "country": "Rwanda",
+    "persian": "رواندا"
+  },
+  {
+    "id": "127408",
+    "name": "Saint Lucia",
+    "country": "Saint Lucia",
+    "persian": "سنت لوسیا"
+  },
+  {
+    "id": "5923",
+    "name": "Saint Vincent and The Grenadines",
+    "country": "Saint Vincent and The Grenadines",
+    "persian": "سنت وینسنت و گرنادین‌ها"
+  },
+  {
+    "id": "287878",
+    "name": "Samoa",
+    "country": "Samoa",
+    "persian": "ساموآ"
+  },
+  {
+    "id": "6035",
+    "name": "San Marino",
+    "country": "San Marino",
+    "persian": "سن مارینو"
+  },
+  {
+    "id": "287979",
+    "name": "Sao Tome and Principe",
+    "country": "Sao Tome and Principe",
+    "persian": "سائوتومه و پرنسیپ"
+  },
+  {
+    "id": "7795",
+    "name": "Saudi Arabia",
+    "country": "Saudi Arabia",
+    "persian": "عربستان"
+  },
+  {
+    "id": "8498",
+    "name": "Scotland",
+    "country": "Scotland",
+    "persian": "اسکاتلند"
+  },
+  {
+    "id": "6395",
+    "name": "Senegal",
+    "country": "Senegal",
+    "persian": "سنگال"
+  },
+  {
+    "id": "8205",
+    "name": "Serbia",
+    "country": "Serbia",
+    "persian": "صربستان"
+  },
+  {
+    "id": "121274",
+    "name": "Seychelles",
+    "country": "Seychelles",
+    "persian": "سیشل"
+  },
+  {
+    "id": "5803",
+    "name": "Sierra Leone",
+    "country": "Sierra Leone",
+    "persian": "سیرالئون"
+  },
+  {
+    "id": "5825",
+    "name": "Singapore",
+    "country": "Singapore",
+    "persian": "سنگاپور"
+  },
+  {
+    "id": "8497",
+    "name": "Slovakia",
+    "country": "Slovakia",
+    "persian": "اسلواکی"
+  },
+  {
+    "id": "5787",
+    "name": "Slovenia",
+    "country": "Slovenia",
+    "persian": "اسلوونی"
+  },
+  {
+    "id": "6319",
+    "name": "Solomon Islands",
+    "country": "Solomon Islands",
+    "persian": "جزایر سلیمان"
+  },
+  {
+    "id": "287978",
+    "name": "Somalia",
+    "country": "Somalia",
+    "persian": "سومالی"
+  },
+  {
+    "id": "6316",
+    "name": "South Africa",
+    "country": "South Africa",
+    "persian": "آفریقای جنوبی"
+  },
+  {
+    "id": "7804",
+    "name": "South Korea",
+    "country": "South Korea",
+    "persian": "کره جنوبی"
+  },
+  {
+    "id": "408231",
+    "name": "South Sudan",
+    "country": "South Sudan",
+    "persian": "سودان جنوبی"
+  },
+  {
+    "id": "6720",
+    "name": "Spain",
+    "country": "Spain",
+    "persian": "اسپانیا"
+  },
+  {
+    "id": "5895",
+    "name": "Sri Lanka",
+    "country": "Sri Lanka",
+    "persian": "سریلانکا"
+  },
+  {
+    "id": "5924",
+    "name": "St. Kitts and Nevis",
+    "country": "St. Kitts and Nevis",
+    "persian": "سنت کیتس و نویس"
+  },
+  {
+    "id": "5805",
+    "name": "Sudan",
+    "country": "Sudan",
+    "persian": "سودان"
+  },
+  {
+    "id": "127411",
+    "name": "Suriname",
+    "country": "Suriname",
+    "persian": "سورینام"
+  },
+  {
+    "id": "8520",
+    "name": "Sweden",
+    "country": "Sweden",
+    "persian": "سوئد"
+  },
+  {
+    "id": "6717",
+    "name": "Switzerland",
+    "country": "Switzerland",
+    "persian": "سوئیس"
+  },
+  {
+    "id": "6320",
+    "name": "Syria",
+    "country": "Syria",
+    "persian": "سوریه"
+  },
+  {
+    "id": "5927",
+    "name": "Tahiti",
+    "country": "Tahiti",
+    "persian": "تاهیتی"
+  },
+  {
+    "id": "5898",
+    "name": "Tajikistan",
+    "country": "Tajikistan",
+    "persian": "تاجیکستان"
+  },
+  {
+    "id": "7941",
+    "name": "Tanzania",
+    "country": "Tanzania",
+    "persian": "تانزانیا"
+  },
+  {
+    "id": "5788",
+    "name": "Thailand",
+    "country": "Thailand",
+    "persian": "تایلند"
+  },
+  {
+    "id": "95801",
+    "name": "Timor-Leste",
+    "country": "Timor-Leste",
+    "persian": "تیمور شرقی"
+  },
+  {
+    "id": "7740",
+    "name": "Togo",
+    "country": "Togo",
+    "persian": "توگو"
+  },
+  {
+    "id": "287881",
+    "name": "Tonga",
+    "country": "Tonga",
+    "persian": "تونگا"
+  },
+  {
+    "id": "7724",
+    "name": "Trinidad and Tobago",
+    "country": "Trinidad and Tobago",
+    "persian": "ترینیداد و توباگو"
+  },
+  {
+    "id": "6719",
+    "name": "Tunisia",
+    "country": "Tunisia",
+    "persian": "تونس"
+  },
+  {
+    "id": "6595",
+    "name": "Turkiye",
+    "country": "Turkiye",
+    "persian": "ترکیه"
+  },
+  {
+    "id": "5900",
+    "name": "Turkmenistan",
+    "country": "Turkmenistan",
+    "persian": "ترکمنستان"
+  },
+  {
+    "id": "262137",
+    "name": "Turks and Caicos Islands",
+    "country": "Turks and Caicos Islands",
+    "persian": "جزایر تورکس و کایکوس"
+  },
+  {
+    "id": "262136",
+    "name": "U.S. Virgin Islands",
+    "country": "U.S. Virgin Islands",
+    "persian": "جزایر ویرجین آمریکا"
+  },
+  {
+    "id": "5789",
+    "name": "UAE",
+    "country": "UAE",
+    "persian": "امارات"
+  },
+  {
+    "id": "5890",
+    "name": "Uganda",
+    "country": "Uganda",
+    "persian": "اوگاندا"
+  },
+  {
+    "id": "6718",
+    "name": "Ukraine",
+    "country": "Ukraine",
+    "persian": "اوکراین"
+  },
+  {
+    "id": "5796",
+    "name": "Uruguay",
+    "country": "Uruguay",
+    "persian": "اروگوئه"
+  },
+  {
+    "id": "6713",
+    "name": "USA",
+    "country": "USA",
+    "persian": "آمریکا"
+  },
+  {
+    "id": "8700",
+    "name": "Uzbekistan",
+    "country": "Uzbekistan",
+    "persian": "ازبکستان"
+  },
+  {
+    "id": "5926",
+    "name": "Vanuatu",
+    "country": "Vanuatu",
+    "persian": "وانواتو"
+  },
+  {
+    "id": "5800",
+    "name": "Venezuela",
+    "country": "Venezuela",
+    "persian": "ونزوئلا"
+  },
+  {
+    "id": "5894",
+    "name": "Vietnam",
+    "country": "Vietnam",
+    "persian": "ویتنام"
+  },
+  {
+    "id": "5790",
+    "name": "Wales",
+    "country": "Wales",
+    "persian": "ولز"
+  },
+  {
+    "id": "5892",
+    "name": "Yemen",
+    "country": "Yemen",
+    "persian": "یمن"
+  },
+  {
+    "id": "6277",
+    "name": "Zambia",
+    "country": "Zambia",
+    "persian": "زامبیا"
+  },
+  {
+    "id": "6290",
+    "name": "Zimbabwe",
+    "country": "Zimbabwe",
+    "persian": "زیمبابوه"
+  }
+]
