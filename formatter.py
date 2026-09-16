@@ -32,64 +32,28 @@ def get_display_team_name(
 snapshot,
 side,
 ):
-if not isinstance(
-snapshot,
-dict,
-):
+if not isinstance(snapshot, dict):
 return ""
 
 ```
 if side == "home":
-
-    team_id = snapshot.get(
-        "home_team_id"
-    )
-
-    translated_name = (
-        snapshot.get("home_fa")
-        or ""
-    )
-
-    team_name = (
-        snapshot.get("home")
-        or ""
-    )
-
-    team_data = snapshot.get(
-        "home_team"
-    )
+    team_id = snapshot.get("home_team_id")
+    translated_name = snapshot.get("home_fa") or ""
+    team_name = snapshot.get("home") or ""
+    team_data = snapshot.get("home_team")
 
 elif side == "away":
-
-    team_id = snapshot.get(
-        "away_team_id"
-    )
-
-    translated_name = (
-        snapshot.get("away_fa")
-        or ""
-    )
-
-    team_name = (
-        snapshot.get("away")
-        or ""
-    )
-
-    team_data = snapshot.get(
-        "away_team"
-    )
+    team_id = snapshot.get("away_team_id")
+    translated_name = snapshot.get("away_fa") or ""
+    team_name = snapshot.get("away") or ""
+    team_data = snapshot.get("away_team")
 
 else:
-
     return ""
 
-if isinstance(
-    team_data,
-    dict,
-):
+if isinstance(team_data, dict):
 
     if team_id is None:
-
         team_id = (
             team_data.get("id")
             or team_data.get("teamId")
@@ -97,7 +61,6 @@ if isinstance(
         )
 
     if not translated_name:
-
         translated_name = (
             team_data.get("persian")
             or team_data.get("persian_name")
@@ -107,7 +70,6 @@ if isinstance(
         )
 
     if not team_name:
-
         team_name = (
             team_data.get("name")
             or team_data.get("shortName")
@@ -115,53 +77,27 @@ if isinstance(
             or ""
         )
 
-print(
-    "\n========== FORMATTER TEAM DEBUG =========="
-)
-
-print(
-    f"side: {side}"
-)
-
-print(
-    f"team_id: {team_id}"
-)
-
-print(
-    f"translated_name: {translated_name}"
-)
-
-print(
-    f"team_name: {team_name}"
-)
-
-print(
-    f"team_data_type: {type(team_data).__name__}"
-)
-
-print(
-    "==========================================\n"
-)
+print("\n========== FORMATTER TEAM DEBUG ==========")
+print(f"side: {side}")
+print(f"team_id: {team_id}")
+print(f"translated_name: {translated_name}")
+print(f"team_name: {team_name}")
+print(f"team_data_type: {type(team_data).__name__}")
+print("==========================================\n")
 
 if translated_name:
-
     return translated_name
 
 if team_id is not None:
-
-    translated_name = (
-        get_persian_team_name(
-            team_id,
-            "",
-        )
+    translated_name = get_persian_team_name(
+        team_id,
+        "",
     )
 
     if translated_name:
-
         return translated_name
 
 return team_name
-```
 
 # --------------------------------------------------------
 
