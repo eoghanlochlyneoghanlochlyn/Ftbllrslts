@@ -54,6 +54,52 @@ def get_display_team_name(
             or ""
         )
 
+        # اگر home_team_id در سطح اصلی snapshot نبود،
+        # از home_team هم امتحان می‌کنیم.
+        if team_id is None:
+
+            home_team = snapshot.get(
+                "home_team"
+            )
+
+            if isinstance(
+                home_team,
+                dict,
+            ):
+
+                team_id = (
+                    home_team.get("id")
+                    or home_team.get("teamId")
+                    or home_team.get("team_id")
+                )
+
+                if not translated_name:
+
+                    translated_name = (
+                        home_team.get(
+                            "persian"
+                        )
+                        or home_team.get(
+                            "persian_name"
+                        )
+                        or home_team.get(
+                            "name_fa"
+                        )
+                        or ""
+                    )
+
+                if not team_name:
+
+                    team_name = (
+                        home_team.get(
+                            "name"
+                        )
+                        or home_team.get(
+                            "shortName"
+                        )
+                        or ""
+                    )
+
     elif side == "away":
 
         team_id = snapshot.get(
@@ -70,22 +116,89 @@ def get_display_team_name(
             or ""
         )
 
+        # اگر away_team_id در سطح اصلی snapshot نبود،
+        # از away_team هم امتحان می‌کنیم.
+        if team_id is None:
+
+            away_team = snapshot.get(
+                "away_team"
+            )
+
+            if isinstance(
+                away_team,
+                dict,
+            ):
+
+                team_id = (
+                    away_team.get("id")
+                    or away_team.get("teamId")
+                    or away_team.get("team_id")
+                )
+
+                if not translated_name:
+
+                    translated_name = (
+                        away_team.get(
+                            "persian"
+                        )
+                        or away_team.get(
+                            "persian_name"
+                        )
+                        or away_team.get(
+                            "name_fa"
+                        )
+                        or ""
+                    )
+
+                if not team_name:
+
+                    team_name = (
+                        away_team.get(
+                            "name"
+                        )
+                        or away_team.get(
+                            "shortName"
+                        )
+                        or ""
+                    )
+
     else:
 
         return ""
 
-    # اولویت با ترجمه‌ای است که خود fotmob.py
-    # داخل snapshot قرار داده است.
+    # ----------------------------------------------------
+    # اولویت اول:
+    # ترجمه‌ای که خود snapshot دارد
+    # ----------------------------------------------------
+
     if translated_name:
 
         return translated_name
 
-    # اگر home_fa / away_fa موجود نبود،
-    # از فایل teams.json استفاده می‌کنیم.
-    return get_persian_team_name(
-        team_id,
-        team_name,
-    )
+    # ----------------------------------------------------
+    # اولویت دوم:
+    # ترجمه بر اساس ID از teams.json
+    # ----------------------------------------------------
+
+    if team_id is not None:
+
+        translated_name = (
+            get_persian_team_name(
+                team_id,
+                "",
+            )
+        )
+
+        if translated_name:
+
+            return translated_name
+
+    # ----------------------------------------------------
+    # آخرین fallback:
+    # نام خام تیم
+    # ----------------------------------------------------
+
+    return team_name
 
 
 # --------------------------------------------------------
