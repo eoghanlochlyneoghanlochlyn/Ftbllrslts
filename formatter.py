@@ -32,14 +32,13 @@ def get_display_team_name(
 snapshot,
 side,
 ):
+if not isinstance(
+snapshot,
+dict,
+):
+return ""
 
 ```
-if not isinstance(
-    snapshot,
-    dict,
-):
-    return ""
-
 if side == "home":
 
     team_id = snapshot.get(
@@ -199,14 +198,13 @@ home_name="Home",
 away_name="Away",
 penalty_score=None,
 ):
+if not isinstance(
+score,
+dict,
+):
+return ""
 
 ```
-if not isinstance(
-    score,
-    dict,
-):
-    return ""
-
 home_score = score.get(
     "home"
 )
@@ -304,14 +302,13 @@ return (
 ```
 
 def has_valid_score(score):
+if not isinstance(
+score,
+dict,
+):
+return False
 
 ```
-if not isinstance(
-    score,
-    dict,
-):
-    return False
-
 if score.get(
     "home"
 ) is None:
@@ -349,23 +346,19 @@ return True
 # --------------------------------------------------------
 
 def _empty_player_event_data():
-
-```
 return {
-    "goals": 0,
-    "assists": 0,
-    "own_goals": 0,
-    "penalty_goals": 0,
+"goals": 0,
+"assists": 0,
+"own_goals": 0,
+"penalty_goals": 0,
 }
-```
 
 def build_final_player_events(
 events
 ):
-
-```
 result = {}
 
+```
 if not isinstance(
     events,
     list,
@@ -452,12 +445,11 @@ def get_player_event_markers(
 player,
 player_events,
 ):
-
-```
 player_id = get_player_id(
-    player
+player
 )
 
+```
 if player_id is None:
     return []
 
@@ -553,12 +545,11 @@ player,
 show_rating,
 player_events=None,
 ):
-
-```
 name = get_player_name(
-    player
+player
 )
 
+```
 if not name:
     return ""
 
@@ -610,10 +601,9 @@ players,
 show_rating,
 player_events=None,
 ):
-
-```
 names = []
 
+```
 for player in players:
 
     name = format_player(
@@ -651,13 +641,12 @@ show_rating,
 team_icon,
 player_events=None,
 ):
-
-```
 if not isinstance(
-    team,
-    dict,
+team,
+dict,
 ):
 
+```
     return (
         f"{team_icon} "
         f"{team_name}\n"
@@ -798,10 +787,9 @@ away_name,
 home_scorers,
 away_scorers,
 ):
-
-```
 lines = []
 
+```
 if home_scorers:
 
     lines.append(
@@ -837,13 +825,12 @@ away_scorers=None,
 show_rating=False,
 show_final_score=False,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -989,13 +976,12 @@ return "\n".join(
 def build_start_message(
 snapshot,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -1025,14 +1011,13 @@ return (
 def get_event_player_name(
 event,
 ):
+if not isinstance(
+event,
+dict,
+):
+return ""
 
 ```
-if not isinstance(
-    event,
-    dict,
-):
-    return ""
-
 player = event.get(
     "player"
 )
@@ -1070,13 +1055,12 @@ snapshot,
 event,
 score=None,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -1212,13 +1196,12 @@ snapshot,
 cancelled_goal,
 score=None,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -1347,13 +1330,12 @@ def build_half_time_message(
 snapshot,
 score=None,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -1401,13 +1383,12 @@ def build_red_card_message(
 snapshot,
 event,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -1490,14 +1471,13 @@ snapshot,
 event,
 score=None,
 ):
+if not isinstance(
+event,
+dict,
+):
+return ""
 
 ```
-if not isinstance(
-    event,
-    dict,
-):
-    return ""
-
 event_type = str(
     event.get(
         "type",
@@ -1549,11 +1529,10 @@ def format_stat_value(
 label,
 value,
 ):
+if value is None:
+return ""
 
 ```
-if value is None:
-    return ""
-
 if label == "xG":
 
     try:
@@ -1613,14 +1592,13 @@ def build_final_lineup_message(
 snapshot,
 events=None,
 ):
-
-```
 player_events = (
-    build_final_player_events(
-        events
-    )
+build_final_player_events(
+events
+)
 )
 
+```
 message = build_lineup_message(
     snapshot,
     player_events=player_events,
@@ -1671,13 +1649,12 @@ def build_final_stats_message(
 snapshot,
 score=None,
 ):
-
-```
 home_name = get_display_team_name(
-    snapshot,
-    "home",
+snapshot,
+"home",
 )
 
+```
 if not home_name:
 
     home_name = "Home"
@@ -1857,9 +1834,7 @@ def build_final_message(
 snapshot,
 score=None,
 ):
-
-```
 return build_final_stats_message(
-    snapshot,
-    score,
+snapshot,
+score,
 )
