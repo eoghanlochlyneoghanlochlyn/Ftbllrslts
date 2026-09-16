@@ -32,28 +32,70 @@ def get_display_team_name(
 snapshot,
 side,
 ):
-    if not isinstance(snapshot, dict):
-return ""
 
-
-if side == "home":
-    team_id = snapshot.get("home_team_id")
-    translated_name = snapshot.get("home_fa") or ""
-    team_name = snapshot.get("home") or ""
-    team_data = snapshot.get("home_team")
-
-elif side == "away":
-    team_id = snapshot.get("away_team_id")
-    translated_name = snapshot.get("away_fa") or ""
-    team_name = snapshot.get("away") or ""
-    team_data = snapshot.get("away_team")
-
-else:
+```
+if not isinstance(
+    snapshot,
+    dict,
+):
     return ""
 
-if isinstance(team_data, dict):
+if side == "home":
+
+    team_id = snapshot.get(
+        "home_team_id"
+    )
+
+    translated_name = (
+        snapshot.get("home_fa")
+        or ""
+    )
+
+    team_name = (
+        snapshot.get("home")
+        or ""
+    )
+
+    team_data = snapshot.get(
+        "home_team"
+    )
+
+elif side == "away":
+
+    team_id = snapshot.get(
+        "away_team_id"
+    )
+
+    translated_name = (
+        snapshot.get("away_fa")
+        or ""
+    )
+
+    team_name = (
+        snapshot.get("away")
+        or ""
+    )
+
+    team_data = snapshot.get(
+        "away_team"
+    )
+
+else:
+
+    return ""
+
+# ----------------------------------------------------
+# اگر اطلاعات تیم داخل snapshot وجود داشت،
+# شناسه و نام فارسی را از آن هم بررسی می‌کنیم.
+# ----------------------------------------------------
+
+if isinstance(
+    team_data,
+    dict,
+):
 
     if team_id is None:
+
         team_id = (
             team_data.get("id")
             or team_data.get("teamId")
@@ -61,6 +103,7 @@ if isinstance(team_data, dict):
         )
 
     if not translated_name:
+
         translated_name = (
             team_data.get("persian")
             or team_data.get("persian_name")
@@ -70,6 +113,7 @@ if isinstance(team_data, dict):
         )
 
     if not team_name:
+
         team_name = (
             team_data.get("name")
             or team_data.get("shortName")
@@ -77,27 +121,37 @@ if isinstance(team_data, dict):
             or ""
         )
 
-print("\n========== FORMATTER TEAM DEBUG ==========")
-print(f"side: {side}")
-print(f"team_id: {team_id}")
-print(f"translated_name: {translated_name}")
-print(f"team_name: {team_name}")
-print(f"team_data_type: {type(team_data).__name__}")
-print("==========================================\n")
+# ----------------------------------------------------
+# اولویت با ترجمه‌ای است که داخل snapshot
+# یا اطلاعات خود تیم پیدا شده است.
+# ----------------------------------------------------
 
 if translated_name:
+
     return translated_name
 
+# ----------------------------------------------------
+# اگر ترجمه داخل snapshot نبود،
+# از teams.json بر اساس شناسه تیم استفاده می‌کنیم.
+# ----------------------------------------------------
+
 if team_id is not None:
+
     translated_name = get_persian_team_name(
         team_id,
         "",
     )
 
     if translated_name:
+
         return translated_name
 
+# ----------------------------------------------------
+# آخرین پشتیبان: نام اصلی تیم
+# ----------------------------------------------------
+
 return team_name
+```
 
 # --------------------------------------------------------
 
@@ -111,13 +165,14 @@ home_name="Home",
 away_name="Away",
 penalty_score=None,
 ):
-if not isinstance(
-score,
-dict,
-):
-return ""
 
 ```
+if not isinstance(
+    score,
+    dict,
+):
+    return ""
+
 home_score = score.get(
     "home"
 )
@@ -214,16 +269,15 @@ return (
 )
 ```
 
-def has_valid_score(
-score,
-):
-if not isinstance(
-score,
-dict,
-):
-return False
+def has_valid_score(score):
 
 ```
+if not isinstance(
+    score,
+    dict,
+):
+    return False
+
 if score.get(
     "home"
 ) is None:
@@ -261,19 +315,23 @@ return True
 # --------------------------------------------------------
 
 def _empty_player_event_data():
-return {
-"goals": 0,
-"assists": 0,
-"own_goals": 0,
-"penalty_goals": 0,
-}
-
-def build_final_player_events(
-events,
-):
-result = {}
 
 ```
+return {
+    "goals": 0,
+    "assists": 0,
+    "own_goals": 0,
+    "penalty_goals": 0,
+}
+```
+
+def build_final_player_events(
+events
+):
+
+```
+result = {}
+
 if not isinstance(
     events,
     list,
@@ -306,7 +364,6 @@ for event in events:
         continue
 
     if player_id not in result:
-
         result[player_id] = (
             _empty_player_event_data()
         )
@@ -344,7 +401,6 @@ for event in events:
     if assist_id is not None:
 
         if assist_id not in result:
-
             result[assist_id] = (
                 _empty_player_event_data()
             )
@@ -362,11 +418,12 @@ def get_player_event_markers(
 player,
 player_events,
 ):
-player_id = get_player_id(
-player
-)
 
 ```
+player_id = get_player_id(
+    player
+)
+
 if player_id is None:
     return []
 
@@ -462,11 +519,12 @@ player,
 show_rating,
 player_events=None,
 ):
-name = get_player_name(
-player
-)
 
 ```
+name = get_player_name(
+    player
+)
+
 if not name:
     return ""
 
@@ -518,9 +576,10 @@ players,
 show_rating,
 player_events=None,
 ):
-names = []
 
 ```
+names = []
+
 for player in players:
 
     name = format_player(
@@ -530,7 +589,6 @@ for player in players:
     )
 
     if name:
-
         names.append(
             name
         )
@@ -559,12 +617,13 @@ show_rating,
 team_icon,
 player_events=None,
 ):
-if not isinstance(
-team,
-dict,
-):
 
 ```
+if not isinstance(
+    team,
+    dict,
+):
+
     return (
         f"{team_icon} "
         f"{team_name}\n"
@@ -618,10 +677,7 @@ line = format_player_line(
 )
 
 if line:
-
-    lines.append(
-        line
-    )
+    lines.append(line)
 
 line = format_player_line(
     "🛡",
@@ -631,10 +687,7 @@ line = format_player_line(
 )
 
 if line:
-
-    lines.append(
-        line
-    )
+    lines.append(line)
 
 line = format_player_line(
     "⚙️",
@@ -644,10 +697,7 @@ line = format_player_line(
 )
 
 if line:
-
-    lines.append(
-        line
-    )
+    lines.append(line)
 
 line = format_player_line(
     "⚡",
@@ -657,10 +707,7 @@ line = format_player_line(
 )
 
 if line:
-
-    lines.append(
-        line
-    )
+    lines.append(line)
 
 if groups["unknown"]:
 
@@ -672,10 +719,7 @@ if groups["unknown"]:
     )
 
     if line:
-
-        lines.append(
-            line
-        )
+        lines.append(line)
 
 lines.append("")
 
@@ -690,7 +734,6 @@ for player in substitutes:
     )
 
     if name:
-
         substitute_names.append(
             name
         )
@@ -721,9 +764,10 @@ away_name,
 home_scorers,
 away_scorers,
 ):
-lines = []
 
 ```
+lines = []
+
 if home_scorers:
 
     lines.append(
@@ -759,12 +803,13 @@ away_scorers=None,
 show_rating=False,
 show_final_score=False,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -910,12 +955,13 @@ return "\n".join(
 def build_start_message(
 snapshot,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -945,13 +991,14 @@ return (
 def get_event_player_name(
 event,
 ):
-if not isinstance(
-event,
-dict,
-):
-return ""
 
 ```
+if not isinstance(
+    event,
+    dict,
+):
+    return ""
+
 player = event.get(
     "player"
 )
@@ -968,7 +1015,6 @@ if isinstance(
     )
 
     if name:
-
         return name
 
 return (
@@ -990,12 +1036,13 @@ snapshot,
 event,
 score=None,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -1016,7 +1063,6 @@ player_name = (
 )
 
 if not player_name:
-
     player_name = (
         "بازیکن نامشخص"
     )
@@ -1026,15 +1072,12 @@ is_home = get_event_team(
 )
 
 if is_home is True:
-
     team_name = home_name
 
 elif is_home is False:
-
     team_name = away_name
 
 else:
-
     team_name = ""
 
 own_goal = is_own_goal(
@@ -1135,12 +1178,13 @@ snapshot,
 cancelled_goal,
 score=None,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -1158,7 +1202,6 @@ if not isinstance(
     cancelled_goal,
     dict,
 ):
-
     return ""
 
 goal_event = (
@@ -1171,7 +1214,6 @@ if not isinstance(
     goal_event,
     dict,
 ):
-
     return ""
 
 player_name = (
@@ -1199,15 +1241,12 @@ if is_home is None:
     )
 
 if is_home is True:
-
     team_name = home_name
 
 elif is_home is False:
-
     team_name = away_name
 
 else:
-
     team_name = ""
 
 minute = (
@@ -1274,12 +1313,13 @@ def build_half_time_message(
 snapshot,
 score=None,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -1327,12 +1367,13 @@ def build_red_card_message(
 snapshot,
 event,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -1415,13 +1456,14 @@ snapshot,
 event,
 score=None,
 ):
-if not isinstance(
-event,
-dict,
-):
-return ""
 
 ```
+if not isinstance(
+    event,
+    dict,
+):
+    return ""
+
 event_type = str(
     event.get(
         "type",
@@ -1473,27 +1515,25 @@ def format_stat_value(
 label,
 value,
 ):
-if value is None:
-return ""
 
 ```
+if value is None:
+    return ""
+
 if label == "xG":
 
     try:
-
         return f"{float(value):.2f}"
 
     except (
         TypeError,
         ValueError,
     ):
-
         return str(value)
 
 if label == "مالکیت":
 
     try:
-
         number = float(
             value
         )
@@ -1506,7 +1546,6 @@ if label == "مالکیت":
         TypeError,
         ValueError,
     ):
-
         return str(value)
 
 if isinstance(
@@ -1515,7 +1554,6 @@ if isinstance(
 ):
 
     if value.is_integer():
-
         return str(
             int(value)
         )
@@ -1541,13 +1579,14 @@ def build_final_lineup_message(
 snapshot,
 events=None,
 ):
-player_events = (
-build_final_player_events(
-events
-)
-)
 
 ```
+player_events = (
+    build_final_player_events(
+        events
+    )
+)
+
 message = build_lineup_message(
     snapshot,
     player_events=player_events,
@@ -1598,12 +1637,13 @@ def build_final_stats_message(
 snapshot,
 score=None,
 ):
-home_name = get_display_team_name(
-snapshot,
-"home",
-)
 
 ```
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
 if not home_name:
 
     home_name = "Home"
@@ -1625,7 +1665,6 @@ if not isinstance(
     stats,
     dict,
 ):
-
     stats = {}
 
 lines = [
@@ -1670,7 +1709,6 @@ for label in FINAL_STAT_ORDER:
         data,
         dict,
     ):
-
         continue
 
     home_value = data.get(
@@ -1685,7 +1723,6 @@ for label in FINAL_STAT_ORDER:
         home_value is None
         or away_value is None
     ):
-
         continue
 
     available_stats.append(
@@ -1786,7 +1823,9 @@ def build_final_message(
 snapshot,
 score=None,
 ):
+
+```
 return build_final_stats_message(
-snapshot,
-score,
+    snapshot,
+    score,
 )
