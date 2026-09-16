@@ -531,7 +531,6 @@ def _get_competition_id(tournament):
     if not isinstance(tournament, dict):
         return None
 
-    # شناسه‌های مستقیم
     for key in (
         "tournamentId",
         "leagueId",
@@ -547,13 +546,11 @@ def _get_competition_id(tournament):
         if value is not None:
             return value
 
-    # در بعضی ساختارها خود id متعلق به tournament است.
     value = tournament.get("id")
 
     if value is not None:
         return value
 
-    # ساختارهای تو در تو
     for key in (
         "tournament",
         "league",
@@ -606,7 +603,6 @@ def _find_competition_object(data):
             ):
                 return candidate
 
-    # مسیرهای مشخص FotMob
     general = data.get("general")
 
     if isinstance(general, dict):
@@ -712,6 +708,25 @@ def extract_basic_info(data):
         page_general = {}
 
     # -----------------------------------------------------
+    # content
+    # -----------------------------------------------------
+
+    content = get_content(data)
+
+    if not isinstance(content, dict):
+        content = {}
+
+    content_general = content.get("general")
+
+    if not isinstance(content_general, dict):
+        content_general = {}
+
+    content_header = content.get("header")
+
+    if not isinstance(content_header, dict):
+        content_header = {}
+
+    # -----------------------------------------------------
     # تیم‌ها
     # -----------------------------------------------------
 
@@ -719,12 +734,18 @@ def extract_basic_info(data):
         general.get("homeTeam")
         or page_general.get("homeTeam")
         or header.get("homeTeam")
+        or content_general.get("homeTeam")
+        or content_header.get("homeTeam")
+        or content.get("homeTeam")
     )
 
     away = (
         general.get("awayTeam")
         or page_general.get("awayTeam")
         or header.get("awayTeam")
+        or content_general.get("awayTeam")
+        or content_header.get("awayTeam")
+        or content.get("awayTeam")
     )
 
     if not isinstance(home, dict):
@@ -753,10 +774,7 @@ def extract_basic_info(data):
         event_jsonld,
         dict,
     ):
-
-        event_jsonld = extract_event_jsonld(
-            ""
-        )
+        event_jsonld = None
 
     if isinstance(event_jsonld, dict):
 
@@ -815,26 +833,61 @@ def extract_basic_info(data):
     league = ""
     competition_id = None
 
-    tournament = (
-        general.get("tournament")
-        or general.get("league")
-        or general.get("competition")
-        or general.get("uniqueTournament")
-        or page_general.get("tournament")
-        or page_general.get("league")
-        or page_general.get("competition")
-        or page_general.get("uniqueTournament")
-        or header.get("tournament")
-        or header.get("league")
-        or header.get("competition")
-        or header.get("uniqueTournament")
-    )
+    tournament_candidates = [
+        general.get("tournament"),
+        general.get("league"),
+        general.get("competition"),
+        general.get("uniqueTournament"),
+
+        page_general.get("tournament"),
+        page_general.get("league"),
+        page_general.get("competition"),
+        page_general.get("uniqueTournament"),
+
+        header.get("tournament"),
+        header.get("league"),
+        header.get("competition"),
+        header.get("uniqueTournament"),
+
+        content_general.get("tournament"),
+        content_general.get("league"),
+        content_general.get("competition"),
+        content_general.get("uniqueTournament"),
+
+        content_header.get("tournament"),
+        content_header.get("league"),
+        content_header.get("competition"),
+        content_header.get("uniqueTournament"),
+
+        content.get("tournament"),
+        content.get("league"),
+        content.get("competition"),
+        content.get("uniqueTournament"),
+    ]
+
+    tournament = None
+
+    for candidate in tournament_candidates:
+
+        if isinstance(candidate, dict):
+
+            tournament = candidate
+            break
+
+        if isinstance(candidate, str) and not league:
+
+            league = candidate
+
+    # -----------------------------------------------------
+    # استخراج اطلاعات رقابت
+    # -----------------------------------------------------
 
     if isinstance(tournament, dict):
 
         league = (
             tournament.get("name")
             or tournament.get("title")
+            or league
             or ""
         )
 
@@ -842,12 +895,11 @@ def extract_basic_info(data):
             tournament
         )
 
-    elif isinstance(tournament, str):
-
-        league = tournament
-
+    # -----------------------------------------------------
     # اگر هنوز شناسه پیدا نشده،
-    # چند ساختار مشخص دیگر را بررسی می‌کنیم.
+    # از ساختارهای دیگر FotMob استفاده می‌کنیم.
+    # -----------------------------------------------------
+
     if competition_id is None:
 
         competition_object = (
@@ -873,9 +925,43 @@ def extract_basic_info(data):
                 )
             )
 
+    # -----------------------------------------------------
+    # اگر هنوز شناسه پیدا نشده،
+    # خود content را هم بررسی می‌کنیم.
+    # -----------------------------------------------------
+
+    if competition_id is None:
+
+        competition_object = (
+            _find_competition_object(content)
+        )
+
+        if isinstance(
+            competition_object,
+            dict,
+        ):
+
+            if not league:
+
+                league = (
+                    competition_object.get("name")
+                    or competition_object.get("title")
+                    or ""
+                )
+
+            competition_id = (
+                _get_competition_id(
+                    competition_object
+                )
+            )
+
+    # -----------------------------------------------------
+    # fallback نام رقابت
+    # -----------------------------------------------------
+
     if not league:
 
-        league = (
+        league = clean_text(
             recursive_find(
                 data,
                 {
@@ -902,9 +988,6 @@ def extract_basic_info(data):
 
     # -----------------------------------------------------
     # نام فارسی تیم‌ها
-    #
-    # مهم:
-    # نام خام home/away دست‌نخورده می‌ماند.
     # -----------------------------------------------------
 
     home_name_fa = (
@@ -931,9 +1014,26 @@ def extract_basic_info(data):
         general.get("matchTimeUTCDate")
         or general.get("matchTimeUTC")
         or general.get("startDate")
-        or page_general.get("matchTimeUTCDate")
-        or page_general.get("matchTimeUTC")
-        or page_general.get("startDate")
+
+        or page_general.get(
+            "matchTimeUTCDate"
+        )
+        or page_general.get(
+            "matchTimeUTC"
+        )
+        or page_general.get(
+            "startDate"
+        )
+
+        or content_general.get(
+            "matchTimeUTCDate"
+        )
+        or content_general.get(
+            "matchTimeUTC"
+        )
+        or content_general.get(
+            "startDate"
+        )
     )
 
     if not start and isinstance(
@@ -957,19 +1057,33 @@ def extract_basic_info(data):
         )
 
     return {
-        "home_name": clean_text(home_name),
-        "away_name": clean_text(away_name),
+        "home_name": clean_text(
+            home_name
+        ),
 
-        "home_name_fa": home_name_fa,
-        "away_name_fa": away_name_fa,
+        "away_name": clean_text(
+            away_name
+        ),
+
+        "home_name_fa": (
+            home_name_fa
+        ),
+
+        "away_name_fa": (
+            away_name_fa
+        ),
 
         "home_id": home_id,
+
         "away_id": away_id,
 
         "league": league_clean,
+
         "league_fa": league_fa,
 
-        "competition_id": competition_id,
+        "competition_id": (
+            competition_id
+        ),
 
         "start": start,
     }
