@@ -6,6 +6,10 @@ from zoneinfo import ZoneInfo
 
 import requests
 
+from competition_translations import (
+    get_persian_competition_name,
+)
+
 
 # =========================================================
 # تنظیمات
@@ -515,6 +519,27 @@ def _get_team_id(team):
     )
 
 
+def _get_competition_id(tournament):
+
+    if not isinstance(tournament, dict):
+        return None
+
+    for key in (
+        "id",
+        "tournamentId",
+        "leagueId",
+        "uniqueTournamentId",
+        "competitionId",
+    ):
+
+        value = tournament.get(key)
+
+        if value is not None:
+            return value
+
+    return None
+
+
 def extract_basic_info(data):
 
     if not isinstance(data, dict):
@@ -621,6 +646,7 @@ def extract_basic_info(data):
         )
 
     league = ""
+    competition_id = None
 
     tournament = (
         general.get("tournament")
@@ -635,6 +661,10 @@ def extract_basic_info(data):
             tournament.get("name")
             or tournament.get("title")
             or ""
+        )
+
+        competition_id = _get_competition_id(
+            tournament
         )
 
     elif isinstance(tournament, str):
@@ -653,6 +683,42 @@ def extract_basic_info(data):
             )
             or ""
         )
+
+    # اگر ساختار اصلی competition ID را نداشت،
+    # چند مسیر مشخص و محدود دیگر را بررسی می‌کنیم.
+    if competition_id is None:
+
+        competition_candidates = [
+            general.get("tournament"),
+            general.get("league"),
+            page_general.get("tournament"),
+            page_general.get("league"),
+        ]
+
+        for candidate in competition_candidates:
+
+            if isinstance(
+                candidate,
+                dict,
+            ):
+
+                competition_id = (
+                    _get_competition_id(
+                        candidate
+                    )
+                )
+
+                if competition_id is not None:
+                    break
+
+    league_clean = clean_text(
+        league
+    )
+
+    league_fa = get_persian_competition_name(
+        competition_id,
+        league_clean,
+    )
 
     start = (
         general.get("matchTimeUTCDate")
@@ -688,7 +754,9 @@ def extract_basic_info(data):
         "away_name": clean_text(away_name),
         "home_id": home_id,
         "away_id": away_id,
-        "league": clean_text(league),
+        "league": league_clean,
+        "league_fa": league_fa,
+        "competition_id": competition_id,
         "start": start,
     }
 
@@ -4258,9 +4326,22 @@ def get_match_snapshot(match_url):
 
         "away_team_id": away_id,
 
+        # نام خام مسابقه
         "league": (
             info.get("league")
             or "نامشخص"
+        ),
+
+        # نام فارسی مسابقه
+        "league_fa": (
+            info.get("league_fa")
+            or info.get("league")
+            or "نامشخص"
+        ),
+
+        # شناسه مسابقه/لیگ
+        "competition_id": (
+            info.get("competition_id")
         ),
 
         "start": info.get("start"),
