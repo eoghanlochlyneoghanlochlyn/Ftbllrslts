@@ -44,6 +44,11 @@ def get_display_team_name(
             "home_team_id"
         )
 
+        translated_name = (
+            snapshot.get("home_fa")
+            or ""
+        )
+
         team_name = (
             snapshot.get("home")
             or ""
@@ -55,6 +60,11 @@ def get_display_team_name(
             "away_team_id"
         )
 
+        translated_name = (
+            snapshot.get("away_fa")
+            or ""
+        )
+
         team_name = (
             snapshot.get("away")
             or ""
@@ -64,6 +74,14 @@ def get_display_team_name(
 
         return ""
 
+    # اولویت با ترجمه‌ای است که خود fotmob.py
+    # داخل snapshot قرار داده است.
+    if translated_name:
+
+        return translated_name
+
+    # اگر home_fa / away_fa موجود نبود،
+    # از فایل teams.json استفاده می‌کنیم.
     return get_persian_team_name(
         team_id,
         team_name,
@@ -1699,3 +1717,4 @@ def build_final_message(
         snapshot,
         score,
     )
+این نسخه یک تغییر اصلی دارد
