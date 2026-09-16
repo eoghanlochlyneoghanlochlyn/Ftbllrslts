@@ -32,10 +32,10 @@ def get_display_team_name(
 snapshot,
 side,
 ):
-if not isinstance(snapshot, dict):
+    if not isinstance(snapshot, dict):
 return ""
 
-```
+
 if side == "home":
     team_id = snapshot.get("home_team_id")
     translated_name = snapshot.get("home_fa") or ""
