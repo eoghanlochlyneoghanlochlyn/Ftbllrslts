@@ -85,45 +85,7 @@ else:
     return ""
 
 # ----------------------------------------------------
-# اگر اطلاعات تیم داخل snapshot وجود داشت،
-# شناسه و نام فارسی را از آن هم بررسی می‌کنیم.
-# ----------------------------------------------------
-
-if isinstance(
-    team_data,
-    dict,
-):
-
-    if team_id is None:
-
-        team_id = (
-            team_data.get("id")
-            or team_data.get("teamId")
-            or team_data.get("team_id")
-        )
-
-    if not translated_name:
-
-        translated_name = (
-            team_data.get("persian")
-            or team_data.get("persian_name")
-            or team_data.get("name_fa")
-            or team_data.get("persianName")
-            or ""
-        )
-
-    if not team_name:
-
-        team_name = (
-            team_data.get("name")
-            or team_data.get("shortName")
-            or team_data.get("displayName")
-            or ""
-        )
-
-# ----------------------------------------------------
-# اولویت با ترجمه‌ای است که داخل snapshot
-# یا اطلاعات خود تیم پیدا شده است.
+# 1. ترجمه‌ی مستقیم home_fa / away_fa
 # ----------------------------------------------------
 
 if translated_name:
@@ -131,23 +93,41 @@ if translated_name:
     return translated_name
 
 # ----------------------------------------------------
-# اگر ترجمه داخل snapshot نبود،
-# از teams.json بر اساس شناسه تیم استفاده می‌کنیم.
+# 2. اطلاعات تیم داخل home_team / away_team
 # ----------------------------------------------------
 
-if team_id is not None:
+if isinstance(
+    team_data,
+    dict,
+):
 
-    translated_name = get_persian_team_name(
-        team_id,
-        "",
+    team_fa = (
+        team_data.get("name_fa")
+        or team_data.get("fa_name")
+        or team_data.get("persian_name")
+        or team_data.get("nameFa")
+        or ""
     )
 
-    if translated_name:
+    if team_fa:
 
-        return translated_name
+        return team_fa
 
 # ----------------------------------------------------
-# آخرین پشتیبان: نام اصلی تیم
+# 3. team_id و teams.json
+# ----------------------------------------------------
+
+translated_name = get_persian_team_name(
+    team_id,
+    team_name,
+)
+
+if translated_name:
+
+    return translated_name
+
+# ----------------------------------------------------
+# 4. نام انگلیسی به‌عنوان پشتیبان نهایی
 # ----------------------------------------------------
 
 return team_name
@@ -823,6 +803,7 @@ if not away_name:
 
     away_name = "Away"
 
+# نام فارسی رقابت
 league = (
     snapshot.get("league_fa")
     or snapshot.get("league")
@@ -1146,6 +1127,12 @@ if is_penalty_goal(
         "🎯 پنالتی"
     )
 
+# ----------------------------------------------------
+# نتیجه‌ی قابل نمایش
+# ----------------------------------------------------
+
+# score از main.py نتیجه‌ی بعد از ثبت گل است.
+# بنابراین برای گل به خودی نباید دوباره گل اضافه شود.
 score_for_display = score
 
 score_text = format_score(
@@ -1743,6 +1730,7 @@ if not available_stats:
         lines
     )
 
+# عرض ستون‌ها را بر اساس نام تیم تنظیم می‌کنیم.
 home_width = max(
     8,
     len(home_name),
