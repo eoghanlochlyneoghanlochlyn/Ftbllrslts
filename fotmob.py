@@ -546,10 +546,29 @@ def _get_competition_id(tournament):
         if value is not None:
             return value
 
-    value = tournament.get("id")
+    # در ساختارهای واقعی FotMob، شیء رقابت معمولاً id معمولی
+    # دارد؛ اما فقط وقتی آن را قبول می‌کنیم که خود شیء
+    # نشانه‌ای از یک رقابت داشته باشد. این کار جلوی این را می‌گیرد
+    # که id یک تیم/بازیکن اشتباهاً به‌عنوان competition_id انتخاب شود.
+    competition_markers = {
+        "name",
+        "shortName",
+        "displayName",
+        "slug",
+        "uniqueTournament",
+        "tournament",
+        "league",
+        "competition",
+    }
 
-    if value is not None:
-        return value
+    if (
+        tournament.get("id") is not None
+        and any(
+            marker in tournament
+            for marker in competition_markers
+        )
+    ):
+        return tournament.get("id")
 
     for key in (
         "tournament",
@@ -572,110 +591,139 @@ def _get_competition_id(tournament):
     return None
 
 
-def _find_competition_object(data):
+def _find_competition_object(
+    data,
+    target_name=None,
+):
+    """
+    پیدا کردن مقاوم شیء رقابت در ساختار تو‌در‌توی FotMob.
 
-    if not isinstance(data, dict):
+    اگر target_name داده شود، شیئی که نامش با نام خام رقابت
+    مطابقت دارد در اولویت قرار می‌گیرد.
+    """
+
+    if data is None:
         return None
 
-    direct_candidates = [
-        data.get("tournament"),
-        data.get("league"),
-        data.get("competition"),
-        data.get("uniqueTournament"),
-    ]
+    target_normalized = clean_text(
+        target_name or ""
+    ).lower()
 
-    for candidate in direct_candidates:
+    candidates = []
 
-        if isinstance(candidate, dict):
+    competition_keys = {
+        "tournament",
+        "league",
+        "competition",
+        "uniquetournament",
+        "tournamentid",
+        "leagueid",
+        "uniquetournamentid",
+        "competitionid",
+    }
 
-            competition_id = (
-                _get_competition_id(
-                    candidate
+    def walk(node, parent_key=""):
+
+        if isinstance(node, dict):
+
+            names = []
+
+            for key in (
+                "name",
+                "title",
+                "shortName",
+                "displayName",
+                "leagueName",
+                "tournamentName",
+                "competitionName",
+            ):
+
+                value = node.get(key)
+
+                if value is not None:
+                    text = clean_text(value)
+
+                    if text:
+                        names.append(text)
+
+            node_name = names[0] if names else ""
+            competition_id = _get_competition_id(node)
+            parent_normalized = str(
+                parent_key or ""
+            ).replace("_", "").lower()
+
+            is_competition_context = (
+                parent_normalized in competition_keys
+                or any(
+                    key in node
+                    for key in competition_keys
+                )
+                or any(
+                    key in node
+                    for key in (
+                        "leagueName",
+                        "tournamentName",
+                        "competitionName",
+                    )
                 )
             )
 
-            if competition_id is not None:
-                return candidate
-
             if (
-                candidate.get("name")
-                or candidate.get("title")
+                competition_id is not None
+                and node_name
+                and target_normalized
+                and node_name.lower()
+                == target_normalized
             ):
-                return candidate
-
-    general = data.get("general")
-
-    if isinstance(general, dict):
-
-        for key in (
-            "tournament",
-            "league",
-            "competition",
-            "uniqueTournament",
-        ):
-
-            candidate = general.get(key)
-
-            if isinstance(candidate, dict):
-                return candidate
-
-    header = data.get("header")
-
-    if isinstance(header, dict):
-
-        for key in (
-            "tournament",
-            "league",
-            "competition",
-            "uniqueTournament",
-        ):
-
-            candidate = header.get(key)
-
-            if isinstance(candidate, dict):
-                return candidate
-
-    page_props = get_nested(
-        data,
-        "props",
-        "pageProps",
-    )
-
-    if isinstance(page_props, dict):
-
-        for key in (
-            "tournament",
-            "league",
-            "competition",
-            "uniqueTournament",
-        ):
-
-            candidate = page_props.get(key)
-
-            if isinstance(candidate, dict):
-                return candidate
-
-        page_general = page_props.get(
-            "general"
-        )
-
-        if isinstance(page_general, dict):
-
-            for key in (
-                "tournament",
-                "league",
-                "competition",
-                "uniqueTournament",
-            ):
-
-                candidate = page_general.get(
-                    key
+                candidates.append(
+                    (
+                        100,
+                        node,
+                    )
                 )
 
-                if isinstance(candidate, dict):
-                    return candidate
+            elif (
+                competition_id is not None
+                and is_competition_context
+            ):
+                candidates.append(
+                    (
+                        80,
+                        node,
+                    )
+                )
 
-    return None
+            elif (
+                node_name
+                and is_competition_context
+            ):
+                candidates.append(
+                    (
+                        40,
+                        node,
+                    )
+                )
+
+            for key, value in node.items():
+                if isinstance(value, (dict, list)):
+                    walk(value, key)
+
+        elif isinstance(node, list):
+
+            for item in node:
+                walk(item, parent_key)
+
+    walk(data)
+
+    if not candidates:
+        return None
+
+    candidates.sort(
+        key=lambda item: item[0],
+        reverse=True,
+    )
+
+    return candidates[0][1]
 
 
 def extract_basic_info(data):
@@ -949,6 +997,58 @@ def extract_basic_info(data):
                     or ""
                 )
 
+            competition_id = (
+                _get_competition_id(
+                    competition_object
+                )
+            )
+
+    # -----------------------------------------------------
+    # جست‌وجوی عمیق نهایی برای شناسهٔ رقابت
+    # -----------------------------------------------------
+
+    if competition_id is None:
+
+        competition_object = (
+            _find_competition_object(
+                data,
+                target_name=league,
+            )
+        )
+
+        if isinstance(
+            competition_object,
+            dict,
+        ):
+            competition_id = (
+                _get_competition_id(
+                    competition_object
+                )
+            )
+
+            if not league:
+                league = clean_text(
+                    competition_object.get("name")
+                    or competition_object.get("title")
+                    or competition_object.get(
+                        "displayName"
+                    )
+                    or ""
+                )
+
+    if competition_id is None and league:
+
+        competition_object = (
+            _find_competition_object(
+                content,
+                target_name=league,
+            )
+        )
+
+        if isinstance(
+            competition_object,
+            dict,
+        ):
             competition_id = (
                 _get_competition_id(
                     competition_object
