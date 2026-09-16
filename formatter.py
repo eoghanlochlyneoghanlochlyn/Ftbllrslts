@@ -33,7 +33,7 @@ snapshot,
 side,
 ):
 
-
+```
 if not isinstance(
     snapshot,
     dict,
