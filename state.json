@@ -1684,7 +1684,8 @@
         "id:14447502",
         "substitution|None|False|63.0|",
         "id:14447454",
-        "substitution|None|False|69.0|"
+        "substitution|None|False|69.0|",
+        "substitution|None|True|76.0|"
       ],
       "goals": [
         {
@@ -1790,7 +1791,8 @@
         "id:14447451",
         "substitution|None|False|67.0|",
         "substitution|None|True|70.0|",
-        "substitution|None|True|69.0|"
+        "substitution|None|True|69.0|",
+        "substitution|None|False|75.0|"
       ],
       "goals": [
         {
@@ -1965,7 +1967,8 @@
         "half|None|None|45.0|",
         "addedtime|None|None|45.0|",
         "substitution|None|False|46.0|",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "id:14447593"
       ],
       "goals": [
         {
