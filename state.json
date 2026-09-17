@@ -1677,7 +1677,9 @@
       "event_keys": [
         "half|None|None|45.0|",
         "id:14447203",
-        "id:14447177"
+        "id:14447177",
+        "id:14447430",
+        "id:14447424"
       ],
       "goals": [
         {
@@ -1774,7 +1776,8 @@
         "id:14447071",
         "id:14447119",
         "half|None|None|45.0|",
-        "substitution|None|False|46.0|"
+        "substitution|None|False|46.0|",
+        "id:14447425"
       ],
       "goals": [
         {
