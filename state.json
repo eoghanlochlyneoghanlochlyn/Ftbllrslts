@@ -1984,7 +1984,8 @@
         "id:14448022",
         "id:14448058",
         "id:14448126",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "substitution|None|True|46.0|"
       ],
       "goals": [
         {
@@ -2711,7 +2712,9 @@
         "id:14448140",
         "substitution|None|False|32.0|",
         "half|None|None|45.0|",
-        "substitution|None|False|46.0|"
+        "substitution|None|False|46.0|",
+        "id:14448306",
+        "id:14448300"
       ],
       "goals": [
         {
@@ -2974,7 +2977,9 @@
       "finished_sent": false,
       "event_keys": [
         "id:14448110",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "id:14448307",
+        "id:14448287"
       ],
       "goals": [
         {
@@ -3060,6 +3065,90 @@
             "assistKey": "assist_by",
             "assistInput": "Manuel Pozo"
           }
+        },
+        {
+          "event_key": "id:14448287",
+          "player_id": 1219562,
+          "assist_player_id": 886809,
+          "is_home": false,
+          "minute": "49",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444828749Goal1219562undefinedfalse",
+            "timeStr": 49,
+            "type": "goal",
+            "time": 49,
+            "overloadTime": null,
+            "eventId": 14448287,
+            "player": {
+              "id": 1219562,
+              "name": "Manuel Pozo",
+              "profileUrl": "/players/1219562/manuel-pozo"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1219562/manuel-pozo",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Manuel Pozo",
+            "firstName": "Manuel",
+            "lastName": "Pozo",
+            "fullName": "Manuel Pozo",
+            "playerId": 1219562,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971157643,
+              "eventType": "Goal",
+              "teamId": 212820,
+              "playerId": 1219562,
+              "playerName": "Manuel Pozo",
+              "x": 95.640350876,
+              "y": 23.158471341899997,
+              "min": 49,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.1025,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.1566958874464035,
+              "expectedGoalsOnTarget": 0.2334665209054947,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7665343915343916,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 625168,
+              "firstName": "Manuel",
+              "lastName": "Pozo",
+              "fullName": "Manuel Pozo",
+              "teamColor": "#951A2F"
+            },
+            "assistStr": "assist by Javi Vázquez",
+            "assistProfileUrl": "/players/886809/javi-vazquez",
+            "assistPlayerId": 886809,
+            "assistKey": "assist_by",
+            "assistInput": "Javi Vázquez"
+          }
         }
       ]
     },
@@ -3077,7 +3166,9 @@
         "id:14448133",
         "half|None|None|45.0|",
         "id:14448246",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "id:14448316",
+        "id:14448303"
       ],
       "goals": [
         {
@@ -3243,6 +3334,87 @@
             "assistPlayerId": 1233655,
             "assistKey": "assist_by",
             "assistInput": "Alex Scott"
+          }
+        },
+        {
+          "event_key": "id:14448316",
+          "player_id": 844477,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "58",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444831658Goal844477undefinedtrue",
+            "timeStr": 58,
+            "type": "goal",
+            "time": 58,
+            "overloadTime": null,
+            "eventId": 14448316,
+            "player": {
+              "id": 844477,
+              "name": "Sergio Gómez",
+              "profileUrl": "/players/844477/sergio-gomez"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/844477/sergio-gomez",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Sergio Gómez",
+            "firstName": "Sergio",
+            "lastName": "Gómez",
+            "fullName": "Sergio Gómez",
+            "playerId": 844477,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971161687,
+              "eventType": "Goal",
+              "teamId": 8560,
+              "playerId": 844477,
+              "playerName": "Sergio Gómez",
+              "x": 81.471359224,
+              "y": 12.462559249,
+              "min": 58,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 1.0979999946,
+              "expectedGoals": 0.0243,
+              "expectedGoalsOnTarget": 0.4167,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.29047618904761907,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1067256,
+              "firstName": "Sergio",
+              "lastName": "Gómez",
+              "fullName": "Sergio Gómez",
+              "teamColor": "#0056B3"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
           }
         }
       ]
@@ -3522,7 +3694,10 @@
       "event_keys": [
         "id:14448160",
         "id:14448253",
-        "substitution|None|False|37.0|"
+        "substitution|None|False|37.0|",
+        "addedtime|None|None|45.0|",
+        "id:14448299",
+        "id:14448284"
       ],
       "goals": [
         {
@@ -3608,6 +3783,90 @@
             "assistKey": "assist_by",
             "assistInput": "Juan Cruz"
           }
+        },
+        {
+          "event_key": "id:14448284",
+          "player_id": 1184694,
+          "assist_player_id": 1311915,
+          "is_home": false,
+          "minute": "40",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444828440Goal1184694undefinedfalse",
+            "timeStr": 40,
+            "type": "goal",
+            "time": 40,
+            "overloadTime": null,
+            "eventId": 14448284,
+            "player": {
+              "id": 1184694,
+              "name": "Alberto Moleiro",
+              "profileUrl": "/players/1184694/alberto-moleiro"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1184694/alberto-moleiro",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Alberto Moleiro",
+            "firstName": "Alberto",
+            "lastName": "Moleiro",
+            "fullName": "Alberto Moleiro",
+            "playerId": 1184694,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971158199,
+              "eventType": "Goal",
+              "teamId": 10205,
+              "playerId": 1184694,
+              "playerName": "Alberto Moleiro",
+              "x": 97.1842105256,
+              "y": 32.856249999999996,
+              "min": 40,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.143750000000004,
+              "goalCrossedZ": 1.0145263108,
+              "expectedGoals": 0.249263733625412,
+              "expectedGoalsOnTarget": 0.11329754441976547,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6974206349206338,
+                "y": 0.2683932039153439,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 616538,
+              "firstName": "Alberto",
+              "lastName": "Moleiro",
+              "fullName": "Alberto Moleiro",
+              "teamColor": "#e19d00"
+            },
+            "assistStr": "assist by Ilias Akhomach",
+            "assistProfileUrl": "/players/1311915/ilias-akhomach",
+            "assistPlayerId": 1311915,
+            "assistKey": "assist_by",
+            "assistInput": "Ilias Akhomach"
+          }
         }
       ]
     },
@@ -3629,7 +3888,8 @@
         "substitution|None|False|46.0|",
         "substitution|None|False|62.0|",
         "substitution|None|False|71.0|",
-        "substitution|None|True|71.0|"
+        "substitution|None|True|71.0|",
+        "id:14448317"
       ],
       "goals": [
         {
@@ -3960,6 +4220,52 @@
             "assistPlayerId": 933845,
             "assistKey": "assist_by",
             "assistInput": "Rayan Aït-Nouri"
+          }
+        },
+        {
+          "event_key": "id:14448317",
+          "player_id": 0,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "90",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444831790Goal0undefinedtrue",
+            "timeStr": 90,
+            "type": "goal",
+            "time": 90,
+            "overloadTime": null,
+            "eventId": 14448317,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 4,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              5,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
           }
         }
       ]
