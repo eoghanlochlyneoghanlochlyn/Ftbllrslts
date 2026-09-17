@@ -1986,7 +1986,7 @@
     "6112299": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -2048,8 +2048,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14447164",
         "id:14447253",
@@ -2067,7 +2067,10 @@
         "id:14447716",
         "substitution|None|False|69.0|",
         "id:14447839",
-        "substitution|None|False|81.0|"
+        "substitution|None|False|81.0|",
+        "addedtime|None|None|90.0|",
+        "substitution|None|True|90.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -2135,8 +2138,92 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "id:14447919"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14447919",
+          "player_id": 1726962,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "29",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444791929Goal1726962undefinedtrue",
+            "timeStr": 29,
+            "type": "goal",
+            "time": 29,
+            "overloadTime": null,
+            "eventId": 14447919,
+            "player": {
+              "id": 1726962,
+              "name": "Floyd Samba",
+              "profileUrl": "/players/1726962/floyd-samba"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1726962/floyd-samba",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Floyd Samba",
+            "firstName": "Floyd",
+            "lastName": "Samba",
+            "fullName": "Floyd Samba",
+            "playerId": 1726962,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971125029,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1726962,
+              "playerName": "Floyd Samba",
+              "x": 99.8793103452,
+              "y": 30.568749999999998,
+              "min": 29,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.22577761113643646,
+              "expectedGoalsOnTarget": 0.9493122100830078,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2738095238095226,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 862590,
+              "firstName": "Floyd",
+              "lastName": "Samba",
+              "fullName": "Floyd Samba",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ]
     }
   }
 }
