@@ -1543,8 +1543,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "substitution|None|False|42.0|",
         "id:14446615",
@@ -1556,7 +1556,13 @@
         "id:14446716",
         "substitution|None|False|81.0|",
         "substitution|None|True|77.0|",
-        "substitution|None|True|64.0|"
+        "substitution|None|True|64.0|",
+        "id:14446752",
+        "id:14446754",
+        "id:14446755",
+        "id:14446756",
+        "id:14446762",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
