@@ -3164,8 +3164,95 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "id:14448160"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14448160",
+          "player_id": 1209421,
+          "assist_player_id": 940608,
+          "is_home": true,
+          "minute": "12",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444816012Goal1209421undefinedtrue",
+            "timeStr": 12,
+            "type": "goal",
+            "time": 12,
+            "overloadTime": null,
+            "eventId": 14448160,
+            "player": {
+              "id": 1209421,
+              "name": "Carlos Dotor",
+              "profileUrl": "/players/1209421/carlos-dotor"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1209421/carlos-dotor",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Carlos Dotor",
+            "firstName": "Carlos",
+            "lastName": "Dotor",
+            "fullName": "Carlos Dotor",
+            "playerId": 1209421,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971148889,
+              "eventType": "Goal",
+              "teamId": 9864,
+              "playerId": 1209421,
+              "playerName": "Carlos Dotor",
+              "x": 92.2,
+              "y": 36.440000000000005,
+              "min": 12,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.355000000000004,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.24975083768367767,
+              "expectedGoalsOnTarget": 0.7623017430305481,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.11243386243386144,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 151001,
+              "firstName": "Carlos",
+              "lastName": "Dotor",
+              "fullName": "Carlos Dotor",
+              "teamColor": "#518EC7"
+            },
+            "assistStr": "assist by Juan Cruz",
+            "assistProfileUrl": "/players/940608/juan-cruz",
+            "assistPlayerId": 940608,
+            "assistKey": "assist_by",
+            "assistInput": "Juan Cruz"
+          }
+        }
+      ]
     },
     "6099330": {
       "lineup_sent": true,
