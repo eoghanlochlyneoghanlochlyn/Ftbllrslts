@@ -896,15 +896,16 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "half|None|None|45.0|",
         "id:14446608",
         "id:14446607",
         "id:14446600",
         "id:14446599",
-        "id:14446597"
+        "id:14446597",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -1513,8 +1514,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "half|None|None|45.0|",
         "id:14446613",
@@ -1527,7 +1528,13 @@
         "substitution|None|False|62.0|",
         "substitution|None|False|82.0|",
         "id:14446677",
-        "id:14446674"
+        "id:14446674",
+        "id:14446689",
+        "id:14446690",
+        "id:14446695",
+        "substitution|None|True|90.0|",
+        "id:14446698",
+        "half|None|None|90.0|"
       ],
       "goals": []
     },
@@ -1545,7 +1552,11 @@
         "id:14446626",
         "half|None|None|45.0|",
         "substitution|None|True|46.0|",
-        "substitution|None|False|60.0|"
+        "substitution|None|False|60.0|",
+        "id:14446716",
+        "substitution|None|False|81.0|",
+        "substitution|None|True|77.0|",
+        "substitution|None|True|64.0|"
       ],
       "goals": [
         {
@@ -1596,6 +1607,56 @@
             "assistPlayerId": 1798251,
             "assistKey": "assist_by",
             "assistInput": "Nikolaos Nitsos"
+          }
+        },
+        {
+          "event_key": "id:14446716",
+          "player_id": 1138511,
+          "assist_player_id": 839891,
+          "is_home": true,
+          "minute": "83",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444671683Goal1138511undefinedtrue",
+            "timeStr": 83,
+            "type": "goal",
+            "time": 83,
+            "overloadTime": null,
+            "eventId": 14446716,
+            "player": {
+              "id": 1138511,
+              "name": "Jovanny Bolívar",
+              "profileUrl": "/players/1138511/jovanny-bolivar"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1138511/jovanny-bolivar",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jovanny Bolívar",
+            "firstName": "Jovanny",
+            "lastName": "Bolívar",
+            "fullName": "Jovanny Bolívar",
+            "playerId": 1138511,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Julián Bonetto",
+            "assistProfileUrl": "/players/839891/julian-bonetto",
+            "assistPlayerId": 839891,
+            "assistKey": "assist_by",
+            "assistInput": "Julián Bonetto"
           }
         }
       ]
