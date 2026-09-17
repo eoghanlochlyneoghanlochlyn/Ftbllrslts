@@ -2892,7 +2892,9 @@
         "id:14448306",
         "id:14448300",
         "substitution|None|True|61.0|",
-        "substitution|None|True|60.0|"
+        "substitution|None|True|60.0|",
+        "substitution|None|True|71.0|",
+        "substitution|None|False|66.0|"
       ],
       "goals": [
         {
@@ -3351,7 +3353,9 @@
         "id:14448316",
         "id:14448303",
         "substitution|None|True|58.0|",
-        "substitution|None|False|63.0|"
+        "substitution|None|False|63.0|",
+        "substitution|None|False|71.0|",
+        "id:14448395"
       ],
       "goals": [
         {
