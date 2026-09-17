@@ -1263,7 +1263,8 @@
       "event_keys": [
         "half|None|None|45.0|",
         "id:14446603",
-        "id:14446601"
+        "id:14446601",
+        "id:14446637"
       ],
       "goals": [
         {
@@ -1359,6 +1360,53 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "id:14446637",
+          "player_id": 1740709,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "70",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444663770Goal1740709undefinedfalse",
+            "timeStr": 70,
+            "type": "goal",
+            "time": 70,
+            "overloadTime": null,
+            "eventId": 14446637,
+            "player": {
+              "id": 1740709,
+              "name": "Kaylee Hunter",
+              "profileUrl": "/players/1740709/kaylee-hunter"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1740709/kaylee-hunter",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Kaylee Hunter",
+            "firstName": "Kaylee",
+            "lastName": "Hunter",
+            "fullName": "Kaylee Hunter",
+            "playerId": 1740709,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -1388,7 +1436,8 @@
         "substitution|None|False|42.0|",
         "id:14446615",
         "id:14446614",
-        "id:14446626"
+        "id:14446626",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
