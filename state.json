@@ -2065,7 +2065,9 @@
         "id:14447747",
         "substitution|None|True|72.0|",
         "id:14447716",
-        "substitution|None|False|69.0|"
+        "substitution|None|False|69.0|",
+        "id:14447839",
+        "substitution|None|False|81.0|"
       ],
       "goals": [
         {
