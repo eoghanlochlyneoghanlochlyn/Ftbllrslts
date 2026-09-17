@@ -5,80 +5,149 @@ import json
 BOT_TOKEN = os.environ["TELEGRAMBOT"]
 CHANNEL = os.environ["TELEGRAMCHANNEL"]
 
-real_sociedad_players = [
-    "Álex Remiro",
-    "Hamari Traoré",
+real_sociedad_starting = [
+    "Unai Marrero",
+    "Jon Aramburu",
     "Igor Zubeldia",
-    "Robin Le Normand",
-    "Aihen Muñoz",
-    "Martín Zubimendi",
-    "Beñat Turrientes",
-    "Brais Méndez",
+    "Duje Caleta-Car",
+    "Sergio Gomez",
+    "Ander Barrenetxea",
+    "Jon Gorrotxategi",
+    "Carlos Soler",
     "Takefusa Kubo",
     "Mikel Oyarzabal",
-    "Alexander Sørloth",
+    "Luka Sucic",
 ]
 
-osasuna_players = [
-    "Sergio Herrera",
-    "Jesús Areso",
-    "David García",
+osasuna_starting = [
+    "Aitor Fernández",
+    "Inigo Arguibide",
+    "Flavien Boyomo",
     "Jorge Herrando",
     "Juan Cruz",
-    "Lucas Torró",
+    "Enrique Barja",
+    "Iker Munoz",
     "Jon Moncayola",
-    "Aimar Oroz",
-    "Rubén García",
-    "Ante Budimir",
-    "Moi Gómez",
+    "Abel Bretones",
+    "Moi Gomez",
+    "Raul Garcia",
 ]
+
+real_sociedad_substitutes = [
+    "Arsen Zakharyan",
+    "Benat Turrientes",
+    "Álvaro Odriozola",
+    "Goncalo Guedes",
+    "Orri Oskarsson",
+    "Jon Martin",
+    "Alex Remiro",
+    "Aihen Munoz",
+    "Aritz Elustondo",
+    "Brais Méndez",
+    "Pablo Marin",
+]
+
+osasuna_substitutes = [
+    "Javi Galán",
+    "Valentin Rosier",
+    "Rubén Garcia",
+    "Alejandro Catena",
+    "Lucas Torro",
+    "Ante Budimir",
+    "Sergio Herrera",
+    "Asier Osambela",
+    "Aimar Oroz",
+    "Sheraldo Becker",
+    "Victor Munoz",
+]
+
+real_sociedad_subs_text = " | ".join(real_sociedad_substitutes)
+osasuna_subs_text = " | ".join(osasuna_substitutes)
 
 cells = [
     [
         {
-            "text": "رئال سوسیداد",
+            "text": (
+                "رئال سوسیداد\n"
+                "👔 Pellegrino Matarazzo\n"
+                "📐 4-4-2"
+            ),
             "is_header": True,
-            "align": "center"
+            "align": "center",
+            "valign": "middle"
         },
         {
-            "text": "اوساسونا",
+            "text": (
+                "اوساسونا\n"
+                "👔 Alessio Lisci\n"
+                "📐 4-4-2"
+            ),
             "is_header": True,
-            "align": "center"
+            "align": "center",
+            "valign": "middle"
         }
     ]
 ]
 
 for real_player, osasuna_player in zip(
-    real_sociedad_players,
-    osasuna_players
+    real_sociedad_starting,
+    osasuna_starting
 ):
     cells.append(
         [
             {
                 "text": real_player,
-                "align": "right"
+                "align": "right",
+                "valign": "middle"
             },
             {
                 "text": osasuna_player,
-                "align": "left"
+                "align": "left",
+                "valign": "middle"
             }
         ]
     )
+
+cells.append(
+    [
+        {
+            "text": (
+                "🔄 تعویضی‌ها\n"
+                + real_sociedad_subs_text
+            ),
+            "align": "right",
+            "valign": "top"
+        },
+        {
+            "text": (
+                "🔄 تعویضی‌ها\n"
+                + osasuna_subs_text
+            ),
+            "align": "left",
+            "valign": "top"
+        }
+    ]
+)
 
 rich_message = {
     "is_rtl": True,
     "blocks": [
         {
             "type": "paragraph",
-            "text": "🏆 ترکیب اصلی دو تیم"
+            "text": "🏆 جام حذفی اسپانیا"
         },
         {
             "type": "paragraph",
             "text": "رئال سوسیداد 🆚 اوساسونا"
         },
         {
+            "type": "paragraph",
+            "text": "🕐 1404/10/22 - 23:30 به وقت ایران"
+        },
+        {
             "type": "table",
             "is_bordered": True,
+            "is_striped": True,
             "is_compact": False,
             "cells": cells
         }
