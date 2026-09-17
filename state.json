@@ -4444,7 +4444,8 @@
         "id:14448529",
         "id:14448527",
         "id:14448522",
-        "substitution|None|False|79.0|"
+        "substitution|None|False|79.0|",
+        "addedtime|None|None|90.0|"
       ],
       "goals": [
         {
