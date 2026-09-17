@@ -833,7 +833,8 @@
         "half|None|None|45.0|",
         "addedtime|None|None|45.0|",
         "substitution|None|True|74.0|",
-        "substitution|None|True|73.0|"
+        "substitution|None|True|73.0|",
+        "substitution|None|False|78.0|"
       ],
       "goals": [
         {
