@@ -2186,7 +2186,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14447995",
-        "id:14448116"
+        "id:14448116",
+        "id:14448143"
       ],
       "goals": [
         {
@@ -2353,6 +2354,87 @@
             "assistKey": "assist_by",
             "assistInput": "Adam Wharton"
           }
+        },
+        {
+          "event_key": "id:14448143",
+          "player_id": 821100,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "34",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444814334Goal821100undefinedtrue",
+            "timeStr": 34,
+            "type": "goal",
+            "time": 34,
+            "overloadTime": null,
+            "eventId": 14448143,
+            "player": {
+              "id": 821100,
+              "name": "Jørgen Strand Larsen",
+              "profileUrl": "/players/821100/jorgen-strand-larsen"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/821100/jorgen-strand-larsen",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jørgen Strand Larsen",
+            "firstName": "Jørgen Strand",
+            "lastName": "Larsen",
+            "fullName": "Jørgen Strand Larsen",
+            "playerId": 821100,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971145259,
+              "eventType": "Goal",
+              "teamId": 9826,
+              "playerId": 821100,
+              "playerName": "Jørgen Strand Larsen",
+              "x": 94,
+              "y": 34,
+              "min": 34,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 1.7465263072000001,
+              "expectedGoals": 0.7884,
+              "expectedGoalsOnTarget": 0.986944317817688,
+              "shotType": "RightFoot",
+              "situation": "Penalty",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2738095238095226,
+                "y": 0.4620439966137566,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 630036,
+              "firstName": "Jørgen Strand",
+              "lastName": "Larsen",
+              "fullName": "Jørgen Strand Larsen",
+              "teamColor": "#0055A5"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -2365,7 +2447,9 @@
       "finished_sent": false,
       "event_keys": [
         "id:14447987",
-        "id:14448096"
+        "id:14448096",
+        "id:14448140",
+        "substitution|None|False|32.0|"
       ],
       "goals": [
         {
@@ -2535,6 +2619,87 @@
             "assistKey": "assist_by",
             "assistInput": "Weston McKennie"
           }
+        },
+        {
+          "event_key": "id:14448140",
+          "player_id": 1106563,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "35",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444814035Goal1106563undefinedtrue",
+            "timeStr": 35,
+            "type": "goal",
+            "time": 35,
+            "overloadTime": null,
+            "eventId": 14448140,
+            "player": {
+              "id": 1106563,
+              "name": "Nick Woltemade",
+              "profileUrl": "/players/1106563/nick-woltemade"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1106563/nick-woltemade",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nick Woltemade",
+            "firstName": "Nick",
+            "lastName": "Woltemade",
+            "fullName": "Nick Woltemade",
+            "playerId": 1106563,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971145573,
+              "eventType": "Goal",
+              "teamId": 9885,
+              "playerId": 1106563,
+              "playerName": "Nick Woltemade",
+              "x": 94,
+              "y": 34,
+              "min": 35,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.525000000000006,
+              "goalCrossedZ": 1.0979999946,
+              "expectedGoals": 0.7884,
+              "expectedGoalsOnTarget": 0.681291937828064,
+              "shotType": "RightFoot",
+              "situation": "Penalty",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5965608465608451,
+                "y": 0.29047618904761907,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1184793,
+              "firstName": "Nick",
+              "lastName": "Woltemade",
+              "fullName": "Nick Woltemade",
+              "teamColor": "#000001"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -2645,7 +2810,8 @@
       "event_keys": [
         "id:14448027",
         "id:14448106",
-        "id:14448086"
+        "id:14448086",
+        "id:14448133"
       ],
       "goals": [
         {
@@ -3013,7 +3179,10 @@
         "id:14447935",
         "id:14447922",
         "half|None|None|45.0|",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "id:14448156",
+        "id:14448134",
+        "substitution|None|False|46.0|"
       ],
       "goals": [
         {
@@ -3179,6 +3348,171 @@
             "assistPlayerId": 1561552,
             "assistKey": "assist_by",
             "assistInput": "Ayyoub Bouaddi"
+          }
+        },
+        {
+          "event_key": "id:14448156",
+          "player_id": 1726962,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "54",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444815654Goal1726962undefinedtrue",
+            "timeStr": 54,
+            "type": "goal",
+            "time": 54,
+            "overloadTime": null,
+            "eventId": 14448156,
+            "player": {
+              "id": 1726962,
+              "name": "Floyd Samba",
+              "profileUrl": "/players/1726962/floyd-samba"
+            },
+            "homeScore": 3,
+            "awayScore": 0,
+            "profileUrl": "/players/1726962/floyd-samba",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Floyd Samba",
+            "firstName": "Floyd",
+            "lastName": "Samba",
+            "fullName": "Floyd Samba",
+            "playerId": 1726962,
+            "newScore": [
+              4,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971148173,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1726962,
+              "playerName": "Floyd Samba",
+              "x": 89.9,
+              "y": 46.382929932699994,
+              "min": 54,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.797499999999996,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.0478,
+              "expectedGoalsOnTarget": 0.5854,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.8472222222222223,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 862590,
+              "firstName": "Floyd",
+              "lastName": "Samba",
+              "fullName": "Floyd Samba",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14448134",
+          "player_id": 1721789,
+          "assist_player_id": 933845,
+          "is_home": true,
+          "minute": "48",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444813448Goal1721789undefinedtrue",
+            "timeStr": 48,
+            "type": "goal",
+            "time": 48,
+            "overloadTime": null,
+            "eventId": 14448134,
+            "player": {
+              "id": 1721789,
+              "name": "Allan",
+              "profileUrl": "/players/1721789/allan"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1721789/allan",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Allan",
+            "firstName": "",
+            "lastName": "Allan",
+            "fullName": "Allan",
+            "playerId": 1721789,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971144875,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1721789,
+              "playerName": "Allan",
+              "x": 92.4,
+              "y": 43.860636937900004,
+              "min": 48,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.559999999999995,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.06978604197502136,
+              "expectedGoalsOnTarget": 0.25670111179351807,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.6455026455026467,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 862590,
+              "firstName": "",
+              "lastName": "Allan",
+              "fullName": "Allan",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": "assist by Rayan Aït-Nouri",
+            "assistProfileUrl": "/players/933845/rayan-ait-nouri",
+            "assistPlayerId": 933845,
+            "assistKey": "assist_by",
+            "assistInput": "Rayan Aït-Nouri"
           }
         }
       ]
