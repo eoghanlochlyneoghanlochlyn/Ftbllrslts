@@ -33,29 +33,36 @@ def get_display_team_name(
     snapshot,
     side,
 ):
-    if not isinstance(snapshot, dict):
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
         return "Home" if side == "home" else "Away"
 
     if side == "home":
+        translated_name = (
+            snapshot.get("home_fa")
+            or ""
+        )
+
         raw_name = (
             snapshot.get("home")
             or "Home"
         )
+
     else:
+        translated_name = (
+            snapshot.get("away_fa")
+            or ""
+        )
+
         raw_name = (
             snapshot.get("away")
             or "Away"
         )
 
-    try:
-        translated = get_persian_team_name(
-            raw_name
-        )
-    except Exception:
-        translated = None
-
-    if translated:
-        return translated
+    if translated_name:
+        return translated_name
 
     return raw_name
 
