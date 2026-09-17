@@ -386,6 +386,115 @@
         "half|None|None|90.0|"
       ],
       "goals": []
+    },
+    "6099338": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": true,
+      "finished_sent": true,
+      "event_keys": [
+        "id:14445364",
+        "id:14445370",
+        "substitution|None|False|38.0|",
+        "half|None|None|45.0|",
+        "substitution|None|False|46.0|",
+        "substitution|None|True|58.0|",
+        "substitution|None|False|63.0|",
+        "substitution|None|False|73.0|",
+        "substitution|None|False|74.0|",
+        "substitution|None|True|77.0|",
+        "id:14445895",
+        "id:14445996",
+        "half|None|None|90.0|"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14445895",
+          "player_id": 1128965,
+          "assist_player_id": 1292833,
+          "is_home": true,
+          "minute": "80",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444589580Goal1128965undefinedtrue",
+            "timeStr": 80,
+            "type": "goal",
+            "time": 80,
+            "overloadTime": null,
+            "eventId": 14445895,
+            "player": {
+              "id": 1128965,
+              "name": "Charly Alcaraz",
+              "profileUrl": "/players/1128965/charly-alcaraz"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1128965/charly-alcaraz",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Charly Alcaraz",
+            "firstName": "Charly",
+            "lastName": "Alcaraz",
+            "fullName": "Charly Alcaraz",
+            "playerId": 1128965,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2970868763,
+              "eventType": "Goal",
+              "teamId": 8668,
+              "playerId": 1128965,
+              "playerName": "Charly Alcaraz",
+              "x": 96.0263157884,
+              "y": 27.278333333000003,
+              "min": 80,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.448750000000004,
+              "goalCrossedZ": 1.3805263090000002,
+              "expectedGoals": 0.0898069217801094,
+              "expectedGoalsOnTarget": 0.392276793718338,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6167328042328032,
+                "y": 0.3652186002645503,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 959247,
+              "firstName": "Charly",
+              "lastName": "Alcaraz",
+              "fullName": "Charly Alcaraz",
+              "teamColor": "#00359C"
+            },
+            "assistStr": "assist by Tyler Dibling",
+            "assistProfileUrl": "/players/1292833/tyler-dibling",
+            "assistPlayerId": 1292833,
+            "assistKey": "assist_by",
+            "assistInput": "Tyler Dibling"
+          }
+        }
+      ]
     }
   }
 }
