@@ -50,6 +50,47 @@ def send_telegram(text):
     return response.json()
 
 
+def send_rich_message(
+    rich_message,
+):
+
+    if not TELEGRAM_BOT_TOKEN:
+        raise RuntimeError(
+            "TELEGRAMBOT environment variable is missing."
+        )
+
+    if not TELEGRAM_CHANNEL:
+        raise RuntimeError(
+            "TELEGRAMCHANNEL environment variable is missing."
+        )
+
+    url = (
+        "https://api.telegram.org/"
+        f"bot{TELEGRAM_BOT_TOKEN}/sendRichMessage"
+    )
+
+    response = requests.post(
+        url,
+        json={
+            "chat_id": TELEGRAM_CHANNEL,
+            "rich_message": rich_message,
+        },
+        timeout=30,
+    )
+
+    print(
+        "Telegram Rich Message status:",
+        response.status_code,
+    )
+
+    if not response.ok:
+        print(response.text)
+
+    response.raise_for_status()
+
+    return response.json()
+
+
 def split_message(
     message,
     max_length=4000,
