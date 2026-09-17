@@ -1991,7 +1991,10 @@
         "substitution|None|False|58.0|",
         "substitution|None|True|71.0|",
         "substitution|None|False|67.0|",
-        "id:14448422"
+        "id:14448422",
+        "substitution|None|True|82.0|",
+        "substitution|None|False|82.0|",
+        "id:14448475"
       ],
       "goals": [
         {
@@ -2253,6 +2256,90 @@
             "assistKey": "assist_by",
             "assistInput": "Orkun Kökcü"
           }
+        },
+        {
+          "event_key": "id:14448475",
+          "player_id": 1251666,
+          "assist_player_id": 1264368,
+          "is_home": true,
+          "minute": "81",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444847581Goal1251666undefinedtrue",
+            "timeStr": 81,
+            "type": "goal",
+            "time": 81,
+            "overloadTime": null,
+            "eventId": 14448475,
+            "player": {
+              "id": 1251666,
+              "name": "Ernest Poku",
+              "profileUrl": "/players/1251666/ernest-poku"
+            },
+            "homeScore": 3,
+            "awayScore": 1,
+            "profileUrl": "/players/1251666/ernest-poku",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ernest Poku",
+            "firstName": "Ernest",
+            "lastName": "Poku",
+            "fullName": "Ernest Poku",
+            "playerId": 1251666,
+            "newScore": [
+              4,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971174607,
+              "eventType": "Goal",
+              "teamId": 10188,
+              "playerId": 1251666,
+              "playerName": "Ernest Poku",
+              "x": 93.2,
+              "y": 30.22,
+              "min": 81,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.0175,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.36788949370384216,
+              "expectedGoalsOnTarget": 0.5422555804252625,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.5244708994709,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 687868,
+              "firstName": "Ernest",
+              "lastName": "Poku",
+              "fullName": "Ernest Poku",
+              "teamColor": "#000000"
+            },
+            "assistStr": "assist by Junior Olaïtan",
+            "assistProfileUrl": "/players/1264368/junior-olaitan",
+            "assistPlayerId": 1264368,
+            "assistKey": "assist_by",
+            "assistInput": "Junior Olaïtan"
+          }
         }
       ]
     },
@@ -2274,7 +2361,10 @@
         "substitution|None|True|57.0|",
         "substitution|None|True|66.0|",
         "substitution|None|False|66.0|",
-        "substitution|None|True|80.0|"
+        "substitution|None|True|80.0|",
+        "id:14448488",
+        "id:14448480",
+        "substitution|None|False|81.0|"
       ],
       "goals": [
         {
@@ -2629,7 +2719,10 @@
         "half|None|None|45.0|",
         "substitution|None|False|61.0|",
         "substitution|None|True|62.0|",
-        "id:14448426"
+        "id:14448426",
+        "id:14448490",
+        "id:14448489",
+        "substitution|None|False|82.0|"
       ],
       "goals": [
         {
@@ -2877,6 +2970,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "id:14448490",
+          "player_id": 860920,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "89",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444849089Goal860920undefinedtrue",
+            "timeStr": 89,
+            "type": "goal",
+            "time": 89,
+            "overloadTime": null,
+            "eventId": 14448490,
+            "player": {
+              "id": 860920,
+              "name": "Edward Nketiah",
+              "profileUrl": "/players/860920/edward-nketiah"
+            },
+            "homeScore": 3,
+            "awayScore": 0,
+            "profileUrl": "/players/860920/edward-nketiah",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Edward Nketiah",
+            "firstName": "Edward",
+            "lastName": "Nketiah",
+            "fullName": "Edward Nketiah",
+            "playerId": 860920,
+            "newScore": [
+              4,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971176835,
+              "eventType": "Goal",
+              "teamId": 9826,
+              "playerId": 860920,
+              "playerName": "Edward Nketiah",
+              "x": 93.4,
+              "y": 23.0183439533,
+              "min": 89,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.36375,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.07382338494062424,
+              "expectedGoalsOnTarget": 0.3277364671230316,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.37466931216931143,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 630036,
+              "firstName": "Edward",
+              "lastName": "Nketiah",
+              "fullName": "Edward Nketiah",
+              "teamColor": "#0055A5"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -2901,7 +3075,9 @@
         "substitution|None|True|71.0|",
         "substitution|None|False|66.0|",
         "id:14448410",
-        "substitution|None|False|78.0|"
+        "substitution|None|False|78.0|",
+        "substitution|None|True|83.0|",
+        "id:14448451"
       ],
       "goals": [
         {
@@ -3236,6 +3412,90 @@
             "assistKey": "assist_by",
             "assistInput": "Randal Kolo Muani"
           }
+        },
+        {
+          "event_key": "id:14448451",
+          "player_id": 823825,
+          "assist_player_id": 860913,
+          "is_home": true,
+          "minute": "82",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444845182Goal823825undefinedtrue",
+            "timeStr": 82,
+            "type": "goal",
+            "time": 82,
+            "overloadTime": null,
+            "eventId": 14448451,
+            "player": {
+              "id": 823825,
+              "name": "Randal Kolo Muani",
+              "profileUrl": "/players/823825/randal-kolo-muani"
+            },
+            "homeScore": 4,
+            "awayScore": 0,
+            "profileUrl": "/players/823825/randal-kolo-muani",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Randal Kolo Muani",
+            "firstName": "Randal Kolo",
+            "lastName": "Muani",
+            "fullName": "Randal Kolo Muani",
+            "playerId": 823825,
+            "newScore": [
+              5,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971173259,
+              "eventType": "Goal",
+              "teamId": 9885,
+              "playerId": 823825,
+              "playerName": "Randal Kolo Muani",
+              "x": 103.6724137932,
+              "y": 34.1525,
+              "min": 82,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.31375,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.9986081719398499,
+              "expectedGoalsOnTarget": 0.9951905012130737,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.1815476190476193,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1184793,
+              "firstName": "Randal Kolo",
+              "lastName": "Muani",
+              "fullName": "Randal Kolo Muani",
+              "teamColor": "#000001"
+            },
+            "assistStr": "assist by Jhon Lucumí",
+            "assistProfileUrl": "/players/860913/jhon-lucumi",
+            "assistPlayerId": 860913,
+            "assistKey": "assist_by",
+            "assistInput": "Jhon Lucumí"
+          }
         }
       ]
     },
@@ -3257,7 +3517,11 @@
         "substitution|None|True|76.0|",
         "id:14448446",
         "id:14448443",
-        "substitution|None|False|65.0|"
+        "substitution|None|False|65.0|",
+        "id:14448487",
+        "substitution|None|True|81.0|",
+        "id:14448457",
+        "substitution|None|False|78.0|"
       ],
       "goals": [
         {
@@ -3427,6 +3691,90 @@
             "assistKey": "assist_by",
             "assistInput": "Javi Vázquez"
           }
+        },
+        {
+          "event_key": "id:14448457",
+          "player_id": 168832,
+          "assist_player_id": 791597,
+          "is_home": true,
+          "minute": "79",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444845779Goal168832undefinedtrue",
+            "timeStr": 79,
+            "type": "goal",
+            "time": 79,
+            "overloadTime": null,
+            "eventId": 14448457,
+            "player": {
+              "id": 168832,
+              "name": "Thomas Lehne Olsen",
+              "profileUrl": "/players/168832/thomas-lehne-olsen"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/168832/thomas-lehne-olsen",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Thomas Lehne Olsen",
+            "firstName": "Thomas Lehne",
+            "lastName": "Olsen",
+            "fullName": "Thomas Lehne Olsen",
+            "playerId": 168832,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971172627,
+              "eventType": "Goal",
+              "teamId": 8476,
+              "playerId": 168832,
+              "playerName": "Thomas Lehne Olsen",
+              "x": 101.58620689680001,
+              "y": 34.22875,
+              "min": 79,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.8475,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.6930062770843506,
+              "expectedGoalsOnTarget": 0.9014742970466614,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.0403439153439162,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1248662,
+              "firstName": "Thomas Lehne",
+              "lastName": "Olsen",
+              "fullName": "Thomas Lehne Olsen",
+              "teamColor": "#dba000"
+            },
+            "assistStr": "assist by Vá",
+            "assistProfileUrl": "/players/791597/va",
+            "assistPlayerId": 791597,
+            "assistKey": "assist_by",
+            "assistInput": "Vá"
+          }
         }
       ]
     },
@@ -3451,7 +3799,9 @@
         "substitution|None|False|63.0|",
         "substitution|None|False|71.0|",
         "id:14448395",
-        "substitution|None|True|74.0|"
+        "substitution|None|True|74.0|",
+        "substitution|None|True|84.0|",
+        "substitution|None|False|83.0|"
       ],
       "goals": [
         {
@@ -3722,7 +4072,8 @@
         "substitution|None|False|63.0|",
         "id:14448358",
         "substitution|None|True|72.0|",
-        "substitution|None|False|75.0|"
+        "substitution|None|False|75.0|",
+        "substitution|None|False|83.0|"
       ],
       "goals": [
         {
