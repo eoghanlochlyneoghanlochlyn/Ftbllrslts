@@ -1880,7 +1880,7 @@
       ]
     },
     "6112354": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -1890,7 +1890,7 @@
       "goals": []
     },
     "6112299": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -1900,7 +1900,7 @@
       "goals": []
     },
     "6112324": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -1910,7 +1910,7 @@
       "goals": []
     },
     "6112253": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -1920,7 +1920,7 @@
       "goals": []
     },
     "6112377": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -1930,7 +1930,7 @@
       "goals": []
     },
     "6112272": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -1940,7 +1940,7 @@
       "goals": []
     },
     "6112283": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -2027,7 +2027,7 @@
       "goals": []
     },
     "6099330": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
