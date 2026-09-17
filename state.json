@@ -1387,9 +1387,61 @@
       "event_keys": [
         "substitution|None|False|42.0|",
         "id:14446615",
-        "id:14446614"
+        "id:14446614",
+        "id:14446626"
       ],
-      "goals": []
+      "goals": [
+        {
+          "event_key": "id:14446626",
+          "player_id": 1011185,
+          "assist_player_id": 1798251,
+          "is_home": false,
+          "minute": "44",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444662644Goal1011185undefinedfalse",
+            "timeStr": 44,
+            "type": "goal",
+            "time": 44,
+            "overloadTime": null,
+            "eventId": 14446626,
+            "player": {
+              "id": 1011185,
+              "name": "Vangelis Nikokyrakis",
+              "profileUrl": "/players/1011185/vangelis-nikokyrakis"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1011185/vangelis-nikokyrakis",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Vangelis Nikokyrakis",
+            "firstName": "Vangelis",
+            "lastName": "Nikokyrakis",
+            "fullName": "Vangelis Nikokyrakis",
+            "playerId": 1011185,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Nikolaos Nitsos",
+            "assistProfileUrl": "/players/1798251/nikolaos-nitsos",
+            "assistPlayerId": 1798251,
+            "assistKey": "assist_by",
+            "assistInput": "Nikolaos Nitsos"
+          }
+        }
+      ]
     }
   }
 }
