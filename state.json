@@ -367,6 +367,25 @@
           }
         }
       ]
+    },
+    "6112363": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": true,
+      "finished_sent": true,
+      "event_keys": [
+        "substitution|None|False|24.0|",
+        "half|None|None|45.0|",
+        "substitution|None|False|64.0|",
+        "substitution|None|True|69.0|",
+        "substitution|None|True|75.0|",
+        "substitution|None|False|78.0|",
+        "substitution|None|True|83.0|",
+        "half|None|None|90.0|"
+      ],
+      "goals": []
     }
   }
 }
