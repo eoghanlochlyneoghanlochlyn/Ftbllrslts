@@ -528,19 +528,23 @@ def _get_team_id(team):
     return None
 
 
-def _get_competition_id(tournament):
+def _get_stage_id(tournament):
 
-    if not isinstance(tournament, dict):
+    if not isinstance(
+        tournament,
+        dict,
+    ):
         return None
 
     for key in (
-        "tournamentId",
         "leagueId",
+        "tournamentId",
         "uniqueTournamentId",
         "competitionId",
         "competitionID",
         "tournamentID",
         "leagueID",
+        "id",
     ):
 
         value = tournament.get(key)
@@ -548,49 +552,34 @@ def _get_competition_id(tournament):
         if value is not None:
             return value
 
-    # در ساختارهای واقعی FotMob، شیء رقابت معمولاً id معمولی
-    # دارد؛ اما فقط وقتی آن را قبول می‌کنیم که خود شیء
-    # نشانه‌ای از یک رقابت داشته باشد. این کار جلوی این را می‌گیرد
-    # که id یک تیم/بازیکن اشتباهاً به‌عنوان competition_id انتخاب شود.
-    competition_markers = {
-        "name",
-        "shortName",
-        "displayName",
-        "slug",
-        "uniqueTournament",
-        "tournament",
-        "league",
-        "competition",
-    }
+    return None
 
-    if (
-        tournament.get("id") is not None
-        and any(
-            marker in tournament
-            for marker in competition_markers
-        )
+
+def _get_competition_id(tournament):
+
+    if not isinstance(
+        tournament,
+        dict,
     ):
-        return tournament.get("id")
+        return None
 
     for key in (
-        "tournament",
-        "league",
-        "uniqueTournament",
-        "competition",
+        "parentLeagueId",
+        "parentTournamentId",
+        "parentCompetitionId",
+        "parentLeagueID",
+        "parentTournamentID",
+        "parentCompetitionID",
     ):
 
-        nested = tournament.get(key)
+        value = tournament.get(key)
 
-        if isinstance(nested, dict):
+        if value is not None:
+            return value
 
-            result = _get_competition_id(
-                nested
-            )
-
-            if result is not None:
-                return result
-
-    return None
+    return _get_stage_id(
+        tournament
+    )
 
 
 def _find_competition_object(
@@ -622,6 +611,9 @@ def _find_competition_object(
         "leagueid",
         "uniquetournamentid",
         "competitionid",
+        "parentleagueid",
+        "parenttournamentid",
+        "parentcompetitionid",
     }
 
     def walk(node, parent_key=""):
@@ -882,6 +874,7 @@ def extract_basic_info(data):
 
     league = ""
     competition_id = None
+    stage_id = None
 
     tournament_candidates = [
         general.get("tournament"),
@@ -935,10 +928,15 @@ def extract_basic_info(data):
     if isinstance(tournament, dict):
 
         league = (
-            tournament.get("name")
+            tournament.get("leagueName")
+            or tournament.get("name")
             or tournament.get("title")
             or league
             or ""
+        )
+
+        stage_id = _get_stage_id(
+            tournament
         )
 
         competition_id = _get_competition_id(
@@ -964,10 +962,15 @@ def extract_basic_info(data):
             if not league:
 
                 league = (
-                    competition_object.get("name")
+                    competition_object.get("leagueName")
+                    or competition_object.get("name")
                     or competition_object.get("title")
                     or ""
                 )
+
+            stage_id = _get_stage_id(
+                competition_object
+            )
 
             competition_id = (
                 _get_competition_id(
@@ -994,10 +997,15 @@ def extract_basic_info(data):
             if not league:
 
                 league = (
-                    competition_object.get("name")
+                    competition_object.get("leagueName")
+                    or competition_object.get("name")
                     or competition_object.get("title")
                     or ""
                 )
+
+            stage_id = _get_stage_id(
+                competition_object
+            )
 
             competition_id = (
                 _get_competition_id(
@@ -1022,6 +1030,10 @@ def extract_basic_info(data):
             competition_object,
             dict,
         ):
+            stage_id = _get_stage_id(
+                competition_object
+            )
+
             competition_id = (
                 _get_competition_id(
                     competition_object
@@ -1030,7 +1042,8 @@ def extract_basic_info(data):
 
             if not league:
                 league = clean_text(
-                    competition_object.get("name")
+                    competition_object.get("leagueName")
+                    or competition_object.get("name")
                     or competition_object.get("title")
                     or competition_object.get(
                         "displayName"
@@ -1051,11 +1064,23 @@ def extract_basic_info(data):
             competition_object,
             dict,
         ):
+            stage_id = _get_stage_id(
+                competition_object
+            )
+
             competition_id = (
                 _get_competition_id(
                     competition_object
                 )
             )
+
+    # -----------------------------------------------------
+    # اگر stage_id هنوز پیدا نشده ولی competition_id
+    # پیدا شده، در حالت fallback همان شناسه را نگه می‌داریم.
+    # -----------------------------------------------------
+
+    if stage_id is None:
+        stage_id = competition_id
 
     # -----------------------------------------------------
     # fallback نام رقابت
@@ -1203,6 +1228,10 @@ def extract_basic_info(data):
 
         "competition_id": (
             competition_id
+        ),
+
+        "stage_id": (
+            stage_id
         ),
 
         "start": start,
@@ -4730,8 +4759,14 @@ def get_match_snapshot(match_url):
         # نام فارسی رقابت
         "league_fa": league_fa,
 
+        # شناسه رقابت اصلی
         "competition_id": (
             info.get("competition_id")
+        ),
+
+        # شناسه مرحله / نسخه رقابت
+        "stage_id": (
+            info.get("stage_id")
         ),
 
         "start": info.get("start"),
