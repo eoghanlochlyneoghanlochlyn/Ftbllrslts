@@ -1985,7 +1985,8 @@
         "id:14448058",
         "id:14448126",
         "half|None|None|45.0|",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "id:14448327"
       ],
       "goals": [
         {
@@ -2079,6 +2080,90 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "id:14448327",
+          "player_id": 623540,
+          "assist_player_id": 935409,
+          "is_home": true,
+          "minute": "56",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444832756Goal623540undefinedtrue",
+            "timeStr": 56,
+            "type": "goal",
+            "time": 56,
+            "overloadTime": null,
+            "eventId": 14448327,
+            "player": {
+              "id": 623540,
+              "name": "Václav Cerny",
+              "profileUrl": "/players/623540/vaclav-cerny"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/623540/vaclav-cerny",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Václav Cerny",
+            "firstName": "Václav",
+            "lastName": "Cerny",
+            "fullName": "Václav Cerny",
+            "playerId": 623540,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971162999,
+              "eventType": "Goal",
+              "teamId": 10188,
+              "playerId": 623540,
+              "playerName": "Václav Cerny",
+              "x": 96.7017543851,
+              "y": 22.597961787499997,
+              "min": 56,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.355000000000004,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.043461427092552185,
+              "expectedGoalsOnTarget": 0.7263634204864502,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.11243386243386144,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 687868,
+              "firstName": "Václav",
+              "lastName": "Cerny",
+              "fullName": "Václav Cerny",
+              "teamColor": "#000000"
+            },
+            "assistStr": "assist by Orkun Kökcü",
+            "assistProfileUrl": "/players/935409/orkun-kokcu",
+            "assistPlayerId": 935409,
+            "assistKey": "assist_by",
+            "assistInput": "Orkun Kökcü"
+          }
         }
       ]
     },
@@ -2096,7 +2181,8 @@
         "id:14448176",
         "id:14448254",
         "substitution|None|False|46.0|",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "substitution|None|True|57.0|"
       ],
       "goals": [
         {
@@ -2448,7 +2534,8 @@
         "id:14447995",
         "id:14448116",
         "id:14448143",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "substitution|None|False|61.0|"
       ],
       "goals": [
         {
@@ -2714,7 +2801,9 @@
         "half|None|None|45.0|",
         "substitution|None|False|46.0|",
         "id:14448306",
-        "id:14448300"
+        "id:14448300",
+        "substitution|None|True|61.0|",
+        "substitution|None|True|60.0|"
       ],
       "goals": [
         {
@@ -2979,7 +3068,10 @@
         "id:14448110",
         "half|None|None|45.0|",
         "id:14448307",
-        "id:14448287"
+        "id:14448287",
+        "substitution|None|True|60.0|",
+        "id:14448330",
+        "id:14448328"
       ],
       "goals": [
         {
@@ -3168,7 +3260,8 @@
         "id:14448246",
         "substitution|None|True|46.0|",
         "id:14448316",
-        "id:14448303"
+        "id:14448303",
+        "substitution|None|True|58.0|"
       ],
       "goals": [
         {
@@ -3433,7 +3526,8 @@
         "id:14448190",
         "id:14448185",
         "id:14448178",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "id:14448332"
       ],
       "goals": [
         {
@@ -3603,6 +3697,87 @@
             "assistKey": "assist_by",
             "assistInput": "Louis Patris"
           }
+        },
+        {
+          "event_key": "id:14448332",
+          "player_id": 1395201,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "59",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444833259Goal1395201undefinedfalse",
+            "timeStr": 59,
+            "type": "goal",
+            "time": 59,
+            "overloadTime": null,
+            "eventId": 14448332,
+            "player": {
+              "id": 1395201,
+              "name": "Ondřej Kričfaluši",
+              "profileUrl": "/players/1395201/ondrej-kricfalusi"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1395201/ondrej-kricfalusi",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ondřej Kričfaluši",
+            "firstName": "Ondřej",
+            "lastName": "Kričfaluši",
+            "fullName": "Ondřej Kričfaluši",
+            "playerId": 1395201,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971163121,
+              "eventType": "Goal",
+              "teamId": 7978,
+              "playerId": 1395201,
+              "playerName": "Ondřej Kričfaluši",
+              "x": 100.732758621,
+              "y": 32.6275,
+              "min": 59,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.21125,
+              "goalCrossedZ": 0.5265263132,
+              "expectedGoals": 0.5009996294975281,
+              "expectedGoalsOnTarget": 0.9767087697982788,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.41501322751322767,
+                "y": 0.13929267544973545,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1514693,
+              "firstName": "Ondřej",
+              "lastName": "Kričfaluši",
+              "fullName": "Ondřej Kričfaluši",
+              "teamColor": "#daa000"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -3697,7 +3872,9 @@
         "substitution|None|False|37.0|",
         "addedtime|None|None|45.0|",
         "id:14448299",
-        "id:14448284"
+        "id:14448284",
+        "half|None|None|45.0|",
+        "id:14448320"
       ],
       "goals": [
         {
@@ -3867,6 +4044,90 @@
             "assistKey": "assist_by",
             "assistInput": "Ilias Akhomach"
           }
+        },
+        {
+          "event_key": "id:14448320",
+          "player_id": 844544,
+          "assist_player_id": 479020,
+          "is_home": false,
+          "minute": "45 + 2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444832045Goal844544undefinedfalse",
+            "timeStr": "45 + 2",
+            "type": "goal",
+            "time": 45,
+            "overloadTime": 2,
+            "eventId": 14448320,
+            "player": {
+              "id": 844544,
+              "name": "Pape Gueye",
+              "profileUrl": "/players/844544/pape-gueye"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/844544/pape-gueye",
+            "overloadTimeStr": "+2",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Pape Gueye",
+            "firstName": "Pape",
+            "lastName": "Gueye",
+            "fullName": "Pape Gueye",
+            "playerId": 844544,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971162047,
+              "eventType": "Goal",
+              "teamId": 10205,
+              "playerId": 844544,
+              "playerName": "Pape Gueye",
+              "x": 95.54385964789999,
+              "y": 33.92375,
+              "min": 45,
+              "minAdded": 2,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.68625,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.3219941258430481,
+              "expectedGoalsOnTarget": 0.266832172870636,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.8184523809523807,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 616538,
+              "firstName": "Pape",
+              "lastName": "Gueye",
+              "fullName": "Pape Gueye",
+              "teamColor": "#e19d00"
+            },
+            "assistStr": "assist by Ayoze Pérez",
+            "assistProfileUrl": "/players/479020/ayoze-perez",
+            "assistPlayerId": 479020,
+            "assistKey": "assist_by",
+            "assistInput": "Ayoze Pérez"
+          }
         }
       ]
     },
@@ -3875,8 +4136,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14447919",
         "id:14447935",
@@ -3889,7 +4150,8 @@
         "substitution|None|False|62.0|",
         "substitution|None|False|71.0|",
         "substitution|None|True|71.0|",
-        "id:14448317"
+        "id:14448317",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
