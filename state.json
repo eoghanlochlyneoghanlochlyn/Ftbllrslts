@@ -4430,7 +4430,9 @@
         "id:14448284",
         "half|None|None|45.0|",
         "id:14448320",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "substitution|None|False|63.0|",
+        "substitution|None|True|61.0|"
       ],
       "goals": [
         {
