@@ -29,17 +29,18 @@ from event_detector import (
 
 from formatter import (
     build_cancelled_goal_message,
-    build_final_lineup_message,
-    build_final_stats_message,
+    build_final_lineup_rich_message,
+    build_final_stats_rich_message,
     build_goal_message,
     build_half_time_message,
-    build_lineup_message,
+    build_lineup_rich_message,
     build_red_card_message,
     build_start_message,
 )
 
 from telegram_sender import (
     send_long_message,
+    send_rich_message,
 )
 
 
@@ -719,18 +720,20 @@ def process_match(
 
         print(
             f"[{match_id}] "
-            "Sending lineup message."
+            "Sending lineup rich message."
         )
 
-        message = build_lineup_message(
-            snapshot,
-            show_rating=False,
+        rich_message = (
+            build_lineup_rich_message(
+                snapshot,
+                show_rating=False,
+            )
         )
 
-        if message:
+        if rich_message:
 
-            send_long_message(
-                message
+            send_rich_message(
+                rich_message
             )
 
             match_state[
@@ -926,7 +929,7 @@ def process_match(
             # -------------------------------------------------
 
             final_lineup_message = (
-                build_final_lineup_message(
+                build_final_lineup_rich_message(
                     snapshot,
                     events,
                 )
@@ -936,7 +939,7 @@ def process_match(
 
             if final_lineup_message:
 
-                send_long_message(
+                send_rich_message(
                     final_lineup_message
                 )
 
@@ -949,11 +952,11 @@ def process_match(
 
             print(
                 f"[{match_id}] "
-                "Sending final stats message."
+                "Sending final stats rich message."
             )
 
             final_stats_message = (
-                build_final_stats_message(
+                build_final_stats_rich_message(
                     snapshot,
                     final_score,
                 )
@@ -963,7 +966,7 @@ def process_match(
 
             if final_stats_message:
 
-                send_long_message(
+                send_rich_message(
                     final_stats_message
                 )
 
