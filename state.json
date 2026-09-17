@@ -1685,7 +1685,11 @@
         "substitution|None|False|63.0|",
         "id:14447454",
         "substitution|None|False|69.0|",
-        "substitution|None|True|76.0|"
+        "substitution|None|True|76.0|",
+        "substitution|None|True|88.0|",
+        "substitution|None|False|89.0|",
+        "id:14447715",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -1795,7 +1799,8 @@
         "substitution|None|False|75.0|",
         "id:14447637",
         "substitution|None|True|81.0|",
-        "substitution|None|True|80.0|"
+        "substitution|None|True|80.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -2056,7 +2061,11 @@
         "substitution|None|False|46.0|",
         "substitution|None|True|46.0|",
         "id:14447593",
-        "substitution|None|True|61.0|"
+        "substitution|None|True|61.0|",
+        "id:14447747",
+        "substitution|None|True|72.0|",
+        "id:14447716",
+        "substitution|None|False|69.0|"
       ],
       "goals": [
         {
@@ -2120,7 +2129,7 @@
     "6099330": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
