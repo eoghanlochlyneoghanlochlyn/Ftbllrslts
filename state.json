@@ -2092,7 +2092,10 @@
         "id:14448078",
         "half|None|None|45.0|",
         "id:14448186",
-        "id:14448176"
+        "id:14448176",
+        "id:14448254",
+        "substitution|None|False|46.0|",
+        "substitution|None|True|46.0|"
       ],
       "goals": [
         {
@@ -2345,6 +2348,90 @@
             "assistPlayerId": 582499,
             "assistKey": "assist_by",
             "assistInput": "Kieran Tierney"
+          }
+        },
+        {
+          "event_key": "id:14448254",
+          "player_id": 799044,
+          "assist_player_id": 1133802,
+          "is_home": false,
+          "minute": "47",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444825447Goal799044undefinedfalse",
+            "timeStr": 47,
+            "type": "goal",
+            "time": 47,
+            "overloadTime": null,
+            "eventId": 14448254,
+            "player": {
+              "id": 799044,
+              "name": "Daniel Arzani",
+              "profileUrl": "/players/799044/daniel-arzani"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/799044/daniel-arzani",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Daniel Arzani",
+            "firstName": "Daniel",
+            "lastName": "Arzani",
+            "fullName": "Daniel Arzani",
+            "playerId": 799044,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971155391,
+              "eventType": "Goal",
+              "teamId": 8222,
+              "playerId": 799044,
+              "playerName": "Daniel Arzani",
+              "x": 86.6749999996,
+              "y": 41.7146875,
+              "min": 47,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.026249999999997,
+              "goalCrossedZ": 1.6694736760000002,
+              "expectedGoals": 0.05565343797206879,
+              "expectedGoalsOnTarget": 0.832690417766571,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7867063492063497,
+                "y": 0.44165970264550264,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1185782,
+              "firstName": "Daniel",
+              "lastName": "Arzani",
+              "fullName": "Daniel Arzani",
+              "teamColor": "#008040"
+            },
+            "assistStr": "assist by Bamidele Yusuf",
+            "assistProfileUrl": "/players/1133802/bamidele-yusuf",
+            "assistPlayerId": 1133802,
+            "assistKey": "assist_by",
+            "assistInput": "Bamidele Yusuf"
           }
         }
       ]
@@ -2623,7 +2710,8 @@
         "id:14448096",
         "id:14448140",
         "substitution|None|False|32.0|",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "substitution|None|False|46.0|"
       ],
       "goals": [
         {
@@ -2988,7 +3076,8 @@
         "id:14448086",
         "id:14448133",
         "half|None|None|45.0|",
-        "id:14448246"
+        "id:14448246",
+        "substitution|None|True|46.0|"
       ],
       "goals": [
         {
@@ -3171,7 +3260,8 @@
         "half|None|None|45.0|",
         "id:14448190",
         "id:14448185",
-        "id:14448178"
+        "id:14448178",
+        "substitution|None|True|46.0|"
       ],
       "goals": [
         {
@@ -3431,7 +3521,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14448160",
-        "id:14448253"
+        "id:14448253",
+        "substitution|None|False|37.0|"
       ],
       "goals": [
         {
