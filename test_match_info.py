@@ -1,171 +1,95 @@
-import os
 import requests
 import json
+import re
 
-BOT_TOKEN = os.environ["TELEGRAMBOT"]
-CHANNEL = os.environ["TELEGRAMCHANNEL"]
+MATCH_ID = "5811755"
 
-real_sociedad_starting = [
-    "Unai Marrero",
-    "Jon Aramburu",
-    "Igor Zubeldia",
-    "Duje Caleta-Car",
-    "Sergio Gomez",
-    "Ander Barrenetxea",
-    "Jon Gorrotxategi",
-    "Carlos Soler",
-    "Takefusa Kubo",
-    "Mikel Oyarzabal",
-    "Luka Sucic",
-]
+url = f"https://www.fotmob.com/matches/-/-/{MATCH_ID}"
 
-osasuna_starting = [
-    "Aitor Fernández",
-    "Inigo Arguibide",
-    "Flavien Boyomo",
-    "Jorge Herrando",
-    "Juan Cruz",
-    "Enrique Barja",
-    "Iker Munoz",
-    "Jon Moncayola",
-    "Abel Bretones",
-    "Moi Gomez",
-    "Raul Garcia",
-]
-
-real_sociedad_substitutes = [
-    "Arsen Zakharyan",
-    "Benat Turrientes",
-    "Álvaro Odriozola",
-    "Goncalo Guedes",
-    "Orri Oskarsson",
-    "Jon Martin",
-    "Alex Remiro",
-    "Aihen Munoz",
-    "Aritz Elustondo",
-    "Brais Méndez",
-    "Pablo Marin",
-]
-
-osasuna_substitutes = [
-    "Javi Galán",
-    "Valentin Rosier",
-    "Rubén Garcia",
-    "Alejandro Catena",
-    "Lucas Torro",
-    "Ante Budimir",
-    "Sergio Herrera",
-    "Asier Osambela",
-    "Aimar Oroz",
-    "Sheraldo Becker",
-    "Victor Munoz",
-]
-
-real_sociedad_subs_text = " | ".join(real_sociedad_substitutes)
-osasuna_subs_text = " | ".join(osasuna_substitutes)
-
-cells = [
-    [
-        {
-            "text": (
-                "رئال سوسیداد\n"
-                "👔 Pellegrino Matarazzo\n"
-                "📐 4-4-2"
-            ),
-            "is_header": True,
-            "align": "center",
-            "valign": "middle"
-        },
-        {
-            "text": (
-                "اوساسونا\n"
-                "👔 Alessio Lisci\n"
-                "📐 4-4-2"
-            ),
-            "is_header": True,
-            "align": "center",
-            "valign": "middle"
-        }
-    ]
-]
-
-for real_player, osasuna_player in zip(
-    real_sociedad_starting,
-    osasuna_starting
-):
-    cells.append(
-        [
-            {
-                "text": real_player,
-                "align": "right",
-                "valign": "middle"
-            },
-            {
-                "text": osasuna_player,
-                "align": "left",
-                "valign": "middle"
-            }
-        ]
+headers = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/140.0.0.0 Safari/537.36"
     )
-
-cells.append(
-    [
-        {
-            "text": (
-                "🔄 تعویضی‌ها\n"
-                + real_sociedad_subs_text
-            ),
-            "align": "right",
-            "valign": "top"
-        },
-        {
-            "text": (
-                "🔄 تعویضی‌ها\n"
-                + osasuna_subs_text
-            ),
-            "align": "left",
-            "valign": "top"
-        }
-    ]
-)
-
-rich_message = {
-    "is_rtl": True,
-    "blocks": [
-        {
-            "type": "paragraph",
-            "text": "🏆 جام حذفی اسپانیا"
-        },
-        {
-            "type": "paragraph",
-            "text": "رئال سوسیداد 🆚 اوساسونا"
-        },
-        {
-            "type": "paragraph",
-            "text": "🕐 1404/10/22 - 23:30 به وقت ایران"
-        },
-        {
-            "type": "table",
-            "is_bordered": True,
-            "is_striped": True,
-            "is_compact": False,
-            "cells": cells
-        }
-    ]
 }
 
-url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendRichMessage"
-
-response = requests.post(
+response = requests.get(
     url,
-    data={
-        "chat_id": CHANNEL,
-        "rich_message": json.dumps(
-            rich_message,
-            ensure_ascii=False
-        ),
-    },
+    headers=headers,
+    timeout=30
 )
 
 print("Status:", response.status_code)
-print("Response:", response.text)
+
+if response.status_code != 200:
+    print("Response:")
+    print(response.text[:2000])
+    raise SystemExit
+
+html = response.text
+
+match = re.search(
+    r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
+    html,
+    re.DOTALL
+)
+
+if not match:
+    print("❌ __NEXT_DATA__ پیدا نشد.")
+    raise SystemExit
+
+data = json.loads(match.group(1))
+
+print("\n✅ __NEXT_DATA__ پیدا شد.")
+
+def find_keys(obj, target_keys, path="root"):
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+
+            if key in target_keys:
+                print("\n" + "=" * 80)
+                print(f"FOUND KEY: {key}")
+                print(f"PATH: {path}.{key}")
+                print("=" * 80)
+                print(
+                    json.dumps(
+                        value,
+                        ensure_ascii=False,
+                        indent=2,
+                        default=str
+                    )
+                )
+
+            find_keys(
+                value,
+                target_keys,
+                f"{path}.{key}"
+            )
+
+    elif isinstance(obj, list):
+        for i, value in enumerate(obj):
+            find_keys(
+                value,
+                target_keys,
+                f"{path}[{i}]"
+            )
+
+
+target_keys = {
+    "shirtNumber",
+    "shirt_number",
+    "shirtNo",
+    "shirt_no",
+    "number",
+    "jerseyNumber",
+    "jersey_number",
+    "jerseyNo",
+    "jersey_no"
+}
+
+find_keys(data, target_keys)
+
+print("\n" + "=" * 80)
+print("SEARCH FINISHED")
+print("=" * 80)
