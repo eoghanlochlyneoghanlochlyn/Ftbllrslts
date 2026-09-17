@@ -1312,7 +1312,8 @@
         "half|None|None|45.0|",
         "id:14446603",
         "id:14446601",
-        "id:14446637"
+        "id:14446637",
+        "id:14446649"
       ],
       "goals": [
         {
@@ -1455,6 +1456,53 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "id:14446649",
+          "player_id": 1640206,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "81",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444664981Goal1640206undefinedtrue",
+            "timeStr": 81,
+            "type": "goal",
+            "time": 81,
+            "overloadTime": null,
+            "eventId": 14446649,
+            "player": {
+              "id": 1640206,
+              "name": "Kenza Roche-Dufour",
+              "profileUrl": "/players/1640206/kenza-roche-dufour"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/1640206/kenza-roche-dufour",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Kenza Roche-Dufour",
+            "firstName": "Kenza",
+            "lastName": "Roche-Dufour",
+            "fullName": "Kenza Roche-Dufour",
+            "playerId": 1640206,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -1469,7 +1517,12 @@
         "half|None|None|45.0|",
         "id:14446613",
         "id:14446606",
-        "id:14446604"
+        "id:14446604",
+        "substitution|None|True|75.0|",
+        "substitution|None|True|69.0|",
+        "substitution|None|True|68.0|",
+        "substitution|None|False|66.0|",
+        "substitution|None|False|62.0|"
       ],
       "goals": []
     },
@@ -1485,7 +1538,8 @@
         "id:14446615",
         "id:14446614",
         "id:14446626",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "substitution|None|True|46.0|"
       ],
       "goals": [
         {
