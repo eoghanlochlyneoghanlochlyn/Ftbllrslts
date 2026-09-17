@@ -1,135 +1,236 @@
+import os
 import requests
-import json
-import re
 
-MATCH_URL = "https://www.fotmob.com/matches/argentina-vs-france/1hox8a#3370572"
 
-headers = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/140.0.0.0 Safari/537.36"
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAMBOT"]
+TELEGRAM_CHANNEL = os.environ["TELEGRAMCHANNEL"]
+
+
+def send_rich_message(
+    chat_id,
+    rich_message,
+):
+
+    url = (
+        f"https://api.telegram.org/bot"
+        f"{TELEGRAM_BOT_TOKEN}/sendRichMessage"
     )
-}
 
-response = requests.get(
-    MATCH_URL,
-    headers=headers,
-    timeout=30
-)
+    response = requests.post(
+        url,
+        json={
+            "chat_id": chat_id,
+            "rich_message": rich_message,
+        },
+        timeout=30,
+    )
 
-print("Status:", response.status_code)
-
-if response.status_code != 200:
-    print("❌ صفحه بازی دریافت نشد.")
-    print(response.text[:2000])
-    raise SystemExit
-
-html = response.text
-
-print("HTML length:", len(html))
-
-match = re.search(
-    r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-    html,
-    re.DOTALL
-)
-
-if not match:
-    print("❌ __NEXT_DATA__ داخل صفحه پیدا نشد.")
-    raise SystemExit
-
-data = json.loads(match.group(1))
-
-print("✅ __NEXT_DATA__ پیدا شد.")
-print("Top-level keys:", list(data.keys()))
-
-
-# --------------------------------------------------------
-# جستجوی شماره پیراهن داخل کل داده صفحه
-# --------------------------------------------------------
-
-target_keys = {
-    "shirtNumber",
-    "shirt_number",
-    "shirtNo",
-    "shirt_no",
-    "jerseyNumber",
-    "jersey_number",
-    "jerseyNo",
-    "jersey_no",
-    "shirt",
-    "number",
-}
-
-
-found_count = 0
-
-
-def search_for_shirt_numbers(obj, path="root"):
-
-    global found_count
-
-    if isinstance(obj, dict):
-
-        for key, value in obj.items():
-
-            if key in target_keys:
-
-                found_count += 1
-
-                print("\n" + "=" * 80)
-                print("🎯 SHIRT NUMBER FOUND")
-                print("=" * 80)
-                print("Path:", f"{path}.{key}")
-                print("Key:", key)
-                print(
-                    "Value:",
-                    json.dumps(
-                        value,
-                        ensure_ascii=False
-                    )
-                )
-
-                # اطلاعات اطراف این شماره را هم چاپ می‌کنیم
-                print("\nParent object:")
-
-                print(
-                    json.dumps(
-                        obj,
-                        ensure_ascii=False,
-                        indent=2,
-                        default=str
-                    )
-                )
-
-            search_for_shirt_numbers(
-                value,
-                f"{path}.{key}"
-            )
-
-    elif isinstance(obj, list):
-
-        for i, value in enumerate(obj):
-
-            search_for_shirt_numbers(
-                value,
-                f"{path}[{i}]"
-            )
-
-
-print("\n🔎 Searching entire page data...")
-
-search_for_shirt_numbers(data)
-
-
-print("\n" + "=" * 80)
-print("SEARCH FINISHED")
-print("=" * 80)
-
-if found_count == 0:
-    print("❌ هیچ کلید شناخته‌شده‌ای برای شماره پیراهن پیدا نشد.")
-else:
     print(
-        f"✅ تعداد موارد پیدا شده: {found_count}"
+        "Status:",
+        response.status_code,
     )
+
+    print(
+        "Response:",
+        response.text,
+    )
+
+
+rich_message = {
+    "is_rtl": True,
+    "blocks": [
+        {
+            "type": "paragraph",
+            "text": "📊 آمار بازی",
+        },
+        {
+            "type": "paragraph",
+            "text": "رئال سوسیداد 2 (4) 🆚 (3) 2 اوساسونا",
+        },
+        {
+            "type": "table",
+            "is_bordered": True,
+            "is_compact": False,
+            "is_striped": True,
+            "cells": [
+                [
+                    {
+                        "text": "آمار",
+                        "is_header": True,
+                        "align": "center",
+                    },
+                    {
+                        "text": "رئال سوسیداد",
+                        "is_header": True,
+                        "align": "center",
+                    },
+                    {
+                        "text": "اوساسونا",
+                        "is_header": True,
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🎯 ایکس جی",
+                        "align": "center",
+                    },
+                    {
+                        "text": "3.96",
+                        "align": "center",
+                    },
+                    {
+                        "text": "0.55",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "💥 شوت",
+                        "align": "center",
+                    },
+                    {
+                        "text": "30",
+                        "align": "center",
+                    },
+                    {
+                        "text": "13",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🥅 در چارچوب",
+                        "align": "center",
+                    },
+                    {
+                        "text": "9",
+                        "align": "center",
+                    },
+                    {
+                        "text": "5",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "⚽️ مالکیت",
+                        "align": "center",
+                    },
+                    {
+                        "text": "69%",
+                        "align": "center",
+                    },
+                    {
+                        "text": "31%",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🔄 پاس",
+                        "align": "center",
+                    },
+                    {
+                        "text": "752",
+                        "align": "center",
+                    },
+                    {
+                        "text": "347",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "✅ پاس دقیق",
+                        "align": "center",
+                    },
+                    {
+                        "text": "636 (85%)",
+                        "align": "center",
+                    },
+                    {
+                        "text": "228 (66%)",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🚩 کرنر",
+                        "align": "center",
+                    },
+                    {
+                        "text": "7",
+                        "align": "center",
+                    },
+                    {
+                        "text": "3",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "⚠️ خطا",
+                        "align": "center",
+                    },
+                    {
+                        "text": "13",
+                        "align": "center",
+                    },
+                    {
+                        "text": "21",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🚫 آفساید",
+                        "align": "center",
+                    },
+                    {
+                        "text": "2",
+                        "align": "center",
+                    },
+                    {
+                        "text": "3",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🟨 کارت زرد",
+                        "align": "center",
+                    },
+                    {
+                        "text": "1",
+                        "align": "center",
+                    },
+                    {
+                        "text": "5",
+                        "align": "center",
+                    },
+                ],
+                [
+                    {
+                        "text": "🟥 کارت قرمز",
+                        "align": "center",
+                    },
+                    {
+                        "text": "0",
+                        "align": "center",
+                    },
+                    {
+                        "text": "0",
+                        "align": "center",
+                    },
+                ],
+            ],
+        },
+    ],
+}
+
+
+send_rich_message(
+    TELEGRAM_CHANNEL,
+    rich_message,
+)
