@@ -1986,7 +1986,9 @@
         "id:14448126",
         "half|None|None|45.0|",
         "substitution|None|True|46.0|",
-        "id:14448327"
+        "id:14448327",
+        "id:14448364",
+        "substitution|None|False|58.0|"
       ],
       "goals": [
         {
@@ -2164,6 +2166,90 @@
             "assistKey": "assist_by",
             "assistInput": "Orkun Kökcü"
           }
+        },
+        {
+          "event_key": "id:14448364",
+          "player_id": 643635,
+          "assist_player_id": 935409,
+          "is_home": true,
+          "minute": "59",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444836459Goal643635undefinedtrue",
+            "timeStr": 59,
+            "type": "goal",
+            "time": 59,
+            "overloadTime": null,
+            "eventId": 14448364,
+            "player": {
+              "id": 643635,
+              "name": "Amir Murillo",
+              "profileUrl": "/players/643635/amir-murillo"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/643635/amir-murillo",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Amir Murillo",
+            "firstName": "Amir",
+            "lastName": "Murillo",
+            "fullName": "Amir Murillo",
+            "playerId": 643635,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971164325,
+              "eventType": "Goal",
+              "teamId": 10188,
+              "playerId": 643635,
+              "playerName": "Amir Murillo",
+              "x": 96.7017543851,
+              "y": 31.7125,
+              "min": 59,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.2025,
+              "goalCrossedZ": 0.7705263120000001,
+              "expectedGoals": 0.05911630764603615,
+              "expectedGoalsOnTarget": 0.784226655960083,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.15277777777777768,
+                "y": 0.2038429396825397,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 687868,
+              "firstName": "Amir",
+              "lastName": "Murillo",
+              "fullName": "Amir Murillo",
+              "teamColor": "#000000"
+            },
+            "assistStr": "assist by Orkun Kökcü",
+            "assistProfileUrl": "/players/935409/orkun-kokcu",
+            "assistPlayerId": 935409,
+            "assistKey": "assist_by",
+            "assistInput": "Orkun Kökcü"
+          }
         }
       ]
     },
@@ -2182,7 +2268,9 @@
         "id:14448254",
         "substitution|None|False|46.0|",
         "substitution|None|True|46.0|",
-        "substitution|None|True|57.0|"
+        "substitution|None|True|57.0|",
+        "substitution|None|True|66.0|",
+        "substitution|None|False|66.0|"
       ],
       "goals": [
         {
@@ -2535,7 +2623,8 @@
         "id:14448116",
         "id:14448143",
         "half|None|None|45.0|",
-        "substitution|None|False|61.0|"
+        "substitution|None|False|61.0|",
+        "substitution|None|True|62.0|"
       ],
       "goals": [
         {
@@ -3261,7 +3350,8 @@
         "substitution|None|True|46.0|",
         "id:14448316",
         "id:14448303",
-        "substitution|None|True|58.0|"
+        "substitution|None|True|58.0|",
+        "substitution|None|False|63.0|"
       ],
       "goals": [
         {
@@ -3527,7 +3617,10 @@
         "id:14448185",
         "id:14448178",
         "substitution|None|True|46.0|",
-        "id:14448332"
+        "id:14448332",
+        "substitution|None|True|64.0|",
+        "substitution|None|False|63.0|",
+        "id:14448358"
       ],
       "goals": [
         {
@@ -4151,7 +4244,8 @@
         "substitution|None|False|71.0|",
         "substitution|None|True|71.0|",
         "id:14448317",
-        "half|None|None|90.0|"
+        "half|None|None|90.0|",
+        "substitution|None|False|85.0|"
       ],
       "goals": [
         {
