@@ -1792,7 +1792,10 @@
         "substitution|None|False|67.0|",
         "substitution|None|True|70.0|",
         "substitution|None|True|69.0|",
-        "substitution|None|False|75.0|"
+        "substitution|None|False|75.0|",
+        "id:14447637",
+        "substitution|None|True|81.0|",
+        "substitution|None|True|80.0|"
       ],
       "goals": [
         {
@@ -1877,6 +1880,90 @@
             "assistPlayerId": 574623,
             "assistKey": "assist_by",
             "assistInput": "Kenan Kodro"
+          }
+        },
+        {
+          "event_key": "id:14447637",
+          "player_id": 916949,
+          "assist_player_id": 1071487,
+          "is_home": true,
+          "minute": "84",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444763784Goal916949undefinedtrue",
+            "timeStr": 84,
+            "type": "goal",
+            "time": 84,
+            "overloadTime": null,
+            "eventId": 14447637,
+            "player": {
+              "id": 916949,
+              "name": "Giorgios Kanellopoulos",
+              "profileUrl": "/players/916949/giorgios-kanellopoulos"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/916949/giorgios-kanellopoulos",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Giorgios Kanellopoulos",
+            "firstName": "Giorgios",
+            "lastName": "Kanellopoulos",
+            "fullName": "Giorgios Kanellopoulos",
+            "playerId": 916949,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971116215,
+              "eventType": "Goal",
+              "teamId": 7753,
+              "playerId": 916949,
+              "playerName": "Giorgios Kanellopoulos",
+              "x": 98.6315789471,
+              "y": 37.2025,
+              "min": 84,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.821250000000006,
+              "goalCrossedZ": 1.0979999946,
+              "expectedGoals": 0.3169,
+              "expectedGoalsOnTarget": 0.6784,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2536375661375645,
+                "y": 0.29047618904761907,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 178778,
+              "firstName": "Giorgios",
+              "lastName": "Kanellopoulos",
+              "fullName": "Giorgios Kanellopoulos",
+              "teamColor": "#101010"
+            },
+            "assistStr": "assist by Borja González",
+            "assistProfileUrl": "/players/1071487/borja-gonzalez",
+            "assistPlayerId": 1071487,
+            "assistKey": "assist_by",
+            "assistInput": "Borja González"
           }
         }
       ]
@@ -1968,7 +2055,8 @@
         "addedtime|None|None|45.0|",
         "substitution|None|False|46.0|",
         "substitution|None|True|46.0|",
-        "id:14447593"
+        "id:14447593",
+        "substitution|None|True|61.0|"
       ],
       "goals": [
         {
