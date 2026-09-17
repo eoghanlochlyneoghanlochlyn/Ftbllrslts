@@ -1983,7 +1983,8 @@
       "event_keys": [
         "id:14448022",
         "id:14448058",
-        "id:14448126"
+        "id:14448126",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
@@ -2088,7 +2089,10 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "id:14448078"
+        "id:14448078",
+        "half|None|None|45.0|",
+        "id:14448186",
+        "id:14448176"
       ],
       "goals": [
         {
@@ -2174,6 +2178,174 @@
             "assistKey": "assist_by",
             "assistInput": "Kristoffer Zachariassen"
           }
+        },
+        {
+          "event_key": "id:14448186",
+          "player_id": 532097,
+          "assist_player_id": 1133802,
+          "is_home": false,
+          "minute": "45 + 1",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444818645Goal532097undefinedfalse",
+            "timeStr": "45 + 1",
+            "type": "goal",
+            "time": 45,
+            "overloadTime": 1,
+            "eventId": 14448186,
+            "player": {
+              "id": 532097,
+              "name": "Kristoffer Zachariassen",
+              "profileUrl": "/players/532097/kristoffer-zachariassen"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/532097/kristoffer-zachariassen",
+            "overloadTimeStr": "+1",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Kristoffer Zachariassen",
+            "firstName": "Kristoffer",
+            "lastName": "Zachariassen",
+            "fullName": "Kristoffer Zachariassen",
+            "playerId": 532097,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971151831,
+              "eventType": "Goal",
+              "teamId": 8222,
+              "playerId": 532097,
+              "playerName": "Kristoffer Zachariassen",
+              "x": 100.6379310348,
+              "y": 28.370952380000002,
+              "min": 45,
+              "minAdded": 1,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.70374999999999,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.11337162554264069,
+              "expectedGoalsOnTarget": 0.17625464498996735,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3429232804232825,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1185782,
+              "firstName": "Kristoffer",
+              "lastName": "Zachariassen",
+              "fullName": "Kristoffer Zachariassen",
+              "teamColor": "#008040"
+            },
+            "assistStr": "assist by Bamidele Yusuf",
+            "assistProfileUrl": "/players/1133802/bamidele-yusuf",
+            "assistPlayerId": 1133802,
+            "assistKey": "assist_by",
+            "assistInput": "Bamidele Yusuf"
+          }
+        },
+        {
+          "event_key": "id:14448176",
+          "player_id": 1329169,
+          "assist_player_id": 582499,
+          "is_home": true,
+          "minute": "44",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444817644Goal1329169undefinedtrue",
+            "timeStr": 44,
+            "type": "goal",
+            "time": 44,
+            "overloadTime": null,
+            "eventId": 14448176,
+            "player": {
+              "id": 1329169,
+              "name": "Mika Baur",
+              "profileUrl": "/players/1329169/mika-baur"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1329169/mika-baur",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mika Baur",
+            "firstName": "Mika",
+            "lastName": "Baur",
+            "fullName": "Mika Baur",
+            "playerId": 1329169,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971150629,
+              "eventType": "Goal",
+              "teamId": 9925,
+              "playerId": 1329169,
+              "playerName": "Mika Baur",
+              "x": 95.640350876,
+              "y": 37.58375000000001,
+              "min": 44,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.00875,
+              "goalCrossedZ": 0.28252631440000003,
+              "expectedGoals": 0.1522621214389801,
+              "expectedGoalsOnTarget": 0.6649877429008484,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.26223544973545,
+                "y": 0.07474241121693122,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 764642,
+              "firstName": "Mika",
+              "lastName": "Baur",
+              "fullName": "Mika Baur",
+              "teamColor": "#007838"
+            },
+            "assistStr": "assist by Kieran Tierney",
+            "assistProfileUrl": "/players/582499/kieran-tierney",
+            "assistPlayerId": 582499,
+            "assistKey": "assist_by",
+            "assistInput": "Kieran Tierney"
+          }
         }
       ]
     },
@@ -2187,7 +2359,8 @@
       "event_keys": [
         "id:14447995",
         "id:14448116",
-        "id:14448143"
+        "id:14448143",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
@@ -2449,7 +2622,8 @@
         "id:14447987",
         "id:14448096",
         "id:14448140",
-        "substitution|None|False|32.0|"
+        "substitution|None|False|32.0|",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
@@ -2711,7 +2885,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "id:14448110"
+        "id:14448110",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
@@ -2811,7 +2986,8 @@
         "id:14448027",
         "id:14448106",
         "id:14448086",
-        "id:14448133"
+        "id:14448133",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
@@ -2990,7 +3166,11 @@
       "finished_sent": false,
       "event_keys": [
         "id:14448059",
-        "id:14448073"
+        "id:14448073",
+        "half|None|None|45.0|",
+        "id:14448190",
+        "id:14448185",
+        "id:14448178"
       ],
       "goals": [
         {
@@ -3075,6 +3255,90 @@
             "assistPlayerId": 1670317,
             "assistKey": "assist_by",
             "assistInput": "Massiré Sylla"
+          }
+        },
+        {
+          "event_key": "id:14448185",
+          "player_id": 1385813,
+          "assist_player_id": 1178319,
+          "is_home": false,
+          "minute": "44",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444818544Goal1385813undefinedfalse",
+            "timeStr": 44,
+            "type": "goal",
+            "time": 44,
+            "overloadTime": null,
+            "eventId": 14448185,
+            "player": {
+              "id": 1385813,
+              "name": "Mateo Biondic",
+              "profileUrl": "/players/1385813/mateo-biondic"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1385813/mateo-biondic",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mateo Biondic",
+            "firstName": "Mateo",
+            "lastName": "Biondic",
+            "fullName": "Mateo Biondic",
+            "playerId": 1385813,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971150823,
+              "eventType": "Goal",
+              "teamId": 7978,
+              "playerId": 1385813,
+              "playerName": "Mateo Biondic",
+              "x": 91.6,
+              "y": 37.05,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.178749999999994,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.40973854064941406,
+              "expectedGoalsOnTarget": 0.9487782716751099,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7463624338624355,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1514693,
+              "firstName": "Mateo",
+              "lastName": "Biondic",
+              "fullName": "Mateo Biondic",
+              "teamColor": "#daa000"
+            },
+            "assistStr": "assist by Louis Patris",
+            "assistProfileUrl": "/players/1178319/louis-patris",
+            "assistPlayerId": 1178319,
+            "assistKey": "assist_by",
+            "assistInput": "Louis Patris"
           }
         }
       ]
@@ -3269,7 +3533,8 @@
         "substitution|None|True|46.0|",
         "id:14448156",
         "id:14448134",
-        "substitution|None|False|46.0|"
+        "substitution|None|False|46.0|",
+        "substitution|None|False|62.0|"
       ],
       "goals": [
         {
