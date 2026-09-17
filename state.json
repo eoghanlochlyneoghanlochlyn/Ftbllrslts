@@ -1149,13 +1149,14 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14446617",
         "half|None|None|45.0|",
         "id:14446598",
-        "id:14446639"
+        "id:14446639",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -1306,14 +1307,15 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "half|None|None|45.0|",
         "id:14446603",
         "id:14446601",
         "id:14446637",
-        "id:14446649"
+        "id:14446649",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -1522,7 +1524,10 @@
         "substitution|None|True|69.0|",
         "substitution|None|True|68.0|",
         "substitution|None|False|66.0|",
-        "substitution|None|False|62.0|"
+        "substitution|None|False|62.0|",
+        "substitution|None|False|82.0|",
+        "id:14446677",
+        "id:14446674"
       ],
       "goals": []
     },
@@ -1539,7 +1544,8 @@
         "id:14446614",
         "id:14446626",
         "half|None|None|45.0|",
-        "substitution|None|True|46.0|"
+        "substitution|None|True|46.0|",
+        "substitution|None|False|60.0|"
       ],
       "goals": [
         {
