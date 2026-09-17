@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone, timedelta
 
 from fotmob import (
@@ -16,6 +17,7 @@ from event_detector import (
     get_event_assist_player_id,
     get_event_player_id,
     get_event_team,
+    get_event_type,
     is_own_goal,
     is_penalty_goal,
 )
@@ -405,12 +407,9 @@ def build_final_player_events(
         ):
             continue
 
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
+        event_type = get_event_type(
+            event
+        )
 
         if event_type != "goal":
             continue
@@ -481,12 +480,9 @@ def build_final_player_events(
         ):
             continue
 
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
+        event_type = get_event_type(
+            event
+        )
 
         if event_type != "card":
             continue
@@ -969,12 +965,9 @@ def _get_goal_events(
         ):
             continue
 
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
+        event_type = get_event_type(
+            event
+        )
 
         if event_type != "goal":
             continue
@@ -1006,17 +999,39 @@ def _get_goal_events(
         )
 
         try:
-            sort_minute = float(
-                str(minute)
-                .replace(
-                    "'",
-                    "",
-                )
-                .replace(
-                    "+",
-                    ".",
-                )
+            minute_text = str(
+                minute
             )
+
+            match = re.match(
+                r"^(\d+)(?:\+(\d+))?$",
+                minute_text,
+            )
+
+            if match:
+                base_minute = int(
+                    match.group(1)
+                )
+
+                added_minute = int(
+                    match.group(2)
+                    or 0
+                )
+
+                sort_minute = (
+                    base_minute
+                    + added_minute / 100
+                )
+
+            else:
+                sort_minute = float(
+                    minute_text
+                    .replace(
+                        "'",
+                        "",
+                    )
+                )
+
         except (
             TypeError,
             ValueError,
@@ -1295,10 +1310,10 @@ def build_goal_message(
         event
     )
 
-    if event_team == "home":
+    if event_team is True:
         team_name = home_name
 
-    elif event_team == "away":
+    elif event_team is False:
         team_name = away_name
 
     else:
@@ -1307,17 +1322,6 @@ def build_goal_message(
     own_goal = is_own_goal(
         event
     )
-
-    # در گل به خودی:
-    # event_team تیمی است که گل به سودش ثبت شده.
-    # بنابراین بازیکن ممکن است از تیم مقابل باشد.
-    if own_goal:
-
-        if event_team == "home":
-            team_name = home_name
-
-        elif event_team == "away":
-            team_name = away_name
 
     minute = get_goal_minute(
         event
@@ -1372,8 +1376,6 @@ def build_goal_message(
 
     score_for_display = score
 
-    # score ورودی قبل از ثبت همین گل است.
-    # در گل به خودی باید گل به تیم مقابل اضافه شود.
     if own_goal and isinstance(
         score,
         dict,
@@ -1383,7 +1385,7 @@ def build_goal_message(
             score
         )
 
-        if event_team == "home":
+        if event_team is True:
 
             try:
                 score_for_display[
@@ -1404,7 +1406,7 @@ def build_goal_message(
             ):
                 score_for_display = score
 
-        elif event_team == "away":
+        elif event_team is False:
 
             try:
                 score_for_display[
@@ -1503,10 +1505,10 @@ def build_cancelled_goal_message(
             )
         )
 
-    if event_team == "home":
+    if event_team is True:
         team_name = home_name
 
-    elif event_team == "away":
+    elif event_team is False:
         team_name = away_name
 
     else:
@@ -1640,10 +1642,10 @@ def build_red_card_message(
         event
     )
 
-    if event_team == "home":
+    if event_team is True:
         team_name = home_name
 
-    elif event_team == "away":
+    elif event_team is False:
         team_name = away_name
 
     else:
@@ -1688,12 +1690,9 @@ def build_event_message(
     ):
         return ""
 
-    event_type = str(
-        event.get(
-            "type",
-            "",
-        )
-    ).lower()
+    event_type = get_event_type(
+        event
+    )
 
     if event_type == "goal":
         return build_goal_message(
@@ -2274,12 +2273,9 @@ def _get_rich_goal_events(
         ):
             continue
 
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
+        event_type = get_event_type(
+            event
+        )
 
         if event_type != "goal":
             continue
@@ -2296,9 +2292,12 @@ def _get_rich_goal_events(
             event
         )
 
+        # get_event_team در event_detector:
+        # True  = میزبان
+        # False = مهمان
         if event_team not in (
-            "home",
-            "away",
+            True,
+            False,
         ):
             continue
 
@@ -2321,17 +2320,39 @@ def _get_rich_goal_events(
         )
 
         try:
-            sort_minute = float(
-                str(minute)
-                .replace(
-                    "'",
-                    "",
-                )
-                .replace(
-                    "+",
-                    ".",
-                )
+            minute_text = str(
+                minute
             )
+
+            match = re.match(
+                r"^(\d+)(?:\+(\d+))?$",
+                minute_text,
+            )
+
+            if match:
+                base_minute = int(
+                    match.group(1)
+                )
+
+                added_minute = int(
+                    match.group(2)
+                    or 0
+                )
+
+                sort_minute = (
+                    base_minute
+                    + added_minute / 100
+                )
+
+            else:
+                sort_minute = float(
+                    minute_text
+                    .replace(
+                        "'",
+                        "",
+                    )
+                )
+
         except (
             TypeError,
             ValueError,
@@ -2341,7 +2362,11 @@ def _get_rich_goal_events(
         goals.append(
             {
                 "event": event,
-                "team": event_team,
+                "team": (
+                    "home"
+                    if event_team is True
+                    else "away"
+                ),
                 "text": scorer_text,
                 "minute": sort_minute,
                 "index": index,
@@ -2391,10 +2416,6 @@ def _build_rich_scorer_table(
         ]
     ]
 
-    # همه گل‌ها قبلاً در یک لیست مشترک
-    # بر اساس زمان مرتب شده‌اند.
-    # بنابراین تعداد ردیف‌های گل دقیقاً
-    # برابر تعداد گل‌های جریان بازی است.
     for goal in goals:
 
         home_text = ""
