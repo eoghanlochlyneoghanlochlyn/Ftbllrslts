@@ -1772,7 +1772,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14447071",
-        "id:14447119"
+        "id:14447119",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
