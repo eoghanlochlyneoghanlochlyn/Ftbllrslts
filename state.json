@@ -1773,7 +1773,8 @@
       "event_keys": [
         "id:14447071",
         "id:14447119",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "substitution|None|False|46.0|"
       ],
       "goals": [
         {
@@ -1942,9 +1943,58 @@
       "event_keys": [
         "id:14447164",
         "id:14447253",
-        "id:14447247"
+        "id:14447247",
+        "id:0",
+        "id:14447390"
       ],
-      "goals": []
+      "goals": [
+        {
+          "event_key": "id:14447390",
+          "player_id": 0,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "45 + 1",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444739045Goal0undefinedtrue",
+            "timeStr": "45 + 1",
+            "type": "goal",
+            "time": 45,
+            "overloadTime": 1,
+            "eventId": 14447390,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": "+1",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ]
     },
     "5868068": {
       "lineup_sent": false,
