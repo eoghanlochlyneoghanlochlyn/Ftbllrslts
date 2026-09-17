@@ -2987,7 +2987,8 @@
         "id:14448106",
         "id:14448086",
         "id:14448133",
-        "half|None|None|45.0|"
+        "half|None|None|45.0|",
+        "id:14448246"
       ],
       "goals": [
         {
@@ -3429,7 +3430,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "id:14448160"
+        "id:14448160",
+        "id:14448253"
       ],
       "goals": [
         {
@@ -3534,7 +3536,9 @@
         "id:14448156",
         "id:14448134",
         "substitution|None|False|46.0|",
-        "substitution|None|False|62.0|"
+        "substitution|None|False|62.0|",
+        "substitution|None|False|71.0|",
+        "substitution|None|True|71.0|"
       ],
       "goals": [
         {
