@@ -691,9 +691,18 @@ def format_player(
 
         if rating is not None:
 
-            result += (
-                f" — {rating:.1f}"
-            )
+            try:
+
+                result += (
+                    f" — {float(rating):.1f}"
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                pass
 
     if player_events is not None:
 
@@ -715,6 +724,8 @@ def format_player(
             )
 
     return result
+
+
 # --------------------------------------------------------
 # خط بازیکنان
 # --------------------------------------------------------
@@ -851,6 +862,46 @@ def format_team_lineup(
 
     return "\n".join(
         lines
+    )
+
+
+# --------------------------------------------------------
+# نام بازیکن event
+# --------------------------------------------------------
+
+def get_event_player_name(
+    event,
+):
+
+    if not isinstance(
+        event,
+        dict,
+    ):
+        return ""
+
+    player = event.get(
+        "player"
+    )
+
+    if isinstance(
+        player,
+        dict,
+    ):
+
+        name = (
+            player.get("name")
+            or player.get("shortName")
+            or ""
+        )
+
+        if name:
+            return name
+
+    return (
+        event.get(
+            "playerName"
+        )
+        or ""
     )
 
 
@@ -1268,46 +1319,6 @@ def build_start_message(
         "🔴 بازی شروع شد\n"
         "\n"
         f"{home_name} 🆚 {away_name}"
-    )
-
-
-# --------------------------------------------------------
-# نام بازیکن event
-# --------------------------------------------------------
-
-def get_event_player_name(
-    event,
-):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return ""
-
-    player = event.get(
-        "player"
-    )
-
-    if isinstance(
-        player,
-        dict,
-    ):
-
-        name = (
-            player.get("name")
-            or player.get("shortName")
-            or ""
-        )
-
-        if name:
-            return name
-
-    return (
-        event.get(
-            "playerName"
-        )
-        or ""
     )
 
 
@@ -2070,6 +2081,984 @@ def _get_stat_rows(
         )
 
     return rows
+
+
+# --------------------------------------------------------
+# Rich Message - ابزار بازیکن
+# --------------------------------------------------------
+
+def _format_rich_player(
+    player,
+    show_rating=False,
+    player_events=None,
+):
+
+    if not isinstance(
+        player,
+        dict,
+    ):
+        return ""
+
+    name = get_player_name(
+        player
+    )
+
+    if not name:
+
+        return ""
+
+    shirt_number = player.get(
+        "shirtNumber"
+    )
+
+    if shirt_number:
+
+        text = (
+            f"{shirt_number}. "
+            f"{name}"
+        )
+
+    else:
+
+        text = name
+
+    if show_rating:
+
+        rating = get_player_rating(
+            player
+        )
+
+        if rating is not None:
+
+            try:
+
+                text += (
+                    f" — {float(rating):.1f}"
+                )
+
+            except (
+                TypeError,
+                ValueError,
+            ):
+
+                pass
+
+    if player_events is not None:
+
+        markers = (
+            get_player_event_markers(
+                player,
+                player_events,
+            )
+        )
+
+        if markers:
+
+            text += (
+                " ("
+                + " ".join(
+                    markers
+                )
+                + ")"
+            )
+
+    return text
+
+
+def _get_team_header_text(
+    team_name,
+    team,
+):
+
+    if not isinstance(
+        team,
+        dict,
+    ):
+
+        return (
+            f"{team_name}\n"
+            "اطلاعات ترکیب پیدا نشد."
+        )
+
+    coach = get_coach(
+        team
+    )
+
+    formation = get_formation(
+        team
+    )
+
+    lines = [
+        team_name
+    ]
+
+    if coach:
+
+        lines.append(
+            f"👔 {coach}"
+        )
+
+    if formation:
+
+        lines.append(
+            f"📐 {formation}"
+        )
+
+    return "\n".join(
+        lines
+    )
+
+
+def _build_rich_lineup_rows(
+    home_name,
+    away_name,
+    home_team,
+    away_team,
+    show_rating=False,
+    player_events=None,
+):
+
+    rows = []
+
+    # -----------------------------------------------------
+    # ردیف ۱: نام تیم + مربی + آرایش
+    # -----------------------------------------------------
+
+    rows.append(
+        [
+            {
+                "text": _get_team_header_text(
+                    home_name,
+                    home_team,
+                ),
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": _get_team_header_text(
+                    away_name,
+                    away_team,
+                ),
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    )
+
+    if not isinstance(
+        home_team,
+        dict,
+    ):
+
+        home_starters = []
+
+    else:
+
+        home_starters = get_starters(
+            home_team
+        )
+
+    if not isinstance(
+        away_team,
+        dict,
+    ):
+
+        away_starters = []
+
+    else:
+
+        away_starters = get_starters(
+            away_team
+        )
+
+    # -----------------------------------------------------
+    # ردیف‌های ۲ تا ۱۲: بازیکنان اصلی
+    # -----------------------------------------------------
+
+    for index in range(
+        11
+    ):
+
+        home_player = ""
+
+        away_player = ""
+
+        if index < len(
+            home_starters
+        ):
+
+            home_player = (
+                _format_rich_player(
+                    home_starters[index],
+                    show_rating,
+                    player_events,
+                )
+            )
+
+        if index < len(
+            away_starters
+        ):
+
+            away_player = (
+                _format_rich_player(
+                    away_starters[index],
+                    show_rating,
+                    player_events,
+                )
+            )
+
+        rows.append(
+            [
+                {
+                    "text": home_player,
+                    "align": "center",
+                    "valign": "middle",
+                },
+                {
+                    "text": away_player,
+                    "align": "center",
+                    "valign": "middle",
+                },
+            ]
+        )
+
+    # -----------------------------------------------------
+    # ردیف ۱۳: ذخیره‌ها
+    # -----------------------------------------------------
+
+    if not isinstance(
+        home_team,
+        dict,
+    ):
+
+        home_substitutes = []
+
+    else:
+
+        home_substitutes = get_substitutes(
+            home_team
+        )
+
+    if not isinstance(
+        away_team,
+        dict,
+    ):
+
+        away_substitutes = []
+
+    else:
+
+        away_substitutes = get_substitutes(
+            away_team
+        )
+
+    home_substitute_lines = []
+
+    for player in home_substitutes:
+
+        player_text = (
+            _format_rich_player(
+                player,
+                show_rating,
+                player_events,
+            )
+        )
+
+        if player_text:
+
+            home_substitute_lines.append(
+                player_text
+            )
+
+    away_substitute_lines = []
+
+    for player in away_substitutes:
+
+        player_text = (
+            _format_rich_player(
+                player,
+                show_rating,
+                player_events,
+            )
+        )
+
+        if player_text:
+
+            away_substitute_lines.append(
+                player_text
+            )
+
+    home_substitute_text = ""
+
+    if home_substitute_lines:
+
+        home_substitute_text = (
+            "🔄 تعویضی‌ها\n"
+            + "\n".join(
+                home_substitute_lines
+            )
+        )
+
+    away_substitute_text = ""
+
+    if away_substitute_lines:
+
+        away_substitute_text = (
+            "🔄 تعویضی‌ها\n"
+            + "\n".join(
+                away_substitute_lines
+            )
+        )
+
+    rows.append(
+        [
+            {
+                "text": home_substitute_text,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": away_substitute_text,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    )
+
+    return rows
+
+
+# --------------------------------------------------------
+# Rich Message - گلزنان
+# --------------------------------------------------------
+
+def _get_rich_goal_events(
+    events,
+):
+
+    result = []
+
+    if not isinstance(
+        events,
+        list,
+    ):
+        return result
+
+    for index, event in enumerate(
+        events
+    ):
+
+        if not isinstance(
+            event,
+            dict,
+        ):
+            continue
+
+        event_type = str(
+            event.get(
+                "type",
+                "",
+            )
+        ).lower()
+
+        if event_type != "goal":
+            continue
+
+        # -------------------------------------------------
+        # پنالتی‌های ضربات پنالتی مسابقه
+        # جزو گل‌های بازی نیستند.
+        #
+        # پنالتی معمولی که منجر به گل شده باشد
+        # event نوع goal دارد و اینجا حفظ می‌شود.
+        # -------------------------------------------------
+
+        if event.get(
+            "shootout",
+            False,
+        ):
+
+            continue
+
+        event_team = get_event_team(
+            event
+        )
+
+        if event_team not in (
+            True,
+            False,
+        ):
+
+            continue
+
+        scorer_text = _get_scorer_text(
+            event
+        )
+
+        if not scorer_text:
+
+            continue
+
+        minute = get_goal_minute(
+            event
+        )
+
+        result.append(
+            {
+                "minute": (
+                    minute
+                    if minute is not None
+                    else 9999
+                ),
+                "index": index,
+                "is_home": event_team,
+                "text": scorer_text,
+            }
+        )
+
+    result.sort(
+        key=lambda item: (
+            item["minute"],
+            item["index"],
+        )
+    )
+
+    return result
+
+
+def _build_rich_scorer_table(
+    events,
+    home_name,
+    away_name,
+):
+
+    goal_events = _get_rich_goal_events(
+        events
+    )
+
+    if not goal_events:
+
+        return None
+
+    home_goals = [
+        item
+        for item in goal_events
+        if item["is_home"] is True
+    ]
+
+    away_goals = [
+        item
+        for item in goal_events
+        if item["is_home"] is False
+    ]
+
+    row_count = max(
+        len(home_goals),
+        len(away_goals),
+    )
+
+    if row_count == 0:
+
+        return None
+
+    cells = [
+        [
+            {
+                "text": home_name,
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": away_name,
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    ]
+
+    for index in range(
+        row_count
+    ):
+
+        home_text = ""
+
+        away_text = ""
+
+        if index < len(
+            home_goals
+        ):
+
+            home_text = (
+                home_goals[index]["text"]
+            )
+
+        if index < len(
+            away_goals
+        ):
+
+            away_text = (
+                away_goals[index]["text"]
+            )
+
+        cells.append(
+            [
+                {
+                    "text": home_text,
+                    "align": "center",
+                    "valign": "middle",
+                },
+                {
+                    "text": away_text,
+                    "align": "center",
+                    "valign": "middle",
+                },
+            ]
+        )
+
+    return {
+        "type": "table",
+        "is_bordered": True,
+        "is_compact": False,
+        "cells": cells,
+    }
+
+
+# --------------------------------------------------------
+# Rich Message - هدر مسابقه
+# --------------------------------------------------------
+
+def _build_rich_match_header(
+    snapshot,
+    show_final_score=False,
+    events=None,
+):
+
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
+    )
+
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
+    )
+
+    if not away_name:
+
+        away_name = "Away"
+
+    league = (
+        snapshot.get("league_fa")
+        or snapshot.get("league")
+        or "نامشخص"
+    )
+
+    kickoff = (
+        format_iran_datetime_jalali(
+            snapshot.get("start")
+        )
+    )
+
+    blocks = [
+        {
+            "type": "paragraph",
+            "text": f"🏆 {league}",
+        }
+    ]
+
+    if show_final_score:
+
+        score = snapshot.get(
+            "score"
+        )
+
+        penalty_score = snapshot.get(
+            "penalty_score"
+        )
+
+        score_text = format_score(
+            score,
+            home_name,
+            away_name,
+            penalty_score,
+        )
+
+        if score_text:
+
+            blocks.append(
+                {
+                    "type": "paragraph",
+                    "text": score_text,
+                }
+            )
+
+            scorer_table = (
+                _build_rich_scorer_table(
+                    events,
+                    home_name,
+                    away_name,
+                )
+            )
+
+            if scorer_table:
+
+                blocks.append(
+                    scorer_table
+                )
+
+    else:
+
+        blocks.append(
+            {
+                "type": "paragraph",
+                "text": (
+                    f"{home_name} "
+                    f"🆚 "
+                    f"{away_name}"
+                ),
+            }
+        )
+
+    blocks.append(
+        {
+            "type": "paragraph",
+            "text": (
+                f"🕐 {kickoff} "
+                f"به وقت ایران"
+            ),
+        }
+    )
+
+    return blocks
+
+
+# --------------------------------------------------------
+# Rich Message - پست ترکیب
+# --------------------------------------------------------
+
+def build_lineup_rich_message(
+    snapshot,
+    show_rating=False,
+):
+
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
+
+        return None
+
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
+    )
+
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
+    )
+
+    if not away_name:
+
+        away_name = "Away"
+
+    home_team = snapshot.get(
+        "home_team"
+    )
+
+    away_team = snapshot.get(
+        "away_team"
+    )
+
+    blocks = _build_rich_match_header(
+        snapshot,
+        show_final_score=False,
+    )
+
+    blocks.append(
+        {
+            "type": "table",
+            "is_bordered": True,
+            "is_compact": False,
+            "cells": _build_rich_lineup_rows(
+                home_name,
+                away_name,
+                home_team,
+                away_team,
+                show_rating,
+                None,
+            ),
+        }
+    )
+
+    return {
+        "is_rtl": True,
+        "blocks": blocks,
+    }
+
+
+# --------------------------------------------------------
+# Rich Message - پست نهایی ترکیب + عملکرد
+# --------------------------------------------------------
+
+def build_final_lineup_rich_message(
+    snapshot,
+    events=None,
+):
+
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
+
+        return None
+
+    player_events = (
+        build_final_player_events(
+            events
+        )
+    )
+
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
+    )
+
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
+    )
+
+    if not away_name:
+
+        away_name = "Away"
+
+    home_team = snapshot.get(
+        "home_team"
+    )
+
+    away_team = snapshot.get(
+        "away_team"
+    )
+
+    blocks = _build_rich_match_header(
+        snapshot,
+        show_final_score=True,
+        events=events,
+    )
+
+    blocks.append(
+        {
+            "type": "table",
+            "is_bordered": True,
+            "is_compact": False,
+            "cells": _build_rich_lineup_rows(
+                home_name,
+                away_name,
+                home_team,
+                away_team,
+                True,
+                player_events,
+            ),
+        }
+    )
+
+    return {
+        "is_rtl": True,
+        "blocks": blocks,
+    }
+
+
+# --------------------------------------------------------
+# Rich Message - آمار نهایی
+# --------------------------------------------------------
+
+def build_final_stats_rich_message(
+    snapshot,
+    score=None,
+):
+
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
+
+        return None
+
+    home_name = get_display_team_name(
+        snapshot,
+        "home",
+    )
+
+    if not home_name:
+
+        home_name = "Home"
+
+    away_name = get_display_team_name(
+        snapshot,
+        "away",
+    )
+
+    if not away_name:
+
+        away_name = "Away"
+
+    stats = snapshot.get(
+        "stats"
+    )
+
+    if not isinstance(
+        stats,
+        dict,
+    ):
+
+        stats = {}
+
+    if score is None:
+
+        score = snapshot.get(
+            "score"
+        )
+
+    penalty_score = snapshot.get(
+        "penalty_score"
+    )
+
+    blocks = [
+        {
+            "type": "paragraph",
+            "text": "📊 آمار بازی",
+        }
+    ]
+
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+        penalty_score,
+    )
+
+    if score_text:
+
+        blocks.append(
+            {
+                "type": "paragraph",
+                "text": score_text,
+            }
+        )
+
+    stat_rows = _get_stat_rows(
+        stats
+    )
+
+    if not stat_rows:
+
+        blocks.append(
+            {
+                "type": "paragraph",
+                "text": (
+                    "آمار بازی در داده‌های "
+                    "FotMob پیدا نشد."
+                ),
+            }
+        )
+
+        return {
+            "is_rtl": True,
+            "blocks": blocks,
+        }
+
+    cells = [
+        [
+            {
+                "text": "آمار",
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": home_name,
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": away_name,
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    ]
+
+    for (
+        icon,
+        label,
+        home_value,
+        away_value,
+    ) in stat_rows:
+
+        home_text = format_stat_value(
+            label,
+            home_value,
+        )
+
+        away_text = format_stat_value(
+            label,
+            away_value,
+        )
+
+        cells.append(
+            [
+                {
+                    "text": (
+                        f"{icon} {label}"
+                    ),
+                    "align": "center",
+                    "valign": "middle",
+                },
+                {
+                    "text": home_text,
+                    "align": "center",
+                    "valign": "middle",
+                },
+                {
+                    "text": away_text,
+                    "align": "center",
+                    "valign": "middle",
+                },
+            ]
+        )
+
+    blocks.append(
+        {
+            "type": "table",
+            "is_bordered": True,
+            "is_striped": True,
+            "is_compact": False,
+            "cells": cells,
+        }
+    )
+
+    return {
+        "is_rtl": True,
+        "blocks": blocks,
+    }
 
 
 # --------------------------------------------------------
