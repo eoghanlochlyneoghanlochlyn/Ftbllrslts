@@ -1978,8 +1978,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14448022",
         "id:14448058",
@@ -1994,7 +1994,9 @@
         "id:14448422",
         "substitution|None|True|82.0|",
         "substitution|None|False|82.0|",
-        "id:14448475"
+        "id:14448475",
+        "id:14448515",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -3509,8 +3511,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14448110",
         "half|None|None|45.0|",
@@ -3790,8 +3792,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14448027",
         "id:14448106",
@@ -4065,8 +4067,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14448059",
         "id:14448073",
@@ -4432,7 +4434,8 @@
         "id:14448320",
         "substitution|None|True|46.0|",
         "substitution|None|False|63.0|",
-        "substitution|None|True|61.0|"
+        "substitution|None|True|61.0|",
+        "id:14448516"
       ],
       "goals": [
         {
