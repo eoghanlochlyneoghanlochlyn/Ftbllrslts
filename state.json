@@ -3811,7 +3811,8 @@
         "substitution|None|True|74.0|",
         "substitution|None|True|84.0|",
         "substitution|None|False|83.0|",
-        "half|None|None|90.0|"
+        "half|None|None|90.0|",
+        "id:14448518"
       ],
       "goals": [
         {
@@ -4435,7 +4436,8 @@
         "substitution|None|True|46.0|",
         "substitution|None|False|63.0|",
         "substitution|None|True|61.0|",
-        "id:14448516"
+        "id:14448516",
+        "id:14448517"
       ],
       "goals": [
         {
