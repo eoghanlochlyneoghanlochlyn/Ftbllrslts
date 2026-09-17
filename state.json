@@ -1996,7 +1996,7 @@
     "6112324": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -2006,7 +2006,7 @@
     "6112253": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -2016,7 +2016,7 @@
     "6112377": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -2026,7 +2026,7 @@
     "6112272": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -2036,7 +2036,7 @@
     "6112283": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -2139,7 +2139,9 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "id:14447919"
+        "id:14447919",
+        "id:14447935",
+        "id:14447922"
       ],
       "goals": [
         {
@@ -2221,6 +2223,90 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14447935",
+          "player_id": 1104053,
+          "assist_player_id": 1561552,
+          "is_home": true,
+          "minute": "32",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444793532Goal1104053undefinedtrue",
+            "timeStr": 32,
+            "type": "goal",
+            "time": 32,
+            "overloadTime": null,
+            "eventId": 14447935,
+            "player": {
+              "id": 1104053,
+              "name": "Rayan Cherki",
+              "profileUrl": "/players/1104053/rayan-cherki"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1104053/rayan-cherki",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Rayan Cherki",
+            "firstName": "Rayan",
+            "lastName": "Cherki",
+            "fullName": "Rayan Cherki",
+            "playerId": 1104053,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971125821,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1104053,
+              "playerName": "Rayan Cherki",
+              "x": 86.99705882319999,
+              "y": 37.2025,
+              "min": 32,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 0.0385263156,
+              "expectedGoals": 0.32680511474609375,
+              "expectedGoalsOnTarget": 0.6917360424995422,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2738095238095226,
+                "y": 0.010192146984126984,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 862590,
+              "firstName": "Rayan",
+              "lastName": "Cherki",
+              "fullName": "Rayan Cherki",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": "assist by Ayyoub Bouaddi",
+            "assistProfileUrl": "/players/1561552/ayyoub-bouaddi",
+            "assistPlayerId": 1561552,
+            "assistKey": "assist_by",
+            "assistInput": "Ayyoub Bouaddi"
           }
         }
       ]
