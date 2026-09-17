@@ -1672,8 +1672,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "half|None|None|45.0|",
         "id:14447203",
@@ -1780,8 +1780,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14447071",
         "id:14447119",
