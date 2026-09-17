@@ -1980,7 +1980,9 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
+      "event_keys": [
+        "id:14448022"
+      ],
       "goals": []
     },
     "6112299": {
@@ -2201,8 +2203,92 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "id:14448027"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14448027",
+          "player_id": 794253,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "11",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444802711Goal794253undefinedfalse",
+            "timeStr": 11,
+            "type": "goal",
+            "time": 11,
+            "overloadTime": null,
+            "eventId": 14448027,
+            "player": {
+              "id": 794253,
+              "name": "Justin Kluivert",
+              "profileUrl": "/players/794253/justin-kluivert"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/794253/justin-kluivert",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Justin Kluivert",
+            "firstName": "Justin",
+            "lastName": "Kluivert",
+            "fullName": "Justin Kluivert",
+            "playerId": 794253,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971134201,
+              "eventType": "Goal",
+              "teamId": 8678,
+              "playerId": 794253,
+              "playerName": "Justin Kluivert",
+              "x": 96.4122807008,
+              "y": 32.0175,
+              "min": 11,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.21125,
+              "goalCrossedZ": 1.1814736784,
+              "expectedGoals": 0.2558225989341736,
+              "expectedGoalsOnTarget": 0.7970036864280701,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.41501322751322767,
+                "y": 0.31255917417989415,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1217043,
+              "firstName": "Justin",
+              "lastName": "Kluivert",
+              "fullName": "Justin Kluivert",
+              "teamColor": "#D71921"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ]
     },
     "6112283": {
       "lineup_sent": true,
