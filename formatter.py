@@ -1,1759 +1,477 @@
 from datetime import datetime, timezone, timedelta
 
 from fotmob import (
-    get_coach,
-    get_formation,
-    get_player_id,
-    get_player_name,
-    get_player_rating,
-    get_starters,
-    get_substitutes,
+get_coach,
+get_formation,
+get_player_id,
+get_player_name,
+get_player_rating,
+get_starters,
+get_substitutes,
 )
 
 from event_detector import (
-    get_goal_minute,
-    get_event_assist_player_id,
-    get_event_player_id,
-    get_event_team,
-    is_own_goal,
-    is_penalty_goal,
+get_goal_minute,
+get_event_assist_player_id,
+get_event_player_id,
+get_event_team,
+is_own_goal,
+is_penalty_goal,
 )
 
 from team_translations import (
-    get_persian_team_name,
+get_persian_team_name,
 )
 
-
-# --------------------------------------------------------
-# نام فارسی تیم
-# --------------------------------------------------------
+--------------------------------------------------------
+نام فارسی تیم
+--------------------------------------------------------
 
 def get_display_team_name(
-    snapshot,
-    side,
+snapshot,
+side,
 ):
 
-    if not isinstance(
-        snapshot,
-        dict,
-    ):
-        return ""
+if not isinstance(
+    snapshot,
+    dict,
+):
+    return ""
 
-    if side == "home":
+if side == "home":
 
-        team_id = snapshot.get(
-            "home_team_id"
-        )
-
-        translated_name = (
-            snapshot.get("home_fa")
-            or ""
-        )
-
-        team_name = (
-            snapshot.get("home")
-            or ""
-        )
-
-    elif side == "away":
-
-        team_id = snapshot.get(
-            "away_team_id"
-        )
-
-        translated_name = (
-            snapshot.get("away_fa")
-            or ""
-        )
-
-        team_name = (
-            snapshot.get("away")
-            or ""
-        )
-
-    else:
-
-        return ""
-
-    if translated_name:
-
-        return translated_name
-
-    return get_persian_team_name(
-        team_id,
-        team_name,
+    team_id = snapshot.get(
+        "home_team_id"
     )
 
+    translated_name = (
+        snapshot.get("home_fa")
+        or ""
+    )
 
-# --------------------------------------------------------
-# تبدیل میلادی به شمسی
-# --------------------------------------------------------
+    team_name = (
+        snapshot.get("home")
+        or ""
+    )
+
+elif side == "away":
+
+    team_id = snapshot.get(
+        "away_team_id"
+    )
+
+    translated_name = (
+        snapshot.get("away_fa")
+        or ""
+    )
+
+    team_name = (
+        snapshot.get("away")
+        or ""
+    )
+
+else:
+
+    return ""
+
+if translated_name:
+
+    return translated_name
+
+return get_persian_team_name(
+    team_id,
+    team_name,
+)
+--------------------------------------------------------
+تبدیل میلادی به شمسی
+--------------------------------------------------------
 
 def gregorian_to_jalali(
-    gy,
-    gm,
-    gd,
+gy,
+gm,
+gd,
 ):
 
-    g_days_in_month = [
-        31,
-        28,
-        31,
-        30,
-        31,
-        30,
-        31,
-        31,
-        30,
-        31,
-        30,
-        31,
-    ]
+g_days_in_month = [
+    31,
+    28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+]
 
-    j_days_in_month = [
-        31,
-        31,
-        31,
-        31,
-        31,
-        31,
-        30,
-        30,
-        30,
-        30,
-        30,
-        29,
-    ]
+j_days_in_month = [
+    31,
+    31,
+    31,
+    31,
+    31,
+    31,
+    30,
+    30,
+    30,
+    30,
+    30,
+    29,
+]
 
-    gy2 = gy - 1600
-    jy = 979
+gy2 = gy - 1600
+jy = 979
+days = (
+    365 * gy2
+    + (gy2 + 3) // 4
+    - (gy2 + 99) // 100
+    + (gy2 + 399) // 400
+    - 80
+)
+
+for i in range(
+    gm - 1
+):
+    days += g_days_in_month[i]
+
+if (
+    gm > 2
+    and (
+        gy % 4 == 0
+        and (
+            gy % 100 != 0
+            or gy % 400 == 0
+        )
+    )
+):
+    days += 1
+
+days += gd - 1
+
+jy += 33 * (days // 12053)
+days %= 12053
+
+jy += 4 * (days // 1461)
+days %= 1461
+
+if days > 365:
+
+    jy += (days - 1) // 365
     days = (
-        365 * gy2
-        + (gy2 + 3) // 4
-        - (gy2 + 99) // 100
-        + (gy2 + 399) // 400
-        - 80
+        days - 1
+    ) % 365
+
+if days < 186:
+
+    jm = 1 + days // 31
+    jd = 1 + days % 31
+
+else:
+
+    jm = (
+        7
+        + (days - 186) // 30
     )
 
-    for i in range(
-        gm - 1
-    ):
-        days += g_days_in_month[i]
+    jd = (
+        1
+        + (days - 186) % 30
+    )
 
-    if (
-        gm > 2
-        and (
-            gy % 4 == 0
-            and (
-                gy % 100 != 0
-                or gy % 400 == 0
-            )
-        )
-    ):
-        days += 1
-
-    days += gd - 1
-
-    jy += 33 * (days // 12053)
-    days %= 12053
-
-    jy += 4 * (days // 1461)
-    days %= 1461
-
-    if days > 365:
-
-        jy += (days - 1) // 365
-        days = (
-            days - 1
-        ) % 365
-
-    if days < 186:
-
-        jm = 1 + days // 31
-        jd = 1 + days % 31
-
-    else:
-
-        jm = (
-            7
-            + (days - 186) // 30
-        )
-
-        jd = (
-            1
-            + (days - 186) % 30
-        )
-
-    return jy, jm, jd
-
+return jy, jm, jd
 
 def format_iran_datetime_jalali(
+value,
+):
+
+if value is None:
+
+    return "نامشخص"
+
+dt = None
+
+if isinstance(
     value,
+    (int, float),
 ):
-
-    if value is None:
-
-        return "نامشخص"
-
-    dt = None
-
-    if isinstance(
-        value,
-        (int, float),
-    ):
-
-        try:
-
-            dt = datetime.fromtimestamp(
-                value,
-                tz=timezone.utc,
-            )
-
-        except (
-            TypeError,
-            ValueError,
-            OSError,
-        ):
-
-            dt = None
-
-    elif isinstance(
-        value,
-        str,
-    ):
-
-        text = value.strip()
-
-        if text:
-
-            try:
-
-                normalized = text
-
-                if normalized.endswith(
-                    "Z"
-                ):
-
-                    normalized = (
-                        normalized[:-1]
-                        + "+00:00"
-                    )
-
-                dt = datetime.fromisoformat(
-                    normalized
-                )
-
-            except ValueError:
-
-                try:
-
-                    dt = datetime.fromtimestamp(
-                        float(text),
-                        tz=timezone.utc,
-                    )
-
-                except (
-                    TypeError,
-                    ValueError,
-                    OSError,
-                ):
-
-                    dt = None
-
-    if dt is None:
-
-        return "نامشخص"
-
-    if dt.tzinfo is None:
-
-        dt = dt.replace(
-            tzinfo=timezone.utc
-        )
-
-    iran_timezone = timezone(
-        timedelta(
-            hours=3,
-            minutes=30,
-        )
-    )
-
-    dt = dt.astimezone(
-        iran_timezone
-    )
-
-    jy, jm, jd = (
-        gregorian_to_jalali(
-            dt.year,
-            dt.month,
-            dt.day,
-        )
-    )
-
-    return (
-        f"{jy:04d}/{jm:02d}/{jd:02d}"
-        f" - "
-        f"{dt.hour:02d}:{dt.minute:02d}"
-    )
-
-
-# --------------------------------------------------------
-# ابزارهای نتیجه
-# --------------------------------------------------------
-
-def format_score(
-    score,
-    home_name="Home",
-    away_name="Away",
-    penalty_score=None,
-):
-
-    if not isinstance(
-        score,
-        dict,
-    ):
-        return ""
-
-    home_score = score.get(
-        "home"
-    )
-
-    away_score = score.get(
-        "away"
-    )
-
-    if home_score is None:
-        return ""
-
-    if away_score is None:
-        return ""
 
     try:
 
-        home_score = int(
-            home_score
-        )
-
-        away_score = int(
-            away_score
+        dt = datetime.fromtimestamp(
+            value,
+            tz=timezone.utc,
         )
 
     except (
         TypeError,
         ValueError,
+        OSError,
     ):
 
-        return ""
+        dt = None
 
-    penalty_home = None
-    penalty_away = None
+elif isinstance(
+    value,
+    str,
+):
 
-    if isinstance(
-        penalty_score,
-        dict,
-    ):
+    text = value.strip()
 
-        penalty_home = (
-            penalty_score.get(
-                "home"
-            )
-        )
-
-        penalty_away = (
-            penalty_score.get(
-                "away"
-            )
-        )
+    if text:
 
         try:
 
-            if (
-                penalty_home is not None
-                and penalty_away is not None
+            normalized = text
+
+            if normalized.endswith(
+                "Z"
             ):
 
-                penalty_home = int(
-                    penalty_home
+                normalized = (
+                    normalized[:-1]
+                    + "+00:00"
                 )
 
-                penalty_away = int(
-                    penalty_away
-                )
-
-        except (
-            TypeError,
-            ValueError,
-        ):
-
-            penalty_home = None
-            penalty_away = None
-
-    if (
-        penalty_home is not None
-        and penalty_away is not None
-    ):
-
-        return (
-            f"{home_name} "
-            f"{home_score} ({penalty_home}) "
-            f"🆚 "
-            f"({penalty_away}) {away_score} "
-            f"{away_name}"
-        )
-
-    return (
-        f"{home_name} "
-        f"{home_score} "
-        f"🆚 "
-        f"{away_score} "
-        f"{away_name}"
-    )
-
-
-def has_valid_score(
-    score,
-):
-
-    if not isinstance(
-        score,
-        dict,
-    ):
-        return False
-
-    if score.get(
-        "home"
-    ) is None:
-        return False
-
-    if score.get(
-        "away"
-    ) is None:
-        return False
-
-    try:
-
-        int(
-            score.get("home")
-        )
-
-        int(
-            score.get("away")
-        )
-
-    except (
-        TypeError,
-        ValueError,
-    ):
-
-        return False
-
-    return True
-
-
-# --------------------------------------------------------
-# نشان‌های رویداد بازیکن
-# --------------------------------------------------------
-
-def _empty_player_event_data():
-
-    return {
-        "goals": 0,
-        "assists": 0,
-        "own_goals": 0,
-        "penalty_goals": 0,
-    }
-
-
-def build_final_player_events(
-    events
-):
-
-    result = {}
-
-    if not isinstance(
-        events,
-        list,
-    ):
-        return result
-
-    for event in events:
-
-        if not isinstance(
-            event,
-            dict,
-        ):
-            continue
-
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
-
-        if event_type != "goal":
-            continue
-
-        player_id = get_event_player_id(
-            event
-        )
-
-        if player_id is None:
-            continue
-
-        if player_id not in result:
-            result[player_id] = (
-                _empty_player_event_data()
+            dt = datetime.fromisoformat(
+                normalized
             )
 
-        data = result[player_id]
-
-        if is_own_goal(
-            event
-        ):
-
-            data[
-                "own_goals"
-            ] += 1
-
-        else:
-
-            data[
-                "goals"
-            ] += 1
-
-            if is_penalty_goal(
-                event
-            ):
-
-                data[
-                    "penalty_goals"
-                ] += 1
-
-        assist_id = (
-            get_event_assist_player_id(
-                event
-            )
-        )
-
-        if assist_id is not None:
-
-            if assist_id not in result:
-                result[assist_id] = (
-                    _empty_player_event_data()
-                )
-
-            result[
-                assist_id
-            ][
-                "assists"
-            ] += 1
-
-    return result
-
-
-def get_player_event_markers(
-    player,
-    player_events,
-):
-
-    player_id = get_player_id(
-        player
-    )
-
-    if player_id is None:
-        return []
-
-    data = player_events.get(
-        player_id
-    )
-
-    if data is None:
-
-        data = player_events.get(
-            str(player_id)
-        )
-
-    if not isinstance(
-        data,
-        dict,
-    ):
-        return []
-
-    markers = []
-
-    goals = int(
-        data.get(
-            "goals",
-            0,
-        )
-        or 0
-    )
-
-    assists = int(
-        data.get(
-            "assists",
-            0,
-        )
-        or 0
-    )
-
-    own_goals = int(
-        data.get(
-            "own_goals",
-            0,
-        )
-        or 0
-    )
-
-    if goals == 1:
-
-        markers.append(
-            "⚽️"
-        )
-
-    elif goals > 1:
-
-        markers.append(
-            f"⚽️×{goals}"
-        )
-
-    if assists == 1:
-
-        markers.append(
-            "🅰️"
-        )
-
-    elif assists > 1:
-
-        markers.append(
-            f"🅰️×{assists}"
-        )
-
-    if own_goals == 1:
-
-        markers.append(
-            "⚽️ OG"
-        )
-
-    elif own_goals > 1:
-
-        markers.append(
-            f"⚽️ OG×{own_goals}"
-        )
-
-    return markers
-
-
-# --------------------------------------------------------
-# بازیکن
-# --------------------------------------------------------
-
-def format_player(
-    player,
-    show_rating,
-    player_events=None,
-):
-
-    name = get_player_name(
-        player
-    )
-
-    if not name:
-        return ""
-
-    shirt_number = None
-
-    if isinstance(
-        player,
-        dict,
-    ):
-
-        shirt_number = player.get(
-            "shirtNumber"
-        )
-
-    if shirt_number:
-
-        result = (
-            f"{shirt_number}. "
-            f"{name}"
-        )
-
-    else:
-
-        result = name
-
-    if show_rating:
-
-        rating = get_player_rating(
-            player
-        )
-
-        if rating is not None:
+        except ValueError:
 
             try:
 
-                result += (
-                    f" — {float(rating):.1f}"
+                dt = datetime.fromtimestamp(
+                    float(text),
+                    tz=timezone.utc,
                 )
 
             except (
                 TypeError,
                 ValueError,
+                OSError,
             ):
 
-                pass
+                dt = None
 
-    if player_events is not None:
+if dt is None:
 
-        markers = (
-            get_player_event_markers(
-                player,
-                player_events,
-            )
+    return "نامشخص"
+
+if dt.tzinfo is None:
+
+    dt = dt.replace(
+        tzinfo=timezone.utc
+    )
+
+iran_timezone = timezone(
+    timedelta(
+        hours=3,
+        minutes=30,
+    )
+)
+
+dt = dt.astimezone(
+    iran_timezone
+)
+
+jy, jm, jd = (
+    gregorian_to_jalali(
+        dt.year,
+        dt.month,
+        dt.day,
+    )
+)
+
+return (
+    f"{jy:04d}/{jm:02d}/{jd:02d}"
+    f" - "
+    f"{dt.hour:02d}:{dt.minute:02d}"
+)
+--------------------------------------------------------
+ابزارهای نتیجه
+--------------------------------------------------------
+
+def format_score(
+score,
+home_name="Home",
+away_name="Away",
+penalty_score=None,
+):
+
+if not isinstance(
+    score,
+    dict,
+):
+    return ""
+
+home_score = score.get(
+    "home"
+)
+
+away_score = score.get(
+    "away"
+)
+
+if home_score is None:
+    return ""
+
+if away_score is None:
+    return ""
+
+try:
+
+    home_score = int(
+        home_score
+    )
+
+    away_score = int(
+        away_score
+    )
+
+except (
+    TypeError,
+    ValueError,
+):
+
+    return ""
+
+penalty_home = None
+penalty_away = None
+
+if isinstance(
+    penalty_score,
+    dict,
+):
+
+    penalty_home = (
+        penalty_score.get(
+            "home"
         )
+    )
 
-        if markers:
+    penalty_away = (
+        penalty_score.get(
+            "away"
+        )
+    )
 
-            result += (
-                " ("
-                + " ".join(
-                    markers
-                )
-                + ")"
+    try:
+
+        if (
+            penalty_home is not None
+            and penalty_away is not None
+        ):
+
+            penalty_home = int(
+                penalty_home
             )
 
+            penalty_away = int(
+                penalty_away
+            )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        penalty_home = None
+        penalty_away = None
+
+if (
+    penalty_home is not None
+    and penalty_away is not None
+):
+
+    return (
+        f"{home_name} "
+        f"{home_score} ({penalty_home}) "
+        f"🆚 "
+        f"({penalty_away}) {away_score} "
+        f"{away_name}"
+    )
+
+return (
+    f"{home_name} "
+    f"{home_score} "
+    f"🆚 "
+    f"{away_score} "
+    f"{away_name}"
+)
+
+def has_valid_score(
+score,
+):
+
+if not isinstance(
+    score,
+    dict,
+):
+    return False
+
+if score.get(
+    "home"
+) is None:
+    return False
+
+if score.get(
+    "away"
+) is None:
+    return False
+
+try:
+
+    int(
+        score.get("home")
+    )
+
+    int(
+        score.get("away")
+    )
+
+except (
+    TypeError,
+    ValueError,
+):
+
+    return False
+
+return True
+--------------------------------------------------------
+نشان‌های رویداد بازیکن
+--------------------------------------------------------
+
+def _empty_player_event_data():
+
+return {
+    "goals": 0,
+    "assists": 0,
+    "own_goals": 0,
+    "penalty_goals": 0,
+}
+
+def build_final_player_events(
+events
+):
+
+result = {}
+
+if not isinstance(
+    events,
+    list,
+):
     return result
 
-
-# --------------------------------------------------------
-# خط بازیکنان
-# --------------------------------------------------------
-
-def format_player_line(
-    icon,
-    players,
-    show_rating,
-    player_events=None,
-):
-
-    names = []
-
-    for player in players:
-
-        name = format_player(
-            player,
-            show_rating,
-            player_events,
-        )
-
-        if name:
-            names.append(
-                name
-            )
-
-    if not names:
-        return ""
-
-    return (
-        f"{icon} "
-        + " | ".join(
-            names
-        )
-    )
-
-
-# --------------------------------------------------------
-# ترکیب تیم
-# --------------------------------------------------------
-
-def format_team_lineup(
-    team_name,
-    team,
-    show_rating,
-    team_icon,
-    player_events=None,
-):
-
-    if not isinstance(
-        team,
-        dict,
-    ):
-
-        return (
-            f"{team_icon} "
-            f"{team_name}\n"
-            "اطلاعات ترکیب پیدا نشد."
-        )
-
-    starters = get_starters(
-        team
-    )
-
-    substitutes = get_substitutes(
-        team
-    )
-
-    coach = get_coach(
-        team
-    )
-
-    formation = get_formation(
-        team
-    )
-
-    lines = [
-        f"🔘 {team_name}"
-    ]
-
-    if coach:
-
-        lines.append(
-            f"👔 {coach}"
-        )
-
-    if formation:
-
-        lines.append(
-            f"📐 {formation}"
-        )
-
-    lines.append("")
-
-    starter_line = format_player_line(
-        "🔲",
-        starters,
-        show_rating,
-        player_events,
-    )
-
-    if starter_line:
-
-        lines.append(
-            starter_line
-        )
-
-    substitute_names = []
-
-    for player in substitutes:
-
-        name = format_player(
-            player,
-            show_rating,
-            player_events,
-        )
-
-        if name:
-
-            substitute_names.append(
-                name
-            )
-
-    if substitute_names:
-
-        lines.append("")
-
-        lines.append(
-            "🔄 "
-            + " | ".join(
-                substitute_names
-            )
-        )
-
-    return "\n".join(
-        lines
-    )
-
-
-# --------------------------------------------------------
-# نام بازیکن event
-# --------------------------------------------------------
-
-def get_event_player_name(
-    event,
-):
+for event in events:
 
     if not isinstance(
         event,
         dict,
     ):
-        return ""
-
-    player = event.get(
-        "player"
-    )
-
-    if isinstance(
-        player,
-        dict,
-    ):
-
-        name = (
-            player.get("name")
-            or player.get("shortName")
-            or ""
-        )
-
-        if name:
-            return name
-
-    return (
-        event.get(
-            "playerName"
-        )
-        or ""
-    )
-
-
-# --------------------------------------------------------
-# گل‌زنان
-# --------------------------------------------------------
-
-def _get_scorer_text(
-    event,
-):
-
-    player_name = get_event_player_name(
-        event
-    )
-
-    if not player_name:
-
-        return ""
-
-    minute = get_goal_minute(
-        event
-    )
-
-    if minute is None:
-
-        return player_name
-
-    return (
-        f"{player_name} "
-        f"({minute}')"
-    )
-
-
-def _get_goal_events(
-    events,
-    home_or_away,
-):
-
-    result = []
-
-    if not isinstance(
-        events,
-        list,
-    ):
-        return result
-
-    for index, event in enumerate(
-        events
-    ):
-
-        if not isinstance(
-            event,
-            dict,
-        ):
-            continue
-
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
-
-        if event_type != "goal":
-            continue
-
-        if is_penalty_goal(
-            event
-        ):
-            continue
-
-        event_team = get_event_team(
-            event
-        )
-
-        if home_or_away == "home":
-
-            if event_team is not True:
-                continue
-
-        else:
-
-            if event_team is not False:
-                continue
-
-        scorer_text = _get_scorer_text(
-            event
-        )
-
-        if not scorer_text:
-            continue
-
-        minute = get_goal_minute(
-            event
-        )
-
-        result.append(
-            (
-                minute
-                if minute is not None
-                else 9999,
-                index,
-                scorer_text,
-            )
-        )
-
-    result.sort(
-        key=lambda item: (
-            item[0],
-            item[1],
-        )
-    )
-
-    return [
-        item[2]
-        for item in result
-    ]
-
-
-def _build_scorer_lines(
-    home_scorers,
-    away_scorers,
-):
-
-    lines = []
-
-    count = max(
-        len(home_scorers),
-        len(away_scorers),
-    )
-
-    for index in range(
-        count
-    ):
-
-        home_text = ""
-
-        away_text = ""
-
-        if index < len(
-            home_scorers
-        ):
-
-            home_text = (
-                home_scorers[index]
-            )
-
-        if index < len(
-            away_scorers
-        ):
-
-            away_text = (
-                away_scorers[index]
-            )
-
-        lines.append(
-            (
-                home_text
-                + " " * 4
-                + away_text
-            )
-        )
-
-    return lines
-
-
-def format_scorers(
-    home_scorers,
-    away_scorers,
-):
-
-    if not home_scorers and not away_scorers:
-
-        return []
-
-    max_home_width = max(
-        [
-            len(item)
-            for item in home_scorers
-        ]
-        or [0]
-    )
-
-    lines = []
-
-    count = max(
-        len(home_scorers),
-        len(away_scorers),
-    )
-
-    for index in range(
-        count
-    ):
-
-        home_text = ""
-
-        away_text = ""
-
-        if index < len(
-            home_scorers
-        ):
-
-            home_text = (
-                home_scorers[index]
-            )
-
-        if index < len(
-            away_scorers
-        ):
-
-            away_text = (
-                away_scorers[index]
-            )
-
-        if away_text:
-
-            line = (
-                f"{home_text:<{max_home_width}}"
-                f"    "
-                f"{away_text}"
-            )
-
-        else:
-
-            line = home_text
-
-        lines.append(
-            line.rstrip()
-        )
-
-    return lines
-
-
-# --------------------------------------------------------
-# پیام ترکیب
-# --------------------------------------------------------
-
-def build_lineup_message(
-    snapshot,
-    player_events=None,
-    home_scorers=None,
-    away_scorers=None,
-    show_rating=False,
-    show_final_score=False,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    league = (
-        snapshot.get("league_fa")
-        or snapshot.get("league")
-        or "نامشخص"
-    )
-
-    kickoff = (
-        format_iran_datetime_jalali(
-            snapshot.get("start")
-        )
-    )
-
-    home_team = snapshot.get(
-        "home_team"
-    )
-
-    away_team = snapshot.get(
-        "away_team"
-    )
-
-    message = [
-        f"🏆 {league}",
-        "",
-    ]
-
-    if show_final_score:
-
-        score = snapshot.get(
-            "score"
-        )
-
-        penalty_score = snapshot.get(
-            "penalty_score"
-        )
-
-        score_text = format_score(
-            score,
-            home_name,
-            away_name,
-            penalty_score,
-        )
-
-        if score_text:
-
-            message.append(
-                score_text
-            )
-
-            if (
-                home_scorers
-                or away_scorers
-            ):
-
-                scorer_lines = (
-                    format_scorers(
-                        home_scorers
-                        or [],
-                        away_scorers
-                        or [],
-                    )
-                )
-
-                if scorer_lines:
-
-                    message.extend(
-                        scorer_lines
-                    )
-
-            message.append("")
-
-        message.append(
-            (
-                f"🕐 {kickoff} "
-                f"به وقت ایران"
-            )
-        )
-
-    else:
-
-        message.append(
-            (
-                f"{home_name} "
-                f"🆚 "
-                f"{away_name}"
-            )
-        )
-
-        message.append(
-            (
-                f"🕐 {kickoff} "
-                f"به وقت ایران"
-            )
-        )
-
-    message.append("")
-
-    message.append(
-        format_team_lineup(
-            home_name,
-            home_team,
-            show_rating,
-            "🔘",
-            player_events,
-        )
-    )
-
-    message.append("")
-
-    message.append(
-        format_team_lineup(
-            away_name,
-            away_team,
-            show_rating,
-            "🔘",
-            player_events,
-        )
-    )
-
-    return "\n".join(
-        message
-    )
-
-
-# --------------------------------------------------------
-# پیام شروع بازی
-# --------------------------------------------------------
-
-def build_start_message(
-    snapshot,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    return (
-        "🔴 بازی شروع شد\n"
-        "\n"
-        f"{home_name} 🆚 {away_name}"
-    )
-
-
-# --------------------------------------------------------
-# پیام گل
-# --------------------------------------------------------
-
-def build_goal_message(
-    snapshot,
-    event,
-    score=None,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    player_name = (
-        get_event_player_name(
-            event
-        )
-    )
-
-    if not player_name:
-
-        player_name = (
-            "بازیکن نامشخص"
-        )
-
-    is_home = get_event_team(
-        event
-    )
-
-    if is_home is True:
-
-        team_name = home_name
-
-    elif is_home is False:
-
-        team_name = away_name
-
-    else:
-
-        team_name = ""
-
-    own_goal = is_own_goal(
-        event
-    )
-
-    minute = get_goal_minute(
-        event
-    )
-
-    if minute is not None:
-
-        minute_text = (
-            f"⏱ دقیقه {minute}"
-        )
-
-    else:
-
-        minute_text = ""
-
-    if own_goal:
-
-        title = (
-            "⚽️ گل به خودی"
-        )
-
-    else:
-
-        title = (
-            "⚽️ گل"
-        )
-
-    lines = [
-        title,
-    ]
-
-    if team_name:
-
-        if own_goal:
-
-            lines.append(
-                f"به سود {team_name}!"
-            )
-
-        else:
-
-            lines.append(
-                f"برای {team_name}!"
-            )
-
-    if minute_text:
-
-        lines.append(
-            minute_text
-        )
-
-    lines.append(
-        player_name
-    )
-
-    if is_penalty_goal(
-        event
-    ):
-
-        lines.append(
-            "🎯 پنالتی"
-        )
-
-    score_for_display = score
-
-    score_text = format_score(
-        score_for_display,
-        home_name,
-        away_name,
-    )
-
-    if score_text:
-
-        lines.append("")
-
-        lines.append(
-            score_text
-        )
-
-    return "\n".join(
-        lines
-    )
-
-
-# --------------------------------------------------------
-# پیام گل مردود
-# --------------------------------------------------------
-
-def build_cancelled_goal_message(
-    snapshot,
-    cancelled_goal,
-    score=None,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    if not isinstance(
-        cancelled_goal,
-        dict,
-    ):
-        return ""
-
-    goal_event = (
-        cancelled_goal.get(
-            "goal_event"
-        )
-    )
-
-    if not isinstance(
-        goal_event,
-        dict,
-    ):
-        return ""
-
-    player_name = (
-        get_event_player_name(
-            goal_event
-        )
-    )
-
-    if not player_name:
-
-        player_name = (
-            "بازیکن نامشخص"
-        )
-
-    is_home = (
-        cancelled_goal.get(
-            "is_home"
-        )
-    )
-
-    if is_home is None:
-
-        is_home = get_event_team(
-            goal_event
-        )
-
-    if is_home is True:
-
-        team_name = home_name
-
-    elif is_home is False:
-
-        team_name = away_name
-
-    else:
-
-        team_name = ""
-
-    minute = (
-        cancelled_goal.get(
-            "minute"
-        )
-    )
-
-    if minute is None:
-
-        minute = get_goal_minute(
-            goal_event
-        )
-
-    lines = [
-        "❌ گل مردود شد!",
-    ]
-
-    if team_name:
-
-        lines.append(
-            f"گل {team_name}"
-        )
-
-    if minute is not None:
-
-        lines.append(
-            f"⏱ دقیقه {minute}"
-        )
-
-    lines.append(
-        player_name
-    )
-
-    lines.append(
-        "🖥 VAR گل را مردود اعلام کرد."
-    )
-
-    score_text = format_score(
-        score,
-        home_name,
-        away_name,
-    )
-
-    if score_text:
-
-        lines.append("")
-
-        lines.append(
-            score_text
-        )
-
-    return "\n".join(
-        lines
-    )
-
-
-# --------------------------------------------------------
-# پایان نیمه اول
-# --------------------------------------------------------
-
-def build_half_time_message(
-    snapshot,
-    score=None,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    lines = [
-        "⏸️ پایان نیمه اول",
-        "",
-        f"{home_name} 🆚 {away_name}",
-    ]
-
-    score_text = format_score(
-        score,
-        home_name,
-        away_name,
-    )
-
-    if score_text:
-
-        lines.append("")
-
-        lines.append(
-            score_text
-        )
-
-    return "\n".join(
-        lines
-    )
-
-
-# --------------------------------------------------------
-# کارت قرمز
-# --------------------------------------------------------
-
-def build_red_card_message(
-    snapshot,
-    event,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    player_name = (
-        get_event_player_name(
-            event
-        )
-    )
-
-    if not player_name:
-
-        player_name = (
-            "بازیکن نامشخص"
-        )
-
-    minute = get_goal_minute(
-        event
-    )
-
-    is_home = get_event_team(
-        event
-    )
-
-    if is_home is True:
-
-        team_name = home_name
-
-    elif is_home is False:
-
-        team_name = away_name
-
-    else:
-
-        team_name = ""
-
-    lines = [
-        "🟥 کارت قرمز",
-        player_name,
-    ]
-
-    if team_name:
-
-        lines.append(
-            team_name
-        )
-
-    if minute is not None:
-
-        lines.append(
-            f"⏱ دقیقه {minute}"
-        )
-
-    lines.append(
-        f"{home_name} 🆚 {away_name}"
-    )
-
-    return "\n".join(
-        lines
-    )
-
-
-# --------------------------------------------------------
-# پیام عمومی event
-# --------------------------------------------------------
-
-def build_event_message(
-    snapshot,
-    event,
-    score=None,
-):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return ""
+        continue
 
     event_type = str(
         event.get(
@@ -1762,1189 +480,2174 @@ def build_event_message(
         )
     ).lower()
 
-    if event_type == "goal":
+    if event_type != "goal":
+        continue
 
-        return build_goal_message(
-            snapshot,
-            event,
-            score,
+    player_id = get_event_player_id(
+        event
+    )
+
+    if player_id is None:
+        continue
+
+    if player_id not in result:
+        result[player_id] = (
+            _empty_player_event_data()
         )
 
-    if event_type == "card":
+    data = result[player_id]
 
-        card = str(
-            event.get(
-                "card",
-                "",
-            )
-        ).lower()
+    if is_own_goal(
+        event
+    ):
 
-        if (
-            card in (
-                "red",
-                "redcard",
-                "red_card",
-            )
-            or "red" in card
+        data[
+            "own_goals"
+        ] += 1
+
+    else:
+
+        data[
+            "goals"
+        ] += 1
+
+        if is_penalty_goal(
+            event
         ):
 
-            return build_red_card_message(
-                snapshot,
-                event,
+            data[
+                "penalty_goals"
+            ] += 1
+
+    assist_id = (
+        get_event_assist_player_id(
+            event
+        )
+    )
+
+    if assist_id is not None:
+
+        if assist_id not in result:
+            result[assist_id] = (
+                _empty_player_event_data()
             )
 
+        result[
+            assist_id
+        ][
+            "assists"
+        ] += 1
+
+return result
+
+def get_player_event_markers(
+player,
+player_events,
+):
+
+player_id = get_player_id(
+    player
+)
+
+if player_id is None:
+    return []
+
+data = player_events.get(
+    player_id
+)
+
+if data is None:
+
+    data = player_events.get(
+        str(player_id)
+    )
+
+if not isinstance(
+    data,
+    dict,
+):
+    return []
+
+markers = []
+
+goals = int(
+    data.get(
+        "goals",
+        0,
+    )
+    or 0
+)
+
+assists = int(
+    data.get(
+        "assists",
+        0,
+    )
+    or 0
+)
+
+own_goals = int(
+    data.get(
+        "own_goals",
+        0,
+    )
+    or 0
+)
+
+if goals == 1:
+
+    markers.append(
+        "⚽️"
+    )
+
+elif goals > 1:
+
+    markers.append(
+        f"⚽️×{goals}"
+    )
+
+if assists == 1:
+
+    markers.append(
+        "🅰️"
+    )
+
+elif assists > 1:
+
+    markers.append(
+        f"🅰️×{assists}"
+    )
+
+if own_goals == 1:
+
+    markers.append(
+        "⚽️ OG"
+    )
+
+elif own_goals > 1:
+
+    markers.append(
+        f"⚽️ OG×{own_goals}"
+    )
+
+return markers
+--------------------------------------------------------
+بازیکن
+--------------------------------------------------------
+
+def format_player(
+player,
+show_rating,
+player_events=None,
+):
+
+name = get_player_name(
+    player
+)
+
+if not name:
     return ""
 
+shirt_number = None
 
-# --------------------------------------------------------
-# نمایش مقدار آمار
-# --------------------------------------------------------
-
-def format_stat_value(
-    label,
-    value,
-):
-
-    if value is None:
-        return ""
-
-    normalized_label = str(
-        label
-    ).strip().lower()
-
-    if normalized_label in (
-        "xg",
-        "ایکس جی",
-    ):
-
-        try:
-
-            return f"{float(value):.2f}"
-
-        except (
-            TypeError,
-            ValueError,
-        ):
-
-            return str(value)
-
-    if normalized_label in (
-        "مالکیت",
-        "possession",
-    ):
-
-        try:
-
-            number = float(
-                value
-            )
-
-            return (
-                f"{number:g}%"
-            )
-
-        except (
-            TypeError,
-            ValueError,
-        ):
-
-            return str(value)
-
-    if isinstance(
-        value,
-        float,
-    ):
-
-        if value.is_integer():
-
-            return str(
-                int(value)
-            )
-
-        return f"{value:.2f}".rstrip(
-            "0"
-        ).rstrip(
-            "."
-        )
-
-    return str(
-        value
-    )
-
-
-# --------------------------------------------------------
-# نام و آیکون آمار
-# --------------------------------------------------------
-
-FINAL_STAT_ORDER = [
-    (
-        "xG",
-        "ایکس جی",
-        "🎯",
-    ),
-    (
-        "شوت",
-        "شوت",
-        "💥",
-    ),
-    (
-        "شوت در چارچوب",
-        "شوت در چارچوب",
-        "🥅",
-    ),
-    (
-        "مالکیت",
-        "مالکیت",
-        "⚽️",
-    ),
-    (
-        "پاس",
-        "پاس",
-        "🔄",
-    ),
-    (
-        "دقت پاس",
-        "دقت",
-        "✅",
-    ),
-    (
-        "پاس دقیق",
-        "پاس دقیق",
-        "✅",
-    ),
-    (
-        "کرنر",
-        "کرنر",
-        "🚩",
-    ),
-    (
-        "خطا",
-        "خطا",
-        "⚠️",
-    ),
-    (
-        "آفساید",
-        "آفساید",
-        "🚫",
-    ),
-    (
-        "کارت زرد",
-        "کارت زرد",
-        "🟨",
-    ),
-    (
-        "کارت قرمز",
-        "کارت قرمز",
-        "🟥",
-    ),
-]
-
-
-def _get_stat_data(
-    stats,
-    possible_keys,
-):
-
-    for key in possible_keys:
-
-        data = stats.get(
-            key
-        )
-
-        if isinstance(
-            data,
-            dict,
-        ):
-
-            home_value = data.get(
-                "home"
-            )
-
-            away_value = data.get(
-                "away"
-            )
-
-            if (
-                home_value is not None
-                and away_value is not None
-            ):
-
-                return data
-
-    return None
-
-
-def _get_stat_rows(
-    stats,
-):
-
-    rows = []
-
-    stat_aliases = {
-        "xG": [
-            "xG",
-            "ایکس جی",
-        ],
-        "شوت": [
-            "شوت",
-        ],
-        "شوت در چارچوب": [
-            "شوت در چارچوب",
-            "در چارچوب",
-        ],
-        "مالکیت": [
-            "مالکیت",
-        ],
-        "پاس": [
-            "پاس",
-        ],
-        "دقت پاس": [
-            "دقت پاس",
-            "دقت",
-            "دقت ",
-        ],
-        "پاس دقیق": [
-            "پاس دقیق",
-        ],
-        "کرنر": [
-            "کرنر",
-        ],
-        "خطا": [
-            "خطا",
-        ],
-        "آفساید": [
-            "آفساید",
-        ],
-        "کارت زرد": [
-            "کارت زرد",
-        ],
-        "کارت قرمز": [
-            "کارت قرمز",
-        ],
-    }
-
-    display_names = {
-        "xG": "ایکس جی",
-        "شوت": "شوت",
-        "شوت در چارچوب": "در چارچوب",
-        "مالکیت": "مالکیت",
-        "پاس": "پاس",
-        "دقت پاس": "دقت",
-        "پاس دقیق": "پاس دقیق",
-        "کرنر": "کرنر",
-        "خطا": "خطا",
-        "آفساید": "آفساید",
-        "کارت زرد": "کارت زرد",
-        "کارت قرمز": "کارت قرمز",
-    }
-
-    icons = {
-        "xG": "🎯",
-        "شوت": "💥",
-        "شوت در چارچوب": "🥅",
-        "مالکیت": "⚽️",
-        "پاس": "🔄",
-        "دقت پاس": "✅",
-        "پاس دقیق": "✅",
-        "کرنر": "🚩",
-        "خطا": "⚠️",
-        "آفساید": "🚫",
-        "کارت زرد": "🟨",
-        "کارت قرمز": "🟥",
-    }
-
-    for stat_name in [
-        item[0]
-        for item in FINAL_STAT_ORDER
-    ]:
-
-        data = _get_stat_data(
-            stats,
-            stat_aliases.get(
-                stat_name,
-                [stat_name],
-            ),
-        )
-
-        if data is None:
-            continue
-
-        rows.append(
-            (
-                icons[stat_name],
-                display_names[
-                    stat_name
-                ],
-                data.get("home"),
-                data.get("away"),
-            )
-        )
-
-    return rows
-
-
-# --------------------------------------------------------
-# Rich Message - ابزار بازیکن
-# --------------------------------------------------------
-
-def _format_rich_player(
+if isinstance(
     player,
-    show_rating=False,
-    player_events=None,
+    dict,
 ):
-
-    if not isinstance(
-        player,
-        dict,
-    ):
-        return ""
-
-    name = get_player_name(
-        player
-    )
-
-    if not name:
-
-        return ""
 
     shirt_number = player.get(
         "shirtNumber"
     )
 
-    if shirt_number:
+if shirt_number:
 
-        text = (
-            f"{shirt_number}. "
-            f"{name}"
-        )
+    result = (
+        f"{shirt_number}. "
+        f"{name}"
+    )
 
-    else:
+else:
 
-        text = name
+    result = name
 
-    if show_rating:
+if show_rating:
 
-        rating = get_player_rating(
-            player
-        )
+    rating = get_player_rating(
+        player
+    )
 
-        if rating is not None:
+    if rating is not None:
 
-            try:
+        try:
 
-                text += (
-                    f" — {float(rating):.1f}"
-                )
-
-            except (
-                TypeError,
-                ValueError,
-            ):
-
-                pass
-
-    if player_events is not None:
-
-        markers = (
-            get_player_event_markers(
-                player,
-                player_events,
-            )
-        )
-
-        if markers:
-
-            text += (
-                " ("
-                + " ".join(
-                    markers
-                )
-                + ")"
+            result += (
+                f" — {float(rating):.1f}"
             )
 
-    return text
+        except (
+            TypeError,
+            ValueError,
+        ):
 
+            pass
 
-def _get_team_header_text(
-    team_name,
+if player_events is not None:
+
+    markers = (
+        get_player_event_markers(
+            player,
+            player_events,
+        )
+    )
+
+    if markers:
+
+        result += (
+            " ("
+            + " ".join(
+                markers
+            )
+            + ")"
+        )
+
+return result
+--------------------------------------------------------
+خط بازیکنان
+--------------------------------------------------------
+
+def format_player_line(
+icon,
+players,
+show_rating,
+player_events=None,
+):
+
+names = []
+
+for player in players:
+
+    name = format_player(
+        player,
+        show_rating,
+        player_events,
+    )
+
+    if name:
+        names.append(
+            name
+        )
+
+if not names:
+    return ""
+
+return (
+    f"{icon} "
+    + " | ".join(
+        names
+    )
+)
+--------------------------------------------------------
+ترکیب تیم
+--------------------------------------------------------
+
+def format_team_lineup(
+team_name,
+team,
+show_rating,
+team_icon,
+player_events=None,
+):
+
+if not isinstance(
     team,
+    dict,
 ):
 
-    if not isinstance(
-        team,
-        dict,
-    ):
-
-        return (
-            f"{team_name}\n"
-            "اطلاعات ترکیب پیدا نشد."
-        )
-
-    coach = get_coach(
-        team
+    return (
+        f"{team_icon} "
+        f"{team_name}\n"
+        "اطلاعات ترکیب پیدا نشد."
     )
 
-    formation = get_formation(
-        team
+starters = get_starters(
+    team
+)
+
+substitutes = get_substitutes(
+    team
+)
+
+coach = get_coach(
+    team
+)
+
+formation = get_formation(
+    team
+)
+
+lines = [
+    f"🔘 {team_name}"
+]
+
+if coach:
+
+    lines.append(
+        f"👔 {coach}"
     )
 
-    lines = [
-        team_name
-    ]
+if formation:
 
-    if coach:
-
-        lines.append(
-            f"👔 {coach}"
-        )
-
-    if formation:
-
-        lines.append(
-            f"📐 {formation}"
-        )
-
-    return "\n".join(
-        lines
+    lines.append(
+        f"📐 {formation}"
     )
 
+lines.append("")
 
-def _build_rich_lineup_rows(
-    home_name,
-    away_name,
-    home_team,
-    away_team,
-    show_rating=False,
-    player_events=None,
+starter_line = format_player_line(
+    "🔲",
+    starters,
+    show_rating,
+    player_events,
+)
+
+if starter_line:
+
+    lines.append(
+        starter_line
+    )
+
+substitute_names = []
+
+for player in substitutes:
+
+    name = format_player(
+        player,
+        show_rating,
+        player_events,
+    )
+
+    if name:
+
+        substitute_names.append(
+            name
+        )
+
+if substitute_names:
+
+    lines.append("")
+
+    lines.append(
+        "🔄 "
+        + " | ".join(
+            substitute_names
+        )
+    )
+
+return "\n".join(
+    lines
+)
+--------------------------------------------------------
+نام بازیکن event
+--------------------------------------------------------
+
+def get_event_player_name(
+event,
 ):
 
-    rows = []
+if not isinstance(
+    event,
+    dict,
+):
+    return ""
 
-    # -----------------------------------------------------
-    # ردیف ۱: نام تیم + مربی + آرایش
-    # -----------------------------------------------------
+player = event.get(
+    "player"
+)
 
-    rows.append(
-        [
-            {
-                "text": _get_team_header_text(
-                    home_name,
-                    home_team,
-                ),
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-            {
-                "text": _get_team_header_text(
-                    away_name,
-                    away_team,
-                ),
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-        ]
+if isinstance(
+    player,
+    dict,
+):
+
+    name = (
+        player.get("name")
+        or player.get("shortName")
+        or ""
     )
 
-    if not isinstance(
-        home_team,
-        dict,
-    ):
+    if name:
+        return name
 
-        home_starters = []
-
-    else:
-
-        home_starters = get_starters(
-            home_team
-        )
-
-    if not isinstance(
-        away_team,
-        dict,
-    ):
-
-        away_starters = []
-
-    else:
-
-        away_starters = get_starters(
-            away_team
-        )
-
-    # -----------------------------------------------------
-    # ردیف‌های ۲ تا ۱۲: بازیکنان اصلی
-    # -----------------------------------------------------
-
-    for index in range(
-        11
-    ):
-
-        home_player = ""
-
-        away_player = ""
-
-        if index < len(
-            home_starters
-        ):
-
-            home_player = (
-                _format_rich_player(
-                    home_starters[index],
-                    show_rating,
-                    player_events,
-                )
-            )
-
-        if index < len(
-            away_starters
-        ):
-
-            away_player = (
-                _format_rich_player(
-                    away_starters[index],
-                    show_rating,
-                    player_events,
-                )
-            )
-
-        rows.append(
-            [
-                {
-                    "text": home_player,
-                    "align": "center",
-                    "valign": "middle",
-                },
-                {
-                    "text": away_player,
-                    "align": "center",
-                    "valign": "middle",
-                },
-            ]
-        )
-
-    # -----------------------------------------------------
-    # ردیف ۱۳: ذخیره‌ها
-    # -----------------------------------------------------
-
-    if not isinstance(
-        home_team,
-        dict,
-    ):
-
-        home_substitutes = []
-
-    else:
-
-        home_substitutes = get_substitutes(
-            home_team
-        )
-
-    if not isinstance(
-        away_team,
-        dict,
-    ):
-
-        away_substitutes = []
-
-    else:
-
-        away_substitutes = get_substitutes(
-            away_team
-        )
-
-    home_substitute_lines = []
-
-    for player in home_substitutes:
-
-        player_text = (
-            _format_rich_player(
-                player,
-                show_rating,
-                player_events,
-            )
-        )
-
-        if player_text:
-
-            home_substitute_lines.append(
-                player_text
-            )
-
-    away_substitute_lines = []
-
-    for player in away_substitutes:
-
-        player_text = (
-            _format_rich_player(
-                player,
-                show_rating,
-                player_events,
-            )
-        )
-
-        if player_text:
-
-            away_substitute_lines.append(
-                player_text
-            )
-
-    home_substitute_text = ""
-
-    if home_substitute_lines:
-
-        home_substitute_text = (
-            "🔄 تعویضی‌ها\n"
-            + "\n".join(
-                home_substitute_lines
-            )
-        )
-
-    away_substitute_text = ""
-
-    if away_substitute_lines:
-
-        away_substitute_text = (
-            "🔄 تعویضی‌ها\n"
-            + "\n".join(
-                away_substitute_lines
-            )
-        )
-
-    rows.append(
-        [
-            {
-                "text": home_substitute_text,
-                "align": "center",
-                "valign": "middle",
-            },
-            {
-                "text": away_substitute_text,
-                "align": "center",
-                "valign": "middle",
-            },
-        ]
+return (
+    event.get(
+        "playerName"
     )
+    or ""
+)
+--------------------------------------------------------
+گل‌زنان
+--------------------------------------------------------
 
-    return rows
+def _get_scorer_text(
+event,
+):
 
+player_name = get_event_player_name(
+    event
+)
 
-# --------------------------------------------------------
-# Rich Message - گلزنان
-# --------------------------------------------------------
+if not player_name:
 
-def _get_rich_goal_events(
+    return ""
+
+minute = get_goal_minute(
+    event
+)
+
+if minute is None:
+
+    return player_name
+
+return (
+    f"{player_name} "
+    f"({minute}')"
+)
+
+def _get_goal_events(
+events,
+home_or_away,
+):
+
+result = []
+
+if not isinstance(
     events,
+    list,
 ):
-
-    result = []
-
-    if not isinstance(
-        events,
-        list,
-    ):
-        return result
-
-    for index, event in enumerate(
-        events
-    ):
-
-        if not isinstance(
-            event,
-            dict,
-        ):
-            continue
-
-        event_type = str(
-            event.get(
-                "type",
-                "",
-            )
-        ).lower()
-
-        if event_type != "goal":
-            continue
-
-        # -------------------------------------------------
-        # پنالتی‌های ضربات پنالتی مسابقه
-        # جزو گل‌های بازی نیستند.
-        #
-        # پنالتی معمولی که منجر به گل شده باشد
-        # event نوع goal دارد و اینجا حفظ می‌شود.
-        # -------------------------------------------------
-
-        if event.get(
-            "shootout",
-            False,
-        ):
-
-            continue
-
-        event_team = get_event_team(
-            event
-        )
-
-        if event_team not in (
-            True,
-            False,
-        ):
-
-            continue
-
-        scorer_text = _get_scorer_text(
-            event
-        )
-
-        if not scorer_text:
-
-            continue
-
-        minute = get_goal_minute(
-            event
-        )
-
-        result.append(
-            {
-                "minute": (
-                    minute
-                    if minute is not None
-                    else 9999
-                ),
-                "index": index,
-                "is_home": event_team,
-                "text": scorer_text,
-            }
-        )
-
-    result.sort(
-        key=lambda item: (
-            item["minute"],
-            item["index"],
-        )
-    )
-
     return result
 
-
-def _build_rich_scorer_table(
-    events,
-    home_name,
-    away_name,
+for index, event in enumerate(
+    events
 ):
 
-    goal_events = _get_rich_goal_events(
-        events
-    )
-
-    if not goal_events:
-
-        return None
-
-    home_goals = [
-        item
-        for item in goal_events
-        if item["is_home"] is True
-    ]
-
-    away_goals = [
-        item
-        for item in goal_events
-        if item["is_home"] is False
-    ]
-
-    row_count = max(
-        len(home_goals),
-        len(away_goals),
-    )
-
-    if row_count == 0:
-
-        return None
-
-    cells = [
-        [
-            {
-                "text": home_name,
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-            {
-                "text": away_name,
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-        ]
-    ]
-
-    for index in range(
-        row_count
+    if not isinstance(
+        event,
+        dict,
     ):
+        continue
 
-        home_text = ""
-
-        away_text = ""
-
-        if index < len(
-            home_goals
-        ):
-
-            home_text = (
-                home_goals[index]["text"]
-            )
-
-        if index < len(
-            away_goals
-        ):
-
-            away_text = (
-                away_goals[index]["text"]
-            )
-
-        cells.append(
-            [
-                {
-                    "text": home_text,
-                    "align": "center",
-                    "valign": "middle",
-                },
-                {
-                    "text": away_text,
-                    "align": "center",
-                    "valign": "middle",
-                },
-            ]
+    event_type = str(
+        event.get(
+            "type",
+            "",
         )
+    ).lower()
 
-    return {
-        "type": "table",
-        "is_bordered": True,
-        "is_compact": False,
-        "cells": cells,
-    }
+    if event_type != "goal":
+        continue
 
+    if is_penalty_goal(
+        event
+    ):
+        continue
 
-# --------------------------------------------------------
-# Rich Message - هدر مسابقه
-# --------------------------------------------------------
-
-def _build_rich_match_header(
-    snapshot,
-    show_final_score=False,
-    events=None,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
+    event_team = get_event_team(
+        event
     )
 
-    if not home_name:
+    if home_or_away == "home":
 
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    league = (
-        snapshot.get("league_fa")
-        or snapshot.get("league")
-        or "نامشخص"
-    )
-
-    kickoff = (
-        format_iran_datetime_jalali(
-            snapshot.get("start")
-        )
-    )
-
-    blocks = [
-        {
-            "type": "paragraph",
-            "text": f"🏆 {league}",
-        }
-    ]
-
-    if show_final_score:
-
-        score = snapshot.get(
-            "score"
-        )
-
-        penalty_score = snapshot.get(
-            "penalty_score"
-        )
-
-        score_text = format_score(
-            score,
-            home_name,
-            away_name,
-            penalty_score,
-        )
-
-        if score_text:
-
-            blocks.append(
-                {
-                    "type": "paragraph",
-                    "text": score_text,
-                }
-            )
-
-            scorer_table = (
-                _build_rich_scorer_table(
-                    events,
-                    home_name,
-                    away_name,
-                )
-            )
-
-            if scorer_table:
-
-                blocks.append(
-                    scorer_table
-                )
+        if event_team is not True:
+            continue
 
     else:
 
-        blocks.append(
-            {
-                "type": "paragraph",
-                "text": (
-                    f"{home_name} "
-                    f"🆚 "
-                    f"{away_name}"
-                ),
-            }
-        )
+        if event_team is not False:
+            continue
 
-    blocks.append(
-        {
-            "type": "paragraph",
-            "text": (
-                f"🕐 {kickoff} "
-                f"به وقت ایران"
-            ),
-        }
+    scorer_text = _get_scorer_text(
+        event
     )
 
-    return blocks
+    if not scorer_text:
+        continue
 
-
-# --------------------------------------------------------
-# Rich Message - پست ترکیب
-# --------------------------------------------------------
-
-def build_lineup_rich_message(
-    snapshot,
-    show_rating=False,
-):
-
-    if not isinstance(
-        snapshot,
-        dict,
-    ):
-
-        return None
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
+    minute = get_goal_minute(
+        event
     )
 
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    home_team = snapshot.get(
-        "home_team"
-    )
-
-    away_team = snapshot.get(
-        "away_team"
-    )
-
-    blocks = _build_rich_match_header(
-        snapshot,
-        show_final_score=False,
-    )
-
-    blocks.append(
-        {
-            "type": "table",
-            "is_bordered": True,
-            "is_compact": False,
-            "cells": _build_rich_lineup_rows(
-                home_name,
-                away_name,
-                home_team,
-                away_team,
-                show_rating,
-                None,
-            ),
-        }
-    )
-
-    return {
-        "is_rtl": True,
-        "blocks": blocks,
-    }
-
-
-# --------------------------------------------------------
-# Rich Message - پست نهایی ترکیب + عملکرد
-# --------------------------------------------------------
-
-def build_final_lineup_rich_message(
-    snapshot,
-    events=None,
-):
-
-    if not isinstance(
-        snapshot,
-        dict,
-    ):
-
-        return None
-
-    player_events = (
-        build_final_player_events(
-            events
+    result.append(
+        (
+            minute
+            if minute is not None
+            else 9999,
+            index,
+            scorer_text,
         )
     )
 
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
+result.sort(
+    key=lambda item: (
+        item[0],
+        item[1],
     )
+)
 
-    if not home_name:
+return [
+    item[2]
+    for item in result
+]
 
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    home_team = snapshot.get(
-        "home_team"
-    )
-
-    away_team = snapshot.get(
-        "away_team"
-    )
-
-    blocks = _build_rich_match_header(
-        snapshot,
-        show_final_score=True,
-        events=events,
-    )
-
-    blocks.append(
-        {
-            "type": "table",
-            "is_bordered": True,
-            "is_compact": False,
-            "cells": _build_rich_lineup_rows(
-                home_name,
-                away_name,
-                home_team,
-                away_team,
-                True,
-                player_events,
-            ),
-        }
-    )
-
-    return {
-        "is_rtl": True,
-        "blocks": blocks,
-    }
-
-
-# --------------------------------------------------------
-# Rich Message - آمار نهایی
-# --------------------------------------------------------
-
-def build_final_stats_rich_message(
-    snapshot,
-    score=None,
+def _build_scorer_lines(
+home_scorers,
+away_scorers,
 ):
 
-    if not isinstance(
-        snapshot,
-        dict,
+lines = []
+
+count = max(
+    len(home_scorers),
+    len(away_scorers),
+)
+
+for index in range(
+    count
+):
+
+    home_text = ""
+
+    away_text = ""
+
+    if index < len(
+        home_scorers
     ):
 
-        return None
-
-    home_name = get_display_team_name(
-        snapshot,
-        "home",
-    )
-
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
-        "away",
-    )
-
-    if not away_name:
-
-        away_name = "Away"
-
-    stats = snapshot.get(
-        "stats"
-    )
-
-    if not isinstance(
-        stats,
-        dict,
-    ):
-
-        stats = {}
-
-    if score is None:
-
-        score = snapshot.get(
-            "score"
+        home_text = (
+            home_scorers[index]
         )
+
+    if index < len(
+        away_scorers
+    ):
+
+        away_text = (
+            away_scorers[index]
+        )
+
+    lines.append(
+        (
+            home_text
+            + " " * 4
+            + away_text
+        )
+    )
+
+return lines
+
+def format_scorers(
+home_scorers,
+away_scorers,
+):
+
+if not home_scorers and not away_scorers:
+
+    return []
+
+max_home_width = max(
+    [
+        len(item)
+        for item in home_scorers
+    ]
+    or [0]
+)
+
+lines = []
+
+count = max(
+    len(home_scorers),
+    len(away_scorers),
+)
+
+for index in range(
+    count
+):
+
+    home_text = ""
+
+    away_text = ""
+
+    if index < len(
+        home_scorers
+    ):
+
+        home_text = (
+            home_scorers[index]
+        )
+
+    if index < len(
+        away_scorers
+    ):
+
+        away_text = (
+            away_scorers[index]
+        )
+
+    if away_text:
+
+        line = (
+            f"{home_text:<{max_home_width}}"
+            f"    "
+            f"{away_text}"
+        )
+
+    else:
+
+        line = home_text
+
+    lines.append(
+        line.rstrip()
+    )
+
+return lines
+--------------------------------------------------------
+پیام ترکیب
+--------------------------------------------------------
+
+def build_lineup_message(
+snapshot,
+player_events=None,
+home_scorers=None,
+away_scorers=None,
+show_rating=False,
+show_final_score=False,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+league = (
+    snapshot.get("league_fa")
+    or snapshot.get("league")
+    or "نامشخص"
+)
+
+kickoff = (
+    format_iran_datetime_jalali(
+        snapshot.get("start")
+    )
+)
+
+home_team = snapshot.get(
+    "home_team"
+)
+
+away_team = snapshot.get(
+    "away_team"
+)
+
+message = [
+    f"🏆 {league}",
+    "",
+]
+
+if show_final_score:
+
+    score = snapshot.get(
+        "score"
+    )
 
     penalty_score = snapshot.get(
         "penalty_score"
     )
 
-    blocks = [
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
+        penalty_score,
+    )
+
+    if score_text:
+
+        message.append(
+            score_text
+        )
+
+        if (
+            home_scorers
+            or away_scorers
+        ):
+
+            scorer_lines = (
+                format_scorers(
+                    home_scorers
+                    or [],
+                    away_scorers
+                    or [],
+                )
+            )
+
+            if scorer_lines:
+
+                message.extend(
+                    scorer_lines
+                )
+
+        message.append("")
+
+    message.append(
+        (
+            f"🕐 {kickoff} "
+            f"به وقت ایران"
+        )
+    )
+
+else:
+
+    message.append(
+        (
+            f"{home_name} "
+            f"🆚 "
+            f"{away_name}"
+        )
+    )
+
+    message.append(
+        (
+            f"🕐 {kickoff} "
+            f"به وقت ایران"
+        )
+    )
+
+message.append("")
+
+message.append(
+    format_team_lineup(
+        home_name,
+        home_team,
+        show_rating,
+        "🔘",
+        player_events,
+    )
+)
+
+message.append("")
+
+message.append(
+    format_team_lineup(
+        away_name,
+        away_team,
+        show_rating,
+        "🔘",
+        player_events,
+    )
+)
+
+return "\n".join(
+    message
+)
+--------------------------------------------------------
+پیام شروع بازی
+--------------------------------------------------------
+
+def build_start_message(
+snapshot,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+return (
+    "🔴 بازی شروع شد\n"
+    "\n"
+    f"{home_name} 🆚 {away_name}"
+)
+--------------------------------------------------------
+پیام گل
+--------------------------------------------------------
+
+def build_goal_message(
+snapshot,
+event,
+score=None,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+player_name = (
+    get_event_player_name(
+        event
+    )
+)
+
+if not player_name:
+
+    player_name = (
+        "بازیکن نامشخص"
+    )
+
+is_home = get_event_team(
+    event
+)
+
+if is_home is True:
+
+    team_name = home_name
+
+elif is_home is False:
+
+    team_name = away_name
+
+else:
+
+    team_name = ""
+
+own_goal = is_own_goal(
+    event
+)
+
+minute = get_goal_minute(
+    event
+)
+
+if minute is not None:
+
+    minute_text = (
+        f"⏱ دقیقه {minute}"
+    )
+
+else:
+
+    minute_text = ""
+
+if own_goal:
+
+    title = (
+        "⚽️ گل به خودی"
+    )
+
+else:
+
+    title = (
+        "⚽️ گل"
+    )
+
+lines = [
+    title,
+]
+
+if team_name:
+
+    if own_goal:
+
+        lines.append(
+            f"به سود {team_name}!"
+        )
+
+    else:
+
+        lines.append(
+            f"برای {team_name}!"
+        )
+
+if minute_text:
+
+    lines.append(
+        minute_text
+    )
+
+lines.append(
+    player_name
+)
+
+if is_penalty_goal(
+    event
+):
+
+    lines.append(
+        "🎯 پنالتی"
+    )
+
+score_for_display = score
+
+score_text = format_score(
+    score_for_display,
+    home_name,
+    away_name,
+)
+
+if score_text:
+
+    lines.append("")
+
+    lines.append(
+        score_text
+    )
+
+return "\n".join(
+    lines
+)
+--------------------------------------------------------
+پیام گل مردود
+--------------------------------------------------------
+
+def build_cancelled_goal_message(
+snapshot,
+cancelled_goal,
+score=None,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+if not isinstance(
+    cancelled_goal,
+    dict,
+):
+    return ""
+
+goal_event = (
+    cancelled_goal.get(
+        "goal_event"
+    )
+)
+
+if not isinstance(
+    goal_event,
+    dict,
+):
+    return ""
+
+player_name = (
+    get_event_player_name(
+        goal_event
+    )
+)
+
+if not player_name:
+
+    player_name = (
+        "بازیکن نامشخص"
+    )
+
+is_home = (
+    cancelled_goal.get(
+        "is_home"
+    )
+)
+
+if is_home is None:
+
+    is_home = get_event_team(
+        goal_event
+    )
+
+if is_home is True:
+
+    team_name = home_name
+
+elif is_home is False:
+
+    team_name = away_name
+
+else:
+
+    team_name = ""
+
+minute = (
+    cancelled_goal.get(
+        "minute"
+    )
+)
+
+if minute is None:
+
+    minute = get_goal_minute(
+        goal_event
+    )
+
+lines = [
+    "❌ گل مردود شد!",
+]
+
+if team_name:
+
+    lines.append(
+        f"گل {team_name}"
+    )
+
+if minute is not None:
+
+    lines.append(
+        f"⏱ دقیقه {minute}"
+    )
+
+lines.append(
+    player_name
+)
+
+lines.append(
+    "🖥 VAR گل را مردود اعلام کرد."
+)
+
+score_text = format_score(
+    score,
+    home_name,
+    away_name,
+)
+
+if score_text:
+
+    lines.append("")
+
+    lines.append(
+        score_text
+    )
+
+return "\n".join(
+    lines
+)
+--------------------------------------------------------
+پایان نیمه اول
+--------------------------------------------------------
+
+def build_half_time_message(
+snapshot,
+score=None,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+lines = [
+    "⏸️ پایان نیمه اول",
+    "",
+    f"{home_name} 🆚 {away_name}",
+]
+
+score_text = format_score(
+    score,
+    home_name,
+    away_name,
+)
+
+if score_text:
+
+    lines.append("")
+
+    lines.append(
+        score_text
+    )
+
+return "\n".join(
+    lines
+)
+--------------------------------------------------------
+کارت قرمز
+--------------------------------------------------------
+
+def build_red_card_message(
+snapshot,
+event,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+player_name = (
+    get_event_player_name(
+        event
+    )
+)
+
+if not player_name:
+
+    player_name = (
+        "بازیکن نامشخص"
+    )
+
+minute = get_goal_minute(
+    event
+)
+
+is_home = get_event_team(
+    event
+)
+
+if is_home is True:
+
+    team_name = home_name
+
+elif is_home is False:
+
+    team_name = away_name
+
+else:
+
+    team_name = ""
+
+lines = [
+    "🟥 کارت قرمز",
+    player_name,
+]
+
+if team_name:
+
+    lines.append(
+        team_name
+    )
+
+if minute is not None:
+
+    lines.append(
+        f"⏱ دقیقه {minute}"
+    )
+
+lines.append(
+    f"{home_name} 🆚 {away_name}"
+)
+
+return "\n".join(
+    lines
+)
+--------------------------------------------------------
+پیام عمومی event
+--------------------------------------------------------
+
+def build_event_message(
+snapshot,
+event,
+score=None,
+):
+
+if not isinstance(
+    event,
+    dict,
+):
+    return ""
+
+event_type = str(
+    event.get(
+        "type",
+        "",
+    )
+).lower()
+
+if event_type == "goal":
+
+    return build_goal_message(
+        snapshot,
+        event,
+        score,
+    )
+
+if event_type == "card":
+
+    card = str(
+        event.get(
+            "card",
+            "",
+        )
+    ).lower()
+
+    if (
+        card in (
+            "red",
+            "redcard",
+            "red_card",
+        )
+        or "red" in card
+    ):
+
+        return build_red_card_message(
+            snapshot,
+            event,
+        )
+
+return ""
+--------------------------------------------------------
+نمایش مقدار آمار
+--------------------------------------------------------
+
+def format_stat_value(
+label,
+value,
+):
+
+if value is None:
+    return ""
+
+normalized_label = str(
+    label
+).strip().lower()
+
+if normalized_label in (
+    "xg",
+    "ایکس جی",
+):
+
+    try:
+
+        return f"{float(value):.2f}"
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        return str(value)
+
+if normalized_label in (
+    "مالکیت",
+    "possession",
+):
+
+    try:
+
+        number = float(
+            value
+        )
+
+        return (
+            f"{number:g}%"
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        return str(value)
+
+if isinstance(
+    value,
+    float,
+):
+
+    if value.is_integer():
+
+        return str(
+            int(value)
+        )
+
+    return f"{value:.2f}".rstrip(
+        "0"
+    ).rstrip(
+        "."
+    )
+
+return str(
+    value
+)
+--------------------------------------------------------
+نام و آیکون آمار
+--------------------------------------------------------
+
+FINAL_STAT_ORDER = [
+(
+"xG",
+"ایکس جی",
+"🎯",
+),
+(
+"شوت",
+"شوت",
+"💥",
+),
+(
+"شوت در چارچوب",
+"شوت در چارچوب",
+"🥅",
+),
+(
+"مالکیت",
+"مالکیت",
+"⚽️",
+),
+(
+"پاس",
+"پاس",
+"🔄",
+),
+(
+"دقت پاس",
+"دقت",
+"✅",
+),
+(
+"پاس دقیق",
+"پاس دقیق",
+"✅",
+),
+(
+"کرنر",
+"کرنر",
+"🚩",
+),
+(
+"خطا",
+"خطا",
+"⚠️",
+),
+(
+"آفساید",
+"آفساید",
+"🚫",
+),
+(
+"کارت زرد",
+"کارت زرد",
+"🟨",
+),
+(
+"کارت قرمز",
+"کارت قرمز",
+"🟥",
+),
+]
+
+def _get_stat_data(
+stats,
+possible_keys,
+):
+
+for key in possible_keys:
+
+    data = stats.get(
+        key
+    )
+
+    if isinstance(
+        data,
+        dict,
+    ):
+
+        home_value = data.get(
+            "home"
+        )
+
+        away_value = data.get(
+            "away"
+        )
+
+        if (
+            home_value is not None
+            and away_value is not None
+        ):
+
+            return data
+
+return None
+
+def _get_stat_rows(
+stats,
+):
+
+rows = []
+
+stat_aliases = {
+    "xG": [
+        "xG",
+        "ایکس جی",
+    ],
+    "شوت": [
+        "شوت",
+    ],
+    "شوت در چارچوب": [
+        "شوت در چارچوب",
+        "در چارچوب",
+    ],
+    "مالکیت": [
+        "مالکیت",
+    ],
+    "پاس": [
+        "پاس",
+    ],
+    "دقت پاس": [
+        "دقت پاس",
+        "دقت",
+        "دقت ",
+    ],
+    "پاس دقیق": [
+        "پاس دقیق",
+    ],
+    "کرنر": [
+        "کرنر",
+    ],
+    "خطا": [
+        "خطا",
+    ],
+    "آفساید": [
+        "آفساید",
+    ],
+    "کارت زرد": [
+        "کارت زرد",
+    ],
+    "کارت قرمز": [
+        "کارت قرمز",
+    ],
+}
+
+display_names = {
+    "xG": "ایکس جی",
+    "شوت": "شوت",
+    "شوت در چارچوب": "در چارچوب",
+    "مالکیت": "مالکیت",
+    "پاس": "پاس",
+    "دقت پاس": "دقت",
+    "پاس دقیق": "پاس دقیق",
+    "کرنر": "کرنر",
+    "خطا": "خطا",
+    "آفساید": "آفساید",
+    "کارت زرد": "کارت زرد",
+    "کارت قرمز": "کارت قرمز",
+}
+
+icons = {
+    "xG": "🎯",
+    "شوت": "💥",
+    "شوت در چارچوب": "🥅",
+    "مالکیت": "⚽️",
+    "پاس": "🔄",
+    "دقت پاس": "✅",
+    "پاس دقیق": "✅",
+    "کرنر": "🚩",
+    "خطا": "⚠️",
+    "آفساید": "🚫",
+    "کارت زرد": "🟨",
+    "کارت قرمز": "🟥",
+}
+
+for stat_name in [
+    item[0]
+    for item in FINAL_STAT_ORDER
+]:
+
+    data = _get_stat_data(
+        stats,
+        stat_aliases.get(
+            stat_name,
+            [stat_name],
+        ),
+    )
+
+    if data is None:
+        continue
+
+    rows.append(
+        (
+            icons[stat_name],
+            display_names[
+                stat_name
+            ],
+            data.get("home"),
+            data.get("away"),
+        )
+    )
+
+return rows
+--------------------------------------------------------
+Rich Message - ابزار بازیکن
+--------------------------------------------------------
+
+def _format_rich_player(
+player,
+show_rating=False,
+player_events=None,
+):
+
+if not isinstance(
+    player,
+    dict,
+):
+    return ""
+
+name = get_player_name(
+    player
+)
+
+if not name:
+
+    return ""
+
+shirt_number = player.get(
+    "shirtNumber"
+)
+
+if shirt_number:
+
+    text = (
+        f"{shirt_number}. "
+        f"{name}"
+    )
+
+else:
+
+    text = name
+
+if show_rating:
+
+    rating = get_player_rating(
+        player
+    )
+
+    if rating is not None:
+
+        try:
+
+            text += (
+                f" — {float(rating):.1f}"
+            )
+
+        except (
+            TypeError,
+            ValueError,
+        ):
+
+            pass
+
+if player_events is not None:
+
+    markers = (
+        get_player_event_markers(
+            player,
+            player_events,
+        )
+    )
+
+    if markers:
+
+        text += (
+            " ("
+            + " ".join(
+                markers
+            )
+            + ")"
+        )
+
+return text
+
+def _get_team_header_text(
+team_name,
+team,
+):
+
+if not isinstance(
+    team,
+    dict,
+):
+
+    return (
+        f"{team_name}\n"
+        "اطلاعات ترکیب پیدا نشد."
+    )
+
+coach = get_coach(
+    team
+)
+
+formation = get_formation(
+    team
+)
+
+lines = [
+    team_name
+]
+
+if coach:
+
+    lines.append(
+        f"👔 {coach}"
+    )
+
+if formation:
+
+    lines.append(
+        f"📐 {formation}"
+    )
+
+return "\n".join(
+    lines
+)
+
+def _build_rich_lineup_rows(
+home_name,
+away_name,
+home_team,
+away_team,
+show_rating=False,
+player_events=None,
+):
+
+rows = []
+
+# -----------------------------------------------------
+# ردیف ۱: نام تیم + مربی + آرایش
+# -----------------------------------------------------
+
+rows.append(
+    [
         {
-            "type": "paragraph",
-            "text": "📊 آمار بازی",
-        }
+            "text": _get_team_header_text(
+                home_name,
+                home_team,
+            ),
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
+        {
+            "text": _get_team_header_text(
+                away_name,
+                away_team,
+            ),
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
     ]
+)
+
+if not isinstance(
+    home_team,
+    dict,
+):
+
+    home_starters = []
+
+else:
+
+    home_starters = get_starters(
+        home_team
+    )
+
+if not isinstance(
+    away_team,
+    dict,
+):
+
+    away_starters = []
+
+else:
+
+    away_starters = get_starters(
+        away_team
+    )
+
+# -----------------------------------------------------
+# ردیف‌های ۲ تا ۱۲: بازیکنان اصلی
+# -----------------------------------------------------
+
+for index in range(
+    11
+):
+
+    home_player = ""
+
+    away_player = ""
+
+    if index < len(
+        home_starters
+    ):
+
+        home_player = (
+            _format_rich_player(
+                home_starters[index],
+                show_rating,
+                player_events,
+            )
+        )
+
+    if index < len(
+        away_starters
+    ):
+
+        away_player = (
+            _format_rich_player(
+                away_starters[index],
+                show_rating,
+                player_events,
+            )
+        )
+
+    rows.append(
+        [
+            {
+                "text": home_player,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": away_player,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    )
+
+# -----------------------------------------------------
+# ردیف ۱۳: ذخیره‌ها
+# -----------------------------------------------------
+
+if not isinstance(
+    home_team,
+    dict,
+):
+
+    home_substitutes = []
+
+else:
+
+    home_substitutes = get_substitutes(
+        home_team
+    )
+
+if not isinstance(
+    away_team,
+    dict,
+):
+
+    away_substitutes = []
+
+else:
+
+    away_substitutes = get_substitutes(
+        away_team
+    )
+
+home_substitute_lines = []
+
+for player in home_substitutes:
+
+    player_text = (
+        _format_rich_player(
+            player,
+            show_rating,
+            player_events,
+        )
+    )
+
+    if player_text:
+
+        home_substitute_lines.append(
+            player_text
+        )
+
+away_substitute_lines = []
+
+for player in away_substitutes:
+
+    player_text = (
+        _format_rich_player(
+            player,
+            show_rating,
+            player_events,
+        )
+    )
+
+    if player_text:
+
+        away_substitute_lines.append(
+            player_text
+        )
+
+home_substitute_text = ""
+
+if home_substitute_lines:
+
+    home_substitute_text = (
+        "🔄 تعویضی‌ها\n"
+        + "\n".join(
+            home_substitute_lines
+        )
+    )
+
+away_substitute_text = ""
+
+if away_substitute_lines:
+
+    away_substitute_text = (
+        "🔄 تعویضی‌ها\n"
+        + "\n".join(
+            away_substitute_lines
+        )
+    )
+
+rows.append(
+    [
+        {
+            "text": home_substitute_text,
+            "align": "center",
+            "valign": "middle",
+        },
+        {
+            "text": away_substitute_text,
+            "align": "center",
+            "valign": "middle",
+        },
+    ]
+)
+
+return rows
+--------------------------------------------------------
+Rich Message - گلزنان
+--------------------------------------------------------
+
+def _get_rich_goal_events(
+events,
+):
+
+result = []
+
+if not isinstance(
+    events,
+    list,
+):
+    return result
+
+for index, event in enumerate(
+    events
+):
+
+    if not isinstance(
+        event,
+        dict,
+    ):
+        continue
+
+    event_type = str(
+        event.get(
+            "type",
+            "",
+        )
+    ).lower()
+
+    if event_type != "goal":
+        continue
+
+    # -------------------------------------------------
+    # پنالتی‌های ضربات پنالتی مسابقه
+    # جزو گل‌های بازی نیستند.
+    #
+    # پنالتی معمولی که منجر به گل شده باشد
+    # event نوع goal دارد و اینجا حفظ می‌شود.
+    # -------------------------------------------------
+
+    if event.get(
+        "shootout",
+        False,
+    ):
+
+        continue
+
+    event_team = get_event_team(
+        event
+    )
+
+    if event_team not in (
+        True,
+        False,
+    ):
+
+        continue
+
+    scorer_text = _get_scorer_text(
+        event
+    )
+
+    if not scorer_text:
+
+        continue
+
+    minute = get_goal_minute(
+        event
+    )
+
+    result.append(
+        {
+            "minute": (
+                minute
+                if minute is not None
+                else 9999
+            ),
+            "index": index,
+            "is_home": event_team,
+            "text": scorer_text,
+        }
+    )
+
+result.sort(
+    key=lambda item: (
+        item["minute"],
+        item["index"],
+    )
+)
+
+return result
+
+def _build_rich_scorer_table(
+events,
+home_name,
+away_name,
+):
+
+goal_events = _get_rich_goal_events(
+    events
+)
+
+if not goal_events:
+
+    return None
+
+home_goals = [
+    item
+    for item in goal_events
+    if item["is_home"] is True
+]
+
+away_goals = [
+    item
+    for item in goal_events
+    if item["is_home"] is False
+]
+
+# -----------------------------------------------------
+# اطمینان از ترتیب زمانی هر ستون
+# از دقیقه کمتر به دقیقه بیشتر
+# -----------------------------------------------------
+
+home_goals.sort(
+    key=lambda item: (
+        item["minute"],
+        item["index"],
+    )
+)
+
+away_goals.sort(
+    key=lambda item: (
+        item["minute"],
+        item["index"],
+    )
+)
+
+row_count = max(
+    len(home_goals),
+    len(away_goals),
+)
+
+if row_count == 0:
+
+    return None
+
+cells = [
+    [
+        {
+            "text": home_name,
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
+        {
+            "text": away_name,
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
+    ]
+]
+
+for index in range(
+    row_count
+):
+
+    home_text = ""
+
+    away_text = ""
+
+    if index < len(
+        home_goals
+    ):
+
+        home_text = (
+            home_goals[index]["text"]
+        )
+
+    if index < len(
+        away_goals
+    ):
+
+        away_text = (
+            away_goals[index]["text"]
+        )
+
+    cells.append(
+        [
+            {
+                "text": home_text,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": away_text,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    )
+
+return {
+    "type": "table",
+    "is_bordered": True,
+    "is_compact": False,
+    "cells": cells,
+}
+--------------------------------------------------------
+Rich Message - هدر مسابقه
+--------------------------------------------------------
+
+def _build_rich_match_header(
+snapshot,
+show_final_score=False,
+events=None,
+):
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+league = (
+    snapshot.get("league_fa")
+    or snapshot.get("league")
+    or "نامشخص"
+)
+
+kickoff = (
+    format_iran_datetime_jalali(
+        snapshot.get("start")
+    )
+)
+
+blocks = [
+    {
+        "type": "paragraph",
+        "text": f"🏆 {league}",
+    }
+]
+
+if show_final_score:
+
+    score = snapshot.get(
+        "score"
+    )
+
+    penalty_score = snapshot.get(
+        "penalty_score"
+    )
 
     score_text = format_score(
         score,
@@ -2962,96 +2665,276 @@ def build_final_stats_rich_message(
             }
         )
 
-    stat_rows = _get_stat_rows(
-        stats
-    )
-
-    if not stat_rows:
-
-        blocks.append(
-            {
-                "type": "paragraph",
-                "text": (
-                    "آمار بازی در داده‌های "
-                    "FotMob پیدا نشد."
-                ),
-            }
+        scorer_table = (
+            _build_rich_scorer_table(
+                events,
+                home_name,
+                away_name,
+            )
         )
 
-        return {
-            "is_rtl": True,
-            "blocks": blocks,
-        }
+        if scorer_table:
 
-    cells = [
-        [
-            {
-                "text": "آمار",
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-            {
-                "text": home_name,
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-            {
-                "text": away_name,
-                "is_header": True,
-                "align": "center",
-                "valign": "middle",
-            },
-        ]
-    ]
+            blocks.append(
+                scorer_table
+            )
 
-    for (
-        icon,
-        label,
-        home_value,
-        away_value,
-    ) in stat_rows:
-
-        home_text = format_stat_value(
-            label,
-            home_value,
-        )
-
-        away_text = format_stat_value(
-            label,
-            away_value,
-        )
-
-        cells.append(
-            [
-                {
-                    "text": (
-                        f"{icon} {label}"
-                    ),
-                    "align": "center",
-                    "valign": "middle",
-                },
-                {
-                    "text": home_text,
-                    "align": "center",
-                    "valign": "middle",
-                },
-                {
-                    "text": away_text,
-                    "align": "center",
-                    "valign": "middle",
-                },
-            ]
-        )
+else:
 
     blocks.append(
         {
-            "type": "table",
-            "is_bordered": True,
-            "is_striped": True,
-            "is_compact": False,
-            "cells": cells,
+            "type": "paragraph",
+            "text": (
+                f"{home_name} "
+                f"🆚 "
+                f"{away_name}"
+            ),
+        }
+    )
+
+blocks.append(
+    {
+        "type": "paragraph",
+        "text": (
+            f"🕐 {kickoff} "
+            f"به وقت ایران"
+        ),
+    }
+)
+
+return blocks
+--------------------------------------------------------
+Rich Message - پست ترکیب
+--------------------------------------------------------
+
+def build_lineup_rich_message(
+snapshot,
+show_rating=False,
+):
+
+if not isinstance(
+    snapshot,
+    dict,
+):
+
+    return None
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+home_team = snapshot.get(
+    "home_team"
+)
+
+away_team = snapshot.get(
+    "away_team"
+)
+
+blocks = _build_rich_match_header(
+    snapshot,
+    show_final_score=False,
+)
+
+blocks.append(
+    {
+        "type": "table",
+        "is_bordered": True,
+        "is_compact": False,
+        "cells": _build_rich_lineup_rows(
+            home_name,
+            away_name,
+            home_team,
+            away_team,
+            show_rating,
+            None,
+        ),
+    }
+)
+
+return {
+    "is_rtl": True,
+    "blocks": blocks,
+}
+--------------------------------------------------------
+Rich Message - پست نهایی ترکیب + عملکرد
+--------------------------------------------------------
+
+def build_final_lineup_rich_message(
+snapshot,
+events=None,
+):
+
+if not isinstance(
+    snapshot,
+    dict,
+):
+
+    return None
+
+player_events = (
+    build_final_player_events(
+        events
+    )
+)
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+home_team = snapshot.get(
+    "home_team"
+)
+
+away_team = snapshot.get(
+    "away_team"
+)
+
+blocks = _build_rich_match_header(
+    snapshot,
+    show_final_score=True,
+    events=events,
+)
+
+blocks.append(
+    {
+        "type": "table",
+        "is_bordered": True,
+        "is_compact": False,
+        "cells": _build_rich_lineup_rows(
+            home_name,
+            away_name,
+            home_team,
+            away_team,
+            True,
+            player_events,
+        ),
+    }
+)
+
+return {
+    "is_rtl": True,
+    "blocks": blocks,
+}
+--------------------------------------------------------
+Rich Message - آمار نهایی
+--------------------------------------------------------
+
+def build_final_stats_rich_message(
+snapshot,
+score=None,
+):
+
+if not isinstance(
+    snapshot,
+    dict,
+):
+
+    return None
+
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+stats = snapshot.get(
+    "stats"
+)
+
+if not isinstance(
+    stats,
+    dict,
+):
+
+    stats = {}
+
+if score is None:
+
+    score = snapshot.get(
+        "score"
+    )
+
+penalty_score = snapshot.get(
+    "penalty_score"
+)
+
+blocks = [
+    {
+        "type": "paragraph",
+        "text": "📊 آمار بازی",
+    }
+]
+
+score_text = format_score(
+    score,
+    home_name,
+    away_name,
+    penalty_score,
+)
+
+if score_text:
+
+    blocks.append(
+        {
+            "type": "paragraph",
+            "text": score_text,
+        }
+    )
+
+stat_rows = _get_stat_rows(
+    stats
+)
+
+if not stat_rows:
+
+    blocks.append(
+        {
+            "type": "paragraph",
+            "text": (
+                "آمار بازی در داده‌های "
+                "FotMob پیدا نشد."
+            ),
         }
     )
 
@@ -3060,248 +2943,319 @@ def build_final_stats_rich_message(
         "blocks": blocks,
     }
 
+cells = [
+    [
+        {
+            "text": "آمار",
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
+        {
+            "text": home_name,
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
+        {
+            "text": away_name,
+            "is_header": True,
+            "align": "center",
+            "valign": "middle",
+        },
+    ]
+]
 
-# --------------------------------------------------------
-# پیام نهایی ترکیب + امتیاز
-# --------------------------------------------------------
+for (
+    icon,
+    label,
+    home_value,
+    away_value,
+) in stat_rows:
+
+    home_text = format_stat_value(
+        label,
+        home_value,
+    )
+
+    away_text = format_stat_value(
+        label,
+        away_value,
+    )
+
+    cells.append(
+        [
+            {
+                "text": (
+                    f"{icon} {label}"
+                ),
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": home_text,
+                "align": "center",
+                "valign": "middle",
+            },
+            {
+                "text": away_text,
+                "align": "center",
+                "valign": "middle",
+            },
+        ]
+    )
+
+blocks.append(
+    {
+        "type": "table",
+        "is_bordered": True,
+        "is_striped": True,
+        "is_compact": False,
+        "cells": cells,
+    }
+)
+
+return {
+    "is_rtl": True,
+    "blocks": blocks,
+}
+--------------------------------------------------------
+پیام نهایی ترکیب + امتیاز
+--------------------------------------------------------
 
 def build_final_lineup_message(
-    snapshot,
-    events=None,
+snapshot,
+events=None,
 ):
 
-    player_events = (
-        build_final_player_events(
-            events
-        )
+player_events = (
+    build_final_player_events(
+        events
     )
+)
 
-    home_scorers = (
-        _get_goal_events(
-            events,
-            "home",
-        )
-    )
-
-    away_scorers = (
-        _get_goal_events(
-            events,
-            "away",
-        )
-    )
-
-    return build_lineup_message(
-        snapshot,
-        player_events=player_events,
-        home_scorers=home_scorers,
-        away_scorers=away_scorers,
-        show_rating=True,
-        show_final_score=True,
-    )
-
-
-# --------------------------------------------------------
-# پیام نهایی آمار
-# --------------------------------------------------------
-
-def build_final_stats_message(
-    snapshot,
-    score=None,
-):
-
-    home_name = get_display_team_name(
-        snapshot,
+home_scorers = (
+    _get_goal_events(
+        events,
         "home",
     )
+)
 
-    if not home_name:
-
-        home_name = "Home"
-
-    away_name = get_display_team_name(
-        snapshot,
+away_scorers = (
+    _get_goal_events(
+        events,
         "away",
     )
+)
 
-    if not away_name:
+return build_lineup_message(
+    snapshot,
+    player_events=player_events,
+    home_scorers=home_scorers,
+    away_scorers=away_scorers,
+    show_rating=True,
+    show_final_score=True,
+)
+--------------------------------------------------------
+پیام نهایی آمار
+--------------------------------------------------------
 
-        away_name = "Away"
+def build_final_stats_message(
+snapshot,
+score=None,
+):
 
-    stats = snapshot.get(
-        "stats"
+home_name = get_display_team_name(
+    snapshot,
+    "home",
+)
+
+if not home_name:
+
+    home_name = "Home"
+
+away_name = get_display_team_name(
+    snapshot,
+    "away",
+)
+
+if not away_name:
+
+    away_name = "Away"
+
+stats = snapshot.get(
+    "stats"
+)
+
+if not isinstance(
+    stats,
+    dict,
+):
+
+    stats = {}
+
+lines = [
+    "📊 آمار بازی",
+    "",
+]
+
+if score is None:
+
+    score = snapshot.get(
+        "score"
     )
 
-    if not isinstance(
-        stats,
-        dict,
-    ):
+penalty_score = snapshot.get(
+    "penalty_score"
+)
 
-        stats = {}
+score_text = format_score(
+    score,
+    home_name,
+    away_name,
+    penalty_score,
+)
 
-    lines = [
-        "📊 آمار بازی",
-        "",
-    ]
-
-    if score is None:
-
-        score = snapshot.get(
-            "score"
-        )
-
-    penalty_score = snapshot.get(
-        "penalty_score"
-    )
-
-    score_text = format_score(
-        score,
-        home_name,
-        away_name,
-        penalty_score,
-    )
-
-    if score_text:
-
-        lines.append(
-            score_text
-        )
-
-        lines.append("")
-
-    stat_rows = _get_stat_rows(
-        stats
-    )
-
-    if not stat_rows:
-
-        lines.append(
-            "آمار بازی در داده‌های FotMob پیدا نشد."
-        )
-
-        return "\n".join(
-            lines
-        )
-
-    home_values = [
-        format_stat_value(
-            label,
-            home_value,
-        )
-        for (
-            icon,
-            label,
-            home_value,
-            away_value,
-        ) in stat_rows
-    ]
-
-    away_values = [
-        format_stat_value(
-            label,
-            away_value,
-        )
-        for (
-            icon,
-            label,
-            home_value,
-            away_value,
-        ) in stat_rows
-    ]
-
-    label_width = max(
-        [
-            len(
-                f"{icon} {label}"
-            )
-            for (
-                icon,
-                label,
-                _,
-                _,
-            ) in stat_rows
-        ]
-        or [0]
-    )
-
-    home_width = max(
-        len(home_name),
-        max(
-            [
-                len(value)
-                for value in home_values
-            ]
-            or [0]
-        ),
-    )
-
-    away_width = max(
-        len(away_name),
-        max(
-            [
-                len(value)
-                for value in away_values
-            ]
-            or [0]
-        ),
-    )
-
-    column_gap = 4
+if score_text:
 
     lines.append(
-        " "
-        * (
-            label_width
-            + column_gap
-            + home_width
-            - len(home_name)
-        )
-        + home_name
-        + " "
-        * column_gap
-        + away_name
+        score_text
     )
 
-    for index, row in enumerate(
-        stat_rows
-    ):
+    lines.append("")
 
-        icon, label, _, _ = row
+stat_rows = _get_stat_rows(
+    stats
+)
 
-        display_label = (
-            f"{icon} {label}"
-        )
+if not stat_rows:
 
-        home_text = home_values[
-            index
-        ]
-
-        away_text = away_values[
-            index
-        ]
-
-        lines.append(
-            f"{display_label:<{label_width}}"
-            f"{home_text:>{home_width}}"
-            + " "
-            * column_gap
-            + f"{away_text:>{away_width}}"
-        )
+    lines.append(
+        "آمار بازی در داده‌های FotMob پیدا نشد."
+    )
 
     return "\n".join(
         lines
     )
 
+home_values = [
+    format_stat_value(
+        label,
+        home_value,
+    )
+    for (
+        icon,
+        label,
+        home_value,
+        away_value,
+    ) in stat_rows
+]
 
-# --------------------------------------------------------
-# سازگاری با کدهای قبلی
-# --------------------------------------------------------
+away_values = [
+    format_stat_value(
+        label,
+        away_value,
+    )
+    for (
+        icon,
+        label,
+        home_value,
+        away_value,
+    ) in stat_rows
+]
 
-def build_final_message(
-    snapshot,
-    score=None,
+label_width = max(
+    [
+        len(
+            f"{icon} {label}"
+        )
+        for (
+            icon,
+            label,
+            _,
+            _,
+        ) in stat_rows
+    ]
+    or [0]
+)
+
+home_width = max(
+    len(home_name),
+    max(
+        [
+            len(value)
+            for value in home_values
+        ]
+        or [0]
+    ),
+)
+
+away_width = max(
+    len(away_name),
+    max(
+        [
+            len(value)
+            for value in away_values
+        ]
+        or [0]
+    ),
+)
+
+column_gap = 4
+
+lines.append(
+    " "
+    * (
+        label_width
+        + column_gap
+        + home_width
+        - len(home_name)
+    )
+    + home_name
+    + " "
+    * column_gap
+    + away_name
+)
+
+for index, row in enumerate(
+    stat_rows
 ):
 
-    return build_final_stats_message(
-        snapshot,
-        score,
+    icon, label, _, _ = row
+
+    display_label = (
+        f"{icon} {label}"
     )
+
+    home_text = home_values[
+        index
+    ]
+
+    away_text = away_values[
+        index
+    ]
+
+    lines.append(
+        f"{display_label:<{label_width}}"
+        f"{home_text:>{home_width}}"
+        + " "
+        * column_gap
+        + f"{away_text:>{away_width}}"
+    )
+
+return "\n".join(
+    lines
+)
+--------------------------------------------------------
+سازگاری با کدهای قبلی
+--------------------------------------------------------
+
+def build_final_message(
+snapshot,
+score=None,
+):
+
+return build_final_stats_message(
+    snapshot,
+    score,
+)
