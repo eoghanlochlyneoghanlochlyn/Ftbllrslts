@@ -661,7 +661,27 @@ def format_player(
     if not name:
         return ""
 
-    result = name
+    shirt_number = None
+
+    if isinstance(
+        player,
+        dict,
+    ):
+
+        shirt_number = player.get(
+            "shirtNumber"
+        )
+
+    if shirt_number:
+
+        result = (
+            f"{shirt_number}. "
+            f"{name}"
+        )
+
+    else:
+
+        result = name
 
     if show_rating:
 
@@ -695,8 +715,6 @@ def format_player(
             )
 
     return result
-
-
 # --------------------------------------------------------
 # خط بازیکنان
 # --------------------------------------------------------
