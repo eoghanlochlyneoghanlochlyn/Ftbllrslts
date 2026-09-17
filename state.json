@@ -816,6 +816,75 @@
           }
         }
       ]
+    },
+    "6054845": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [
+        "substitution|None|False|66.0|",
+        "substitution|None|True|65.0|",
+        "substitution|None|False|61.0|",
+        "id:0",
+        "substitution|None|False|46.0|",
+        "half|None|None|45.0|",
+        "addedtime|None|None|45.0|"
+      ],
+      "goals": [
+        {
+          "event_key": "id:0",
+          "player_id": 628064,
+          "assist_player_id": 1463317,
+          "is_home": true,
+          "minute": "55",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "055Goal628064undefinedtrue",
+            "timeStr": 55,
+            "type": "goal",
+            "time": 55,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 628064,
+              "name": "Moses Dyer",
+              "profileUrl": "/players/628064/moses-dyer"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/628064/moses-dyer",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Moses Dyer",
+            "firstName": "Moses",
+            "lastName": "Dyer",
+            "fullName": "Moses Dyer",
+            "playerId": 628064,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Guytho Mijland",
+            "assistProfileUrl": "/players/1463317/guytho-mijland",
+            "assistPlayerId": 1463317,
+            "assistKey": "assist_by",
+            "assistInput": "Guytho Mijland"
+          }
+        }
+      ]
     }
   }
 }
