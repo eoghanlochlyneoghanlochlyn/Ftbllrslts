@@ -890,6 +890,259 @@
           }
         }
       ]
+    },
+    "5200654": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [
+        "half|None|None|45.0|",
+        "id:14446608",
+        "id:14446607",
+        "id:14446600",
+        "id:14446599",
+        "id:14446597"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14446608",
+          "player_id": 1362973,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "41",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444660841Goal1362973undefinedtrue",
+            "timeStr": 41,
+            "type": "goal",
+            "time": 41,
+            "overloadTime": null,
+            "eventId": 14446608,
+            "player": {
+              "id": 1362973,
+              "name": "Shokhrukh Abdurakhmonov",
+              "profileUrl": "/players/1362973/shokhrukh-abdurakhmonov"
+            },
+            "homeScore": 2,
+            "awayScore": 2,
+            "profileUrl": "/players/1362973/shokhrukh-abdurakhmonov",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Shokhrukh Abdurakhmonov",
+            "firstName": "Shokhrukh",
+            "lastName": "Abdurakhmonov",
+            "fullName": "Shokhrukh Abdurakhmonov",
+            "playerId": 1362973,
+            "newScore": [
+              3,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14446607",
+          "player_id": 306617,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "39",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444660739Goal306617undefinedtrue",
+            "timeStr": 39,
+            "type": "goal",
+            "time": 39,
+            "overloadTime": null,
+            "eventId": 14446607,
+            "player": {
+              "id": 306617,
+              "name": "Giorgi Jgerenaia",
+              "profileUrl": "/players/306617/giorgi-jgerenaia"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/306617/giorgi-jgerenaia",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Giorgi Jgerenaia",
+            "firstName": "Giorgi",
+            "lastName": "Jgerenaia",
+            "fullName": "Giorgi Jgerenaia",
+            "playerId": 306617,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14446600",
+          "player_id": 1969965,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "25",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444660025Goal1969965undefinedfalse",
+            "timeStr": 25,
+            "type": "goal",
+            "time": 25,
+            "overloadTime": null,
+            "eventId": 14446600,
+            "player": {
+              "id": 1969965,
+              "name": "Jaloliddin Jumaboyev",
+              "profileUrl": "/players/1969965/jaloliddin-jumaboyev"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1969965/jaloliddin-jumaboyev",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jaloliddin Jumaboyev",
+            "firstName": "Jaloliddin",
+            "lastName": "Jumaboyev",
+            "fullName": "Jaloliddin Jumaboyev",
+            "playerId": 1969965,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14446599",
+          "player_id": 1362973,
+          "assist_player_id": null,
+          "is_home": true,
+          "minute": "21",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444659921Goal1362973undefinedtrue",
+            "timeStr": 21,
+            "type": "goal",
+            "time": 21,
+            "overloadTime": null,
+            "eventId": 14446599,
+            "player": {
+              "id": 1362973,
+              "name": "Shokhrukh Abdurakhmonov",
+              "profileUrl": "/players/1362973/shokhrukh-abdurakhmonov"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1362973/shokhrukh-abdurakhmonov",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Shokhrukh Abdurakhmonov",
+            "firstName": "Shokhrukh",
+            "lastName": "Abdurakhmonov",
+            "fullName": "Shokhrukh Abdurakhmonov",
+            "playerId": 1362973,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14446597",
+          "player_id": 933051,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "7",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "144465977Goal933051undefinedfalse",
+            "timeStr": 7,
+            "type": "goal",
+            "time": 7,
+            "overloadTime": null,
+            "eventId": 14446597,
+            "player": {
+              "id": 933051,
+              "name": "Azizbek Amonov",
+              "profileUrl": "/players/933051/azizbek-amonov"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/933051/azizbek-amonov",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Azizbek Amonov",
+            "firstName": "Azizbek",
+            "lastName": "Amonov",
+            "fullName": "Azizbek Amonov",
+            "playerId": 933051,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ]
     }
   }
 }
