@@ -1154,7 +1154,8 @@
       "event_keys": [
         "id:14446617",
         "half|None|None|45.0|",
-        "id:14446598"
+        "id:14446598",
+        "id:14446639"
       ],
       "goals": [
         {
@@ -1244,6 +1245,53 @@
             "newScore": [
               0,
               1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14446639",
+          "player_id": 0,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "73",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444663973Goal0undefinedfalse",
+            "timeStr": 73,
+            "type": "goal",
+            "time": 73,
+            "overloadTime": null,
+            "eventId": 14446639,
+            "player": {
+              "id": 0,
+              "name": "M. Mamudu",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "M. Mamudu",
+            "firstName": "M.",
+            "lastName": "Mamudu",
+            "fullName": "M. Mamudu",
+            "playerId": 0,
+            "newScore": [
+              0,
+              3
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
