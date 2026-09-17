@@ -1,372 +1,97 @@
-{
-  "matches": {
-    "5125328": {
-      "lineup_sent": true,
-      "fallback_sent": false,
-      "started": true,
-      "half_time": false,
-      "finished": true,
-      "finished_sent": true,
-      "event_keys": [
-        "id:13601310",
-        "id:13601366",
-        "id:13601510",
-        "half|None|None|45.0|",
-        "substitution|None|True|55.0|",
-        "id:13601722",
-        "substitution|None|False|63.0|",
-        "id:13601780",
-        "substitution|None|False|71.0|",
-        "substitution|None|True|74.0|",
-        "id:13601756",
-        "id:13601808",
-        "substitution|None|False|85.0|",
-        "substitution|None|True|89.0|",
-        "id:13601837",
-        "half|None|None|90.0|",
-        "substitution|None|True|91.0|",
-        "substitution|None|False|98.0|",
-        "id:13601855",
-        "id:13601860",
-        "half|None|None|120.0|",
-        "penaltyshootout|None|None|121.0|",
-        "id:13601861",
-        "id:13601862",
-        "id:13601863",
-        "id:13601864",
-        "id:13601865",
-        "id:13601866",
-        "id:13601867",
-        "id:13601868",
-        "id:13601869",
-        "id:13601870"
-      ],
-      "goals": [
-        {
-          "event_key": "id:13601310",
-          "player_id": 921825,
-          "assist_player_id": null,
-          "is_home": false,
-          "minute": "4",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "136013104Goal921825undefinedfalse",
-            "timeStr": 4,
-            "type": "goal",
-            "time": 4,
-            "overloadTime": null,
-            "eventId": 13601310,
-            "player": {
-              "id": 921825,
-              "name": "Jon Moncayola",
-              "profileUrl": "/players/921825/jon-moncayola"
+# --------------------------------------------------------
+# جدول گلزنان
+# --------------------------------------------------------
+
+def _build_rich_scorer_table(
+    events,
+    home_name,
+    away_name,
+):
+    goals = _get_rich_goal_events(
+        events
+    )
+
+    if not goals:
+        return None
+
+    home_goals = []
+
+    away_goals = []
+
+    for goal in goals:
+
+        if goal["team"] == "home":
+            home_goals.append(
+                goal["text"]
+            )
+
+        elif goal["team"] == "away":
+            away_goals.append(
+                goal["text"]
+            )
+
+    rows = [
+        [
+            {
+                "text": home_name,
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
             },
-            "homeScore": 0,
-            "awayScore": 0,
-            "profileUrl": "/players/921825/jon-moncayola",
-            "overloadTimeStr": false,
-            "isHome": false,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Jon Moncayola",
-            "firstName": "Jon",
-            "lastName": "Moncayola",
-            "fullName": "Jon Moncayola",
-            "playerId": 921825,
-            "newScore": [
-              0,
-              1
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2889302937,
-              "eventType": "Goal",
-              "teamId": 8371,
-              "playerId": 921825,
-              "playerName": "Jon Moncayola",
-              "x": 83.94902912639999,
-              "y": 30.304,
-              "min": 4,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 31.026249999999997,
-              "goalCrossedZ": 1.6245263078,
-              "expectedGoals": 0.040382057428359985,
-              "expectedGoalsOnTarget": 0.46664711833000183,
-              "shotType": "RightFoot",
-              "situation": "ThrowInSetPiece",
-              "period": "FirstHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.7867063492063497,
-                "y": 0.42976886449735446,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": false,
-              "keeperId": 1217043,
-              "firstName": "Jon",
-              "lastName": "Moncayola",
-              "fullName": "Jon Moncayola",
-              "teamColor": "#af1428"
+            {
+                "text": away_name,
+                "is_header": True,
+                "align": "center",
+                "valign": "middle",
             },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        },
-        {
-          "event_key": "id:13601366",
-          "player_id": 678234,
-          "assist_player_id": null,
-          "is_home": true,
-          "minute": "17",
-          "penalty": false,
-          "own_goal": true,
-          "cancelled": false,
-          "event": {
-            "reactKey": "1360136617Goal678234undefinedfalse",
-            "timeStr": 17,
-            "type": "goal",
-            "time": 17,
-            "overloadTime": null,
-            "eventId": 13601366,
-            "player": {
-              "id": 678234,
-              "name": "Mikel Oyarzabal",
-              "profileUrl": "/players/678234/mikel-oyarzabal"
-            },
-            "homeScore": 0,
-            "awayScore": 1,
-            "profileUrl": "/players/678234/mikel-oyarzabal",
-            "overloadTimeStr": false,
-            "isHome": false,
-            "ownGoal": true,
-            "goalDescription": "Own goal",
-            "goalDescriptionKey": "owngoal",
-            "suffix": "OG",
-            "suffixKey": "own_goal_short",
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Mikel Oyarzabal",
-            "firstName": "Mikel",
-            "lastName": "Oyarzabal",
-            "fullName": "Mikel Oyarzabal",
-            "playerId": 678234,
-            "newScore": [
-              0,
-              2
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2889311145,
-              "eventType": "Goal",
-              "teamId": 8560,
-              "playerId": 678234,
-              "playerName": "Mikel Oyarzabal",
-              "x": 1.896551724,
-              "y": 27.278333333000003,
-              "min": 17,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 35.60125,
-              "goalCrossedZ": 2.1125263054,
-              "expectedGoals": null,
-              "expectedGoalsOnTarget": null,
-              "shotType": "RightFoot",
-              "situation": "FromCorner",
-              "period": "FirstHalf",
-              "isOwnGoal": true,
-              "onGoalShot": {
-                "x": 0.5763888888888888,
-                "y": 0.5588693929629629,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": true,
-              "keeperId": 1217043,
-              "firstName": "Mikel",
-              "lastName": "Oyarzabal",
-              "fullName": "Mikel Oyarzabal",
-              "teamColor": "#0056B3"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        },
-        {
-          "event_key": "id:13601756",
-          "player_id": 1210647,
-          "assist_player_id": null,
-          "is_home": true,
-          "minute": "75",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "1360175675Goal1210647undefinedtrue",
-            "timeStr": 75,
-            "type": "goal",
-            "time": 75,
-            "overloadTime": null,
-            "eventId": 13601756,
-            "player": {
-              "id": 1210647,
-              "name": "Benat Turrientes",
-              "profileUrl": "/players/1210647/benat-turrientes"
-            },
-            "homeScore": 0,
-            "awayScore": 2,
-            "profileUrl": "/players/1210647/benat-turrientes",
-            "overloadTimeStr": false,
-            "isHome": true,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Benat Turrientes",
-            "firstName": "Benat",
-            "lastName": "Turrientes",
-            "fullName": "Benat Turrientes",
-            "playerId": 1210647,
-            "newScore": [
-              1,
-              2
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2889343259,
-              "eventType": "Goal",
-              "teamId": 8560,
-              "playerId": 1210647,
-              "playerName": "Benat Turrientes",
-              "x": 81.80922330160001,
-              "y": 41.483437499999994,
-              "min": 75,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 35.75375,
-              "goalCrossedZ": 0.44947368200000004,
-              "expectedGoals": 0.03500831872224808,
-              "expectedGoalsOnTarget": 0.06770399957895279,
-              "shotType": "RightFoot",
-              "situation": "RegularPlay",
-              "period": "SecondHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 0.5360449735449745,
-                "y": 0.11890838148148149,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": false,
-              "keeperId": 213471,
-              "firstName": "Benat",
-              "lastName": "Turrientes",
-              "fullName": "Benat Turrientes",
-              "teamColor": "#0056B3"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        },
-        {
-          "event_key": "id:13601837",
-          "player_id": 698653,
-          "assist_player_id": null,
-          "is_home": true,
-          "minute": "90",
-          "penalty": false,
-          "own_goal": false,
-          "cancelled": false,
-          "event": {
-            "reactKey": "1360183790Goal698653undefinedtrue",
-            "timeStr": 90,
-            "type": "goal",
-            "time": 90,
-            "overloadTime": null,
-            "eventId": 13601837,
-            "player": {
-              "id": 698653,
-              "name": "Igor Zubeldia",
-              "profileUrl": "/players/698653/igor-zubeldia"
-            },
-            "homeScore": 1,
-            "awayScore": 2,
-            "profileUrl": "/players/698653/igor-zubeldia",
-            "overloadTimeStr": false,
-            "isHome": true,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
-            "isPenaltyShootoutEvent": false,
-            "nameStr": "Igor Zubeldia",
-            "firstName": "Igor",
-            "lastName": "Zubeldia",
-            "fullName": "Igor Zubeldia",
-            "playerId": 698653,
-            "newScore": [
-              2,
-              2
-            ],
-            "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2889347845,
-              "eventType": "Goal",
-              "teamId": 8560,
-              "playerId": 698653,
-              "playerName": "Igor Zubeldia",
-              "x": 93.7,
-              "y": 31.1025,
-              "min": 90,
-              "minAdded": 2,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 31.78875,
-              "goalCrossedZ": 1.2199999940000001,
-              "expectedGoals": 0.17608189582824707,
-              "expectedGoalsOnTarget": 0.6132329106330872,
-              "shotType": "RightFoot",
-              "situation": "FromCorner",
-              "period": "SecondHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 1.5849867724867723,
-                "y": 0.32275132116402117,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": true,
-              "keeperId": 213471,
-              "firstName": "Igor",
-              "lastName": "Zubeldia",
-              "fullName": "Igor Zubeldia",
-              "teamColor": "#0056B3"
-            },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
-        }
-      ]
+        ]
+    ]
+
+    row_count = max(
+        len(home_goals),
+        len(away_goals),
+    )
+
+    for index in range(
+        row_count
+    ):
+
+        home_text = ""
+
+        away_text = ""
+
+        if index < len(
+            home_goals
+        ):
+            home_text = (
+                home_goals[index]
+            )
+
+        if index < len(
+            away_goals
+        ):
+            away_text = (
+                away_goals[index]
+            )
+
+        rows.append(
+            [
+                {
+                    "text": home_text,
+                    "align": "center",
+                    "valign": "middle",
+                },
+                {
+                    "text": away_text,
+                    "align": "center",
+                    "valign": "middle",
+                },
+            ]
+        )
+
+    return {
+        "type": "table",
+        "is_bordered": True,
+        "is_compact": False,
+        "cells": rows,
     }
-  }
-}
