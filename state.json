@@ -2010,8 +2010,95 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "id:14447987"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14447987",
+          "player_id": 841672,
+          "assist_player_id": 760722,
+          "is_home": true,
+          "minute": "9",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "144479879Goal841672undefinedtrue",
+            "timeStr": 9,
+            "type": "goal",
+            "time": 9,
+            "overloadTime": null,
+            "eventId": 14447987,
+            "player": {
+              "id": 841672,
+              "name": "Nicolás González",
+              "profileUrl": "/players/841672/nicolas-gonzalez"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/841672/nicolas-gonzalez",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nicolás González",
+            "firstName": "Nicolás",
+            "lastName": "González",
+            "fullName": "Nicolás González",
+            "playerId": 841672,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971131019,
+              "eventType": "Goal",
+              "teamId": 9885,
+              "playerId": 841672,
+              "playerName": "Nicolás González",
+              "x": 100.9224137934,
+              "y": 39.881190477,
+              "min": 9,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.6775,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.5754,
+              "expectedGoalsOnTarget": 0.8421,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5562169312169307,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1184793,
+              "firstName": "Nicolás",
+              "lastName": "González",
+              "fullName": "Nicolás González",
+              "teamColor": "#000001"
+            },
+            "assistStr": "assist by Kamil Grabara",
+            "assistProfileUrl": "/players/760722/kamil-grabara",
+            "assistPlayerId": 760722,
+            "assistKey": "assist_by",
+            "assistInput": "Kamil Grabara"
+          }
+        }
+      ]
     },
     "6112377": {
       "lineup_sent": true,
