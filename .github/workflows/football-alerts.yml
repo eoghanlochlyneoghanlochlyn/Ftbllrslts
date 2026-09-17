@@ -1,4 +1,3 @@
-```yaml
 name: Football Alerts
 
 on:
@@ -44,4 +43,3 @@ jobs:
             git commit -m "Update football alerts state"
             git push
           fi
-```
