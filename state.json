@@ -1674,8 +1674,94 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "half|None|None|45.0|",
+        "id:14447203",
+        "id:14447177"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14447177",
+          "player_id": 388903,
+          "assist_player_id": null,
+          "is_home": false,
+          "minute": "39",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "event": {
+            "reactKey": "1444717739Goal388903undefinedfalse",
+            "timeStr": 39,
+            "type": "goal",
+            "time": 39,
+            "overloadTime": null,
+            "eventId": 14447177,
+            "player": {
+              "id": 388903,
+              "name": "Haris Tabaković",
+              "profileUrl": "/players/388903/haris-tabakovic"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/388903/haris-tabakovic",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Haris Tabaković",
+            "firstName": "Haris",
+            "lastName": "Tabaković",
+            "fullName": "Haris Tabaković",
+            "playerId": 388903,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971085995,
+              "eventType": "Goal",
+              "teamId": 10013,
+              "playerId": 388903,
+              "playerName": "Haris Tabaković",
+              "x": 102.4396551726,
+              "y": 34.838750000000005,
+              "min": 39,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.533750000000005,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.7305386066436768,
+              "expectedGoalsOnTarget": 0.5877955555915833,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.8587962962962951,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1037768,
+              "firstName": "Haris",
+              "lastName": "Tabaković",
+              "fullName": "Haris Tabaković",
+              "teamColor": "#F13032"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ]
     },
     "6112373": {
       "lineup_sent": true,
@@ -1853,7 +1939,9 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "id:14447164"
+        "id:14447164",
+        "id:14447253",
+        "id:14447247"
       ],
       "goals": []
     },
