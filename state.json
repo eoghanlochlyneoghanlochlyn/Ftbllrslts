@@ -2345,7 +2345,9 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
+      "event_keys": [
+        "id:14448059"
+      ],
       "goals": []
     },
     "5868063": {
@@ -2446,7 +2448,8 @@
       "event_keys": [
         "id:14447919",
         "id:14447935",
-        "id:14447922"
+        "id:14447922",
+        "half|None|None|45.0|"
       ],
       "goals": [
         {
