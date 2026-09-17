@@ -2387,6 +2387,10 @@ def _get_rich_goal_events(
 # جدول گلزنان با ترتیب زمانی واقعی
 # --------------------------------------------------------
 
+# --------------------------------------------------------
+# جدول گلزنان
+# --------------------------------------------------------
+
 def _build_rich_scorer_table(
     events,
     home_name,
@@ -2398,6 +2402,22 @@ def _build_rich_scorer_table(
 
     if not goals:
         return None
+
+    home_goals = []
+
+    away_goals = []
+
+    for goal in goals:
+
+        if goal["team"] == "home":
+            home_goals.append(
+                goal["text"]
+            )
+
+        elif goal["team"] == "away":
+            away_goals.append(
+                goal["text"]
+            )
 
     rows = [
         [
@@ -2416,17 +2436,32 @@ def _build_rich_scorer_table(
         ]
     ]
 
-    for goal in goals:
+    row_count = max(
+        len(home_goals),
+        len(away_goals),
+    )
+
+    for index in range(
+        row_count
+    ):
 
         home_text = ""
 
         away_text = ""
 
-        if goal["team"] == "home":
-            home_text = goal["text"]
+        if index < len(
+            home_goals
+        ):
+            home_text = (
+                home_goals[index]
+            )
 
-        elif goal["team"] == "away":
-            away_text = goal["text"]
+        if index < len(
+            away_goals
+        ):
+            away_text = (
+                away_goals[index]
+            )
 
         rows.append(
             [
@@ -2449,7 +2484,6 @@ def _build_rich_scorer_table(
         "is_compact": False,
         "cells": rows,
     }
-
 
 # --------------------------------------------------------
 # سربرگ مسابقه Rich
