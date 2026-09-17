@@ -1852,7 +1852,9 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
+      "event_keys": [
+        "id:14447164"
+      ],
       "goals": []
     },
     "5868068": {
