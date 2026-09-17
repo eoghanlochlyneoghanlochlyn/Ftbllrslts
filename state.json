@@ -2725,7 +2725,8 @@
         "id:14448489",
         "substitution|None|False|82.0|",
         "substitution|None|True|74.0|",
-        "half|None|None|90.0|"
+        "half|None|None|90.0|",
+        "substitution|None|False|70.0|"
       ],
       "goals": [
         {
@@ -3526,7 +3527,8 @@
         "substitution|None|True|81.0|",
         "id:14448457",
         "substitution|None|False|78.0|",
-        "substitution|None|False|87.0|"
+        "substitution|None|False|87.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -3806,7 +3808,8 @@
         "id:14448395",
         "substitution|None|True|74.0|",
         "substitution|None|True|84.0|",
-        "substitution|None|False|83.0|"
+        "substitution|None|False|83.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -4078,7 +4081,8 @@
         "id:14448358",
         "substitution|None|True|72.0|",
         "substitution|None|False|75.0|",
-        "substitution|None|False|83.0|"
+        "substitution|None|False|83.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
