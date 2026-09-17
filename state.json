@@ -4422,8 +4422,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "id:14448160",
         "id:14448253",
@@ -4445,7 +4445,10 @@
         "id:14448527",
         "id:14448522",
         "substitution|None|False|79.0|",
-        "addedtime|None|None|90.0|"
+        "addedtime|None|None|90.0|",
+        "substitution|None|True|62.0|",
+        "substitution|None|False|80.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
