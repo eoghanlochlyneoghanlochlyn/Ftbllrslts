@@ -344,6 +344,33 @@ def find_goal(
     return None
 
 
+def _is_missing_player_name(
+    player_name
+):
+    if player_name is None:
+        return True
+
+    if not isinstance(
+        player_name,
+        str,
+    ):
+        return False
+
+    normalized = (
+        player_name
+        .strip()
+        .lower()
+    )
+
+    return normalized in (
+        "",
+        "<tbd>",
+        "tbd",
+        "unknown",
+        "unknown player",
+    )
+
+
 def add_goal(
     match_state,
     goal_info,
@@ -371,8 +398,133 @@ def add_goal(
         goal_key,
     )
 
+    # --------------------------------------------------------
+    # اگر گل قبلاً ثبت شده، اطلاعات جدید آن را به‌روزرسانی کن.
+    #
+    # این بخش برای حالتی مهم است که FotMob ابتدا گل را بدون
+    # نام بازیکن برگرداند و در اجرای بعد نام واقعی را اضافه کند.
+    # --------------------------------------------------------
+
     if existing is not None:
+
+        new_player_id = goal_info.get(
+            "player_id"
+        )
+
+        if new_player_id is not None:
+
+            if existing.get(
+                "player_id"
+            ) is None:
+
+                existing[
+                    "player_id"
+                ] = new_player_id
+
+        new_assist_player_id = (
+            goal_info.get(
+                "assist_player_id"
+            )
+        )
+
+        if new_assist_player_id is not None:
+
+            if existing.get(
+                "assist_player_id"
+            ) is None:
+
+                existing[
+                    "assist_player_id"
+                ] = new_assist_player_id
+
+        new_player_name = goal_info.get(
+            "player_name"
+        )
+
+        if not _is_missing_player_name(
+            new_player_name
+        ):
+
+            old_player_name = existing.get(
+                "player_name"
+            )
+
+            if _is_missing_player_name(
+                old_player_name
+            ):
+
+                existing[
+                    "player_name"
+                ] = new_player_name
+
+                existing[
+                    "needs_update"
+                ] = True
+
+        new_assist_player_name = (
+            goal_info.get(
+                "assist_player_name"
+            )
+        )
+
+        if not _is_missing_player_name(
+            new_assist_player_name
+        ):
+
+            old_assist_player_name = (
+                existing.get(
+                    "assist_player_name"
+                )
+            )
+
+            if _is_missing_player_name(
+                old_assist_player_name
+            ):
+
+                existing[
+                    "assist_player_name"
+                ] = new_assist_player_name
+
+        # اگر اطلاعات دیگری بعداً کامل شد، آنها را نیز
+        # فقط در صورت وجود مقدار معتبر به‌روزرسانی کن.
+
+        if (
+            existing.get("minute") is None
+            and goal_info.get("minute") is not None
+        ):
+
+            existing[
+                "minute"
+            ] = goal_info.get(
+                "minute"
+            )
+
+        if (
+            existing.get("is_home") is None
+            and goal_info.get("is_home") is not None
+        ):
+
+            existing[
+                "is_home"
+            ] = goal_info.get(
+                "is_home"
+            )
+
+        if goal_info.get(
+            "event"
+        ) is not None:
+
+            existing[
+                "event"
+            ] = goal_info.get(
+                "event"
+            )
+
         return existing
+
+    # --------------------------------------------------------
+    # گل جدید
+    # --------------------------------------------------------
 
     goal = {
         "event_key": goal_key,
@@ -381,9 +533,19 @@ def add_goal(
             "player_id"
         ),
 
+        "player_name": goal_info.get(
+            "player_name"
+        ),
+
         "assist_player_id": (
             goal_info.get(
                 "assist_player_id"
+            )
+        ),
+
+        "assist_player_name": (
+            goal_info.get(
+                "assist_player_name"
             )
         ),
 
@@ -411,6 +573,17 @@ def add_goal(
 
         "cancelled": False,
 
+        # شناسه پیام تلگرام را فعلاً None می‌گذاریم.
+        # در مرحله telegram_sender/main مقدار واقعی آن ثبت خواهد شد.
+        "telegram_message_id": None,
+
+        # اگر نام بازیکن ناقص باشد، در اجرای بعد باید بررسی شود.
+        "needs_update": _is_missing_player_name(
+            goal_info.get(
+                "player_name"
+            )
+        ),
+
         "event": goal_info.get(
             "event"
         ),
@@ -422,6 +595,75 @@ def add_goal(
     ).append(
         goal
     )
+
+    return goal
+
+
+def update_goal(
+    match_state,
+    goal_key,
+    **updates,
+):
+
+    goal = find_goal(
+        match_state,
+        goal_key,
+    )
+
+    if goal is None:
+        return None
+
+    for key, value in updates.items():
+
+        if value is None:
+            continue
+
+        goal[
+            key
+        ] = value
+
+    return goal
+
+
+def set_goal_message_id(
+    match_state,
+    goal_key,
+    message_id,
+):
+
+    goal = find_goal(
+        match_state,
+        goal_key,
+    )
+
+    if goal is None:
+        return None
+
+    if message_id is not None:
+
+        goal[
+            "telegram_message_id"
+        ] = message_id
+
+    return goal
+
+
+def mark_goal_update_complete(
+    match_state,
+    goal_key,
+):
+
+    goal = find_goal(
+        match_state,
+        goal_key,
+    )
+
+    if goal is None:
+        return None
+
+    goal[
+        "needs_update"
+    ] = False
 
     return goal
 
