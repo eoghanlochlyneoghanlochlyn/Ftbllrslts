@@ -317,7 +317,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14451033",
-        "id:14451335"
+        "id:14451335",
+        "id:14451382"
       ],
       "goals": [
         {
@@ -492,6 +493,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "id:14451382",
+          "player_id": 1029063,
+          "player_name": "Michael Olise",
+          "assist_player_id": 1156141,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "43",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1875,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1445138243Goal1029063undefinedtrue",
+            "timeStr": 43,
+            "type": "goal",
+            "time": 43,
+            "overloadTime": null,
+            "eventId": 14451382,
+            "player": {
+              "id": 1029063,
+              "name": "Michael Olise",
+              "profileUrl": "/players/1029063/michael-olise"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1029063/michael-olise",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Michael Olise",
+            "firstName": "Michael",
+            "lastName": "Olise",
+            "fullName": "Michael Olise",
+            "playerId": 1029063,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971440147,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1029063,
+              "playerName": "Michael Olise",
+              "x": 85.6014705876,
+              "y": 22.177579621699998,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.48375,
+              "goalCrossedZ": 1.4639999928,
+              "expectedGoals": 0.026318339630961418,
+              "expectedGoalsOnTarget": 0.17094212770462036,
+              "shotType": "LeftFoot",
+              "situation": "SetPiece",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.665674603174603,
+                "y": 0.38730158539682535,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 186557,
+              "firstName": "Michael",
+              "lastName": "Olise",
+              "fullName": "Michael Olise",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Jamal Musiala",
+            "assistProfileUrl": "/players/1156141/jamal-musiala",
+            "assistPlayerId": 1156141,
+            "assistKey": "assist_by",
+            "assistInput": "Jamal Musiala"
+          }
         }
       ]
     },
@@ -512,8 +601,99 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "id:14451462"
+      ],
+      "goals": [
+        {
+          "event_key": "id:14451462",
+          "player_id": 1412956,
+          "player_name": "Paris Brunner",
+          "assist_player_id": 1250492,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "33",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1876,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1445146233Goal1412956undefinedtrue",
+            "timeStr": 33,
+            "type": "goal",
+            "time": 33,
+            "overloadTime": null,
+            "eventId": 14451462,
+            "player": {
+              "id": 1412956,
+              "name": "Paris Brunner",
+              "profileUrl": "/players/1412956/paris-brunner"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1412956/paris-brunner",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Paris Brunner",
+            "firstName": "Paris",
+            "lastName": "Brunner",
+            "fullName": "Paris Brunner",
+            "playerId": 1412956,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971447869,
+              "eventType": "Goal",
+              "teamId": 9829,
+              "playerId": 1412956,
+              "playerName": "Paris Brunner",
+              "x": 97.6666666661,
+              "y": 30.95,
+              "min": 32,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.46592092514038086,
+              "expectedGoalsOnTarget": 0.8336712718009949,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1390336,
+              "firstName": "Paris",
+              "lastName": "Brunner",
+              "fullName": "Paris Brunner",
+              "teamColor": "#C80C13"
+            },
+            "assistStr": "assist by Matthis Abline",
+            "assistProfileUrl": "/players/1250492/matthis-abline",
+            "assistPlayerId": 1250492,
+            "assistKey": "assist_by",
+            "assistInput": "Matthis Abline"
+          }
+        }
+      ]
     }
   }
 }
