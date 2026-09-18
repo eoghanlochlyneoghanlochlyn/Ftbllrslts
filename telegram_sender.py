@@ -91,6 +91,54 @@ def send_rich_message(
     return response.json()
 
 
+def edit_rich_message(
+    message_id,
+    rich_message,
+):
+
+    if not TELEGRAM_BOT_TOKEN:
+        raise RuntimeError(
+            "TELEGRAMBOT environment variable is missing."
+        )
+
+    if not TELEGRAM_CHANNEL:
+        raise RuntimeError(
+            "TELEGRAMCHANNEL environment variable is missing."
+        )
+
+    if message_id is None:
+        raise ValueError(
+            "message_id is required to edit a Telegram message."
+        )
+
+    url = (
+        "https://api.telegram.org/"
+        f"bot{TELEGRAM_BOT_TOKEN}/editMessageText"
+    )
+
+    response = requests.post(
+        url,
+        json={
+            "chat_id": TELEGRAM_CHANNEL,
+            "message_id": int(message_id),
+            "rich_message": rich_message,
+        },
+        timeout=30,
+    )
+
+    print(
+        "Telegram Rich Message edit status:",
+        response.status_code,
+    )
+
+    if not response.ok:
+        print(response.text)
+
+    response.raise_for_status()
+
+    return response.json()
+
+
 def split_message(
     message,
     max_length=4000,
