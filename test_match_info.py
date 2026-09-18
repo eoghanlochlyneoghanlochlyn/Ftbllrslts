@@ -1,4 +1,5 @@
-from unittest.mock import patch
+import os
+import time
 
 from event_detector import get_goal_info
 
@@ -9,6 +10,10 @@ from state_manager import (
 )
 
 from main import process_updated_goal
+
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAMBOT")
+TELEGRAM_CHANNEL = os.getenv("TELEGRAMCHANNEL")
 
 
 def assert_equal(actual, expected, message):
@@ -26,13 +31,41 @@ def assert_true(value, message):
 
 
 def main():
+
     print("=" * 60)
-    print("TBD GOAL -> TELEGRAM EDIT TEST")
+    print("TBD GOAL -> REAL TELEGRAM EDIT TEST")
     print("=" * 60)
 
     # ========================================================
+    # بررسی تنظیمات Telegram
+    # ========================================================
+
+    if not TELEGRAM_BOT_TOKEN:
+        raise RuntimeError(
+            "TELEGRAMBOT environment variable is not set."
+        )
+
+    if not TELEGRAM_CHANNEL:
+        raise RuntimeError(
+            "TELEGRAMCHANNEL environment variable is not set."
+        )
+
+    print()
+    print("Telegram configuration found.")
+    print("Channel:", TELEGRAM_CHANNEL)
+
+    # ========================================================
+    # Import مستقیم توابع Telegram
+    # ========================================================
+
+    from telegram_sender import (
+        send_rich_message,
+        edit_rich_message,
+    )
+
+    # ========================================================
     # مرحله 1
-    # گل ابتدا با نام ناقص از FotMob می‌آید.
+    # گل اولیه با <TBD>
     # ========================================================
 
     first_event = {
@@ -64,39 +97,80 @@ def main():
         "مرحله 1: گل در state ثبت نشد."
     )
 
-    # فرض می‌کنیم پیام واقعی تلگرام قبلاً ارسال شده
-    # و Telegram message_id = 500 بوده است.
+    print()
+    print("PASS 1: گل اولیه با <TBD> ساخته شد.")
+
+    # ========================================================
+    # مرحله 2
+    # ارسال واقعی پیام به Telegram
+    # ========================================================
+
+    first_rich_message = {
+        "markdown": (
+            "⚽️ گل\n"
+            "برای **Test Home**!\n"
+            "⏱ دقیقه 37\n"
+            "<TBD>\n"
+            "\n"
+            "Test Home 1 🆚 0 Test Away"
+        )
+    }
+
+    print()
+    print("Sending REAL Telegram message...")
+    print("مهم: این مرحله واقعاً یک پیام در کانال می‌فرستد.")
+
+    response = send_rich_message(
+        first_rich_message
+    )
+
+    print()
+    print("Telegram send response:")
+    print(response)
+
+    assert_true(
+        isinstance(response, dict),
+        "مرحله 2: پاسخ Telegram معتبر نیست."
+    )
+
+    assert_true(
+        response.get("ok") is True,
+        "مرحله 2: Telegram ارسال پیام را قبول نکرد."
+    )
+
+    result = response.get("result")
+
+    assert_true(
+        isinstance(result, dict),
+        "مرحله 2: result در پاسخ Telegram وجود ندارد."
+    )
+
+    message_id = result.get(
+        "message_id"
+    )
+
+    assert_true(
+        message_id is not None,
+        "مرحله 2: Telegram message_id برنگرداند."
+    )
+
+    message_id = int(
+        message_id
+    )
 
     set_goal_message_id(
         match_state,
         "id:123456",
-        500,
+        message_id,
     )
 
-    assert_equal(
-        goal["player_name"],
-        "<TBD>",
-        "مرحله 1: نام اولیه گل اشتباه است."
-    )
-
-    assert_equal(
-        goal["telegram_message_id"],
-        500,
-        "مرحله 1: message_id ذخیره نشده است."
-    )
-
-    assert_true(
-        goal["needs_update"] is True,
-        "مرحله 1: needs_update باید True باشد."
-    )
-
-    print("PASS 1: گل اولیه با <TBD> ثبت شد.")
-    print("       message_id = 500")
-    print("       needs_update = True")
+    print()
+    print("PASS 2: پیام واقعی Telegram ارسال شد.")
+    print("       message_id =", message_id)
 
     # ========================================================
-    # مرحله 2
-    # FotMob همان event را با نام واقعی برمی‌گرداند.
+    # مرحله 3
+    # FotMob اطلاعات گل را کامل می‌کند
     # ========================================================
 
     second_event = {
@@ -114,29 +188,28 @@ def main():
 
     assert_true(
         updated_goal_info is not None,
-        "مرحله 2: گل به‌روزشده شناسایی نشد."
+        "مرحله 3: گل به‌روزشده شناسایی نشد."
     )
 
     assert_equal(
         updated_goal_info["event_key"],
         "id:123456",
-        "مرحله 2: event_key تغییر کرده است."
+        "مرحله 3: event_key تغییر کرده است."
     )
 
     assert_equal(
         updated_goal_info["player_name"],
         "Test Player",
-        "مرحله 2: نام واقعی بازیکن تشخیص داده نشد."
+        "مرحله 3: نام واقعی بازیکن شناسایی نشد."
     )
 
-    print("PASS 2: همان event با نام واقعی دریافت شد.")
+    print()
+    print("PASS 3: همان گل با نام واقعی دریافت شد.")
+    print("       player_name = Test Player")
 
     # ========================================================
-    # مرحله 3
-    # خود main.py را تست می‌کنیم.
-    #
-    # edit_rich_message را Mock می‌کنیم تا هیچ درخواست واقعی
-    # به Telegram ارسال نشود.
+    # مرحله 4
+    # ویرایش واقعی همان پیام Telegram
     # ========================================================
 
     snapshot = {
@@ -148,91 +221,32 @@ def main():
         },
     }
 
-    fake_telegram_response = {
-        "ok": True,
-        "result": {
-            "message_id": 500,
-        },
-    }
+    print()
+    print("Waiting 2 seconds before editing...")
+    time.sleep(2)
 
-    with patch(
-        "main.edit_rich_message"
-    ) as mock_edit:
+    print()
+    print("Editing REAL Telegram message...")
+    print("message_id =", message_id)
 
-        mock_edit.return_value = (
-            fake_telegram_response
-        )
+    result = process_updated_goal(
+        snapshot,
+        match_state,
+        updated_goal_info,
+    )
 
-        result = process_updated_goal(
-            snapshot,
-            match_state,
-            updated_goal_info,
-        )
+    print()
+    print("process_updated_goal returned:")
+    print(result)
 
-        assert_true(
-            result is True,
-            "مرحله 3: process_updated_goal موفق نبود."
-        )
-
-        assert_equal(
-            mock_edit.call_count,
-            1,
-            "مرحله 3: edit_rich_message باید دقیقاً یک بار فراخوانی شود."
-        )
-
-        call_args = (
-            mock_edit.call_args
-        )
-
-        assert_true(
-            call_args is not None,
-            "مرحله 3: هیچ فراخوانی برای edit_rich_message ثبت نشد."
-        )
-
-        actual_message_id = (
-            call_args.args[0]
-        )
-
-        actual_payload = (
-            call_args.args[1]
-        )
-
-        assert_equal(
-            actual_message_id,
-            500,
-            "مرحله 3: edit باید روی همان message_id قبلی انجام شود."
-        )
-
-        assert_true(
-            isinstance(
-                actual_payload,
-                dict,
-            ),
-            "مرحله 3: payload ویرایش باید dict باشد."
-        )
-
-        assert_true(
-            "markdown" in actual_payload,
-            "مرحله 3: payload باید شامل markdown باشد."
-        )
-
-        print(
-            "PASS 3: edit_rich_message فراخوانی شد."
-        )
-
-        print(
-            "       message_id =",
-            actual_message_id,
-        )
-
-        print(
-            "       payload =",
-            actual_payload,
-        )
+    assert_true(
+        result is True,
+        "مرحله 4: process_updated_goal موفق نبود."
+    )
 
     # ========================================================
-    # مرحله 4
-    # بررسی کنیم state بعد از edit درست شده باشد.
+    # مرحله 5
+    # بررسی state
     # ========================================================
 
     final_goal = match_state["goals"][0]
@@ -240,41 +254,39 @@ def main():
     assert_equal(
         final_goal["player_name"],
         "Test Player",
-        "مرحله 4: نام واقعی در state ذخیره نشده است."
+        "مرحله 5: نام واقعی در state ذخیره نشده."
     )
 
     assert_equal(
         final_goal["player_id"],
         9876,
-        "مرحله 4: player_id واقعی ذخیره نشده است."
+        "مرحله 5: player_id ذخیره نشده."
     )
 
     assert_equal(
         final_goal["telegram_message_id"],
-        500,
-        "مرحله 4: message_id قبلی تغییر کرده است."
+        message_id,
+        "مرحله 5: message_id تغییر کرده."
     )
 
     assert_equal(
         final_goal["needs_update"],
         False,
-        "مرحله 4: بعد از edit موفق needs_update باید False شود."
+        "مرحله 5: needs_update بعد از edit موفق باید False باشد."
     )
 
     assert_equal(
         len(match_state["goals"]),
         1,
-        "مرحله 4: نباید گل دوم ایجاد شده باشد."
+        "مرحله 5: گل تکراری ایجاد شده."
     )
 
-    print(
-        "PASS 4: state بعد از ویرایش صحیح است."
-    )
+    print()
+    print("PASS 5: state بعد از ویرایش Telegram صحیح است.")
 
-    print(
-        "       player_name =",
-        final_goal["player_name"],
-    )
+    print()
+    print("       player_name =",
+          final_goal["player_name"])
 
     print(
         "       player_id =",
@@ -297,18 +309,25 @@ def main():
 
     print()
     print("=" * 60)
-    print("ALL TESTS PASSED")
+    print("REAL TELEGRAM TEST PASSED")
     print("=" * 60)
+
     print()
-    print("زنجیره کامل با موفقیت تست شد:")
-    print("1. گل با <TBD> ثبت شد.")
-    print("2. message_id قبلی ذخیره شد.")
-    print("3. همان event با نام واقعی دریافت شد.")
-    print("4. main.py آن را به‌عنوان گل جدید نفرستاد.")
-    print("5. edit_rich_message با همان message_id فراخوانی شد.")
-    print("6. نام بازیکن به‌روزرسانی شد.")
-    print("7. needs_update بعد از edit موفق False شد.")
-    print("8. هیچ گل تکراری ایجاد نشد.")
+    print("نتیجه:")
+    print("1. پیام واقعی با <TBD> به Telegram ارسال شد.")
+    print("2. Telegram یک message_id واقعی برگرداند.")
+    print("3. همان message_id داخل state ذخیره شد.")
+    print("4. اطلاعات همان گل با نام Test Player کامل شد.")
+    print("5. همان پیام واقعی Telegram ویرایش شد.")
+    print("6. message_id تغییر نکرد.")
+    print("7. needs_update = False شد.")
+    print("8. گل تکراری ایجاد نشد.")
+
+    print()
+    print(
+        "پیام آزمایشی را در کانال بررسی کن؛ "
+        "باید نام <TBD> به Test Player تغییر کرده باشد."
+    )
 
 
 if __name__ == "__main__":
