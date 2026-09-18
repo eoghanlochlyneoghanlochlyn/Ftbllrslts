@@ -1,3 +1,7 @@
+import os
+import time
+from datetime import datetime, timezone
+
 from fotmob import (
     get_match_events,
     get_match_snapshot,
@@ -47,77 +51,10 @@ from telegram_sender import (
 
 
 # =========================================================
-# تنظیمات
+# ابزارهای کمکی
 # =========================================================
 
-POLL_INTERVAL = 60
-
-
-# =========================================================
-# ابزارهای event
-# =========================================================
-
-def get_event_key_safe(event):
-
-    try:
-
-        return event_key(
-            event
-        )
-
-    except Exception:
-
-        return None
-
-
-def get_goal_event_from_cancellation(
-    cancelled_goal,
-):
-
-    if not isinstance(
-        cancelled_goal,
-        dict,
-    ):
-        return None
-
-    return cancelled_goal.get(
-        "goal_event"
-    )
-
-
-def get_goal_key_from_cancellation(
-    cancelled_goal,
-):
-
-    if not isinstance(
-        cancelled_goal,
-        dict,
-    ):
-        return None
-
-    key = cancelled_goal.get(
-        "goal_key"
-    )
-
-    if key is not None:
-        return str(key)
-
-    event = get_goal_event_from_cancellation(
-        cancelled_goal
-    )
-
-    return get_event_key_safe(
-        event
-    )
-
-
-# =========================================================
-# Telegram helpers
-# =========================================================
-
-def get_telegram_message_id(
-    response
-):
+def get_telegram_message_id(response):
 
     if not isinstance(
         response,
@@ -147,55 +84,27 @@ def get_telegram_message_id(
     if message_id is None:
         return None
 
+    return message_id
+
+
+def get_event_key_safe(event):
+
     try:
 
-        return int(
-            message_id
+        return event_key(
+            event
         )
 
-    except (
-        TypeError,
-        ValueError,
-    ):
+    except Exception:
 
         return None
-
-
-# =========================================================
-# نتیجه قبل / بعد گل
-# =========================================================
-
-def get_goal_score_before_event(
-    match_state,
-):
-
-    return get_current_score(
-        match_state
-    )
-
-
-def get_goal_score_after_event(
-    match_state,
-    goal_info,
-):
-
-    add_goal(
-        match_state,
-        goal_info,
-    )
-
-    return get_current_score(
-        match_state
-    )
 
 
 # =========================================================
 # آماده‌سازی اطلاعات گل
 # =========================================================
 
-def prepare_goal_info(
-    goal_info,
-):
+def prepare_goal_info(goal_info):
 
     if not isinstance(
         goal_info,
@@ -213,83 +122,73 @@ def prepare_goal_info(
     ):
         return goal_info
 
-    # نام بازیکن از event_detector داخل goal_info
-    # قرار گرفته است. اینجا فقط برای سازگاری با
-    # stateهای قدیمی fallback داریم.
-
-    if not goal_info.get(
-        "player_name"
-    ):
-
-        player = event.get(
-            "player"
-        )
-
-        if isinstance(
-            player,
-            dict,
-        ):
-
-            goal_info[
-                "player_name"
-            ] = (
-                player.get(
-                    "name"
-                )
-                or player.get(
-                    "shortName"
-                )
-                or ""
-            )
-
-        else:
-
-            goal_info[
-                "player_name"
-            ] = (
-                event.get(
-                    "playerName"
-                )
-                or ""
-            )
-
-    if not goal_info.get(
-        "assist_player_name"
-    ):
-
-        assist_player = event.get(
-            "assistPlayer"
-        )
-
-        if isinstance(
-            assist_player,
-            dict,
-        ):
-
-            goal_info[
-                "assist_player_name"
-            ] = (
-                assist_player.get(
-                    "name"
-                )
-                or assist_player.get(
-                    "shortName"
-                )
-                or ""
-            )
-
-        else:
-
-            goal_info[
-                "assist_player_name"
-            ] = (
-                event.get(
-                    "assistPlayerName"
-                )
-                or ""
-            )
-
     return goal_info
+
+
+# =========================================================
+# پیدا کردن اطلاعات گل مردود
+# =========================================================
+
+def get_goal_key_from_cancellation(
+    cancelled_goal,
+):
+
+    if not isinstance(
+        cancelled_goal,
+        dict,
+    ):
+        return None
+
+    for key in (
+        "event_key",
+        "goal_key",
+        "key",
+    ):
+
+        value = cancelled_goal.get(
+            key
+        )
+
+        if value is not None:
+            return value
+
+    event = cancelled_goal.get(
+        "event"
+    )
+
+    if isinstance(
+        event,
+        dict,
+    ):
+
+        return get_event_key_safe(
+            event
+        )
+
+    return None
+
+
+def get_goal_event_from_cancellation(
+    cancelled_goal,
+):
+
+    if not isinstance(
+        cancelled_goal,
+        dict,
+    ):
+        return None
+
+    event = cancelled_goal.get(
+        "event"
+    )
+
+    if isinstance(
+        event,
+        dict,
+    ):
+        return event
+
+    return cancelled_goal
 
 
 # =========================================================
@@ -334,166 +233,110 @@ def process_new_goal(
         goal_key,
     )
 
-    # -----------------------------------------------------
-    # اگر قبلاً state ساخته شده ولی پیام هنوز ثبت نشده،
-    # یعنی احتمالاً اجرای قبلی هنگام ارسال شکست خورده.
-    #
-    # در این حالت نباید پیام جدید را به‌عنوان گل جدید
-    # تشخیص بدهیم؛ همان گل را دوباره ارسال می‌کنیم.
-    # -----------------------------------------------------
-
     if existing_goal is not None:
 
-        existing_message_id = (
-            existing_goal.get(
-                "telegram_message_id"
-            )
+        message_id = existing_goal.get(
+            "telegram_message_id"
         )
 
-        if existing_message_id is not None:
+        if message_id is not None:
+
+            print(
+                "[GOAL] "
+                "Goal already has Telegram message."
+            )
 
             return True
 
-    # -----------------------------------------------------
-    # اصلاح is_home برای گل به خودی
-    # -----------------------------------------------------
-
-    if goal_info.get(
-        "own_goal",
-        False,
-    ):
-
-        event_is_home = event.get(
-            "isHome"
-        )
-
-        if isinstance(
-            event_is_home,
-            bool,
-        ):
-
-            goal_info[
-                "is_home"
-            ] = not event_is_home
-
+    print()
     print(
-        "\n"
-        "=================================================="
+        "[GOAL] New goal detected."
     )
 
     print(
-        "[GOAL DEBUG]"
-    )
-
-    print(
-        "Goal key:",
+        "[GOAL] Event key:",
         goal_key,
     )
 
     print(
-        "Goal info:",
+        "[GOAL] Player:",
+        goal_info.get(
+            "player_name"
+        ),
+    )
+
+    print(
+        "[GOAL] Minute:",
+        goal_info.get(
+            "minute"
+        ),
+    )
+
+    print(
+        "[GOAL] Is home:",
+        goal_info.get(
+            "is_home"
+        ),
+    )
+
+    # -----------------------------------------------------
+    # ذخیره گل در state
+    # -----------------------------------------------------
+
+    add_goal(
+        match_state,
         goal_info,
     )
 
-    print(
-        "Raw event:",
-        event,
-    )
-
-    print(
-        "Snapshot home:",
-        snapshot.get(
-            "home"
-        ),
-    )
-
-    print(
-        "Snapshot away:",
-        snapshot.get(
-            "away"
-        ),
-    )
-
-    print(
-        "Snapshot score:",
-        snapshot.get(
-            "score"
-        ),
-    )
-
-    print(
-        "Score BEFORE:",
-        get_current_score(
-            match_state
-        ),
-    )
-
-    # -----------------------------------------------------
-    # ثبت موقت گل برای محاسبه score
-    # -----------------------------------------------------
-
-    score_after = (
-        get_goal_score_after_event(
-            match_state,
-            goal_info,
-        )
-    )
-
-    print(
-        "Score AFTER:",
-        score_after,
-    )
-
-    print(
-        "State goals:",
-        match_state.get(
-            "goals",
-            [],
-        ),
-    )
-
-    print(
-        "=================================================="
-    )
-
-    print(
-        "[GOAL] "
-        f"{snapshot.get('home', 'Home')} "
-        f"- "
-        f"{snapshot.get('away', 'Away')}"
+    score = get_current_score(
+        match_state
     )
 
     message = build_goal_message(
         snapshot,
         event,
-        score_after,
+        score,
     )
 
     if not message:
 
         print(
-            "[GOAL] Goal message is empty."
+            "[GOAL] "
+            "Could not build Telegram message."
         )
 
         return False
 
     try:
 
+        telegram_started_at = time.monotonic()
+
+        print(
+            "[GOAL] "
+            "Sending Telegram message..."
+        )
+
         response = send_telegram(
             message
         )
 
-        message_id = (
-            get_telegram_message_id(
-                response
-            )
+        telegram_finished_at = time.monotonic()
+
+        print(
+            "[GOAL] Timing: Telegram send =",
+            f"{telegram_finished_at - telegram_started_at:.2f}s",
+        )
+
+        message_id = get_telegram_message_id(
+            response
         )
 
         if message_id is None:
 
             print(
-                "[GOAL] Telegram response "
-                "did not contain message_id."
+                "[GOAL] "
+                "Telegram response did not contain "
+                "a valid message_id."
             )
 
             return False
@@ -529,7 +372,6 @@ def process_new_goal(
             error,
         )
 
-        # نکته مهم:
         # event_key عمداً اینجا ثبت نمی‌شود.
         # اجرای بعدی دوباره تلاش خواهد کرد.
 
@@ -593,6 +435,7 @@ def process_updated_goal(
         )
     )
 
+    print()
     print(
         "[GOAL UPDATE]"
     )
@@ -613,7 +456,7 @@ def process_updated_goal(
     )
 
     # -----------------------------------------------------
-    # add_goal اطلاعات جدید را داخل state merge می‌کند.
+    # merge اطلاعات جدید داخل state
     # -----------------------------------------------------
 
     add_goal(
@@ -642,7 +485,6 @@ def process_updated_goal(
 
         return False
 
-    # اگر هنوز نام واقعی نداریم، edit نکن.
     needs_update = bool(
         existing_goal.get(
             "needs_update",
@@ -651,33 +493,19 @@ def process_updated_goal(
     )
 
     if not needs_update:
-
         return False
-
-    # -----------------------------------------------------
-    # score را از state می‌گیریم.
-    # -----------------------------------------------------
 
     score = get_current_score(
         match_state
     )
 
-    rich_message = (
-        build_goal_message(
-            snapshot,
-            event,
-            score,
-        )
+    rich_message = build_goal_message(
+        snapshot,
+        event,
+        score,
     )
 
-    # build_goal_message در پروژه فعلی متن معمولی است.
-    # برای editRich باید rich_message معتبر داشته باشیم.
-    #
-    # بنابراین متن را در قالب markdown-rich قرار می‌دهیم.
-    # Telegram Rich Messages این حالت را پشتیبانی می‌کند.
-
     if not rich_message:
-
         return False
 
     rich_message_payload = {
@@ -686,9 +514,24 @@ def process_updated_goal(
 
     try:
 
+        telegram_started_at = time.monotonic()
+
+        print(
+            "[GOAL UPDATE] "
+            "Editing Telegram message..."
+        )
+
         response = edit_rich_message(
             message_id,
             rich_message_payload,
+        )
+
+        telegram_finished_at = time.monotonic()
+
+        print(
+            "[GOAL UPDATE] "
+            "Timing: Telegram edit =",
+            f"{telegram_finished_at - telegram_started_at:.2f}s",
         )
 
         if not isinstance(
@@ -700,7 +543,6 @@ def process_updated_goal(
         if response.get(
             "ok"
         ) is not True:
-
             return False
 
         mark_goal_update_complete(
@@ -728,9 +570,6 @@ def process_updated_goal(
             f"Telegram edit failed: {error}"
         )
 
-        # needs_update همچنان True باقی می‌ماند.
-        # اجرای بعدی دوباره تلاش می‌کند.
-
         return False
 
 
@@ -746,9 +585,6 @@ def process_live_events(
 
     # -----------------------------------------------------
     # گل‌های جدید
-    #
-    # مهم:
-    # event_key قبل از ارسال پیام ثبت نمی‌شود.
     # -----------------------------------------------------
 
     for goal_info in (
@@ -795,8 +631,6 @@ def process_live_events(
 
     # -----------------------------------------------------
     # eventهای غیرگل
-    #
-    # فقط بعد از موفقیت ارسال event_key ثبت می‌شود.
     # -----------------------------------------------------
 
     previous_keys = {
@@ -840,7 +674,6 @@ def process_live_events(
         )
 
         # goal قبلاً در بخش بالا پردازش شده.
-        # اگر ارسال موفق شده باشد key ثبت شده است.
         if (
             "goal" in str(
                 event_type
@@ -849,10 +682,12 @@ def process_live_events(
                 "isGoal"
             ) is True
         ):
-
             continue
 
-        # کارت‌ها
+        # -------------------------------------------------
+        # کارت قرمز
+        # -------------------------------------------------
+
         is_red_card = False
 
         if key in {
@@ -893,8 +728,22 @@ def process_live_events(
 
                     try:
 
+                        telegram_started_at = (
+                            time.monotonic()
+                        )
+
                         send_long_message(
                             message
+                        )
+
+                        telegram_finished_at = (
+                            time.monotonic()
+                        )
+
+                        print(
+                            "[RED CARD] "
+                            "Timing: Telegram send =",
+                            f"{telegram_finished_at - telegram_started_at:.2f}s",
                         )
 
                         add_event_keys(
@@ -996,8 +845,22 @@ def process_live_events(
 
             try:
 
+                telegram_started_at = (
+                    time.monotonic()
+                )
+
                 send_long_message(
                     message
+                )
+
+                telegram_finished_at = (
+                    time.monotonic()
+                )
+
+                print(
+                    "[CANCELLED GOAL] "
+                    "Timing: Telegram send =",
+                    f"{telegram_finished_at - telegram_started_at:.2f}s",
                 )
 
             except Exception as error:
@@ -1016,6 +879,14 @@ def process_match(
     state,
     match,
 ):
+
+    process_started_at = time.monotonic()
+
+    process_started_iso = (
+        datetime.now(
+            timezone.utc
+        ).isoformat()
+    )
 
     match_id = get_match_id(
         match
@@ -1036,10 +907,27 @@ def process_match(
     if not match_url:
 
         print(
-            f"[{match_id}] Match URL not found."
+            f"[{match_id}] "
+            "Match URL not found."
         )
 
         return
+
+    print()
+    print(
+        f"[{match_id}] "
+        "Processing started at UTC:",
+        process_started_iso,
+    )
+
+    print(
+        f"[{match_id}] "
+        "GitHub run:",
+        os.getenv(
+            "GITHUB_RUN_ID",
+            "unknown",
+        ),
+    )
 
     match_state = get_match_state(
         state,
@@ -1050,8 +938,18 @@ def process_match(
     # snapshot
     # -----------------------------------------------------
 
+    snapshot_started_at = time.monotonic()
+
     snapshot = get_match_snapshot(
         match_url
+    )
+
+    snapshot_finished_at = time.monotonic()
+
+    print(
+        f"[{match_id}] "
+        "Timing: snapshot fetch =",
+        f"{snapshot_finished_at - snapshot_started_at:.2f}s",
     )
 
     if not snapshot:
@@ -1188,16 +1086,33 @@ def process_match(
 
             try:
 
+                telegram_started_at = (
+                    time.monotonic()
+                )
+
                 response = send_rich_message(
                     rich_message
                 )
 
-                if isinstance(
-                    response,
-                    dict,
-                ) and response.get(
-                    "ok"
-                ) is True:
+                telegram_finished_at = (
+                    time.monotonic()
+                )
+
+                print(
+                    f"[{match_id}] "
+                    "Timing: lineup Telegram send =",
+                    f"{telegram_finished_at - telegram_started_at:.2f}s",
+                )
+
+                if (
+                    isinstance(
+                        response,
+                        dict,
+                    )
+                    and response.get(
+                        "ok"
+                    ) is True
+                ):
 
                     match_state[
                         "lineup_sent"
@@ -1214,13 +1129,23 @@ def process_match(
     # eventهای مسابقه
     # -----------------------------------------------------
 
+    events_started_at = time.monotonic()
+
     events = get_match_events(
         match_url
     )
 
+    events_finished_at = time.monotonic()
+
     print(
         f"[{match_id}] "
         f"Events found: {len(events)}"
+    )
+
+    print(
+        f"[{match_id}] "
+        "Timing: events fetch =",
+        f"{events_finished_at - events_started_at:.2f}s",
     )
 
     snapshot[
@@ -1231,10 +1156,60 @@ def process_match(
     # تشخیص تغییرات
     # -----------------------------------------------------
 
+    detect_started_at = time.monotonic()
+
     changes = detect_state_changes(
         match_state,
         events,
         snapshot,
+    )
+
+    detect_finished_at = time.monotonic()
+
+    print(
+        f"[{match_id}] "
+        "Timing: event detection =",
+        f"{detect_finished_at - detect_started_at:.2f}s",
+    )
+
+    print(
+        f"[{match_id}] "
+        "Changes:",
+        "goals=",
+        len(
+            changes.get(
+                "goals",
+                [],
+            )
+        ),
+        "updated_goals=",
+        len(
+            changes.get(
+                "updated_goals",
+                [],
+            )
+        ),
+        "events=",
+        len(
+            changes.get(
+                "events",
+                [],
+            )
+        ),
+        "red_cards=",
+        len(
+            changes.get(
+                "red_cards",
+                [],
+            )
+        ),
+        "cancelled_goals=",
+        len(
+            changes.get(
+                "cancelled_goals",
+                [],
+            )
+        ),
     )
 
     # -----------------------------------------------------
@@ -1264,8 +1239,22 @@ def process_match(
 
             try:
 
+                telegram_started_at = (
+                    time.monotonic()
+                )
+
                 send_long_message(
                     message
+                )
+
+                telegram_finished_at = (
+                    time.monotonic()
+                )
+
+                print(
+                    f"[{match_id}] "
+                    "Timing: start Telegram send =",
+                    f"{telegram_finished_at - telegram_started_at:.2f}s",
                 )
 
                 match_state[
@@ -1311,9 +1300,17 @@ def process_match(
         )
 
         if not score or (
-            score.get("home", 0) == 0
-            and score.get("away", 0) == 0
-            and snapshot.get("score")
+            score.get(
+                "home",
+                0,
+            ) == 0
+            and score.get(
+                "away",
+                0,
+            ) == 0
+            and snapshot.get(
+                "score"
+            )
         ):
 
             score = snapshot.get(
@@ -1331,8 +1328,22 @@ def process_match(
 
             try:
 
+                telegram_started_at = (
+                    time.monotonic()
+                )
+
                 send_long_message(
                     message
+                )
+
+                telegram_finished_at = (
+                    time.monotonic()
+                )
+
+                print(
+                    f"[{match_id}] "
+                    "Timing: half-time Telegram send =",
+                    f"{telegram_finished_at - telegram_started_at:.2f}s",
                 )
 
                 match_state[
@@ -1358,10 +1369,20 @@ def process_match(
     # eventهای زنده
     # -----------------------------------------------------
 
+    live_events_started_at = time.monotonic()
+
     process_live_events(
         snapshot,
         match_state,
         changes,
+    )
+
+    live_events_finished_at = time.monotonic()
+
+    print(
+        f"[{match_id}] "
+        "Timing: live event processing =",
+        f"{live_events_finished_at - live_events_started_at:.2f}s",
     )
 
     # -----------------------------------------------------
@@ -1396,9 +1417,17 @@ def process_match(
             )
 
             if (
-                final_score.get("home", 0) == 0
-                and final_score.get("away", 0) == 0
-                and snapshot.get("score")
+                final_score.get(
+                    "home",
+                    0,
+                ) == 0
+                and final_score.get(
+                    "away",
+                    0,
+                ) == 0
+                and snapshot.get(
+                    "score"
+                )
             ):
 
                 final_score = snapshot.get(
@@ -1422,8 +1451,22 @@ def process_match(
 
                 try:
 
+                    telegram_started_at = (
+                        time.monotonic()
+                    )
+
                     response = send_rich_message(
                         final_lineup_message
+                    )
+
+                    telegram_finished_at = (
+                        time.monotonic()
+                    )
+
+                    print(
+                        f"[{match_id}] "
+                        "Timing: final lineup Telegram send =",
+                        f"{telegram_finished_at - telegram_started_at:.2f}s",
                     )
 
                     lineup_sent = (
@@ -1465,8 +1508,22 @@ def process_match(
 
                 try:
 
+                    telegram_started_at = (
+                        time.monotonic()
+                    )
+
                     response = send_rich_message(
                         final_stats_message
+                    )
+
+                    telegram_finished_at = (
+                        time.monotonic()
+                    )
+
+                    print(
+                        f"[{match_id}] "
+                        "Timing: final stats Telegram send =",
+                        f"{telegram_finished_at - telegram_started_at:.2f}s",
                     )
 
                     stats_sent = (
@@ -1500,12 +1557,54 @@ def process_match(
                     "Final messages sent."
                 )
 
+    process_finished_at = time.monotonic()
+
+    print(
+        f"[{match_id}] "
+        "Total process_match duration =",
+        f"{process_finished_at - process_started_at:.2f}s",
+    )
+
 
 # =========================================================
 # main
 # =========================================================
 
 def main():
+
+    run_started_at = time.monotonic()
+
+    print()
+    print(
+        "========================================"
+    )
+
+    print(
+        "[RUN] Started at UTC:",
+        datetime.now(
+            timezone.utc
+        ).isoformat(),
+    )
+
+    print(
+        "[RUN] GitHub run:",
+        os.getenv(
+            "GITHUB_RUN_ID",
+            "unknown",
+        ),
+    )
+
+    print(
+        "[RUN] GitHub run attempt:",
+        os.getenv(
+            "GITHUB_RUN_ATTEMPT",
+            "unknown",
+        ),
+    )
+
+    print(
+        "========================================"
+    )
 
     state = load_state()
 
@@ -1529,6 +1628,8 @@ def main():
 
     for match in matches:
 
+        match_started_at = time.monotonic()
+
         try:
 
             process_match(
@@ -1547,8 +1648,47 @@ def main():
                 f"Error: {error}"
             )
 
+        match_finished_at = time.monotonic()
+
+        match_id = get_match_id(
+            match
+        )
+
+        print(
+            f"[{match_id}] "
+            "Total match loop duration =",
+            f"{match_finished_at - match_started_at:.2f}s",
+        )
+
+    save_started_at = time.monotonic()
+
     save_state(
         state
+    )
+
+    save_finished_at = time.monotonic()
+
+    print(
+        "[RUN] Timing: save_state =",
+        f"{save_finished_at - save_started_at:.2f}s",
+    )
+
+    run_finished_at = time.monotonic()
+
+    print(
+        "[RUN] Finished at UTC:",
+        datetime.now(
+            timezone.utc
+        ).isoformat(),
+    )
+
+    print(
+        "[RUN] Total duration:",
+        f"{run_finished_at - run_started_at:.2f}s",
+    )
+
+    print(
+        "========================================"
     )
 
 
