@@ -108,7 +108,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14452456",
-        "id:14452646"
+        "id:14452646",
+        "id:14452689"
       ],
       "goals": [
         {
@@ -274,6 +275,91 @@
               "firstName": "Igor",
               "lastName": "Thiago",
               "fullName": "Igor Thiago",
+              "teamColor": "#C00808"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14452689",
+          "player_id": 963965,
+          "player_name": "Fábio Carvalho",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 4",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1901,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1445268990Goal963965undefinedtrue",
+            "timeStr": "90 + 4",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 4,
+            "eventId": 14452689,
+            "player": {
+              "id": 963965,
+              "name": "Fábio Carvalho",
+              "profileUrl": "/players/963965/fabio-carvalho"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/963965/fabio-carvalho",
+            "overloadTimeStr": "+4",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Fábio Carvalho",
+            "firstName": "Fábio",
+            "lastName": "Carvalho",
+            "fullName": "Fábio Carvalho",
+            "playerId": 963965,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971523479,
+              "eventType": "Goal",
+              "teamId": 9937,
+              "playerId": 963965,
+              "playerName": "Fábio Carvalho",
+              "x": 102.72413793119999,
+              "y": 28.118809523000003,
+              "min": 90,
+              "minAdded": 4,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.7125,
+              "goalCrossedZ": 1.9134736748,
+              "expectedGoals": 0.4286136329174042,
+              "expectedGoalsOnTarget": 0.9783146381378174,
+              "shotType": "RightFoot",
+              "situation": "ThrowInSetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.6051587301587305,
+                "y": 0.5062099668783069,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 268375,
+              "firstName": "Fábio",
+              "lastName": "Carvalho",
+              "fullName": "Fábio Carvalho",
               "teamColor": "#C00808"
             },
             "assistStr": null,
