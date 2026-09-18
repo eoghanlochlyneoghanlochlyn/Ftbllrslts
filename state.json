@@ -102,7 +102,7 @@
     "5795456": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -299,7 +299,7 @@
     "5868075": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
