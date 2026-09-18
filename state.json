@@ -589,7 +589,8 @@
         "id:14451382",
         "id:14451974",
         "id:14452282",
-        "id:14452251"
+        "id:14452251",
+        "id:14452315"
       ],
       "goals": [
         {
@@ -1115,6 +1116,94 @@
             "assistPlayerId": 751202,
             "assistKey": "assist_by",
             "assistInput": "Alphonso Davies"
+          }
+        },
+        {
+          "event_key": "id:14452315",
+          "player_id": 1029063,
+          "player_name": "Michael Olise",
+          "assist_player_id": 1286183,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "76",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1887,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1445231576Goal1029063undefinedtrue",
+            "timeStr": 76,
+            "type": "goal",
+            "time": 76,
+            "overloadTime": null,
+            "eventId": 14452315,
+            "player": {
+              "id": 1029063,
+              "name": "Michael Olise",
+              "profileUrl": "/players/1029063/michael-olise"
+            },
+            "homeScore": 6,
+            "awayScore": 0,
+            "profileUrl": "/players/1029063/michael-olise",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Michael Olise",
+            "firstName": "Michael",
+            "lastName": "Olise",
+            "fullName": "Michael Olise",
+            "playerId": 1029063,
+            "newScore": [
+              7,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971500199,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1029063,
+              "playerName": "Michael Olise",
+              "x": 80.23252427279999,
+              "y": 40.721666666999994,
+              "min": 76,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.551249999999996,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.0295,
+              "expectedGoalsOnTarget": 0.0818,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3832671957671967,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 186557,
+              "firstName": "Michael",
+              "lastName": "Olise",
+              "fullName": "Michael Olise",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Tom Bischof",
+            "assistProfileUrl": "/players/1286183/tom-bischof",
+            "assistPlayerId": 1286183,
+            "assistKey": "assist_by",
+            "assistInput": "Tom Bischof"
           }
         }
       ]
