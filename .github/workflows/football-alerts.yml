@@ -6,6 +6,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: football-alerts
+  cancel-in-progress: false
+
 jobs:
   football-alerts:
     runs-on: ubuntu-latest
