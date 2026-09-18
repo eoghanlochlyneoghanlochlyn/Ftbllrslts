@@ -1,64 +1,7 @@
-{
-  "matches": [
-    {
-      "id": "6112379",
-      "url": "https://www.fotmob.com/matches/levski-sofia-vs-salzburg/2vhwov#6112379",
-      "enabled": true
-    },
-    {
-      "id": "6112373",
-      "url": "https://www.fotmob.com/matches/ofi-crete-vs-hoffenheim/240mus#6112373",
-      "enabled": true
-    },
-    {
-      "id": "6112354",
-      "url": "https://www.fotmob.com/matches/marseille-vs-besiktas/2x01xi#6112354",
-      "enabled": true
-    },
-    {
-      "id": "6112299",
-      "url": "https://www.fotmob.com/matches/ferencvaros-vs-celtic/2q1knv#6112299",
-      "enabled": true
-    },
-    {
-      "id": "6112324",
-      "url": "https://www.fotmob.com/matches/lech-poznan-vs-crystal-palace/16xlva#6112324",
-      "enabled": true
-    },
-    {
-      "id": "6112253",
-      "url": "https://www.fotmob.com/matches/nec-nijmegen-vs-juventus/2s8kx4#6112253",
-      "enabled": true
-    },
-    {
-      "id": "6112377",
-      "url": "https://www.fotmob.com/matches/lillestrom-vs-torreense/b8ydnf8#6112377",
-      "enabled": true
-    },
-    {
-      "id": "6112272",
-      "url": "https://www.fotmob.com/matches/real-sociedad-vs-afc-bournemouth/2ggu0z#6112272",
-      "enabled": true
-    },
-    {
-      "id": "6112283",
-      "url": "https://www.fotmob.com/matches/viktoria-plzen-vs-union-stgilloise/1mg3pw#6112283",
-      "enabled": true
-    },
-    {
-      "id": "5868063",
-      "url": "https://www.fotmob.com/matches/getafe-vs-real-betis/2d42jt#5868063",
-      "enabled": true
-    },
-    {
-      "id": "5868068",
-      "url": "https://www.fotmob.com/matches/malaga-vs-villarreal/3bwqzr#5868068",
-      "enabled": true
-    },
-    {
-      "id": "6099330",
-      "url": "https://www.fotmob.com/matches/manchester-city-vs-norwich-city/2rrosd#6099330",
-      "enabled": true
-    }
-  ]
-}
+[
+  {
+    "id": "5868064",
+    "url": "https://www.fotmob.com/matches/sevilla-vs-deportivo-coruna/2pdhva#5868064",
+    "enabled": true
+  }
+]
