@@ -118,7 +118,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14450534",
-        "id:14450963"
+        "id:14450963",
+        "id:14451666"
       ],
       "goals": [
         {
@@ -292,6 +293,94 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "id:14451666",
+          "player_id": 1426704,
+          "player_name": "Tygo Land",
+          "assist_player_id": 1695991,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "68",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1877,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1445166668Goal1426704undefinedtrue",
+            "timeStr": 68,
+            "type": "goal",
+            "time": 68,
+            "overloadTime": null,
+            "eventId": 14451666,
+            "player": {
+              "id": 1426704,
+              "name": "Tygo Land",
+              "profileUrl": "/players/1426704/tygo-land"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1426704/tygo-land",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Tygo Land",
+            "firstName": "Tygo",
+            "lastName": "Land",
+            "fullName": "Tygo Land",
+            "playerId": 1426704,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971461459,
+              "eventType": "Goal",
+              "teamId": 8674,
+              "playerId": 1426704,
+              "playerName": "Tygo Land",
+              "x": 87.53382352919999,
+              "y": 30.328,
+              "min": 68,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.645,
+              "goalCrossedZ": 2.0739999898,
+              "expectedGoals": 0.08590348809957504,
+              "expectedGoalsOnTarget": 0.2537352442741394,
+              "shotType": "RightFoot",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.8875661375661386,
+                "y": 0.5486772459788359,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 873529,
+              "firstName": "Tygo",
+              "lastName": "Land",
+              "fullName": "Tygo Land",
+              "teamColor": "#008850"
+            },
+            "assistStr": "assist by David van der Werff",
+            "assistProfileUrl": "/players/1695991/david-van-der-werff",
+            "assistPlayerId": 1695991,
+            "assistKey": "assist_by",
+            "assistInput": "David van der Werff"
           }
         }
       ]
