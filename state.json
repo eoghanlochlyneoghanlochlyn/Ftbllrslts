@@ -98,6 +98,66 @@
           }
         }
       ]
+    },
+    "5795456": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
+    },
+    "5781754": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
+    },
+    "5868075": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
+    },
+    "5881171": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
+    },
+    "5749686": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
+    },
+    "5802941": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": []
     }
   }
 }
