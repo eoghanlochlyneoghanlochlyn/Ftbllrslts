@@ -1741,24 +1741,24 @@
               "playerId": 388903,
               "playerName": "Haris Tabaković",
               "x": 102.4396551726,
-              "y": 34.838750000000005,
+              "y": 37.27875,
               "min": 39,
               "minAdded": null,
               "isBlocked": false,
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 34.533750000000005,
-              "goalCrossedZ": 0.3274736826,
-              "expectedGoals": 0.7305386066436768,
-              "expectedGoalsOnTarget": 0.5877955555915833,
+              "goalCrossedY": 35.220000000000006,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.5324797630310059,
+              "expectedGoalsOnTarget": 0.9444503784179688,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.8587962962962951,
-                "y": 0.08663324936507935,
+                "x": 0.6772486772486757,
+                "y": 0.032275132116402115,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -1771,7 +1771,9 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
-          }
+          },
+          "player_name": "Haris Tabaković",
+          "needs_update": true
         }
       ]
     },
@@ -1851,25 +1853,25 @@
               "teamId": 7753,
               "playerId": 675600,
               "playerName": "Aitor Cantalapiedra",
-              "x": 96.2192982446,
-              "y": 37.58375000000001,
+              "x": 96.50877192889999,
+              "y": 36.135000000000005,
               "min": 30,
               "minAdded": null,
               "isBlocked": false,
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 32.24625,
-              "goalCrossedZ": 1.8685263066000002,
-              "expectedGoals": 0.5531025528907776,
-              "expectedGoalsOnTarget": 0.8812664747238159,
+              "goalCrossedY": 32.09375,
+              "goalCrossedZ": 1.7465263072000001,
+              "expectedGoals": 0.6285576820373535,
+              "expectedGoalsOnTarget": 0.7471446990966797,
               "shotType": "LeftFoot",
               "situation": "FastBreak",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 1.4639550264550256,
-                "y": 0.49431912873015876,
+                "x": 1.5042989417989419,
+                "y": 0.4620439966137566,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -1885,7 +1887,9 @@
             "assistPlayerId": 574623,
             "assistKey": "assist_by",
             "assistInput": "Kenan Kodro"
-          }
+          },
+          "player_name": "Aitor Cantalapiedra",
+          "needs_update": true
         },
         {
           "event_key": "id:14447637",
@@ -1943,17 +1947,17 @@
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 36.821250000000006,
-              "goalCrossedZ": 1.0979999946,
-              "expectedGoals": 0.3169,
-              "expectedGoalsOnTarget": 0.6784,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 1.0145263108,
+              "expectedGoals": 0.09834297746419907,
+              "expectedGoalsOnTarget": 0.5690973997116089,
               "shotType": "Header",
               "situation": "FromCorner",
               "period": "SecondHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.2536375661375645,
-                "y": 0.29047618904761907,
+                "x": 0.2738095238095226,
+                "y": 0.2683932039153439,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -1969,7 +1973,9 @@
             "assistPlayerId": 1071487,
             "assistKey": "assist_by",
             "assistInput": "Borja González"
-          }
+          },
+          "player_name": "Giorgios Kanellopoulos",
+          "needs_update": true
         }
       ]
     },
@@ -2002,27 +2008,27 @@
         {
           "event_key": "id:14448058",
           "player_id": 0,
-          "assist_player_id": null,
+          "assist_player_id": 1264368,
           "is_home": true,
           "minute": "16",
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
           "event": {
-            "reactKey": "1444805816Goal0undefinedtrue",
-            "timeStr": 16,
+            "reactKey": "1444805815Goal1642084undefinedtrue",
+            "timeStr": 15,
             "type": "goal",
-            "time": 16,
+            "time": 15,
             "overloadTime": null,
             "eventId": 14448058,
             "player": {
-              "id": 0,
-              "name": "<TBD>",
-              "profileUrl": ""
+              "id": 1642084,
+              "name": "İlhan Fakılı",
+              "profileUrl": "/players/1642084/ilhan-fakl"
             },
             "homeScore": 0,
             "awayScore": 0,
-            "profileUrl": "",
+            "profileUrl": "/players/1642084/ilhan-fakl",
             "overloadTimeStr": false,
             "isHome": true,
             "ownGoal": null,
@@ -2031,44 +2037,84 @@
             "suffix": null,
             "suffixKey": null,
             "isPenaltyShootoutEvent": false,
-            "nameStr": "<TBD>",
-            "firstName": "",
-            "lastName": "<TBD>",
-            "fullName": "<TBD>",
-            "playerId": 0,
+            "nameStr": "İlhan Fakılı",
+            "firstName": "İlhan",
+            "lastName": "Fakılı",
+            "fullName": "İlhan Fakılı",
+            "playerId": 1642084,
             "newScore": [
               1,
               0
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "shotmapEvent": {
+              "id": 2971136193,
+              "eventType": "Goal",
+              "teamId": 10188,
+              "playerId": 1642084,
+              "playerName": "İlhan Fakılı",
+              "x": 97.3771929818,
+              "y": 31.4075,
+              "min": 15,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.7721027135848999,
+              "expectedGoalsOnTarget": 0.8593263626098633,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 687868,
+              "firstName": "İlhan",
+              "lastName": "Fakılı",
+              "fullName": "İlhan Fakılı",
+              "teamColor": "#000000"
+            },
+            "assistStr": "assist by Junior Olaïtan",
+            "assistProfileUrl": "/players/1264368/junior-olaitan",
+            "assistPlayerId": 1264368,
+            "assistKey": "assist_by",
+            "assistInput": "Junior Olaïtan"
+          },
+          "player_name": "İlhan Fakılı",
+          "needs_update": true
         },
         {
           "event_key": "id:14448126",
           "player_id": 0,
-          "assist_player_id": null,
+          "assist_player_id": 956659,
           "is_home": false,
           "minute": "30",
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
           "event": {
-            "reactKey": "1444812630Goal0undefinedfalse",
+            "reactKey": "1444812630Goal1638922undefinedfalse",
             "timeStr": 30,
             "type": "goal",
             "time": 30,
             "overloadTime": null,
             "eventId": 14448126,
             "player": {
-              "id": 0,
-              "name": "<TBD>",
-              "profileUrl": ""
+              "id": 1638922,
+              "name": "Keyliane Abdallah",
+              "profileUrl": "/players/1638922/keyliane-abdallah"
             },
             "homeScore": 1,
             "awayScore": 0,
-            "profileUrl": "",
+            "profileUrl": "/players/1638922/keyliane-abdallah",
             "overloadTimeStr": false,
             "isHome": false,
             "ownGoal": null,
@@ -2077,19 +2123,59 @@
             "suffix": null,
             "suffixKey": null,
             "isPenaltyShootoutEvent": false,
-            "nameStr": "<TBD>",
-            "firstName": "",
-            "lastName": "<TBD>",
-            "fullName": "<TBD>",
-            "playerId": 0,
+            "nameStr": "Keyliane Abdallah",
+            "firstName": "Keyliane",
+            "lastName": "Abdallah",
+            "fullName": "Keyliane Abdallah",
+            "playerId": 1638922,
             "newScore": [
               1,
               1
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "shotmapEvent": {
+              "id": 2971143745,
+              "eventType": "Goal",
+              "teamId": 8592,
+              "playerId": 1638922,
+              "playerName": "Keyliane Abdallah",
+              "x": 96.0263157884,
+              "y": 24.84,
+              "min": 29,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.178749999999994,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.4598959982395172,
+              "expectedGoalsOnTarget": 0.6646789312362671,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7463624338624355,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 554534,
+              "firstName": "Keyliane",
+              "lastName": "Abdallah",
+              "fullName": "Keyliane Abdallah",
+              "teamColor": "#0A60A8"
+            },
+            "assistStr": "assist by Himad Abdelli",
+            "assistProfileUrl": "/players/956659/himad-abdelli",
+            "assistPlayerId": 956659,
+            "assistKey": "assist_by",
+            "assistInput": "Himad Abdelli"
+          },
+          "player_name": "Keyliane Abdallah",
+          "needs_update": true
         },
         {
           "event_key": "id:14448327",
@@ -2139,8 +2225,8 @@
               "teamId": 10188,
               "playerId": 623540,
               "playerName": "Václav Cerny",
-              "x": 96.7017543851,
-              "y": 22.597961787499997,
+              "x": 93.8,
+              "y": 24.84,
               "min": 56,
               "minAdded": null,
               "isBlocked": false,
@@ -2149,8 +2235,8 @@
               "blockedY": null,
               "goalCrossedY": 37.355000000000004,
               "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.043461427092552185,
-              "expectedGoalsOnTarget": 0.7263634204864502,
+              "expectedGoals": 0.06012997031211853,
+              "expectedGoalsOnTarget": 0.8742408156394958,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -2173,7 +2259,9 @@
             "assistPlayerId": 935409,
             "assistKey": "assist_by",
             "assistInput": "Orkun Kökcü"
-          }
+          },
+          "player_name": "Václav Cerny",
+          "needs_update": true
         },
         {
           "event_key": "id:14448364",
@@ -2223,8 +2311,8 @@
               "teamId": 10188,
               "playerId": 643635,
               "playerName": "Amir Murillo",
-              "x": 96.7017543851,
-              "y": 31.7125,
+              "x": 96.79824561320001,
+              "y": 32.39875,
               "min": 59,
               "minAdded": null,
               "isBlocked": false,
@@ -2233,8 +2321,8 @@
               "blockedY": null,
               "goalCrossedY": 37.2025,
               "goalCrossedZ": 0.7705263120000001,
-              "expectedGoals": 0.05911630764603615,
-              "expectedGoalsOnTarget": 0.784226655960083,
+              "expectedGoals": 0.0648212879896164,
+              "expectedGoalsOnTarget": 0.809248685836792,
               "shotType": "Header",
               "situation": "FromCorner",
               "period": "SecondHalf",
@@ -2257,7 +2345,9 @@
             "assistPlayerId": 935409,
             "assistKey": "assist_by",
             "assistInput": "Orkun Kökcü"
-          }
+          },
+          "player_name": "Amir Murillo",
+          "needs_update": true
         },
         {
           "event_key": "id:14448475",
@@ -2307,8 +2397,8 @@
               "teamId": 10188,
               "playerId": 1251666,
               "playerName": "Ernest Poku",
-              "x": 93.2,
-              "y": 30.22,
+              "x": 94.4824561388,
+              "y": 31.254999999999995,
               "min": 81,
               "minAdded": null,
               "isBlocked": false,
@@ -2317,8 +2407,8 @@
               "blockedY": null,
               "goalCrossedY": 32.0175,
               "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.36788949370384216,
-              "expectedGoalsOnTarget": 0.5422555804252625,
+              "expectedGoals": 0.400846391916275,
+              "expectedGoalsOnTarget": 0.7422308921813965,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -2341,7 +2431,9 @@
             "assistPlayerId": 1264368,
             "assistKey": "assist_by",
             "assistInput": "Junior Olaïtan"
-          }
+          },
+          "player_name": "Ernest Poku",
+          "needs_update": true
         }
       ]
     },
@@ -2380,79 +2472,43 @@
           "own_goal": false,
           "cancelled": false,
           "event": {
-            "reactKey": "1444807820Goal1133802undefinedfalse",
+            "reactKey": "1444807820Goal782705undefinedfalse",
             "timeStr": 20,
             "type": "goal",
             "time": 20,
             "overloadTime": null,
             "eventId": 14448078,
             "player": {
-              "id": 1133802,
-              "name": "Bamidele Yusuf",
-              "profileUrl": "/players/1133802/bamidele-yusuf"
+              "id": 782705,
+              "name": "Liam Scales",
+              "profileUrl": "/players/782705/liam-scales"
             },
             "homeScore": 0,
             "awayScore": 0,
-            "profileUrl": "/players/1133802/bamidele-yusuf",
+            "profileUrl": "/players/782705/liam-scales",
             "overloadTimeStr": false,
             "isHome": false,
-            "ownGoal": null,
-            "goalDescription": null,
-            "goalDescriptionKey": null,
-            "suffix": null,
-            "suffixKey": null,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
             "isPenaltyShootoutEvent": false,
-            "nameStr": "Bamidele Yusuf",
-            "firstName": "Bamidele",
-            "lastName": "Yusuf",
-            "fullName": "Bamidele Yusuf",
-            "playerId": 1133802,
+            "nameStr": "Liam Scales",
+            "firstName": "Liam",
+            "lastName": "Scales",
+            "fullName": "Liam Scales",
+            "playerId": 782705,
             "newScore": [
               0,
               1
             ],
             "penShootoutScore": null,
-            "shotmapEvent": {
-              "id": 2971136981,
-              "eventType": "Goal",
-              "teamId": 8222,
-              "playerId": 1133802,
-              "playerName": "Bamidele Yusuf",
-              "x": 87.426470588,
-              "y": 13.9801273886,
-              "min": 20,
-              "minAdded": null,
-              "isBlocked": false,
-              "isOnTarget": true,
-              "blockedX": null,
-              "blockedY": null,
-              "goalCrossedY": 37.27875,
-              "goalCrossedZ": 0.28252631440000003,
-              "expectedGoals": 0.01785939931869507,
-              "expectedGoalsOnTarget": 0.12730339169502258,
-              "shotType": "LeftFoot",
-              "situation": "RegularPlay",
-              "period": "FirstHalf",
-              "isOwnGoal": false,
-              "onGoalShot": {
-                "x": 0.13260582010581956,
-                "y": 0.07474241121693122,
-                "zoomRatio": 1
-              },
-              "isSavedOffLine": false,
-              "isFromInsideBox": false,
-              "keeperId": 1185782,
-              "firstName": "Bamidele",
-              "lastName": "Yusuf",
-              "fullName": "Bamidele Yusuf",
-              "teamColor": "#008040"
-            },
-            "assistStr": "assist by Kristoffer Zachariassen",
-            "assistProfileUrl": "/players/532097/kristoffer-zachariassen",
-            "assistPlayerId": 532097,
-            "assistKey": "assist_by",
-            "assistInput": "Kristoffer Zachariassen"
-          }
+            "assistStr": null,
+            "assistProfileUrl": null
+          },
+          "player_name": "Liam Scales",
+          "needs_update": true
         },
         {
           "event_key": "id:14448186",
@@ -2502,8 +2558,8 @@
               "teamId": 8222,
               "playerId": 532097,
               "playerName": "Kristoffer Zachariassen",
-              "x": 100.6379310348,
-              "y": 28.370952380000002,
+              "x": 100.9224137934,
+              "y": 30.316,
               "min": 45,
               "minAdded": 1,
               "isBlocked": false,
@@ -2512,8 +2568,8 @@
               "blockedY": null,
               "goalCrossedY": 32.70374999999999,
               "goalCrossedZ": 0.20547368320000003,
-              "expectedGoals": 0.11337162554264069,
-              "expectedGoalsOnTarget": 0.17625464498996735,
+              "expectedGoals": 0.21068771183490753,
+              "expectedGoalsOnTarget": 0.2375689148902893,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -2536,7 +2592,9 @@
             "assistPlayerId": 1133802,
             "assistKey": "assist_by",
             "assistInput": "Bamidele Yusuf"
-          }
+          },
+          "player_name": "Kristoffer Zachariassen",
+          "needs_update": true
         },
         {
           "event_key": "id:14448176",
@@ -2586,8 +2644,8 @@
               "teamId": 9925,
               "playerId": 1329169,
               "playerName": "Mika Baur",
-              "x": 95.640350876,
-              "y": 37.58375000000001,
+              "x": 95.9298245603,
+              "y": 36.5925,
               "min": 44,
               "minAdded": null,
               "isBlocked": false,
@@ -2596,8 +2654,8 @@
               "blockedY": null,
               "goalCrossedY": 33.00875,
               "goalCrossedZ": 0.28252631440000003,
-              "expectedGoals": 0.1522621214389801,
-              "expectedGoalsOnTarget": 0.6649877429008484,
+              "expectedGoals": 0.33562085032463074,
+              "expectedGoalsOnTarget": 0.8690466284751892,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -2620,7 +2678,9 @@
             "assistPlayerId": 582499,
             "assistKey": "assist_by",
             "assistInput": "Kieran Tierney"
-          }
+          },
+          "player_name": "Mika Baur",
+          "needs_update": true
         },
         {
           "event_key": "id:14448254",
@@ -2680,8 +2740,8 @@
               "blockedY": null,
               "goalCrossedY": 31.026249999999997,
               "goalCrossedZ": 1.6694736760000002,
-              "expectedGoals": 0.05565343797206879,
-              "expectedGoalsOnTarget": 0.832690417766571,
+              "expectedGoals": 0.055125560611486435,
+              "expectedGoalsOnTarget": 0.8006529211997986,
               "shotType": "RightFoot",
               "situation": "FastBreak",
               "period": "SecondHalf",
@@ -2704,7 +2764,9 @@
             "assistPlayerId": 1133802,
             "assistKey": "assist_by",
             "assistInput": "Bamidele Yusuf"
-          }
+          },
+          "player_name": "Daniel Arzani",
+          "needs_update": true
         }
       ]
     },
@@ -2779,8 +2841,8 @@
               "teamId": 9826,
               "playerId": 1047676,
               "playerName": "Yéremi Pino",
-              "x": 94.4824561388,
-              "y": 31.4075,
+              "x": 95.35087719170001,
+              "y": 30.645,
               "min": 10,
               "minAdded": null,
               "isBlocked": false,
@@ -2789,8 +2851,8 @@
               "blockedY": null,
               "goalCrossedY": 36.21125,
               "goalCrossedZ": 0.6485263126,
-              "expectedGoals": 0.6185494661331177,
-              "expectedGoalsOnTarget": 0.7535476088523865,
+              "expectedGoals": 0.6247711777687073,
+              "expectedGoalsOnTarget": 0.81794273853302,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -2810,7 +2872,9 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
-          }
+          },
+          "player_name": "Yéremi Pino",
+          "needs_update": true
         },
         {
           "event_key": "id:14448116",
@@ -2870,8 +2934,8 @@
               "blockedY": null,
               "goalCrossedY": 32.3225,
               "goalCrossedZ": 1.7079999916000002,
-              "expectedGoals": 0.059745170176029205,
-              "expectedGoalsOnTarget": 0.2615445554256439,
+              "expectedGoals": 0.06208990141749382,
+              "expectedGoalsOnTarget": 0.3425075113773346,
               "shotType": "Header",
               "situation": "FromCorner",
               "period": "FirstHalf",
@@ -2894,7 +2958,9 @@
             "assistPlayerId": 1296650,
             "assistKey": "assist_by",
             "assistInput": "Adam Wharton"
-          }
+          },
+          "player_name": "Chris Richards",
+          "needs_update": true
         },
         {
           "event_key": "id:14448143",
@@ -2975,12 +3041,14 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
-          }
+          },
+          "player_name": "Jørgen Strand Larsen",
+          "needs_update": true
         },
         {
           "event_key": "id:14448490",
           "player_id": 860920,
-          "assist_player_id": null,
+          "assist_player_id": 939542,
           "is_home": true,
           "minute": "89",
           "penalty": false,
@@ -3025,8 +3093,8 @@
               "teamId": 9826,
               "playerId": 860920,
               "playerName": "Edward Nketiah",
-              "x": 93.4,
-              "y": 23.0183439533,
+              "x": 94.09649122639999,
+              "y": 25.186875,
               "min": 89,
               "minAdded": null,
               "isBlocked": false,
@@ -3035,8 +3103,8 @@
               "blockedY": null,
               "goalCrossedY": 36.36375,
               "goalCrossedZ": 0.20547368320000003,
-              "expectedGoals": 0.07382338494062424,
-              "expectedGoalsOnTarget": 0.3277364671230316,
+              "expectedGoals": 0.16510009765625,
+              "expectedGoalsOnTarget": 0.7975257039070129,
               "shotType": "LeftFoot",
               "situation": "FastBreak",
               "period": "SecondHalf",
@@ -3054,9 +3122,14 @@
               "fullName": "Edward Nketiah",
               "teamColor": "#0055A5"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "assistStr": "assist by Dwight McNeil",
+            "assistProfileUrl": "/players/939542/dwight-mcneil",
+            "assistPlayerId": 939542,
+            "assistKey": "assist_by",
+            "assistInput": "Dwight McNeil"
+          },
+          "player_name": "Edward Nketiah",
+          "needs_update": true
         }
       ]
     },
@@ -3135,8 +3208,8 @@
               "teamId": 9885,
               "playerId": 841672,
               "playerName": "Nicolás González",
-              "x": 100.9224137934,
-              "y": 39.881190477,
+              "x": 99.784482759,
+              "y": 40.049285714999996,
               "min": 9,
               "minAdded": null,
               "isBlocked": false,
@@ -3145,8 +3218,8 @@
               "blockedY": null,
               "goalCrossedY": 35.6775,
               "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.5754,
-              "expectedGoalsOnTarget": 0.8421,
+              "expectedGoals": 0.9155113697052002,
+              "expectedGoalsOnTarget": 0.9952552914619446,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -3169,7 +3242,9 @@
             "assistPlayerId": 760722,
             "assistKey": "assist_by",
             "assistInput": "Kamil Grabara"
-          }
+          },
+          "player_name": "Nicolás González",
+          "needs_update": true
         },
         {
           "event_key": "id:14448096",
@@ -3219,25 +3294,25 @@
               "teamId": 9885,
               "playerId": 1684401,
               "playerName": "Kerim Alajbegović",
-              "x": 90.6,
-              "y": 32.9325,
+              "x": 89.2,
+              "y": 33.77125,
               "min": 24,
               "minAdded": null,
               "isBlocked": false,
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 36.821250000000006,
-              "goalCrossedZ": 1.4639999928,
-              "expectedGoals": 0.20817719399929047,
-              "expectedGoalsOnTarget": 0.7755182385444641,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 1.3419999934,
+              "expectedGoals": 0.15996350347995758,
+              "expectedGoalsOnTarget": 0.7857232689857483,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.2536375661375645,
-                "y": 0.38730158539682535,
+                "x": 0.21329365079365015,
+                "y": 0.35502645328042326,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -3253,7 +3328,9 @@
             "assistPlayerId": 848266,
             "assistKey": "assist_by",
             "assistInput": "Weston McKennie"
-          }
+          },
+          "player_name": "Kerim Alajbegović",
+          "needs_update": true
         },
         {
           "event_key": "id:14448140",
@@ -3311,17 +3388,17 @@
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 35.525000000000006,
-              "goalCrossedZ": 1.0979999946,
+              "goalCrossedY": 35.29625000000001,
+              "goalCrossedZ": 1.1814736784,
               "expectedGoals": 0.7884,
-              "expectedGoalsOnTarget": 0.681291937828064,
+              "expectedGoalsOnTarget": 0.7917797565460205,
               "shotType": "RightFoot",
               "situation": "Penalty",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.5965608465608451,
-                "y": 0.29047618904761907,
+                "x": 0.6570767195767175,
+                "y": 0.31255917417989415,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -3334,7 +3411,9 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
-          }
+          },
+          "player_name": "Nick Woltemade",
+          "needs_update": true
         },
         {
           "event_key": "id:14448410",
@@ -3394,8 +3473,8 @@
               "blockedY": null,
               "goalCrossedY": 35.75375,
               "goalCrossedZ": 0.8925263114,
-              "expectedGoals": 0.7899,
-              "expectedGoalsOnTarget": 0.951,
+              "expectedGoals": 0.858022153377533,
+              "expectedGoalsOnTarget": 0.9875525236129761,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -3418,7 +3497,9 @@
             "assistPlayerId": 823825,
             "assistKey": "assist_by",
             "assistInput": "Randal Kolo Muani"
-          }
+          },
+          "player_name": "Zeki Çelik",
+          "needs_update": true
         },
         {
           "event_key": "id:14448451",
@@ -3502,7 +3583,9 @@
             "assistPlayerId": 860913,
             "assistKey": "assist_by",
             "assistInput": "Jhon Lucumí"
-          }
+          },
+          "player_name": "Randal Kolo Muani",
+          "needs_update": true
         }
       ]
     },
@@ -3610,12 +3693,14 @@
               "fullName": "Alejandro Alfaro",
               "teamColor": "#951A2F"
             },
-            "assistStr": "assist by Manuel Pozo",
-            "assistProfileUrl": "/players/1219562/manuel-pozo",
-            "assistPlayerId": 1219562,
+            "assistStr": "assist by David Bruno",
+            "assistProfileUrl": "/players/191785/david-bruno",
+            "assistPlayerId": 191785,
             "assistKey": "assist_by",
-            "assistInput": "Manuel Pozo"
-          }
+            "assistInput": "David Bruno"
+          },
+          "player_name": "Alejandro Alfaro",
+          "needs_update": true
         },
         {
           "event_key": "id:14448287",
@@ -3675,8 +3760,8 @@
               "blockedY": null,
               "goalCrossedY": 31.1025,
               "goalCrossedZ": 0.0834736838,
-              "expectedGoals": 0.1566958874464035,
-              "expectedGoalsOnTarget": 0.2334665209054947,
+              "expectedGoals": 0.23851220309734344,
+              "expectedGoalsOnTarget": 0.2956394553184509,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -3699,7 +3784,9 @@
             "assistPlayerId": 886809,
             "assistKey": "assist_by",
             "assistInput": "Javi Vázquez"
-          }
+          },
+          "player_name": "Manuel Pozo",
+          "needs_update": true
         },
         {
           "event_key": "id:14448457",
@@ -3783,7 +3870,9 @@
             "assistPlayerId": 791597,
             "assistKey": "assist_by",
             "assistInput": "Vá"
-          }
+          },
+          "player_name": "Thomas Lehne Olsen",
+          "needs_update": true
         }
       ]
     },
@@ -3818,7 +3907,7 @@
         {
           "event_key": "id:14448027",
           "player_id": 794253,
-          "assist_player_id": null,
+          "assist_player_id": 1177358,
           "is_home": false,
           "minute": "11",
           "penalty": false,
@@ -3871,17 +3960,17 @@
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 36.21125,
-              "goalCrossedZ": 1.1814736784,
-              "expectedGoals": 0.2558225989341736,
-              "expectedGoalsOnTarget": 0.7970036864280701,
+              "goalCrossedY": 36.5925,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.24500849843025208,
+              "expectedGoalsOnTarget": 0.6932917833328247,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.41501322751322767,
-                "y": 0.31255917417989415,
+                "x": 0.31415343915343885,
+                "y": 0.32275132116402117,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -3892,9 +3981,14 @@
               "fullName": "Justin Kluivert",
               "teamColor": "#D71921"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "assistStr": "assist by Adrien Truffert",
+            "assistProfileUrl": "/players/1177358/adrien-truffert",
+            "assistPlayerId": 1177358,
+            "assistKey": "assist_by",
+            "assistInput": "Adrien Truffert"
+          },
+          "player_name": "Justin Kluivert",
+          "needs_update": true
         },
         {
           "event_key": "id:14448086",
@@ -3954,8 +4048,8 @@
               "blockedY": null,
               "goalCrossedY": 33.695,
               "goalCrossedZ": 0.9374736796,
-              "expectedGoals": 0.1402069479227066,
-              "expectedGoalsOnTarget": 0.09749597311019897,
+              "expectedGoals": 0.11799033731222153,
+              "expectedGoalsOnTarget": 0.05054057762026787,
               "shotType": "Header",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -3978,7 +4072,9 @@
             "assistPlayerId": 1233655,
             "assistKey": "assist_by",
             "assistInput": "Alex Scott"
-          }
+          },
+          "player_name": "Rayan",
+          "needs_update": true
         },
         {
           "event_key": "id:14448316",
@@ -3990,10 +4086,10 @@
           "own_goal": false,
           "cancelled": false,
           "event": {
-            "reactKey": "1444831658Goal844477undefinedtrue",
-            "timeStr": 58,
+            "reactKey": "1444831657Goal844477undefinedtrue",
+            "timeStr": 57,
             "type": "goal",
-            "time": 58,
+            "time": 57,
             "overloadTime": null,
             "eventId": 14448316,
             "player": {
@@ -4030,7 +4126,7 @@
               "playerName": "Sergio Gómez",
               "x": 81.471359224,
               "y": 12.462559249,
-              "min": 58,
+              "min": 57,
               "minAdded": null,
               "isBlocked": false,
               "isOnTarget": true,
@@ -4038,8 +4134,8 @@
               "blockedY": null,
               "goalCrossedY": 36.97375,
               "goalCrossedZ": 1.0979999946,
-              "expectedGoals": 0.0243,
-              "expectedGoalsOnTarget": 0.4167,
+              "expectedGoals": 0.015452434308826923,
+              "expectedGoalsOnTarget": 0.22683554887771606,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -4059,7 +4155,9 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
-          }
+          },
+          "player_name": "Sergio Gómez",
+          "needs_update": true
         }
       ]
     },
@@ -4170,7 +4268,9 @@
             "assistPlayerId": 1670317,
             "assistKey": "assist_by",
             "assistInput": "Massiré Sylla"
-          }
+          },
+          "player_name": "Relebohile Mofokeng",
+          "needs_update": true
         },
         {
           "event_key": "id:14448185",
@@ -4230,8 +4330,8 @@
               "blockedY": null,
               "goalCrossedY": 31.178749999999994,
               "goalCrossedZ": 0.2439999988,
-              "expectedGoals": 0.40973854064941406,
-              "expectedGoalsOnTarget": 0.9487782716751099,
+              "expectedGoals": 0.5041117668151855,
+              "expectedGoalsOnTarget": 0.6887881755828857,
               "shotType": "LeftFoot",
               "situation": "FastBreak",
               "period": "FirstHalf",
@@ -4254,12 +4354,14 @@
             "assistPlayerId": 1178319,
             "assistKey": "assist_by",
             "assistInput": "Louis Patris"
-          }
+          },
+          "player_name": "Mateo Biondic",
+          "needs_update": true
         },
         {
           "event_key": "id:14448332",
           "player_id": 1395201,
-          "assist_player_id": null,
+          "assist_player_id": 1338361,
           "is_home": false,
           "minute": "59",
           "penalty": false,
@@ -4304,25 +4406,25 @@
               "teamId": 7978,
               "playerId": 1395201,
               "playerName": "Ondřej Kričfaluši",
-              "x": 100.732758621,
-              "y": 32.6275,
+              "x": 100.9224137934,
+              "y": 33.61875,
               "min": 59,
               "minAdded": null,
               "isBlocked": false,
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 36.21125,
-              "goalCrossedZ": 0.5265263132,
-              "expectedGoals": 0.5009996294975281,
-              "expectedGoalsOnTarget": 0.9767087697982788,
+              "goalCrossedY": 35.3725,
+              "goalCrossedZ": 0.9374736796,
+              "expectedGoals": 0.3021308183670044,
+              "expectedGoalsOnTarget": 0.6717764139175415,
               "shotType": "Header",
               "situation": "FromCorner",
               "period": "SecondHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.41501322751322767,
-                "y": 0.13929267544973545,
+                "x": 0.6369047619047613,
+                "y": 0.24800890994708993,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -4333,9 +4435,14 @@
               "fullName": "Ondřej Kričfaluši",
               "teamColor": "#daa000"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "assistStr": "assist by Besfort Zeneli",
+            "assistProfileUrl": "/players/1338361/besfort-zeneli",
+            "assistPlayerId": 1338361,
+            "assistKey": "assist_by",
+            "assistInput": "Besfort Zeneli"
+          },
+          "player_name": "Ondřej Kričfaluši",
+          "needs_update": true
         }
       ]
     },
@@ -4372,28 +4479,28 @@
         {
           "event_key": "id:14447390",
           "player_id": 0,
-          "assist_player_id": null,
+          "assist_player_id": 942365,
           "is_home": true,
           "minute": "45 + 1",
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
           "event": {
-            "reactKey": "1444739045Goal0undefinedtrue",
-            "timeStr": "45 + 1",
+            "reactKey": "1444739045Goal1209399undefinedtrue",
+            "timeStr": 45,
             "type": "goal",
             "time": 45,
-            "overloadTime": 1,
+            "overloadTime": null,
             "eventId": 14447390,
             "player": {
-              "id": 0,
-              "name": "<TBD>",
-              "profileUrl": ""
+              "id": 1209399,
+              "name": "Abdessamad Ezzalzouli",
+              "profileUrl": "/players/1209399/abdessamad-ezzalzouli"
             },
             "homeScore": 0,
             "awayScore": 0,
-            "profileUrl": "",
-            "overloadTimeStr": "+1",
+            "profileUrl": "/players/1209399/abdessamad-ezzalzouli",
+            "overloadTimeStr": false,
             "isHome": true,
             "ownGoal": null,
             "goalDescription": null,
@@ -4401,19 +4508,59 @@
             "suffix": null,
             "suffixKey": null,
             "isPenaltyShootoutEvent": false,
-            "nameStr": "<TBD>",
-            "firstName": "",
-            "lastName": "<TBD>",
-            "fullName": "<TBD>",
-            "playerId": 0,
+            "nameStr": "Abdessamad Ezzalzouli",
+            "firstName": "Abdessamad",
+            "lastName": "Ezzalzouli",
+            "fullName": "Abdessamad Ezzalzouli",
+            "playerId": 1209399,
             "newScore": [
               1,
               0
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "shotmapEvent": {
+              "id": 2971097399,
+              "eventType": "Goal",
+              "teamId": 8603,
+              "playerId": 1209399,
+              "playerName": "Abdessamad Ezzalzouli",
+              "x": 96.50877192889999,
+              "y": 37.50750000000001,
+              "min": 45,
+              "minAdded": 0,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.821250000000006,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.4941418766975403,
+              "expectedGoalsOnTarget": 0.9766503572463989,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2536375661375645,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 581919,
+              "firstName": "Abdessamad",
+              "lastName": "Ezzalzouli",
+              "fullName": "Abdessamad Ezzalzouli",
+              "teamColor": "#009048"
+            },
+            "assistStr": "assist by Troy Parrott",
+            "assistProfileUrl": "/players/942365/troy-parrott",
+            "assistPlayerId": 942365,
+            "assistKey": "assist_by",
+            "assistInput": "Troy Parrott"
+          },
+          "player_name": "Abdessamad Ezzalzouli",
+          "needs_update": true
         }
       ]
     },
@@ -4499,25 +4646,25 @@
               "teamId": 9864,
               "playerId": 1209421,
               "playerName": "Carlos Dotor",
-              "x": 92.2,
-              "y": 36.440000000000005,
+              "x": 91.6,
+              "y": 34.68625,
               "min": 12,
               "minAdded": null,
               "isBlocked": false,
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 37.355000000000004,
-              "goalCrossedZ": 0.2439999988,
-              "expectedGoals": 0.24975083768367767,
-              "expectedGoalsOnTarget": 0.7623017430305481,
+              "goalCrossedY": 37.2025,
+              "goalCrossedZ": 0.7705263120000001,
+              "expectedGoals": 0.17841263115406036,
+              "expectedGoalsOnTarget": 0.8792390823364258,
               "shotType": "RightFoot",
               "situation": "FastBreak",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.11243386243386144,
-                "y": 0.06455026423280423,
+                "x": 0.15277777777777768,
+                "y": 0.2038429396825397,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -4533,7 +4680,9 @@
             "assistPlayerId": 940608,
             "assistKey": "assist_by",
             "assistInput": "Juan Cruz"
-          }
+          },
+          "player_name": "Carlos Dotor",
+          "needs_update": true
         },
         {
           "event_key": "id:14448284",
@@ -4593,8 +4742,8 @@
               "blockedY": null,
               "goalCrossedY": 35.143750000000004,
               "goalCrossedZ": 1.0145263108,
-              "expectedGoals": 0.249263733625412,
-              "expectedGoalsOnTarget": 0.11329754441976547,
+              "expectedGoals": 0.21375447511672974,
+              "expectedGoalsOnTarget": 0.8903986811637878,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -4617,7 +4766,9 @@
             "assistPlayerId": 1311915,
             "assistKey": "assist_by",
             "assistInput": "Ilias Akhomach"
-          }
+          },
+          "player_name": "Alberto Moleiro",
+          "needs_update": true
         },
         {
           "event_key": "id:14448320",
@@ -4667,8 +4818,8 @@
               "teamId": 10205,
               "playerId": 844544,
               "playerName": "Pape Gueye",
-              "x": 95.54385964789999,
-              "y": 33.92375,
+              "x": 97.1842105256,
+              "y": 32.24625,
               "min": 45,
               "minAdded": 2,
               "isBlocked": false,
@@ -4677,8 +4828,8 @@
               "blockedY": null,
               "goalCrossedY": 34.68625,
               "goalCrossedZ": 0.3274736826,
-              "expectedGoals": 0.3219941258430481,
-              "expectedGoalsOnTarget": 0.266832172870636,
+              "expectedGoals": 0.40727296471595764,
+              "expectedGoalsOnTarget": 0.6316011548042297,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -4701,7 +4852,9 @@
             "assistPlayerId": 479020,
             "assistKey": "assist_by",
             "assistInput": "Ayoze Pérez"
-          }
+          },
+          "player_name": "Pape Gueye",
+          "needs_update": true
         },
         {
           "event_key": "id:14448530",
@@ -4782,7 +4935,9 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
-          }
+          },
+          "player_name": "Pape Gueye",
+          "needs_update": true
         }
       ]
     },
@@ -4813,7 +4968,7 @@
         {
           "event_key": "id:14447919",
           "player_id": 1726962,
-          "assist_player_id": null,
+          "assist_player_id": 1721789,
           "is_home": true,
           "minute": "29",
           "penalty": false,
@@ -4887,9 +5042,14 @@
               "fullName": "Floyd Samba",
               "teamColor": "#69A8D8"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "assistStr": "assist by Allan",
+            "assistProfileUrl": "/players/1721789/allan",
+            "assistPlayerId": 1721789,
+            "assistKey": "assist_by",
+            "assistInput": "Allan"
+          },
+          "player_name": "Floyd Samba",
+          "needs_update": true
         },
         {
           "event_key": "id:14447935",
@@ -4973,12 +5133,14 @@
             "assistPlayerId": 1561552,
             "assistKey": "assist_by",
             "assistInput": "Ayyoub Bouaddi"
-          }
+          },
+          "player_name": "Rayan Cherki",
+          "needs_update": true
         },
         {
           "event_key": "id:14448156",
           "player_id": 1726962,
-          "assist_player_id": null,
+          "assist_player_id": 933845,
           "is_home": true,
           "minute": "54",
           "penalty": false,
@@ -5033,8 +5195,8 @@
               "blockedY": null,
               "goalCrossedY": 30.797499999999996,
               "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.0478,
-              "expectedGoalsOnTarget": 0.5854,
+              "expectedGoals": 0.037586525082588196,
+              "expectedGoalsOnTarget": 0.5944864749908447,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -5052,9 +5214,14 @@
               "fullName": "Floyd Samba",
               "teamColor": "#69A8D8"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "assistStr": "assist by Rayan Aït-Nouri",
+            "assistProfileUrl": "/players/933845/rayan-ait-nouri",
+            "assistPlayerId": 933845,
+            "assistKey": "assist_by",
+            "assistInput": "Rayan Aït-Nouri"
+          },
+          "player_name": "Floyd Samba",
+          "needs_update": true
         },
         {
           "event_key": "id:14448134",
@@ -5138,32 +5305,34 @@
             "assistPlayerId": 933845,
             "assistKey": "assist_by",
             "assistInput": "Rayan Aït-Nouri"
-          }
+          },
+          "player_name": "Allan",
+          "needs_update": true
         },
         {
           "event_key": "id:14448317",
           "player_id": 0,
-          "assist_player_id": null,
+          "assist_player_id": 1300526,
           "is_home": true,
           "minute": "90",
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
           "event": {
-            "reactKey": "1444831790Goal0undefinedtrue",
+            "reactKey": "1444831790Goal1680328undefinedtrue",
             "timeStr": 90,
             "type": "goal",
             "time": 90,
             "overloadTime": null,
             "eventId": 14448317,
             "player": {
-              "id": 0,
-              "name": "<TBD>",
-              "profileUrl": ""
+              "id": 1680328,
+              "name": "Ryan McAidoo",
+              "profileUrl": "/players/1680328/ryan-mcaidoo"
             },
             "homeScore": 4,
             "awayScore": 0,
-            "profileUrl": "",
+            "profileUrl": "/players/1680328/ryan-mcaidoo",
             "overloadTimeStr": false,
             "isHome": true,
             "ownGoal": null,
@@ -5172,19 +5341,59 @@
             "suffix": null,
             "suffixKey": null,
             "isPenaltyShootoutEvent": false,
-            "nameStr": "<TBD>",
-            "firstName": "",
-            "lastName": "<TBD>",
-            "fullName": "<TBD>",
-            "playerId": 0,
+            "nameStr": "Ryan McAidoo",
+            "firstName": "Ryan",
+            "lastName": "McAidoo",
+            "fullName": "Ryan McAidoo",
+            "playerId": 1680328,
             "newScore": [
               5,
               0
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
-          }
+            "shotmapEvent": {
+              "id": 2971161965,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1680328,
+              "playerName": "Ryan McAidoo",
+              "x": 93.6,
+              "y": 24.139363062099996,
+              "min": 90,
+              "minAdded": 0,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.66875,
+              "goalCrossedZ": 1.5474736766000001,
+              "expectedGoals": 0.09675998240709305,
+              "expectedGoalsOnTarget": 0.5812896490097046,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.29398148148148073,
+                "y": 0.40938457052910054,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 862590,
+              "firstName": "Ryan",
+              "lastName": "McAidoo",
+              "fullName": "Ryan McAidoo",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": "assist by Nico O'Reilly",
+            "assistProfileUrl": "/players/1300526/nico-oreilly",
+            "assistPlayerId": 1300526,
+            "assistKey": "assist_by",
+            "assistInput": "Nico O'Reilly"
+          },
+          "player_name": "Ryan McAidoo",
+          "needs_update": true
         }
       ]
     }
