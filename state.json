@@ -1308,7 +1308,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14452195",
-        "id:14452342"
+        "id:14452342",
+        "id:14452595"
       ],
       "goals": [
         {
@@ -1483,6 +1484,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "id:14452595",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "88",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1892,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1445259588Goal0undefinedfalse",
+            "timeStr": 88,
+            "type": "goal",
+            "time": 88,
+            "overloadTime": null,
+            "eventId": 14452595,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ]
     },
@@ -1495,7 +1546,8 @@
       "finished_sent": false,
       "event_keys": [
         "id:14451462",
-        "id:14452293"
+        "id:14452293",
+        "id:14452581"
       ],
       "goals": [
         {
@@ -1672,6 +1724,91 @@
             "assistPlayerId": 254308,
             "assistKey": "assist_by",
             "assistInput": "Florian Thauvin"
+          }
+        },
+        {
+          "event_key": "id:14452581",
+          "player_id": 513072,
+          "player_name": "Jonathan Gradit",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "84",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 1893,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1445258184Goal513072undefinedtrue",
+            "timeStr": 84,
+            "type": "goal",
+            "time": 84,
+            "overloadTime": null,
+            "eventId": 14452581,
+            "player": {
+              "id": 513072,
+              "name": "Jonathan Gradit",
+              "profileUrl": "/players/513072/jonathan-gradit"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/513072/jonathan-gradit",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jonathan Gradit",
+            "firstName": "Jonathan",
+            "lastName": "Gradit",
+            "fullName": "Jonathan Gradit",
+            "playerId": 513072,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2971515583,
+              "eventType": "Goal",
+              "teamId": 8588,
+              "playerId": 513072,
+              "playerName": "Jonathan Gradit",
+              "x": 8.6842105273,
+              "y": 33.61875,
+              "min": 84,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.78875,
+              "goalCrossedZ": 0.9374736796,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.5849867724867723,
+                "y": 0.24800890994708993,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1390336,
+              "firstName": "Jonathan",
+              "lastName": "Gradit",
+              "fullName": "Jonathan Gradit",
+              "teamColor": "#d89f00"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
           }
         }
       ]
