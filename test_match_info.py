@@ -1,417 +1,266 @@
-import json
-import re
+from event_detector import (
+    detect_updated_goals,
+    get_goal_info,
+)
 
-import requests
-
-
-MATCHES = [
-    "https://www.fotmob.com/matches/esteghlal-vs-al-sadd/9ih3qny#6050065",
-    "https://www.fotmob.com/matches/hapoel-beer-sheva-vs-dinamo-zagreb/3a0mfj#6112363",
-    "https://www.fotmob.com/matches/brighton-hove-albion-vs-manchester-united/3goccs#6099329",
-    "https://www.fotmob.com/matches/nottingham-forest-vs-aston-villa/3gke9k#5206176",
-    "https://www.fotmob.com/matches/arsenal-vs-crystal-palace/36ytc8#5034192",
-    "https://www.fotmob.com/matches/vissel-kobe-vs-al-sadd/2lxqo1w#5336423",
-]
+from state_manager import (
+    default_match_state,
+    add_goal,
+    set_goal_message_id,
+)
 
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 "
-        "(KHTML, like Gecko) "
-        "Chrome/131.0.0.0 Safari/537.36"
-    )
-}
-
-
-INTERESTING_KEYS = {
-    "id",
-    "name",
-    "shortName",
-    "slug",
-    "tournamentId",
-    "tournamentID",
-    "leagueId",
-    "leagueID",
-    "uniqueTournamentId",
-    "uniqueTournamentID",
-    "competitionId",
-    "competitionID",
-    "seasonId",
-    "seasonID",
-    "stageId",
-    "stageID",
-    "roundId",
-    "roundID",
-    "parentTournament",
-    "parent",
-    "season",
-    "stage",
-    "round",
-    "tournament",
-    "league",
-    "competition",
-}
-
-
-INTERESTING_NAMES = {
-    "premier league",
-    "europa league",
-    "efl cup",
-    "afc champions league elite",
-    "afc champions league",
-    "champions league",
-    "final stage",
-    "league phase",
-    "knockout phase",
-    "round of 16",
-    "quarter-finals",
-    "quarterfinals",
-    "semi-finals",
-    "semifinals",
-    "final",
-}
-
-
-def extract_match_id(match_url):
-    match = re.search(
-        r"#(\d+)",
-        match_url,
-    )
-
-    if match:
-        return match.group(1)
-
-    match = re.search(
-        r"/matches/[^/]+/[^#]+",
-        match_url,
-    )
-
-    if match:
-        return match.group(0).split("/")[-1]
-
-    return "unknown"
-
-
-def fetch_next_data(match_url):
-    response = requests.get(
-        match_url,
-        headers=HEADERS,
-        timeout=30,
-    )
-
-    response.raise_for_status()
-
-    html = response.text
-
-    match = re.search(
-        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-        html,
-        re.DOTALL,
-    )
-
-    if not match:
-        raise RuntimeError(
-            "__NEXT_DATA__ پیدا نشد."
+def assert_equal(actual, expected, message):
+    if actual != expected:
+        raise AssertionError(
+            f"{message}\n"
+            f"Expected: {expected!r}\n"
+            f"Actual:   {actual!r}"
         )
 
-    return json.loads(
-        match.group(1)
-    )
 
-
-def normalize_text(value):
-    if not isinstance(
-        value,
-        str,
-    ):
-        return ""
-
-    return (
-        value
-        .strip()
-        .lower()
-        .replace(
-            "-",
-            " ",
-        )
-        .replace(
-            "_",
-            " ",
-        )
-    )
-
-
-def is_interesting_dict(data):
-    if not isinstance(
-        data,
-        dict,
-    ):
-        return False
-
-    keys = {
-        str(key)
-        for key in data.keys()
-    }
-
-    if keys.intersection(
-        INTERESTING_KEYS
-    ):
-        return True
-
-    for key, value in data.items():
-        if isinstance(
-            value,
-            str,
-        ):
-            normalized = normalize_text(
-                value
-            )
-
-            if normalized in INTERESTING_NAMES:
-                return True
-
-    return False
-
-
-def compact_value(value):
-    if isinstance(
-        value,
-        (
-            str,
-            int,
-            float,
-            bool,
-        ),
-    ) or value is None:
-        return value
-
-    if isinstance(
-        value,
-        list,
-    ):
-        return [
-            compact_value(item)
-            for item in value
-        ]
-
-    if isinstance(
-        value,
-        dict,
-    ):
-        result = {}
-
-        for key, item in value.items():
-            if (
-                key in INTERESTING_KEYS
-                or isinstance(
-                    item,
-                    (
-                        str,
-                        int,
-                        float,
-                        bool,
-                    ),
-                )
-            ):
-                result[key] = compact_value(
-                    item
-                )
-
-        return result
-
-    return str(value)
-
-
-def print_interesting_objects(
-    data,
-    path="$",
-    depth=0,
-    max_depth=12,
-):
-    if depth > max_depth:
-        return
-
-    if isinstance(
-        data,
-        dict,
-    ):
-
-        if is_interesting_dict(
-            data
-        ):
-            print()
-            print("-" * 100)
-            print(
-                "PATH:",
-                path,
-            )
-            print(
-                "OBJECT:"
-            )
-            print(
-                json.dumps(
-                    compact_value(data),
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
-
-        for key, value in data.items():
-            print_interesting_objects(
-                value,
-                path=f"{path}.{key}",
-                depth=depth + 1,
-                max_depth=max_depth,
-            )
-
-    elif isinstance(
-        data,
-        list,
-    ):
-
-        for index, value in enumerate(
-            data
-        ):
-            print_interesting_objects(
-                value,
-                path=f"{path}[{index}]",
-                depth=depth + 1,
-                max_depth=max_depth,
-            )
-
-
-def find_named_objects(
-    data,
-    path="$",
-    depth=0,
-    max_depth=12,
-):
-    if depth > max_depth:
-        return
-
-    if isinstance(
-        data,
-        dict,
-    ):
-
-        matched_names = []
-
-        for key, value in data.items():
-            if not isinstance(
-                value,
-                str,
-            ):
-                continue
-
-            normalized = normalize_text(
-                value
-            )
-
-            if normalized in INTERESTING_NAMES:
-                matched_names.append(
-                    (
-                        key,
-                        value,
-                    )
-                )
-
-        if matched_names:
-            print()
-            print("#" * 100)
-            print(
-                "NAMED OBJECT PATH:",
-                path,
-            )
-            print(
-                "MATCHED NAMES:",
-                matched_names,
-            )
-            print(
-                "FULL OBJECT:"
-            )
-            print(
-                json.dumps(
-                    data,
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
-
-        for key, value in data.items():
-            find_named_objects(
-                value,
-                path=f"{path}.{key}",
-                depth=depth + 1,
-                max_depth=max_depth,
-            )
-
-    elif isinstance(
-        data,
-        list,
-    ):
-
-        for index, value in enumerate(
-            data
-        ):
-            find_named_objects(
-                value,
-                path=f"{path}[{index}]",
-                depth=depth + 1,
-                max_depth=max_depth,
-            )
+def assert_true(value, message):
+    if not value:
+        raise AssertionError(message)
 
 
 def main():
-    for index, match_url in enumerate(
-        MATCHES,
-        start=1,
-    ):
+    print("=" * 60)
+    print("TBD GOAL UPDATE TEST")
+    print("=" * 60)
 
-        print()
-        print()
-        print("=" * 120)
-        print(
-            f"TEST {index}/{len(MATCHES)}"
-        )
-        print(
-            "URL:",
-            match_url,
-        )
-        print("=" * 120)
+    # --------------------------------------------------------
+    # مرحله 1:
+    # FotMob ابتدا همان گل را بدون نام بازیکن برمی‌گرداند.
+    # --------------------------------------------------------
 
-        try:
-            data = fetch_next_data(
-                match_url
-            )
+    first_event = {
+        "id": 123456,
+        "type": "Goal",
+        "minute": 37,
+        "isHome": True,
+        "playerName": "<TBD>",
+    }
 
-        except Exception as error:
-            print(
-                "ERROR:",
-                repr(error),
-            )
-            continue
+    match_state = default_match_state()
 
-        print()
-        print("========== ALL INTERESTING OBJECTS ==========")
+    first_goal_info = get_goal_info(
+        first_event
+    )
 
-        print_interesting_objects(
-            data
-        )
+    assert_true(
+        first_goal_info is not None,
+        "مرحله اول: گل توسط get_goal_info تشخیص داده نشد."
+    )
 
-        print()
-        print("========== OBJECTS WITH COMPETITION/STAGE NAMES ==========")
+    assert_equal(
+        first_goal_info["event_key"],
+        "id:123456",
+        "مرحله اول: event_key اشتباه است."
+    )
 
-        find_named_objects(
-            data
-        )
+    assert_equal(
+        first_goal_info["player_name"],
+        "<TBD>",
+        "مرحله اول: نام اولیه گل اشتباه است."
+    )
 
-        print()
-        print("=" * 120)
-        print(
-            f"END TEST {index}"
-        )
-        print("=" * 120)
+    # ثبت گل در state
+    goal = add_goal(
+        match_state,
+        first_goal_info,
+    )
+
+    assert_true(
+        goal is not None,
+        "مرحله اول: گل در state ثبت نشد."
+    )
+
+    assert_equal(
+        len(match_state["goals"]),
+        1,
+        "مرحله اول: تعداد گل‌های ثبت‌شده اشتباه است."
+    )
+
+    assert_equal(
+        goal["player_name"],
+        "<TBD>",
+        "مرحله اول: نام بازیکن باید TBD باشد."
+    )
+
+    assert_true(
+        goal["needs_update"] is True,
+        "مرحله اول: needs_update باید True باشد."
+    )
+
+    # فرض می‌کنیم پیام گل در تلگرام با موفقیت ارسال شده
+    # و شناسه پیام 500 است.
+    set_goal_message_id(
+        match_state,
+        "id:123456",
+        500,
+    )
+
+    assert_equal(
+        goal["telegram_message_id"],
+        500,
+        "مرحله اول: telegram_message_id ذخیره نشد."
+    )
+
+    print("PASS 1: گل اولیه با <TBD> ثبت شد.")
+    print("       needs_update = True")
+    print("       telegram_message_id = 500")
+
+    # --------------------------------------------------------
+    # مرحله 2:
+    # FotMob همان event را دوباره می‌فرستد،
+    # اما این بار نام واقعی بازیکن آمده است.
+    # --------------------------------------------------------
+
+    second_event = {
+        "id": 123456,
+        "type": "Goal",
+        "minute": 37,
+        "isHome": True,
+        "playerId": 9876,
+        "playerName": "Test Player",
+    }
+
+    updated_goals = detect_updated_goals(
+        match_state,
+        [second_event],
+    )
+
+    assert_equal(
+        len(updated_goals),
+        1,
+        "مرحله دوم: گل به‌روزشده شناسایی نشد."
+    )
+
+    updated_goal_info = updated_goals[0]
+
+    assert_equal(
+        updated_goal_info["event_key"],
+        "id:123456",
+        "مرحله دوم: event_key گل تغییر کرده است."
+    )
+
+    assert_equal(
+        updated_goal_info["player_id"],
+        9876,
+        "مرحله دوم: player_id جدید تشخیص داده نشد."
+    )
+
+    assert_equal(
+        updated_goal_info["player_name"],
+        "Test Player",
+        "مرحله دوم: نام واقعی بازیکن تشخیص داده نشد."
+    )
+
+    print("PASS 2: کامل‌شدن اطلاعات همان گل تشخیص داده شد.")
+
+    # --------------------------------------------------------
+    # مرحله 3:
+    # اطلاعات کامل‌شده را دوباره به state بده.
+    #
+    # add_goal باید همان گل قبلی را پیدا کند و به‌روزرسانی کند،
+    # نه اینکه گل دوم بسازد.
+    # --------------------------------------------------------
+
+    updated_goal = add_goal(
+        match_state,
+        updated_goal_info,
+    )
+
+    assert_true(
+        updated_goal is goal,
+        "مرحله سوم: add_goal یک object جدید برای گل ساخت."
+    )
+
+    assert_equal(
+        len(match_state["goals"]),
+        1,
+        "مرحله سوم: یک گل تکراری ایجاد شده است."
+    )
+
+    assert_equal(
+        updated_goal["player_id"],
+        9876,
+        "مرحله سوم: player_id در state به‌روزرسانی نشد."
+    )
+
+    assert_equal(
+        updated_goal["player_name"],
+        "Test Player",
+        "مرحله سوم: نام واقعی بازیکن در state ذخیره نشد."
+    )
+
+    assert_equal(
+        updated_goal["telegram_message_id"],
+        500,
+        "مرحله سوم: telegram_message_id قبلی از بین رفته است."
+    )
+
+    assert_true(
+        updated_goal["needs_update"] is True,
+        "مرحله سوم: needs_update باید برای ویرایش پیام True باشد."
+    )
+
+    print("PASS 3: همان گل به‌روزرسانی شد و گل تکراری ساخته نشد.")
+    print("       player_name = Test Player")
+    print("       player_id = 9876")
+    print("       telegram_message_id = 500")
+    print("       needs_update = True")
+
+    # --------------------------------------------------------
+    # مرحله 4:
+    # بررسی نهایی اینکه کل زنجیره دقیقاً چیزی است که می‌خواهیم.
+    # --------------------------------------------------------
+
+    final_goal = match_state["goals"][0]
+
+    assert_equal(
+        final_goal["event_key"],
+        "id:123456",
+        "مرحله نهایی: event_key اشتباه است."
+    )
+
+    assert_equal(
+        final_goal["player_name"],
+        "Test Player",
+        "مرحله نهایی: نام بازیکن صحیح نیست."
+    )
+
+    assert_equal(
+        final_goal["player_id"],
+        9876,
+        "مرحله نهایی: player_id صحیح نیست."
+    )
+
+    assert_equal(
+        final_goal["telegram_message_id"],
+        500,
+        "مرحله نهایی: شناسه پیام تلگرام حفظ نشده است."
+    )
+
+    assert_equal(
+        len(match_state["goals"]),
+        1,
+        "مرحله نهایی: تعداد گل‌ها باید دقیقاً 1 باشد."
+    )
+
+    print()
+    print("=" * 60)
+    print("ALL TESTS PASSED")
+    print("=" * 60)
+    print()
+    print("نتیجه:")
+    print("1. گل با <TBD> ثبت شد.")
+    print("2. همان event با نام واقعی دوباره دریافت شد.")
+    print("3. event_detector آن را به‌عنوان گل جدید تشخیص نداد.")
+    print("4. اطلاعات همان گل به‌روزرسانی شد.")
+    print("5. telegram_message_id قبلی حفظ شد.")
+    print("6. گل تکراری ایجاد نشد.")
 
 
 if __name__ == "__main__":
