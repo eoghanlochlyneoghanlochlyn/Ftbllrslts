@@ -205,6 +205,104 @@ def get_match_state(
             "goals"
         ] = []
 
+    # --------------------------------------------------------
+    # مهاجرت state قدیمی
+    #
+    # قبل از اصلاح event_key، بعضی eventها با eventId ذخیره
+    # شده‌اند. برای بازی 6054373، eventId همه گل‌ها صفر است.
+    # اگر گل ذخیره‌شده reactKey داشته باشد، کلید قدیمی آن را
+    # به reactKey جدید تبدیل می‌کنیم تا همان گل دوباره ارسال
+    # نشود.
+    # --------------------------------------------------------
+
+    migrated_keys = []
+
+    for goal in match_state.get(
+        "goals",
+        [],
+    ):
+
+        if not isinstance(
+            goal,
+            dict,
+        ):
+            continue
+
+        old_key = goal.get(
+            "event_key"
+        )
+
+        event = goal.get(
+            "event"
+        )
+
+        if not isinstance(
+            event,
+            dict,
+        ):
+            continue
+
+        react_key = event.get(
+            "reactKey"
+        )
+
+        if (
+            react_key is None
+            or not str(react_key).strip()
+        ):
+            continue
+
+        new_key = (
+            "react:"
+            + str(react_key)
+        )
+
+        if old_key != new_key:
+
+            goal[
+                "event_key"
+            ] = new_key
+
+            migrated_keys.append(
+                (
+                    str(old_key)
+                    if old_key is not None
+                    else None,
+                    new_key,
+                )
+            )
+
+    if migrated_keys:
+
+        current_event_keys = [
+            str(key)
+            for key in match_state.get(
+                "event_keys",
+                [],
+            )
+            if key is not None
+        ]
+
+        for old_key, new_key in migrated_keys:
+
+            if old_key is not None:
+
+                current_event_keys = [
+                    key
+                    for key in current_event_keys
+                    if key != old_key
+                ]
+
+            if new_key not in current_event_keys:
+
+                current_event_keys.append(
+                    new_key
+                )
+
+        match_state[
+            "event_keys"
+        ] = current_event_keys
+
     return match_state
 
 
