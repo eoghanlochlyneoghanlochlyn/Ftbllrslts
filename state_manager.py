@@ -778,29 +778,22 @@ def get_current_score(
             "is_home"
         )
 
-        own_goal = bool(
-            goal.get(
-                "own_goal",
-                False,
-            )
-        )
-
         if is_home is None:
             continue
 
-        if own_goal:
+        # FotMob's isHome tells us which team the goal
+        # is awarded to. This is also true for own goals:
+        # an own goal by a home player has isHome=True
+        # because the goal is awarded to the away team only
+        # if FotMob reports the scoring team that way.
+        #
+        # In our current event data, isHome already represents
+        # the team receiving the goal, so do not invert it here.
 
-            if is_home:
-                away_score += 1
-            else:
-                home_score += 1
-
+        if is_home:
+            home_score += 1
         else:
-
-            if is_home:
-                home_score += 1
-            else:
-                away_score += 1
+            away_score += 1
 
     return {
         "home": home_score,
