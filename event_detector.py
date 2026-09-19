@@ -402,11 +402,29 @@ def event_key(event):
     ):
         return None
 
+    # reactKey در داده‌های FotMob برای eventهای واقعی یکتا است.
+    # باید قبل از eventId بررسی شود، چون eventId در بعضی بازی‌ها
+    # برای چند event مختلف مقدار 0 دارد.
+    react_key = event.get(
+        "reactKey"
+    )
+
+    if react_key is not None and str(
+        react_key
+    ).strip():
+
+        return f"react:{react_key}"
+
     unique_id = get_event_unique_id(
         event
     )
 
-    if unique_id is not None:
+    # صفر در FotMob می‌تواند شناسه placeholder باشد؛ در این
+    # حالت به fallback پایین می‌رویم تا چند event یکی نشوند.
+    if (
+        unique_id is not None
+        and str(unique_id) != "0"
+    ):
         return f"id:{unique_id}"
 
     event_type = get_event_type(
