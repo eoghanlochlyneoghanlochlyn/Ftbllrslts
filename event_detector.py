@@ -1293,9 +1293,6 @@ def detect_state_changes(
 
         "event_keys": bootstrap_event_keys,
 
-      new_events
-        ),
-
         "goals": [],
 
         "updated_goals": updated_goals,
