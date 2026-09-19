@@ -5,12 +5,12 @@ import requests
 
 MATCHES = {
     "Napoli-Bologna": {
-        "id": "5749676",
-        "url": "https://www.fotmob.com/matches/bologna-vs-napoli/37x04l#5749676",
+        "id": "6106331",
+        "url": "https://www.fotmob.com/matches/roma-vs-fenerbahce/2hxw0m#6106331",
     },
     "Pisa-Roma": {
-        "id": "6106331",
-        "url": "https://www.fotmob.com/matches/pisa-vs-roma/2hxw0m#6106331",
+        "id": "6106254",
+        "url": "https://www.fotmob.com/matches/manchester-city-vs-paris-saint-germain/2rqiev#6106254",
     },
 }
 
