@@ -29,6 +29,7 @@ from state_manager import (
 from event_detector import (
     detect_state_changes,
     event_key,
+    get_event_time,
 )
 
 from formatter import (
@@ -584,8 +585,24 @@ def process_live_events(
 ):
 
     # -----------------------------------------------------
-    # گل‌های جدید
+    # همه eventهای جدید را با ترتیب زمانی خودشان پردازش کن.
+    #
+    # قبلاً ابتدا همه گل‌ها و بعد همه کارت‌های قرمز پردازش
+    # می‌شدند؛ در نتیجه اگر کارت قرمز دقیقه 6 و گل دقیقه 26
+    # در یک اجرا پیدا می‌شدند، کارت قرمز بعد از گل ارسال می‌شد.
     # -----------------------------------------------------
+
+    previous_keys = {
+        str(key)
+        for key in (
+            match_state.get(
+                "event_keys",
+                [],
+            )
+        )
+    }
+
+    goal_infos_by_key = {}
 
     for goal_info in (
         changes.get(
@@ -600,11 +617,171 @@ def process_live_events(
         ):
             continue
 
-        process_new_goal(
-            snapshot,
-            match_state,
-            goal_info,
+        goal_key = goal_info.get(
+            "event_key"
         )
+
+        if goal_key is not None:
+            goal_infos_by_key[
+                str(goal_key)
+            ] = goal_info
+
+    red_cards_by_key = {}
+
+    for red_card in (
+        changes.get(
+            "red_cards",
+            []
+        )
+    ):
+
+        if not isinstance(
+            red_card,
+            dict,
+        ):
+            continue
+
+        red_card_key = get_event_key_safe(
+            red_card
+        )
+
+        if red_card_key is not None:
+            red_cards_by_key[
+                str(red_card_key)
+            ] = red_card
+
+    new_events = []
+
+    for index, event in enumerate(
+        changes.get(
+            "events",
+            []
+        )
+    ):
+
+        if not isinstance(
+            event,
+            dict,
+        ):
+            continue
+
+        key = get_event_key_safe(
+            event
+        )
+
+        if key is None:
+            continue
+
+        key = str(key)
+
+        if key in previous_keys:
+            continue
+
+        new_events.append(
+            (
+                index,
+                event,
+                key,
+            )
+        )
+
+    def event_sort_key(item):
+
+        index, event, key = item
+
+        event_time = get_event_time(
+            event
+        )
+
+        if event_time is None:
+            event_time = float(
+                "inf"
+            )
+
+        return (
+            event_time,
+            index,
+        )
+
+    new_events.sort(
+        key=event_sort_key
+    )
+
+    for index, event, key in new_events:
+
+        # -------------------------------------------------
+        # گل
+        # -------------------------------------------------
+
+        goal_info = goal_infos_by_key.get(
+            key
+        )
+
+        if goal_info is not None:
+
+            process_new_goal(
+                snapshot,
+                match_state,
+                goal_info,
+            )
+
+            continue
+
+        # -------------------------------------------------
+        # کارت قرمز
+        # -------------------------------------------------
+
+        red_card = red_cards_by_key.get(
+            key
+        )
+
+        if red_card is not None:
+
+            message = build_red_card_message(
+                snapshot,
+                red_card,
+            )
+
+            if not message:
+                continue
+
+            try:
+
+                telegram_started_at = (
+                    time.monotonic()
+                )
+
+                send_long_message(
+                    message
+                )
+
+                telegram_finished_at = (
+                    time.monotonic()
+                )
+
+                print(
+                    "[RED CARD] "
+                    "Timing: Telegram send =",
+                    f"{telegram_finished_at - telegram_started_at:.2f}s",
+                )
+
+                add_event_keys(
+                    match_state,
+                    [
+                        key
+                    ],
+                )
+
+                previous_keys.add(
+                    key
+                )
+
+            except Exception as error:
+
+                print(
+                    "[RED CARD] "
+                    f"Send failed: {error}"
+                )
 
     # -----------------------------------------------------
     # گل‌هایی که اطلاعاتشان بعداً کامل شده
@@ -628,146 +805,6 @@ def process_live_events(
             match_state,
             goal_info,
         )
-
-    # -----------------------------------------------------
-    # eventهای غیرگل
-    # -----------------------------------------------------
-
-    previous_keys = {
-        str(key)
-        for key in (
-            match_state.get(
-                "event_keys",
-                [],
-            )
-        )
-    }
-
-    for event in (
-        changes.get(
-            "events",
-            []
-        )
-    ):
-
-        if not isinstance(
-            event,
-            dict,
-        ):
-            continue
-
-        key = get_event_key_safe(
-            event
-        )
-
-        if key is None:
-            continue
-
-        if str(key) in previous_keys:
-            continue
-
-        event_type = (
-            event.get(
-                "type"
-            )
-            or ""
-        )
-
-        # goal قبلاً در بخش بالا پردازش شده.
-        if (
-            "goal" in str(
-                event_type
-            ).lower()
-            or event.get(
-                "isGoal"
-            ) is True
-        ):
-            continue
-
-        # -------------------------------------------------
-        # کارت قرمز
-        # -------------------------------------------------
-
-        is_red_card = False
-
-        if key in {
-            str(item)
-            for item in (
-                changes.get(
-                    "event_keys",
-                    []
-                )
-            )
-        }:
-
-            for red_card in (
-                changes.get(
-                    "red_cards",
-                    []
-                )
-            ):
-
-                if (
-                    get_event_key_safe(
-                        red_card
-                    )
-                    == key
-                ):
-
-                    is_red_card = True
-
-                    message = (
-                        build_red_card_message(
-                            snapshot,
-                            red_card,
-                        )
-                    )
-
-                    if not message:
-                        continue
-
-                    try:
-
-                        telegram_started_at = (
-                            time.monotonic()
-                        )
-
-                        send_long_message(
-                            message
-                        )
-
-                        telegram_finished_at = (
-                            time.monotonic()
-                        )
-
-                        print(
-                            "[RED CARD] "
-                            "Timing: Telegram send =",
-                            f"{telegram_finished_at - telegram_started_at:.2f}s",
-                        )
-
-                        add_event_keys(
-                            match_state,
-                            [
-                                key
-                            ],
-                        )
-
-                        previous_keys.add(
-                            str(key)
-                        )
-
-                    except Exception as error:
-
-                        print(
-                            "[RED CARD] "
-                            f"Send failed: {error}"
-                        )
-
-                    break
-
-        if is_red_card:
-            continue
 
     # -----------------------------------------------------
     # گل‌های مردود
