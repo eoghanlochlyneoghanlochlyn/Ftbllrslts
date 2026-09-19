@@ -4,8 +4,14 @@ import requests
 
 
 MATCHES = {
-    "Napoli-Bologna": "5749676",
-    "Pisa-Roma": "6106331",
+    "Napoli-Bologna": {
+        "id": "5749676",
+        "url": "https://www.fotmob.com/matches/bologna-vs-napoli/37x04l#5749676",
+    },
+    "Pisa-Roma": {
+        "id": "6106331",
+        "url": "https://www.fotmob.com/matches/pisa-vs-roma/2hxw0m#6106331",
+    },
 }
 
 
@@ -50,7 +56,6 @@ def find_relevant_fields(node, path="root", results=None):
                     "stagename",
                 )
             ):
-
                 results.append(
                     {
                         "path": f"{path}.{key}",
@@ -81,18 +86,17 @@ def find_relevant_fields(node, path="root", results=None):
 
 def main():
 
-    for match_name, match_id in MATCHES.items():
+    for match_name, match_info in MATCHES.items():
+
+        match_id = match_info["id"]
+        url = match_info["url"]
 
         print()
         print("=" * 80)
         print(match_name)
         print(f"FotMob ID: {match_id}")
+        print(f"URL: {url}")
         print("=" * 80)
-
-        url = (
-            f"https://www.fotmob.com/matches/"
-            f"{match_id}"
-        )
 
         try:
 
@@ -119,6 +123,7 @@ def main():
             )
 
             if response.status_code != 200:
+                print("صفحه معتبر دریافت نشد.")
                 continue
 
         except Exception as exc:
@@ -145,19 +150,21 @@ def main():
             data
         )
 
+        print()
+
         if not results:
 
             print(
                 "هیچ فیلد مرتبط با "
-                "round/week/stage پیدا نشد."
+                "round/week/stage/matchday پیدا نشد."
             )
 
             continue
 
-        print()
         print(
             f"تعداد موارد پیدا شده: {len(results)}"
         )
+
         print()
 
         for item in results:
