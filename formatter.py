@@ -1374,58 +1374,61 @@ def build_goal_message(
             "🎯 پنالتی"
         )
 
-    score_for_display = score
+    # FotMob's event contains the score immediately after
+    # the goal in newScore. Prefer it so the message always
+    # shows the score at that exact moment, not the final/current
+    # score accumulated from all events already stored in state.
+    score_for_display = None
 
-    if own_goal and isinstance(
-        score,
+    new_score = event.get(
+        "newScore"
+    )
+
+    if isinstance(
+        new_score,
+        (list, tuple),
+    ) and len(new_score) >= 2:
+
+        try:
+            score_for_display = {
+                "home": int(new_score[0]),
+                "away": int(new_score[1]),
+            }
+        except (
+            TypeError,
+            ValueError,
+        ):
+            score_for_display = None
+
+    elif isinstance(
+        new_score,
         dict,
     ):
 
-        score_for_display = dict(
-            score
-        )
+        try:
+            home_value = new_score.get(
+                "home"
+            )
+            away_value = new_score.get(
+                "away"
+            )
 
-        if event_team is True:
-
-            try:
-                score_for_display[
-                    "home"
-                ] = (
-                    int(
-                        score_for_display.get(
-                            "home",
-                            0,
-                        )
-                    )
-                    + 1
-                )
-
-            except (
-                TypeError,
-                ValueError,
+            if (
+                home_value is not None
+                and away_value is not None
             ):
-                score_for_display = score
+                score_for_display = {
+                    "home": int(home_value),
+                    "away": int(away_value),
+                }
+        except (
+            TypeError,
+            ValueError,
+        ):
+            score_for_display = None
 
-        elif event_team is False:
-
-            try:
-                score_for_display[
-                    "away"
-                ] = (
-                    int(
-                        score_for_display.get(
-                            "away",
-                            0,
-                        )
-                    )
-                    + 1
-                )
-
-            except (
-                TypeError,
-                ValueError,
-            ):
-                score_for_display = score
+    if score_for_display is None:
+        score_for_display = score
 
     score_text = format_score(
         score_for_display,
