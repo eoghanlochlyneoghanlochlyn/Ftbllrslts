@@ -878,113 +878,67 @@ def is_red_card_event(event):
     ):
         return False
 
-    event_type = clean_text(
-        first_non_empty(
-            event.get("type"),
-            event.get("eventType"),
-            event.get("incidentType"),
-            event.get("incident"),
-        )
-    ).lower()
-
-    card_value = clean_text(
-        first_non_empty(
-            event.get("card"),
-            event.get("cardType"),
-            event.get("cardName"),
-            event.get("cardTypeName"),
-        )
-    ).lower()
-
-    description = clean_text(
-        first_non_empty(
-            event.get("description"),
-            event.get("text"),
-            event.get("incidentDescription"),
-            event.get("reason"),
-        )
-    ).lower()
-
-    # -----------------------------------------------------
-    # سیگنال اول:
-    # نوع event مستقیماً red card را اعلام کرده
-    # -----------------------------------------------------
-
-    explicit_red_type = (
-        "redcard" in event_type
-        or "red_card" in event_type
-        or "red card" in event_type
+    event_type = get_event_type(
+        event
     )
 
-    # -----------------------------------------------------
-    # سیگنال دوم:
-    # فیلد کارت، red را اعلام کرده
-    # -----------------------------------------------------
-
-    explicit_red_card = (
-        "red" in card_value
-        and (
-            "card" in card_value
-            or "dismiss" in card_value
-            or "sent" in card_value
-        )
-    )
-
-    # -----------------------------------------------------
-    # سیگنال سوم:
-    # متن event اخراج / کارت قرمز را اعلام کرده
-    # -----------------------------------------------------
-
-    red_text = (
-        "red card" in description
-        or "red-card" in description
-        or "sent off" in description
-        or "sent-off" in description
-        or "dismissed" in description
-    )
-
-    # -----------------------------------------------------
-    # سیگنال چهارم:
-    # کارت زرد دوم
-    # -----------------------------------------------------
-
-    second_yellow = (
-        "second yellow" in event_type
-        or "second_yellow" in event_type
-        or "second yellow" in card_value
-        or "second_yellow" in card_value
-        or "yellow red" in card_value
-        or "yellow-red" in card_value
-        or "second yellow" in description
-        or "second_yellow" in description
-    )
-
-    # -----------------------------------------------------
-    # نتیجه
-    #
-    # اگر FotMob صراحتاً red card را در type داده باشد،
-    # همان سیگنال معتبر است.
-    #
-    # اگر type فقط card باشد، باید یک سیگنال مستقل
-    # دیگر مثل cardType یا متن red وجود داشته باشد.
-    # -----------------------------------------------------
-
-    if explicit_red_type:
-        return True
-
-    if second_yellow:
-        return True
-
-    if (
-        event_type == "card"
-        and explicit_red_card
+    if event_type in (
+        "red_card",
+        "redcard",
+        "red card",
+        "card",
     ):
+
+        card = clean_text(
+            first_non_empty(
+                event.get(
+                    "card"
+                ),
+                event.get(
+                    "cardType"
+                ),
+                event.get(
+                    "cardName"
+                ),
+            )
+        ).lower()
+
+        if (
+            event_type
+            != "card"
+            or "red" in card
+        ):
+            return True
+
+    card = clean_text(
+        first_non_empty(
+            event.get(
+                "card"
+            ),
+            event.get(
+                "cardType"
+            ),
+            event.get(
+                "cardName"
+            ),
+        )
+    ).lower()
+
+    if "red" in card:
         return True
 
-    if (
-        event_type == "card"
-        and red_text
-    ):
+    text = clean_text(
+        first_non_empty(
+            event.get(
+                "description"
+            ),
+            event.get(
+                "text"
+            ),
+        )
+    ).lower()
+
+    if "red card" in text:
         return True
 
     return False
@@ -1283,654 +1237,6 @@ def detect_updated_goals(
 
 
 # =========================================================
-# تشخیص چندسیگناله شروع بازی
-# =========================================================
-
-def _normalize_period_value(value):
-
-    if isinstance(
-        value,
-        dict,
-    ):
-
-        value = first_non_empty(
-            value.get("name"),
-            value.get("type"),
-            value.get("key"),
-            value.get("value"),
-        )
-
-    return clean_text(
-        value
-    ).lower()
-
-
-def _is_live_period(value):
-
-    normalized = _normalize_period_value(
-        value
-    )
-
-    if not normalized:
-        return False
-
-    compact = (
-        normalized
-        .replace(" ", "")
-        .replace("_", "")
-        .replace("-", "")
-    )
-
-    return (
-        compact in (
-            "1h",
-            "2h",
-            "1sthalf",
-            "2ndhalf",
-            "firsthalf",
-            "secondhalf",
-            "extratime",
-            "extratime1",
-            "extratime2",
-            "firstextra",
-            "secondextra",
-            "firstextrahalf",
-            "secondextrahalf",
-            "et",
-            "aet",
-            "penaltyshootout",
-            "shootout",
-        )
-        or "firsthalf" in compact
-        or "secondhalf" in compact
-        or "extrahalf" in compact
-        or "halfextra" in compact
-        or "penaltyshootout" in compact
-    )
-
-
-def _snapshot_has_live_period(snapshot):
-
-    if not isinstance(
-        snapshot,
-        dict,
-    ):
-        return False
-
-    current_period = snapshot.get(
-        "current_period"
-    )
-
-    if _is_live_period(
-        current_period
-    ):
-        return True
-
-    periods = snapshot.get(
-        "periods"
-    )
-
-    if isinstance(
-        periods,
-        list,
-    ):
-
-        for period in periods:
-
-            if _is_live_period(
-                period
-            ):
-                return True
-
-    elif periods is not None:
-
-        if _is_live_period(
-            periods
-        ):
-            return True
-
-    return False
-
-
-def _get_snapshot_score(snapshot):
-
-    if not isinstance(
-        snapshot,
-        dict,
-    ):
-        return None
-
-    score = snapshot.get(
-        "score"
-    )
-
-    if not isinstance(
-        score,
-        dict,
-    ):
-        return None
-
-    try:
-
-        home = int(
-            score.get(
-                "home",
-                0,
-            )
-            or 0
-        )
-
-        away = int(
-            score.get(
-                "away",
-                0,
-            )
-            or 0
-        )
-
-    except (
-        TypeError,
-        ValueError,
-    ):
-
-        return None
-
-    return {
-        "home": max(
-            0,
-            home,
-        ),
-        "away": max(
-            0,
-            away,
-        ),
-    }
-
-
-def _get_state_score(match_state):
-
-    if not isinstance(
-        match_state,
-        dict,
-    ):
-        return {
-            "home": 0,
-            "away": 0,
-        }
-
-    score = {
-        "home": 0,
-        "away": 0,
-    }
-
-    for goal in (
-        match_state.get(
-            "goals",
-            [],
-        )
-    ):
-
-        if not isinstance(
-            goal,
-            dict,
-        ):
-            continue
-
-        if goal.get(
-            "cancelled"
-        ):
-            continue
-
-        is_home = goal.get(
-            "is_home"
-        )
-
-        if is_home is True:
-            score["home"] += 1
-
-        elif is_home is False:
-            score["away"] += 1
-
-    return score
-
-
-def _get_score_signal(
-    snapshot,
-    match_state,
-    event=None,
-):
-
-    snapshot_score = _get_snapshot_score(
-        snapshot
-    )
-
-    if snapshot_score is None:
-        return None
-
-    state_score = _get_state_score(
-        match_state
-    )
-
-    home_delta = (
-        snapshot_score["home"]
-        - state_score["home"]
-    )
-
-    away_delta = (
-        snapshot_score["away"]
-        - state_score["away"]
-    )
-
-    if home_delta <= 0 and away_delta <= 0:
-        return None
-
-    event_team = None
-
-    if isinstance(
-        event,
-        dict,
-    ):
-        event_team = get_event_team(
-            event
-        )
-
-    if (
-        event_team is True
-        and home_delta > 0
-    ):
-        return "home_score"
-
-    if (
-        event_team is False
-        and away_delta > 0
-    ):
-        return "away_score"
-
-    if (
-        event_team is None
-        and (
-            home_delta > 0
-            or away_delta > 0
-        )
-    ):
-        return "score"
-
-    return None
-
-
-def _goal_event_signal(event):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return False
-
-    raw_type = clean_text(
-        first_non_empty(
-            event.get("type"),
-            event.get("eventType"),
-            event.get("incidentType"),
-            event.get("incident"),
-        )
-    ).lower()
-
-    if "goal" in raw_type:
-        return True
-
-    if event.get(
-        "isGoal"
-    ) is True:
-        return True
-
-    goal_key = clean_text(
-        event.get(
-            "goalDescriptionKey"
-        )
-    ).lower()
-
-    goal_description = clean_text(
-        event.get(
-            "goalDescription"
-        )
-    ).lower()
-
-    if goal_key or goal_description:
-        return True
-
-    return False
-
-
-def _goal_metadata_signal(event):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return False
-
-    has_team = (
-        get_event_team(
-            event
-        ) in (
-            True,
-            False,
-        )
-    )
-
-    has_time = (
-        get_event_time(
-            event
-        ) is not None
-    )
-
-    has_player = (
-        get_event_player_id(
-            event
-        ) is not None
-        or not _is_missing_player_name(
-            get_event_player_name(
-                event
-            )
-        )
-    )
-
-    return (
-        has_team
-        and (
-            has_time
-            or has_player
-        )
-    )
-
-
-def _is_reliable_goal_event(
-    event,
-    snapshot,
-    match_state,
-):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return False
-
-    if get_event_type(
-        event
-    ) != "goal":
-        return False
-
-    if is_cancelled_goal_event(
-        event
-    ):
-        return False
-
-    direct_goal = _goal_event_signal(
-        event
-    )
-
-    score_signal = _get_score_signal(
-        snapshot,
-        match_state,
-        event,
-    )
-
-    metadata_signal = _goal_metadata_signal(
-        event
-    )
-
-    # -----------------------------------------------------
-    # رویداد صریح گل، قوی‌ترین سیگنال است.
-    #
-    # بنابراین اگر FotMob واقعاً event گل را داده باشد،
-    # حتی اگر score هنوز در snapshot تغییر نکرده باشد،
-    # گل را از دست نمی‌دهیم.
-    # -----------------------------------------------------
-
-    if direct_goal:
-        return True
-
-    # -----------------------------------------------------
-    # fallback برای event ناقص:
-    #
-    # تغییر score
-    # +
-    # اطلاعات معتبر تیم و زمان/بازیکن
-    # -----------------------------------------------------
-
-    if (
-        score_signal is not None
-        and metadata_signal
-    ):
-        return True
-
-    return False
-
-
-# =========================================================
-# سیگنال زنده برای شروع بازی
-# =========================================================
-
-def _event_has_live_start_signal(event):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return False
-
-    event_type = get_event_type(
-        event
-    )
-
-    normalized_type = clean_text(
-        event_type
-    ).lower()
-
-    compact_type = (
-        normalized_type
-        .replace(" ", "")
-        .replace("_", "")
-        .replace("-", "")
-    )
-
-    # -----------------------------------------------------
-    # سیگنال مستقیم شروع
-    # -----------------------------------------------------
-
-    if compact_type in (
-        "matchstarted",
-        "matchstart",
-        "kickoff",
-        "start",
-        "started",
-        "firsthalf",
-        "secondhalf",
-    ):
-        return True
-
-    # -----------------------------------------------------
-    # رویدادهای قطعی داخل بازی
-    # -----------------------------------------------------
-
-    if event_type == "goal":
-        return True
-
-    if event_type == "card":
-        return True
-
-    if compact_type in (
-        "substitution",
-        "sub",
-        "penalty",
-        "penaltyawarded",
-        "redcard",
-        "yellowredcard",
-    ):
-        return True
-
-    # -----------------------------------------------------
-    # VAR فقط در صورت وجود نشانه زمانی/دوره بازی
-    # -----------------------------------------------------
-
-    if event_type == "var":
-
-        event_time = get_event_time(
-            event
-        )
-
-        if (
-            event_time is not None
-            and event_time >= 0
-        ):
-            return True
-
-        if any(
-            _is_live_period(
-                event.get(key)
-            )
-            for key in (
-                "period",
-                "periodName",
-                "periodType",
-                "matchPeriod",
-                "stage",
-                "stageName",
-            )
-        ):
-            return True
-
-    # -----------------------------------------------------
-    # event ناشناخته ولی دارای مشخصات معتبر بازی
-    # -----------------------------------------------------
-
-    event_time = get_event_time(
-        event
-    )
-
-    if (
-        event_time is not None
-        and event_time >= 0
-    ):
-
-        has_team = (
-            get_event_team(
-                event
-            )
-            is not None
-        )
-
-        has_player = (
-            get_event_player_id(
-                event
-            )
-            is not None
-        )
-
-        has_type = bool(
-            normalized_type
-        )
-
-        if (
-            has_team
-            or has_player
-            or has_type
-        ):
-
-            ignored_types = (
-                "lineup",
-                "lineups",
-                "formation",
-                "player",
-                "players",
-                "preview",
-                "pre-match",
-                "prematch",
-            )
-
-            if not any(
-                ignored in normalized_type
-                for ignored in ignored_types
-            ):
-                return True
-
-    return False
-
-
-def _find_live_start_event(events):
-
-    for event in events or []:
-
-        if _event_has_live_start_signal(
-            event
-        ):
-            return event
-
-    return None
-
-
-def detect_start_signal(
-    snapshot,
-    events,
-):
-
-    # -----------------------------------------------------
-    # سیگنال 1: وضعیت رسمی FotMob
-    # -----------------------------------------------------
-
-    if (
-        isinstance(
-            snapshot,
-            dict,
-        )
-        and snapshot.get(
-            "started"
-        )
-    ):
-        return "status"
-
-    # -----------------------------------------------------
-    # سیگنال 2: دوره زنده مسابقه
-    # -----------------------------------------------------
-
-    if _snapshot_has_live_period(
-        snapshot
-    ):
-        return "period"
-
-    # -----------------------------------------------------
-    # سیگنال 3: نتیجه غیرصفر
-    # -----------------------------------------------------
-
-    score = _get_snapshot_score(
-        snapshot
-    )
-
-    if (
-        score is not None
-        and (
-            score["home"] > 0
-            or score["away"] > 0
-        )
-    ):
-        return "score"
-
-    # -----------------------------------------------------
-    # سیگنال 4: event زنده
-    # -----------------------------------------------------
-
-    live_event = _find_live_start_event(
-        events
-    )
-
-    if live_event is not None:
-        return "live_event"
-
-    return None
-
-
-# =========================================================
 # تغییرات state
 # =========================================================
 
@@ -1982,8 +1288,6 @@ def detect_state_changes(
 
         "start": False,
 
-        "start_reason": None,
-
         "half_time": False,
 
         "finished": False,
@@ -1998,33 +1302,19 @@ def detect_state_changes(
         dict,
     ):
 
-        # -------------------------------------------------
-        # شروع بازی
-        # -------------------------------------------------
-
-        if not match_state.get(
-            "started",
-            False,
+        if (
+            snapshot.get(
+                "started"
+            )
+            and not match_state.get(
+                "started",
+                False,
+            )
         ):
 
-            start_reason = detect_start_signal(
-                snapshot,
-                events,
-            )
-
-            if start_reason is not None:
-
-                changes[
-                    "start"
-                ] = True
-
-                changes[
-                    "start_reason"
-                ] = start_reason
-
-        # -------------------------------------------------
-        # نیمه‌وقت
-        # -------------------------------------------------
+            changes[
+                "start"
+            ] = True
 
         if (
             snapshot.get(
@@ -2039,10 +1329,6 @@ def detect_state_changes(
             changes[
                 "half_time"
             ] = True
-
-        # -------------------------------------------------
-        # پایان بازی
-        # -------------------------------------------------
 
         if (
             snapshot.get(
@@ -2068,33 +1354,19 @@ def detect_state_changes(
             event
         )
 
-        # -------------------------------------------------
-        # گل
-        # -------------------------------------------------
-
         if event_type == "goal":
 
-            if _is_reliable_goal_event(
-                event,
-                snapshot,
-                match_state,
-            ):
+            goal_info = get_goal_info(
+                event
+            )
 
-                goal_info = get_goal_info(
-                    event
+            if goal_info is not None:
+
+                changes[
+                    "goals"
+                ].append(
+                    goal_info
                 )
-
-                if goal_info is not None:
-
-                    changes[
-                        "goals"
-                    ].append(
-                        goal_info
-                    )
-
-        # -------------------------------------------------
-        # کارت قرمز
-        # -------------------------------------------------
 
         elif event_type == "card":
 
