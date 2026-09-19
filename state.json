@@ -2190,6 +2190,83 @@
           }
         }
       ]
+    },
+    "6054373": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": true,
+      "finished_sent": true,
+      "event_keys": [
+        "id:0"
+      ],
+      "goals": [
+        {
+          "event_key": "id:0",
+          "player_id": 300050,
+          "player_name": "Taha Yassine Khenissi",
+          "assist_player_id": 0,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "5",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 1908,
+          "needs_update": false,
+          "event": {
+            "reactKey": "05Goal300050undefinedfalse",
+            "timeStr": 5,
+            "type": "goal",
+            "time": 5,
+            "overloadTime": null,
+            "eventId": 0,
+            "highlight": {
+              "id": 2204293,
+              "eventId": 0,
+              "elapsed": "",
+              "title": "Benteke scores matchwinner in 90'+7! | Al Wahda FC 🇦🇪 vs Kuwait SC 🇰🇼 | Highlights ACL Two™",
+              "image": "https://i.ytimg.com/vi/R4ww_ESbDxU/maxresdefault.jpg",
+              "url": "https://www.youtube.com/watch?v=R4ww_ESbDxU",
+              "source": "www.youtube.com",
+              "eventType": "1"
+            },
+            "player": {
+              "id": 300050,
+              "name": "Taha Yassine Khenissi",
+              "profileUrl": "/players/300050/taha-yassine-khenissi"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/300050/taha-yassine-khenissi",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Taha Yassine Khenissi",
+            "firstName": "Taha Yassine",
+            "lastName": "Khenissi",
+            "fullName": "Taha Yassine Khenissi",
+            "playerId": 300050,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Amr Abd El Fattah Ammouri",
+            "assistProfileUrl": "",
+            "assistPlayerId": 0,
+            "assistKey": "assist_by",
+            "assistInput": "Amr Abd El Fattah Ammouri"
+          }
+        }
+      ]
     }
   }
 }
