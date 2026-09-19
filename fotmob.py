@@ -1437,12 +1437,105 @@ def _collect_event_lists(node, result=None):
 
 def _get_current_match_event_candidates(data):
 
+    candidates = []
+
+    # -----------------------------------------------------
+    # رویدادهای موجود در header
+    #
+    # در بعضی بازی‌های FotMob (از جمله 6054373) رویدادهای
+    # کامل گل داخل این مسیر قرار دارند:
+    # props.pageProps.header.events.homeTeamGoals
+    # props.pageProps.header.events.awayTeamGoals
+    #
+    # این داده‌ها را جداگانه می‌گیریم چون ساختار آن‌ها dict
+    # با کلید نام بازیکن است و _collect_event_lists برای
+    # عبور از کلیدهای دلخواه طراحی نشده است.
+    # -----------------------------------------------------
+
+    page_props = get_nested(
+        data,
+        "props",
+        "pageProps",
+    )
+
+    if isinstance(page_props, dict):
+
+        header = page_props.get(
+            "header"
+        )
+
+        if isinstance(header, dict):
+
+            header_events = header.get(
+                "events"
+            )
+
+            if isinstance(
+                header_events,
+                dict,
+            ):
+
+                for key in (
+                    "homeTeamGoals",
+                    "awayTeamGoals",
+                    "homeTeamRedCards",
+                    "awayTeamRedCards",
+                    "goals",
+                    "cards",
+                    "incidents",
+                    "events",
+                ):
+
+                    value = header_events.get(
+                        key
+                    )
+
+                    if isinstance(
+                        value,
+                        list,
+                    ):
+
+                        if value:
+                            candidates.append(
+                                value
+                            )
+
+                    elif isinstance(
+                        value,
+                        dict,
+                    ):
+
+                        for nested in value.values():
+
+                            if isinstance(
+                                nested,
+                                list,
+                            ):
+
+                                if nested:
+                                    candidates.append(
+                                        nested
+                                    )
+
+                            elif isinstance(
+                                nested,
+                                dict,
+                            ):
+
+                                candidates.extend(
+                                    _collect_event_lists(
+                                        nested
+                                    )
+                                )
+
+    # -----------------------------------------------------
+    # content
+    # -----------------------------------------------------
+
     content = get_content(data)
 
     if not isinstance(content, dict):
-        return []
-
-    candidates = []
+        return candidates
 
     match_facts = content.get(
         "matchFacts"
@@ -3731,27 +3824,58 @@ def _dedupe_events(events):
 
     for event in events:
 
-        event_id = get_event_unique_id(
-            event
+        if not isinstance(
+            event,
+            dict,
+        ):
+            continue
+
+        # reactKey در داده‌های فعلی FotMob شناسه یکتای واقعی
+        # event است. eventId در بعضی بازی‌ها برای چند event
+        # مختلف مقدار 0 دارد، بنابراین نباید اولویت داشته باشد.
+        react_key = event.get(
+            "reactKey"
         )
 
-        if event_id is not None:
+        if react_key is not None and str(
+            react_key
+        ).strip():
 
             key = (
-                "id",
-                str(event_id),
+                "react",
+                str(react_key),
             )
 
         else:
 
-            key = (
-                "fallback",
-                str(event.get("type", "")),
-                str(event.get("playerId", "")),
-                str(event.get("time", "")),
-                str(event.get("minute", "")),
-                str(event.get("isHome", "")),
+            event_id = get_event_unique_id(
+                event
             )
+
+            # eventId=0 در بعضی صفحات FotMob مقدار placeholder
+            # است و برای dedupe قابل اعتماد نیست.
+            if (
+                event_id is not None
+                and str(event_id) != "0"
+            ):
+
+                key = (
+                    "id",
+                    str(event_id),
+                )
+
+            else:
+
+                key = (
+                    "fallback",
+                    str(event.get("type", "")),
+                    str(event.get("playerId", "")),
+                    str(event.get("time", "")),
+                    str(event.get("minute", "")),
+                    str(event.get("isHome", "")),
+                    str(event.get("ownGoal", "")),
+                    str(event.get("isPenaltyShootoutEvent", "")),
+                )
 
         if key in seen:
             continue
