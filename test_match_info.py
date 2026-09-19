@@ -14,11 +14,8 @@ MATCH_URLS = [
 ]
 
 def get_next_data(html):
-match = re.search(
-r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
-html,
-re.DOTALL,
-)
+pattern = r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>'
+match = re.search(pattern, html, re.DOTALL)
 
 ```
 if not match:
@@ -29,16 +26,14 @@ return json.loads(match.group(1))
 
 def find_info_box(obj):
 if isinstance(obj, dict):
+match_facts = obj.get("matchFacts")
 
 ```
-    if "matchFacts" in obj and isinstance(obj["matchFacts"], dict):
-        match_facts = obj["matchFacts"]
+    if isinstance(match_facts, dict):
+        info_box = match_facts.get("infoBox")
 
-        if "infoBox" in match_facts and isinstance(
-            match_facts["infoBox"],
-            dict,
-        ):
-            return match_facts["infoBox"]
+        if isinstance(info_box, dict):
+            return info_box
 
     for value in obj.values():
         result = find_info_box(value)
@@ -47,7 +42,6 @@ if isinstance(obj, dict):
             return result
 
 elif isinstance(obj, list):
-
     for value in obj:
         result = find_info_box(value)
 
@@ -57,40 +51,33 @@ elif isinstance(obj, list):
 return None
 ```
 
-def print_relevant_data(obj, path="root"):
+def print_matching_keys(obj, path="root"):
 if isinstance(obj, dict):
+for key, value in obj.items():
+key_text = str(key).lower()
 
 ```
-    for key, value in obj.items():
-
-        key_lower = str(key).lower()
-
-        if any(
-            word in key_lower
-            for word in (
-                "aggregate",
-                "leg",
-                "score",
-                "penalty",
-            )
+        if (
+            "aggregate" in key_text
+            or "leg" in key_text
+            or "penalty" in key_text
         ):
             print()
-            print(f"PATH: {path}.{key}")
+            print("PATH:", path + "." + str(key))
             print(json.dumps(value, ensure_ascii=False, indent=2))
 
         if isinstance(value, (dict, list)):
-            print_relevant_data(
+            print_matching_keys(
                 value,
-                f"{path}.{key}",
+                path + "." + str(key),
             )
 
 elif isinstance(obj, list):
-
     for index, value in enumerate(obj):
         if isinstance(value, (dict, list)):
-            print_relevant_data(
+            print_matching_keys(
                 value,
-                f"{path}[{index}]",
+                path + "[" + str(index) + "]",
             )
 ```
 
@@ -100,21 +87,15 @@ session = requests.Session()
 ```
 session.headers.update(
     {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 "
-            "(KHTML, like Gecko) "
-            "Chrome/140.0.0.0 Safari/537.36"
-        ),
+        "User-Agent": "Mozilla/5.0",
         "Accept-Language": "en-US,en;q=0.9",
     }
 )
 
 for index, url in enumerate(MATCH_URLS, start=1):
-
     print()
     print("=" * 100)
-    print(f"MATCH {index}")
+    print("MATCH", index)
     print(url)
     print("=" * 100)
 
@@ -161,12 +142,14 @@ for index, url in enumerate(MATCH_URLS, start=1):
         )
 
         print()
-        print("RELEVANT AGGREGATE / LEG / SCORE / PENALTY DATA:")
-        print_relevant_data(info_box)
+        print("AGGREGATE / LEG / PENALTY:")
+        print_matching_keys(info_box)
 
-    except Exception as e:
+    except Exception as error:
         print(
-            f"ERROR: {type(e).__name__}: {e}"
+            "ERROR:",
+            type(error).__name__,
+            str(error),
         )
 ```
 
