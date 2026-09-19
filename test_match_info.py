@@ -28,34 +28,62 @@ def get_next_data(html):
     return json.loads(match.group(1))
 
 
-def get_info_box(data):
-    try:
-        return data["props"]["pageProps"]["content"]["matchFacts"]["infoBox"]
-    except (KeyError, TypeError):
-        return None
+def key_is_relevant(key):
+    normalized = re.sub(r"[^a-z0-9]", "", str(key).lower())
+
+    return normalized in {
+        "aggregate",
+        "aggregatescore",
+        "aggregatescores",
+        "penalty",
+        "penalties",
+        "penaltyscore",
+        "penaltyscores",
+        "penaltyshootout",
+        "score",
+        "result",
+        "winner",
+        "match",
+        "leg",
+    }
 
 
-def print_keys(obj, path=""):
+def print_relevant_data(obj, path="root", depth=0):
+    if depth > 12:
+        return
+
     if isinstance(obj, dict):
         for key, value in obj.items():
-            key_text = str(key).lower()
+            current_path = path + "." + str(key)
 
-            if (
-                "aggregate" in key_text
-                or "leg" in key_text
-                or "penalty" in key_text
-            ):
+            if key_is_relevant(key):
                 print()
-                print("FOUND:", path + "." + str(key))
-                print(json.dumps(value, ensure_ascii=False, indent=2))
+                print("-" * 100)
+                print("FOUND:", current_path)
+                print("-" * 100)
+                print(
+                    json.dumps(
+                        value,
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                )
 
             if isinstance(value, (dict, list)):
-                print_keys(value, path + "." + str(key))
+                print_relevant_data(
+                    value,
+                    current_path,
+                    depth + 1,
+                )
 
     elif isinstance(obj, list):
         for index, value in enumerate(obj):
             if isinstance(value, (dict, list)):
-                print_keys(value, path + "[" + str(index) + "]")
+                print_relevant_data(
+                    value,
+                    path + "[" + str(index) + "]",
+                    depth + 1,
+                )
 
 
 def main():
@@ -70,10 +98,10 @@ def main():
 
     for number, url in enumerate(MATCH_URLS, 1):
         print()
-        print("=" * 90)
+        print("=" * 100)
         print("MATCH", number)
         print(url)
-        print("=" * 90)
+        print("=" * 100)
 
         try:
             response = session.get(url, timeout=45)
@@ -89,39 +117,9 @@ def main():
                 print("ERROR: NEXT DATA NOT FOUND")
                 continue
 
-            info_box = get_info_box(data)
-
-            if info_box is None:
-                print("ERROR: INFO BOX NOT FOUND")
-                continue
-
-            tournament = info_box.get("Tournament")
-            leg_info = info_box.get("legInfo")
-
             print()
-            print("TOURNAMENT:")
-            print(
-                json.dumps(
-                    tournament,
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
-
-            print()
-            print("LEG INFO:")
-            print(
-                json.dumps(
-                    leg_info,
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
-
-            print()
-            print("AGGREGATE / LEG / PENALTY RELATED DATA:")
-
-            print_keys(info_box, "infoBox")
+            print("SEARCHING ENTIRE __NEXT_DATA__...")
+            print_relevant_data(data)
 
         except Exception as error:
             print()
