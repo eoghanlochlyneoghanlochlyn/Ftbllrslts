@@ -1,15 +1,9 @@
 import json
 import re
-
 import requests
 
 
-MATCH_ID = "5161863"
-
-MATCH_URL = (
-    "https://www.fotmob.com/matches/"
-    "monaco-vs-paris-saint-germain/379cod#5161863"
-)
+MATCH_URL = "https://www.fotmob.com/matches/coventry-city-vs-nottingham-forest/2y16ft#5795463"
 
 
 def find_key(obj, target_key, path="root"):
@@ -41,24 +35,9 @@ def extract_next_data(html):
     return json.loads(match.group(1))
 
 
-def print_json(title, value, limit=30000):
-    print(f"\n========== {title} ==========")
-
-    text = json.dumps(
-        value,
-        ensure_ascii=False,
-        indent=2,
-    )
-
-    print(text[:limit])
-
-    if len(text) > limit:
-        print("\n... OUTPUT TRUNCATED ...")
-
-
 def main():
-    print("Match ID:", MATCH_ID)
-    print("Match URL:", MATCH_URL)
+    print("Match URL:")
+    print(MATCH_URL)
 
     response = requests.get(
         MATCH_URL,
@@ -76,83 +55,65 @@ def main():
     data = extract_next_data(response.text)
 
     # ---------------------------------------------------------
-    # Tournament
+    # Find Tournament objects
     # ---------------------------------------------------------
-
-    print("\n\n========== TOURNAMENT ==========")
 
     tournament_results = list(find_key(data, "Tournament"))
 
-    print("Tournament objects found:", len(tournament_results))
+    print("\nTournament objects found:", len(tournament_results))
 
-    for index, (path, value) in enumerate(tournament_results, 1):
-        print(f"\n--- Tournament #{index} ---")
+    if not tournament_results:
+        print("\nTournament information was not found.")
+        return
+
+    # Usually the useful one is inside:
+    # root.props.pageProps.content.matchFacts.infoBox.Tournament
+
+    for path, tournament in tournament_results:
+
+        if not isinstance(tournament, dict):
+            continue
+
+        if "leagueName" not in tournament:
+            continue
+
+        print("\n========== RESULT ==========")
+
         print("Path:", path)
 
-        if isinstance(value, dict):
-            print_json("Tournament object", value)
-        else:
-            print("Value:", repr(value))
+        print("Competition:", tournament.get("leagueName"))
+        print("Round:", tournament.get("round"))
+        print("Round name:", tournament.get("roundName"))
 
-    # ---------------------------------------------------------
-    # Round-related fields
-    # ---------------------------------------------------------
+        # -----------------------------------------------------
+        # legInfo
+        # -----------------------------------------------------
 
-    interesting_keys = (
-        "round",
-        "roundName",
-        "roundId",
-        "localizedKey",
-        "stage",
-        "stageName",
-        "phase",
-        "phaseName",
-        "leg",
-        "legNumber",
-        "legName",
-    )
+        info_box_results = list(find_key(data, "infoBox"))
 
-    print("\n\n========== ROUND / STAGE / PHASE ==========")
+        leg_info = None
 
-    for key in interesting_keys:
-        results = list(find_key(data, key))
+        for info_path, info_box in info_box_results:
+            if not isinstance(info_box, dict):
+                continue
 
-        if not results:
-            continue
+            if info_box.get("Tournament") is tournament:
+                leg_info = info_box.get("legInfo")
+                break
 
-        print(f"\n========== KEY: {key} ==========")
-        print("Occurrences:", len(results))
+        print("Leg info:", leg_info)
 
-        for path, value in results[:20]:
-            print("\nPath:", path)
-            print("Value:", repr(value))
+        print("\n========== RAW TOURNAMENT ==========")
 
-    # ---------------------------------------------------------
-    # InfoBox
-    # ---------------------------------------------------------
+        print(
+            json.dumps(
+                tournament,
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
 
-    print("\n\n========== INFOBOX ==========")
-
-    match_facts_results = list(find_key(data, "matchFacts"))
-
-    print("matchFacts found:", len(match_facts_results))
-
-    for path, value in match_facts_results[:5]:
-        print("\nPath:", path)
-
-        if not isinstance(value, dict):
-            continue
-
-        info_box = value.get("infoBox")
-
-        if info_box is not None:
-            print_json("infoBox", info_box)
-
-    # ---------------------------------------------------------
-    # DONE
-    # ---------------------------------------------------------
-
-    print("\n\n========== DONE ==========")
+        break
 
 
 if __name__ == "__main__":
