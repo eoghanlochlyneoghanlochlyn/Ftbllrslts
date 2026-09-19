@@ -37,18 +37,22 @@ def extract_next_data(html):
     return json.loads(match.group(1))
 
 
-def print_matches(title, results, limit=10):
+def print_object(title, value, limit=20000):
     print(f"\n========== {title} ==========")
-    print("Found:", len(results))
 
-    for index, (path, value) in enumerate(results[:limit], 1):
-        print(f"\n--- {title} #{index} ---")
-        print("Path:", path)
+    if isinstance(value, (dict, list)):
+        text = json.dumps(
+            value,
+            ensure_ascii=False,
+            indent=2,
+        )
 
-        if isinstance(value, (dict, list)):
-            print(json.dumps(value, ensure_ascii=False, indent=2)[:12000])
-        else:
-            print("Value:", repr(value))
+        print(text[:limit])
+
+        if len(text) > limit:
+            print("\n... OUTPUT TRUNCATED ...")
+    else:
+        print(repr(value))
 
 
 def main():
@@ -70,68 +74,104 @@ def main():
 
     data = extract_next_data(response.text)
 
-    print("\n========== NEXT_DATA ROOT KEYS ==========")
-    print(list(data.keys()))
+    print("\n========== MATCH TOURNAMENT OBJECT ==========")
 
-    print_matches("fixtureInfo", list(find_key(data, "fixtureInfo")))
-    print_matches("activeRound", list(find_key(data, "activeRound")))
-    print_matches("rounds", list(find_key(data, "rounds")))
-    print_matches("roundName", list(find_key(data, "roundName")))
-    print_matches("round", list(find_key(data, "round")))
-    print_matches("stage", list(find_key(data, "stage")))
-    print_matches("stageName", list(find_key(data, "stageName")))
-    print_matches("phase", list(find_key(data, "phase")))
-    print_matches("phaseName", list(find_key(data, "phaseName")))
-    print_matches("leg", list(find_key(data, "leg")))
-    print_matches("aggregate", list(find_key(data, "aggregate")))
-    print_matches("playoff", list(find_key(data, "playoff")))
-    print_matches("matchInfo", list(find_key(data, "matchInfo")))
+    tournament_results = list(find_key(data, "Tournament"))
 
-    print("\n========== POSSIBLE COMPETITION/MATCH OBJECTS ==========")
+    print("Tournament objects found:", len(tournament_results))
 
-    for key in (
-        "header",
-        "content",
-        "matchFacts",
+    for index, (path, value) in enumerate(tournament_results, 1):
+        print(f"\n--- Tournament #{index} ---")
+        print("Path:", path)
+
+        if isinstance(value, dict):
+            print_object("Tournament object", value)
+
+    print("\n========== MATCH FACTS INFOBOX ==========")
+
+    match_facts_results = list(find_key(data, "matchFacts"))
+
+    print("matchFacts found:", len(match_facts_results))
+
+    for path, value in match_facts_results[:5]:
+        print("Path:", path)
+
+        if isinstance(value, dict):
+            info_box = value.get("infoBox")
+
+            if info_box is not None:
+                print_object("infoBox", info_box)
+
+    print("\n========== RELATED MATCH / COMPETITION FIELDS ==========")
+
+    interesting_keys = (
+        "id",
+        "matchId",
+        "eventId",
+        "fixtureId",
+        "tournamentId",
+        "leagueId",
+        "seasonId",
+        "season",
+        "competitionId",
         "competition",
         "tournament",
-        "fixture",
-    ):
+        "round",
+        "roundName",
+        "roundId",
+        "stage",
+        "stageName",
+        "phase",
+        "phaseName",
+        "leg",
+        "legNumber",
+        "legName",
+        "aggregate",
+        "aggregateScore",
+        "aggregateHome",
+        "aggregateAway",
+        "parentMatch",
+        "previousMatch",
+        "nextMatch",
+        "relatedMatch",
+        "match",
+    )
+
+    found = []
+
+    for key in interesting_keys:
         results = list(find_key(data, key))
 
         if results:
-            print(f"\nKEY {key}: {len(results)} occurrence(s)")
+            found.append((key, results))
 
-            for path, value in results[:5]:
-                print("Path:", path)
+    for key, results in found:
+        print(f"\n========== KEY: {key} ==========")
+        print("Occurrences:", len(results))
 
-                if isinstance(value, dict):
-                    interesting = {
-                        k: v
-                        for k, v in value.items()
-                        if any(
-                            token in k.lower()
-                            for token in (
-                                "round",
-                                "stage",
-                                "phase",
-                                "leg",
-                                "aggregate",
-                                "competition",
-                                "tournament",
-                                "fixture",
-                            )
-                        )
-                    }
+        for path, value in results[:10]:
+            print("\nPath:", path)
 
-                    if interesting:
-                        print(
-                            json.dumps(
-                                interesting,
-                                ensure_ascii=False,
-                                indent=2,
-                            )[:8000]
-                        )
+            if isinstance(value, (dict, list)):
+                print(
+                    json.dumps(
+                        value,
+                        ensure_ascii=False,
+                        indent=2,
+                    )[:8000]
+                )
+            else:
+                print("Value:", repr(value))
+
+    print("\n========== POSSIBLE MATCH LINKS / IDS ==========")
+
+    all_ids = list(find_key(data, "id"))
+
+    print("Total id fields:", len(all_ids))
+
+    for path, value in all_ids[:100]:
+        if isinstance(value, (str, int)):
+            print(path, "=", repr(value))
 
     print("\n========== DONE ==========")
 
