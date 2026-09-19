@@ -11,67 +11,20 @@ URL = (
 )
 
 
-def print_round_info(data):
-    details = data.get("details", {})
-    fixture_info = data.get("fixtureInfo", {})
+def find_key(obj, target_key, path="root"):
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            current_path = f"{path}.{key}"
 
-    print("\n========== COMPETITION ==========")
-    print("Name:", details.get("name"))
-    print("Short name:", details.get("shortName"))
-    print("Country:", details.get("country"))
+            if key == target_key:
+                yield current_path, value
 
-    print("\n========== ACTIVE ROUND ==========")
-    active_round = fixture_info.get("activeRound")
-    print(json.dumps(active_round, ensure_ascii=False, indent=2))
+            yield from find_key(value, target_key, current_path)
 
-    print("\n========== ALL ROUNDS ==========")
-    rounds = fixture_info.get("rounds")
-
-    if isinstance(rounds, list):
-        print("Round count:", len(rounds))
-
-        for index, item in enumerate(rounds, 1):
-            print(f"\n--- Round {index} ---")
-            print(json.dumps(item, ensure_ascii=False, indent=2))
-    else:
-        print("No rounds list found.")
-
-    print("\n========== PLAYOFF ==========")
-    playoff = fixture_info.get("playoff")
-
-    if playoff is None:
-        print("playoff = None")
-    else:
-        print(json.dumps(playoff, ensure_ascii=False, indent=2))
-
-    print("\n========== FIXTURE ROUND DATA ==========")
-
-    fixtures = data.get("fixtures", [])
-
-    if isinstance(fixtures, list):
-        print("Fixture count:", len(fixtures))
-
-        found = 0
-
-        for index, fixture in enumerate(fixtures):
-            if not isinstance(fixture, dict):
-                continue
-
-            round_value = fixture.get("round")
-            round_name = fixture.get("roundName")
-
-            if round_value is not None or round_name is not None:
-                found += 1
-
-                print(f"\n--- Fixture {index + 1} ---")
-                print("Round:", round_value)
-                print("Round name:", round_name)
-
-                if found >= 30:
-                    print("\nOnly first 30 fixtures with round information shown.")
-                    break
-    else:
-        print("No fixtures list found.")
+    elif isinstance(obj, list):
+        for index, value in enumerate(obj):
+            current_path = f"{path}[{index}]"
+            yield from find_key(value, target_key, current_path)
 
 
 def main():
@@ -92,7 +45,67 @@ def main():
 
     data = response.json()
 
-    print_round_info(data)
+    print("\n========== ROOT KEYS ==========")
+    print(list(data.keys()))
+
+    print("\n========== SEARCH: fixtureInfo ==========")
+
+    fixture_info_results = list(find_key(data, "fixtureInfo"))
+
+    print("Found:", len(fixture_info_results))
+
+    for index, (path, value) in enumerate(fixture_info_results, 1):
+        print(f"\n--- fixtureInfo #{index} ---")
+        print("Path:", path)
+
+        if isinstance(value, dict):
+            print("Keys:", list(value.keys()))
+        else:
+            print("Type:", type(value).__name__)
+
+        print(json.dumps(value, ensure_ascii=False, indent=2)[:15000])
+
+    print("\n========== SEARCH: rounds ==========")
+
+    rounds_results = list(find_key(data, "rounds"))
+
+    print("Found:", len(rounds_results))
+
+    for index, (path, value) in enumerate(rounds_results, 1):
+        print(f"\n--- rounds #{index} ---")
+        print("Path:", path)
+
+        if isinstance(value, list):
+            print("Count:", len(value))
+
+            for round_index, item in enumerate(value, 1):
+                print(f"\nRound {round_index}:")
+                print(json.dumps(item, ensure_ascii=False, indent=2))
+        else:
+            print("Type:", type(value).__name__)
+            print(json.dumps(value, ensure_ascii=False, indent=2))
+
+    print("\n========== SEARCH: activeRound ==========")
+
+    active_round_results = list(find_key(data, "activeRound"))
+
+    print("Found:", len(active_round_results))
+
+    for index, (path, value) in enumerate(active_round_results, 1):
+        print(f"\n--- activeRound #{index} ---")
+        print("Path:", path)
+        print(json.dumps(value, ensure_ascii=False, indent=2))
+
+    print("\n========== SEARCH: playoff ==========")
+
+    playoff_results = list(find_key(data, "playoff"))
+
+    print("Found:", len(playoff_results))
+
+    for index, (path, value) in enumerate(playoff_results, 1):
+        print(f"\n--- playoff #{index} ---")
+        print("Path:", path)
+        print(json.dumps(value, ensure_ascii=False, indent=2)[:10000])
 
 
 if __name__ == "__main__":
