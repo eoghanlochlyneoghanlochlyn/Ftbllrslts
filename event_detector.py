@@ -39,129 +39,6 @@ def first_non_empty(*values):
     return ""
 
 
-def _is_missing_player_name(
-    player_name
-):
-
-    if player_name is None:
-        return True
-
-    if not isinstance(
-        player_name,
-        str,
-    ):
-        return False
-
-    normalized = (
-        player_name
-        .strip()
-        .lower()
-    )
-
-    return normalized in (
-        "",
-        "<tbd>",
-        "tbd",
-        "unknown",
-        "unknown player",
-        "player unknown",
-        "بازیکن نامشخص",
-    )
-
-
-def get_event_player_name(
-    event
-):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return ""
-
-    player = event.get(
-        "player"
-    )
-
-    if isinstance(
-        player,
-        dict,
-    ):
-
-        name = first_non_empty(
-            player.get("name"),
-            player.get("shortName"),
-            player.get("displayName"),
-        )
-
-        if name:
-            return str(name)
-
-    return str(
-        first_non_empty(
-            event.get("playerName"),
-            event.get("player_name"),
-            event.get("name"),
-        )
-        or ""
-    )
-
-
-def get_event_assist_player_name(
-    event
-):
-
-    if not isinstance(
-        event,
-        dict,
-    ):
-        return ""
-
-    player = event.get(
-        "assistPlayer"
-    )
-
-    if isinstance(
-        player,
-        dict,
-    ):
-
-        name = first_non_empty(
-            player.get("name"),
-            player.get("shortName"),
-            player.get("displayName"),
-        )
-
-        if name:
-            return str(name)
-
-    assist = event.get(
-        "assist"
-    )
-
-    if isinstance(
-        assist,
-        dict,
-    ):
-
-        name = first_non_empty(
-            assist.get("name"),
-            assist.get("shortName"),
-            assist.get("displayName"),
-        )
-
-        if name:
-            return str(name)
-
-    return str(
-        first_non_empty(
-            event.get("assistPlayerName"),
-            event.get("assist_player_name"),
-        )
-        or ""
-    )
-
-
 # =========================================================
 # نوع event
 # =========================================================
@@ -985,18 +862,8 @@ def get_goal_info(event):
             event
         ),
 
-        "player_name": get_event_player_name(
-            event
-        ),
-
         "assist_player_id": (
             get_event_assist_player_id(
-                event
-            )
-        ),
-
-        "assist_player_name": (
-            get_event_assist_player_name(
                 event
             )
         ),
@@ -1082,161 +949,6 @@ def detect_new_events(
 
 
 # =========================================================
-# تشخیص تغییر اطلاعات گل‌های قبلی
-# =========================================================
-
-def detect_updated_goals(
-    match_state,
-    events,
-):
-
-    result = []
-
-    if not isinstance(
-        match_state,
-        dict,
-    ):
-        return result
-
-    previous_goals = (
-        match_state.get(
-            "goals",
-            [],
-        )
-    )
-
-    if not isinstance(
-        previous_goals,
-        list,
-    ):
-        return result
-
-    goals_by_key = {}
-
-    for goal in previous_goals:
-
-        if not isinstance(
-            goal,
-            dict,
-        ):
-            continue
-
-        key = goal.get(
-            "event_key"
-        )
-
-        if key is None:
-            continue
-
-        goals_by_key[
-            str(key)
-        ] = goal
-
-    for event in events or []:
-
-        if not isinstance(
-            event,
-            dict,
-        ):
-            continue
-
-        if get_event_type(
-            event
-        ) != "goal":
-            continue
-
-        if is_cancelled_goal_event(
-            event
-        ):
-            continue
-
-        key = event_key(
-            event
-        )
-
-        if key is None:
-            continue
-
-        existing = goals_by_key.get(
-            str(key)
-        )
-
-        if existing is None:
-            continue
-
-        new_player_name = (
-            get_event_player_name(
-                event
-            )
-        )
-
-        new_assist_name = (
-            get_event_assist_player_name(
-                event
-            )
-        )
-
-        old_player_name = existing.get(
-            "player_name"
-        )
-
-        old_assist_name = existing.get(
-            "assist_player_name"
-        )
-
-        player_improved = (
-            _is_missing_player_name(
-                old_player_name
-            )
-            and not _is_missing_player_name(
-                new_player_name
-            )
-        )
-
-        assist_improved = (
-            _is_missing_player_name(
-                old_assist_name
-            )
-            and not _is_missing_player_name(
-                new_assist_name
-            )
-        )
-
-        player_id_improved = (
-            existing.get(
-                "player_id"
-            ) is None
-            and get_event_player_id(
-                event
-            ) is not None
-        )
-
-        assist_id_improved = (
-            existing.get(
-                "assist_player_id"
-            ) is None
-            and get_event_assist_player_id(
-                event
-            ) is not None
-        )
-
-        if (
-            player_improved
-            or assist_improved
-            or player_id_improved
-            or assist_id_improved
-        ):
-
-            result.append(
-                get_goal_info(
-                    event
-                )
-            )
-
-    return result
-
-
-# =========================================================
 # تغییرات state
 # =========================================================
 
@@ -1261,50 +973,21 @@ def detect_state_changes(
         )
     )
 
-    # Bootstrap a match first observed after it has finished.
-    # FotMob then returns historical events, which must not be
-    # treated as newly happened live events. Their keys are still
-    # stored so they cannot be reprocessed on later runs.
-    # The TBD -> real player-name update logic remains unchanged.
-    initial_finished_snapshot = (
-        isinstance(snapshot, dict)
-        and snapshot.get("finished") is True
-        and not previous_keys
-        and not match_state.get("goals")
-    )
-
-    if initial_finished_snapshot:
-        new_events = []
-        bootstrap_event_keys = get_event_keys(events)
-    else:
-        new_events = detect_new_events(
-            previous_keys,
-            events,
-        )
-        bootstrap_event_keys = get_event_keys(new_events)
-
-    updated_goals = detect_updated_goals(
-        match_state,
+    new_events = detect_new_events(
+        previous_keys,
         events,
     )
 
     changes = {
         "events": new_events,
-
-        "event_keys": bootstrap_event_keys,
-
+        "event_keys": get_event_keys(
+            new_events
+        ),
         "goals": [],
-
-        "updated_goals": updated_goals,
-
         "cancelled_goals": [],
-
         "red_cards": [],
-
         "start": False,
-
         "half_time": False,
-
         "finished": False,
     }
 
@@ -1427,7 +1110,6 @@ def detect_state_changes(
             )
 
             if key is not None:
-
                 previous_cancelled.add(
                     str(key)
                 )
