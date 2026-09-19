@@ -5,7 +5,11 @@ import requests
 
 
 MATCH_ID = "5161863"
-MATCH_URL = "https://www.fotmob.com/matches/monaco-vs-paris-saint-germain/379cod#5161863"
+
+MATCH_URL = (
+    "https://www.fotmob.com/matches/"
+    "monaco-vs-paris-saint-germain/379cod#5161863"
+)
 
 
 def find_key(obj, target_key, path="root"):
@@ -37,22 +41,19 @@ def extract_next_data(html):
     return json.loads(match.group(1))
 
 
-def print_object(title, value, limit=20000):
+def print_json(title, value, limit=30000):
     print(f"\n========== {title} ==========")
 
-    if isinstance(value, (dict, list)):
-        text = json.dumps(
-            value,
-            ensure_ascii=False,
-            indent=2,
-        )
+    text = json.dumps(
+        value,
+        ensure_ascii=False,
+        indent=2,
+    )
 
-        print(text[:limit])
+    print(text[:limit])
 
-        if len(text) > limit:
-            print("\n... OUTPUT TRUNCATED ...")
-    else:
-        print(repr(value))
+    if len(text) > limit:
+        print("\n... OUTPUT TRUNCATED ...")
 
 
 def main():
@@ -74,7 +75,11 @@ def main():
 
     data = extract_next_data(response.text)
 
-    print("\n========== MATCH TOURNAMENT OBJECT ==========")
+    # ---------------------------------------------------------
+    # Tournament
+    # ---------------------------------------------------------
+
+    print("\n\n========== TOURNAMENT ==========")
 
     tournament_results = list(find_key(data, "Tournament"))
 
@@ -85,40 +90,19 @@ def main():
         print("Path:", path)
 
         if isinstance(value, dict):
-            print_object("Tournament object", value)
+            print_json("Tournament object", value)
+        else:
+            print("Value:", repr(value))
 
-    print("\n========== MATCH FACTS INFOBOX ==========")
-
-    match_facts_results = list(find_key(data, "matchFacts"))
-
-    print("matchFacts found:", len(match_facts_results))
-
-    for path, value in match_facts_results[:5]:
-        print("Path:", path)
-
-        if isinstance(value, dict):
-            info_box = value.get("infoBox")
-
-            if info_box is not None:
-                print_object("infoBox", info_box)
-
-    print("\n========== RELATED MATCH / COMPETITION FIELDS ==========")
+    # ---------------------------------------------------------
+    # Round-related fields
+    # ---------------------------------------------------------
 
     interesting_keys = (
-        "id",
-        "matchId",
-        "eventId",
-        "fixtureId",
-        "tournamentId",
-        "leagueId",
-        "seasonId",
-        "season",
-        "competitionId",
-        "competition",
-        "tournament",
         "round",
         "roundName",
         "roundId",
+        "localizedKey",
         "stage",
         "stageName",
         "phase",
@@ -126,54 +110,49 @@ def main():
         "leg",
         "legNumber",
         "legName",
-        "aggregate",
-        "aggregateScore",
-        "aggregateHome",
-        "aggregateAway",
-        "parentMatch",
-        "previousMatch",
-        "nextMatch",
-        "relatedMatch",
-        "match",
     )
 
-    found = []
+    print("\n\n========== ROUND / STAGE / PHASE ==========")
 
     for key in interesting_keys:
         results = list(find_key(data, key))
 
-        if results:
-            found.append((key, results))
+        if not results:
+            continue
 
-    for key, results in found:
         print(f"\n========== KEY: {key} ==========")
         print("Occurrences:", len(results))
 
-        for path, value in results[:10]:
+        for path, value in results[:20]:
             print("\nPath:", path)
+            print("Value:", repr(value))
 
-            if isinstance(value, (dict, list)):
-                print(
-                    json.dumps(
-                        value,
-                        ensure_ascii=False,
-                        indent=2,
-                    )[:8000]
-                )
-            else:
-                print("Value:", repr(value))
+    # ---------------------------------------------------------
+    # InfoBox
+    # ---------------------------------------------------------
 
-    print("\n========== POSSIBLE MATCH LINKS / IDS ==========")
+    print("\n\n========== INFOBOX ==========")
 
-    all_ids = list(find_key(data, "id"))
+    match_facts_results = list(find_key(data, "matchFacts"))
 
-    print("Total id fields:", len(all_ids))
+    print("matchFacts found:", len(match_facts_results))
 
-    for path, value in all_ids[:100]:
-        if isinstance(value, (str, int)):
-            print(path, "=", repr(value))
+    for path, value in match_facts_results[:5]:
+        print("\nPath:", path)
 
-    print("\n========== DONE ==========")
+        if not isinstance(value, dict):
+            continue
+
+        info_box = value.get("infoBox")
+
+        if info_box is not None:
+            print_json("infoBox", info_box)
+
+    # ---------------------------------------------------------
+    # DONE
+    # ---------------------------------------------------------
+
+    print("\n\n========== DONE ==========")
 
 
 if __name__ == "__main__":
