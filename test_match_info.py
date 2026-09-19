@@ -22,14 +22,13 @@ MATCH_URLS = [
 
 def find_tournament(obj):
 if isinstance(obj, dict):
+if (
+"leagueName" in obj
+and ("round" in obj or "roundName" in obj)
+):
+return obj
 
 ```
-    if (
-        "leagueName" in obj
-        and ("round" in obj or "roundName" in obj)
-    ):
-        return obj
-
     for value in obj.values():
         result = find_tournament(value)
 
@@ -37,7 +36,6 @@ if isinstance(obj, dict):
             return result
 
 elif isinstance(obj, list):
-
     for value in obj:
         result = find_tournament(value)
 
@@ -49,11 +47,10 @@ return None
 
 def find_info_box(obj):
 if isinstance(obj, dict):
+if "Tournament" in obj and isinstance(obj["Tournament"], dict):
+return obj
 
 ```
-    if "Tournament" in obj and isinstance(obj["Tournament"], dict):
-        return obj
-
     for value in obj.values():
         result = find_info_box(value)
 
@@ -61,7 +58,6 @@ if isinstance(obj, dict):
             return result
 
 elif isinstance(obj, list):
-
     for value in obj:
         result = find_info_box(value)
 
@@ -102,7 +98,6 @@ print("=" * 90)
 print()
 
 for index, url in enumerate(MATCH_URLS, start=1):
-
     try:
         response = session.get(
             url,
@@ -122,7 +117,10 @@ for index, url in enumerate(MATCH_URLS, start=1):
             continue
 
         competition = tournament.get("leagueName")
-        round_value = tournament.get("roundName") or tournament.get("round")
+        round_value = (
+            tournament.get("roundName")
+            or tournament.get("round")
+        )
 
         info_box = find_info_box(data)
 
@@ -134,7 +132,6 @@ for index, url in enumerate(MATCH_URLS, start=1):
         leg_text = ""
 
         if isinstance(leg_info, dict):
-
             localized = leg_info.get("localizedString")
 
             if isinstance(localized, dict):
@@ -155,7 +152,6 @@ for index, url in enumerate(MATCH_URLS, start=1):
         )
 
     except Exception as e:
-
         print(
             f"{index:02d}. ERROR | "
             f"{type(e).__name__}: {e}"
