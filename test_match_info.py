@@ -9,37 +9,45 @@ from fotmob import (
 MATCH_ID = "6054373"
 
 
-def contains_goal_data(value):
-
-    if isinstance(value, dict):
-
-        text = json.dumps(
-            value,
-            ensure_ascii=False
-        ).lower()
-
-        keywords = (
-            '"goal"',
-            '"isgoal"',
-            '"newscore"',
-            '"owngoal"',
-            '"eventid"',
-        )
-
-        return any(
-            keyword in text
-            for keyword in keywords
-        )
-
-    return False
-
-
-def search_raw(value, path="root", results=None):
+def search_goal_data(value, path="root", results=None):
 
     if results is None:
         results = []
 
     if isinstance(value, dict):
+
+        event_type = value.get("type")
+
+        has_new_score = "newScore" in value
+        has_event_id = (
+            "eventId" in value
+            or "eventID" in value
+        )
+        has_score = (
+            "homeScore" in value
+            or "awayScore" in value
+        )
+
+        is_goal = (
+            isinstance(event_type, str)
+            and event_type.lower() == "goal"
+        )
+
+        if (
+            is_goal
+            or has_new_score
+            or (
+                has_event_id
+                and has_score
+            )
+        ):
+
+            results.append(
+                (
+                    path,
+                    value
+                )
+            )
 
         for key, child in value.items():
 
@@ -47,16 +55,7 @@ def search_raw(value, path="root", results=None):
 
             if isinstance(child, (dict, list)):
 
-                if contains_goal_data(child):
-
-                    results.append(
-                        (
-                            child_path,
-                            child
-                        )
-                    )
-
-                search_raw(
+                search_goal_data(
                     child,
                     child_path,
                     results
@@ -70,16 +69,7 @@ def search_raw(value, path="root", results=None):
 
             if isinstance(child, (dict, list)):
 
-                if contains_goal_data(child):
-
-                    results.append(
-                        (
-                            child_path,
-                            child
-                        )
-                    )
-
-                search_raw(
+                search_goal_data(
                     child,
                     child_path,
                     results
@@ -88,95 +78,76 @@ def search_raw(value, path="root", results=None):
     return results
 
 
-def print_possible_event_lists(value, path="root"):
+def print_compact_event(path, value):
 
-    if isinstance(value, dict):
+    print("\n" + "-" * 100)
+    print(f"PATH: {path}")
+    print("-" * 100)
 
-        for key, child in value.items():
+    fields = (
+        "id",
+        "eventId",
+        "eventID",
+        "incidentId",
+        "incidentID",
+        "type",
+        "time",
+        "minute",
+        "minutesAdded",
+        "minutesAddedInput",
+        "timeStr",
+        "halfStrShort",
+        "isHome",
+        "playerId",
+        "assistPlayerId",
+        "homeScore",
+        "awayScore",
+        "newScore",
+        "isGoal",
+        "ownGoal",
+        "reactKey",
+    )
 
-            child_path = f"{path}.{key}"
+    for field in fields:
 
-            if isinstance(child, list):
+        if field in value:
 
-                dict_items = [
-                    item
-                    for item in child
-                    if isinstance(item, dict)
-                ]
+            print(
+                f"{field}: "
+                f"{json.dumps(value[field], ensure_ascii=False)}"
+            )
 
-                if len(dict_items) >= 2:
+    player = value.get("player")
 
-                    event_like = 0
+    if isinstance(player, dict):
 
-                    for item in dict_items:
+        print(
+            "player:",
+            json.dumps(
+                {
+                    "id": player.get("id"),
+                    "name": player.get("name"),
+                },
+                ensure_ascii=False
+            )
+        )
 
-                        keys = set(item.keys())
+    else:
 
-                        if (
-                            "type" in keys
-                            or "eventId" in keys
-                            or "id" in keys
-                            or "time" in keys
-                            or "newScore" in keys
-                            or "homeScore" in keys
-                            or "awayScore" in keys
-                        ):
-                            event_like += 1
+        player_name = value.get("playerName")
 
-                    if event_like >= 2:
+        if player_name is not None:
 
-                        print("\n" + "=" * 100)
-                        print(
-                            f"POSSIBLE EVENT LIST: {child_path}"
-                        )
-                        print(
-                            f"ITEM COUNT: {len(child)}"
-                        )
-                        print("=" * 100)
-
-                        for index, item in enumerate(
-                            child,
-                            start=1
-                        ):
-
-                            print(
-                                f"\n--- ITEM #{index} ---"
-                            )
-
-                            print(
-                                json.dumps(
-                                    item,
-                                    ensure_ascii=False,
-                                    indent=2
-                                )
-                            )
-
-            if isinstance(child, (dict, list)):
-
-                print_possible_event_lists(
-                    child,
-                    child_path
-                )
-
-    elif isinstance(value, list):
-
-        for index, child in enumerate(value):
-
-            child_path = f"{path}[{index}]"
-
-            if isinstance(child, (dict, list)):
-
-                print_possible_event_lists(
-                    child,
-                    child_path
-                )
+            print(
+                f"playerName: {player_name}"
+            )
 
 
 def main():
 
     print("=" * 100)
     print(
-        f"RAW FOTMOB DATA TEST | MATCH ID: {MATCH_ID}"
+        f"GOAL LOCATION TEST | MATCH ID: {MATCH_ID}"
     )
     print("=" * 100)
 
@@ -192,10 +163,8 @@ def main():
 
         return
 
-    print("[OK] FotMob page fetched.")
-
     print(
-        f"Page length: {len(page)}"
+        f"[OK] Page fetched | length={len(page)}"
     )
 
     print("\n[2] Extracting NEXT_DATA...")
@@ -212,24 +181,12 @@ def main():
 
     print("[OK] NEXT_DATA extracted.")
 
-    print(
-        f"Top-level keys: {list(data.keys())}"
-    )
+    print("\n[3] Searching for goal/score structures...")
+
+    results = search_goal_data(data)
 
     print(
-        "\n[3] Searching for possible raw event lists..."
-    )
-
-    print_possible_event_lists(data)
-
-    print(
-        "\n[4] Searching for goal-related raw structures..."
-    )
-
-    results = search_raw(data)
-
-    print(
-        f"\nFound {len(results)} goal-related structures."
+        f"[OK] Found {len(results)} matching structures."
     )
 
     for index, (path, value) in enumerate(
@@ -237,43 +194,16 @@ def main():
         start=1
     ):
 
-        print("\n" + "#" * 100)
+        print("\n" + "=" * 100)
         print(
-            f"GOAL-RELATED STRUCTURE #{index}"
+            f"RESULT #{index}"
         )
-        print(
-            f"PATH: {path}"
+        print("=" * 100)
+
+        print_compact_event(
+            path,
+            value
         )
-        print("#" * 100)
-
-        try:
-
-            text = json.dumps(
-                value,
-                ensure_ascii=False,
-                indent=2
-            )
-
-            # برای جلوگیری از خروجی بسیار عظیم
-            if len(text) > 15000:
-
-                print(
-                    text[:15000]
-                )
-
-                print(
-                    f"\n...[TRUNCATED] total size={len(text)} characters..."
-                )
-
-            else:
-
-                print(text)
-
-        except Exception as exc:
-
-            print(
-                f"[ERROR] Could not print structure: {exc}"
-            )
 
     print("\n" + "=" * 100)
     print("TEST FINISHED")
