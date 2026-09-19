@@ -6,364 +6,93 @@ LEAGUE_ID = 42
 SEASON = "2026/2027"
 
 URL = (
-    "https://www.fotmob.com/api/data/leagues"
-    f"?id={LEAGUE_ID}"
-    f"&season={SEASON}"
+    f"https://www.fotmob.com/api/data/leagues"
+    f"?id={LEAGUE_ID}&season={SEASON}"
 )
 
 
-SEARCH_WORDS = (
-    "stage",
-    "round",
-    "knockout",
-    "playoff",
-    "play-off",
-    "leg",
-    "aggregate",
-    "bracket",
-    "phase",
-)
+def print_round_info(data):
+    details = data.get("details", {})
+    fixture_info = data.get("fixtureInfo", {})
 
+    print("\n========== COMPETITION ==========")
+    print("Name:", details.get("name"))
+    print("Short name:", details.get("shortName"))
+    print("Country:", details.get("country"))
 
-def get_nested_value(node, path="root", results=None):
-    if results is None:
-        results = []
+    print("\n========== ACTIVE ROUND ==========")
+    active_round = fixture_info.get("activeRound")
+    print(json.dumps(active_round, ensure_ascii=False, indent=2))
 
-    if isinstance(node, dict):
+    print("\n========== ALL ROUNDS ==========")
+    rounds = fixture_info.get("rounds")
 
-        for key, value in node.items():
+    if isinstance(rounds, list):
+        print("Round count:", len(rounds))
 
-            key_lower = str(key).lower()
+        for index, item in enumerate(rounds, 1):
+            print(f"\n--- Round {index} ---")
+            print(json.dumps(item, ensure_ascii=False, indent=2))
+    else:
+        print("No rounds list found.")
 
-            if any(word in key_lower for word in SEARCH_WORDS):
+    print("\n========== PLAYOFF ==========")
+    playoff = fixture_info.get("playoff")
 
-                results.append(
-                    {
-                        "path": f"{path}.{key}",
-                        "value": value,
-                    }
-                )
+    if playoff is None:
+        print("playoff = None")
+    else:
+        print(json.dumps(playoff, ensure_ascii=False, indent=2))
 
-            if isinstance(value, (dict, list)):
+    print("\n========== FIXTURE ROUND DATA ==========")
 
-                get_nested_value(
-                    value,
-                    f"{path}.{key}",
-                    results,
-                )
+    fixtures = data.get("fixtures", [])
 
-    elif isinstance(node, list):
+    if isinstance(fixtures, list):
+        print("Fixture count:", len(fixtures))
 
-        for index, item in enumerate(node):
+        found = 0
 
-            if isinstance(item, (dict, list)):
+        for index, fixture in enumerate(fixtures):
+            if not isinstance(fixture, dict):
+                continue
 
-                get_nested_value(
-                    item,
-                    f"{path}[{index}]",
-                    results,
-                )
+            round_value = fixture.get("round")
+            round_name = fixture.get("roundName")
 
-    return results
+            if round_value is not None or round_name is not None:
+                found += 1
 
+                print(f"\n--- Fixture {index + 1} ---")
+                print("Round:", round_value)
+                print("Round name:", round_name)
 
-def print_structure(node, path="root", depth=0, max_depth=5):
-    if depth > max_depth:
-        return
-
-    indent = "  " * depth
-
-    if isinstance(node, dict):
-
-        for key, value in node.items():
-
-            print(
-                f"{indent}{key}: "
-                f"{type(value).__name__}"
-            )
-
-            if isinstance(value, (dict, list)):
-
-                print_structure(
-                    value,
-                    f"{path}.{key}",
-                    depth + 1,
-                    max_depth,
-                )
-
-    elif isinstance(node, list):
-
-        print(
-            f"{indent}[list] length={len(node)}"
-        )
-
-        for index, item in enumerate(node[:10]):
-
-            print(
-                f"{indent}  [{index}]: "
-                f"{type(item).__name__}"
-            )
-
-            if isinstance(item, (dict, list)):
-
-                print_structure(
-                    item,
-                    f"{path}[{index}]",
-                    depth + 1,
-                    max_depth,
-                )
+                if found >= 30:
+                    print("\nOnly first 30 fixtures with round information shown.")
+                    break
+    else:
+        print("No fixtures list found.")
 
 
 def main():
+    print("Fetching:")
+    print(URL)
 
-    print("=" * 100)
-    print("FotMob Competition Structure Test")
-    print("=" * 100)
-
-    print()
-    print(f"League ID: {LEAGUE_ID}")
-    print(f"Season: {SEASON}")
-    print(f"URL: {URL}")
-    print()
-
-    try:
-
-        response = requests.get(
-            URL,
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 "
-                    "(Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) "
-                    "Chrome/140.0 Safari/537.36"
-                )
-            },
-            timeout=30,
-        )
-
-    except Exception as exc:
-
-        print(
-            f"Request error: {exc}"
-        )
-
-        return
-
-    print(
-        f"HTTP status: {response.status_code}"
+    response = requests.get(
+        URL,
+        timeout=30,
+        headers={
+            "User-Agent": "Mozilla/5.0"
+        },
     )
 
-    print(
-        f"Response length: {len(response.text)}"
-    )
+    print("\nHTTP status:", response.status_code)
 
-    print()
+    response.raise_for_status()
 
-    if response.status_code != 200:
+    data = response.json()
 
-        print(
-            "صفحه معتبر دریافت نشد."
-        )
-
-        print(
-            response.text[:1000]
-        )
-
-        return
-
-    try:
-
-        data = response.json()
-
-    except Exception as exc:
-
-        print(
-            f"JSON decode error: {exc}"
-        )
-
-        print(
-            response.text[:1000]
-        )
-
-        return
-
-    if not isinstance(data, dict):
-
-        print(
-            "پاسخ JSON یک dictionary نیست."
-        )
-
-        return
-
-    # ------------------------------------------------------------------
-    # اطلاعات اصلی رقابت
-    # ------------------------------------------------------------------
-
-    print("=" * 100)
-    print("1. ROOT KEYS")
-    print("=" * 100)
-
-    print(
-        json.dumps(
-            list(data.keys()),
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
-
-    print()
-
-    # ------------------------------------------------------------------
-    # details
-    # ------------------------------------------------------------------
-
-    print("=" * 100)
-    print("2. DETAILS")
-    print("=" * 100)
-
-    details = data.get("details")
-
-    if isinstance(details, dict):
-
-        print(
-            json.dumps(
-                details,
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
-
-    else:
-
-        print(
-            "details پیدا نشد."
-        )
-
-    print()
-
-    # ------------------------------------------------------------------
-    # seasons
-    # ------------------------------------------------------------------
-
-    print("=" * 100)
-    print("3. SEASONS")
-    print("=" * 100)
-
-    seasons = data.get("seasons")
-
-    if isinstance(seasons, list):
-
-        print(
-            json.dumps(
-                seasons,
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
-
-    else:
-
-        print(
-            "seasons پیدا نشد."
-        )
-
-    print()
-
-    # ------------------------------------------------------------------
-    # ساختار کلیدهای مهم
-    # ------------------------------------------------------------------
-
-    print("=" * 100)
-    print("4. STRUCTURAL KEYS")
-    print("=" * 100)
-
-    results = get_nested_value(data)
-
-    print(
-        f"تعداد موارد پیدا شده: {len(results)}"
-    )
-
-    print()
-
-    for index, item in enumerate(results, start=1):
-
-        print(
-            f"[{index}] PATH:"
-        )
-
-        print(
-            item["path"]
-        )
-
-        print(
-            "VALUE:"
-        )
-
-        try:
-
-            print(
-                json.dumps(
-                    item["value"],
-                    ensure_ascii=False,
-                    indent=2,
-                )
-            )
-
-        except Exception:
-
-            print(
-                repr(item["value"])
-            )
-
-        print("-" * 100)
-
-    # ------------------------------------------------------------------
-    # فقط ساختار سطح اول برای فهم راحت‌تر
-    # ------------------------------------------------------------------
-
-    print()
-    print("=" * 100)
-    print("5. TOP-LEVEL STRUCTURE")
-    print("=" * 100)
-
-    print_structure(
-        data,
-        max_depth=4,
-    )
-
-    print()
-
-    # ------------------------------------------------------------------
-    # ذخیره JSON کامل برای بررسی بعدی
-    # ------------------------------------------------------------------
-
-    output_file = "fotmob_competition_structure.json"
-
-    try:
-
-        with open(
-            output_file,
-            "w",
-            encoding="utf-8",
-        ) as file:
-
-            json.dump(
-                data,
-                file,
-                ensure_ascii=False,
-                indent=2,
-            )
-
-        print(
-            f"JSON کامل در {output_file} ذخیره شد."
-        )
-
-    except Exception as exc:
-
-        print(
-            f"خطا در ذخیره JSON: {exc}"
-        )
+    print_round_info(data)
 
 
 if __name__ == "__main__":
