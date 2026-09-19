@@ -1261,10 +1261,27 @@ def detect_state_changes(
         )
     )
 
-    new_events = detect_new_events(
-        previous_keys,
-        events,
+    # Bootstrap a match first observed after it has finished.
+    # FotMob then returns historical events, which must not be
+    # treated as newly happened live events. Their keys are still
+    # stored so they cannot be reprocessed on later runs.
+    # The TBD -> real player-name update logic remains unchanged.
+    initial_finished_snapshot = (
+        isinstance(snapshot, dict)
+        and snapshot.get("finished") is True
+        and not previous_keys
+        and not match_state.get("goals")
     )
+
+    if initial_finished_snapshot:
+        new_events = []
+        bootstrap_event_keys = get_event_keys(events)
+    else:
+        new_events = detect_new_events(
+            previous_keys,
+            events,
+        )
+        bootstrap_event_keys = get_event_keys(new_events)
 
     updated_goals = detect_updated_goals(
         match_state,
@@ -1274,8 +1291,9 @@ def detect_state_changes(
     changes = {
         "events": new_events,
 
-        "event_keys": get_event_keys(
-            new_events
+        "event_keys": bootstrap_event_keys,
+
+      new_events
         ),
 
         "goals": [],
