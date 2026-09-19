@@ -1,540 +1,192 @@
 import json
-
-import fotmob
-
-
-MATCH_ID = "6054373"
+import re
+import requests
 
 
-def is_goal(event):
-
-    if not isinstance(event, dict):
-        return False
-
-    event_type = event.get("type")
-
-    if isinstance(event_type, str):
-
-        if "goal" in event_type.lower():
-            return True
-
-    if event.get("isGoal") is True:
-        return True
-
-    return False
+MATCHES = {
+    "Napoli-Bologna": "5749676",
+    "Pisa-Roma": "6106331",
+}
 
 
-def get_player_name(event):
-
-    player = event.get("player")
-
-    if isinstance(player, dict):
-
-        return player.get(
-            "name",
-            "Unknown"
-        )
-
-    return (
-        event.get("playerName")
-        or event.get("name")
-        or "Unknown"
+def extract_next_data(html):
+    match = re.search(
+        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
+        html,
+        re.DOTALL,
     )
 
+    if not match:
+        return None
 
-def get_minute(event):
-
-    if event.get("timeStr") is not None:
-
-        return str(
-            event.get("timeStr")
-        )
-
-    if event.get("time") is not None:
-
-        return str(
-            event.get("time")
-        )
-
-    if event.get("minute") is not None:
-
-        return str(
-            event.get("minute")
-        )
-
-    return "?"
+    try:
+        return json.loads(match.group(1))
+    except Exception:
+        return None
 
 
-def print_goal(index, event):
-
-    print(
-        f"  {index}. "
-        f"{get_minute(event)}' - "
-        f"{get_player_name(event)}"
-    )
-
-    print(
-        f"     type={event.get('type')} "
-        f"eventId={event.get('eventId')} "
-        f"id={event.get('id')} "
-        f"reactKey={event.get('reactKey')}"
-    )
-
-    print(
-        f"     score="
-        f"{event.get('homeScore')}-"
-        f"{event.get('awayScore')} "
-        f"newScore={event.get('newScore')}"
-    )
-
-
-def collect_goal_candidates(
-    value,
-    path="root",
-    results=None,
-    seen_objects=None,
-):
-
+def find_relevant_fields(node, path="root", results=None):
     if results is None:
         results = []
 
-    if seen_objects is None:
-        seen_objects = set()
+    if isinstance(node, dict):
 
-    if isinstance(value, dict):
+        for key, value in node.items():
 
-        object_id = id(value)
+            key_lower = str(key).lower()
 
-        if object_id in seen_objects:
-            return results
-
-        seen_objects.add(object_id)
-
-        if is_goal(value):
-
-            results.append(
-                (
-                    path,
-                    value
+            if any(
+                word in key_lower
+                for word in (
+                    "round",
+                    "week",
+                    "stage",
+                    "matchday",
+                    "match_day",
+                    "roundnumber",
+                    "roundname",
+                    "weeknumber",
+                    "weekname",
+                    "stagename",
                 )
-            )
-
-        for key, child in value.items():
-
-            child_path = (
-                f"{path}.{key}"
-            )
-
-            if isinstance(
-                child,
-                (dict, list)
             ):
 
-                collect_goal_candidates(
-                    child,
-                    child_path,
-                    results,
-                    seen_objects,
+                results.append(
+                    {
+                        "path": f"{path}.{key}",
+                        "value": value,
+                    }
                 )
 
-    elif isinstance(value, list):
-
-        object_id = id(value)
-
-        if object_id in seen_objects:
-            return results
-
-        seen_objects.add(object_id)
-
-        for index, child in enumerate(
-            value
-        ):
-
-            child_path = (
-                f"{path}[{index}]"
-            )
-
-            if isinstance(
-                child,
-                (dict, list)
-            ):
-
-                collect_goal_candidates(
-                    child,
-                    child_path,
+            if isinstance(value, (dict, list)):
+                find_relevant_fields(
+                    value,
+                    f"{path}.{key}",
                     results,
-                    seen_objects,
+                )
+
+    elif isinstance(node, list):
+
+        for index, item in enumerate(node):
+
+            if isinstance(item, (dict, list)):
+                find_relevant_fields(
+                    item,
+                    f"{path}[{index}]",
+                    results,
                 )
 
     return results
 
 
-def dedupe_by_react_key(events):
-
-    result = []
-    seen = set()
-
-    for event in events:
-
-        if not isinstance(event, dict):
-            continue
-
-        react_key = event.get(
-            "reactKey"
-        )
-
-        if (
-            react_key is not None
-            and str(react_key).strip()
-        ):
-
-            key = (
-                "reactKey",
-                str(react_key),
-            )
-
-        else:
-
-            key = (
-                "fallback",
-                str(event.get("type", "")),
-                str(event.get("playerId", "")),
-                str(event.get("time", "")),
-                str(event.get("minute", "")),
-                str(event.get("isHome", "")),
-            )
-
-        if key in seen:
-            continue
-
-        seen.add(key)
-        result.append(event)
-
-    return result
-
-
 def main():
 
-    print("=" * 100)
-    print(
-        f"EVENT PIPELINE TEST | MATCH ID: {MATCH_ID}"
-    )
-    print("=" * 100)
+    for match_name, match_id in MATCHES.items():
 
-    # ------------------------------------------------------------------
-    # STEP 1
-    # ------------------------------------------------------------------
+        print()
+        print("=" * 80)
+        print(match_name)
+        print(f"FotMob ID: {match_id}")
+        print("=" * 80)
 
-    print("\n[1] Fetching FotMob page...")
-
-    page = fotmob.fetch_match_page(
-        MATCH_ID
-    )
-
-    if not page:
-
-        print(
-            "[ERROR] Could not fetch FotMob page."
+        url = (
+            f"https://www.fotmob.com/matches/"
+            f"{match_id}"
         )
 
-        return
+        try:
 
-    print(
-        f"[OK] Page fetched | length={len(page)}"
-    )
+            response = requests.get(
+                url,
+                headers={
+                    "User-Agent": (
+                        "Mozilla/5.0 "
+                        "(Windows NT 10.0; Win64; x64) "
+                        "AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) "
+                        "Chrome/140.0 Safari/537.36"
+                    )
+                },
+                timeout=30,
+            )
 
-    # ------------------------------------------------------------------
-    # STEP 2
-    # ------------------------------------------------------------------
+            print(
+                f"HTTP status: {response.status_code}"
+            )
 
-    print("\n[2] Extracting NEXT_DATA...")
+            print(
+                f"Response length: {len(response.text)}"
+            )
 
-    data = fotmob.extract_next_data(
-        page
-    )
+            if response.status_code != 200:
+                continue
 
-    if not isinstance(data, dict):
+        except Exception as exc:
 
-        print(
-            "[ERROR] Could not extract NEXT_DATA."
+            print(
+                f"Request error: {exc}"
+            )
+
+            continue
+
+        data = extract_next_data(
+            response.text
         )
 
-        return
+        if not isinstance(data, dict):
 
-    print(
-        "[OK] NEXT_DATA extracted."
-    )
+            print(
+                "NEXT_DATA پیدا نشد."
+            )
 
-    # ------------------------------------------------------------------
-    # STEP 3
-    # ------------------------------------------------------------------
+            continue
 
-    print(
-        "\n[3] Searching entire NEXT_DATA "
-        "for raw goal dictionaries..."
-    )
-
-    raw_goal_results = collect_goal_candidates(
-        data
-    )
-
-    print(
-        f"[OK] Raw goal dictionaries found: "
-        f"{len(raw_goal_results)}"
-    )
-
-    print(
-        "\nRAW GOALS:"
-    )
-
-    for index, (
-        path,
-        event
-    ) in enumerate(
-        raw_goal_results,
-        start=1
-    ):
-
-        print(
-            f"\nRAW RESULT #{index}"
-        )
-
-        print(
-            f"  PATH: {path}"
-        )
-
-        print_goal(
-            index,
-            event
-        )
-
-    # ------------------------------------------------------------------
-    # STEP 4
-    # ------------------------------------------------------------------
-
-    print(
-        "\n" + "=" * 100
-    )
-
-    print(
-        "[4] Calling extract_events_from_data()"
-    )
-
-    print(
-        "=" * 100
-    )
-
-    extracted_events = (
-        fotmob.extract_events_from_data(
+        results = find_relevant_fields(
             data
         )
-    )
 
-    if not isinstance(
-        extracted_events,
-        list
-    ):
+        if not results:
 
+            print(
+                "هیچ فیلد مرتبط با "
+                "round/week/stage پیدا نشد."
+            )
+
+            continue
+
+        print()
         print(
-            "[ERROR] "
-            "extract_events_from_data() "
-            "did not return a list."
+            f"تعداد موارد پیدا شده: {len(results)}"
         )
+        print()
 
-        return
-
-    print(
-        f"[OK] Extracted events: "
-        f"{len(extracted_events)}"
-    )
-
-    extracted_goals = [
-        event
-        for event in extracted_events
-        if is_goal(event)
-    ]
-
-    print(
-        f"[INFO] Goals returned by "
-        f"extract_events_from_data(): "
-        f"{len(extracted_goals)}"
-    )
-
-    print(
-        "\nEXTRACTED GOALS:"
-    )
-
-    for index, event in enumerate(
-        extracted_goals,
-        start=1
-    ):
-
-        print_goal(
-            index,
-            event
-        )
-
-    # ------------------------------------------------------------------
-    # STEP 5
-    # ------------------------------------------------------------------
-
-    print(
-        "\n" + "=" * 100
-    )
-
-    print(
-        "[5] Testing reactKey-based deduplication"
-    )
-
-    print(
-        "=" * 100
-    )
-
-    deduped_events = dedupe_by_react_key(
-        extracted_events
-    )
-
-    deduped_goals = [
-        event
-        for event in deduped_events
-        if is_goal(event)
-    ]
-
-    print(
-        f"[INFO] Events before dedupe: "
-        f"{len(extracted_events)}"
-    )
-
-    print(
-        f"[INFO] Events after dedupe: "
-        f"{len(deduped_events)}"
-    )
-
-    print(
-        f"[INFO] Goals before dedupe: "
-        f"{len(extracted_goals)}"
-    )
-
-    print(
-        f"[INFO] Goals after dedupe: "
-        f"{len(deduped_goals)}"
-    )
-
-    print(
-        "\nDEDUPED GOALS:"
-    )
-
-    for index, event in enumerate(
-        deduped_goals,
-        start=1
-    ):
-
-        print_goal(
-            index,
-            event
-        )
-
-    # ------------------------------------------------------------------
-    # STEP 6
-    # ------------------------------------------------------------------
-
-    print(
-        "\n" + "=" * 100
-    )
-
-    print(
-        "[6] FINAL DIAGNOSIS"
-    )
-
-    print(
-        "=" * 100
-    )
-
-    raw_goal_count = len(
-        raw_goal_results
-    )
-
-    extracted_goal_count = len(
-        extracted_goals
-    )
-
-    deduped_goal_count = len(
-        deduped_goals
-    )
-
-    print(
-        f"\nRaw NEXT_DATA goals: "
-        f"{raw_goal_count}"
-    )
-
-    print(
-        f"extract_events_from_data goals: "
-        f"{extracted_goal_count}"
-    )
-
-    print(
-        f"reactKey dedupe goals: "
-        f"{deduped_goal_count}"
-    )
-
-    if raw_goal_count >= 5:
-
-        if extracted_goal_count < raw_goal_count:
+        for item in results:
 
             print(
-                "\n[DIAGNOSIS] "
-                "The missing goals disappear "
-                "inside extract_events_from_data()."
+                f"PATH: {item['path']}"
             )
 
             print(
-                "The problem is BEFORE "
-                "the final dedupe step."
+                "VALUE:"
             )
 
-        elif deduped_goal_count < extracted_goal_count:
+            try:
 
-            print(
-                "\n[DIAGNOSIS] "
-                "The missing goals disappear "
-                "during deduplication."
-            )
+                print(
+                    json.dumps(
+                        item["value"],
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                )
 
-            print(
-                "The problem is in the dedupe logic."
-            )
+            except Exception:
 
-        else:
+                print(
+                    repr(item["value"])
+                )
 
-            print(
-                "\n[DIAGNOSIS] "
-                "All raw goals survived "
-                "the extraction pipeline."
-            )
-
-    else:
-
-        print(
-            "\n[WARNING] "
-            "Fewer than 5 raw goals were found."
-        )
-
-        print(
-            "The FotMob page structure may have "
-            "changed or the test data may differ."
-        )
-
-    print(
-        "\n" + "=" * 100
-    )
-
-    print(
-        "TEST FINISHED"
-    )
-
-    print(
-        "=" * 100
-    )
+            print("-" * 80)
 
 
 if __name__ == "__main__":
