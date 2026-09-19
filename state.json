@@ -1,14 +1,24 @@
 {
   "matches": {
     "6054373": {
-      "lineup_sent": true,
+      "lineup_sent": false,
       "fallback_sent": false,
       "started": true,
       "half_time": false,
       "finished": true,
       "finished_sent": true,
       "event_keys": [
-        "id:0"
+        "id:0",
+        "substitution|None|False|30.0|",
+        "addedtime|None|None|45.0|",
+        "half|None|None|45.0|",
+        "substitution|None|True|46.0|",
+        "substitution|None|False|57.0|",
+        "substitution|None|True|67.0|",
+        "substitution|None|False|77.0|",
+        "substitution|None|True|85.0|",
+        "addedtime|None|None|90.0|",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -22,7 +32,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": 1968,
+          "telegram_message_id": null,
           "needs_update": false,
           "event": {
             "reactKey": "05Goal300050undefinedfalse",
@@ -78,18 +88,34 @@
       ]
     },
     "5868075": {
-      "lineup_sent": true,
+      "lineup_sent": false,
       "fallback_sent": false,
       "started": true,
       "half_time": false,
       "finished": true,
       "finished_sent": true,
       "event_keys": [
+        "id:14451349",
+        "id:0",
+        "id:14451639",
         "id:14451698",
         "id:14451754",
+        "substitution|None|False|37.0|",
+        "addedtime|None|None|45.0|",
+        "id:14452144",
+        "half|None|None|45.0|",
+        "substitution|None|True|46.0|",
+        "substitution|None|False|60.0|",
+        "substitution|None|True|61.0|",
+        "substitution|None|False|61.0|",
+        "substitution|None|True|67.0|",
         "id:14452628",
+        "substitution|None|False|77.0|",
         "id:14452663",
-        "id:14451349"
+        "id:14452681",
+        "addedtime|None|None|90.0|",
+        "id:14452696",
+        "half|None|None|90.0|"
       ],
       "goals": [
         {
@@ -103,7 +129,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": 1973,
+          "telegram_message_id": null,
           "needs_update": false,
           "event": {
             "reactKey": "1445169826Goal1127224undefinedfalse",
@@ -191,7 +217,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": 1974,
+          "telegram_message_id": null,
           "needs_update": false,
           "event": {
             "reactKey": "1445175429Goal1127224undefinedfalse",
@@ -279,7 +305,7 @@
           "penalty": false,
           "own_goal": true,
           "cancelled": false,
-          "telegram_message_id": 1975,
+          "telegram_message_id": null,
           "needs_update": false,
           "event": {
             "reactKey": "1445262872Goal1192393undefinedtrue",
@@ -364,7 +390,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": 1976,
+          "telegram_message_id": null,
           "needs_update": false,
           "event": {
             "reactKey": "1445266378Goal1102708undefinedfalse",

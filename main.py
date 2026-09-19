@@ -101,6 +101,61 @@ def get_event_key_safe(event):
 
 
 # =========================================================
+# تشخیص اولین مشاهده بعد از شروع مسابقه
+# =========================================================
+
+def is_event_bootstrap(
+    match_state,
+    snapshot,
+):
+
+    if not isinstance(
+        match_state,
+        dict,
+    ):
+        return False
+
+    if not isinstance(
+        snapshot,
+        dict,
+    ):
+        return False
+
+    # اگر مسابقه هنوز شروع نشده، چیزی برای bootstrap کردن
+    # وجود ندارد.
+    if not snapshot.get(
+        "started"
+    ):
+        return False
+
+    # اگر قبلاً شروع مسابقه را دیده‌ایم، این دیگر اولین
+    # مشاهده زنده نیست؛ eventهای جدید باید عادی منتشر شوند.
+    if match_state.get(
+        "started",
+        False,
+    ):
+        return False
+
+    previous_keys = match_state.get(
+        "event_keys",
+        [],
+    )
+
+    previous_goals = match_state.get(
+        "goals",
+        [],
+    )
+
+    # وقتی هیچ سابقه‌ای از eventهای مسابقه نداریم و هنوز
+    # start را هم ثبت نکرده‌ایم، eventهای فعلی می‌توانند
+    # مربوط به قبل از اولین اجرای ربات باشند.
+    return (
+        not previous_keys
+        and not previous_goals
+    )
+
+
+# =========================================================
 # آماده‌سازی اطلاعات گل
 # =========================================================
 
@@ -1062,12 +1117,28 @@ def process_match(
         )
     )
 
+    # در اولین مشاهده یک مسابقه‌ای که از قبل تمام شده،
+    # پیام ترکیب پیش از بازی دیگر معنی «پیش از بازی» ندارد.
+    # ترکیب نهایی پایین‌تر ارسال خواهد شد.
+    initial_live_bootstrap = is_event_bootstrap(
+        match_state,
+        snapshot,
+    )
+
+    skip_initial_lineup = (
+        initial_live_bootstrap
+        and snapshot.get(
+            "finished"
+        )
+    )
+
     if (
         valid_lineup
         and not match_state.get(
             "lineup_sent",
             False,
         )
+        and not skip_initial_lineup
     ):
 
         print(
@@ -1171,6 +1242,55 @@ def process_match(
         "Timing: event detection =",
         f"{detect_finished_at - detect_started_at:.2f}s",
     )
+
+    # -----------------------------------------------------
+    # bootstrap امن eventها
+    # -----------------------------------------------------
+
+    # event_detector عمداً همه eventهای فعلی را «new to state»
+    # تشخیص می‌دهد. اینجا فقط تصمیم می‌گیریم آیا این eventها
+    # واقعاً جدید هستند یا ممکن است تاریخی باشند.
+    historical_event_bootstrap = (
+        initial_live_bootstrap
+        and bool(events)
+    )
+
+    if historical_event_bootstrap:
+
+        print(
+            f"[{match_id}] "
+            "First live observation detected. "
+            "Bootstrapping existing events without live posts."
+        )
+
+        # همه eventهای فعلی باید در state ثبت شوند تا اجرای بعدی
+        # آن‌ها را دوباره «جدید» تشخیص ندهد.
+        add_event_keys(
+            match_state,
+            changes.get(
+                "event_keys",
+                [],
+            ),
+        )
+
+        # گل‌های تاریخی را هم در state نگه می‌داریم تا نتیجه،
+        # گلزن و اطلاعات کامل گل برای پیام‌های نهایی موجود باشد.
+        for goal_info in changes.get(
+            "goals",
+            [],
+        ):
+
+            if isinstance(
+                goal_info,
+                dict,
+            ):
+                add_goal(
+                    match_state,
+                    goal_info,
+                )
+
+        # گل‌های مردود نیز نباید در اجرای بعدی به‌عنوان event جدید
+        # دوباره پردازش شوند. خود event key بالاتر ثبت شده است.
 
     print(
         f"[{match_id}] "
@@ -1371,11 +1491,21 @@ def process_match(
 
     live_events_started_at = time.monotonic()
 
-    process_live_events(
-        snapshot,
-        match_state,
-        changes,
-    )
+    if historical_event_bootstrap:
+
+        print(
+            f"[{match_id}] "
+            "Historical events were bootstrapped; "
+            "no live event messages will be sent."
+        )
+
+    else:
+
+        process_live_events(
+            snapshot,
+            match_state,
+            changes,
+        )
 
     live_events_finished_at = time.monotonic()
 
