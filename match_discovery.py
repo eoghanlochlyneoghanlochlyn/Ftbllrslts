@@ -77,7 +77,7 @@ def extract_jsonld(html):
     objects = []
 
     for block in re.findall(
-        r'<script[^>]+type=["']application/ld\\+json["'][^>]*>(.*?)</script>',
+        r"<script[^>]+type=[\"']application/ld\\+json[\"'][^>]*>(.*?)</script>",
         html,
         re.DOTALL | re.IGNORECASE,
     ):
@@ -99,7 +99,7 @@ def extract_match_links(html):
     seen = set()
 
     pattern = re.compile(
-        r'href=["']([^"']+/(?:matches|match)/[^"'<#\\s]+)(?:#(\\d+))?["']',
+        r"href=[\"']([^\"']+/(?:matches|match)/[^\"'<#\\s]+)(?:#(\\d+))?[\"']",
         re.IGNORECASE,
     )
 
