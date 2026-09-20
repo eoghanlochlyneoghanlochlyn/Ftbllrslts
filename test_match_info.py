@@ -41,6 +41,91 @@ def clean_text(value):
     return re.sub(r"\s+", " ", value or "").strip()
 
 
+def decode_rsc(text):
+    return (
+        text.replace(r"\/", "/")
+        .replace(r'\"', '"')
+        .replace(r"\\n", "
+")
+        .replace(r"\\", "\")
+    )
+
+
+def find_rsc_payloads(html):
+    soup = BeautifulSoup(html, "html.parser")
+    payloads = []
+
+    for script in soup.find_all("script"):
+        text = script.string or script.get_text()
+        if not text:
+            continue
+
+        if "self.__next_f.push" in text or "/match/" in text:
+            payloads.append(text)
+
+    return payloads
+
+
+def diagnostic_rsc(html):
+    payloads = find_rsc_payloads(html)
+    combined = decode_rsc("\n".join(payloads))
+
+    print()
+    print("-" * 100)
+    print("RSC / NEXT.JS DIAGNOSTICS")
+    print("-" * 100)
+    print(f"Relevant script blocks: {len(payloads)}")
+    print(f"Combined diagnostic text: {len(combined):,} chars")
+
+    markers = (
+        "self.__next_f.push",
+        "/match/",
+        "matchId",
+        "homeTeam",
+        "awayTeam",
+        "tournament",
+        "stage",
+        "startTime",
+        "utcTime",
+    )
+
+    for marker in markers:
+        print(f"{marker}: {combined.count(marker)}")
+
+    match_positions = [
+        m.start()
+        for m in re.finditer(r"/match/", combined)
+    ]
+
+    print(f"/match/ occurrences: {len(match_positions)}")
+
+    if match_positions:
+        print()
+        print("SAMPLES AROUND /match/:")
+        for index, position in enumerate(match_positions[:5], 1):
+            start = max(0, position - 700)
+            end = min(len(combined), position + 1400)
+            snippet = clean_text(combined[start:end])
+            print()
+            print(f"--- SAMPLE {index} ---")
+            print(snippet)
+    else:
+        print()
+        print("No /match/ found in relevant script blocks.")
+
+        for marker in ("matchId", "homeTeam", "awayTeam", "tournament"):
+            position = combined.find(marker)
+            if position != -1:
+                start = max(0, position - 500)
+                end = min(len(combined), position + 1500)
+                print()
+                print(f"--- SAMPLE AROUND {marker} ---")
+                print(clean_text(combined[start:end]))
+
+    print("-" * 100)
+    print()
+
+
 def extract_match_id(href):
     if not href:
         return None
@@ -237,9 +322,11 @@ def main():
                 )
             )
 
+            diagnostic_rsc(html)
+
             items = find_match_links(html)
 
-            print(f"Match links found: {len(items)}")
+            print(f"HTML <a> match links found: {len(items)}")
             all_items.extend(items)
 
         except Exception as exc:
@@ -260,7 +347,7 @@ def main():
 
     print()
     print("=" * 100)
-    print(f"MATCHES FOUND IN FOTMOB HTML: {len(matches)}")
+    print(f"MATCHES FOUND AS HTML LINKS: {len(matches)}")
     print("=" * 100)
     print()
 
