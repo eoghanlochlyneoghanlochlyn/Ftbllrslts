@@ -19,6 +19,8 @@ HEADERS = {
 ),
 "Accept-Language": "en-US,en;q=0.9",
 "Referer": "https://www.fotmob.com/",
+"Cache-Control": "no-cache",
+"Pragma": "no-cache",
 }
 
 def get(url):
@@ -116,14 +118,13 @@ print("RAW LENGTH:", len(raw))
 
 try:
     data = json.loads(raw)
-
 except Exception as error:
     print("JSON ERROR:", error)
     return None
 
-print("TOP LEVEL KEYS:")
-
 if isinstance(data, dict):
+    print("TOP LEVEL KEYS:")
+
     for key in data.keys():
         print(" ", key)
 
@@ -151,9 +152,9 @@ if isinstance(value, dict):
     for key, child in list(value.items())[:40]:
         print_structure(
             child,
-            f"{path}.{key}",
-            depth + 1,
-            max_depth,
+            path=f"{path}.{key}",
+            depth=depth + 1,
+            max_depth=max_depth,
         )
 
 elif isinstance(value, list):
@@ -165,9 +166,9 @@ elif isinstance(value, list):
     if value:
         print_structure(
             value[0],
-            f"{path}[0]",
-            depth + 1,
-            max_depth,
+            path=f"{path}[0]",
+            depth=depth + 1,
+            max_depth=max_depth,
         )
 
 else:
@@ -191,7 +192,6 @@ found = []
 
 ```
 if isinstance(data, dict):
-
     for key, value in data.items():
         current_path = f"{path}.{key}"
 
@@ -212,7 +212,6 @@ if isinstance(data, dict):
         )
 
 elif isinstance(data, list):
-
     for index, value in enumerate(data):
         found.extend(
             find_values(
@@ -225,119 +224,96 @@ elif isinstance(data, list):
 return found
 ```
 
-def main():
-print("=" * 80)
-print("FOTMOB DISCOVERY STRUCTURE TEST")
-print("=" * 80)
+def find_match_url(sitemap_urls, direct_urls):
+if direct_urls:
+return direct_urls[0]
 
 ```
-# --------------------------------------------------------------
-# 1. Main sitemap
-# --------------------------------------------------------------
-
-main_text = get(SITEMAP_URL)
-
-sitemap_urls, direct_urls = parse_sitemap(
-    main_text
-)
-
-match_url = None
-
-# --------------------------------------------------------------
-# 2. Find a real match URL
-# --------------------------------------------------------------
-
-if sitemap_urls:
-
-    child_url = sitemap_urls[0]
-
-    print()
-    print("=" * 80)
-    print("INSPECTING FIRST CHILD SITEMAP")
-    print("=" * 80)
-
-    child_text = get(child_url)
+for sitemap_url in sitemap_urls[:10]:
+    try:
+        child_text = get(sitemap_url)
+    except Exception as error:
+        print()
+        print("CHILD SITEMAP ERROR:")
+        print(error)
+        continue
 
     child_sitemaps, child_match_urls = parse_sitemap(
         child_text
     )
 
     if child_match_urls:
+        return child_match_urls[0]
 
-        match_url = child_match_urls[0]
-
-    elif child_sitemaps:
-
-        print()
-        print(
-            "FIRST CHILD IS ITSELF A SITEMAP INDEX"
-        )
-
-        second_url = child_sitemaps[0]
-
-        second_text = get(second_url)
+    for second_url in child_sitemaps[:10]:
+        try:
+            second_text = get(second_url)
+        except Exception as error:
+            print()
+            print("SECOND LEVEL SITEMAP ERROR:")
+            print(error)
+            continue
 
         _, second_match_urls = parse_sitemap(
             second_text
         )
 
         if second_match_urls:
+            return second_match_urls[0]
 
-            match_url = second_match_urls[0]
+return None
+```
 
-        else:
+def main():
+print("=" * 80)
+print("FOTMOB STRUCTURE TEST")
+print("=" * 80)
 
-            print(
-                "NO MATCH URL FOUND IN SECOND LEVEL"
-            )
-
-            return
-
-    else:
-
-        print(
-            "NO MATCH URL FOUND IN FIRST CHILD"
-        )
-
-        return
-
-elif direct_urls:
-
-    match_url = direct_urls[0]
-
-else:
-
+```
+try:
+    main_text = get(SITEMAP_URL)
+except Exception as error:
     print()
-    print("NO SITEMAP URL FOUND")
-
+    print("MAIN SITEMAP ERROR:")
+    print(error)
     return
 
-# --------------------------------------------------------------
-# 3. Inspect real match page
-# --------------------------------------------------------------
+sitemap_urls, direct_urls = parse_sitemap(main_text)
+
+match_url = find_match_url(
+    sitemap_urls,
+    direct_urls,
+)
+
+if not match_url:
+    print()
+    print("=" * 80)
+    print("NO REAL MATCH URL FOUND")
+    print("=" * 80)
+    return
 
 print()
 print("=" * 80)
-print("INSPECTING REAL MATCH PAGE")
+print("REAL MATCH URL FOUND")
 print("=" * 80)
-
-print("MATCH URL:")
 print(match_url)
 
-match_html = get(match_url)
-
-# --------------------------------------------------------------
-# 4. Extract __NEXT_DATA__
-# --------------------------------------------------------------
+try:
+    match_html = get(match_url)
+except Exception as error:
+    print()
+    print("MATCH PAGE ERROR:")
+    print(error)
+    return
 
 data = extract_next_data(match_html)
 
 if data is None:
+    print()
+    print("=" * 80)
+    print("NO PARSED NEXT DATA")
+    print("=" * 80)
     return
-
-# --------------------------------------------------------------
-# 5. Print structure
-# --------------------------------------------------------------
 
 print()
 print("=" * 80)
@@ -348,15 +324,6 @@ print_structure(
     data,
     max_depth=3,
 )
-
-# --------------------------------------------------------------
-# 6. Search important keys
-# --------------------------------------------------------------
-
-print()
-print("=" * 80)
-print("IMPORTANT VALUES")
-print("=" * 80)
 
 wanted_keys = {
     "matchId",
@@ -376,6 +343,7 @@ wanted_keys = {
     "tournamentId",
     "uniqueTournamentId",
     "competitionId",
+    "competitionID",
     "parentLeagueId",
     "stage",
     "round",
@@ -383,27 +351,29 @@ wanted_keys = {
     "tournamentStage",
 }
 
+print()
+print("=" * 80)
+print("IMPORTANT VALUES")
+print("=" * 80)
+
 found = find_values(
     data,
     wanted_keys,
 )
 
+if not found:
+    print("NO IMPORTANT KEYS FOUND")
+
 for path, value in found:
-
     if isinstance(value, (dict, list)):
-
         try:
             shown = json.dumps(
                 value,
                 ensure_ascii=False,
             )
-
         except Exception:
-
             shown = repr(value)
-
     else:
-
         shown = repr(value)
 
     if len(shown) > 1000:
