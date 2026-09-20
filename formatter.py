@@ -1828,7 +1828,7 @@ def format_stat_value(
 # --------------------------------------------------------
 
 FINAL_STAT_ORDER = [
-    "ایکـس جی",
+    "xG",
     "شوت",
     "شوت در چارچوب",
     "مالکیت",
@@ -1844,7 +1844,7 @@ FINAL_STAT_ORDER = [
 
 
 FINAL_STAT_ICONS = {
-    "ایکـس جی": "🎯",
+    "xG": "🎯",
     "شوت": "💥",
     "شوت در چارچوب": "🥅",
     "مالکیت": "⚽️",
@@ -1901,7 +1901,7 @@ def _get_stat_rows(
 
     aliases = {
         "xG": (
-            "ایکـس جی",
+            "xG",
             "xg",
             "expected_goals",
         ),
@@ -1910,7 +1910,7 @@ def _get_stat_rows(
             "shots",
             "Shots",
         ),
-        "در چارچوب": (
+        "شوت در چارچوب": (
             "شوت در چارچوب",
             "shots_on_target",
             "Shots on target",
@@ -1925,11 +1925,11 @@ def _get_stat_rows(
             "passes",
             "Passes",
         ),
-        "دقت پاس": (
+        "پاس دقیق": (
             "دقت پاس",
             "pass_accuracy",
         ),
-        "دقت پاس": (
+        "پاس دقیق": (
             "پاس دقیق",
             "accurate_passes",
             "Accurate passes",
@@ -2812,32 +2812,13 @@ def build_final_stats_rich_message(
     blocks = [
         {
             "type": "paragraph",
-            "text": f"🏆 {league}",
-        }
-    ]
-
-    aggregate = snapshot.get("aggregate")
-    if (
-        snapshot.get("is_second_leg")
-        and isinstance(aggregate, dict)
-        and aggregate.get("text")
-    ):
-        blocks.append(
-            {
-                "type": "paragraph",
-                "text": (
-                    "مجموع دو بازی: "
-                    + str(aggregate["text"])
-                ),
-            }
-        )
-
-    blocks.append(
+            "text": "📊 آمار بازی",
+        },
         {
             "type": "paragraph",
-            "text": "📊 آمار بازی",
-        }
-    )
+            "text": f"🏆 {league}",
+        },
+    ]
 
     if score is None:
         score = snapshot.get(
@@ -2860,6 +2841,22 @@ def build_final_stats_rich_message(
             {
                 "type": "paragraph",
                 "text": score_text,
+            }
+        )
+
+    aggregate = snapshot.get("aggregate")
+    if (
+        snapshot.get("is_second_leg")
+        and isinstance(aggregate, dict)
+        and aggregate.get("text")
+    ):
+        blocks.append(
+            {
+                "type": "paragraph",
+                "text": (
+                    "مجموع دو بازی: "
+                    + str(aggregate["text"])
+                ),
             }
         )
 
@@ -2917,8 +2914,14 @@ def build_final_stats_rich_message(
             "•",
         )
 
+        display_names = {
+            "xG": "ایکس جی",
+            "شوت در چارچوب": "در چارچوب",
+            "پاس دقیق": "دقت پاس",
+        }
+
         display_label = (
-            f"{icon} {label}"
+            f"{icon} {display_names.get(label, label)}"
         )
 
         cells.append(
