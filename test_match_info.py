@@ -290,11 +290,16 @@ def main():
         print("ERROR: Sitemap index contains no child sitemaps.")
         sys.exit(1)
 
-    print("2) Reading ALL child sitemaps...")
-    print("   Sitemap timestamps are NOT used to discard matches.")
+    print("2) Reading sitemap structure only...")
+    print("   Match pages are NOT crawled yet.")
     print()
 
-    match_urls = set()
+    # The sitemap contains many historical/future match URLs. Crawling every
+    # URL is far too expensive, so first inspect only a small sample of each
+    # child sitemap. This test is specifically for determining whether the
+    # sitemap itself gives us a usable way to narrow the candidates.
+    sample_size = 5
+    sampled_urls = set()
 
     for index, sitemap_url in enumerate(child_sitemaps, start=1):
         try:
@@ -303,27 +308,31 @@ def main():
             print(f"  [{index}/{len(child_sitemaps)}] ERROR: {exc}")
             continue
 
-        for url in urls:
-            if urlparse(url).path.startswith("/matches/"):
-                match_urls.add(url)
+        match_urls = [
+            url for url in urls
+            if urlparse(url).path.startswith("/matches/")
+        ]
 
-        if index % 10 == 0 or index == len(child_sitemaps):
-            print(
-                f"  [{index}/{len(child_sitemaps)}] "
-                f"unique match URLs: {len(match_urls)}"
-            )
+        if match_urls:
+            sampled_urls.update(match_urls[:sample_size])
+
+        print(
+            f"  [{index}/{len(child_sitemaps)}] "
+            f"match URLs: {len(match_urls)} | "
+            f"sampled: {min(len(match_urls), sample_size)}"
+        )
 
     print()
-    print(f"Total unique match pages: {len(match_urls)}")
+    print(f"Sampled unique match pages: {len(sampled_urls)}")
     print()
 
-    if not match_urls:
+    if not sampled_urls:
         print("ERROR: No /matches/ URLs were found in the sitemap.")
         sys.exit(1)
 
-    print("3) Reading match pages...")
+    print("3) Reading only the sampled match pages...")
     print(f"   Workers: {MAX_WORKERS}")
-    print("   Time filtering uses only matchTimeUTC from each match page.")
+    print("   Time is read from matchTimeUTC on the actual FotMob page.")
     print()
 
     matches = []
@@ -332,7 +341,7 @@ def main():
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {
             executor.submit(read_match_page, url): url
-            for url in sorted(match_urls)
+            for url in sorted(sampled_urls)
         }
 
         total = len(futures)
@@ -405,7 +414,7 @@ def main():
     print("=" * 100)
     print("SUMMARY")
     print("=" * 100)
-    print(f"Match pages discovered : {len(match_urls)}")
+    print(f"Match pages sampled    : {len(sampled_urls)}")
     print(f"Matches in next 24h    : {len(matches)}")
     print(f"Pages with errors      : {len(errors)}")
 
