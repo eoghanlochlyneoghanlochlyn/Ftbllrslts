@@ -1,273 +1,327 @@
 import json
-import requests
-from bs4 import BeautifulSoup
+import re
+import urllib.request
+from html.parser import HTMLParser
 
 
-URL = "https://www.fotmob.com/matches/club-brugge-vs-atletico-madrid/2r4yuu#5161870"
+MATCH_URL = "https://www.fotmob.com/matches/club-brugge-vs-atletico-madrid/2r4yuu#5161870"
 
 
-def get_next_data(url):
-    response = requests.get(
+class NextDataParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.in_next_data = False
+        self.data = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+
+        if (
+            tag == "script"
+            and attrs.get("id") == "__NEXT_DATA__"
+        ):
+            self.in_next_data = True
+
+    def handle_endtag(self, tag):
+        if tag == "script" and self.in_next_data:
+            self.in_next_data = False
+
+    def handle_data(self, data):
+        if self.in_next_data:
+            self.data.append(data)
+
+
+def fetch_next_data(url):
+    request = urllib.request.Request(
         url,
         headers={
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                 "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/140.0.0.0 Safari/537.36"
+                "Chrome/140.0 Safari/537.36"
             )
         },
-        timeout=30,
     )
 
-    response.raise_for_status()
+    with urllib.request.urlopen(request, timeout=30) as response:
+        html = response.read().decode("utf-8")
 
-    soup = BeautifulSoup(response.text, "html.parser")
-    script = soup.find("script", id="__NEXT_DATA__")
+    parser = NextDataParser()
+    parser.feed(html)
 
-    if not script:
+    raw = "".join(parser.data).strip()
+
+    if not raw:
         raise RuntimeError("__NEXT_DATA__ پیدا نشد.")
 
-    return json.loads(script.string)
+    return json.loads(raw)
 
 
-def recursive_find(obj, target_keys, path="root"):
-    results = []
+def get_nested(data, *keys):
+    current = data
 
-    if isinstance(obj, dict):
-        for key, value in obj.items():
-            current_path = f"{path}.{key}"
+    for key in keys:
+        if not isinstance(current, dict):
+            return None
 
-            if key in target_keys:
-                results.append((current_path, value))
+        current = current.get(key)
 
-            results.extend(
-                recursive_find(value, target_keys, current_path)
-            )
-
-    elif isinstance(obj, list):
-        for index, value in enumerate(obj):
-            current_path = f"{path}[{index}]"
-
-            results.extend(
-                recursive_find(value, target_keys, current_path)
-            )
-
-    return results
+    return current
 
 
-def find_first(results, key_name):
-    for path, value in results:
-        if path.endswith(f".{key_name}"):
-            return value
+def extract_leg_info(root):
+    leg_info = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "content",
+        "matchFacts",
+        "infoBox",
+        "legInfo",
+    )
+
+    if not isinstance(leg_info, dict):
+        return None
+
+    localized = leg_info.get("localizedString")
+
+    if not isinstance(localized, dict):
+        return {
+            "key": None,
+            "fallback": None,
+        }
+
+    return {
+        "key": localized.get("key"),
+        "fallback": localized.get("fallback"),
+    }
+
+
+def is_second_leg(root):
+    leg_info = extract_leg_info(root)
+
+    if not leg_info:
+        return False
+
+    return leg_info.get("key") == "second_leg"
+
+
+def extract_match_score(root):
+    """
+    نتیجه خود همین مسابقه را استخراج می‌کند.
+
+    اولویت:
+    1. header.status.scoreStr
+    2. header.teams[].score
+    3. general.homeTeam.score / awayTeam.score
+    """
+
+    page_props = get_nested(root, "props", "pageProps")
+
+    if not isinstance(page_props, dict):
+        return None
+
+    # ---------------------------------------------------------
+    # روش اصلی
+    # ---------------------------------------------------------
+
+    score_str = get_nested(
+        page_props,
+        "header",
+        "status",
+        "scoreStr",
+    )
+
+    if isinstance(score_str, str) and score_str.strip():
+        return score_str.strip()
+
+    # ---------------------------------------------------------
+    # پشتیبان: header.teams
+    # ---------------------------------------------------------
+
+    header_teams = get_nested(
+        page_props,
+        "header",
+        "teams",
+    )
+
+    if isinstance(header_teams, list) and len(header_teams) >= 2:
+        home_score = header_teams[0].get("score")
+        away_score = header_teams[1].get("score")
+
+        if home_score is not None and away_score is not None:
+            return f"{home_score} - {away_score}"
+
+    # ---------------------------------------------------------
+    # پشتیبان: general.homeTeam / awayTeam
+    # ---------------------------------------------------------
+
+    home_team = get_nested(
+        page_props,
+        "general",
+        "homeTeam",
+    )
+
+    away_team = get_nested(
+        page_props,
+        "general",
+        "awayTeam",
+    )
+
+    if isinstance(home_team, dict) and isinstance(away_team, dict):
+        home_score = home_team.get("score")
+        away_score = away_team.get("score")
+
+        if home_score is not None and away_score is not None:
+            return f"{home_score} - {away_score}"
+
     return None
+
+
+def extract_aggregate(root):
+    """
+    aggregate را از header.status استخراج می‌کند.
+    """
+
+    status = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "header",
+        "status",
+    )
+
+    if not isinstance(status, dict):
+        return {
+            "aggregated": None,
+            "who_lost": None,
+        }
+
+    return {
+        "aggregated": status.get("aggregatedStr"),
+        "who_lost": status.get("whoLostOnAggregated"),
+    }
+
+
+def extract_general(root):
+    general = get_nested(
+        root,
+        "props",
+        "pageProps",
+        "general",
+    )
+
+    if not isinstance(general, dict):
+        return {}
+
+    return {
+        "match_id": general.get("matchId"),
+        "match_name": general.get("matchName"),
+        "league_name": general.get("leagueName"),
+        "finished": general.get("finished"),
+    }
 
 
 def main():
     print("=" * 70)
     print("FotMob Leg Detection Test")
     print("=" * 70)
-    print()
 
-    data = get_next_data(URL)
+    print(f"\nURL:")
+    print(MATCH_URL)
 
-    target_keys = {
-        "matchId",
-        "name",
-        "localizedString",
-        "bestOf",
-        "bestOfNum",
-        "linkToOtherLeg",
-        "aggregatedStr",
-        "whoLostOnAggregated",
-        "homeScoreAggregated",
-        "awayScoreAggregated",
-    }
+    print("\nدر حال دریافت صفحه...")
 
-    results = recursive_find(data, target_keys)
+    root = fetch_next_data(MATCH_URL)
 
-    print("موارد مهم پیدا شده:")
-    print()
+    print("OK - __NEXT_DATA__ دریافت شد.")
 
-    for path, value in results:
-        if any(
-            key in path
-            for key in (
-                ".matchId",
-                ".name",
-                ".localizedString",
-                ".bestOf",
-                ".bestOfNum",
-                ".linkToOtherLeg",
-                ".aggregatedStr",
-                ".whoLostOnAggregated",
-                ".homeScoreAggregated",
-                ".awayScoreAggregated",
-            )
-        ):
-            print(f"{path}")
-            print(f"  -> {value}")
-            print()
+    # ---------------------------------------------------------
+    # اطلاعات عمومی
+    # ---------------------------------------------------------
 
-    # ------------------------------------------------------------
-    # اطلاعات اصلی بازی
-    # ------------------------------------------------------------
+    general = extract_general(root)
 
-    match_id = find_first(results, "matchId")
+    print("\n" + "-" * 70)
+    print("GENERAL")
+    print("-" * 70)
 
-    print("=" * 70)
-    print("خلاصه")
-    print("=" * 70)
-    print()
+    print("Match ID:", general.get("match_id"))
+    print("Match name:", general.get("match_name"))
+    print("League:", general.get("league_name"))
+    print("Finished:", general.get("finished"))
 
-    print(f"Match ID: {match_id}")
+    # ---------------------------------------------------------
+    # نتیجه خود مسابقه
+    # ---------------------------------------------------------
 
-    # ------------------------------------------------------------
-    # تشخیص رقابت
-    # ------------------------------------------------------------
+    score = extract_match_score(root)
 
-    competition = None
+    print("\n" + "-" * 70)
+    print("MATCH SCORE")
+    print("-" * 70)
 
-    for path, value in results:
-        if path.endswith(".name") and isinstance(value, str):
-            if "Champions League" in value:
-                competition = value
-                break
-
-    if competition is None:
-        for path, value in results:
-            if path.endswith(".name") and isinstance(value, str):
-                competition = value
-                break
-
-    print(f"رقابت: {competition}")
-
-    # ------------------------------------------------------------
-    # تشخیص مرحله / دور
-    # ------------------------------------------------------------
-
-    localized_strings = [
-        (path, value)
-        for path, value in results
-        if path.endswith(".localizedString")
-        and isinstance(value, dict)
-    ]
-
-    print()
-    print("LocalizedString های مربوط به مرحله:")
-
-    for path, value in localized_strings:
-        print(f"{path} -> {value}")
-
-    leg_type = None
-
-    for _, value in localized_strings:
-        key = value.get("key")
-        fallback = value.get("fallback")
-
-        if key in ("first_leg", "second_leg"):
-            leg_type = key
-            break
-
-        if isinstance(fallback, str):
-            lower = fallback.lower()
-
-            if "2nd leg" in lower or "second leg" in lower:
-                leg_type = "second_leg"
-                break
-
-            if "1st leg" in lower or "first leg" in lower:
-                leg_type = "first_leg"
-                break
-
-    # ------------------------------------------------------------
-    # fallback بر اساس bestOf / linkToOtherLeg
-    # ------------------------------------------------------------
-
-    if leg_type is None:
-        best_of = find_first(results, "bestOf")
-        best_of_num = find_first(results, "bestOfNum")
-        link_to_other_leg = find_first(results, "linkToOtherLeg")
-
-        if best_of is not None or best_of_num is not None:
-            print()
-            print("bestOf:")
-            print(best_of)
-
-            print()
-            print("bestOfNum:")
-            print(best_of_num)
-
-            print()
-            print("linkToOtherLeg:")
-            print(link_to_other_leg)
-
-    # ------------------------------------------------------------
-    # نوع بازی
-    # ------------------------------------------------------------
-
-    print()
-
-    if leg_type == "second_leg":
-        print("نوع بازی: بازی برگشت")
-    elif leg_type == "first_leg":
-        print("نوع بازی: بازی رفت")
+    if score:
+        print("نتیجه بازی:", score)
     else:
-        print("نوع بازی: بازی معمولی / تشخیص رفت و برگشت پیدا نشد")
+        print("نتیجه بازی پیدا نشد.")
 
-    # ------------------------------------------------------------
-    # نتیجه بازی
-    # ------------------------------------------------------------
+    # ---------------------------------------------------------
+    # رفت / برگشت
+    # ---------------------------------------------------------
 
-    print()
+    leg_info = extract_leg_info(root)
+    second_leg = is_second_leg(root)
 
-    home_score = None
-    away_score = None
+    print("\n" + "-" * 70)
+    print("LEG DETECTION")
+    print("-" * 70)
 
-    # پیدا کردن homeScore / awayScore در کل داده
-    score_results = recursive_find(
-        data,
-        {
-            "homeScore",
-            "awayScore",
-        },
-    )
+    if leg_info:
+        print("legInfo.key:", leg_info.get("key"))
+        print("legInfo.fallback:", leg_info.get("fallback"))
+    else:
+        print("legInfo پیدا نشد.")
 
-    for path, value in score_results:
-        if path.endswith(".homeScore") and home_score is None:
-            home_score = value
+    print("Is second leg:", second_leg)
 
-        if path.endswith(".awayScore") and away_score is None:
-            away_score = value
+    # ---------------------------------------------------------
+    # Aggregate
+    # ---------------------------------------------------------
 
-    print(f"نتیجه این بازی: {home_score} - {away_score}")
+    aggregate = extract_aggregate(root)
 
-    # ------------------------------------------------------------
-    # نتیجه مجموع
-    # فقط برای بازی برگشت
-    # ------------------------------------------------------------
+    print("\n" + "-" * 70)
+    print("AGGREGATE")
+    print("-" * 70)
 
-    if leg_type == "second_leg":
-        aggregated_str = find_first(results, "aggregatedStr")
+    print("Aggregated:", aggregate.get("aggregated"))
+    print("Who lost on aggregate:", aggregate.get("who_lost"))
 
-        home_agg = find_first(results, "homeScoreAggregated")
-        away_agg = find_first(results, "awayScoreAggregated")
+    # ---------------------------------------------------------
+    # نتیجه نهایی تست
+    # ---------------------------------------------------------
 
-        print()
-        print("نتیجه مجموع:")
+    print("\n" + "=" * 70)
+    print("FINAL RESULT")
+    print("=" * 70)
 
-        if aggregated_str is not None:
-            print(aggregated_str)
-        elif home_agg is not None or away_agg is not None:
-            print(f"{home_agg} - {away_agg}")
-        else:
-            print("پیدا نشد.")
+    if second_leg:
+        print("این مسابقه: بازی برگشت")
 
-        who_lost = find_first(results, "whoLostOnAggregated")
+        if score:
+            print("نتیجه بازی:", score)
 
-        print()
-        print(f"whoLostOnAggregated: {who_lost}")
+        if aggregate.get("aggregated"):
+            print("نتیجه مجموع:", aggregate["aggregated"])
 
-    print()
+        if aggregate.get("who_lost"):
+            print("بازنده مجموع:", aggregate["who_lost"])
+
+    else:
+        print("این مسابقه: بازی عادی / بازی رفت")
+        print("Aggregate نادیده گرفته می‌شود.")
+
     print("=" * 70)
 
 
