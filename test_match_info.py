@@ -224,6 +224,8 @@ def format_match(match, league, date, reasons):
 
     utc_time = status.get("utcTime")
 
+    detailed = get_detailed_stage_info(match.get("id"))
+
     return {
         "id": match.get("id"),
         "date": date,
