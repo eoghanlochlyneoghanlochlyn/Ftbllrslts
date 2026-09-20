@@ -1,406 +1,224 @@
-import re
+import requests
+
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-import requests
-from bs4 import BeautifulSoup
 
+TARGET_TEAMS = {
+    8650: "Liverpool",
+    9825: "Arsenal",
+    8456: "Manchester City",
+    10260: "Manchester United",
+    8455: "Chelsea",
+    8586: "Tottenham Hotspur",
+    9885: "Juventus",
+    8564: "AC Milan",
+    8636: "Inter Milan",
+    9823: "Bayern Munich",
+    9789: "Borussia Dortmund",
+    9847: "Paris Saint-Germain",
+    8633: "Real Madrid",
+    8634: "Barcelona",
+    9906: "Atlético Madrid",
+}
 
-FOTMOB_URL = "https://www.fotmob.com/matches"
-IRAN_TZ = ZoneInfo("Asia/Tehran")
 
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/140.0.0.0 Safari/537.36"
-    ),
-    "Accept-Language": "en-US,en;q=0.9",
+    )
 }
 
 
-def fetch_page(date_value):
-    date_str = date_value.strftime("%Y%m%d")
-    url = f"{FOTMOB_URL}?date={date_str}"
+def utc_to_iran(utc_time):
+    if not utc_time:
+        return "Unknown"
 
-    print(f"Fetching: {url}")
+    try:
+        dt = datetime.fromisoformat(
+            utc_time.replace("Z", "+00:00")
+        )
+
+        return dt.astimezone(
+            ZoneInfo("Asia/Tehran")
+        ).strftime("%Y-%m-%d %H:%M")
+
+    except Exception:
+        return "Unknown"
+
+
+def get_match_status(match):
+    status = match.get("status", {})
+
+    if status.get("cancelled"):
+        return "Cancelled"
+
+    if status.get("finished"):
+        return "Finished"
+
+    if status.get("started"):
+        return "Live"
+
+    return "Upcoming"
+
+
+def is_target_match(match):
+    home = match.get("home", {})
+    away = match.get("away", {})
+
+    return (
+        home.get("id") in TARGET_TEAMS
+        or away.get("id") in TARGET_TEAMS
+    )
+
+
+def format_match(match, league_name, date):
+    home = match.get("home", {})
+    away = match.get("away", {})
+    status = match.get("status", {})
+
+    home_name = (
+        home.get("longName")
+        or home.get("name")
+        or "Unknown"
+    )
+
+    away_name = (
+        away.get("longName")
+        or away.get("name")
+        or "Unknown"
+    )
+
+    match_status = get_match_status(match)
+
+    home_score = home.get("score")
+    away_score = away.get("score")
+
+    if match_status == "Upcoming":
+        score_text = "-"
+    else:
+        score_text = (
+            f"{home_score if home_score is not None else 0}"
+            f" - "
+            f"{away_score if away_score is not None else 0}"
+        )
+
+    utc_time = status.get("utcTime")
+
+    return {
+        "id": match.get("id"),
+        "date": date,
+        "league": league_name,
+        "home": home_name,
+        "away": away_name,
+        "home_id": home.get("id"),
+        "away_id": away.get("id"),
+        "utc_time": utc_time,
+        "iran_time": utc_to_iran(utc_time),
+        "status": match_status,
+        "score": score_text,
+        "url": f"https://www.fotmob.com/match/{match.get('id')}",
+    }
+
+
+def fetch_matches_for_date(date):
+    url = (
+        "https://www.fotmob.com/api/data/matches"
+        f"?date={date}"
+    )
+
+    print(f"Downloading matches for {date}...")
 
     response = requests.get(
         url,
         headers=HEADERS,
         timeout=30,
-        allow_redirects=True,
-    )
-    response.raise_for_status()
-
-    print(
-        f"HTTP: {response.status_code} | "
-        f"HTML: {len(response.text):,} bytes"
-    )
-    return response.text
-
-
-def clean_text(value):
-    return re.sub(r"\s+", " ", value or "").strip()
-
-
-def decode_rsc(text):
-    """
-    Keep the RSC payload as plain text.
-    We intentionally avoid JavaScript decoding here.
-    """
-    return text
-
-
-def find_rsc_payloads(html):
-    soup = BeautifulSoup(html, "html.parser")
-    payloads = []
-
-    for script in soup.find_all("script"):
-        text = script.string or script.get_text()
-
-        if not text:
-            continue
-
-        if "self.__next_f.push" in text or "/match/" in text:
-            payloads.append(text)
-
-    return payloads
-
-
-def diagnostic_rsc(html):
-    payloads = find_rsc_payloads(html)
-    combined = decode_rsc(chr(10).join(payloads))
-
-    print()
-    print("-" * 100)
-    print("RSC / NEXT.JS DIAGNOSTICS")
-    print("-" * 100)
-    print(f"Relevant script blocks: {len(payloads)}")
-    print(f"Combined diagnostic text: {len(combined):,} chars")
-
-    markers = (
-        "self.__next_f.push",
-        "/match/",
-        "matchId",
-        "homeTeam",
-        "awayTeam",
-        "tournament",
-        "stage",
-        "startTime",
-        "utcTime",
     )
 
-    for marker in markers:
-        print(f"{marker}: {combined.count(marker)}")
+    print("Status code:", response.status_code)
 
-    match_positions = [
-        match.start()
-        for match in re.finditer(r"/match/", combined)
-    ]
+    if response.status_code != 200:
+        print(f"Failed to download matches for {date}")
+        return []
 
-    print(f"/match/ occurrences: {len(match_positions)}")
+    data = response.json()
 
-    if match_positions:
-        print()
-        print("SAMPLES AROUND /match/:")
+    found_matches = []
 
-        for index, position in enumerate(match_positions[:5], 1):
-            start = max(0, position - 700)
-            end = min(len(combined), position + 1400)
-            snippet = clean_text(combined[start:end])
-
-            print()
-            print(f"--- SAMPLE {index} ---")
-            print(snippet)
-    else:
-        print()
-        print("No /match/ found in relevant script blocks.")
-
-        for marker in (
-            "matchId",
-            "homeTeam",
-            "awayTeam",
-            "tournament",
-        ):
-            position = combined.find(marker)
-
-            if position != -1:
-                start = max(0, position - 500)
-                end = min(len(combined), position + 1500)
-
-                print()
-                print(f"--- SAMPLE AROUND {marker} ---")
-                print(clean_text(combined[start:end]))
-
-    print("-" * 100)
-    print()
-
-
-def extract_match_id(href):
-    if not href:
-        return None
-
-    patterns = (
-        r"/match/[^/?#]+(?:/[^/?#]+)?#(\d+)",
-        r"/match/(?:[^/?#]+/)?(\d+)(?:[/?#]|$)",
-        r"#(\d+)(?:$|[/?])",
-    )
-
-    for pattern in patterns:
-        match = re.search(pattern, href)
-
-        if match:
-            return match.group(1)
-
-    return None
-
-
-def find_match_links(html):
-    soup = BeautifulSoup(html, "html.parser")
-    matches = {}
-
-    for anchor in soup.find_all("a", href=True):
-        href = anchor["href"]
-
-        if "/match/" not in href:
-            continue
-
-        match_id = extract_match_id(href)
-
-        if not match_id:
-            continue
-
-        current = anchor
-        context = ""
-
-        for _ in range(8):
-            current = current.parent
-
-            if current is None:
-                break
-
-            text = clean_text(current.get_text(" ", strip=True))
-
-            if 20 <= len(text) <= 1000:
-                context = text
-                break
-
-        item = {
-            "id": match_id,
-            "href": (
-                href
-                if href.startswith("http")
-                else "https://www.fotmob.com" + href
-            ),
-            "anchor_text": clean_text(
-                anchor.get_text(" ", strip=True)
-            ),
-            "context": context,
-        }
-
-        if (
-            match_id not in matches
-            or len(item["context"])
-            > len(matches[match_id]["context"])
-        ):
-            matches[match_id] = item
-
-    return list(matches.values())
-
-
-def parse_teams(anchor_text, context):
-    text = clean_text(anchor_text)
-
-    patterns = (
-        r"\s+vs\.?\s+",
-        r"\s+v\.?\s+",
-        r"\s+[-–]\s+",
-    )
-
-    for pattern in patterns:
-        parts = re.split(
-            pattern,
-            text,
-            maxsplit=1,
-            flags=re.I,
+    for league in data.get("leagues", []):
+        league_name = league.get(
+            "name",
+            "Unknown League",
         )
 
-        if len(parts) == 2:
-            return parts[0].strip(), parts[1].strip()
+        for match in league.get("matches", []):
+            if not is_target_match(match):
+                continue
 
-    text = clean_text(context)
-
-    for pattern in patterns:
-        parts = re.split(
-            pattern,
-            text,
-            maxsplit=1,
-            flags=re.I,
-        )
-
-        if len(parts) == 2:
-            return parts[0].strip(), parts[1].strip()
-
-    return text or "نامشخص", ""
-
-
-def find_stage(text):
-    patterns = [
-        r"Round of \d+",
-        r"Quarter[- ]finals?",
-        r"Semi[- ]finals?",
-        r"Final",
-        r"Group [A-Z0-9]+",
-        r"Matchday \d+",
-        r"Regular Season",
-        r"Play[- ]offs?",
-        r"Relegation Play[- ]off",
-    ]
-
-    for pattern in patterns:
-        match = re.search(pattern, text, re.I)
-
-        if match:
-            return match.group(0)
-
-    return "نامشخص"
-
-
-def find_competition(context, home, away, stage):
-    if not context:
-        return "نامشخص"
-
-    text = clean_text(context)
-
-    for team in (home, away):
-        if team and team != "نامشخص":
-            text = re.sub(
-                re.escape(team),
-                " ",
-                text,
-                flags=re.I,
-            )
-
-    if stage != "نامشخص":
-        text = re.sub(
-            re.escape(stage),
-            " ",
-            text,
-            flags=re.I,
-        )
-
-    text = re.sub(
-        r"\b\d{1,2}:\d{2}\b",
-        " ",
-        text,
-    )
-    text = re.sub(
-        r"\b(?:Today|Tomorrow|Yesterday)\b",
-        " ",
-        text,
-        flags=re.I,
-    )
-    text = re.sub(
-        r"\b\d{1,3}\s*[-–]\s*\d{1,3}\b",
-        " ",
-        text,
-    )
-    text = clean_text(text)
-
-    return text or "نامشخص"
-
-
-def parse_match(item):
-    home, away = parse_teams(
-        item["anchor_text"],
-        item["context"],
-    )
-
-    combined = clean_text(
-        f'{item["anchor_text"]} {item["context"]}'
-    )
-
-    stage = find_stage(combined)
-    competition = find_competition(
-        item["context"],
-        home,
-        away,
-        stage,
-    )
-
-    return {
-        "id": item["id"],
-        "home": home,
-        "away": away,
-        "competition": competition,
-        "stage": stage,
-    }
-
-
-def main():
-    now = datetime.now(IRAN_TZ)
-    end = now + timedelta(hours=24)
-
-    dates = sorted({now.date(), end.date()})
-
-    print("=" * 100)
-    print("FOTMOB — ALL MATCHES NEXT 24 HOURS")
-    print("HTML ONLY — NO API")
-    print("=" * 100)
-    print(f"IRAN NOW:   {now:%Y-%m-%d %H:%M:%S}")
-    print(f"IRAN UNTIL: {end:%Y-%m-%d %H:%M:%S}")
-    print()
-
-    all_items = []
-
-    for date_value in dates:
-        try:
-            html = fetch_page(
-                datetime.combine(
-                    date_value,
-                    datetime.min.time(),
+            found_matches.append(
+                format_match(
+                    match,
+                    league_name,
+                    date,
                 )
             )
 
-            diagnostic_rsc(html)
+    return found_matches
 
-            items = find_match_links(html)
 
-            print(f"HTML <a> match links found: {len(items)}")
-            all_items.extend(items)
+def main():
+    today = datetime.now(
+        ZoneInfo("Asia/Tehran")
+    ).date()
 
-        except Exception as exc:
-            print(
-                f"ERROR for {date_value}: "
-                f"{type(exc).__name__}: {exc}"
-            )
-
-    unique = {}
-
-    for item in all_items:
-        unique[item["id"]] = item
-
-    matches = [
-        parse_match(item)
-        for item in unique.values()
+    dates = [
+        today,
+        today + timedelta(days=1),
     ]
 
-    print()
-    print("=" * 100)
-    print(f"MATCHES FOUND AS HTML LINKS: {len(matches)}")
-    print("=" * 100)
-    print()
+    all_matches = []
 
-    for index, match in enumerate(matches, 1):
+    for current_date in dates:
+        date_string = current_date.strftime("%Y%m%d")
+
+        matches = fetch_matches_for_date(date_string)
+
+        all_matches.extend(matches)
+
+    all_matches.sort(
+        key=lambda match: match.get("utc_time") or ""
+    )
+
+    print("")
+    print("=" * 60)
+    print(f"Target matches found: {len(all_matches)}")
+    print("=" * 60)
+    print("")
+
+    if not all_matches:
+        print("No target matches found.")
+        return
+
+    for index, match in enumerate(
+        all_matches,
+        start=1,
+    ):
         print(
-            f"{index:03d}. "
-            f"{match['home']}  vs  {match['away']}"
+            f"{index}. "
+            f"{match['home']} 🆚 {match['away']}"
         )
-        print(f"     رقابت: {match['competition']}")
-        print(f"     مرحله: {match['stage']}")
-        print(f"     ID:     {match['id']}")
-        print()
+
+        print(f"   Competition: {match['league']}")
+        print(f"   Match ID: {match['id']}")
+        print(f"   Date: {match['date']}")
+        print(f"   UTC: {match['utc_time']}")
+        print(f"   Iran: {match['iran_time']}")
+        print(f"   Status: {match['status']}")
+        print(f"   Score: {match['score']}")
+        print(f"   URL: {match['url']}")
+        print("")
 
 
 if __name__ == "__main__":
