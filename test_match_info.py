@@ -1,7 +1,4 @@
-from fotmob import (
-fetch_match_page,
-extract_next_data,
-)
+from fotmob import fetch_match_page, extract_next_data
 
 MATCH_ID = "6050065"
 
@@ -28,14 +25,11 @@ return any(
 
 def walk(node, path=()):
 if isinstance(node, dict):
+for key, value in node.items():
+current_path = path + (str(key),)
 
 ```
-    for key, value in node.items():
-
-        current_path = path + (str(key),)
-
         if looks_relevant(key):
-
             print()
             print("=" * 100)
             print("KEY:")
@@ -49,72 +43,41 @@ if isinstance(node, dict):
             else:
                 print(repr(value))
 
-        walk(
-            value,
-            current_path,
-        )
+        walk(value, current_path)
 
 elif isinstance(node, list):
-
     for index, item in enumerate(node):
-
-        current_path = (
-            path + (f"[{index}]",)
-        )
-
-        walk(
-            item,
-            current_path,
-        )
+        current_path = path + (f"[{index}]",)
+        walk(item, current_path)
 ```
 
 def main():
+print(f"Fetching FotMob page for match {MATCH_ID}...")
 
 ```
-print(
-    f"Fetching FotMob page for match {MATCH_ID}..."
-)
-
-html = fetch_match_page(
-    MATCH_ID
-)
+html = fetch_match_page(MATCH_ID)
 
 if not html:
-    print(
-        "ERROR: Could not fetch FotMob page."
-    )
+    print("ERROR: Could not fetch FotMob page.")
     return
 
-print(
-    f"HTML length: {len(html)}"
-)
+print(f"HTML length: {len(html)}")
 
-data = extract_next_data(
-    html
-)
+data = extract_next_data(html)
 
 if not isinstance(data, dict):
-    print(
-        "ERROR: Could not extract __NEXT_DATA__."
-    )
+    print("ERROR: Could not extract __NEXT_DATA__.")
     return
 
-print(
-    "NEXT_DATA extracted successfully."
-)
-
+print("NEXT_DATA extracted successfully.")
 print()
-print(
-    "Searching for round/week/stage related keys..."
-)
+print("Searching for round/week/stage related keys...")
 
 walk(data)
 
 print()
 print("=" * 100)
-print(
-    "TEST FINISHED."
-)
+print("TEST FINISHED.")
 ```
 
 if **name** == "**main**":
