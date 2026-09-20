@@ -1,14 +1,25 @@
 import json
 import os
 import re
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urlparse
 
 import requests
 
-BASE_URL = "https://www.fotmob.com/api"
+from fotmob import (
+    extract_next_data,
+    fetch_match_page,
+    get_content,
+    recursive_find,
+)
+
 CONFIG_FILE = "auto_matches.json"
 MATCHES_FILE = "matches.json"
 TEAMS_FILE = "teams.json"
+
+SITEMAP_URL = "https://www.fotmob.com/sitemap/en/matches.xml"
+FOTMOB_BASE_URL = "https://www.fotmob.com"
 TIMEOUT = 30
 
 STAGE_RANK = {
@@ -29,6 +40,7 @@ STAGE_RANK = {
 
 STAGE_ALIASES = {
     "final": "final",
+    "finale": "final",
     "semi final": "semi_final",
     "semi-final": "semi_final",
     "semifinal": "semi_final",
@@ -60,11 +72,11 @@ def load_json(path, default):
     if not os.path.exists(path):
         return default
 
-    with open(path, "r", encoding="utf-8") as file:
-        try:
+    try:
+        with open(path, "r", encoding="utf-8") as file:
             return json.load(file)
-        except json.JSONDecodeError:
-            return default
+    except (OSError, json.JSONDecodeError):
+        return default
 
 
 def save_json(path, data):
@@ -73,462 +85,537 @@ def save_json(path, data):
         file.write("\n")
 
 
-def extract_next_data(html):
-    if not html:
-        return None
-
-    pattern = (
-        r"<script[^>]+id=[^>]*__NEXT_DATA__[^>]*>"
-        r"(.*?)"
-        r"</script\\s*>"
-    )
-
-    match = re.search(
-        pattern,
-        html,
-        re.IGNORECASE | re.DOTALL,
-    )
-
-    if not match:
-        return None
-
-    try:
-        return json.loads(match.group(1).strip())
-    except Exception:
-        return None
-
-
-def recursive_find(data, keys):
-    if not isinstance(keys, (set, list, tuple)):
-        keys = {keys}
-
-    if isinstance(data, dict):
-        for key, value in data.items():
-            if key in keys and value is not None:
-                return value
-
-        for value in data.values():
-            result = recursive_find(value, keys)
-            if result is not None:
-                return result
-
-    elif isinstance(data, list):
-        for value in data:
-            result = recursive_find(value, keys)
-            if result is not None:
-                return result
-
-    return None
-
-
-def find_match_ids(html):
-    if not html:
-        return []
-
-    text = (
-        html
-        .replace("\\\\/","/")
-        .replace("\\\\u002F","/")
-        .replace("&quot;", '"')
-    )
-
-    patterns = (
-        r'"matchId"\\s*[:=]\\s*"?(\\d{5,})',
-        r'"matchID"\\s*[:=]\\s*"?(\\d{5,})',
-        r'matchId\\s*[:=]\\s*"?(\\d{5,})',
-        r'/match/(\d{5,})',
-        r'/matches/[^"\\s<#]+#(\\d{5,})',
-    )
-
-    result = []
-    seen = set()
-
-    for pattern in patterns:
-        for value in re.findall(pattern, text, re.IGNORECASE):
-            value = str(value)
-            if value not in seen:
-                seen.add(value)
-                result.append(value)
-
-    return result
-
-
-def extract_event_jsonld(html):
-    if not html:
-        return None
-
-    scripts = re.findall(
-        r"""<script[^>]+type=["']application/ld\+json["'][^>]*>(.*?)</script>""",
-        html,
-        re.IGNORECASE | re.DOTALL,
-    )
-
-    for raw in scripts:
-        try:
-            data = json.loads(raw.strip())
-        except Exception:
-            continue
-
-        objects = data if isinstance(data, list) else [data]
-
-        for item in objects:
-            if not isinstance(item, dict):
-                continue
-
-            if item.get("@type") == "SportsEvent":
-                return item
-
-            if item.get("homeTeam") and item.get("awayTeam"):
-                return item
-
-    return None
-
-
-def build_match_from_page(match_id_value, html):
-    data = extract_next_data(html)
-
-    general = None
-
-    if isinstance(data, dict):
-        page_props = data.get("props", {}).get("pageProps", {})
-
-        if isinstance(page_props, dict):
-            general = page_props.get("general")
-
-        if not isinstance(general, dict):
-            general = recursive_find(data, {"general"})
-
-    if isinstance(general, dict):
-        home = general.get("homeTeam")
-        away = general.get("awayTeam")
-        start = (
-            general.get("matchTimeUTC")
-            or general.get("matchTime")
-            or general.get("startTime")
-        )
-
-        league_id = (
-            general.get("parentLeagueId")
-            or general.get("leagueId")
-            or general.get("tournamentId")
-            or general.get("uniqueTournamentId")
-        )
-
-        stage = (
-            general.get("tournamentStage")
-            or general.get("stage")
-            or general.get("round")
-        )
-
-        if (
-            isinstance(home, dict)
-            and isinstance(away, dict)
-            and start
-        ):
-            return {
-                "id": str(general.get("matchId") or match_id_value),
-                "start": start,
-                "home": {
-                    "id": home.get("id"),
-                    "name": home.get("name") or home.get("longName"),
-                },
-                "away": {
-                    "id": away.get("id"),
-                    "name": away.get("name") or away.get("longName"),
-                },
-                "leagueId": str(league_id) if league_id is not None else "",
-                "stage": stage,
-                "_league_ids": (
-                    {str(league_id)}
-                    if league_id is not None
-                    else set()
-                ),
-            }
-
-    event = extract_event_jsonld(html)
-
-    if not isinstance(event, dict):
-        return None
-
-    home = event.get("homeTeam")
-    away = event.get("awayTeam")
-    start = event.get("startDate")
-
-    if not isinstance(home, dict) or not isinstance(away, dict) or not start:
-        return None
-
-    return {
-        "id": str(match_id_value),
-        "start": start,
-        "home": {
-            "id": None,
-            "name": home.get("name", ""),
-        },
-        "away": {
-            "id": None,
-            "name": away.get("name", ""),
-        },
-        "leagueId": "",
-        "stage": None,
-        "_league_ids": set(),
-    }
-
-
-def fetch_matches(date_value):
-    url = "https://www.fotmob.com/matches"
-
-    try:
-        response = requests.get(
-            url,
-            params={"date": date_value.strftime("%Y%m%d")},
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 (X11; Linux x86_64) "
-                    "AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) "
-                    "Chrome/140.0.0.0 Safari/537.36"
-                ),
-                "Accept": (
-                    "text/html,application/xhtml+xml,"
-                    "application/xml;q=0.9,*/*;q=0.8"
-                ),
-                "Accept-Language": "en-US,en;q=0.9",
-                "Referer": "https://www.fotmob.com/",
-            },
-            timeout=TIMEOUT,
-            allow_redirects=True,
-        )
-        response.raise_for_status()
-    except requests.RequestException as error:
-        print(f"[DISCOVERY] Matches page failed: {error}")
-        return []
-
-    html = response.text
-
-    print(
-        f"[DISCOVERY] Matches page: HTTP {response.status_code}, "
-        f"length {len(html)}"
-    )
-
-    match_ids = find_match_ids(html)
-
-    print(
-        f"[DISCOVERY] {date_value.isoformat()}: "
-        f"found {len(match_ids)} match IDs in page"
-    )
-
-    result = []
-    seen = set()
-
-    for current_id in match_ids:
-        if current_id in seen:
-            continue
-
-        match_url = f"https://www.fotmob.com/match/{current_id}"
-
-        try:
-            match_response = requests.get(
-                match_url,
-                headers={
-                    "User-Agent": (
-                        "Mozilla/5.0 (X11; Linux x86_64) "
-                        "AppleWebKit/537.36 "
-                        "(KHTML, like Gecko) "
-                        "Chrome/140.0.0.0 Safari/537.36"
-                    ),
-                    "Accept": (
-                        "text/html,application/xhtml+xml,"
-                        "application/xml;q=0.9,*/*;q=0.8"
-                    ),
-                    "Accept-Language": "en-US,en;q=0.9",
-                    "Referer": "https://www.fotmob.com/",
-                },
-                timeout=TIMEOUT,
-                allow_redirects=True,
-            )
-            match_response.raise_for_status()
-        except requests.RequestException as error:
-            print(
-                f"[DISCOVERY] Match {current_id} page failed: "
-                f"{error}"
-            )
-            continue
-
-        item = build_match_from_page(
-            current_id,
-            match_response.text,
-        )
-
-        if item is None:
-            print(
-                f"[DISCOVERY] Match {current_id}: "
-                "could not extract match data"
-            )
-            continue
-
-        start = match_start(item)
-
-        if start is None or start.date() != date_value:
-            continue
-
-        seen.add(current_id)
-        result.append(item)
-
-    print(
-        f"[DISCOVERY] {date_value.isoformat()}: "
-        f"found {len(result)} matches from site"
-    )
-
-    return result
-
-
-def match_id(match):
-    value = match.get("id") if isinstance(match, dict) else None
-    return str(value) if value is not None else ""
-
-
-def team_id(team):
-    if not isinstance(team, dict):
+def clean_text(value):
+    if value is None:
         return ""
-    value = team.get("id")
-    return str(value) if value is not None else ""
+
+    if isinstance(value, (int, float)):
+        return str(value)
+
+    return " ".join(str(value).replace("\xa0", " ").split()).strip()
 
 
-def match_team_ids(match):
-    return {
-        team_id(match.get("home")),
-        team_id(match.get("away")),
-    } - {""}
-
-
-def match_start(match):
-    stored_start = match.get("start")
-
-    if stored_start:
-        try:
-            return datetime.fromisoformat(
-                str(stored_start).replace("Z", "+00:00")
-            ).astimezone(timezone.utc)
-        except ValueError:
-            pass
-
-    status = match.get("status")
-    if isinstance(status, dict) and status.get("utcTime"):
-        try:
-            return datetime.fromisoformat(
-                str(status["utcTime"]).replace("Z", "+00:00")
-            ).astimezone(timezone.utc)
-        except ValueError:
-            pass
-
-    value = match.get("timeTS")
-    if value is not None:
-        try:
-            timestamp = float(value)
-            if timestamp > 10_000_000_000:
-                timestamp /= 1000
-            return datetime.fromtimestamp(timestamp, timezone.utc)
-        except (TypeError, ValueError, OSError):
-            pass
-
-    return None
+def normalize(value):
+    return clean_text(value).lower()
 
 
 def normalize_stage(value):
     if value is None:
         return None
 
-    text = re.sub(r"\s+", " ", str(value).strip().lower())
+    text = re.sub(r"\s+", " ", normalize(value))
 
     if text in STAGE_ALIASES:
         return STAGE_ALIASES[text]
 
-    if text in STAGE_RANK:
-        return text
-
-    return None
+    return text if text in STAGE_RANK else None
 
 
-def get_stage(match):
-    values = []
+def parse_datetime(value):
+    if value is None:
+        return None
 
-    for key in (
-        "tournamentStage",
-        "stage",
-        "stageName",
-        "roundName",
-        "round",
-        "leagueRoundName",
-        "matchRound",
+    text = clean_text(value)
+
+    if not text:
+        return None
+
+    try:
+        return datetime.fromisoformat(
+            text.replace("Z", "+00:00")
+        ).astimezone(timezone.utc)
+    except ValueError:
+        pass
+
+    try:
+        timestamp = float(text)
+        if timestamp > 10_000_000_000:
+            timestamp /= 1000
+        return datetime.fromtimestamp(timestamp, timezone.utc)
+    except (TypeError, ValueError, OSError):
+        return None
+
+
+def extract_match_id(data):
+    value = recursive_find(
+        data,
+        {
+            "matchId",
+            "matchID",
+            "match_id",
+        },
+    )
+
+    if value is None:
+        return None
+
+    text = clean_text(value)
+
+    return text if text.isdigit() else None
+
+
+def fetch_url(url):
+    try:
+        response = requests.get(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 "
+                    "(KHTML, like Gecko) "
+                    "Chrome/131.0.0.0 Safari/537.36"
+                ),
+                "Accept": (
+                    "text/html,application/xhtml+xml,"
+                    "application/xml;q=0.9,*/*;q=0.8"
+                ),
+                "Accept-Language": "en-US,en;q=0.9",
+                "Referer": FOTMOB_BASE_URL + "/",
+            },
+            timeout=TIMEOUT,
+            allow_redirects=True,
+        )
+
+        response.raise_for_status()
+        return response.text
+
+    except requests.RequestException as error:
+        print(f"[DISCOVERY] Request failed: {url} -> {error}")
+        return None
+
+
+def xml_root(text):
+    if not text:
+        return None
+
+    try:
+        return ET.fromstring(text)
+    except ET.ParseError as error:
+        print(f"[DISCOVERY] Invalid sitemap XML: {error}")
+        return None
+
+
+def xml_local_name(tag):
+    return tag.rsplit("}", 1)[-1]
+
+
+def sitemap_locations(text):
+    root = xml_root(text)
+
+    if root is None:
+        return [], []
+
+    urls = []
+    sitemaps = []
+
+    for element in root.iter():
+        name = xml_local_name(element.tag)
+
+        if name == "loc" and element.text:
+            value = element.text.strip()
+
+            if not value:
+                continue
+
+            parent = element.getparent() if hasattr(element, "getparent") else None
+
+            if parent is not None:
+                parent_name = xml_local_name(parent.tag)
+                if parent_name == "sitemap":
+                    sitemaps.append(value)
+                elif parent_name == "url":
+                    urls.append(value)
+                continue
+
+            # ElementTree has no parent pointers. Determine the type
+            # from the root structure below instead.
+    
+    for container in root:
+        container_name = xml_local_name(container.tag)
+
+        if container_name == "sitemap":
+            for child in container:
+                if xml_local_name(child.tag) == "loc" and child.text:
+                    sitemaps.append(child.text.strip())
+
+        elif container_name == "url":
+            for child in container:
+                if xml_local_name(child.tag) == "loc" and child.text:
+                    urls.append(child.text.strip())
+
+    return list(dict.fromkeys(urls)), list(dict.fromkeys(sitemaps))
+
+
+def fetch_sitemap_urls():
+    print(f"[DISCOVERY] Fetching sitemap: {SITEMAP_URL}")
+
+    text = fetch_url(SITEMAP_URL)
+
+    if text is None:
+        return []
+
+    urls, child_sitemaps = sitemap_locations(text)
+
+    if urls:
+        print(
+            f"[DISCOVERY] Match sitemap contains "
+            f"{len(urls)} match URLs"
+        )
+        return urls
+
+    if not child_sitemaps:
+        print("[DISCOVERY] Sitemap contains no match URLs.")
+        return []
+
+    print(
+        f"[DISCOVERY] Sitemap index contains "
+        f"{len(child_sitemaps)} child sitemaps"
+    )
+
+    all_urls = []
+
+    for index, child_url in enumerate(child_sitemaps, 1):
+        print(
+            f"[DISCOVERY] Fetching child sitemap "
+            f"{index}/{len(child_sitemaps)}"
+        )
+
+        child_text = fetch_url(child_url)
+        child_urls, _ = sitemap_locations(child_text)
+
+        all_urls.extend(child_urls)
+
+    return list(dict.fromkeys(all_urls))
+
+
+def sitemap_match_time(url):
+    """
+    FotMob's match sitemap can append the scheduled UTC time to the
+    match code, e.g.:
+        .../37gy4p2025-09-04T11:00:00Z
+    """
+    match = re.search(
+        r"(20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)",
+        url,
+    )
+
+    if not match:
+        return None
+
+    return parse_datetime(match.group(1))
+
+
+def extract_page_match(data, fallback_url):
+    if not isinstance(data, dict):
+        return None
+
+    general = recursive_find(data, {"general"})
+
+    if not isinstance(general, dict):
+        return None
+
+    home = (
+        general.get("homeTeam")
+        or general.get("home")
+    )
+
+    away = (
+        general.get("awayTeam")
+        or general.get("away")
+    )
+
+    if not isinstance(home, dict) or not isinstance(away, dict):
+        return None
+
+    match_id = (
+        general.get("matchId")
+        or general.get("id")
+        or extract_match_id(data)
+    )
+
+    if match_id is None:
+        return None
+
+    start = (
+        general.get("matchTimeUTC")
+        or general.get("matchTime")
+        or general.get("startTime")
+        or general.get("utcTime")
+    )
+
+    start_dt = parse_datetime(start)
+
+    if start_dt is None:
+        start_dt = sitemap_match_time(fallback_url)
+
+    competition = recursive_find(
+        data,
+        {
+            "tournament",
+            "league",
+            "competition",
+            "uniqueTournament",
+        },
+    )
+
+    competition_id = None
+    competition_name = ""
+
+    if isinstance(competition, dict):
+        for key in (
+            "parentLeagueId",
+            "parentTournamentId",
+            "parentCompetitionId",
+            "leagueId",
+            "tournamentId",
+            "uniqueTournamentId",
+            "competitionId",
+            "id",
+        ):
+            if competition.get(key) is not None:
+                competition_id = str(competition[key])
+                break
+
+        for key in (
+            "name",
+            "title",
+            "shortName",
+            "displayName",
+            "leagueName",
+            "tournamentName",
+            "competitionName",
+        ):
+            if competition.get(key):
+                competition_name = clean_text(
+                    competition[key]
+                )
+                break
+
+    # Prefer parent competition IDs when the object exposes them.
+    if isinstance(competition, dict):
+        for key in (
+            "parentLeagueId",
+            "parentTournamentId",
+            "parentCompetitionId",
+        ):
+            if competition.get(key) is not None:
+                competition_id = str(competition[key])
+                break
+
+    stage = None
+
+    for source in (
+        general,
+        competition,
+        recursive_find(
+            data,
+            {
+                "matchFacts",
+            },
+        ),
     ):
-        value = match.get(key)
-        if value is not None:
-            values.append(value)
+        if not isinstance(source, dict):
+            continue
 
-    for value in values:
-        stage = normalize_stage(value)
-        if stage is not None:
-            return stage
+        for key in (
+            "tournamentStage",
+            "stage",
+            "stageName",
+            "roundName",
+            "round",
+            "leagueRoundName",
+            "matchRound",
+        ):
+            value = source.get(key)
 
-    return None
+            if value is None:
+                continue
+
+            normalized = normalize_stage(value)
+
+            if normalized:
+                stage = normalized
+                break
+
+        if stage:
+            break
+
+    home_id = (
+        home.get("id")
+        or home.get("teamId")
+        or home.get("teamID")
+    )
+
+    away_id = (
+        away.get("id")
+        or away.get("teamId")
+        or away.get("teamID")
+    )
+
+    return {
+        "id": str(match_id),
+        "start": (
+            start_dt.isoformat()
+            if start_dt is not None
+            else None
+        ),
+        "home": {
+            "id": str(home_id) if home_id is not None else "",
+            "name": clean_text(
+                home.get("longName")
+                or home.get("name")
+                or home.get("shortName")
+            ),
+        },
+        "away": {
+            "id": str(away_id) if away_id is not None else "",
+            "name": clean_text(
+                away.get("longName")
+                or away.get("name")
+                or away.get("shortName")
+            ),
+        },
+        "leagueId": (
+            competition_id
+            if competition_id is not None
+            else ""
+        ),
+        "competitionName": competition_name,
+        "stage": stage,
+    }
 
 
-def resolve_team_index():
+def fetch_match_from_sitemap(url):
+    html = fetch_url(url)
+
+    if html is None:
+        return None
+
+    data = extract_next_data(html)
+
+    if data is None:
+        print(
+            f"[DISCOVERY] No __NEXT_DATA__ on match page: {url}"
+        )
+        return None
+
+    return extract_page_match(data, url)
+
+
+def load_team_config():
     teams = load_json(TEAMS_FILE, [])
+
     by_name = {}
     by_country = {}
+
+    if not isinstance(teams, list):
+        return by_name, by_country
 
     for team in teams:
         if not isinstance(team, dict):
             continue
 
-        team_id_value = team.get("id")
-        if team_id_value is None:
+        team_id = team.get("id")
+
+        if team_id is None:
             continue
 
-        team_id_value = str(team_id_value)
-        name = str(team.get("name", "")).strip().lower()
-        country = str(team.get("country", "")).strip().lower()
+        team_id = str(team_id)
 
-        if name:
-            by_name[name] = team_id_value
+        for key in (
+            "name",
+            "shortName",
+            "longName",
+        ):
+            name = normalize(team.get(key))
+
+            if name:
+                by_name[name] = team_id
+
+        country = normalize(team.get("country"))
 
         if country:
-            by_country.setdefault(country, set()).add(team_id_value)
+            by_country.setdefault(
+                country,
+                set(),
+            ).add(team_id)
 
     return by_name, by_country
 
 
-def rule_team_ids(rule, by_name, by_country):
-    ids = set()
+def configured_extra_team_ids(
+    rule,
+    by_name,
+    by_country,
+):
+    result = set()
 
     for name in rule.get("extra_teams", []):
-        value = by_name.get(str(name).strip().lower())
-        if value:
-            ids.add(value)
+        team_id = by_name.get(normalize(name))
 
-    country = rule.get("extra_country")
+        if team_id:
+            result.add(team_id)
+
+    country = normalize(
+        rule.get("extra_country")
+    )
+
     if country:
-        ids.update(
+        result.update(
             by_country.get(
-                str(country).strip().lower(),
+                country,
                 set(),
             )
         )
 
-    return ids
+    return result
 
 
-def rule_matches(match, rule, selected_team_ids, by_name, by_country):
-    if str(rule.get("id")) not in match.get("_league_ids", set()):
+def match_team_ids(match):
+    result = set()
+
+    for side in (
+        match.get("home"),
+        match.get("away"),
+    ):
+        if not isinstance(side, dict):
+            continue
+
+        value = side.get("id")
+
+        if value:
+            result.add(str(value))
+
+    return result
+
+
+def selected_by_rule(
+    match,
+    rule,
+    selected_team_ids,
+    by_name,
+    by_country,
+):
+    configured_competition = str(
+        rule.get("id")
+    )
+
+    if str(match.get("leagueId")) != configured_competition:
         return False
 
-    mode = str(rule.get("mode", "all")).lower()
+    mode = normalize(
+        rule.get("mode") or "all"
+    )
+
     teams = match_team_ids(match)
-    rule_teams = selected_team_ids | rule_team_ids(
-        rule,
-        by_name,
-        by_country,
+
+    rule_teams = (
+        set(selected_team_ids)
+        | configured_extra_team_ids(
+            rule,
+            by_name,
+            by_country,
+        )
     )
 
     if mode == "all":
@@ -537,102 +624,118 @@ def rule_matches(match, rule, selected_team_ids, by_name, by_country):
     if mode == "team_only":
         return bool(teams & rule_teams)
 
-    stage = get_stage(match)
+    stage = match.get("stage")
 
     if mode == "final_only":
         return stage == "final"
 
     if mode == "from":
-        minimum = normalize_stage(rule.get("stage"))
-        if minimum is None or stage is None:
+        required = normalize_stage(
+            rule.get("stage")
+        )
+
+        if required is None or stage is None:
             return False
 
-        return STAGE_RANK.get(stage, 999) <= STAGE_RANK.get(
-            minimum,
-            999,
+        return (
+            STAGE_RANK.get(stage, 999)
+            <= STAGE_RANK.get(required, 999)
         )
 
     return False
 
 
-def is_selected(match, config, selected_team_ids, by_name, by_country):
-    start = match_start(match)
+def is_selected(
+    match,
+    config,
+    selected_team_ids,
+    by_name,
+    by_country,
+):
+    start = parse_datetime(
+        match.get("start")
+    )
+
     if start is None:
         return False
 
     now = datetime.now(timezone.utc)
-    end = now + timedelta(
-        hours=float(config.get("window_hours", 24))
+
+    window_hours = float(
+        config.get("window_hours", 24)
     )
 
-    if start < now or start > end:
+    if start < now:
         return False
 
-    status = match.get("status")
-    if isinstance(status, dict):
-        if status.get("cancelled") is True:
-            return False
-        if status.get("finished") is True:
-            return False
+    if start > now + timedelta(hours=window_hours):
+        return False
 
-    if match_team_ids(match) & selected_team_ids:
+    team_ids = match_team_ids(match)
+
+    # A configured team is always selected, regardless of competition.
+    if team_ids & selected_team_ids:
         return True
 
-    return any(
-        rule_matches(
+    for rule in config.get("competitions", []):
+        if not isinstance(rule, dict):
+            continue
+
+        if selected_by_rule(
             match,
             rule,
             selected_team_ids,
             by_name,
             by_country,
-        )
-        for rule in config.get("competitions", [])
-        if isinstance(rule, dict)
-    )
+        ):
+            return True
+
+    return False
 
 
 def build_entry(match):
-    current_id = match_id(match)
-    start = match_start(match)
+    match_id = str(match["id"])
 
     return {
-        "id": current_id,
-        "url": f"https://www.fotmob.com/match/{current_id}",
+        "id": match_id,
+        "url": f"{FOTMOB_BASE_URL}/match/{match_id}",
         "enabled": True,
         "auto": True,
-        "start": (
-            start.isoformat()
-            if start is not None
-            else None
-        ),
+        "start": match.get("start"),
     }
 
 
-def merge(existing, discovered):
-    by_id = {}
+def existing_matches():
+    value = load_json(
+        MATCHES_FILE,
+        [],
+    )
 
-    for item in existing:
-        if not isinstance(item, dict):
-            continue
-        current_id = match_id(item)
-        if current_id:
-            by_id[current_id] = item
+    if isinstance(value, dict):
+        value = value.get("matches", [])
 
-    added = 0
-
-    for item in discovered:
-        current_id = match_id(item)
-        if not current_id or current_id in by_id:
-            continue
-        by_id[current_id] = item
-        added += 1
-
-    return list(by_id.values()), added
+    return value if isinstance(value, list) else []
 
 
-def prune_old_auto(matches, hours):
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
-    kept = []
+def entry_start(item):
+    if not isinstance(item, dict):
+        return None
+
+    return parse_datetime(
+        item.get("start")
+    )
+
+
+def prune_old_auto(
+    matches,
+    hours,
+):
+    cutoff = (
+        datetime.now(timezone.utc)
+        - timedelta(hours=hours)
+    )
+
+    result = []
     removed = 0
 
     for item in matches:
@@ -640,56 +743,172 @@ def prune_old_auto(matches, hours):
             continue
 
         if item.get("auto") is not True:
-            kept.append(item)
+            result.append(item)
             continue
 
-        start = match_start(item)
+        start = entry_start(item)
+
         if start is not None and start < cutoff:
             removed += 1
-        else:
-            kept.append(item)
+            continue
 
-    return kept, removed
+        result.append(item)
+
+    return result, removed
+
+
+def merge_matches(
+    existing,
+    discovered,
+):
+    by_id = {}
+
+    for item in existing:
+        if not isinstance(item, dict):
+            continue
+
+        match_id = item.get("id")
+
+        if match_id is None:
+            continue
+
+        by_id[str(match_id)] = item
+
+    added = 0
+    updated = 0
+
+    for item in discovered:
+        match_id = str(item["id"])
+
+        if match_id not in by_id:
+            by_id[match_id] = item
+            added += 1
+            continue
+
+        old = by_id[match_id]
+
+        if old.get("auto") is True:
+            changed = False
+
+            for key in (
+                "url",
+                "start",
+            ):
+                if old.get(key) != item.get(key):
+                    old[key] = item.get(key)
+                    changed = True
+
+            if changed:
+                updated += 1
+
+    return list(by_id.values()), added, updated
 
 
 def main():
-    config = load_json(CONFIG_FILE, {})
-    if not isinstance(config, dict):
-        raise RuntimeError("Invalid auto_matches.json")
+    config = load_json(
+        CONFIG_FILE,
+        {},
+    )
 
-    by_name, by_country = resolve_team_index()
+    if not isinstance(config, dict):
+        raise RuntimeError(
+            "auto_matches.json is invalid"
+        )
+
+    by_name, by_country = load_team_config()
 
     selected_team_ids = {
         str(value)
-        for value in config.get("team_ids", [])
+        for value in config.get(
+            "team_ids",
+            [],
+        )
         if str(value).strip()
     }
 
     now = datetime.now(timezone.utc)
-    dates = [now.date(), (now + timedelta(days=1)).date()]
 
-    league_ids = {
-        str(rule.get("id"))
-        for rule in config.get("competitions", [])
-        if isinstance(rule, dict) and rule.get("id") is not None
-    }
+    window_hours = float(
+        config.get("window_hours", 24)
+    )
 
-    all_matches = []
-    seen = set()
+    window_end = (
+        now + timedelta(hours=window_hours)
+    )
 
-    for date_value in dates:
-        print(f"[DISCOVERY] Fetching {date_value.isoformat()}")
-        for item in fetch_matches(date_value):
-            current_id = match_id(item)
-            if current_id and current_id not in seen:
-                seen.add(current_id)
-                all_matches.append(item)
+    print(
+        "[DISCOVERY] Window:",
+        now.isoformat(),
+        "->",
+        window_end.isoformat(),
+    )
+
+    sitemap_urls = fetch_sitemap_urls()
+
+    if not sitemap_urls:
+        raise RuntimeError(
+            "FotMob match sitemap returned no URLs"
+        )
+
+    candidates = []
+
+    for url in sitemap_urls:
+        scheduled = sitemap_match_time(url)
+
+        if scheduled is None:
+            continue
+
+        if scheduled < now:
+            continue
+
+        if scheduled > window_end:
+            continue
+
+        candidates.append(
+            (
+                scheduled,
+                url,
+            )
+        )
+
+    candidates.sort(
+        key=lambda item: item[0]
+    )
+
+    print(
+        f"[DISCOVERY] Sitemap candidates in window: "
+        f"{len(candidates)}"
+    )
 
     discovered = []
+    seen_ids = set()
 
-    for item in all_matches:
+    for index, (scheduled, url) in enumerate(
+        candidates,
+        1,
+    ):
+        print(
+            f"[DISCOVERY] Match page "
+            f"{index}/{len(candidates)}: "
+            f"{scheduled.isoformat()}"
+        )
+
+        match = fetch_match_from_sitemap(url)
+
+        if not match:
+            continue
+
+        match_id = str(match["id"])
+
+        if match_id in seen_ids:
+            continue
+
+        seen_ids.add(match_id)
+
+        # The sitemap time is only a pre-filter. The actual match
+        # page time wins when it is available.
         if not is_selected(
-            item,
+            match,
             config,
             selected_team_ids,
             by_name,
@@ -697,44 +916,73 @@ def main():
         ):
             continue
 
-        entry = build_entry(item)
-        discovered.append(entry)
+        discovered.append(
+            build_entry(match)
+        )
 
-        home = item.get("home") or {}
-        away = item.get("away") or {}
+        home = match["home"]["name"]
+        away = match["away"]["name"]
 
         print(
             "[DISCOVERED]",
-            entry["id"],
+            match_id,
             "|",
-            home.get("name", "?"),
+            home,
             "vs",
-            away.get("name", "?"),
+            away,
             "|",
-            match_start(item),
+            match.get("start"),
+            "| competition:",
+            match.get("competitionName"),
+            "| leagueId:",
+            match.get("leagueId"),
             "| stage:",
-            get_stage(item),
+            match.get("stage"),
         )
 
-    existing = load_json(MATCHES_FILE, [])
-    if isinstance(existing, dict):
-        existing = existing.get("matches", [])
-    if not isinstance(existing, list):
-        existing = []
+    current = existing_matches()
 
-    existing, removed = prune_old_auto(
-        existing,
-        float(config.get("prune_auto_after_hours", 6)),
+    current, removed = prune_old_auto(
+        current,
+        float(
+            config.get(
+                "prune_auto_after_hours",
+                6,
+            )
+        ),
     )
 
-    merged, added = merge(existing, discovered)
-    save_json(MATCHES_FILE, merged)
+    merged, added, updated = merge_matches(
+        current,
+        discovered,
+    )
+
+    save_json(
+        MATCHES_FILE,
+        merged,
+    )
 
     print("========================================")
-    print("[DISCOVERY] Discovered:", len(discovered))
-    print("[DISCOVERY] Added:", added)
-    print("[DISCOVERY] Removed old auto matches:", removed)
-    print("[DISCOVERY] Total matches:", len(merged))
+    print(
+        "[DISCOVERY] Discovered:",
+        len(discovered),
+    )
+    print(
+        "[DISCOVERY] Added:",
+        added,
+    )
+    print(
+        "[DISCOVERY] Updated:",
+        updated,
+    )
+    print(
+        "[DISCOVERY] Removed old auto matches:",
+        removed,
+    )
+    print(
+        "[DISCOVERY] Total matches:",
+        len(merged),
+    )
     print("========================================")
 
 
