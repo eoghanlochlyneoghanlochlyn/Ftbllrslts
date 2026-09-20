@@ -315,11 +315,18 @@ def is_selected(match, config, selected_team_ids, by_name, by_country):
 
 def build_entry(match):
     current_id = match_id(match)
+    start = match_start(match)
+
     return {
         "id": current_id,
         "url": f"https://www.fotmob.com/match/{current_id}",
         "enabled": True,
         "auto": True,
+        "start": (
+            start.isoformat()
+            if start is not None
+            else None
+        ),
     }
 
 
