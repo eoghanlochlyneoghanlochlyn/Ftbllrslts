@@ -1,6 +1,15 @@
 import json
 import requests
 
+from fotmob import (
+    fetch_match_api,
+    fetch_match_page,
+    extract_next_data,
+    extract_round_info,
+    extract_leg_info,
+    extract_aggregate_info,
+)
+
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -143,6 +152,58 @@ def team_name_matches(team, names):
 def get_match_rule_reasons(match, league, config):
     return ["all_matches"]
 
+def get_detailed_stage_info(match_id):
+    """فقط برای تست، مرحله را از جزئیات مسابقه FotMob استخراج می‌کند."""
+    data = fetch_match_api(match_id)
+
+    if not data:
+        return {
+            "round_info": None,
+            "leg_info": None,
+            "aggregate": None,
+            "source": "unavailable",
+        }
+
+    round_info = extract_round_info(data)
+    leg_info = extract_leg_info(data)
+    aggregate = extract_aggregate_info(data, leg_info)
+
+    if round_info:
+        return {
+            "round_info": round_info,
+            "leg_info": leg_info,
+            "aggregate": aggregate,
+            "source": "matchDetails",
+        }
+
+    html = fetch_match_page(match_id)
+
+    if html:
+        page_data = extract_next_data(html)
+
+        if page_data:
+            page_round_info = extract_round_info(page_data)
+            page_leg_info = extract_leg_info(page_data)
+            page_aggregate = extract_aggregate_info(
+                page_data,
+                page_leg_info,
+            )
+
+            return {
+                "round_info": page_round_info,
+                "leg_info": page_leg_info,
+                "aggregate": page_aggregate,
+                "source": "match_page",
+            }
+
+    return {
+        "round_info": None,
+        "leg_info": leg_info,
+        "aggregate": aggregate,
+        "source": "matchDetails_no_round",
+    }
+
+
 def format_match(match, league, date, reasons):
     home = match.get("home", {})
     away = match.get("away", {})
@@ -172,6 +233,10 @@ def format_match(match, league, date, reasons):
         ),
         "competition_id": get_competition_id(league),
         "stage": get_stage_text(match, league),
+        "round_info": detailed.get("round_info"),
+        "leg_info": detailed.get("leg_info"),
+        "aggregate": detailed.get("aggregate"),
+        "stage_source": detailed.get("source"),
         "home": home_name,
         "away": away_name,
         "home_id": home.get("id"),
@@ -362,8 +427,24 @@ def main():
             f"{match['competition_id']}"
         )
         print(
-            f"   Stage: "
+            f"   Stage (list endpoint): "
             f"{match['stage'] or 'Unknown'}"
+        )
+        print(
+            f"   Round (match details): "
+            f"{json.dumps(match['round_info'], ensure_ascii=False)}"
+        )
+        print(
+            f"   Leg: "
+            f"{json.dumps(match['leg_info'], ensure_ascii=False)}"
+        )
+        print(
+            f"   Aggregate: "
+            f"{json.dumps(match['aggregate'], ensure_ascii=False)}"
+        )
+        print(
+            f"   Stage source: "
+            f"{match['stage_source']}"
         )
         print(
             f"   Match ID: "
