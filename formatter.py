@@ -2568,6 +2568,22 @@ def _build_rich_match_header(
                 }
             )
 
+        aggregate = snapshot.get("aggregate")
+        if (
+            snapshot.get("is_second_leg")
+            and isinstance(aggregate, dict)
+            and aggregate.get("text")
+        ):
+            blocks.append(
+                {
+                    "type": "paragraph",
+                    "text": (
+                        "مجموع دو بازی: "
+                        + str(aggregate["text"])
+                    ),
+                }
+            )
+
         if events:
 
             scorer_table = (
