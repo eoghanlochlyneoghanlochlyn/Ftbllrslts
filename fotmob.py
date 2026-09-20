@@ -972,6 +972,55 @@ def extract_round_info(data):
     علاوه بر فیلدهای سطح بالا، اشیای tournament/league/competition
     و matchesInRound را هم بررسی می‌کند.
     """
+    # -----------------------------------------------------
+    # ساختار واقعی FotMob برای بعضی رقابت‌ها، از جمله
+    # لیگ قهرمانان آسیا الیت:
+    #
+    # props.pageProps.general.matchRound = "1"
+    # props.pageProps.general.leagueRoundName = "1"
+    #
+    # این دو فیلد را قبل از جست‌وجوی عمومی بررسی می‌کنیم تا
+    # مقدار عمومی "Round" جای شماره هفته را نگیرد.
+    # -----------------------------------------------------
+
+    general = get_nested(
+        data,
+        "props",
+        "pageProps",
+        "general",
+    )
+
+    if isinstance(general, dict):
+
+        for key in (
+            "matchRound",
+            "leagueRoundName",
+        ):
+            value = general.get(key)
+
+            if value is None:
+                continue
+
+            raw = clean_text(value)
+
+            if not raw:
+                continue
+
+            if raw.isdigit():
+                return {
+                    "raw": raw,
+                    "name": raw,
+                    "name_fa": f"هفته {raw}",
+                }
+
+            translated = _translate_round_name(raw)
+
+            return {
+                "raw": raw,
+                "name": raw,
+                "name_fa": translated or raw,
+            }
+
     candidates = []
 
     match_facts = get_nested(
