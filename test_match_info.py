@@ -1,15 +1,14 @@
 import json
 import re
 import sys
-import xml.etree.ElementTree as ET
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timedelta, timezone
-from urllib.parse import urlparse
+from datetime import date, datetime, time, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 import requests
 
-FOTMOB_BASE_URL = "https://www.fotmob.com"
-SITEMAP_INDEX_URL = f"{FOTMOB_BASE_URL}/sitemap/en/matches.xml"
+FOTMOB_URL = "https://www.fotmob.com/matches"
+IRAN_TZ = ZoneInfo("Asia/Tehran")
+TARGET_DATE = date(2026, 9, 20)
 
 HEADERS = {
     "User-Agent": (
@@ -17,118 +16,61 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/131.0.0.0 Safari/537.36"
     ),
-    "Accept": "application/xml,text/xml,text/html,*/*;q=0.8",
+    "Accept": "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
-    "Referer": f"{FOTMOB_BASE_URL}/",
+    "Referer": "https://www.fotmob.com/",
     "Cache-Control": "no-cache",
     "Pragma": "no-cache",
 }
 
-REQUEST_TIMEOUT = 30
-MAX_WORKERS = 12
+TIMEOUT = 30
 
 
-def get_url(url):
-    response = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+def fetch_matches_page(target_date):
+    url = f"{FOTMOB_URL}?date={target_date.isoformat()}"
+
+    response = requests.get(
+        url,
+        headers=HEADERS,
+        timeout=TIMEOUT,
+    )
     response.raise_for_status()
-    return response.text
+
+    return response.url, response.text
 
 
-def extract_xml_urls(xml_text):
-    root = ET.fromstring(xml_text)
-    return [
-        element.text.strip()
-        for element in root.iter()
-        if element.tag.endswith("loc") and element.text
-    ]
+def extract_json_scripts(html):
+    scripts = []
 
-
-def extract_next_data(html):
-    match = re.search(
-        r"""<script[^>]+id=["']__NEXT_DATA__["'][^>]*>(.*?)</script>""",
+    next_data = re.search(
+        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>(.*?)</script>',
         html,
         re.DOTALL | re.IGNORECASE,
     )
-    if not match:
-        return None
 
-    try:
-        return json.loads(match.group(1))
-    except json.JSONDecodeError:
-        return None
+    if next_data:
+        try:
+            scripts.append(json.loads(next_data.group(1)))
+        except json.JSONDecodeError:
+            pass
 
+    for match in re.finditer(
+        r"<script[^>]*>(.*?)</script>",
+        html,
+        re.DOTALL | re.IGNORECASE,
+    ):
+        text = match.group(1).strip()
 
-def get_page_props(data):
-    if not isinstance(data, dict):
-        return {}
+        if not text or len(text) < 2:
+            continue
 
-    props = data.get("props")
-    if not isinstance(props, dict):
-        return {}
+        if text.startswith("{") or text.startswith("["):
+            try:
+                scripts.append(json.loads(text))
+            except json.JSONDecodeError:
+                continue
 
-    page_props = props.get("pageProps")
-    return page_props if isinstance(page_props, dict) else {}
-
-
-def get_general(page_props):
-    general = page_props.get("general")
-    if isinstance(general, dict):
-        return general
-
-    data = page_props.get("data")
-    if isinstance(data, dict):
-        general = data.get("general")
-        if isinstance(general, dict):
-            return general
-
-    return {}
-
-
-def get_content(page_props):
-    candidates = [
-        page_props.get("content"),
-        (
-            page_props.get("data", {}).get("content")
-            if isinstance(page_props.get("data"), dict)
-            else None
-        ),
-        (
-            page_props.get("match", {}).get("content")
-            if isinstance(page_props.get("match"), dict)
-            else None
-        ),
-        page_props.get("matchData"),
-    ]
-
-    for candidate in candidates:
-        if isinstance(candidate, dict):
-            return candidate
-
-    return {}
-
-
-def get_team_name(team):
-    if not isinstance(team, dict):
-        return None
-
-    for key in ("longName", "name", "shortName", "title"):
-        value = team.get(key)
-        if value:
-            return str(value)
-
-    return None
-
-
-def get_team_id(team):
-    if not isinstance(team, dict):
-        return None
-
-    for key in ("id", "teamId", "teamID", "team_id"):
-        value = team.get(key)
-        if value is not None:
-            return str(value)
-
-    return None
+    return scripts
 
 
 def parse_datetime(value):
@@ -138,7 +80,7 @@ def parse_datetime(value):
     if isinstance(value, (int, float)):
         timestamp = float(value)
 
-        if timestamp > 100000000000:
+        if timestamp > 100_000_000_000:
             timestamp /= 1000
 
         try:
@@ -150,6 +92,7 @@ def parse_datetime(value):
         return None
 
     value = value.strip()
+
     if not value:
         return None
 
@@ -161,268 +104,239 @@ def parse_datetime(value):
 
         return parsed.astimezone(timezone.utc)
     except ValueError:
-        pass
-
-    for fmt in (
-        "%Y-%m-%dT%H:%M:%S.%fZ",
-        "%Y-%m-%dT%H:%M:%SZ",
-        "%Y-%m-%d %H:%M:%S",
-    ):
-        try:
-            return datetime.strptime(value, fmt).replace(tzinfo=timezone.utc)
-        except ValueError:
-            continue
-
-    return None
-
-
-def get_id(general, keys):
-    for key in keys:
-        value = general.get(key)
-        if value is not None:
-            return str(value)
-
-    return None
-
-
-def get_match_time(general):
-    for key in (
-        "matchTimeUTC",
-        "matchTime",
-        "startTime",
-        "utcTime",
-        "kickoff",
-    ):
-        value = general.get(key)
-        if value:
-            return value
-
-    return None
-
-
-def get_stage(content):
-    match_facts = content.get("matchFacts")
-    if not isinstance(match_facts, dict):
         return None
 
-    info_box = match_facts.get("infoBox")
-    if not isinstance(info_box, dict):
+
+def get_team(team):
+    if not isinstance(team, dict):
         return None
 
-    tournament = info_box.get("Tournament")
-    if not isinstance(tournament, dict):
+    team_id = (
+        team.get("id")
+        or team.get("teamId")
+        or team.get("teamID")
+        or team.get("team_id")
+    )
+
+    name = (
+        team.get("name")
+        or team.get("longName")
+        or team.get("shortName")
+        or team.get("title")
+    )
+
+    if not name and isinstance(team.get("name"), dict):
+        name = team["name"].get("text") or team["name"].get("value")
+
+    if team_id is None and not name:
         return None
-
-    for key in ("roundName", "round", "stage", "name"):
-        value = tournament.get(key)
-        if value:
-            return str(value)
-
-    return None
-
-
-def read_match_page(url):
-    try:
-        html = get_url(url)
-    except Exception as exc:
-        return {"url": url, "error": str(exc)}
-
-    data = extract_next_data(html)
-    if not isinstance(data, dict):
-        return {"url": url, "error": "__NEXT_DATA__ not found"}
-
-    page_props = get_page_props(data)
-    general = get_general(page_props)
-
-    if not general:
-        return {"url": url, "error": "general not found"}
-
-    content = get_content(page_props)
-    raw_time = get_match_time(general)
-    match_time = parse_datetime(raw_time)
 
     return {
-        "match_id": get_id(general, ("matchId", "matchID", "id")),
-        "match_time_utc": match_time.isoformat() if match_time else None,
-        "home_team": get_team_name(general.get("homeTeam")),
-        "away_team": get_team_name(general.get("awayTeam")),
-        "home_team_id": get_team_id(general.get("homeTeam")),
-        "away_team_id": get_team_id(general.get("awayTeam")),
-        "league_id": get_id(general, ("leagueId", "leagueID")),
-        "parent_league_id": get_id(
-            general,
-            ("parentLeagueId", "parentLeagueID"),
-        ),
-        "stage": get_stage(content),
-        "url": url,
-        "error": None,
+        "id": str(team_id) if team_id is not None else None,
+        "name": str(name) if name else None,
+    }
+
+
+def get_match_time(obj):
+    for key in (
+        "matchTimeUTC",
+        "utcTime",
+        "startTime",
+        "kickoff",
+        "timeUTC",
+        "date",
+    ):
+        if key in obj:
+            parsed = parse_datetime(obj.get(key))
+            if parsed:
+                return parsed
+
+    status = obj.get("status")
+    if isinstance(status, dict):
+        for key in ("utcTime", "matchTimeUTC", "startTime"):
+            parsed = parse_datetime(status.get(key))
+            if parsed:
+                return parsed
+
+    return None
+
+
+def get_teams(obj):
+    home = (
+        obj.get("homeTeam")
+        or obj.get("home")
+        or obj.get("home_team")
+    )
+    away = (
+        obj.get("awayTeam")
+        or obj.get("away")
+        or obj.get("away_team")
+    )
+
+    home = get_team(home)
+    away = get_team(away)
+
+    if home and away:
+        return home, away
+
+    return None, None
+
+
+def get_match_id(obj):
+    for key in ("matchId", "matchID", "id", "match_id"):
+        value = obj.get(key)
+
+        if value is not None and not isinstance(value, dict):
+            return str(value)
+
+    return None
+
+
+def looks_like_match(obj):
+    if not isinstance(obj, dict):
+        return False
+
+    home, away = get_teams(obj)
+
+    if not home or not away:
+        return False
+
+    if not get_match_time(obj):
+        return False
+
+    return get_match_id(obj) is not None
+
+
+def walk_matches(value, found):
+    if isinstance(value, dict):
+        if looks_like_match(value):
+            match_id = get_match_id(value)
+
+            if match_id:
+                found[match_id] = value
+
+        for child in value.values():
+            walk_matches(child, found)
+
+    elif isinstance(value, list):
+        for child in value:
+            walk_matches(child, found)
+
+
+def get_competition(obj):
+    candidates = (
+        obj.get("league"),
+        obj.get("tournament"),
+        obj.get("competition"),
+        obj.get("parentLeague"),
+    )
+
+    for item in candidates:
+        if isinstance(item, dict):
+            name = (
+                item.get("name")
+                or item.get("longName")
+                or item.get("title")
+            )
+            league_id = (
+                item.get("id")
+                or item.get("leagueId")
+                or item.get("primaryId")
+            )
+
+            if name or league_id:
+                return {
+                    "id": str(league_id) if league_id is not None else None,
+                    "name": str(name) if name else None,
+                }
+
+    return None
+
+
+def build_match(obj):
+    home, away = get_teams(obj)
+    match_time = get_match_time(obj)
+
+    if not home or not away or not match_time:
+        return None
+
+    iran_time = match_time.astimezone(IRAN_TZ)
+
+    if iran_time.date() != TARGET_DATE:
+        return None
+
+    competition = get_competition(obj)
+
+    return {
+        "id": get_match_id(obj),
+        "home_team": home["name"],
+        "home_team_id": home["id"],
+        "away_team": away["name"],
+        "away_team_id": away["id"],
+        "competition": competition["name"] if competition else None,
+        "competition_id": competition["id"] if competition else None,
+        "kickoff_iran": iran_time.strftime("%Y-%m-%d %H:%M:%S"),
+        "kickoff_utc": match_time.isoformat(),
+        "url": f"https://www.fotmob.com/match/{get_match_id(obj)}",
     }
 
 
 def main():
-    now = datetime.now(timezone.utc)
-    window_end = now + timedelta(hours=24)
-
-    print("=" * 100)
-    print("FotMob - MATCHES IN NEXT 24 HOURS")
-    print("=" * 100)
+    print("=" * 90)
+    print("FotMob - ALL MATCHES FOR 2026-09-20")
+    print("Timezone: Asia/Tehran")
+    print("=" * 90)
     print()
-    print(f"Current UTC : {now.isoformat()}")
-    print(f"Window end  : {window_end.isoformat()}")
-    print()
-    print("SOURCE: FotMob website sitemap + match HTML + __NEXT_DATA__")
-    print("NO FotMob API ENDPOINT IS USED.")
-    print()
-
-    print("1) Reading FotMob matches sitemap index...")
 
     try:
-        index_xml = get_url(SITEMAP_INDEX_URL)
-        child_sitemaps = extract_xml_urls(index_xml)
-    except Exception as exc:
-        print(f"ERROR: Could not read sitemap index: {exc}")
+        final_url, html = fetch_matches_page(TARGET_DATE)
+    except requests.RequestException as exc:
+        print(f"ERROR: Could not read FotMob matches page: {exc}")
         sys.exit(1)
 
-    print(f"Child sitemaps found: {len(child_sitemaps)}")
+    print(f"URL: {final_url}")
+    print(f"HTML length: {len(html):,}")
     print()
 
-    if not child_sitemaps:
-        print("ERROR: Sitemap index contains no child sitemaps.")
+    scripts = extract_json_scripts(html)
+
+    if not scripts:
+        print("ERROR: No JSON data was found in the FotMob page.")
         sys.exit(1)
 
-    print("2) Reading sitemap structure only...")
-    print("   Match pages are NOT crawled yet.")
-    print()
+    found = {}
 
-    # The sitemap contains many historical/future match URLs. Crawling every
-    # URL is far too expensive, so first inspect only a small sample of each
-    # child sitemap. This test is specifically for determining whether the
-    # sitemap itself gives us a usable way to narrow the candidates.
-    sample_size = 5
-    sampled_urls = set()
-
-    for index, sitemap_url in enumerate(child_sitemaps, start=1):
-        try:
-            urls = extract_xml_urls(get_url(sitemap_url))
-        except Exception as exc:
-            print(f"  [{index}/{len(child_sitemaps)}] ERROR: {exc}")
-            continue
-
-        match_urls = [
-            url for url in urls
-            if urlparse(url).path.startswith("/matches/")
-        ]
-
-        if match_urls:
-            sampled_urls.update(match_urls[:sample_size])
-
-        print(
-            f"  [{index}/{len(child_sitemaps)}] "
-            f"match URLs: {len(match_urls)} | "
-            f"sampled: {min(len(match_urls), sample_size)}"
-        )
-
-    print()
-    print(f"Sampled unique match pages: {len(sampled_urls)}")
-    print()
-
-    if not sampled_urls:
-        print("ERROR: No /matches/ URLs were found in the sitemap.")
-        sys.exit(1)
-
-    print("3) Reading only the sampled match pages...")
-    print(f"   Workers: {MAX_WORKERS}")
-    print("   Time is read from matchTimeUTC on the actual FotMob page.")
-    print()
+    for data in scripts:
+        walk_matches(data, found)
 
     matches = []
-    errors = []
 
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {
-            executor.submit(read_match_page, url): url
-            for url in sorted(sampled_urls)
-        }
+    for obj in found.values():
+        match = build_match(obj)
 
-        total = len(futures)
+        if match:
+            matches.append(match)
 
-        for index, future in enumerate(as_completed(futures), start=1):
-            url = futures[future]
+    matches.sort(key=lambda item: item["kickoff_iran"])
 
-            try:
-                result = future.result()
-            except Exception as exc:
-                errors.append({"url": url, "error": str(exc)})
-                continue
-
-            if result.get("error"):
-                errors.append(result)
-                continue
-
-            match_time = parse_datetime(result.get("match_time_utc"))
-
-            if match_time is None:
-                errors.append({
-                    "url": url,
-                    "error": "matchTimeUTC not found",
-                })
-                continue
-
-            if now <= match_time <= window_end:
-                matches.append(result)
-
-            if index % 100 == 0 or index == total:
-                print(
-                    f"  Processed {index}/{total} | "
-                    f"in 24h: {len(matches)} | "
-                    f"errors: {len(errors)}"
-                )
-
-    matches.sort(
-        key=lambda item: parse_datetime(item["match_time_utc"])
-        or datetime.max.replace(tzinfo=timezone.utc)
-    )
-
-    print()
-    print("=" * 100)
-    print(f"FOUND {len(matches)} MATCHES IN NEXT 24 HOURS")
-    print("=" * 100)
+    print(f"Matches found: {len(matches)}")
     print()
 
     for index, match in enumerate(matches, start=1):
         print(
             f"{index:03d}. "
-            f"{match.get('home_team', '?')} vs "
-            f"{match.get('away_team', '?')}"
+            f"{match['home_team']} vs {match['away_team']} | "
+            f"{match['kickoff_iran'][11:16]}"
         )
-        print(f"     Match ID      : {match.get('match_id')}")
-        print(f"     Kickoff UTC   : {match.get('match_time_utc')}")
-        print(f"     Home Team ID  : {match.get('home_team_id')}")
-        print(f"     Away Team ID  : {match.get('away_team_id')}")
-        print(f"     League ID     : {match.get('league_id')}")
-        print(f"     Parent League : {match.get('parent_league_id')}")
-        print(f"     Stage         : {match.get('stage')}")
-        print(f"     URL           : {match.get('url')}")
+        print(f"     Match ID    : {match['id']}")
+        print(f"     Competition : {match['competition']}")
+        print(f"     URL         : {match['url']}")
         print()
 
-    print("=" * 100)
-    print("JSON OUTPUT")
-    print("=" * 100)
+    print("=" * 90)
+    print("JSON")
+    print("=" * 90)
     print(json.dumps(matches, ensure_ascii=False, indent=2))
-
-    print()
-    print("=" * 100)
-    print("SUMMARY")
-    print("=" * 100)
-    print(f"Match pages sampled    : {len(sampled_urls)}")
-    print(f"Matches in next 24h    : {len(matches)}")
-    print(f"Pages with errors      : {len(errors)}")
-
-    if errors:
-        print()
-        print("First errors:")
-        for error in errors[:20]:
-            print(f"- {error.get('url')}: {error.get('error')}")
 
 
 if __name__ == "__main__":
