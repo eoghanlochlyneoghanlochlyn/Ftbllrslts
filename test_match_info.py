@@ -1,16 +1,15 @@
 import json
 import re
 import sys
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
-from html import unescape
-from urllib.parse import urljoin
+from urllib.parse import urlparse
 
 import requests
 
-
 FOTMOB_BASE_URL = "https://www.fotmob.com"
-MATCHES_URL = f"{FOTMOB_BASE_URL}/matches"
+SITEMAP_INDEX_URL = f"{FOTMOB_BASE_URL}/sitemap/en/matches.xml"
 
 HEADERS = {
     "User-Agent": (
@@ -18,7 +17,7 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/131.0.0.0 Safari/537.36"
     ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept": "application/xml,text/xml,text/html,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": f"{FOTMOB_BASE_URL}/",
     "Cache-Control": "no-cache",
@@ -28,42 +27,28 @@ HEADERS = {
 REQUEST_TIMEOUT = 30
 MAX_WORKERS = 12
 
-MATCH_HREF_RE = re.compile(
-    r"""href=["'](/matches/[^"'#?]+)""",
-    re.IGNORECASE,
-)
 
-NEXT_DATA_RE = re.compile(
-    r"""<script[^>]+id=["']__NEXT_DATA__["'][^>]*>(.*?)</script>""",
-    re.DOTALL | re.IGNORECASE,
-)
-
-
-def get_html(url):
-    response = requests.get(
-        url,
-        headers=HEADERS,
-        timeout=REQUEST_TIMEOUT,
-    )
+def get_url(url):
+    response = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
     response.raise_for_status()
     return response.text
 
 
-def extract_match_urls(html):
-    urls = set()
-
-    for match in MATCH_HREF_RE.finditer(html):
-        href = unescape(match.group(1)).strip()
-
-        if href.startswith("/matches/"):
-            urls.add(urljoin(FOTMOB_BASE_URL, href))
-
-    return sorted(urls)
+def extract_xml_urls(xml_text):
+    root = ET.fromstring(xml_text)
+    return [
+        element.text.strip()
+        for element in root.iter()
+        if element.tag.endswith("loc") and element.text
+    ]
 
 
 def extract_next_data(html):
-    match = NEXT_DATA_RE.search(html)
-
+    match = re.search(
+        r"""<script[^>]+id=["']__NEXT_DATA__["'][^>]*>(.*?)</script>""",
+        html,
+        re.DOTALL | re.IGNORECASE,
+    )
     if not match:
         return None
 
@@ -78,29 +63,21 @@ def get_page_props(data):
         return {}
 
     props = data.get("props")
-
     if not isinstance(props, dict):
         return {}
 
     page_props = props.get("pageProps")
-
-    if not isinstance(page_props, dict):
-        return {}
-
-    return page_props
+    return page_props if isinstance(page_props, dict) else {}
 
 
 def get_general(page_props):
     general = page_props.get("general")
-
     if isinstance(general, dict):
         return general
 
     data = page_props.get("data")
-
     if isinstance(data, dict):
         general = data.get("general")
-
         if isinstance(general, dict):
             return general
 
@@ -136,7 +113,6 @@ def get_team_name(team):
 
     for key in ("longName", "name", "shortName", "title"):
         value = team.get(key)
-
         if value:
             return str(value)
 
@@ -149,7 +125,6 @@ def get_team_id(team):
 
     for key in ("id", "teamId", "teamID", "team_id"):
         value = team.get(key)
-
         if value is not None:
             return str(value)
 
@@ -175,7 +150,6 @@ def parse_datetime(value):
         return None
 
     value = value.strip()
-
     if not value:
         return None
 
@@ -202,6 +176,15 @@ def parse_datetime(value):
     return None
 
 
+def get_id(general, keys):
+    for key in keys:
+        value = general.get(key)
+        if value is not None:
+            return str(value)
+
+    return None
+
+
 def get_match_time(general):
     for key in (
         "matchTimeUTC",
@@ -211,42 +194,27 @@ def get_match_time(general):
         "kickoff",
     ):
         value = general.get(key)
-
         if value:
             return value
 
     return None
 
 
-def get_id(general, keys):
-    for key in keys:
-        value = general.get(key)
-
-        if value is not None:
-            return str(value)
-
-    return None
-
-
 def get_stage(content):
     match_facts = content.get("matchFacts")
-
     if not isinstance(match_facts, dict):
         return None
 
     info_box = match_facts.get("infoBox")
-
     if not isinstance(info_box, dict):
         return None
 
     tournament = info_box.get("Tournament")
-
     if not isinstance(tournament, dict):
         return None
 
     for key in ("roundName", "round", "stage", "name"):
         value = tournament.get(key)
-
         if value:
             return str(value)
 
@@ -255,12 +223,11 @@ def get_stage(content):
 
 def read_match_page(url):
     try:
-        html = get_html(url)
+        html = get_url(url)
     except Exception as exc:
         return {"url": url, "error": str(exc)}
 
     data = extract_next_data(html)
-
     if not isinstance(data, dict):
         return {"url": url, "error": "__NEXT_DATA__ not found"}
 
@@ -271,22 +238,16 @@ def read_match_page(url):
         return {"url": url, "error": "general not found"}
 
     content = get_content(page_props)
-
-    home_team = general.get("homeTeam")
-    away_team = general.get("awayTeam")
-
     raw_time = get_match_time(general)
     match_time = parse_datetime(raw_time)
 
     return {
         "match_id": get_id(general, ("matchId", "matchID", "id")),
-        "match_time_utc": (
-            match_time.isoformat() if match_time else None
-        ),
-        "home_team": get_team_name(home_team),
-        "away_team": get_team_name(away_team),
-        "home_team_id": get_team_id(home_team),
-        "away_team_id": get_team_id(away_team),
+        "match_time_utc": match_time.isoformat() if match_time else None,
+        "home_team": get_team_name(general.get("homeTeam")),
+        "away_team": get_team_name(general.get("awayTeam")),
+        "home_team_id": get_team_id(general.get("homeTeam")),
+        "away_team_id": get_team_id(general.get("awayTeam")),
         "league_id": get_id(general, ("leagueId", "leagueID")),
         "parent_league_id": get_id(
             general,
@@ -300,56 +261,69 @@ def read_match_page(url):
 
 def main():
     now = datetime.now(timezone.utc)
-    window_start = now
     window_end = now + timedelta(hours=24)
 
     print("=" * 100)
     print("FotMob - MATCHES IN NEXT 24 HOURS")
     print("=" * 100)
     print()
-    print(f"Current UTC : {window_start.isoformat()}")
+    print(f"Current UTC : {now.isoformat()}")
     print(f"Window end  : {window_end.isoformat()}")
     print()
-    print("SOURCE: FotMob website /matches pages + match HTML + __NEXT_DATA__")
+    print("SOURCE: FotMob website sitemap + match HTML + __NEXT_DATA__")
     print("NO FotMob API ENDPOINT IS USED.")
     print()
 
-    # The 24-hour window can cross a UTC date boundary.
-    dates = [
-        window_start.date() + timedelta(days=-1),
-        window_start.date(),
-        window_start.date() + timedelta(days=1),
-    ]
+    print("1) Reading FotMob matches sitemap index...")
 
-    print("1) Discovering match links from FotMob website pages...")
+    try:
+        index_xml = get_url(SITEMAP_INDEX_URL)
+        child_sitemaps = extract_xml_urls(index_xml)
+    except Exception as exc:
+        print(f"ERROR: Could not read sitemap index: {exc}")
+        sys.exit(1)
+
+    print(f"Child sitemaps found: {len(child_sitemaps)}")
+    print()
+
+    if not child_sitemaps:
+        print("ERROR: Sitemap index contains no child sitemaps.")
+        sys.exit(1)
+
+    print("2) Reading ALL child sitemaps...")
+    print("   Sitemap timestamps are NOT used to discard matches.")
+    print()
 
     match_urls = set()
 
-    for date_value in dates:
-        date_text = date_value.isoformat()
-        url = f"{MATCHES_URL}?date={date_text}"
-
+    for index, sitemap_url in enumerate(child_sitemaps, start=1):
         try:
-            html = get_html(url)
-            page_urls = extract_match_urls(html)
+            urls = extract_xml_urls(get_url(sitemap_url))
         except Exception as exc:
-            print(f"  ERROR {date_text}: {exc}")
+            print(f"  [{index}/{len(child_sitemaps)}] ERROR: {exc}")
             continue
 
-        print(f"  {date_text}: {len(page_urls)} match links")
+        for url in urls:
+            if urlparse(url).path.startswith("/matches/"):
+                match_urls.add(url)
 
-        match_urls.update(page_urls)
+        if index % 10 == 0 or index == len(child_sitemaps):
+            print(
+                f"  [{index}/{len(child_sitemaps)}] "
+                f"unique match URLs: {len(match_urls)}"
+            )
 
     print()
-    print(f"Unique match pages: {len(match_urls)}")
+    print(f"Total unique match pages: {len(match_urls)}")
     print()
 
     if not match_urls:
-        print("ERROR: FotMob /matches HTML contained no match links.")
+        print("ERROR: No /matches/ URLs were found in the sitemap.")
         sys.exit(1)
 
-    print("2) Reading match pages and extracting general.matchTimeUTC...")
+    print("3) Reading match pages...")
     print(f"   Workers: {MAX_WORKERS}")
+    print("   Time filtering uses only matchTimeUTC from each match page.")
     print()
 
     matches = []
@@ -379,18 +353,16 @@ def main():
             match_time = parse_datetime(result.get("match_time_utc"))
 
             if match_time is None:
-                errors.append(
-                    {
-                        "url": url,
-                        "error": "matchTimeUTC not found",
-                    }
-                )
+                errors.append({
+                    "url": url,
+                    "error": "matchTimeUTC not found",
+                })
                 continue
 
-            if window_start <= match_time <= window_end:
+            if now <= match_time <= window_end:
                 matches.append(result)
 
-            if index % 25 == 0 or index == total:
+            if index % 100 == 0 or index == total:
                 print(
                     f"  Processed {index}/{total} | "
                     f"in 24h: {len(matches)} | "
@@ -433,19 +405,15 @@ def main():
     print("=" * 100)
     print("SUMMARY")
     print("=" * 100)
-    print(f"Match links discovered : {len(match_urls)}")
+    print(f"Match pages discovered : {len(match_urls)}")
     print(f"Matches in next 24h    : {len(matches)}")
     print(f"Pages with errors      : {len(errors)}")
 
     if errors:
         print()
         print("First errors:")
-
         for error in errors[:20]:
-            print(
-                f"- {error.get('url')}: "
-                f"{error.get('error')}"
-            )
+            print(f"- {error.get('url')}: {error.get('error')}")
 
 
 if __name__ == "__main__":
