@@ -1,8 +1,6 @@
-# test_next_24h_fotmob.py
-
 import json
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import requests
@@ -18,394 +16,472 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/140.0.0.0 Safari/537.36"
     ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
-              "image/avif,image/webp,*/*;q=0.8",
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;"
+        "q=0.9,image/avif,image/webp,*/*;q=0.8"
+    ),
     "Accept-Language": "en-US,en;q=0.9",
-    "Cache-Control": "no-cache",
 }
 
 
-def fetch_page(date_value: datetime) -> str:
-    """
-    Gets the normal FotMob matches webpage for a specific calendar date.
-    No FotMob API endpoint is used.
-    """
+def fetch_fotmob_page(date_value):
     date_str = date_value.strftime("%Y%m%d")
+
     url = f"{FOTMOB_URL}?date={date_str}"
+
+    print()
+    print("=" * 100)
+    print(f"URL:")
+    print(url)
+    print("=" * 100)
 
     response = requests.get(
         url,
         headers=HEADERS,
         timeout=30,
+        allow_redirects=True,
     )
+
+    print(f"HTTP STATUS: {response.status_code}")
+    print(f"FINAL URL:   {response.url}")
+    print(f"HTML SIZE:   {len(response.text):,} bytes")
+
     response.raise_for_status()
 
     return response.text
 
 
-def extract_next_data(html: str):
-    """
-    Extracts the standard Next.js __NEXT_DATA__ JSON from FotMob HTML.
-    """
+def inspect_html(html):
+    print()
+    print("=" * 100)
+    print("HTML STRUCTURE INSPECTION")
+    print("=" * 100)
+
     soup = BeautifulSoup(html, "html.parser")
 
-    script = soup.find("script", id="__NEXT_DATA__")
+    print()
+    print("TITLE:")
+    print("-" * 100)
 
-    if script and script.string:
-        try:
-            return json.loads(script.string)
-        except json.JSONDecodeError:
-            pass
+    if soup.title:
+        print(soup.title.get_text(" ", strip=True))
+    else:
+        print("NO TITLE")
 
-    # Fallback in case the script contents are split/escaped.
-    raw = html
+    print()
+    print("SCRIPT TAGS:")
+    print("-" * 100)
 
-    match = re.search(
-        r'<script[^>]+id="__NEXT_DATA__"[^>]*>(.*?)</script>',
-        raw,
-        re.DOTALL,
-    )
+    scripts = soup.find_all("script")
 
-    if match:
-        try:
-            return json.loads(match.group(1))
-        except json.JSONDecodeError:
-            pass
+    print(f"TOTAL SCRIPT TAGS: {len(scripts)}")
 
-    raise RuntimeError("Could not find valid __NEXT_DATA__ in FotMob HTML.")
+    for index, script in enumerate(scripts):
+        script_id = script.get("id")
+        script_type = script.get("type")
+        text = script.string or script.get_text()
 
+        if text is None:
+            text = ""
 
-def parse_datetime(value):
-    """
-    Converts common FotMob date/time formats to UTC-aware datetime.
-    """
-    if value is None:
-        return None
+        print(
+            f"[SCRIPT {index}] "
+            f"id={script_id!r} "
+            f"type={script_type!r} "
+            f"length={len(text):,}"
+        )
 
-    # Unix timestamp
-    if isinstance(value, (int, float)):
-        try:
-            # milliseconds
-            if value > 10_000_000_000:
-                return datetime.fromtimestamp(value / 1000, tz=timezone.utc)
+    print()
+    print("=" * 100)
+    print("NEXT.JS / DATA SCRIPTS")
+    print("=" * 100)
 
-            # seconds
-            if value > 1_000_000_000:
-                return datetime.fromtimestamp(value, tz=timezone.utc)
-        except (ValueError, OSError, OverflowError):
-            return None
+    candidates = []
 
-    if not isinstance(value, str):
-        return None
+    for index, script in enumerate(scripts):
 
-    text = value.strip()
+        script_id = script.get("id") or ""
+        script_type = script.get("type") or ""
+        text = script.string or script.get_text()
 
-    if not text:
-        return None
-
-    # ISO 8601
-    try:
-        iso = text.replace("Z", "+00:00")
-        dt = datetime.fromisoformat(iso)
-
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=timezone.utc)
-
-        return dt.astimezone(timezone.utc)
-
-    except ValueError:
-        pass
-
-    # Common FotMob-like formats
-    formats = (
-        "%Y-%m-%dT%H:%M:%S.%fZ",
-        "%Y-%m-%dT%H:%M:%SZ",
-        "%Y-%m-%d %H:%M:%S",
-    )
-
-    for fmt in formats:
-        try:
-            return datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
-        except ValueError:
+        if not text:
             continue
 
-    return None
+        lower_text = text.lower()
 
+        interesting = False
 
-def get_team_name(team):
-    if not isinstance(team, dict):
-        return None
+        if "__next_data__" in script_id.lower():
+            interesting = True
 
-    for key in (
-        "name",
-        "shortName",
-        "longName",
-        "teamName",
-    ):
-        value = team.get(key)
-        if isinstance(value, str) and value.strip():
-            return value.strip()
+        if "next" in script_id.lower():
+            interesting = True
 
-    return None
+        if "buildid" in lower_text:
+            interesting = True
 
+        if "match" in lower_text:
+            interesting = True
 
-def get_match_time(match):
-    """
-    Tries several known time locations used in FotMob data.
-    """
+        if "fixture" in lower_text:
+            interesting = True
 
-    status = match.get("status")
+        if "utcTime" in text:
+            interesting = True
 
-    if isinstance(status, dict):
-        for key in (
+        if interesting:
+            candidates.append(
+                {
+                    "index": index,
+                    "id": script_id,
+                    "type": script_type,
+                    "text": text,
+                }
+            )
+
+    print(f"INTERESTING SCRIPTS: {len(candidates)}")
+
+    for item in candidates:
+
+        print()
+        print("-" * 100)
+        print(
+            f"SCRIPT INDEX: {item['index']} | "
+            f"ID: {item['id']!r} | "
+            f"TYPE: {item['type']!r} | "
+            f"LENGTH: {len(item['text']):,}"
+        )
+        print("-" * 100)
+
+        text = item["text"]
+
+        # فقط اطراف کلیدهای مهم را چاپ می‌کنیم.
+        patterns = [
+            "__NEXT_DATA__",
+            "buildId",
             "utcTime",
-            "kickoffTime",
-            "startTime",
-            "time",
-        ):
-            dt = parse_datetime(status.get(key))
-            if dt:
-                return dt
+            "matchId",
+            "homeTeam",
+            "awayTeam",
+            "matches",
+            "fixtures",
+        ]
 
-    for key in (
-        "utcTime",
-        "startTime",
-        "kickoffTime",
-        "dateTime",
-        "time",
-        "timeTS",
-        "timestamp",
-        "startTimestamp",
-    ):
-        dt = parse_datetime(match.get(key))
-        if dt:
-            return dt
+        shown_positions = set()
 
-    return None
+        for pattern in patterns:
 
-
-def get_match_id(match):
-    for key in (
-        "id",
-        "matchId",
-        "eventId",
-    ):
-        value = match.get(key)
-
-        if value is not None:
-            return str(value)
-
-    return None
-
-
-def extract_teams(match):
-    """
-    Supports several FotMob object layouts.
-    """
-
-    home = None
-    away = None
-
-    for home_key, away_key in (
-        ("homeTeam", "awayTeam"),
-        ("home", "away"),
-    ):
-        if home is None and isinstance(match.get(home_key), dict):
-            home = match.get(home_key)
-
-        if away is None and isinstance(match.get(away_key), dict):
-            away = match.get(away_key)
-
-    home_name = get_team_name(home)
-    away_name = get_team_name(away)
-
-    if not home_name or not away_name:
-        return None, None
-
-    return home_name, away_name
-
-
-def get_league_name(match):
-    for key in (
-        "league",
-        "competition",
-        "tournament",
-    ):
-        value = match.get(key)
-
-        if isinstance(value, dict):
-            for name_key in (
-                "name",
-                "displayName",
-                "shortName",
+            for match in re.finditer(
+                re.escape(pattern),
+                text,
+                flags=re.IGNORECASE,
             ):
-                name = value.get(name_key)
+                position = match.start()
 
-                if isinstance(name, str) and name.strip():
-                    return name.strip()
+                # از چاپ هزاران تکه مشابه جلوگیری می‌کنیم.
+                bucket = position // 1000
 
-        elif isinstance(value, str) and value.strip():
-            return value.strip()
+                if bucket in shown_positions:
+                    continue
 
-    return "نامشخص"
+                shown_positions.add(bucket)
+
+                start = max(0, position - 500)
+                end = min(len(text), position + 1500)
+
+                snippet = text[start:end]
+
+                print()
+                print(f"### FOUND: {pattern}")
+                print(f"### POSITION: {position}")
+                print(snippet)
+
+                # برای هر اسکریپت بیشتر از 5 محل نشان نده.
+                if len(shown_positions) >= 5:
+                    break
+
+            if len(shown_positions) >= 5:
+                break
+
+    print()
+    print("=" * 100)
+    print("HTML ELEMENTS THAT CONTAIN 'MATCH'")
+    print("=" * 100)
+
+    # بررسی تگ‌هایی که مستقیماً در متن قابل مشاهده،
+    # کلاس یا id آنها به match مربوط است.
+    elements = soup.find_all(
+        lambda tag: (
+            tag.name in ("div", "section", "main", "article", "a")
+            and (
+                "match" in " ".join(tag.get("class", [])).lower()
+                or "match" in str(tag.get("id", "")).lower()
+            )
+        )
+    )
+
+    print(f"MATCH-RELATED HTML ELEMENTS: {len(elements)}")
+
+    for index, element in enumerate(elements[:100]):
+
+        classes = element.get("class", [])
+        element_id = element.get("id")
+
+        text = element.get_text(" ", strip=True)
+
+        print()
+        print(
+            f"[ELEMENT {index}] "
+            f"<{element.name}> "
+            f"id={element_id!r} "
+            f"class={classes!r}"
+        )
+
+        if text:
+            print(f"TEXT: {text[:500]}")
+
+    print()
+    print("=" * 100)
+    print("RAW HTML SAMPLE")
+    print("=" * 100)
+
+    # فقط ابتدای HTML برای تشخیص ساختار کلی.
+    print(html[:10000])
 
 
-def looks_like_match(obj):
-    if not isinstance(obj, dict):
-        return False
+def inspect_json_candidates(html):
+    print()
+    print("=" * 100)
+    print("JSON CANDIDATE INSPECTION")
+    print("=" * 100)
 
-    match_id = get_match_id(obj)
+    soup = BeautifulSoup(html, "html.parser")
 
-    if not match_id:
-        return False
+    scripts = soup.find_all("script")
 
-    home_name, away_name = extract_teams(obj)
+    for index, script in enumerate(scripts):
 
-    if not home_name or not away_name:
-        return False
+        text = script.string or script.get_text()
 
-    match_time = get_match_time(obj)
+        if not text:
+            continue
 
-    if not match_time:
-        return False
+        text = text.strip()
 
-    return True
+        if not text:
+            continue
+
+        # بررسی JSON کامل
+        if text.startswith("{") or text.startswith("["):
+
+            try:
+                data = json.loads(text)
+
+            except Exception:
+                continue
+
+            print()
+            print("-" * 100)
+            print(
+                f"VALID JSON SCRIPT: {index} | "
+                f"TYPE: {script.get('type')!r} | "
+                f"ID: {script.get('id')!r}"
+            )
+            print("-" * 100)
+
+            print_json_structure(data)
 
 
-def walk_json(obj, found):
+def print_json_structure(obj, path="root", depth=0):
     """
-    Recursively scans the entire Next.js JSON tree and finds
-    match-like objects regardless of their exact nesting.
+    فقط ساختار JSON را چاپ می‌کند.
+    خود داده‌های عظیم را چاپ نمی‌کند.
     """
+
+    if depth > 5:
+        return
+
+    indent = "  " * depth
 
     if isinstance(obj, dict):
 
-        if looks_like_match(obj):
-            match_id = get_match_id(obj)
+        keys = list(obj.keys())
 
-            # Keep one object per match id.
-            if match_id not in found:
-                found[match_id] = obj
+        print(
+            f"{indent}{path}: "
+            f"DICT ({len(keys)} keys)"
+        )
 
-        for value in obj.values():
-            walk_json(value, found)
+        for key in keys[:100]:
+
+            value = obj[key]
+
+            key_lower = str(key).lower()
+
+            important = (
+                "match" in key_lower
+                or "fixture" in key_lower
+                or "team" in key_lower
+                or "utc" in key_lower
+                or "time" in key_lower
+                or "league" in key_lower
+                or "event" in key_lower
+                or "date" in key_lower
+                or "content" in key_lower
+                or "props" in key_lower
+                or "page" in key_lower
+                or "fallback" in key_lower
+            )
+
+            if important:
+                print_json_structure(
+                    value,
+                    f"{path}.{key}",
+                    depth + 1,
+                )
 
     elif isinstance(obj, list):
 
-        for item in obj:
-            walk_json(item, found)
+        print(
+            f"{indent}{path}: "
+            f"LIST ({len(obj)} items)"
+        )
+
+        for i, value in enumerate(obj[:5]):
+
+            print_json_structure(
+                value,
+                f"{path}[{i}]",
+                depth + 1,
+            )
+
+    else:
+
+        value_text = repr(obj)
+
+        if len(value_text) > 300:
+            value_text = value_text[:300] + "..."
+
+        print(
+            f"{indent}{path}: "
+            f"{type(obj).__name__} = {value_text}"
+        )
 
 
-def normalize_match(match):
-    match_id = get_match_id(match)
+def search_raw_keywords(html):
+    print()
+    print("=" * 100)
+    print("RAW HTML KEYWORD SEARCH")
+    print("=" * 100)
 
-    home_name, away_name = extract_teams(match)
+    keywords = [
+        "utcTime",
+        "matchId",
+        "homeTeam",
+        "awayTeam",
+        "home",
+        "away",
+        "matches",
+        "fixtures",
+        "fixture",
+        "match",
+        "timeTS",
+        "startTime",
+        "kickoff",
+        "tournament",
+        "league",
+    ]
 
-    utc_time = get_match_time(match)
+    lower_html = html.lower()
 
-    if not match_id or not home_name or not away_name or not utc_time:
-        return None
+    for keyword in keywords:
 
-    iran_time = utc_time.astimezone(IRAN_TZ)
+        positions = [
+            match.start()
+            for match in re.finditer(
+                re.escape(keyword.lower()),
+                lower_html,
+            )
+        ]
 
-    return {
-        "id": match_id,
-        "home": home_name,
-        "away": away_name,
-        "league": get_league_name(match),
-        "utc": utc_time,
-        "iran": iran_time,
-    }
+        print(
+            f"{keyword:15} -> "
+            f"{len(positions)} occurrences"
+        )
 
+        if positions:
 
-def get_matches_for_date(date_value):
-    html = fetch_page(date_value)
-    data = extract_next_data(html)
+            # فقط اولین 3 محل.
+            for position in positions[:3]:
 
-    found = {}
-    walk_json(data, found)
+                start = max(0, position - 300)
+                end = min(len(html), position + 700)
 
-    matches = []
-
-    for raw_match in found.values():
-        normalized = normalize_match(raw_match)
-
-        if normalized:
-            matches.append(normalized)
-
-    matches.sort(key=lambda x: x["utc"])
-
-    return matches
+                print()
+                print(f"  POSITION {position}")
+                print("  " + html[start:end].replace("\n", " ")[:1000])
 
 
 def main():
-    now_iran = datetime.now(IRAN_TZ)
-    end_iran = now_iran + timedelta(hours=24)
 
-    print("=" * 80)
-    print("FotMob - مسابقات 24 ساعت آینده")
-    print("=" * 80)
-    print(f"زمان فعلی ایران : {now_iran:%Y-%m-%d %H:%M:%S}")
-    print(f"تا                 : {end_iran:%Y-%m-%d %H:%M:%S}")
+    now_iran = datetime.now(IRAN_TZ)
+
+    tomorrow = now_iran + timedelta(days=1)
+
+    dates = [
+        now_iran,
+        tomorrow,
+    ]
+
+    print("=" * 100)
+    print("FOTMOB HTML STRUCTURE DEBUG TEST")
+    print("=" * 100)
+    print(f"IRAN TIME: {now_iran:%Y-%m-%d %H:%M:%S}")
     print()
 
-    # فقط دو روز تقویمی که بازه 24 ساعته می‌تواند داخلشان باشد.
-    dates_to_check = {
-        now_iran.date(),
-        end_iran.date(),
-    }
-
-    all_matches = {}
-
-    for current_date in sorted(dates_to_check):
-        date_dt = datetime.combine(
-            current_date,
-            datetime.min.time(),
-            tzinfo=IRAN_TZ,
-        )
-
-        print(f"در حال بررسی صفحه فوت‌موب برای {current_date} ...")
+    for date_value in dates:
 
         try:
-            matches = get_matches_for_date(date_dt)
+
+            html = fetch_fotmob_page(date_value)
+
+            # ذخیره HTML خام برای بررسی در GitHub Actions
+            filename = (
+                f"fotmob_debug_"
+                f"{date_value:%Y%m%d}.html"
+            )
+
+            with open(
+                filename,
+                "w",
+                encoding="utf-8",
+            ) as file:
+                file.write(html)
+
+            print()
+            print(f"RAW HTML SAVED: {filename}")
+
+            inspect_html(html)
+
+            inspect_json_candidates(html)
+
+            search_raw_keywords(html)
 
         except Exception as exc:
-            print(f"خطا در دریافت {current_date}: {exc}")
-            continue
 
-        for match in matches:
-            # شناسه مسابقه را یکتا می‌کنیم.
-            all_matches[match["id"]] = match
+            print()
+            print("=" * 100)
+            print("ERROR")
+            print("=" * 100)
 
-    # فقط بازی‌هایی که شروعشان در 24 ساعت آینده است.
-    selected = []
-
-    for match in all_matches.values():
-        start = match["iran"]
-
-        if now_iran <= start <= end_iran:
-            selected.append(match)
-
-    selected.sort(key=lambda x: x["iran"])
+            print(
+                f"{type(exc).__name__}: {exc}"
+            )
 
     print()
-    print("=" * 80)
-    print(f"تعداد مسابقات پیدا شده: {len(selected)}")
-    print("=" * 80)
-
-    for index, match in enumerate(selected, start=1):
-        iran_time = match["iran"]
-
-        print(
-            f"{index:03d}. "
-            f"{iran_time:%Y-%m-%d %H:%M} | "
-            f"{match['home']} - {match['away']} | "
-            f"{match['league']} | "
-            f"ID: {match['id']}"
-        )
-
-    print()
-    print("پایان تست.")
+    print("=" * 100)
+    print("DEBUG TEST FINISHED")
+    print("=" * 100)
 
 
 if __name__ == "__main__":
