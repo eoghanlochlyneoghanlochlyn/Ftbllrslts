@@ -136,7 +136,7 @@ def find_match_ids(html):
         r'"matchId"\\s*[:=]\\s*"?(\\d{5,})',
         r'"matchID"\\s*[:=]\\s*"?(\\d{5,})',
         r'matchId\\s*[:=]\\s*"?(\\d{5,})',
-        r'/match/(\\d{5,})',
+        r'/match/(\d{5,})',
         r'/matches/[^"\\s<#]+#(\\d{5,})',
     )
 
@@ -157,19 +157,13 @@ def extract_event_jsonld(html):
     if not html:
         return None
 
-    pattern = (
-        r'<script[^>]+type=["\\']'
-        r'application/ld\\+json'
-        r'["\\'][^>]*>'
-        r"(.*?)"
-        r"</script>"
-    )
-
-    for raw in re.findall(
-        pattern,
+    scripts = re.findall(
+        r"""<script[^>]+type=["']application/ld\+json["'][^>]*>(.*?)</script>""",
         html,
         re.IGNORECASE | re.DOTALL,
-    ):
+    )
+
+    for raw in scripts:
         try:
             data = json.loads(raw.strip())
         except Exception:
@@ -181,13 +175,10 @@ def extract_event_jsonld(html):
             if not isinstance(item, dict):
                 continue
 
-            if (
-                item.get("@type") == "SportsEvent"
-                or (
-                    item.get("homeTeam") is not None
-                    and item.get("awayTeam") is not None
-                )
-            ):
+            if item.get("@type") == "SportsEvent":
+                return item
+
+            if item.get("homeTeam") and item.get("awayTeam"):
                 return item
 
     return None
