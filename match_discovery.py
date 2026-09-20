@@ -134,6 +134,16 @@ def match_team_ids(match):
 
 
 def match_start(match):
+    stored_start = match.get("start")
+
+    if stored_start:
+        try:
+            return datetime.fromisoformat(
+                str(stored_start).replace("Z", "+00:00")
+            ).astimezone(timezone.utc)
+        except ValueError:
+            pass
+
     status = match.get("status")
     if isinstance(status, dict) and status.get("utcTime"):
         try:
