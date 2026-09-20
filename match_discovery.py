@@ -77,8 +77,15 @@ def extract_next_data(html):
     if not html:
         return None
 
+    pattern = (
+        r'<script[^>]+id=["\\']'
+        r'__NEXT_DATA__["\\'][^>]*>'
+        r"(.*?)"
+        r"</script\\s*>"
+    )
+
     match = re.search(
-        r'<script[^>]+id=["\\']__NEXT_DATA__["\\'][^>]*>(.*?)</script>',
+        pattern,
         html,
         re.IGNORECASE | re.DOTALL,
     )
@@ -87,143 +94,162 @@ def extract_next_data(html):
         return None
 
     try:
-        return json.loads(match.group(1))
-    except json.JSONDecodeError:
+        return json.loads(match.group(1).strip())
+    except Exception:
         return None
 
 
-def find_match_ids(html):
-    if not html:
+def fetch_sitemap_urls():
+    url = "https://www.fotmob.com/sitemap/en/matches.xml"
+
+    try:
+        response = requests.get(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 "
+                    "(KHTML, like Gecko) "
+                    "Chrome/131.0.0.0 Safari/537.36"
+                ),
+                "Accept": "application/xml,text/xml,text/plain,*/*",
+                "Accept-Language": "en-US,en;q=0.9",
+            },
+            timeout=TIMEOUT,
+        )
+        response.raise_for_status()
+    except requests.RequestException as error:
+        print(f"[DISCOVERY] Match sitemap request failed: {error}")
         return []
 
-    text = (
-        html
-        .replace("\\\\/", "/")
-        .replace("\\\\u002F", "/")
-        .replace("&quot;", '"')
+    urls = re.findall(
+        r"<loc>\\s*(.*?)\\s*</loc>",
+        response.text,
+        re.IGNORECASE | re.DOTALL,
     )
 
-    patterns = (
-        r'["\\']matchId["\\']\\s*[:=]\\s*["\\']?(\\d{5,})',
-        r'["\\']matchID["\\']\\s*[:=]\\s*["\\']?(\\d{5,})',
-        r'[#]([0-9]{5,})(?=["\\'])',
-        r'/match(?:es)?/[^"\\'\\s<#]+#(\\d{5,})',
+    urls = [
+        value.replace("&amp;", "&").strip()
+        for value in urls
+        if value.strip()
+    ]
+
+    print(
+        f"[DISCOVERY] Match sitemap: "
+        f"HTTP {response.status_code}, "
+        f"found {len(urls)} URLs"
     )
 
-    found = []
-    seen = set()
-
-    for pattern in patterns:
-        for value in re.findall(pattern, text, re.IGNORECASE):
-            value = str(value)
-            if value not in seen:
-                seen.add(value)
-                found.append(value)
-
-    return found
+    return urls
 
 
-def recursive_find_match_general(data):
-    if isinstance(data, dict):
-        if (
-            data.get("matchId") is not None
-            and isinstance(data.get("homeTeam"), dict)
-            and isinstance(data.get("awayTeam"), dict)
-        ):
-            return data
+def sitemap_date(url):
+    match = re.search(
+        r"(20\\d{2})-(\\d{2})-(\\d{2})",
+        url,
+    )
 
-        for value in data.values():
-            result = recursive_find_match_general(value)
-            if result is not None:
-                return result
+    if not match:
+        return None
 
-    elif isinstance(data, list):
-        for value in data:
-            result = recursive_find_match_general(value)
-            if result is not None:
-                return result
+    try:
+        return datetime.strptime(
+            match.group(0),
+            "%Y-%m-%d",
+        ).date()
+    except ValueError:
+        return None
+
+
+def match_id_from_url(url):
+    match = re.search(
+        r"([A-Za-z0-9]+?)(?:20\\d{2}-\\d{2}-\\d{2}T[^/]+)?$",
+        url.rstrip("/"),
+    )
+
+    if not match:
+        return None
+
+    value = match.group(1)
+
+    if value.isdigit():
+        return value
 
     return None
 
 
-def find_value(data, keys):
-    if isinstance(data, dict):
-        for key in keys:
-            if data.get(key) is not None:
-                return data.get(key)
-
-        for value in data.values():
-            result = find_value(value, keys)
-            if result is not None:
-                return result
-
-    elif isinstance(data, list):
-        for value in data:
-            result = find_value(value, keys)
-            if result is not None:
-                return result
-
-    return None
-
-
-def build_match_from_page(match_id_value, html, fallback_league_id=None):
+def build_match_from_page(match_id_value, html):
     data = extract_next_data(html)
 
-    general = recursive_find_match_general(data)
+    if not isinstance(data, dict):
+        return None
+
+    general = data.get("props", {}).get(
+        "pageProps", {}
+    ).get("general")
+
+    if not isinstance(general, dict):
+        general = recursive_find(
+            data,
+            {"general"},
+        )
 
     if not isinstance(general, dict):
         return None
 
     home = general.get("homeTeam")
     away = general.get("awayTeam")
-    start = general.get("matchTimeUTC")
 
     if not isinstance(home, dict) or not isinstance(away, dict):
         return None
 
-    if not start:
-        start = find_value(
-            general,
-            {"utcTime", "startTime", "startDate"},
-        )
-
-    league_id = find_value(
-        general,
-        {
-            "leagueId",
-            "tournamentId",
-            "competitionId",
-            "uniqueTournamentId",
-            "parentLeagueId",
-        },
+    start = (
+        general.get("matchTimeUTC")
+        or general.get("matchTime")
+        or general.get("startTime")
     )
 
-    if league_id is None:
-        league_id = fallback_league_id
+    if not start:
+        return None
 
-    stage = find_value(
-        general,
-        {
-            "tournamentStage",
-            "stage",
-            "stageName",
-            "roundName",
-            "round",
-        },
+    league_id = (
+        general.get("parentLeagueId")
+        or general.get("leagueId")
+        or general.get("tournamentId")
+        or general.get("uniqueTournamentId")
+    )
+
+    stage = (
+        general.get("tournamentStage")
+        or general.get("stage")
+        or general.get("round")
     )
 
     return {
-        "id": str(match_id_value),
+        "id": str(
+            general.get("matchId")
+            or match_id_value
+        ),
         "start": start,
         "home": {
             "id": home.get("id"),
-            "name": home.get("name") or home.get("longName"),
+            "name": (
+                home.get("name")
+                or home.get("longName")
+            ),
         },
         "away": {
             "id": away.get("id"),
-            "name": away.get("name") or away.get("longName"),
+            "name": (
+                away.get("name")
+                or away.get("longName")
+            ),
         },
-        "leagueId": str(league_id) if league_id is not None else "",
+        "leagueId": (
+            str(league_id)
+            if league_id is not None
+            else ""
+        ),
         "stage": stage,
         "_league_ids": (
             {str(league_id)}
@@ -234,84 +260,54 @@ def build_match_from_page(match_id_value, html, fallback_league_id=None):
 
 
 def fetch_matches(date_value, league_ids):
-    url = "https://www.fotmob.com/matches"
+    sitemap_urls = fetch_sitemap_urls()
 
-    try:
-        response = requests.get(
-            url,
-            params={"date": date_value.strftime("%Y%m%d")},
-            headers={
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/140.0 Safari/537.36"
-                ),
-                "Accept": "text/html,application/xhtml+xml",
-                "Accept-Language": "en-US,en;q=0.9",
-            },
-            timeout=TIMEOUT,
-        )
-        response.raise_for_status()
-    except requests.RequestException as error:
-        print(f"[DISCOVERY] Matches page request failed: {error}")
-        return []
-
-    html = response.text
-
-    print(
-        f"[DISCOVERY] Matches page {date_value.isoformat()}: "
-        f"HTTP {response.status_code}, "
-        f"length {len(html)}"
-    )
-
-    match_ids = find_match_ids(html)
+    target_urls = [
+        url
+        for url in sitemap_urls
+        if sitemap_date(url) == date_value
+    ]
 
     print(
         f"[DISCOVERY] {date_value.isoformat()}: "
-        f"found {len(match_ids)} match IDs in site HTML"
+        f"{len(target_urls)} sitemap match URLs"
     )
 
     result = []
     seen = set()
 
-    for current_id in match_ids:
-        if current_id in seen:
-            continue
-
-        match_url = f"https://www.fotmob.com/match/{current_id}"
-
+    for url in target_urls:
         try:
-            match_response = requests.get(
-                match_url,
+            response = requests.get(
+                url,
                 headers={
                     "User-Agent": (
                         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/140.0 Safari/537.36"
+                        "AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) "
+                        "Chrome/131.0.0.0 Safari/537.36"
                     ),
                     "Accept": "text/html,application/xhtml+xml",
                     "Accept-Language": "en-US,en;q=0.9",
                 },
                 timeout=TIMEOUT,
             )
-            match_response.raise_for_status()
+            response.raise_for_status()
         except requests.RequestException as error:
-            print(
-                f"[DISCOVERY] Match {current_id}: "
-                f"page request failed: {error}"
-            )
+            print(f"[DISCOVERY] Match page failed: {url} | {error}")
             continue
 
         item = build_match_from_page(
-            current_id,
-            match_response.text,
+            match_id_from_url(url),
+            response.text,
         )
 
         if item is None:
-            print(
-                f"[DISCOVERY] Match {current_id}: "
-                "could not extract general data from page"
-            )
+            continue
+
+        current_id = match_id(item)
+
+        if not current_id or current_id in seen:
             continue
 
         start = match_start(item)
@@ -321,7 +317,9 @@ def fetch_matches(date_value, league_ids):
 
         if (
             item.get("_league_ids")
-            and not item["_league_ids"].intersection(league_ids)
+            and not item["_league_ids"].intersection(
+                league_ids
+            )
         ):
             continue
 
@@ -330,7 +328,7 @@ def fetch_matches(date_value, league_ids):
 
     print(
         f"[DISCOVERY] {date_value.isoformat()}: "
-        f"found {len(result)} selected matches from site pages"
+        f"found {len(result)} selected matches from site"
     )
 
     return result
