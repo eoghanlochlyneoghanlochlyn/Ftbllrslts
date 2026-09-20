@@ -173,6 +173,16 @@
           }
         }
       ]
+    },
+    "4933430": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": true,
+      "finished_sent": true,
+      "event_keys": [],
+      "goals": []
     }
   }
 }
