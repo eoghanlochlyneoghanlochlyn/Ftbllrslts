@@ -62,6 +62,16 @@ _COMPETITION_TRANSLATIONS = (
 )
 
 
+# نام‌های شناخته‌شده‌ای که FotMob گاهی به‌صورت
+# نام مرحله/نسخه رقابت برمی‌گرداند و ممکن است
+# شناسه‌شان در competitions.json ثبت نشده باشد.
+_FALLBACK_TRANSLATIONS = {
+    "champions league qualification": (
+        "انتخابی لیگ قهرمانان اروپا"
+    ),
+}
+
+
 def get_persian_competition_name(
     competition_id,
     fallback_name="",
@@ -76,5 +86,18 @@ def get_persian_competition_name(
 
         if translated:
             return translated
+
+    normalized_name = (
+        str(fallback_name or "")
+        .strip()
+        .lower()
+    )
+
+    translated = _FALLBACK_TRANSLATIONS.get(
+        normalized_name
+    )
+
+    if translated:
+        return translated
 
     return fallback_name or ""
