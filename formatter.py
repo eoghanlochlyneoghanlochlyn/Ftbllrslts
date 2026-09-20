@@ -989,24 +989,29 @@ def _get_scorer_text(
             "بازیکن نامشخص"
         )
 
-    # گل از روی نقطه پنالتی با حرف P مشخص می‌شود.
-    # این علامت فقط برای گل‌های جریان بازی است؛
-    # پنالتی‌های ضربات پنالتی از قبل در بخش‌های دیگر فیلتر می‌شوند.
-    if is_penalty_goal(
-        event
-    ):
-        player_name += " P"
-
     minute = get_goal_minute(
         event
     )
 
     if minute is None:
+        if is_penalty_goal(
+            event
+        ):
+            return f"{player_name} (P)"
         return player_name
+
+    minute_text = (
+        f"{minute}'"
+    )
+
+    if is_penalty_goal(
+        event
+    ):
+        minute_text += " P"
 
     return (
         f"{player_name} "
-        f"({minute}')"
+        f"({minute_text})"
     )
 
 
