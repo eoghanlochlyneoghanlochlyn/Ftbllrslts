@@ -1076,10 +1076,10 @@ def is_final_result_ready(snapshot):
     if isinstance(penalty_score, dict):
         return True
 
-    if snapshot.get("penalty_shootout"):
-        return True
-
-    return bool(snapshot.get("extra_time_finished") and penalty_score is not None)
+    # صرفاً وجود بخش پنالتی به معنی پایان نیست؛ باید برنده
+    # پنالتی مشخص شده باشد. در این حالت FotMob باید
+    # penalty_score را برگرداند.
+    return False
 
 
 def extract_basic_info(data):
