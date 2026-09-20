@@ -1,27 +1,12 @@
+import json
 import requests
 
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 
-TARGET_TEAMS = {
-    8650: "Liverpool",
-    9825: "Arsenal",
-    8456: "Manchester City",
-    10260: "Manchester United",
-    8455: "Chelsea",
-    8586: "Tottenham Hotspur",
-    9885: "Juventus",
-    8564: "AC Milan",
-    8636: "Inter Milan",
-    9823: "Bayern Munich",
-    9789: "Borussia Dortmund",
-    9847: "Paris Saint-Germain",
-    8633: "Real Madrid",
-    8634: "Barcelona",
-    9906: "Atlético Madrid",
-}
-
+IRAN_TZ = ZoneInfo("Asia/Tehran")
+AUTO_MATCHES_FILE = "auto_matches.json"
 
 HEADERS = {
     "User-Agent": (
@@ -32,6 +17,11 @@ HEADERS = {
 }
 
 
+def load_auto_config():
+    with open(AUTO_MATCHES_FILE, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+
 def utc_to_iran(utc_time):
     if not utc_time:
         return "Unknown"
@@ -40,11 +30,7 @@ def utc_to_iran(utc_time):
         dt = datetime.fromisoformat(
             utc_time.replace("Z", "+00:00")
         )
-
-        return dt.astimezone(
-            ZoneInfo("Asia/Tehran")
-        ).strftime("%Y-%m-%d %H:%M")
-
+        return dt.astimezone(IRAN_TZ).strftime("%Y-%m-%d %H:%M")
     except Exception:
         return "Unknown"
 
@@ -64,45 +50,225 @@ def get_match_status(match):
     return "Upcoming"
 
 
-def is_target_match(match):
+def get_competition_id(league):
+    value = (
+        league.get("id")
+        or league.get("leagueId")
+        or league.get("competitionId")
+    )
+
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def get_stage_text(match, league):
+    candidates = [
+        match.get("stage"),
+        match.get("round"),
+        match.get("roundName"),
+        match.get("stageName"),
+        league.get("stage"),
+        league.get("round"),
+        league.get("roundName"),
+        league.get("stageName"),
+    ]
+
+    for value in candidates:
+        if isinstance(value, dict):
+            value = (
+                value.get("name")
+                or value.get("slug")
+                or value.get("type")
+            )
+
+        if value:
+            return str(value)
+
+    return ""
+
+
+def normalize_stage(value):
+    if not value:
+        return ""
+
+    text = str(value).strip().lower()
+    text = text.replace("-", "_").replace(" ", "_")
+
+    aliases = {
+        "roundof16": "round_of_16",
+        "last_16": "round_of_16",
+        "last16": "round_of_16",
+        "quarterfinal": "quarter_final",
+        "quarterfinals": "quarter_final",
+        "semifinal": "semi_final",
+        "semifinals": "semi_final",
+    }
+
+    return aliases.get(text, text)
+
+
+def team_name(team):
+    if not isinstance(team, dict):
+        return ""
+
+    return (
+        team.get("longName")
+        or team.get("name")
+        or team.get("shortName")
+        or ""
+    ).strip()
+
+
+def team_name_matches(team, names):
+    actual = team_name(team).lower()
+
+    if not actual:
+        return False
+
+    for name in names:
+        wanted = str(name).strip().lower()
+
+        if (
+            actual == wanted
+            or actual in wanted
+            or wanted in actual
+        ):
+            return True
+
+    return False
+
+
+def get_match_rule_reasons(match, league, config):
     home = match.get("home", {})
     away = match.get("away", {})
 
-    return (
-        home.get("id") in TARGET_TEAMS
-        or away.get("id") in TARGET_TEAMS
+    reasons = []
+
+    target_ids = {
+        str(value)
+        for value in config.get("team_ids", [])
+    }
+
+    # مسابقات تیم‌های اصلی
+    for team in (home, away):
+        if str(team.get("id")) in target_ids:
+            reasons.append(
+                f"target_team_id={team.get('id')}"
+            )
+
+    competition_id = get_competition_id(league)
+    stage = normalize_stage(
+        get_stage_text(match, league)
     )
 
+    stage_order = {
+        "round_of_16": 1,
+        "quarter_final": 2,
+        "semi_final": 3,
+        "final": 4,
+    }
 
-def format_match(match, league_name, date):
+    for rule in config.get("competitions", []):
+        try:
+            rule_id = int(rule.get("id"))
+        except (TypeError, ValueError):
+            continue
+
+        if rule_id != competition_id:
+            continue
+
+        mode = rule.get("mode", "all")
+        extra_teams = rule.get("extra_teams", [])
+        extra_country = rule.get("extra_country")
+
+        if mode == "all":
+            reasons.append(
+                f"competition_id={competition_id}:all"
+            )
+
+        elif mode == "team_only":
+            if (
+                team_name_matches(home, extra_teams)
+                or team_name_matches(away, extra_teams)
+            ):
+                reasons.append(
+                    f"competition_id={competition_id}:team_only"
+                )
+
+        elif mode == "final_only":
+            if stage == "final":
+                reasons.append(
+                    f"competition_id={competition_id}:final"
+                )
+
+        elif mode == "from":
+            required_stage = normalize_stage(
+                rule.get("stage")
+            )
+
+            current_order = stage_order.get(stage, 0)
+            required_order = stage_order.get(
+                required_stage,
+                999,
+            )
+
+            if current_order >= required_order:
+                reasons.append(
+                    f"competition_id={competition_id}:"
+                    f"from_{required_stage}"
+                )
+
+        # تیم‌های اضافه
+        if extra_teams and mode != "team_only":
+            matched_team = None
+
+            for team in (home, away):
+                if team_name_matches(team, extra_teams):
+                    matched_team = team_name(team)
+                    break
+
+            if matched_team:
+                reasons.append(
+                    f"extra_team={matched_team}"
+                )
+
+        # کشور اضافه
+        if extra_country:
+            if (
+                team_name_matches(
+                    home,
+                    [extra_country],
+                )
+                or team_name_matches(
+                    away,
+                    [extra_country],
+                )
+            ):
+                reasons.append(
+                    f"extra_country={extra_country}"
+                )
+
+    return list(dict.fromkeys(reasons))
+
+
+def format_match(match, league, date, reasons):
     home = match.get("home", {})
     away = match.get("away", {})
     status = match.get("status", {})
 
-    home_name = (
-        home.get("longName")
-        or home.get("name")
-        or "Unknown"
-    )
-
-    away_name = (
-        away.get("longName")
-        or away.get("name")
-        or "Unknown"
-    )
+    home_name = team_name(home) or "Unknown"
+    away_name = team_name(away) or "Unknown"
 
     match_status = get_match_status(match)
-
-    home_score = home.get("score")
-    away_score = away.get("score")
 
     if match_status == "Upcoming":
         score_text = "-"
     else:
         score_text = (
-            f"{home_score if home_score is not None else 0}"
-            f" - "
-            f"{away_score if away_score is not None else 0}"
+            f"{home.get('score', 0)} - "
+            f"{away.get('score', 0)}"
         )
 
     utc_time = status.get("utcTime")
@@ -110,7 +276,12 @@ def format_match(match, league_name, date):
     return {
         "id": match.get("id"),
         "date": date,
-        "league": league_name,
+        "league": league.get(
+            "name",
+            "Unknown League",
+        ),
+        "competition_id": get_competition_id(league),
+        "stage": get_stage_text(match, league),
         "home": home_name,
         "away": away_name,
         "home_id": home.get("id"),
@@ -119,16 +290,21 @@ def format_match(match, league_name, date):
         "iran_time": utc_to_iran(utc_time),
         "status": match_status,
         "score": score_text,
-        "url": f"https://www.fotmob.com/match/{match.get('id')}",
+        "reasons": reasons,
+        "url": (
+            f"https://www.fotmob.com/match/"
+            f"{match.get('id')}"
+        ),
     }
 
 
-def fetch_matches_for_date(date):
+def fetch_matches_for_date(date, config):
     url = (
         "https://www.fotmob.com/api/data/matches"
         f"?date={date}"
     )
 
+    print()
     print(f"Downloading matches for {date}...")
 
     response = requests.get(
@@ -137,88 +313,205 @@ def fetch_matches_for_date(date):
         timeout=30,
     )
 
-    print("Status code:", response.status_code)
+    print(
+        "Status code:",
+        response.status_code,
+    )
 
-    if response.status_code != 200:
-        print(f"Failed to download matches for {date}")
-        return []
+    response.raise_for_status()
 
     data = response.json()
-
     found_matches = []
 
     for league in data.get("leagues", []):
-        league_name = league.get(
-            "name",
-            "Unknown League",
-        )
-
         for match in league.get("matches", []):
-            if not is_target_match(match):
+            reasons = get_match_rule_reasons(
+                match,
+                league,
+                config,
+            )
+
+            if not reasons:
                 continue
 
             found_matches.append(
                 format_match(
                     match,
-                    league_name,
+                    league,
                     date,
+                    reasons,
                 )
             )
 
     return found_matches
 
 
-def main():
-    today = datetime.now(
-        ZoneInfo("Asia/Tehran")
-    ).date()
+def build_auto_matches(matches):
+    result = []
+    seen = set()
 
-    dates = [
-        today,
-        today + timedelta(days=1),
-    ]
+    for match in matches:
+        match_id = match.get("id")
+
+        if match_id is None:
+            continue
+
+        match_id = str(match_id)
+
+        if match_id in seen:
+            continue
+
+        seen.add(match_id)
+
+        result.append(
+            {
+                "id": match_id,
+                "url": match.get("url"),
+                "enabled": True,
+            }
+        )
+
+    return result
+
+
+def main():
+    config = load_auto_config()
+
+    now_iran = datetime.now(IRAN_TZ)
+
+    window_hours = float(
+        config.get("window_hours", 24)
+    )
+
+    window_end = (
+        now_iran
+        + timedelta(hours=window_hours)
+    )
+
+    dates = [now_iran.date()]
+
+    if window_end.date() > now_iran.date():
+        dates.append(window_end.date())
 
     all_matches = []
 
     for current_date in dates:
-        date_string = current_date.strftime("%Y%m%d")
+        all_matches.extend(
+            fetch_matches_for_date(
+                current_date.strftime("%Y%m%d"),
+                config,
+            )
+        )
 
-        matches = fetch_matches_for_date(date_string)
+    # پنجره زمانی دقیق بر اساس ساعت ایران
+    filtered_matches = []
 
-        all_matches.extend(matches)
+    for match in all_matches:
+        utc_time = match.get("utc_time")
 
-    all_matches.sort(
+        if not utc_time:
+            continue
+
+        try:
+            match_time = datetime.fromisoformat(
+                utc_time.replace("Z", "+00:00")
+            ).astimezone(IRAN_TZ)
+        except Exception:
+            continue
+
+        if (
+            now_iran
+            <= match_time
+            <= window_end
+        ):
+            filtered_matches.append(match)
+
+    filtered_matches.sort(
         key=lambda match: match.get("utc_time") or ""
     )
 
-    print("")
-    print("=" * 60)
-    print(f"Target matches found: {len(all_matches)}")
-    print("=" * 60)
-    print("")
+    auto_matches = build_auto_matches(
+        filtered_matches
+    )
 
-    if not all_matches:
-        print("No target matches found.")
-        return
+    print()
+    print("=" * 80)
+    print("AUTO MATCH EXTRACTION")
+    print("=" * 80)
+    print(
+        "Iran now:",
+        now_iran.strftime(
+            "%Y-%m-%d %H:%M:%S"
+        ),
+    )
+    print(
+        "Window:",
+        f"{window_hours:g} hours",
+    )
+    print(
+        "Matches found:",
+        len(filtered_matches),
+    )
+    print("=" * 80)
 
     for index, match in enumerate(
-        all_matches,
+        filtered_matches,
         start=1,
     ):
+        print()
         print(
             f"{index}. "
             f"{match['home']} 🆚 {match['away']}"
         )
+        print(
+            f"   Competition: "
+            f"{match['league']}"
+        )
+        print(
+            f"   Competition ID: "
+            f"{match['competition_id']}"
+        )
+        print(
+            f"   Stage: "
+            f"{match['stage'] or 'Unknown'}"
+        )
+        print(
+            f"   Match ID: "
+            f"{match['id']}"
+        )
+        print(
+            f"   Iran: "
+            f"{match['iran_time']}"
+        )
+        print(
+            f"   Status: "
+            f"{match['status']}"
+        )
+        print(
+            f"   Score: "
+            f"{match['score']}"
+        )
+        print(
+            "   Reason: "
+            + " | ".join(match["reasons"])
+        )
+        print(
+            f"   URL: "
+            f"{match['url']}"
+        )
 
-        print(f"   Competition: {match['league']}")
-        print(f"   Match ID: {match['id']}")
-        print(f"   Date: {match['date']}")
-        print(f"   UTC: {match['utc_time']}")
-        print(f"   Iran: {match['iran_time']}")
-        print(f"   Status: {match['status']}")
-        print(f"   Score: {match['score']}")
-        print(f"   URL: {match['url']}")
-        print("")
+    print()
+    print("=" * 80)
+    print("AUTO MATCHES JSON")
+    print("=" * 80)
+
+    print(
+        json.dumps(
+            auto_matches,
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":
