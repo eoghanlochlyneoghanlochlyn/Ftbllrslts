@@ -4,7 +4,6 @@ import xml.etree.ElementTree as ET
 
 import requests
 
-BASE_URL = "https://www.fotmob.com"
 SITEMAP_URL = "https://www.fotmob.com/sitemap/en/matches.xml"
 
 HEADERS = {
@@ -59,7 +58,6 @@ match_urls = []
 
 for element in root:
     element_name = local_name(element.tag)
-
     loc = None
 
     for child in element:
@@ -82,12 +80,14 @@ print("DIRECT URLS:", len(match_urls))
 if sitemap_urls:
     print()
     print("FIRST CHILD SITEMAPS:")
+
     for url in sitemap_urls[:10]:
         print(" ", url)
 
 if match_urls:
     print()
     print("FIRST DIRECT URLS:")
+
     for url in match_urls[:10]:
         print(" ", url)
 
@@ -116,6 +116,7 @@ print("RAW LENGTH:", len(raw))
 
 try:
     data = json.loads(raw)
+
 except Exception as error:
     print("JSON ERROR:", error)
     return None
@@ -129,7 +130,12 @@ if isinstance(data, dict):
 return data
 ```
 
-def print_structure(value, path="root", depth=0, max_depth=3):
+def print_structure(
+value,
+path="root",
+depth=0,
+max_depth=3,
+):
 if depth > max_depth:
 return
 
@@ -165,22 +171,27 @@ elif isinstance(value, list):
         )
 
 else:
-    text = repr(value)
+    shown = repr(value)
 
-    if len(text) > 180:
-        text = text[:180] + "..."
+    if len(shown) > 180:
+        shown = shown[:180] + "..."
 
     print(
         f"{indent}{path} -> "
-        f"{type(value).__name__}: {text}"
+        f"{type(value).__name__}: {shown}"
     )
 ```
 
-def find_values(data, wanted_keys, path="root"):
+def find_values(
+data,
+wanted_keys,
+path="root",
+):
 found = []
 
 ```
 if isinstance(data, dict):
+
     for key, value in data.items():
         current_path = f"{path}.{key}"
 
@@ -201,6 +212,7 @@ if isinstance(data, dict):
         )
 
 elif isinstance(data, list):
+
     for index, value in enumerate(data):
         found.extend(
             find_values(
@@ -219,9 +231,9 @@ print("FOTMOB DISCOVERY STRUCTURE TEST")
 print("=" * 80)
 
 ```
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
 # 1. Main sitemap
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
 
 main_text = get(SITEMAP_URL)
 
@@ -229,11 +241,14 @@ sitemap_urls, direct_urls = parse_sitemap(
     main_text
 )
 
-# ------------------------------------------------------------------
-# 2. If this is a sitemap index, inspect the first child.
-# ------------------------------------------------------------------
+match_url = None
+
+# --------------------------------------------------------------
+# 2. Find a real match URL
+# --------------------------------------------------------------
 
 if sitemap_urls:
+
     child_url = sitemap_urls[0]
 
     print()
@@ -248,12 +263,14 @@ if sitemap_urls:
     )
 
     if child_match_urls:
+
         match_url = child_match_urls[0]
 
     elif child_sitemaps:
+
         print()
         print(
-            "First child is itself a sitemap index."
+            "FIRST CHILD IS ITSELF A SITEMAP INDEX"
         )
 
         second_url = child_sitemaps[0]
@@ -264,31 +281,40 @@ if sitemap_urls:
             second_text
         )
 
-        if not second_match_urls:
+        if second_match_urls:
+
+            match_url = second_match_urls[0]
+
+        else:
+
             print(
                 "NO MATCH URL FOUND IN SECOND LEVEL"
             )
+
             return
 
-        match_url = second_match_urls[0]
-
     else:
+
         print(
             "NO MATCH URL FOUND IN FIRST CHILD"
         )
+
         return
 
 elif direct_urls:
+
     match_url = direct_urls[0]
 
 else:
+
     print()
     print("NO SITEMAP URL FOUND")
+
     return
 
-# ------------------------------------------------------------------
-# 3. Inspect one real match page.
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
+# 3. Inspect real match page
+# --------------------------------------------------------------
 
 print()
 print("=" * 80)
@@ -300,18 +326,18 @@ print(match_url)
 
 match_html = get(match_url)
 
-# ------------------------------------------------------------------
-# 4. __NEXT_DATA__
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
+# 4. Extract __NEXT_DATA__
+# --------------------------------------------------------------
 
 data = extract_next_data(match_html)
 
 if data is None:
     return
 
-# ------------------------------------------------------------------
-# 5. Print shallow structure.
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
+# 5. Print structure
+# --------------------------------------------------------------
 
 print()
 print("=" * 80)
@@ -323,9 +349,9 @@ print_structure(
     max_depth=3,
 )
 
-# ------------------------------------------------------------------
-# 6. Search important keys.
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
+# 6. Search important keys
+# --------------------------------------------------------------
 
 print()
 print("=" * 80)
@@ -363,15 +389,21 @@ found = find_values(
 )
 
 for path, value in found:
+
     if isinstance(value, (dict, list)):
+
         try:
             shown = json.dumps(
                 value,
                 ensure_ascii=False,
             )
+
         except Exception:
+
             shown = repr(value)
+
     else:
+
         shown = repr(value)
 
     if len(shown) > 1000:
