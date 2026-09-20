@@ -720,6 +720,368 @@ def _find_competition_object(
     return candidates[0][1]
 
 
+# =========================================================
+# اطلاعات رفت/برگشت، مجموع و هفته/مرحله/راند
+# =========================================================
+
+def extract_leg_info(data):
+    """
+    اطلاعات رفت/برگشت را از infoBox.legInfo می‌خواند.
+    مسیر تأییدشده در صفحه FotMob:
+    content.matchFacts.infoBox.legInfo
+    """
+    info_box = get_nested(
+        data,
+        "props",
+        "pageProps",
+        "content",
+        "matchFacts",
+        "infoBox",
+    )
+
+    if not isinstance(info_box, dict):
+        content = get_content(data)
+        info_box = (
+            content.get("matchFacts", {}).get("infoBox", {})
+            if isinstance(content, dict)
+            and isinstance(content.get("matchFacts"), dict)
+            else {}
+        )
+
+    if not isinstance(info_box, dict):
+        return {
+            "type": None,
+            "is_second_leg": False,
+            "is_first_leg": False,
+            "name": None,
+        }
+
+    leg_info = info_box.get("legInfo")
+
+    if not isinstance(leg_info, dict):
+        return {
+            "type": None,
+            "is_second_leg": False,
+            "is_first_leg": False,
+            "name": None,
+        }
+
+    localized = leg_info.get("localizedString")
+
+    if not isinstance(localized, dict):
+        localized = {}
+
+    key = clean_text(localized.get("key")).lower()
+    fallback = clean_text(localized.get("fallback"))
+
+    is_second = key == "second_leg" or fallback.lower() == "2nd leg"
+    is_first = key == "first_leg" or fallback.lower() == "1st leg"
+
+    return {
+        "type": "second" if is_second else "first" if is_first else None,
+        "is_second_leg": is_second,
+        "is_first_leg": is_first,
+        "name": fallback or None,
+    }
+
+
+def _parse_score_text(value):
+    if value is None:
+        return None
+
+    text = clean_text(value)
+    match = re.search(r"(\d+)\s*[-:]\s*(\d+)", text)
+
+    if not match:
+        return None
+
+    return {
+        "home": int(match.group(1)),
+        "away": int(match.group(2)),
+    }
+
+
+def extract_aggregate_info(data, leg_info=None):
+    """
+    aggregate فقط برای بازی برگشت معنی دارد.
+    """
+    leg_info = leg_info or extract_leg_info(data)
+
+    if not leg_info.get("is_second_leg"):
+        return {
+            "home": None,
+            "away": None,
+            "text": None,
+            "winner": None,
+            "loser": None,
+            "tied": False,
+        }
+
+    info_box = get_nested(
+        data,
+        "props",
+        "pageProps",
+        "content",
+        "matchFacts",
+        "infoBox",
+    )
+
+    if not isinstance(info_box, dict):
+        content = get_content(data)
+        info_box = (
+            content.get("matchFacts", {}).get("infoBox", {})
+            if isinstance(content, dict)
+            and isinstance(content.get("matchFacts"), dict)
+            else {}
+        )
+
+    leg_data = (
+        info_box.get("legInfo")
+        if isinstance(info_box, dict)
+        else None
+    )
+
+    if not isinstance(leg_data, dict):
+        leg_data = {}
+
+    aggregate = _parse_score_text(
+        leg_data.get("aggregatedStr")
+    )
+
+    if aggregate is None:
+        aggregate = _parse_score_text(
+            leg_data.get("aggregateStr")
+        )
+
+    if aggregate is None:
+        return {
+            "home": None,
+            "away": None,
+            "text": None,
+            "winner": None,
+            "loser": clean_text(
+                leg_data.get("whoLostOnAggregated")
+            ) or None,
+            "tied": False,
+        }
+
+    winner = None
+    loser = clean_text(
+        leg_data.get("whoLostOnAggregated")
+    ) or None
+
+    if aggregate["home"] > aggregate["away"]:
+        winner = "home"
+    elif aggregate["away"] > aggregate["home"]:
+        winner = "away"
+
+    return {
+        "home": aggregate["home"],
+        "away": aggregate["away"],
+        "text": f'{aggregate["home"]} - {aggregate["away"]}',
+        "winner": winner,
+        "loser": loser,
+        "tied": aggregate["home"] == aggregate["away"],
+    }
+
+
+def _translate_round_name(value):
+    text = clean_text(value)
+
+    if not text:
+        return None
+
+    normalized = text.lower().strip()
+
+    exact = {
+        "group stage": "مرحله گروهی",
+        "league phase": "مرحله لیگ",
+        "regular season": "فصل عادی",
+        "playoffs": "پلی‌آف",
+        "play-off": "پلی‌آف",
+        "final": "فینال",
+        "semi-final": "نیمه‌نهایی",
+        "semifinal": "نیمه‌نهایی",
+        "quarter-final": "یک‌چهارم نهایی",
+        "quarterfinal": "یک‌چهارم نهایی",
+        "round of 16": "یک‌هشتم نهایی",
+        "round of 32": "یک‌شانزدهم نهایی",
+        "round of 64": "یک‌سی‌ودوم نهایی",
+        "3rd round": "دور سوم",
+        "4th round": "دور چهارم",
+        "5th round": "دور پنجم",
+        "1st round": "دور اول",
+        "2nd round": "دور دوم",
+    }
+
+    if normalized in exact:
+        return exact[normalized]
+
+    match = re.fullmatch(
+        r"(\d+)(?:st|nd|rd|th)?\s*round",
+        normalized,
+    )
+    if match:
+        return f'دور {match.group(1)}'
+
+    match = re.search(
+        r"(?:matchweek|match week|gameweek|week)\s*(\d+)",
+        normalized,
+    )
+    if match:
+        return f'هفته {match.group(1)}'
+
+    if normalized.isdigit():
+        return f'هفته {normalized}'
+
+    return text
+
+
+def extract_round_info(data):
+    """
+    استخراج نام هفته/مرحله/راند از چند ساختار رایج FotMob.
+    اولویت با roundName/tournamentStage و سپس week/matchweek است.
+    """
+    candidates = []
+
+    match_facts = get_nested(
+        data,
+        "props",
+        "pageProps",
+        "content",
+        "matchFacts",
+    )
+
+    if isinstance(match_facts, dict):
+        matches_in_round = match_facts.get("matchesInRound")
+        if isinstance(matches_in_round, list):
+            for item in matches_in_round:
+                if isinstance(item, dict):
+                    for key in ("roundName", "round", "stageName"):
+                        value = item.get(key)
+                        if value is not None:
+                            candidates.append(value)
+                            break
+
+    general = data.get("general") if isinstance(data, dict) else None
+    if not isinstance(general, dict):
+        general = {}
+
+    header = data.get("header") if isinstance(data, dict) else None
+    if not isinstance(header, dict):
+        header = {}
+
+    content = get_content(data)
+    if not isinstance(content, dict):
+        content = {}
+
+    for container in (
+        general,
+        header,
+        content,
+        match_facts if isinstance(match_facts, dict) else {},
+    ):
+        for key in (
+            "roundName",
+            "round",
+            "matchweek",
+            "matchWeek",
+            "gameweek",
+            "week",
+            "tournamentStage",
+            "stageName",
+        ):
+            value = container.get(key)
+            if value is not None:
+                if isinstance(value, dict):
+                    value = (
+                        value.get("name")
+                        or value.get("label")
+                        or value.get("value")
+                    )
+                if value is not None:
+                    candidates.append(value)
+
+    for value in candidates:
+        raw = clean_text(value)
+        if not raw:
+            continue
+        fa = _translate_round_name(raw)
+        return {
+            "raw": raw,
+            "name": raw,
+            "name_fa": fa or raw,
+        }
+
+    return {
+        "raw": None,
+        "name": None,
+        "name_fa": None,
+    }
+
+
+def _build_competition_context(
+    league_fa,
+    round_info,
+    leg_info,
+):
+    parts = []
+
+    if league_fa:
+        parts.append(league_fa)
+
+    round_name = (
+        round_info.get("name_fa")
+        if isinstance(round_info, dict)
+        else None
+    )
+
+    if round_name:
+        parts.append(round_name)
+
+    if isinstance(leg_info, dict):
+        if leg_info.get("is_first_leg"):
+            parts.append("رفت")
+        elif leg_info.get("is_second_leg"):
+            parts.append("برگشت")
+
+    return " | ".join(parts) if parts else "نامشخص"
+
+
+def is_final_result_ready(snapshot):
+    """
+    تعیین می‌کند finished فعلی FotMob واقعاً پایان نهایی بازی است یا نه.
+
+    در بازی رفت/عادی، finished کافی است.
+    در بازی برگشت، اگر aggregate مساوی باشد باید تا تعیین برنده
+    در وقت اضافه/پنالتی صبر کنیم.
+    """
+    if not isinstance(snapshot, dict):
+        return False
+
+    if not snapshot.get("finished"):
+        return False
+
+    if not snapshot.get("is_second_leg"):
+        return True
+
+    aggregate = snapshot.get("aggregate")
+    if not isinstance(aggregate, dict):
+        return True
+
+    if not aggregate.get("tied"):
+        return True
+
+    penalty_score = snapshot.get("penalty_score")
+    if isinstance(penalty_score, dict):
+        return True
+
+    if snapshot.get("penalty_shootout"):
+        return True
+
+    return bool(snapshot.get("extra_time_finished") and penalty_score is not None)
+
+
 def extract_basic_info(data):
 
     if not isinstance(data, dict):
@@ -1152,6 +1514,13 @@ def extract_basic_info(data):
     )
 
     # -----------------------------------------------------
+    # رفت/برگشت و هفته/مرحله/راند
+    # -----------------------------------------------------
+
+    leg_info = extract_leg_info(data)
+    round_info = extract_round_info(data)
+
+    # -----------------------------------------------------
     # زمان
     # -----------------------------------------------------
 
@@ -1233,6 +1602,26 @@ def extract_basic_info(data):
         "stage_id": (
             stage_id
         ),
+
+        "leg": leg_info,
+
+        "is_second_leg": leg_info.get(
+            "is_second_leg",
+            False,
+        ),
+
+        "is_first_leg": leg_info.get(
+            "is_first_leg",
+            False,
+        ),
+
+        "aggregate": extract_aggregate_info(
+            data,
+            leg_info,
+        ),
+
+        "round_info": round_info,
+
 
         "start": start,
     }
@@ -4858,6 +5247,13 @@ def get_match_snapshot(match_url):
         or league
     )
 
+    leg_info = extract_leg_info(data)
+    round_info = extract_round_info(data)
+    aggregate = extract_aggregate_info(
+        data,
+        leg_info,
+    )
+
     return {
         "match_id": match_id,
 
@@ -4891,6 +5287,28 @@ def get_match_snapshot(match_url):
         # شناسه مرحله / نسخه رقابت
         "stage_id": (
             info.get("stage_id")
+        ),
+
+        "leg": leg_info,
+
+        "is_second_leg": leg_info.get(
+            "is_second_leg",
+            False,
+        ),
+
+        "is_first_leg": leg_info.get(
+            "is_first_leg",
+            False,
+        ),
+
+        "aggregate": aggregate,
+
+        "round_info": round_info,
+
+        "competition_context": _build_competition_context(
+            league_fa,
+            round_info,
+            leg_info,
         ),
 
         "start": info.get("start"),
