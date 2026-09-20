@@ -995,20 +995,28 @@ def extract_round_info(data):
         matches_in_round = match_facts.get("matchesInRound")
         if isinstance(matches_in_round, list):
             for item in matches_in_round:
-                if isinstance(item, dict):
-                    for key in (
-                        "roundName",
-                        "round",
-                        "stageName",
-                        "matchweek",
-                        "matchWeek",
-                        "gameweek",
-                        "week",
-                    ):
-                        value = item.get(key)
-                        if value is not None:
-                            candidates.append(value)
-                            break
+                if not isinstance(item, dict):
+                    continue
+
+                # در بعضی رقابت‌ها FotMob مقدار عمومی "Round" را
+                # در roundName می‌گذارد، در حالی که شماره هفته در
+                # یکی از فیلدهای week/matchweek/gameweek یا round است.
+                # بنابراین به محض دیدن roundName دیگر از بررسی
+                # فیلدهای دقیق‌تر صرف‌نظر نمی‌کنیم.
+                for key in (
+                    "matchweek",
+                    "matchWeek",
+                    "gameweek",
+                    "week",
+                    "round",
+                    "roundName",
+                    "stageName",
+                ):
+                    value = item.get(key)
+                    if value is not None:
+                        candidates.append(
+                            (value, key)
+                        )
 
     content = get_content(data)
     if not isinstance(content, dict):
@@ -1047,7 +1055,7 @@ def extract_round_info(data):
                     or value.get("value")
                 )
             if value is not None:
-                candidates.append(value)
+                candidates.append((value, key))
 
     # در بعضی پاسخ‌های FotMob، مرحله/هفته داخل شیء
     # tournament/league/competition قرار دارد.
@@ -1085,7 +1093,7 @@ def extract_round_info(data):
                             or value.get("value")
                         )
                     if value is not None:
-                        candidates.append(value)
+                        candidates.append((value, key))
 
             for value in node.values():
                 if isinstance(value, (dict, list)):
@@ -1097,20 +1105,56 @@ def extract_round_info(data):
 
     collect_competition_rounds(data)
 
-    for value in candidates:
+    # فیلدهای صریح هفته را بر "Round" عمومی مقدم می‌کنیم.
+    # همچنین کلید منبع را نگه می‌داریم تا عددی مثل 1 را در
+    # فیلدهای week/matchweek/gameweek به «هفته 1» تبدیل کنیم.
+    prioritized_candidates = []
+    for candidate in candidates:
+        if isinstance(candidate, tuple) and len(candidate) == 2:
+            prioritized_candidates.append(candidate)
+        else:
+            prioritized_candidates.append(
+                (candidate, None)
+            )
+
+    prioritized_candidates.sort(
+        key=lambda item: (
+            0
+            if str(item[1] or "").lower()
+            in {
+                "week",
+                "matchweek",
+                "matchweek",
+                "gameweek",
+            }
+            else 1
+        )
+    )
+
+    for value, source_key in prioritized_candidates:
         raw = clean_text(value)
         if not raw:
             continue
 
+        # «Round» به‌تنهایی اطلاعات مرحله/هفته نمی‌دهد.
+        if raw.lower() == "round":
+            continue
+
         fa = _translate_round_name(raw)
 
-        # از چاپ شناسه‌های صرفاً عددی به عنوان مرحله جلوگیری می‌کنیم؛
-        # عدد تنها فقط وقتی هفته است که کلید منبع week/matchweek بوده باشد.
-        if raw.isdigit() and not (
-            "week" in raw.lower()
-            or "round" in raw.lower()
-        ):
-            continue
+        if raw.isdigit():
+            source = str(
+                source_key or ""
+            ).lower()
+
+            if source in {
+                "week",
+                "matchweek",
+                "gameweek",
+            }:
+                fa = f"هفته {raw}"
+            else:
+                continue
 
         return {
             "raw": raw,
