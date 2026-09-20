@@ -929,6 +929,7 @@ def _translate_round_name(value):
         "semifinals": "نیمه‌نهایی",
         "round of 8": "یک‌چهارم نهایی",
         "round of 16": "یک‌هشتم نهایی",
+        "1/16": "یک‌شانزدهم نهایی",
         "round of 32": "یک‌شانزدهم نهایی",
         "round of 64": "یک‌سی‌ودوم نهایی",
         "3rd round": "دور سوم",
