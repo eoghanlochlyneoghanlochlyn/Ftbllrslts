@@ -74,42 +74,93 @@ def save_json(path, data):
 
 
 def fetch_matches(date_value):
+    url = "https://www.fotmob.com/matches"
+
     response = requests.get(
-        f"{BASE_URL}/matches",
-        params={
-            "date": date_value.strftime("%Y%m%d"),
-            "timezone": "Asia/Tehran",
+        url,
+        params={"date": date_value.strftime("%Y%m%d")},
+        headers={
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/140.0 Safari/537.36"
+            ),
+            "Accept": "text/html,application/xhtml+xml",
         },
         timeout=TIMEOUT,
     )
     response.raise_for_status()
 
-    data = response.json()
+    html = response.text
+
+    match = re.search(
+        r'<script[^>]+id=["\']__NEXT_DATA__["\'][^>]*>(.*?)</script>',
+        html,
+        re.DOTALL,
+    )
+
+    if not match:
+        print("[DISCOVERY] __NEXT_DATA__ not found")
+        return []
+
+    try:
+        data = json.loads(match.group(1))
+    except json.JSONDecodeError as error:
+        print("[DISCOVERY] Could not parse __NEXT_DATA__:", error)
+        return []
+
     result = []
+    seen = set()
 
-    if not isinstance(data, dict):
-        return result
+    def visit(value, parent_league=None):
+        if isinstance(value, dict):
+            league = value.get("league")
 
-    for league in data.get("leagues", []):
-        if not isinstance(league, dict):
-            continue
+            if not isinstance(league, dict):
+                league = parent_league
 
-        for match in league.get("matches", []):
-            if not isinstance(match, dict):
-                continue
+            home = value.get("home")
+            away = value.get("away")
 
-            item = dict(match)
-            item["_league_ids"] = {
-                str(value)
-                for value in (
-                    league.get("id"),
-                    league.get("primaryId"),
-                    league.get("parentLeagueId"),
-                    match.get("leagueId"),
-                )
-                if value is not None
-            }
-            result.append(item)
+            if (
+                value.get("id") is not None
+                and isinstance(home, dict)
+                and isinstance(away, dict)
+            ):
+                current_id = str(value["id"])
+
+                if current_id not in seen:
+                    item = dict(value)
+
+                    league_data = league if isinstance(league, dict) else {}
+
+                    item["_league_ids"] = {
+                        str(candidate)
+                        for candidate in (
+                            league_data.get("id"),
+                            league_data.get("primaryId"),
+                            league_data.get("parentLeagueId"),
+                            value.get("leagueId"),
+                        )
+                        if candidate is not None
+                    }
+
+                    result.append(item)
+                    seen.add(current_id)
+
+            for child in value.values():
+                visit(child, league)
+
+        elif isinstance(value, list):
+            for child in value:
+                visit(child, parent_league)
+
+    visit(data)
+
+    print(
+        f"[DISCOVERY] {date_value.isoformat()}: "
+        f"found {len(result)} matches from site page"
+    )
 
     return result
 
