@@ -119,6 +119,126 @@
           }
         }
       ]
+    },
+    "5787782": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": true,
+      "finished_sent": true,
+      "event_keys": [
+        "react:1425782644Goal1178468undefinedtrue",
+        "react:1425791051Goal1617957undefinedfalse"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1425782644Goal1178468undefinedtrue",
+          "player_id": 1178468,
+          "player_name": "Mykola Kukharevych",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "44",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2269,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1425782644Goal1178468undefinedtrue",
+            "timeStr": 44,
+            "type": "goal",
+            "time": 44,
+            "overloadTime": null,
+            "eventId": 14257826,
+            "player": {
+              "id": 1178468,
+              "name": "Mykola Kukharevych",
+              "profileUrl": "/players/1178468/mykola-kukharevych"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "homeScoreAggregated": 2,
+            "awayScoreAggregated": 0,
+            "profileUrl": "/players/1178468/mykola-kukharevych",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mykola Kukharevych",
+            "firstName": "Mykola",
+            "lastName": "Kukharevych",
+            "fullName": "Mykola Kukharevych",
+            "playerId": 1178468,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "react:1425791051Goal1617957undefinedfalse",
+          "player_id": 1617957,
+          "player_name": "Nika Sikharulashvili",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "51",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2270,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1425791051Goal1617957undefinedfalse",
+            "timeStr": 51,
+            "type": "goal",
+            "time": 51,
+            "overloadTime": null,
+            "eventId": 14257910,
+            "player": {
+              "id": 1617957,
+              "name": "Nika Sikharulashvili",
+              "profileUrl": "/players/1617957/nika-sikharulashvili"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "homeScoreAggregated": 3,
+            "awayScoreAggregated": 0,
+            "profileUrl": "/players/1617957/nika-sikharulashvili",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nika Sikharulashvili",
+            "firstName": "Nika",
+            "lastName": "Sikharulashvili",
+            "fullName": "Nika Sikharulashvili",
+            "playerId": 1617957,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ]
     }
   }
 }
