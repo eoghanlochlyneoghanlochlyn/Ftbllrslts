@@ -392,7 +392,7 @@ def format_aggregate_score(
         and penalty_away is not None
     ):
         return (
-            f"{home_score} ({penalty_home}) - "
+            f"{home_score} ({penalty_home}) ▪️ "
             f"({penalty_away}) {away_score}"
         )
 
