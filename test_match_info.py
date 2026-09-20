@@ -1,329 +1,121 @@
-import json
-import re
-import urllib.request
-from html.parser import HTMLParser
+from fotmob import (
+fetch_match_page,
+extract_next_data,
+)
 
+MATCH_ID = "6050065"
 
-MATCH_URL = "https://www.fotmob.com/matches/club-brugge-vs-atletico-madrid/2r4yuu#5161870"
+TARGET_WORDS = (
+"round",
+"week",
+"matchweek",
+"gameweek",
+"stage",
+)
 
+def looks_relevant(key):
+if not isinstance(key, str):
+return False
 
-class NextDataParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.in_next_data = False
-        self.data = []
+```
+key_lower = key.lower()
 
-    def handle_starttag(self, tag, attrs):
-        attrs = dict(attrs)
+return any(
+    word in key_lower
+    for word in TARGET_WORDS
+)
+```
 
-        if (
-            tag == "script"
-            and attrs.get("id") == "__NEXT_DATA__"
-        ):
-            self.in_next_data = True
+def walk(node, path=()):
+if isinstance(node, dict):
 
-    def handle_endtag(self, tag):
-        if tag == "script" and self.in_next_data:
-            self.in_next_data = False
+```
+    for key, value in node.items():
 
-    def handle_data(self, data):
-        if self.in_next_data:
-            self.data.append(data)
+        current_path = path + (str(key),)
 
+        if looks_relevant(key):
 
-def fetch_next_data(url):
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/140.0 Safari/537.36"
-            )
-        },
-    )
+            print()
+            print("=" * 100)
+            print("KEY:")
+            print(".".join(current_path))
+            print("VALUE TYPE:")
+            print(type(value).__name__)
+            print("VALUE:")
 
-    with urllib.request.urlopen(request, timeout=30) as response:
-        html = response.read().decode("utf-8")
+            if isinstance(value, (dict, list)):
+                print(repr(value)[:5000])
+            else:
+                print(repr(value))
 
-    parser = NextDataParser()
-    parser.feed(html)
+        walk(
+            value,
+            current_path,
+        )
 
-    raw = "".join(parser.data).strip()
+elif isinstance(node, list):
 
-    if not raw:
-        raise RuntimeError("__NEXT_DATA__ پیدا نشد.")
+    for index, item in enumerate(node):
 
-    return json.loads(raw)
+        current_path = (
+            path + (f"[{index}]",)
+        )
 
-
-def get_nested(data, *keys):
-    current = data
-
-    for key in keys:
-        if not isinstance(current, dict):
-            return None
-
-        current = current.get(key)
-
-    return current
-
-
-def extract_leg_info(root):
-    leg_info = get_nested(
-        root,
-        "props",
-        "pageProps",
-        "content",
-        "matchFacts",
-        "infoBox",
-        "legInfo",
-    )
-
-    if not isinstance(leg_info, dict):
-        return None
-
-    localized = leg_info.get("localizedString")
-
-    if not isinstance(localized, dict):
-        return {
-            "key": None,
-            "fallback": None,
-        }
-
-    return {
-        "key": localized.get("key"),
-        "fallback": localized.get("fallback"),
-    }
-
-
-def is_second_leg(root):
-    leg_info = extract_leg_info(root)
-
-    if not leg_info:
-        return False
-
-    return leg_info.get("key") == "second_leg"
-
-
-def extract_match_score(root):
-    """
-    نتیجه خود همین مسابقه را استخراج می‌کند.
-
-    اولویت:
-    1. header.status.scoreStr
-    2. header.teams[].score
-    3. general.homeTeam.score / awayTeam.score
-    """
-
-    page_props = get_nested(root, "props", "pageProps")
-
-    if not isinstance(page_props, dict):
-        return None
-
-    # ---------------------------------------------------------
-    # روش اصلی
-    # ---------------------------------------------------------
-
-    score_str = get_nested(
-        page_props,
-        "header",
-        "status",
-        "scoreStr",
-    )
-
-    if isinstance(score_str, str) and score_str.strip():
-        return score_str.strip()
-
-    # ---------------------------------------------------------
-    # پشتیبان: header.teams
-    # ---------------------------------------------------------
-
-    header_teams = get_nested(
-        page_props,
-        "header",
-        "teams",
-    )
-
-    if isinstance(header_teams, list) and len(header_teams) >= 2:
-        home_score = header_teams[0].get("score")
-        away_score = header_teams[1].get("score")
-
-        if home_score is not None and away_score is not None:
-            return f"{home_score} - {away_score}"
-
-    # ---------------------------------------------------------
-    # پشتیبان: general.homeTeam / awayTeam
-    # ---------------------------------------------------------
-
-    home_team = get_nested(
-        page_props,
-        "general",
-        "homeTeam",
-    )
-
-    away_team = get_nested(
-        page_props,
-        "general",
-        "awayTeam",
-    )
-
-    if isinstance(home_team, dict) and isinstance(away_team, dict):
-        home_score = home_team.get("score")
-        away_score = away_team.get("score")
-
-        if home_score is not None and away_score is not None:
-            return f"{home_score} - {away_score}"
-
-    return None
-
-
-def extract_aggregate(root):
-    """
-    aggregate را از header.status استخراج می‌کند.
-    """
-
-    status = get_nested(
-        root,
-        "props",
-        "pageProps",
-        "header",
-        "status",
-    )
-
-    if not isinstance(status, dict):
-        return {
-            "aggregated": None,
-            "who_lost": None,
-        }
-
-    return {
-        "aggregated": status.get("aggregatedStr"),
-        "who_lost": status.get("whoLostOnAggregated"),
-    }
-
-
-def extract_general(root):
-    general = get_nested(
-        root,
-        "props",
-        "pageProps",
-        "general",
-    )
-
-    if not isinstance(general, dict):
-        return {}
-
-    return {
-        "match_id": general.get("matchId"),
-        "match_name": general.get("matchName"),
-        "league_name": general.get("leagueName"),
-        "finished": general.get("finished"),
-    }
-
+        walk(
+            item,
+            current_path,
+        )
+```
 
 def main():
-    print("=" * 70)
-    print("FotMob Leg Detection Test")
-    print("=" * 70)
 
-    print(f"\nURL:")
-    print(MATCH_URL)
+```
+print(
+    f"Fetching FotMob page for match {MATCH_ID}..."
+)
 
-    print("\nدر حال دریافت صفحه...")
+html = fetch_match_page(
+    MATCH_ID
+)
 
-    root = fetch_next_data(MATCH_URL)
+if not html:
+    print(
+        "ERROR: Could not fetch FotMob page."
+    )
+    return
 
-    print("OK - __NEXT_DATA__ دریافت شد.")
+print(
+    f"HTML length: {len(html)}"
+)
 
-    # ---------------------------------------------------------
-    # اطلاعات عمومی
-    # ---------------------------------------------------------
+data = extract_next_data(
+    html
+)
 
-    general = extract_general(root)
+if not isinstance(data, dict):
+    print(
+        "ERROR: Could not extract __NEXT_DATA__."
+    )
+    return
 
-    print("\n" + "-" * 70)
-    print("GENERAL")
-    print("-" * 70)
+print(
+    "NEXT_DATA extracted successfully."
+)
 
-    print("Match ID:", general.get("match_id"))
-    print("Match name:", general.get("match_name"))
-    print("League:", general.get("league_name"))
-    print("Finished:", general.get("finished"))
+print()
+print(
+    "Searching for round/week/stage related keys..."
+)
 
-    # ---------------------------------------------------------
-    # نتیجه خود مسابقه
-    # ---------------------------------------------------------
+walk(data)
 
-    score = extract_match_score(root)
+print()
+print("=" * 100)
+print(
+    "TEST FINISHED."
+)
+```
 
-    print("\n" + "-" * 70)
-    print("MATCH SCORE")
-    print("-" * 70)
-
-    if score:
-        print("نتیجه بازی:", score)
-    else:
-        print("نتیجه بازی پیدا نشد.")
-
-    # ---------------------------------------------------------
-    # رفت / برگشت
-    # ---------------------------------------------------------
-
-    leg_info = extract_leg_info(root)
-    second_leg = is_second_leg(root)
-
-    print("\n" + "-" * 70)
-    print("LEG DETECTION")
-    print("-" * 70)
-
-    if leg_info:
-        print("legInfo.key:", leg_info.get("key"))
-        print("legInfo.fallback:", leg_info.get("fallback"))
-    else:
-        print("legInfo پیدا نشد.")
-
-    print("Is second leg:", second_leg)
-
-    # ---------------------------------------------------------
-    # Aggregate
-    # ---------------------------------------------------------
-
-    aggregate = extract_aggregate(root)
-
-    print("\n" + "-" * 70)
-    print("AGGREGATE")
-    print("-" * 70)
-
-    print("Aggregated:", aggregate.get("aggregated"))
-    print("Who lost on aggregate:", aggregate.get("who_lost"))
-
-    # ---------------------------------------------------------
-    # نتیجه نهایی تست
-    # ---------------------------------------------------------
-
-    print("\n" + "=" * 70)
-    print("FINAL RESULT")
-    print("=" * 70)
-
-    if second_leg:
-        print("این مسابقه: بازی برگشت")
-
-        if score:
-            print("نتیجه بازی:", score)
-
-        if aggregate.get("aggregated"):
-            print("نتیجه مجموع:", aggregate["aggregated"])
-
-        if aggregate.get("who_lost"):
-            print("بازنده مجموع:", aggregate["who_lost"])
-
-    else:
-        print("این مسابقه: بازی عادی / بازی رفت")
-        print("Aggregate نادیده گرفته می‌شود.")
-
-    print("=" * 70)
-
-
-if __name__ == "__main__":
-    main()
+if **name** == "**main**":
+main()
