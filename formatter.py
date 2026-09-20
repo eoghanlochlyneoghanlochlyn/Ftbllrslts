@@ -1828,7 +1828,7 @@ def format_stat_value(
 # --------------------------------------------------------
 
 FINAL_STAT_ORDER = [
-    "xG",
+    "ایکـس جی",
     "شوت",
     "شوت در چارچوب",
     "مالکیت",
@@ -1844,7 +1844,7 @@ FINAL_STAT_ORDER = [
 
 
 FINAL_STAT_ICONS = {
-    "xG": "🎯",
+    "ایکـس جی": "🎯",
     "شوت": "💥",
     "شوت در چارچوب": "🥅",
     "مالکیت": "⚽️",
@@ -1901,7 +1901,7 @@ def _get_stat_rows(
 
     aliases = {
         "xG": (
-            "xG",
+            "ایکـس جی",
             "xg",
             "expected_goals",
         ),
@@ -1910,7 +1910,7 @@ def _get_stat_rows(
             "shots",
             "Shots",
         ),
-        "شوت در چارچوب": (
+        "در چارچوب": (
             "شوت در چارچوب",
             "shots_on_target",
             "Shots on target",
@@ -1929,7 +1929,7 @@ def _get_stat_rows(
             "دقت پاس",
             "pass_accuracy",
         ),
-        "پاس دقیق": (
+        "دقت پاس": (
             "پاس دقیق",
             "accurate_passes",
             "Accurate passes",
