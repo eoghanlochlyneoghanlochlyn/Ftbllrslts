@@ -1065,6 +1065,9 @@ def is_final_result_ready(snapshot):
     if not snapshot.get("is_second_leg"):
         return True
 
+    # اگر بازی برگشت در پایان 90 دقیقه aggregate مساوی باشد،
+    # باید منتظر وقت اضافه/پنالتی بمانیم.
+
     aggregate = snapshot.get("aggregate")
     if not isinstance(aggregate, dict):
         return True
