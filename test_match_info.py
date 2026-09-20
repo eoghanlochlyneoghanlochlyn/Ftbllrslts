@@ -1,21 +1,11 @@
 import json
 import requests
 
-from fotmob import (
-    fetch_match_api,
-    fetch_match_page,
-    extract_next_data,
-    extract_round_info,
-    extract_leg_info,
-    extract_aggregate_info,
-)
-
-from datetime import datetime, timedelta
+from datetime import datetime
 from zoneinfo import ZoneInfo
 
 
 IRAN_TZ = ZoneInfo("Asia/Tehran")
-AUTO_MATCHES_FILE = "auto_matches.json"
 
 HEADERS = {
     "User-Agent": (
@@ -24,11 +14,6 @@ HEADERS = {
         "Chrome/140.0.0.0 Safari/537.36"
     )
 }
-
-
-def load_auto_config():
-    with open(AUTO_MATCHES_FILE, "r", encoding="utf-8") as file:
-        return json.load(file)
 
 
 def utc_to_iran(utc_time):
@@ -44,218 +29,73 @@ def utc_to_iran(utc_time):
         return "Unknown"
 
 
-def get_match_status(match):
-    status = match.get("status", {})
+def find_stage_like_fields(value, path=""):
+    """فقط فیلدهایی را پیدا می‌کند که احتمال دارد اطلاعات مرحله/راند داشته باشند."""
+    found = []
 
-    if status.get("cancelled"):
-        return "Cancelled"
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = f"{path}.{key}" if path else key
+            key_lower = str(key).lower()
 
-    if status.get("finished"):
-        return "Finished"
+            if any(
+                token in key_lower
+                for token in (
+                    "stage",
+                    "round",
+                    "phase",
+                    "leg",
+                    "aggregate",
+                    "matchday",
+                    "matchweek",
+                )
+            ):
+                found.append(
+                    {
+                        "path": child_path,
+                        "value": child,
+                    }
+                )
 
-    if status.get("started"):
-        return "Live"
-
-    return "Upcoming"
-
-
-def get_competition_id(league):
-    value = (
-        league.get("id")
-        or league.get("leagueId")
-        or league.get("competitionId")
-    )
-
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def get_stage_text(match, league):
-    candidates = [
-        match.get("stage"),
-        match.get("round"),
-        match.get("roundName"),
-        match.get("stageName"),
-        league.get("stage"),
-        league.get("round"),
-        league.get("roundName"),
-        league.get("stageName"),
-    ]
-
-    for value in candidates:
-        if isinstance(value, dict):
-            value = (
-                value.get("name")
-                or value.get("slug")
-                or value.get("type")
+            found.extend(
+                find_stage_like_fields(
+                    child,
+                    child_path,
+                )
             )
 
-        if value:
-            return str(value)
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            found.extend(
+                find_stage_like_fields(
+                    child,
+                    f"{path}[{index}]",
+                )
+            )
 
-    return ""
-
-
-def normalize_stage(value):
-    if not value:
-        return ""
-
-    text = str(value).strip().lower()
-    text = text.replace("-", "_").replace(" ", "_")
-
-    aliases = {
-        "roundof16": "round_of_16",
-        "last_16": "round_of_16",
-        "last16": "round_of_16",
-        "quarterfinal": "quarter_final",
-        "quarterfinals": "quarter_final",
-        "semifinal": "semi_final",
-        "semifinals": "semi_final",
-    }
-
-    return aliases.get(text, text)
+    return found
 
 
-def team_name(team):
+def get_team_name(team):
     if not isinstance(team, dict):
-        return ""
+        return "Unknown"
 
     return (
         team.get("longName")
         or team.get("name")
         or team.get("shortName")
-        or ""
-    ).strip()
+        or "Unknown"
+    )
 
 
-def team_name_matches(team, names):
-    actual = team_name(team).lower()
-
-    if not actual:
-        return False
-
-    for name in names:
-        wanted = str(name).strip().lower()
-
-        if (
-            actual == wanted
-            or actual in wanted
-            or wanted in actual
-        ):
-            return True
-
-    return False
-
-
-def get_match_rule_reasons(match, league, config):
-    return ["all_matches"]
-
-def get_detailed_stage_info(match_id):
-    """فقط برای تست، مرحله را از جزئیات مسابقه FotMob استخراج می‌کند."""
-    data = fetch_match_api(match_id)
-
-    if not data:
-        return {
-            "round_info": None,
-            "leg_info": None,
-            "aggregate": None,
-            "source": "unavailable",
-        }
-
-    round_info = extract_round_info(data)
-    leg_info = extract_leg_info(data)
-    aggregate = extract_aggregate_info(data, leg_info)
-
-    if round_info:
-        return {
-            "round_info": round_info,
-            "leg_info": leg_info,
-            "aggregate": aggregate,
-            "source": "matchDetails",
-        }
-
-    html = fetch_match_page(match_id)
-
-    if html:
-        page_data = extract_next_data(html)
-
-        if page_data:
-            page_round_info = extract_round_info(page_data)
-            page_leg_info = extract_leg_info(page_data)
-            page_aggregate = extract_aggregate_info(
-                page_data,
-                page_leg_info,
-            )
-
-            return {
-                "round_info": page_round_info,
-                "leg_info": page_leg_info,
-                "aggregate": page_aggregate,
-                "source": "match_page",
-            }
-
-    return {
-        "round_info": None,
-        "leg_info": leg_info,
-        "aggregate": aggregate,
-        "source": "matchDetails_no_round",
-    }
-
-
-def format_match(match, league, date, reasons):
-    home = match.get("home", {})
-    away = match.get("away", {})
+def get_match_time(match):
     status = match.get("status", {})
-
-    home_name = team_name(home) or "Unknown"
-    away_name = team_name(away) or "Unknown"
-
-    match_status = get_match_status(match)
-
-    if match_status == "Upcoming":
-        score_text = "-"
-    else:
-        score_text = (
-            f"{home.get('score', 0)} - "
-            f"{away.get('score', 0)}"
-        )
-
     utc_time = status.get("utcTime")
 
-    detailed = get_detailed_stage_info(match.get("id"))
-
-    return {
-        "id": match.get("id"),
-        "date": date,
-        "league": league.get(
-            "name",
-            "Unknown League",
-        ),
-        "competition_id": get_competition_id(league),
-        "stage": get_stage_text(match, league),
-        "round_info": detailed.get("round_info"),
-        "leg_info": detailed.get("leg_info"),
-        "aggregate": detailed.get("aggregate"),
-        "stage_source": detailed.get("source"),
-        "home": home_name,
-        "away": away_name,
-        "home_id": home.get("id"),
-        "away_id": away.get("id"),
-        "utc_time": utc_time,
-        "iran_time": utc_to_iran(utc_time),
-        "status": match_status,
-        "score": score_text,
-        "reasons": reasons,
-        "url": (
-            f"https://www.fotmob.com/match/"
-            f"{match.get('id')}"
-        ),
-    }
+    return utc_time, utc_to_iran(utc_time)
 
 
-def fetch_matches_for_date(date, config):
+def fetch_matches_for_date(date):
     url = (
         "https://www.fotmob.com/api/data/matches"
         f"?date={date}"
@@ -270,221 +110,102 @@ def fetch_matches_for_date(date, config):
         timeout=30,
     )
 
-    print(
-        "Status code:",
-        response.status_code,
-    )
-
+    print("Status code:", response.status_code)
     response.raise_for_status()
 
-    data = response.json()
-    found_matches = []
-
-    for league in data.get("leagues", []):
-        for match in league.get("matches", []):
-            reasons = get_match_rule_reasons(
-                match,
-                league,
-                config,
-            )
-
-            if not reasons:
-                continue
-
-            found_matches.append(
-                format_match(
-                    match,
-                    league,
-                    date,
-                    reasons,
-                )
-            )
-
-    return found_matches
-
-
-def build_auto_matches(matches):
-    result = []
-    seen = set()
-
-    for match in matches:
-        match_id = match.get("id")
-
-        if match_id is None:
-            continue
-
-        match_id = str(match_id)
-
-        if match_id in seen:
-            continue
-
-        seen.add(match_id)
-
-        result.append(
-            {
-                "id": match_id,
-                "url": match.get("url"),
-                "enabled": True,
-            }
-        )
-
-    return result
+    return response.json()
 
 
 def main():
-    config = load_auto_config()
-
     now_iran = datetime.now(IRAN_TZ)
 
-    window_hours = float(
-        config.get("window_hours", 24)
-    )
+    # فقط یک روز را بررسی می‌کنیم تا تست سریع بماند.
+    date = now_iran.strftime("%Y%m%d")
 
-    window_end = (
-        now_iran
-        + timedelta(hours=window_hours)
-    )
-
-    dates = [now_iran.date()]
-
-    if window_end.date() > now_iran.date():
-        dates.append(window_end.date())
+    data = fetch_matches_for_date(date)
 
     all_matches = []
 
-    for current_date in dates:
-        all_matches.extend(
-            fetch_matches_for_date(
-                current_date.strftime("%Y%m%d"),
-                config,
+    for league in data.get("leagues", []):
+        league_name = league.get("name", "Unknown League")
+        league_id = (
+            league.get("id")
+            or league.get("leagueId")
+            or league.get("competitionId")
+        )
+
+        for match in league.get("matches", []):
+            all_matches.append(
+                {
+                    "league": league_name,
+                    "league_id": league_id,
+                    "match": match,
+                }
+            )
+
+    print()
+    print("=" * 100)
+    print("RAW MATCH LIST STRUCTURE TEST")
+    print("=" * 100)
+    print("Iran now:", now_iran.strftime("%Y-%m-%d %H:%M:%S"))
+    print("Total matches:", len(all_matches))
+    print("Only the first 15 matches will be inspected.")
+    print("=" * 100)
+
+    for index, item in enumerate(all_matches[:15], start=1):
+        match = item["match"]
+        home = get_team_name(match.get("home"))
+        away = get_team_name(match.get("away"))
+        utc_time, iran_time = get_match_time(match)
+
+        print()
+        print("-" * 100)
+        print(f"{index}. {home} 🆚 {away}")
+        print(f"Competition: {item['league']}")
+        print(f"Competition ID: {item['league_id']}")
+        print(f"Match ID: {match.get('id')}")
+        print(f"UTC: {utc_time}")
+        print(f"Iran: {iran_time}")
+
+        print()
+        print("TOP-LEVEL MATCH KEYS:")
+        print(
+            json.dumps(
+                list(match.keys()),
+                ensure_ascii=False,
+                indent=2,
             )
         )
 
-    # پنجره زمانی دقیق بر اساس ساعت ایران
-    filtered_matches = []
-
-    for match in all_matches:
-        utc_time = match.get("utc_time")
-
-        if not utc_time:
-            continue
-
-        try:
-            match_time = datetime.fromisoformat(
-                utc_time.replace("Z", "+00:00")
-            ).astimezone(IRAN_TZ)
-        except Exception:
-            continue
-
-        if (
-            now_iran
-            <= match_time
-            <= window_end
-        ):
-            filtered_matches.append(match)
-
-    filtered_matches.sort(
-        key=lambda match: match.get("utc_time") or ""
-    )
-
-    auto_matches = build_auto_matches(
-        filtered_matches
-    )
-
-    print()
-    print("=" * 80)
-    print("AUTO MATCH EXTRACTION")
-    print("=" * 80)
-    print(
-        "Iran now:",
-        now_iran.strftime(
-            "%Y-%m-%d %H:%M:%S"
-        ),
-    )
-    print(
-        "Window:",
-        f"{window_hours:g} hours",
-    )
-    print(
-        "Matches found:",
-        len(filtered_matches),
-    )
-    print("=" * 80)
-
-    for index, match in enumerate(
-        filtered_matches,
-        start=1,
-    ):
         print()
+        print("STAGE / ROUND / LEG / AGGREGATE-LIKE FIELDS:")
+        stage_fields = find_stage_like_fields(match)
+
+        if stage_fields:
+            print(
+                json.dumps(
+                    stage_fields,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            )
+        else:
+            print("NONE FOUND")
+
+        print()
+        print("RAW MATCH OBJECT:")
         print(
-            f"{index}. "
-            f"{match['home']} 🆚 {match['away']}"
-        )
-        print(
-            f"   Competition: "
-            f"{match['league']}"
-        )
-        print(
-            f"   Competition ID: "
-            f"{match['competition_id']}"
-        )
-        print(
-            f"   Stage (list endpoint): "
-            f"{match['stage'] or 'Unknown'}"
-        )
-        print(
-            f"   Round (match details): "
-            f"{json.dumps(match['round_info'], ensure_ascii=False)}"
-        )
-        print(
-            f"   Leg: "
-            f"{json.dumps(match['leg_info'], ensure_ascii=False)}"
-        )
-        print(
-            f"   Aggregate: "
-            f"{json.dumps(match['aggregate'], ensure_ascii=False)}"
-        )
-        print(
-            f"   Stage source: "
-            f"{match['stage_source']}"
-        )
-        print(
-            f"   Match ID: "
-            f"{match['id']}"
-        )
-        print(
-            f"   Iran: "
-            f"{match['iran_time']}"
-        )
-        print(
-            f"   Status: "
-            f"{match['status']}"
-        )
-        print(
-            f"   Score: "
-            f"{match['score']}"
-        )
-        print(
-            "   Reason: "
-            + " | ".join(match["reasons"])
-        )
-        print(
-            f"   URL: "
-            f"{match['url']}"
+            json.dumps(
+                match,
+                ensure_ascii=False,
+                indent=2,
+            )
         )
 
     print()
-    print("=" * 80)
-    print("AUTO MATCHES JSON")
-    print("=" * 80)
-
-    print(
-        json.dumps(
-            auto_matches,
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
+    print("=" * 100)
+    print("END OF STRUCTURE TEST")
+    print("=" * 100)
 
 
 if __name__ == "__main__":
