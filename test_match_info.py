@@ -1,6 +1,7 @@
 import json
 import requests
 
+from collections import defaultdict
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -21,59 +22,10 @@ def utc_to_iran(utc_time):
         return "Unknown"
 
     try:
-        dt = datetime.fromisoformat(
-            utc_time.replace("Z", "+00:00")
-        )
+        dt = datetime.fromisoformat(utc_time.replace("Z", "+00:00"))
         return dt.astimezone(IRAN_TZ).strftime("%Y-%m-%d %H:%M")
     except Exception:
         return "Unknown"
-
-
-def find_stage_like_fields(value, path=""):
-    """فقط فیلدهایی را پیدا می‌کند که احتمال دارد اطلاعات مرحله/راند داشته باشند."""
-    found = []
-
-    if isinstance(value, dict):
-        for key, child in value.items():
-            child_path = f"{path}.{key}" if path else key
-            key_lower = str(key).lower()
-
-            if any(
-                token in key_lower
-                for token in (
-                    "stage",
-                    "round",
-                    "phase",
-                    "leg",
-                    "aggregate",
-                    "matchday",
-                    "matchweek",
-                )
-            ):
-                found.append(
-                    {
-                        "path": child_path,
-                        "value": child,
-                    }
-                )
-
-            found.extend(
-                find_stage_like_fields(
-                    child,
-                    child_path,
-                )
-            )
-
-    elif isinstance(value, list):
-        for index, child in enumerate(value):
-            found.extend(
-                find_stage_like_fields(
-                    child,
-                    f"{path}[{index}]",
-                )
-            )
-
-    return found
 
 
 def get_team_name(team):
@@ -88,27 +40,13 @@ def get_team_name(team):
     )
 
 
-def get_match_time(match):
-    status = match.get("status", {})
-    utc_time = status.get("utcTime")
-
-    return utc_time, utc_to_iran(utc_time)
-
-
 def fetch_matches_for_date(date):
-    url = (
-        "https://www.fotmob.com/api/data/matches"
-        f"?date={date}"
-    )
+    url = f"https://www.fotmob.com/api/data/matches?date={date}"
 
     print()
     print(f"Downloading matches for {date}...")
 
-    response = requests.get(
-        url,
-        headers=HEADERS,
-        timeout=30,
-    )
+    response = requests.get(url, headers=HEADERS, timeout=30)
 
     print("Status code:", response.status_code)
     response.raise_for_status()
@@ -116,96 +54,89 @@ def fetch_matches_for_date(date):
     return response.json()
 
 
+def get_stage_value(match):
+    value = match.get("tournamentStage")
+
+    if value is None:
+        return "MISSING"
+
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False, sort_keys=True)
+
+    return str(value)
+
+
 def main():
     now_iran = datetime.now(IRAN_TZ)
-
-    # فقط یک روز را بررسی می‌کنیم تا تست سریع بماند.
     date = now_iran.strftime("%Y%m%d")
 
     data = fetch_matches_for_date(date)
 
-    all_matches = []
+    grouped = defaultdict(lambda: defaultdict(list))
+    total_matches = 0
 
     for league in data.get("leagues", []):
         league_name = league.get("name", "Unknown League")
         league_id = (
-            league.get("id")
+            league.get("primaryId")
+            or league.get("id")
             or league.get("leagueId")
             or league.get("competitionId")
         )
 
         for match in league.get("matches", []):
-            all_matches.append(
+            total_matches += 1
+
+            stage = get_stage_value(match)
+
+            grouped[(str(league_id), league_name)][stage].append(
                 {
-                    "league": league_name,
-                    "league_id": league_id,
-                    "match": match,
+                    "id": match.get("id"),
+                    "home": get_team_name(match.get("home")),
+                    "away": get_team_name(match.get("away")),
+                    "utc": match.get("status", {}).get("utcTime"),
+                    "iran": utc_to_iran(
+                        match.get("status", {}).get("utcTime")
+                    ),
                 }
             )
 
     print()
-    print("=" * 100)
-    print("RAW MATCH LIST STRUCTURE TEST")
-    print("=" * 100)
+    print("=" * 110)
+    print("FOTMOB TOURNAMENT STAGE GROUPING TEST")
+    print("=" * 110)
     print("Iran now:", now_iran.strftime("%Y-%m-%d %H:%M:%S"))
-    print("Total matches:", len(all_matches))
-    print("Only the first 15 matches will be inspected.")
-    print("=" * 100)
+    print("Date:", date)
+    print("Total matches:", total_matches)
+    print("Unique competitions:", len(grouped))
+    print("=" * 110)
 
-    for index, item in enumerate(all_matches[:15], start=1):
-        match = item["match"]
-        home = get_team_name(match.get("home"))
-        away = get_team_name(match.get("away"))
-        utc_time, iran_time = get_match_time(match)
-
+    for (league_id, league_name), stages in sorted(
+        grouped.items(),
+        key=lambda item: (item[0][1].lower(), item[0][0]),
+    ):
         print()
-        print("-" * 100)
-        print(f"{index}. {home} 🆚 {away}")
-        print(f"Competition: {item['league']}")
-        print(f"Competition ID: {item['league_id']}")
-        print(f"Match ID: {match.get('id')}")
-        print(f"UTC: {utc_time}")
-        print(f"Iran: {iran_time}")
+        print("-" * 110)
+        print(f"{league_name} (competition ID: {league_id})")
+        print("-" * 110)
 
-        print()
-        print("TOP-LEVEL MATCH KEYS:")
-        print(
-            json.dumps(
-                list(match.keys()),
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        for stage, matches in sorted(stages.items(), key=lambda item: item[0]):
+            print(f"  tournamentStage = {stage!r} | matches = {len(matches)}")
 
-        print()
-        print("STAGE / ROUND / LEG / AGGREGATE-LIKE FIELDS:")
-        stage_fields = find_stage_like_fields(match)
-
-        if stage_fields:
-            print(
-                json.dumps(
-                    stage_fields,
-                    ensure_ascii=False,
-                    indent=2,
+            for match in matches[:3]:
+                print(
+                    f"    - {match['home']} vs {match['away']} "
+                    f"| match={match['id']} "
+                    f"| Iran={match['iran']}"
                 )
-            )
-        else:
-            print("NONE FOUND")
 
-        print()
-        print("RAW MATCH OBJECT:")
-        print(
-            json.dumps(
-                match,
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+            if len(matches) > 3:
+                print(f"    ... +{len(matches) - 3} more")
 
     print()
-    print("=" * 100)
-    print("END OF STRUCTURE TEST")
-    print("=" * 100)
+    print("=" * 110)
+    print("END OF GROUPING TEST")
+    print("=" * 110)
 
 
 if __name__ == "__main__":
