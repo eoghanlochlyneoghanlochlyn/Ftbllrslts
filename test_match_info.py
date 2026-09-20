@@ -33,7 +33,10 @@ def fetch_page(date_value):
     )
     response.raise_for_status()
 
-    print(f"HTTP: {response.status_code} | HTML: {len(response.text):,} bytes")
+    print(
+        f"HTTP: {response.status_code} | "
+        f"HTML: {len(response.text):,} bytes"
+    )
     return response.text
 
 
@@ -42,13 +45,16 @@ def clean_text(value):
 
 
 def decode_rsc(text):
-    return (
-        text.replace(r"\/", "/")
-        .replace(r'\"', '"')
-        .replace(r"\\n", "
+    """
+    Decode the basic escaping used inside Next.js RSC script payloads.
+    This is deliberately conservative: we do not execute JavaScript.
+    """
+    text = text.replace(r"\/", "/")
+    text = text.replace(r"\"", '"')
+    text = text.replace(r"\\n", "
 ")
-        .replace(r"\\", "\")
-    )
+    text = text.replace(r"\\", "\")
+    return text
 
 
 def find_rsc_payloads(html):
@@ -57,6 +63,7 @@ def find_rsc_payloads(html):
 
     for script in soup.find_all("script"):
         text = script.string or script.get_text()
+
         if not text:
             continue
 
@@ -68,7 +75,8 @@ def find_rsc_payloads(html):
 
 def diagnostic_rsc(html):
     payloads = find_rsc_payloads(html)
-    combined = decode_rsc("\n".join(payloads))
+    combined = decode_rsc("
+".join(payloads))
 
     print()
     print("-" * 100)
@@ -93,8 +101,8 @@ def diagnostic_rsc(html):
         print(f"{marker}: {combined.count(marker)}")
 
     match_positions = [
-        m.start()
-        for m in re.finditer(r"/match/", combined)
+        match.start()
+        for match in re.finditer(r"/match/", combined)
     ]
 
     print(f"/match/ occurrences: {len(match_positions)}")
@@ -102,10 +110,12 @@ def diagnostic_rsc(html):
     if match_positions:
         print()
         print("SAMPLES AROUND /match/:")
+
         for index, position in enumerate(match_positions[:5], 1):
             start = max(0, position - 700)
             end = min(len(combined), position + 1400)
             snippet = clean_text(combined[start:end])
+
             print()
             print(f"--- SAMPLE {index} ---")
             print(snippet)
@@ -113,11 +123,18 @@ def diagnostic_rsc(html):
         print()
         print("No /match/ found in relevant script blocks.")
 
-        for marker in ("matchId", "homeTeam", "awayTeam", "tournament"):
+        for marker in (
+            "matchId",
+            "homeTeam",
+            "awayTeam",
+            "tournament",
+        ):
             position = combined.find(marker)
+
             if position != -1:
                 start = max(0, position - 500)
                 end = min(len(combined), position + 1500)
+
                 print()
                 print(f"--- SAMPLE AROUND {marker} ---")
                 print(clean_text(combined[start:end]))
@@ -138,6 +155,7 @@ def extract_match_id(href):
 
     for pattern in patterns:
         match = re.search(pattern, href)
+
         if match:
             return match.group(1)
 
@@ -189,7 +207,8 @@ def find_match_links(html):
 
         if (
             match_id not in matches
-            or len(item["context"]) > len(matches[match_id]["context"])
+            or len(item["context"])
+            > len(matches[match_id]["context"])
         ):
             matches[match_id] = item
 
@@ -206,7 +225,12 @@ def parse_teams(anchor_text, context):
     )
 
     for pattern in patterns:
-        parts = re.split(pattern, text, maxsplit=1, flags=re.I)
+        parts = re.split(
+            pattern,
+            text,
+            maxsplit=1,
+            flags=re.I,
+        )
 
         if len(parts) == 2:
             return parts[0].strip(), parts[1].strip()
@@ -214,7 +238,12 @@ def parse_teams(anchor_text, context):
     text = clean_text(context)
 
     for pattern in patterns:
-        parts = re.split(pattern, text, maxsplit=1, flags=re.I)
+        parts = re.split(
+            pattern,
+            text,
+            maxsplit=1,
+            flags=re.I,
+        )
 
         if len(parts) == 2:
             return parts[0].strip(), parts[1].strip()
@@ -252,19 +281,37 @@ def find_competition(context, home, away, stage):
 
     for team in (home, away):
         if team and team != "نامشخص":
-            text = re.sub(re.escape(team), " ", text, flags=re.I)
+            text = re.sub(
+                re.escape(team),
+                " ",
+                text,
+                flags=re.I,
+            )
 
     if stage != "نامشخص":
-        text = re.sub(re.escape(stage), " ", text, flags=re.I)
+        text = re.sub(
+            re.escape(stage),
+            " ",
+            text,
+            flags=re.I,
+        )
 
-    text = re.sub(r"\b\d{1,2}:\d{2}\b", " ", text)
+    text = re.sub(
+        r"\b\d{1,2}:\d{2}\b",
+        " ",
+        text,
+    )
     text = re.sub(
         r"\b(?:Today|Tomorrow|Yesterday)\b",
         " ",
         text,
         flags=re.I,
     )
-    text = re.sub(r"\b\d{1,3}\s*[-–]\s*\d{1,3}\b", " ", text)
+    text = re.sub(
+        r"\b\d{1,3}\s*[-–]\s*\d{1,3}\b",
+        " ",
+        text,
+    )
     text = clean_text(text)
 
     return text or "نامشخص"
@@ -352,7 +399,10 @@ def main():
     print()
 
     for index, match in enumerate(matches, 1):
-        print(f"{index:03d}. {match['home']}  vs  {match['away']}")
+        print(
+            f"{index:03d}. "
+            f"{match['home']}  vs  {match['away']}"
+        )
         print(f"     رقابت: {match['competition']}")
         print(f"     مرحله: {match['stage']}")
         print(f"     ID:     {match['id']}")
