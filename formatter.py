@@ -1642,6 +1642,7 @@ def build_half_time_message(
 def build_red_card_message(
     snapshot,
     event,
+    score=None,
 ):
     home_name = get_display_team_name(
         snapshot,
@@ -1696,9 +1697,17 @@ def build_red_card_message(
             f"⏱ دقیقه {minute}"
         )
 
-    lines.append(
-        f"{home_name} 🆚 {away_name}"
+    score_text = format_score(
+        score,
+        home_name,
+        away_name,
     )
+
+    if score_text:
+        lines.append("")
+        lines.append(
+            score_text
+        )
 
     return "\n".join(
         lines
@@ -1751,6 +1760,7 @@ def build_event_message(
             return build_red_card_message(
                 snapshot,
                 event,
+                score,
             )
 
     return ""
@@ -2611,22 +2621,23 @@ def _build_rich_match_header(
             }
         )
 
-    kickoff = (
-        snapshot.get(
-            "start_formatted"
+    if not show_final_score:
+        kickoff = (
+            snapshot.get(
+                "start_formatted"
+            )
+            or "نامشخص"
         )
-        or "نامشخص"
-    )
 
-    blocks.append(
-        {
-            "type": "paragraph",
-            "text": (
-                f"🕐 {kickoff} "
-                f"به وقت ایران"
-            ),
-        }
-    )
+        blocks.append(
+            {
+                "type": "paragraph",
+                "text": (
+                    f"🕐 {kickoff} "
+                    f"به وقت ایران"
+                ),
+            }
+        )
 
     return blocks
 
@@ -2796,12 +2807,37 @@ def build_final_stats_rich_message(
     ):
         stats = {}
 
+    league = get_competition_display_name(snapshot)
+
     blocks = [
+        {
+            "type": "paragraph",
+            "text": f"🏆 {league}",
+        }
+    ]
+
+    aggregate = snapshot.get("aggregate")
+    if (
+        snapshot.get("is_second_leg")
+        and isinstance(aggregate, dict)
+        and aggregate.get("text")
+    ):
+        blocks.append(
+            {
+                "type": "paragraph",
+                "text": (
+                    "مجموع دو بازی: "
+                    + str(aggregate["text"])
+                ),
+            }
+        )
+
+    blocks.append(
         {
             "type": "paragraph",
             "text": "📊 آمار بازی",
         }
-    ]
+    )
 
     if score is None:
         score = snapshot.get(
