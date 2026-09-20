@@ -338,6 +338,69 @@ def format_score(
     )
 
 
+def format_aggregate_score(
+    aggregate,
+    penalty_score=None,
+):
+    if not isinstance(
+        aggregate,
+        dict,
+    ):
+        return ""
+
+    home_score = aggregate.get("home")
+    away_score = aggregate.get("away")
+
+    if home_score is None or away_score is None:
+        return ""
+
+    try:
+        home_score = int(home_score)
+        away_score = int(away_score)
+    except (
+        TypeError,
+        ValueError,
+    ):
+        return ""
+
+    penalty_home = None
+    penalty_away = None
+
+    if isinstance(
+        penalty_score,
+        dict,
+    ):
+        penalty_home = penalty_score.get("home")
+        penalty_away = penalty_score.get("away")
+
+        try:
+            if (
+                penalty_home is not None
+                and penalty_away is not None
+            ):
+                penalty_home = int(penalty_home)
+                penalty_away = int(penalty_away)
+        except (
+            TypeError,
+            ValueError,
+        ):
+            penalty_home = None
+            penalty_away = None
+
+    if (
+        penalty_home is not None
+        and penalty_away is not None
+    ):
+        return (
+            f"{home_score} ({penalty_home}) - "
+            f"{away_score} ({penalty_away})"
+        )
+
+    return (
+        f"{home_score} - {away_score}"
+    )
+
+
 def has_valid_score(
     score,
 ):
@@ -2589,7 +2652,10 @@ def _build_rich_match_header(
                     "type": "paragraph",
                     "text": (
                         "مجموع دو بازی: "
-                        + str(aggregate["text"])
+                        + format_aggregate_score(
+                            aggregate,
+                            snapshot.get("penalty_score"),
+                        )
                     ),
                 }
             )
@@ -2855,7 +2921,10 @@ def build_final_stats_rich_message(
                 "type": "paragraph",
                 "text": (
                     "مجموع دو بازی: "
-                    + str(aggregate["text"])
+                    + format_aggregate_score(
+                        aggregate,
+                        snapshot.get("penalty_score"),
+                    )
                 ),
             }
         )
