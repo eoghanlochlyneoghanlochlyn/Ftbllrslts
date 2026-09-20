@@ -919,6 +919,7 @@ def _translate_round_name(value):
         "playoffs": "پلی‌آف",
         "play-off": "پلی‌آف",
         "final": "فینال",
+        "bronze": "رده بندی",
         "semi-final": "نیمه‌نهایی",
         "semifinal": "نیمه‌نهایی",
         "quarter-final": "یک‌چهارم نهایی",
