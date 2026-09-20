@@ -4,15 +4,56 @@ import requests
 
 
 MATCH_URLS = [
+    # Europa League 2024/25 - Roma vs Porto
+    "https://www.fotmob.com/matches/roma-vs-fc-porto/2tfyxz",
+
+    # Europa League 2024/25 - Bodo/Glimt vs Twente
+    "https://www.fotmob.com/matches/bodoglimt-vs-fc-twente/2e68pm",
+
+    # Europa League 2024/25 - Manchester United vs Lyon
+    "https://www.fotmob.com/matches/lyon-vs-manchester-united/3b6jpk",
+
+    # Champions League 2025/26 - Real Madrid vs Benfica
     "https://www.fotmob.com/matches/real-madrid-vs-benfica/2sumx7#5161859",
-    "https://www.fotmob.com/matches/real-madrid-vs-benfica/2sumx7#5161860",
+
+    # Champions League 2025/26 - Manchester City vs Real Madrid
     "https://www.fotmob.com/matches/manchester-city-vs-real-madrid/2ey0nu#5205731",
-    "https://www.fotmob.com/matches/manchester-city-vs-real-madrid/2ey0nu#5205732",
+
+    # Champions League 2025/26 - Bayern Munich vs Real Madrid
     "https://www.fotmob.com/matches/real-madrid-vs-bayern-munchen/2tes97#5205791",
-    "https://www.fotmob.com/matches/real-madrid-vs-bayern-munchen/2tes97#5205792",
-    "https://www.fotmob.com/matches/bayern-munchen-vs-paris-saint-germain/376tlg#5205811",
-    "https://www.fotmob.com/matches/bayern-munchen-vs-paris-saint-germain/376tlg#5205812",
 ]
+
+
+SPECIAL_KEYS = {
+    "aggregate",
+    "aggregatescore",
+    "aggregatescores",
+    "aggregate_score",
+    "aggregateScore",
+    "aggregateScores",
+    "penalty",
+    "penalties",
+    "penaltyscore",
+    "penaltyscores",
+    "penalty_score",
+    "penaltyScore",
+    "penaltyScores",
+    "winner",
+    "winnerteam",
+    "winnerTeam",
+    "result",
+    "matchresult",
+    "matchResult",
+    "leg",
+    "leginfo",
+    "legInfo",
+    "bestof",
+    "bestOf",
+    "secondleg",
+    "secondLeg",
+    "firstleg",
+    "firstLeg",
+}
 
 
 def get_next_data(html):
@@ -28,94 +69,102 @@ def get_next_data(html):
     return json.loads(match.group(1))
 
 
-def get_match_data(data):
-    try:
-        page_props = data["props"]["pageProps"]
-        return page_props
-    except (KeyError, TypeError):
-        return None
+def walk_special_keys(obj, path="root", depth=0, results=None):
+    if results is None:
+        results = []
 
+    if depth > 15:
+        return results
 
-def print_team_form(team_form, teams):
-    if not isinstance(team_form, list):
-        print("TEAM FORM: not found")
-        return
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            key_text = str(key)
+            normalized = key_text.lower()
 
-    print()
-    print("TEAM FORM")
-    print("-" * 100)
-
-    for team_index, matches in enumerate(team_form):
-        team_name = "UNKNOWN"
-
-        if isinstance(teams, list) and team_index < len(teams):
-            team = teams[team_index]
-
-            if isinstance(team, dict):
-                team_name = (
-                    team.get("name")
-                    or team.get("teamName")
-                    or team.get("shortName")
-                    or "UNKNOWN"
+            if (
+                normalized in {x.lower() for x in SPECIAL_KEYS}
+                or "aggregate" in normalized
+                or "penalty" in normalized
+                or normalized in {
+                    "winner",
+                    "winnerteam",
+                    "result",
+                    "matchresult",
+                    "leg",
+                    "leginfo",
+                    "bestof",
+                }
+            ):
+                results.append(
+                    (
+                        path + "." + key_text,
+                        value,
+                    )
                 )
 
-        print()
-        print("TEAM:", team_name)
-        print()
+            if isinstance(value, (dict, list)):
+                walk_special_keys(
+                    value,
+                    path + "." + key_text,
+                    depth + 1,
+                    results,
+                )
 
-        if not isinstance(matches, list):
-            print(matches)
-            continue
+    elif isinstance(obj, list):
+        for index, value in enumerate(obj):
+            if isinstance(value, (dict, list)):
+                walk_special_keys(
+                    value,
+                    path + "[" + str(index) + "]",
+                    depth + 1,
+                    results,
+                )
 
-        for index, item in enumerate(matches):
-            if not isinstance(item, dict):
-                print(index, ":", item)
+    return results
+
+
+def get_info_box(data):
+    try:
+        return (
+            data["props"]
+            ["pageProps"]
+            ["content"]
+            ["matchFacts"]
+            ["infoBox"]
+        )
+    except (KeyError, TypeError):
+        return {}
+
+
+def print_basic_info(data):
+    page_props = data["props"]["pageProps"]
+
+    header = page_props.get("header", {})
+    info_box = get_info_box(data)
+
+    print()
+    print("BASIC MATCH DATA")
+    print("-" * 100)
+
+    teams = header.get("teams", [])
+
+    if isinstance(teams, list):
+        for index, team in enumerate(teams):
+            if not isinstance(team, dict):
                 continue
 
-            print("MATCH", index + 1)
             print(
-                json.dumps(
-                    item,
-                    ensure_ascii=False,
-                    indent=2,
-                )
+                f"TEAM {index + 1}:",
+                team.get("name"),
+                "| score =",
+                team.get("score"),
+                "| id =",
+                team.get("id"),
             )
 
-
-def print_header_scores(header):
-    print()
-    print("CURRENT MATCH HEADER")
-    print("-" * 100)
-
-    teams = header.get("teams")
-
-    if not isinstance(teams, list):
-        print("TEAMS NOT FOUND")
-        return
-
-    for index, team in enumerate(teams):
-        if not isinstance(team, dict):
-            continue
-
-        print(
-            index,
-            "|",
-            team.get("name"),
-            "| score =",
-            team.get("score"),
-            "| id =",
-            team.get("id"),
-        )
-
-
-def print_leg_info(info_box):
-    print()
-    print("TOURNAMENT / LEG")
-    print("-" * 100)
-
     tournament = info_box.get("Tournament")
-    leg_info = info_box.get("legInfo")
 
+    print()
     print(
         "TOURNAMENT:",
         json.dumps(
@@ -125,58 +174,59 @@ def print_leg_info(info_box):
         ),
     )
 
+    print()
     print(
         "LEG INFO:",
         json.dumps(
-            leg_info,
+            info_box.get("legInfo"),
             ensure_ascii=False,
             indent=2,
         ),
     )
 
 
-def find_match_related_data(obj, path="root", depth=0):
-    if depth > 8:
+def print_special_data(data):
+    print()
+    print("SPECIAL DATA")
+    print("-" * 100)
+
+    results = walk_special_keys(data)
+
+    if not results:
+        print("NO SPECIAL DATA FOUND")
         return
 
-    if isinstance(obj, dict):
-        for key, value in obj.items():
-            key_text = str(key).lower()
+    seen = set()
 
-            if key_text in {
-                "aggregate",
-                "aggregatescore",
-                "aggregatescores",
-                "penaltyscore",
-                "penaltyscores",
-                "winner",
-                "winnerteam",
-            }:
-                print()
-                print("SPECIAL KEY:", path + "." + str(key))
-                print(
-                    json.dumps(
-                        value,
-                        ensure_ascii=False,
-                        indent=2,
-                    )
-                )
+    for path, value in results:
+        key = (
+            path,
+            json.dumps(
+                value,
+                ensure_ascii=False,
+                sort_keys=True,
+                default=str,
+            ),
+        )
 
-            if isinstance(value, (dict, list)):
-                find_match_related_data(
-                    value,
-                    path + "." + str(key),
-                    depth + 1,
-                )
+        if key in seen:
+            continue
 
-    elif isinstance(obj, list):
-        for index, value in enumerate(obj):
-            if isinstance(value, (dict, list)):
-                find_match_related_data(
-                    value,
-                    path + "[" + str(index) + "]",
-                    depth + 1,
-                )
+        seen.add(key)
+
+        print()
+        print("PATH:")
+        print(path)
+
+        print("VALUE:")
+        print(
+            json.dumps(
+                value,
+                ensure_ascii=False,
+                indent=2,
+                default=str,
+            )
+        )
 
 
 def main():
@@ -191,13 +241,16 @@ def main():
 
     for number, url in enumerate(MATCH_URLS, 1):
         print()
-        print("=" * 100)
+        print("=" * 110)
         print("MATCH", number)
         print(url)
-        print("=" * 100)
+        print("=" * 110)
 
         try:
-            response = session.get(url, timeout=45)
+            response = session.get(
+                url,
+                timeout=45,
+            )
 
             print("HTTP:", response.status_code)
             print("LENGTH:", len(response.text))
@@ -207,33 +260,11 @@ def main():
             data = get_next_data(response.text)
 
             if data is None:
-                print("ERROR: NEXT DATA NOT FOUND")
+                print("ERROR: __NEXT_DATA__ NOT FOUND")
                 continue
 
-            page_props = get_match_data(data)
-
-            if page_props is None:
-                print("ERROR: PAGE PROPS NOT FOUND")
-                continue
-
-            header = page_props.get("header", {})
-            content = page_props.get("content", {})
-            match_facts = content.get("matchFacts", {})
-            info_box = match_facts.get("infoBox", {})
-
-            print_header_scores(header)
-            print_leg_info(info_box)
-
-            teams = header.get("teams")
-            team_form = match_facts.get("teamForm")
-
-            print_team_form(team_form, teams)
-
-            print()
-            print("SPECIAL AGGREGATE / WINNER DATA")
-            print("-" * 100)
-
-            find_match_related_data(data)
+            print_basic_info(data)
+            print_special_data(data)
 
         except Exception as error:
             print()
