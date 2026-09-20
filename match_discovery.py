@@ -101,6 +101,9 @@ def fetch_matches(date_value):
 
     if not match:
         print("[DISCOVERY] __NEXT_DATA__ not found")
+        print("[DISCOVERY] HTML length:", len(html))
+        print("[DISCOVERY] Match links:", len(re.findall(r"/matches/[^"\\s<]+", html)))
+        print("[DISCOVERY] Script tags:", len(re.findall(r"<script\\b", html)))
         return []
 
     try:
