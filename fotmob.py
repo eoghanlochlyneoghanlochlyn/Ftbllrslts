@@ -804,18 +804,22 @@ def _parse_score_text(value):
 def extract_aggregate_info(data, leg_info=None):
     """
     aggregate فقط برای بازی برگشت معنی دارد.
+    ابتدا مسیر رسمی infoBox.legInfo را می‌خواند و در صورت نبودن
+    مقدار، کل داده را فقط برای کلیدهای مشخص aggregate جست‌وجو می‌کند.
     """
     leg_info = leg_info or extract_leg_info(data)
 
+    empty = {
+        "home": None,
+        "away": None,
+        "text": None,
+        "winner": None,
+        "loser": None,
+        "tied": False,
+    }
+
     if not leg_info.get("is_second_leg"):
-        return {
-            "home": None,
-            "away": None,
-            "text": None,
-            "winner": None,
-            "loser": None,
-            "tied": False,
-        }
+        return empty
 
     info_box = get_nested(
         data,
@@ -854,15 +858,30 @@ def extract_aggregate_info(data, leg_info=None):
         )
 
     if aggregate is None:
+        aggregate_value = recursive_find(
+            data,
+            {
+                "aggregatedStr",
+                "aggregateStr",
+                "aggregate",
+            },
+        )
+
+        if isinstance(aggregate_value, dict):
+            aggregate = _coerce_score_pair(
+                aggregate_value
+            )
+        else:
+            aggregate = _parse_score_text(
+                aggregate_value
+            )
+
+    if aggregate is None:
         return {
-            "home": None,
-            "away": None,
-            "text": None,
-            "winner": None,
+            **empty,
             "loser": clean_text(
                 leg_data.get("whoLostOnAggregated")
             ) or None,
-            "tied": False,
         }
 
     winner = None
@@ -939,8 +958,9 @@ def _translate_round_name(value):
 
 def extract_round_info(data):
     """
-    استخراج نام هفته/مرحله/راند از چند ساختار رایج FotMob.
-    اولویت با roundName/tournamentStage و سپس week/matchweek است.
+    استخراج نام هفته/مرحله/راند از ساختارهای FotMob.
+    علاوه بر فیلدهای سطح بالا، اشیای tournament/league/competition
+    و matchesInRound را هم بررسی می‌کند.
     """
     candidates = []
 
@@ -952,35 +972,53 @@ def extract_round_info(data):
         "matchFacts",
     )
 
+    if not isinstance(match_facts, dict):
+        content = get_content(data)
+        match_facts = (
+            content.get("matchFacts", {})
+            if isinstance(content, dict)
+            and isinstance(content.get("matchFacts"), dict)
+            else {}
+        )
+
     if isinstance(match_facts, dict):
         matches_in_round = match_facts.get("matchesInRound")
         if isinstance(matches_in_round, list):
             for item in matches_in_round:
                 if isinstance(item, dict):
-                    for key in ("roundName", "round", "stageName"):
+                    for key in (
+                        "roundName",
+                        "round",
+                        "stageName",
+                        "matchweek",
+                        "matchWeek",
+                        "gameweek",
+                        "week",
+                    ):
                         value = item.get(key)
                         if value is not None:
                             candidates.append(value)
                             break
 
-    general = data.get("general") if isinstance(data, dict) else None
-    if not isinstance(general, dict):
-        general = {}
-
-    header = data.get("header") if isinstance(data, dict) else None
-    if not isinstance(header, dict):
-        header = {}
-
     content = get_content(data)
     if not isinstance(content, dict):
         content = {}
 
-    for container in (
-        general,
-        header,
+    containers = [
+        data.get("general") if isinstance(data, dict) else None,
+        data.get("header") if isinstance(data, dict) else None,
+        get_nested(data, "props", "pageProps", "general"),
+        get_nested(data, "props", "pageProps", "header"),
+        content.get("general"),
+        content.get("header"),
         content,
-        match_facts if isinstance(match_facts, dict) else {},
-    ):
+        match_facts,
+    ]
+
+    for container in containers:
+        if not isinstance(container, dict):
+            continue
+
         for key in (
             "roundName",
             "round",
@@ -992,21 +1030,78 @@ def extract_round_info(data):
             "stageName",
         ):
             value = container.get(key)
+            if isinstance(value, dict):
+                value = (
+                    value.get("name")
+                    or value.get("label")
+                    or value.get("value")
+                )
             if value is not None:
-                if isinstance(value, dict):
-                    value = (
-                        value.get("name")
-                        or value.get("label")
-                        or value.get("value")
-                    )
-                if value is not None:
-                    candidates.append(value)
+                candidates.append(value)
+
+    # در بعضی پاسخ‌های FotMob، مرحله/هفته داخل شیء
+    # tournament/league/competition قرار دارد.
+    def collect_competition_rounds(node):
+        if isinstance(node, dict):
+            is_competition_object = any(
+                key in node
+                for key in (
+                    "tournament",
+                    "league",
+                    "competition",
+                    "uniqueTournament",
+                    "leagueName",
+                    "tournamentName",
+                    "competitionName",
+                )
+            )
+
+            if is_competition_object:
+                for key in (
+                    "roundName",
+                    "round",
+                    "matchweek",
+                    "matchWeek",
+                    "gameweek",
+                    "week",
+                    "tournamentStage",
+                    "stageName",
+                ):
+                    value = node.get(key)
+                    if isinstance(value, dict):
+                        value = (
+                            value.get("name")
+                            or value.get("label")
+                            or value.get("value")
+                        )
+                    if value is not None:
+                        candidates.append(value)
+
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    collect_competition_rounds(value)
+
+        elif isinstance(node, list):
+            for item in node:
+                collect_competition_rounds(item)
+
+    collect_competition_rounds(data)
 
     for value in candidates:
         raw = clean_text(value)
         if not raw:
             continue
+
         fa = _translate_round_name(raw)
+
+        # از چاپ شناسه‌های صرفاً عددی به عنوان مرحله جلوگیری می‌کنیم؛
+        # عدد تنها فقط وقتی هفته است که کلید منبع week/matchweek بوده باشد.
+        if raw.isdigit() and not (
+            "week" in raw.lower()
+            or "round" in raw.lower()
+        ):
+            continue
+
         return {
             "raw": raw,
             "name": raw,
@@ -5255,6 +5350,14 @@ def get_match_snapshot(match_url):
     aggregate = extract_aggregate_info(
         data,
         leg_info,
+    )
+
+    print(
+        f"FotMob {match_id}: competition debug | "
+        f"league={league_fa!r} | "
+        f"round_info={round_info!r} | "
+        f"leg_info={leg_info!r} | "
+        f"aggregate={aggregate!r}"
     )
 
     return {
