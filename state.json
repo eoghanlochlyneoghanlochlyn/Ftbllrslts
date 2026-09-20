@@ -434,6 +434,126 @@
           }
         }
       ]
+    },
+    "5785667": {
+      "lineup_sent": true,
+      "fallback_sent": false,
+      "started": true,
+      "half_time": false,
+      "finished": true,
+      "finished_sent": true,
+      "event_keys": [
+        "react:1422519963Goal1213413undefinedtrue",
+        "react:1422522272Card1650721undefinedfalse",
+        "react:1422527186Goal988846undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1422519963Goal1213413undefinedtrue",
+          "player_id": 1213413,
+          "player_name": "Hugo Oliveira",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "63",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2255,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1422519963Goal1213413undefinedtrue",
+            "timeStr": 63,
+            "type": "goal",
+            "time": 63,
+            "overloadTime": null,
+            "eventId": 14225199,
+            "player": {
+              "id": 1213413,
+              "name": "Hugo Oliveira",
+              "profileUrl": "/players/1213413/hugo-oliveira"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1213413/hugo-oliveira",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Hugo Oliveira",
+            "firstName": "Hugo",
+            "lastName": "Oliveira",
+            "fullName": "Hugo Oliveira",
+            "playerId": 1213413,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "react:1422527186Goal988846undefinedtrue",
+          "player_id": 988846,
+          "player_name": "Franca",
+          "assist_player_id": 1190510,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "86",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2257,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1422527186Goal988846undefinedtrue",
+            "timeStr": 86,
+            "type": "goal",
+            "time": 86,
+            "overloadTime": null,
+            "eventId": 14225271,
+            "player": {
+              "id": 988846,
+              "name": "Franca",
+              "profileUrl": "/players/988846/franca"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/988846/franca",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Franca",
+            "firstName": "",
+            "lastName": "Franca",
+            "fullName": "Franca",
+            "playerId": 988846,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Edgar Grigoryan",
+            "assistProfileUrl": "/players/1190510/edgar-grigoryan",
+            "assistPlayerId": 1190510,
+            "assistKey": "assist_by",
+            "assistInput": "Edgar Grigoryan"
+          }
+        }
+      ]
     }
   }
 }
