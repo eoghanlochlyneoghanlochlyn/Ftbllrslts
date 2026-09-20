@@ -1,84 +1,69 @@
 from fotmob import fetch_match_page, extract_next_data
 
+
 MATCH_ID = "6050065"
 
-TARGET_WORDS = (
-"round",
-"week",
-"matchweek",
-"gameweek",
-"stage",
-)
 
-def looks_relevant(key):
-if not isinstance(key, str):
-return False
+def find_keys(data, path=""):
+    if isinstance(data, dict):
+        for key, value in data.items():
+            current_path = f"{path}.{key}" if path else str(key)
 
-```
-key_lower = key.lower()
+            key_text = str(key).lower()
 
-return any(
-    word in key_lower
-    for word in TARGET_WORDS
-)
-```
+            if (
+                "round" in key_text
+                or "week" in key_text
+                or "stage" in key_text
+            ):
+                print("\n" + "=" * 100)
+                print("PATH:")
+                print(current_path)
+                print("KEY:")
+                print(repr(key))
+                print("TYPE:")
+                print(type(value).__name__)
+                print("VALUE:")
 
-def walk(node, path=()):
-if isinstance(node, dict):
-for key, value in node.items():
-current_path = path + (str(key),)
+                if isinstance(value, (dict, list)):
+                    print(repr(value)[:10000])
+                else:
+                    print(repr(value))
 
-```
-        if looks_relevant(key):
-            print()
-            print("=" * 100)
-            print("KEY:")
-            print(".".join(current_path))
-            print("VALUE TYPE:")
-            print(type(value).__name__)
-            print("VALUE:")
+            find_keys(value, current_path)
 
-            if isinstance(value, (dict, list)):
-                print(repr(value)[:5000])
-            else:
-                print(repr(value))
+    elif isinstance(data, list):
+        for index, item in enumerate(data):
+            current_path = f"{path}[{index}]"
+            find_keys(item, current_path)
 
-        walk(value, current_path)
-
-elif isinstance(node, list):
-    for index, item in enumerate(node):
-        current_path = path + (f"[{index}]",)
-        walk(item, current_path)
-```
 
 def main():
-print(f"Fetching FotMob page for match {MATCH_ID}...")
+    print("Fetching FotMob page...")
+    print("Match ID:", MATCH_ID)
 
-```
-html = fetch_match_page(MATCH_ID)
+    html = fetch_match_page(MATCH_ID)
 
-if not html:
-    print("ERROR: Could not fetch FotMob page.")
-    return
+    if not html:
+        print("ERROR: FotMob page could not be fetched.")
+        return
 
-print(f"HTML length: {len(html)}")
+    print("HTML length:", len(html))
 
-data = extract_next_data(html)
+    data = extract_next_data(html)
 
-if not isinstance(data, dict):
-    print("ERROR: Could not extract __NEXT_DATA__.")
-    return
+    if not isinstance(data, dict):
+        print("ERROR: __NEXT_DATA__ could not be extracted.")
+        return
 
-print("NEXT_DATA extracted successfully.")
-print()
-print("Searching for round/week/stage related keys...")
+    print("NEXT_DATA extracted successfully.")
+    print("\nSearching for round / week / stage fields...")
 
-walk(data)
+    find_keys(data)
 
-print()
-print("=" * 100)
-print("TEST FINISHED.")
-```
+    print("\n" + "=" * 100)
+    print("TEST FINISHED.")
 
-if **name** == "**main**":
-main()
+
+if __name__ == "__main__":
+    main()
