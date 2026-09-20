@@ -3,6 +3,7 @@ import time
 from datetime import datetime, timezone
 
 from fotmob import (
+    is_final_result_ready,
     get_match_events,
     get_match_snapshot,
 )
@@ -1426,9 +1427,7 @@ def process_match(
     # پایان بازی
     # -----------------------------------------------------
 
-    if snapshot.get(
-        "finished"
-    ):
+    if is_final_result_ready(snapshot):
 
         if not match_state.get(
             "finished",
