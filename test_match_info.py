@@ -46,14 +46,9 @@ def clean_text(value):
 
 def decode_rsc(text):
     """
-    Decode the basic escaping used inside Next.js RSC script payloads.
-    This is deliberately conservative: we do not execute JavaScript.
+    Keep the RSC payload as plain text.
+    We intentionally avoid JavaScript decoding here.
     """
-    text = text.replace(r"\/", "/")
-    text = text.replace(r"\"", '"')
-    text = text.replace(r"\\n", "
-")
-    text = text.replace(r"\\", "\")
     return text
 
 
@@ -75,8 +70,7 @@ def find_rsc_payloads(html):
 
 def diagnostic_rsc(html):
     payloads = find_rsc_payloads(html)
-    combined = decode_rsc("
-".join(payloads))
+    combined = decode_rsc(chr(10).join(payloads))
 
     print()
     print("-" * 100)
