@@ -1111,6 +1111,37 @@ def format_scorers(
     return lines
 
 
+def get_competition_display_name(snapshot):
+    if not isinstance(snapshot, dict):
+        return "نامشخص"
+
+    context = snapshot.get("competition_context")
+    if context:
+        return str(context)
+
+    league = (
+        snapshot.get("league_fa")
+        or snapshot.get("league")
+        or "نامشخص"
+    )
+
+    round_info = snapshot.get("round_info")
+    if isinstance(round_info, dict):
+        round_name = (
+            round_info.get("name_fa")
+            or round_info.get("name")
+        )
+        if round_name:
+            league = f"{league} | {round_name}"
+
+    if snapshot.get("is_first_leg"):
+        league = f"{league} | رفت"
+    elif snapshot.get("is_second_leg"):
+        league = f"{league} | برگشت"
+
+    return league
+
+
 # --------------------------------------------------------
 # پیام ترکیب
 # --------------------------------------------------------
@@ -1133,11 +1164,7 @@ def build_lineup_message(
         "away",
     )
 
-    league = (
-        snapshot.get("league_fa")
-        or snapshot.get("league")
-        or "نامشخص"
-    )
+    league = get_competition_display_name(snapshot)
 
     kickoff = (
         snapshot.get(
@@ -2507,11 +2534,7 @@ def _build_rich_match_header(
         "away",
     )
 
-    league = (
-        snapshot.get("league_fa")
-        or snapshot.get("league")
-        or "نامشخص"
-    )
+    league = get_competition_display_name(snapshot)
 
     blocks = [
         {
