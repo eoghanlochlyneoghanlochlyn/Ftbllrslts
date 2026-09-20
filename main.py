@@ -738,9 +738,14 @@ def process_live_events(
 
         if red_card is not None:
 
+            score = get_current_score(
+                match_state
+            )
+
             message = build_red_card_message(
                 snapshot,
                 red_card,
+                score,
             )
 
             if not message:
