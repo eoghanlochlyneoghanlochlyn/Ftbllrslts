@@ -154,55 +154,203 @@ def _short_value(value, limit=800):
     return text if len(text) <= limit else text[:limit] + "...[TRUNCATED]"
 
 
-def collect_stage_fields(node, path="root", results=None):
+def _normalize_stage(value):
+    if value is None:
+        return None
+
+    if isinstance(value, (dict, list)):
+        return None
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    return text
+
+
+def _stage_label_from_object(obj):
+    if not isinstance(obj, dict):
+        return None
+
+    for key in (
+        "name",
+        "title",
+        "label",
+        "displayName",
+        "shortName",
+        "stageName",
+        "roundName",
+    ):
+        value = obj.get(key)
+        if isinstance(value, (str, int, float)) and str(value).strip():
+            return str(value).strip()
+
+    return None
+
+
+def collect_stage_mappings(node, path="root", results=None):
+    """
+    Find actual stage values and nearby human-readable labels.
+
+    The important structures observed in FotMob league payloads are:
+      overview.playoff.rounds[*].stage
+      overview.playoff.rounds[*].matchups[*].stage
+      overview.playoff.rounds[*].matchups[*].matches[*].stage
+
+    We also inspect round/phase objects so this works for competitions
+    whose knockout structure is represented differently.
+    """
     if results is None:
         results = []
 
     if isinstance(node, dict):
         for key, value in node.items():
             current_path = f"{path}.{key}"
+            key_lower = str(key).lower()
 
-            if _is_stage_key(key):
-                results.append((current_path, value))
+            if key_lower in {
+                "stage",
+                "round",
+                "phase",
+                "roundname",
+                "stagename",
+            }:
+                normalized = _normalize_stage(value)
+
+                if normalized is not None:
+                    label = None
+
+                    # The parent object often contains the useful name.
+                    if isinstance(node, dict):
+                        label = _stage_label_from_object(node)
+
+                    results.append({
+                        "path": current_path,
+                        "value": normalized,
+                        "label": label,
+                    })
 
             if isinstance(value, (dict, list)):
-                collect_stage_fields(value, current_path, results)
+                collect_stage_mappings(value, current_path, results)
 
     elif isinstance(node, list):
         for index, value in enumerate(node):
-            collect_stage_fields(value, f"{path}[{index}]", results)
+            collect_stage_mappings(value, f"{path}[{index}]", results)
 
     return results
 
 
+def _stage_sort_key(value):
+    order = {
+        "1/16": 10,
+        "round of 32": 10,
+        "round_of_32": 10,
+        "1/8": 20,
+        "round of 16": 20,
+        "round_of_16": 20,
+        "1/4": 30,
+        "quarter-final": 30,
+        "quarter final": 30,
+        "quarter_final": 30,
+        "1/2": 40,
+        "semi-final": 40,
+        "semi final": 40,
+        "semi_final": 40,
+        "final": 50,
+        "bronze": 60,
+    }
+
+    normalized = str(value).strip().lower()
+    return (order.get(normalized, 100), normalized)
+
+
 def print_stage_mapping(data, configured_item, league_id):
     details = extract_details(data)
+    competition_name = details.get("name") or "UNKNOWN"
 
     print()
-    print("-" * 120)
+    print("-" * 100)
     print(
-        f"COMPETITION {league_id} | {details.get('name')!r} | "
+        f"COMPETITION {league_id} | {competition_name!r} | "
         f"configured_stage={configured_item.get('stage')!r} | "
         f"mode={configured_item.get('mode')!r}"
     )
 
-    fields = collect_stage_fields(data)
+    mappings = collect_stage_mappings(data)
 
-    if not fields:
-        print("  No stage/round/phase/leg/matchday/matchweek fields found.")
+    unique = {}
+
+    for item in mappings:
+        value = item["value"]
+        label = item.get("label")
+        key = (value, label)
+
+        if key not in unique:
+            unique[key] = item["path"]
+
+    if not unique:
+        print("  No usable stage/round/phase mappings found.")
         return
 
-    seen = set()
+    # Prefer mappings from the playoff tree because they represent
+    # actual knockout rounds rather than league matchdays.
+    playoff = []
+    other = []
 
-    for path, value in fields:
-        rendered = _short_value(value)
-        signature = (path, rendered)
+    for (value, label), path in unique.items():
+        row = (value, label, path)
 
-        if signature in seen:
-            continue
+        if ".playoff." in path.lower():
+            playoff.append(row)
+        else:
+            other.append(row)
 
-        seen.add(signature)
-        print(f"  {path} = {rendered}")
+    rows = playoff if playoff else other
+
+    # Collapse duplicate values when the only difference is path.
+    collapsed = {}
+
+    for value, label, path in rows:
+        key = (value, label)
+        collapsed.setdefault(key, path)
+
+    print("  UNIQUE STAGE/ROUND VALUES:")
+
+    for (value, label), path in sorted(
+        collapsed.items(),
+        key=lambda item: _stage_sort_key(item[0][0]),
+    ):
+        if label and label != value:
+            print(f"    {value!r} -> {label!r} | {path}")
+        else:
+            print(f"    {value!r} | {path}")
+
+    configured_stage = configured_item.get("stage")
+
+    if configured_stage:
+        aliases = {
+            "round_of_16": {"1/8", "round of 16", "round_of_16"},
+            "quarter_final": {"1/4", "quarter-final", "quarter final", "quarter_final"},
+            "semi_final": {"1/2", "semi-final", "semi final", "semi_final"},
+            "final": {"final"},
+        }
+
+        allowed = aliases.get(
+            str(configured_stage).lower(),
+            {str(configured_stage).lower()},
+        )
+
+        found = [
+            value
+            for value, _label in collapsed
+            if str(value).lower() in allowed
+        ]
+
+        print(
+            f"  CONFIGURED START STAGE {configured_stage!r}: "
+            f"{found or 'NOT FOUND'}"
+        )
+
 
 
 def main():
