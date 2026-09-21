@@ -114,29 +114,43 @@ EXCLUDED_PREVIOUS_SEASON_NAMES = {
 }
 
 
-def is_excluded_competition(name):
+def is_excluded_competition(name, league_id=None):
+    if league_id is not None and str(league_id) in EXCLUDED_PREVIOUS_SEASON_IDS:
+        return True
+
     if not name:
         return False
+
     normalized = " ".join(str(name).lower().split())
+
     if normalized in EXCLUDED_PREVIOUS_SEASON_NAMES:
         return True
-    return any(fragment in normalized for fragment in ("qualification", "qualifiers", "qualifying"))
+
+    return any(
+        fragment in normalized
+        for fragment in ("qualification", "qualifiers", "qualifying")
+    )
 
 
 def get_previous_season_candidate(current_season):
     if current_season is None:
         return None
+
     text = str(current_season).strip()
+
     if "/" in text:
         parts = text.split("/")
         if len(parts) == 2 and all(part.isdigit() for part in parts):
             start_year = int(parts[0])
             end_year = int(parts[1])
             length = end_year - start_year
+
             if 0 < length <= 3:
                 return f"{start_year - length}/{end_year - length}"
+
     if text.isdigit() and len(text) == 4:
         return str(int(text) - 1)
+
     return None
 
 
@@ -144,7 +158,12 @@ def choose_previous_season(data):
     details = extract_details(data)
     current = details.get("selectedSeason")
     previous = get_previous_season_candidate(current)
-    return (str(current).strip() if current is not None else None, previous, [])
+    return (
+        str(current).strip() if current is not None else None,
+        previous,
+        [],
+    )
+
 
 def normalize_stage(value):
     if value is None or isinstance(value, (dict, list)):
@@ -237,10 +256,9 @@ def summarize_stages(data):
     if not mappings:
         return []
 
-    # If a playoff tree exists, prioritize it over ordinary league
-    # matchdays/round numbers.
     playoff = [
-        item for item in mappings
+        item
+        for item in mappings
         if ".playoff." in item["path"].lower()
     ]
 
@@ -300,7 +318,6 @@ def print_competition_result(
         current_data
     )
 
-    # The second call is explicitly made with the previous season.
     previous_details_season = (
         previous_details.get("selectedSeason")
         or previous_season
