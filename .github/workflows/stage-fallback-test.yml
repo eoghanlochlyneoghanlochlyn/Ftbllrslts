@@ -1,0 +1,47 @@
+name: Stage Fallback Test
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  test-stage-fallback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Validate syntax
+        run: python -m py_compile match_discovery.py fotmob.py
+
+      - name: Test real FotMob knockout page
+        run: |
+          python - <<'PY'
+          from match_discovery import fetch_match_page_stage
+
+          tests = {
+              "4737599": "round_of_16",
+              "3835589": "round_of_16",
+          }
+
+          for match_id, expected in tests.items():
+              actual = fetch_match_page_stage(match_id)
+              print(f"{match_id}: expected={expected}, actual={actual}")
+              if actual != expected:
+                  raise SystemExit(
+                      f"Stage detection failed for {match_id}: "
+                      f"expected {expected}, got {actual}"
+                  )
+
+          print("ALL STAGE FALLBACK TESTS PASSED")
+          PY
