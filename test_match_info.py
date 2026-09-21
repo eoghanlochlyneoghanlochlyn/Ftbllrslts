@@ -135,6 +135,76 @@ def extract_details(data):
     return result
 
 
+def _is_stage_key(key):
+    key = str(key).lower()
+    return any(token in key for token in (
+        "stage", "round", "phase", "leg", "matchday", "matchweek"
+    ))
+
+
+def _short_value(value, limit=800):
+    if isinstance(value, (dict, list)):
+        try:
+            text = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+        except Exception:
+            text = repr(value)
+    else:
+        text = repr(value)
+
+    return text if len(text) <= limit else text[:limit] + "...[TRUNCATED]"
+
+
+def collect_stage_fields(node, path="root", results=None):
+    if results is None:
+        results = []
+
+    if isinstance(node, dict):
+        for key, value in node.items():
+            current_path = f"{path}.{key}"
+
+            if _is_stage_key(key):
+                results.append((current_path, value))
+
+            if isinstance(value, (dict, list)):
+                collect_stage_fields(value, current_path, results)
+
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            collect_stage_fields(value, f"{path}[{index}]", results)
+
+    return results
+
+
+def print_stage_mapping(data, configured_item, league_id):
+    details = extract_details(data)
+
+    print()
+    print("-" * 120)
+    print(
+        f"COMPETITION {league_id} | {details.get('name')!r} | "
+        f"configured_stage={configured_item.get('stage')!r} | "
+        f"mode={configured_item.get('mode')!r}"
+    )
+
+    fields = collect_stage_fields(data)
+
+    if not fields:
+        print("  No stage/round/phase/leg/matchday/matchweek fields found.")
+        return
+
+    seen = set()
+
+    for path, value in fields:
+        rendered = _short_value(value)
+        signature = (path, rendered)
+
+        if signature in seen:
+            continue
+
+        seen.add(signature)
+        print(f"  {path} = {rendered}")
+
+
 def main():
     with open("auto_matches.json", "r", encoding="utf-8") as file:
         config = json.load(file)
@@ -204,6 +274,11 @@ def main():
     verified = []
     verification_failed = []
 
+    print()
+    print("=" * 120)
+    print("EXTRACTING STAGE / ROUND STRUCTURE")
+    print("=" * 120)
+
     for item in configured:
         configured_id = str(item["id"])
 
@@ -232,6 +307,8 @@ def main():
             "details": details,
         })
 
+        print_stage_mapping(data, item, configured_id)
+
     print()
     print("=" * 120)
     print("FINAL RESULT")
@@ -246,8 +323,10 @@ def main():
     print("NOTE:")
     print(
         "This test does not depend on today's matches. "
-        "It uses FotMob's global allLeagues directory and then "
-        "verifies each configured ID with the league endpoint."
+        "It uses FotMob's global allLeagues directory, verifies each "
+        "configured ID with /api/data/leagues, and recursively prints "
+        "stage/round/phase/leg/matchday fields from each competition "
+        "payload without calling matchDetails."
     )
 
 
