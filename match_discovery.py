@@ -521,11 +521,11 @@ def fetch_match_page_stage(match_id):
     text = clean_text(html)
 
     explicit_patterns = (
-        (r"\\bRound\\s+of\\s+32\\b", "round_of_32"),
-        (r"\\bRound\\s+of\\s+16\\b", "round_of_16"),
-        (r"\\bQuarter[- ]?finals?\\b", "quarter_final"),
-        (r"\\bSemi[- ]?finals?\\b", "semi_final"),
-        (r"\\bFinal\\b", "final"),
+        (r"\bRound\s+of\s+32\b", "round_of_32"),
+        (r"\bRound\s+of\s+16\b", "round_of_16"),
+        (r"\bQuarter[- ]?finals?\b", "quarter_final"),
+        (r"\bSemi[- ]?finals?\b", "semi_final"),
+        (r"\bFinal\b", "final"),
     )
 
     for pattern, stage in explicit_patterns:
