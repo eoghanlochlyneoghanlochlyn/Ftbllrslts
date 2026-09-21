@@ -100,7 +100,7 @@ def extract_details(data):
 
 
 # These competitions are intentionally excluded from previous-season testing.
-EXCLUDED_PREVIOUS_SEASON_NAMES = {
+EXCLUDED_PREVIOUS_SEASON_IDS = {\n    "77", "78", "50", "9806", "44", "290", "289", "297",\n    "10607", "10199",\n}\n\n\nEXCLUDED_PREVIOUS_SEASON_NAMES = {
     "world cup", "fifa club world cup", "euro", "european championship",
     "asian cup", "afc asian cup", "africa cup of nations",
     "african cup of nations", "concacaf gold cup", "copa america",
@@ -417,7 +417,7 @@ def main():
 
         competition_name = directory_matches[0].get("name")
 
-        if is_excluded_competition(competition_name):
+        if is_excluded_competition(competition_name, league_id):
             print("  PREVIOUS-SEASON TEST: SKIPPED")
             print("  REASON: excluded national/international competition")
             continue
