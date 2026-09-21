@@ -452,29 +452,70 @@ def build_league_stage_map(data):
     return result
 
 
-def build_stage_cache(candidates):
+def configured_competition_rules(config):
     """
-    برای هر leagueId موجود در کاندیدها فقط یک بار endpoint لیگ را
-    می‌خواند و mapping matchId -> stage می‌سازد.
+    قوانین رقابت‌ها را مستقیماً از auto_matches.json می‌خواند.
+
+    نکته مهم:
+    ساختار یک رقابت نباید از لیست مسابقات روزانه کشف شود؛
+    ممکن است آن رقابت در بازه فعلی هیچ مسابقه‌ای نداشته باشد.
+    """
+    result = {}
+
+    competitions = config.get("competitions", [])
+    if not isinstance(competitions, list):
+        return result
+
+    for rule in competitions:
+        if not isinstance(rule, dict):
+            continue
+
+        league_id = clean_text(rule.get("id"))
+        if league_id:
+            result.setdefault(league_id, []).append(rule)
+
+    return result
+
+
+def build_stage_cache(config):
+    """
+    ساختار playoff فقط برای رقابت‌هایی خوانده می‌شود که در
+    auto_matches.json تعریف شده‌اند و واقعاً به stage نیاز دارند.
+
+    بنابراین:
+    - وجود مسابقه در endpoint روزانه شرط خواندن ساختار نیست.
+    - لیگ‌های عادی و mode=all/team_only اصلاً درخواست stage نمی‌گیرند.
+    - برای هر competition فقط یک درخواست /api/data/leagues داریم.
     """
     cache = {}
-    league_ids = []
+    rules_by_competition = configured_competition_rules(config)
 
-    for match in candidates:
-        league_id = clean_text(match.get("leagueId"))
+    stage_league_ids = []
 
-        if league_id and league_id not in league_ids:
-            league_ids.append(league_id)
+    for league_id, rules in rules_by_competition.items():
+        needs_stage = any(
+            normalize(rule.get("mode") or "all")
+            in {"from", "final_only"}
+            for rule in rules
+        )
+
+        if needs_stage:
+            stage_league_ids.append(league_id)
 
     print(
         f"[STAGE] Building playoff stage cache for "
-        f"{len(league_ids)} competitions"
+        f"{len(stage_league_ids)} configured stage competitions"
     )
 
-    for league_id in league_ids:
+    for league_id in stage_league_ids:
+        rules = rules_by_competition.get(league_id, [])
         data = fetch_league_structure(league_id)
 
         if not data:
+            print(
+                f"[STAGE] League {league_id}: "
+                "structure unavailable"
+            )
             continue
 
         mapping = build_league_stage_map(data)
@@ -487,8 +528,8 @@ def build_stage_cache(candidates):
             )
         else:
             print(
-                f"[STAGE] League {league_id}: "
-                "no playoff stage mappings"
+                f"[STAGE] No playoff structure for competition "
+                f"{league_id}"
             )
 
     return cache
@@ -797,7 +838,14 @@ def main():
         f"{len(candidates)}"
     )
 
-    stage_cache = build_stage_cache(candidates)
+    # ساختار مرحله را از خود competitionهای تعریف‌شده در
+    # auto_matches.json می‌گیریم، نه از competitionهایی که
+    # اتفاقاً در endpoint مسابقات روزانه ظاهر شده‌اند.
+    #
+    # این بخش عمداً مستقل از candidates است؛ بنابراین اگر مثلاً
+    # جام حذفی امروز هیچ مسابقه‌ای نداشته باشد، باز هم ساختار
+    # آن رقابت برای تشخیص مرحله بازی‌های آینده در دسترس است.
+    stage_cache = build_stage_cache(config)
 
     # مرحله مسابقات را قبل از اعمال mode=from/final_only تزریق می‌کنیم.
     for match in candidates:
