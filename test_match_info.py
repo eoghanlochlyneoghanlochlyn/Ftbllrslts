@@ -1,11 +1,7 @@
 import json
 import requests
 from collections import defaultdict
-from datetime import datetime
-from zoneinfo import ZoneInfo
 
-
-IRAN_TZ = ZoneInfo("Asia/Tehran")
 
 HEADERS = {
     "User-Agent": (
@@ -16,20 +12,21 @@ HEADERS = {
     "Accept": "application/json,text/plain,*/*",
 }
 
+BASE_URL = "https://www.fotmob.com/api/data/leagues"
+
 
 def fetch_all_leagues():
-    url = "https://www.fotmob.com/api/data/allLeagues"
-
-    print("Downloading FotMob global league directory...")
-    response = requests.get(url, headers=HEADERS, timeout=30)
-
-    print("Status code:", response.status_code)
+    response = requests.get(
+        "https://www.fotmob.com/api/data/allLeagues",
+        headers=HEADERS,
+        timeout=30,
+    )
+    print("allLeagues:", response.status_code)
     response.raise_for_status()
-
     data = response.json()
 
     if not isinstance(data, dict):
-        raise RuntimeError("FotMob allLeagues returned a non-object payload.")
+        raise RuntimeError("allLeagues returned a non-object payload.")
 
     return data
 
@@ -37,63 +34,48 @@ def fetch_all_leagues():
 def collect_leagues(data):
     found = []
 
-    def walk(node, country=None, category=None):
+    def walk(node):
         if isinstance(node, dict):
-            if (
-                node.get("id") is not None
-                and node.get("name")
-            ):
+            if node.get("id") is not None and node.get("name"):
                 found.append({
-                    "id": node.get("id"),
-                    "name": node.get("name"),
+                    "id": str(node["id"]),
+                    "name": node["name"],
                     "pageUrl": node.get("pageUrl"),
-                    "country": country,
-                    "category": category,
-                    "raw": node,
                 })
 
-            for key, value in node.items():
-                next_category = category
-                if key in ("international", "countries"):
-                    next_category = key
-
-                next_country = country
-                if key == "name" and category == "countries":
-                    next_country = value
-
+            for value in node.values():
                 if isinstance(value, (dict, list)):
-                    walk(value, next_country, next_category)
+                    walk(value)
 
         elif isinstance(node, list):
             for item in node:
-                walk(item, country, category)
+                walk(item)
 
     walk(data)
 
     unique = {}
     for item in found:
-        key = (
-            str(item["id"]),
-            item["name"],
-            item.get("pageUrl"),
-        )
-        unique[key] = item
+        unique[(item["id"], item["name"], item.get("pageUrl"))] = item
 
     return list(unique.values())
 
 
-def fetch_league(league_id):
-    url = "https://www.fotmob.com/api/data/leagues"
+def fetch_league(league_id, season=None):
+    params = {"id": league_id}
+
+    if season:
+        params["season"] = season
 
     response = requests.get(
-        url,
-        params={"id": league_id},
+        BASE_URL,
+        params=params,
         headers=HEADERS,
-        timeout=30,
+        timeout=45,
     )
 
     print(
-        f"  league endpoint id={league_id}: "
+        f"  leagues?id={league_id}"
+        f"{'&season=' + str(season) if season else ''}: "
         f"HTTP {response.status_code}"
     )
 
@@ -105,10 +87,7 @@ def fetch_league(league_id):
     except Exception:
         return None
 
-    if not isinstance(data, dict):
-        return None
-
-    return data
+    return data if isinstance(data, dict) else None
 
 
 def extract_details(data):
@@ -117,91 +96,107 @@ def extract_details(data):
     if not isinstance(details, dict):
         return {}
 
-    result = {}
-    for key in (
-        "id",
-        "name",
-        "type",
-        "selectedSeason",
-        "pageUrl",
-        "ccode",
-        "country",
-        "primaryId",
-        "parentLeagueId",
-    ):
-        if key in details:
-            result[key] = details[key]
-
-    return result
+    return details
 
 
-def _is_stage_key(key):
-    key = str(key).lower()
-    return any(token in key for token in (
-        "stage", "round", "phase", "leg", "matchday", "matchweek"
-    ))
+def get_available_seasons(data):
+    seasons = data.get("seasons", [])
+
+    if not isinstance(seasons, list):
+        return []
+
+    result = []
+
+    for item in seasons:
+        if isinstance(item, dict):
+            value = item.get("id") or item.get("season") or item.get("name")
+        else:
+            value = item
+
+        if value is not None and str(value).strip():
+            result.append(str(value).strip())
+
+    # Keep order returned by FotMob, but remove duplicates.
+    return list(dict.fromkeys(result))
 
 
-def _short_value(value, limit=800):
-    if isinstance(value, (dict, list)):
-        try:
-            text = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
-        except Exception:
-            text = repr(value)
-    else:
-        text = repr(value)
+def choose_previous_season(data):
+    details = extract_details(data)
+    current = details.get("selectedSeason")
 
-    return text if len(text) <= limit else text[:limit] + "...[TRUNCATED]"
+    seasons = get_available_seasons(data)
+
+    if not seasons:
+        return current, None, []
+
+    if current is not None:
+        current = str(current)
+
+    # FotMob normally returns seasons newest -> oldest.
+    if current in seasons:
+        index = seasons.index(current)
+
+        if index + 1 < len(seasons):
+            return current, seasons[index + 1], seasons
+
+    # Fallback: if selectedSeason is missing/not listed, use the
+    # first available season as current and the second as previous.
+    if len(seasons) >= 2:
+        return current or seasons[0], seasons[1], seasons
+
+    return current or seasons[0], None, seasons
 
 
-def _normalize_stage(value):
-    if value is None:
+def normalize_stage(value):
+    if value is None or isinstance(value, (dict, list)):
         return None
 
-    if isinstance(value, (dict, list)):
-        return None
-
-    text = str(value).strip()
-    if not text:
-        return None
-
-    return text
+    value = str(value).strip()
+    return value or None
 
 
-def _stage_label_from_object(obj):
-    if not isinstance(obj, dict):
-        return None
+def stage_key(value):
+    text = str(value).strip().lower()
 
-    for key in (
-        "name",
-        "title",
-        "label",
-        "displayName",
-        "shortName",
-        "stageName",
-        "roundName",
-    ):
-        value = obj.get(key)
-        if isinstance(value, (str, int, float)) and str(value).strip():
-            return str(value).strip()
+    aliases = {
+        "round of 32": "round_of_32",
+        "round_of_16": "round_of_16",
+        "round of 16": "round_of_16",
+        "quarter-final": "quarter_final",
+        "quarter final": "quarter_final",
+        "quarter_final": "quarter_final",
+        "semi-final": "semi_final",
+        "semi final": "semi_final",
+        "semi_final": "semi_final",
+        "final": "final",
+        "bronze": "bronze",
+    }
 
-    return None
+    return aliases.get(text, text)
 
 
-def collect_stage_mappings(node, path="root", results=None):
-    """
-    Find actual stage values and nearby human-readable labels.
+def stage_sort_key(value):
+    order = {
+        "preliminary round": 1,
+        "round_of_32": 10,
+        "1/16": 10,
+        "round_of_16": 20,
+        "1/8": 20,
+        "quarter_final": 30,
+        "1/4": 30,
+        "semi_final": 40,
+        "1/2": 40,
+        "bronze": 45,
+        "final": 50,
+    }
 
-    The important structures observed in FotMob league payloads are:
-      overview.playoff.rounds[*].stage
-      overview.playoff.rounds[*].matchups[*].stage
-      overview.playoff.rounds[*].matchups[*].matches[*].stage
+    normalized = stage_key(value)
+    return (order.get(normalized, 100), normalized)
 
-    We also inspect round/phase objects so this works for competitions
-    whose knockout structure is represented differently.
-    """
-    if results is None:
-        results = []
+
+def collect_stage_values(node, path="root", result=None):
+    if result is None:
+        result = []
 
     if isinstance(node, dict):
         for key, value in node.items():
@@ -211,146 +206,151 @@ def collect_stage_mappings(node, path="root", results=None):
             if key_lower in {
                 "stage",
                 "round",
-                "phase",
                 "roundname",
                 "stagename",
+                "phase",
             }:
-                normalized = _normalize_stage(value)
+                normalized = normalize_stage(value)
 
-                if normalized is not None:
-                    label = None
-
-                    # The parent object often contains the useful name.
-                    if isinstance(node, dict):
-                        label = _stage_label_from_object(node)
-
-                    results.append({
-                        "path": current_path,
+                if normalized:
+                    result.append({
                         "value": normalized,
-                        "label": label,
+                        "path": current_path,
                     })
 
             if isinstance(value, (dict, list)):
-                collect_stage_mappings(value, current_path, results)
+                collect_stage_values(value, current_path, result)
 
     elif isinstance(node, list):
         for index, value in enumerate(node):
-            collect_stage_mappings(value, f"{path}[{index}]", results)
+            collect_stage_values(
+                value,
+                f"{path}[{index}]",
+                result,
+            )
 
-    return results
-
-
-def _stage_sort_key(value):
-    order = {
-        "1/16": 10,
-        "round of 32": 10,
-        "round_of_32": 10,
-        "1/8": 20,
-        "round of 16": 20,
-        "round_of_16": 20,
-        "1/4": 30,
-        "quarter-final": 30,
-        "quarter final": 30,
-        "quarter_final": 30,
-        "1/2": 40,
-        "semi-final": 40,
-        "semi final": 40,
-        "semi_final": 40,
-        "final": 50,
-        "bronze": 60,
-    }
-
-    normalized = str(value).strip().lower()
-    return (order.get(normalized, 100), normalized)
+    return result
 
 
-def print_stage_mapping(data, configured_item, league_id):
-    details = extract_details(data)
-    competition_name = details.get("name") or "UNKNOWN"
+def summarize_stages(data):
+    mappings = collect_stage_values(data)
 
-    print()
-    print("-" * 100)
-    print(
-        f"COMPETITION {league_id} | {competition_name!r} | "
-        f"configured_stage={configured_item.get('stage')!r} | "
-        f"mode={configured_item.get('mode')!r}"
-    )
+    if not mappings:
+        return []
 
-    mappings = collect_stage_mappings(data)
+    # If a playoff tree exists, prioritize it over ordinary league
+    # matchdays/round numbers.
+    playoff = [
+        item for item in mappings
+        if ".playoff." in item["path"].lower()
+    ]
+
+    selected = playoff if playoff else mappings
 
     unique = {}
 
-    for item in mappings:
+    for item in selected:
         value = item["value"]
-        label = item.get("label")
-        key = (value, label)
+        normalized = stage_key(value)
 
-        if key not in unique:
-            unique[key] = item["path"]
+        if normalized not in unique:
+            unique[normalized] = {
+                "value": value,
+                "path": item["path"],
+            }
 
-    if not unique:
-        print("  No usable stage/round/phase mappings found.")
-        return
+    return sorted(
+        unique.values(),
+        key=lambda item: stage_sort_key(item["value"]),
+    )
 
-    # Prefer mappings from the playoff tree because they represent
-    # actual knockout rounds rather than league matchdays.
-    playoff = []
-    other = []
 
-    for (value, label), path in unique.items():
-        row = (value, label, path)
+def configured_stage_found(stages, configured_stage):
+    if not configured_stage:
+        return None
 
-        if ".playoff." in path.lower():
-            playoff.append(row)
-        else:
-            other.append(row)
+    aliases = {
+        "round_of_16": {"round_of_16", "1/8"},
+        "quarter_final": {"quarter_final", "1/4"},
+        "semi_final": {"semi_final", "1/2"},
+        "final": {"final"},
+    }
 
-    rows = playoff if playoff else other
+    wanted = aliases.get(
+        str(configured_stage).lower(),
+        {str(configured_stage).lower()},
+    )
 
-    # Collapse duplicate values when the only difference is path.
-    collapsed = {}
+    return [
+        item["value"]
+        for item in stages
+        if stage_key(item["value"]) in wanted
+    ]
 
-    for value, label, path in rows:
-        key = (value, label)
-        collapsed.setdefault(key, path)
 
-    print("  UNIQUE STAGE/ROUND VALUES:")
+def print_competition_result(
+    configured,
+    current_data,
+    previous_data,
+    league_id,
+):
+    current_details = extract_details(current_data)
+    previous_details = extract_details(previous_data)
 
-    for (value, label), path in sorted(
-        collapsed.items(),
-        key=lambda item: _stage_sort_key(item[0][0]),
-    ):
-        if label and label != value:
-            print(f"    {value!r} -> {label!r} | {path}")
-        else:
-            print(f"    {value!r} | {path}")
+    current_season, previous_season, seasons = choose_previous_season(
+        current_data
+    )
 
-    configured_stage = configured_item.get("stage")
+    # The second call is explicitly made with the previous season.
+    previous_details_season = (
+        previous_details.get("selectedSeason")
+        or previous_season
+    )
 
-    if configured_stage:
-        aliases = {
-            "round_of_16": {"1/8", "round of 16", "round_of_16"},
-            "quarter_final": {"1/4", "quarter-final", "quarter final", "quarter_final"},
-            "semi_final": {"1/2", "semi-final", "semi final", "semi_final"},
-            "final": {"final"},
-        }
+    print()
+    print("=" * 110)
+    print(
+        f"COMPETITION {league_id} | "
+        f"{current_details.get('name') or previous_details.get('name')!r}"
+    )
+    print(
+        f"  CURRENT SEASON: {current_season!r} | "
+        f"PREVIOUS SEASON: {previous_details_season!r}"
+    )
+    print(
+        f"  CONFIG: mode={configured.get('mode')!r} | "
+        f"stage={configured.get('stage')!r}"
+    )
 
-        allowed = aliases.get(
-            str(configured_stage).lower(),
-            {str(configured_stage).lower()},
+    if seasons:
+        print("  AVAILABLE SEASONS:", ", ".join(seasons))
+
+    stages = summarize_stages(previous_data)
+
+    print("  PREVIOUS-SEASON STAGE STRUCTURE:")
+
+    if not stages:
+        print("    NO EXPLICIT STAGE/ROUND STRUCTURE FOUND")
+        return False
+
+    for item in stages:
+        print(
+            f"    {item['value']!r} | {item['path']}"
         )
 
-        found = [
-            value
-            for value, _label in collapsed
-            if str(value).lower() in allowed
-        ]
+    found = configured_stage_found(
+        stages,
+        configured.get("stage"),
+    )
 
+    if configured.get("stage"):
         print(
-            f"  CONFIGURED START STAGE {configured_stage!r}: "
+            f"  CONFIGURED START STAGE "
+            f"{configured['stage']!r}: "
             f"{found or 'NOT FOUND'}"
         )
 
+    return True
 
 
 def main():
@@ -358,123 +358,132 @@ def main():
         config = json.load(file)
 
     configured = [
-        item for item in config.get("competitions", [])
+        item
+        for item in config.get("competitions", [])
         if item.get("id") is not None
     ]
 
-    configured_ids = {str(item["id"]) for item in configured}
-
     print()
-    print("=" * 120)
-    print("FOTMOB CONFIGURED COMPETITION ID MAPPING TEST")
-    print("=" * 120)
+    print("=" * 110)
+    print("FOTMOB PREVIOUS-SEASON COMPETITION TEST")
+    print("=" * 110)
     print(
-        "Configured IDs:",
-        ", ".join(sorted(configured_ids, key=lambda x: (len(x), x))),
+        "هدف: بررسی ساختار لیگ‌ها و تورنمنت‌ها بر اساس فصل قبلی، "
+        "نه فصل جاری."
+    )
+    print(
+        "برای هر competition ابتدا فصل جاری از FotMob خوانده می‌شود، "
+        "سپس فصل قبلی از فهرست seasons انتخاب و با پارامتر season "
+        "به /api/data/leagues درخواست می‌شود."
     )
 
     all_leagues = fetch_all_leagues()
-    leagues = collect_leagues(all_leagues)
+    directory = collect_leagues(all_leagues)
 
     by_id = defaultdict(list)
-    for league in leagues:
-        by_id[str(league["id"])].append(league)
+    for item in directory:
+        by_id[item["id"]].append(item)
 
     print()
-    print("Global league directory entries:", len(leagues))
-    print("=" * 120)
-    print("CONFIGURED ID -> GLOBAL FOTMOB DIRECTORY")
-    print("=" * 120)
+    print("Configured competitions:", len(configured))
+    print("Global directory entries:", len(directory))
 
     unresolved = []
+    current_failures = []
+    previous_failures = []
+    no_previous_season = []
+    stage_failures = []
 
-    for item in configured:
-        configured_id = str(item["id"])
-        matches = by_id.get(configured_id, [])
+    checked = 0
+
+    for configured_item in configured:
+        league_id = str(configured_item["id"])
 
         print()
+        print("-" * 110)
         print(
-            f"CONFIGURED {configured_id} | "
-            f"mode={item.get('mode')} | "
-            f"stage={item.get('stage')} | "
-            f"extra_country={item.get('extra_country')} | "
-            f"extra_teams={item.get('extra_teams')}"
+            f"CONFIGURED ID {league_id} | "
+            f"mode={configured_item.get('mode')} | "
+            f"stage={configured_item.get('stage')}"
         )
 
-        if not matches:
-            print("  -> NOT FOUND IN allLeagues")
-            unresolved.append(configured_id)
+        directory_matches = by_id.get(league_id, [])
+
+        if not directory_matches:
+            print("  NOT FOUND IN allLeagues")
+            unresolved.append(league_id)
             continue
-
-        for match in matches:
-            print(
-                f"  -> {match['name']} | "
-                f"country={match.get('country')} | "
-                f"category={match.get('category')} | "
-                f"pageUrl={match.get('pageUrl')}"
-            )
-
-    print()
-    print("=" * 120)
-    print("VERIFYING RESOLVED IDs WITH /api/data/leagues")
-    print("=" * 120)
-
-    verified = []
-    verification_failed = []
-
-    print()
-    print("=" * 120)
-    print("EXTRACTING STAGE / ROUND STRUCTURE")
-    print("=" * 120)
-
-    for item in configured:
-        configured_id = str(item["id"])
-
-        if configured_id in unresolved:
-            continue
-
-        data = fetch_league(configured_id)
-
-        if not data:
-            print(f"  {configured_id} -> FAILED")
-            verification_failed.append(configured_id)
-            continue
-
-        details = extract_details(data)
 
         print(
-            f"  {configured_id} -> "
-            f"name={details.get('name')!r} | "
-            f"id={details.get('id')!r} | "
-            f"type={details.get('type')!r} | "
-            f"season={details.get('selectedSeason')!r}"
+            "  GLOBAL:",
+            " | ".join(
+                f"{item['name']} | pageUrl={item.get('pageUrl')}"
+                for item in directory_matches
+            ),
         )
 
-        verified.append({
-            "configured": item,
-            "details": details,
-        })
+        current_data = fetch_league(league_id)
 
-        print_stage_mapping(data, item, configured_id)
+        if not current_data:
+            current_failures.append(league_id)
+            print("  CURRENT SEASON REQUEST FAILED")
+            continue
+
+        current_season, previous_season, seasons = choose_previous_season(
+            current_data
+        )
+
+        print(
+            f"  DETECTED CURRENT={current_season!r} | "
+            f"PREVIOUS={previous_season!r}"
+        )
+
+        if not previous_season:
+            no_previous_season.append(league_id)
+            print("  NO PREVIOUS SEASON AVAILABLE")
+            continue
+
+        previous_data = fetch_league(
+            league_id,
+            season=previous_season,
+        )
+
+        if not previous_data:
+            previous_failures.append(league_id)
+            print("  PREVIOUS-SEASON REQUEST FAILED")
+            continue
+
+        checked += 1
+
+        ok = print_competition_result(
+            configured_item,
+            current_data,
+            previous_data,
+            league_id,
+        )
+
+        if not ok:
+            stage_failures.append(league_id)
 
     print()
-    print("=" * 120)
+    print("=" * 110)
     print("FINAL RESULT")
-    print("=" * 120)
+    print("=" * 110)
     print("Configured competitions:", len(configured))
     print("Resolved in allLeagues:", len(configured) - len(unresolved))
-    print("Verified by league endpoint:", len(verified))
+    print("Previous seasons checked:", checked)
     print("Unresolved:", unresolved or "NONE")
-    print("Verification failures:", verification_failed or "NONE")
+    print("Current-season request failures:", current_failures or "NONE")
+    print("Previous-season request failures:", previous_failures or "NONE")
+    print("No previous season available:", no_previous_season or "NONE")
+    print("No stage structure:", stage_failures or "NONE")
 
     print()
-    print("NOTE:")
+    print("IMPORTANT:")
     print(
-        "This test does not depend on today's matches. "
-        "It uses FotMob's global allLeagues directory, verifies each "
-        "configured ID with /api/data/leagues, and recursively prints "
-        "stage/round/phase/leg/matchday fields from each competition "
-        "payload without calling matchDetails."
+        "این تست فقط برای کشف ساختار واقعی فصل قبلی است. "
+        "هیچ تغییری در auto_matches.json یا منطق ربات اعمال نمی‌کند "
+        "و هیچ matchDetails برای تک‌تک بازی‌ها صدا زده نمی‌شود."
     )
 
 
