@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-from fotmob import recursive_find
+from fotmob import extract_next_data, extract_round_info, recursive_find
 
 
 CONFIG_FILE = "auto_matches.json"
@@ -452,6 +452,141 @@ def build_league_stage_map(data):
     return result
 
 
+def fetch_match_page_stage(match_id):
+    """
+    آخرین fallback تشخیص مرحله برای مسابقه‌ای که در ساختار
+    /api/data/leagues به صورت playoff.rounds موجود نیست.
+
+    خود صفحه مسابقه FotMob برای مسابقات حذفی معمولاً مرحله را
+    در داده‌های __NEXT_DATA__ یا متن صفحه دارد؛ بنابراین اینجا
+    مرحله را از خود مسابقه می‌خوانیم، نه از tournamentStage عددی
+    endpoint روزانه.
+    """
+    match_id = clean_text(match_id)
+    if not match_id:
+        return None
+
+    url = f"{FOTMOB_BASE_URL}/match/{match_id}"
+
+    try:
+        response = requests.get(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/140.0.0.0 Safari/537.36"
+                ),
+                "Accept": "text/html,application/xhtml+xml,*/*",
+                "Accept-Language": "en-US,en;q=0.9",
+                "Referer": FOTMOB_BASE_URL + "/",
+            },
+            timeout=TIMEOUT,
+        )
+        print(
+            f"[STAGE-PAGE] Match {match_id}: "
+            f"HTTP {response.status_code}"
+        )
+        response.raise_for_status()
+        html = response.text
+
+    except (requests.RequestException, ValueError) as error:
+        print(
+            f"[STAGE-PAGE] Match {match_id}: "
+            f"page fetch failed: {error}"
+        )
+        return None
+
+    # 1) داده ساختاریافته خود صفحه
+    next_data = extract_next_data(html)
+    if isinstance(next_data, dict):
+        round_info = extract_round_info(next_data)
+        if isinstance(round_info, dict):
+            for value in (
+                round_info.get("raw"),
+                round_info.get("name"),
+                round_info.get("name_fa"),
+            ):
+                stage = normalize_stage(value)
+                if stage:
+                    print(
+                        f"[STAGE-PAGE] Match {match_id}: "
+                        f"{value!r} -> {stage}"
+                    )
+                    return stage
+
+    # 2) fallback روی متن/JSON خام صفحه.
+    # فقط عبارت‌های صریح مرحله را قبول می‌کنیم؛
+    # عددهای عمومی مثل tournamentStage یا round=1 قابل اعتماد نیستند.
+    text = clean_text(html)
+
+    explicit_patterns = (
+        (r"\\bRound\\s+of\\s+32\\b", "round_of_32"),
+        (r"\\bRound\\s+of\\s+16\\b", "round_of_16"),
+        (r"\\bQuarter[- ]?finals?\\b", "quarter_final"),
+        (r"\\bSemi[- ]?finals?\\b", "semi_final"),
+        (r"\\bFinal\\b", "final"),
+    )
+
+    for pattern, stage in explicit_patterns:
+        if re.search(pattern, text, re.IGNORECASE):
+            print(
+                f"[STAGE-PAGE] Match {match_id}: "
+                f"HTML -> {stage}"
+            )
+            return stage
+
+    print(
+        f"[STAGE-PAGE] Match {match_id}: "
+        "no explicit knockout stage found"
+    )
+    return None
+
+
+def apply_page_stage_fallback(candidates, config):
+    """
+    برای رقابت‌های mode=from/final_only که stage map لیگ ندارند
+    یا matchId داخل map نیست، مرحله را از صفحه همان مسابقه می‌گیرد.
+
+    این fallback فقط برای competitionهای واقعاً stage-based اجرا
+    می‌شود تا برای لیگ‌های عادی درخواست اضافی ایجاد نکند.
+    """
+    rules_by_competition = configured_competition_rules(config)
+    stage_competitions = set()
+
+    for league_id, rules in rules_by_competition.items():
+        if any(
+            normalize(rule.get("mode") or "all")
+            in {"from", "final_only"}
+            for rule in rules
+        ):
+            stage_competitions.add(str(league_id))
+
+    cache = {}
+
+    for match in candidates:
+        league_id = clean_text(match.get("leagueId"))
+
+        if league_id not in stage_competitions:
+            continue
+
+        if normalize_stage(match.get("stage")) is not None:
+            continue
+
+        match_id = clean_text(match.get("id"))
+        if not match_id:
+            continue
+
+        if match_id not in cache:
+            cache[match_id] = fetch_match_page_stage(match_id)
+
+        stage = cache[match_id]
+        if stage:
+            match["stage"] = stage
+
+    return candidates
+
+
 def configured_competition_rules(config):
     """
     قوانین رقابت‌ها را مستقیماً از auto_matches.json می‌خواند.
@@ -850,6 +985,14 @@ def main():
     # مرحله مسابقات را قبل از اعمال mode=from/final_only تزریق می‌کنیم.
     for match in candidates:
         apply_stage_cache(match, stage_cache)
+
+    # بعضی رقابت‌ها (مثل UEFA/FIFA/AFC یا تورنمنت‌های ملی)
+    # در endpoint لیگِ فصل جاری هنوز overview.playoff.rounds ندارند،
+    # اما صفحه خود مسابقه مرحله را صریحاً اعلام می‌کند.
+    candidates = apply_page_stage_fallback(
+        candidates,
+        config,
+    )
 
     discovered = []
     seen_ids = set()
