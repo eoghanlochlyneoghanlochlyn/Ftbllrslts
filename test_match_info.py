@@ -99,53 +99,46 @@ def extract_details(data):
     return details
 
 
-def get_available_seasons(data):
-    seasons = data.get("seasons", [])
+# These competitions are intentionally excluded from previous-season testing.
+EXCLUDED_PREVIOUS_SEASON_NAMES = {
+    "world cup", "fifa club world cup", "euro", "european championship",
+    "asian cup", "afc asian cup", "africa cup of nations",
+    "african cup of nations", "concacaf gold cup", "copa america",
+    "euro qualification", "world cup qualification conmebol",
+}
 
-    if not isinstance(seasons, list):
-        return []
 
-    result = []
+def is_excluded_competition(name):
+    if not name:
+        return False
+    normalized = " ".join(str(name).lower().split())
+    if normalized in EXCLUDED_PREVIOUS_SEASON_NAMES:
+        return True
+    return any(fragment in normalized for fragment in ("qualification", "qualifiers", "qualifying"))
 
-    for item in seasons:
-        if isinstance(item, dict):
-            value = item.get("id") or item.get("season") or item.get("name")
-        else:
-            value = item
 
-        if value is not None and str(value).strip():
-            result.append(str(value).strip())
-
-    # Keep order returned by FotMob, but remove duplicates.
-    return list(dict.fromkeys(result))
+def get_previous_season_candidate(current_season):
+    if current_season is None:
+        return None
+    text = str(current_season).strip()
+    if "/" in text:
+        parts = text.split("/")
+        if len(parts) == 2 and all(part.isdigit() for part in parts):
+            start_year = int(parts[0])
+            end_year = int(parts[1])
+            length = end_year - start_year
+            if 0 < length <= 3:
+                return f"{start_year - length}/{end_year - length}"
+    if text.isdigit() and len(text) == 4:
+        return str(int(text) - 1)
+    return None
 
 
 def choose_previous_season(data):
     details = extract_details(data)
     current = details.get("selectedSeason")
-
-    seasons = get_available_seasons(data)
-
-    if not seasons:
-        return current, None, []
-
-    if current is not None:
-        current = str(current)
-
-    # FotMob normally returns seasons newest -> oldest.
-    if current in seasons:
-        index = seasons.index(current)
-
-        if index + 1 < len(seasons):
-            return current, seasons[index + 1], seasons
-
-    # Fallback: if selectedSeason is missing/not listed, use the
-    # first available season as current and the second as previous.
-    if len(seasons) >= 2:
-        return current or seasons[0], seasons[1], seasons
-
-    return current or seasons[0], None, seasons
-
+    previous = get_previous_season_candidate(current)
+    return (str(current).strip() if current is not None else None, previous, [])
 
 def normalize_stage(value):
     if value is None or isinstance(value, (dict, list)):
@@ -421,6 +414,13 @@ def main():
                 for item in directory_matches
             ),
         )
+
+        competition_name = directory_matches[0].get("name")
+
+        if is_excluded_competition(competition_name):
+            print("  PREVIOUS-SEASON TEST: SKIPPED")
+            print("  REASON: excluded national/international competition")
+            continue
 
         current_data = fetch_league(league_id)
 
