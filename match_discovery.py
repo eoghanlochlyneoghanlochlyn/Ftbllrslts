@@ -50,11 +50,11 @@ STAGE_ALIASES = {
     "round of 16": "round_of_16",
     "round-of-16": "round_of_16",
     "last 16": "round_of_16",
-    "1/16": "round_of_16",
+    "1/8": "round_of_16",
     "round of 32": "round_of_32",
     "round-of-32": "round_of_32",
     "last 32": "round_of_32",
-    "1/32": "round_of_32",
+    "1/16": "round_of_32",
     "playoff": "playoff",
     "play-off": "playoff",
     "playoffs": "playoffs",
@@ -227,9 +227,6 @@ def sitemap_locations(text):
                     urls.append(value)
                 continue
 
-            # ElementTree has no parent pointers. Determine the type
-            # from the root structure below instead.
-    
     for container in root:
         container_name = xml_local_name(container.tag)
 
@@ -391,7 +388,6 @@ def extract_page_match(data, fallback_url):
                 )
                 break
 
-    # Prefer parent competition IDs when the object exposes them.
     if isinstance(competition, dict):
         for key in (
             "parentLeagueId",
@@ -673,7 +669,6 @@ def is_selected(
 
     team_ids = match_team_ids(match)
 
-    # A configured team is always selected, regardless of competition.
     if team_ids & selected_team_ids:
         return True
 
@@ -905,8 +900,6 @@ def main():
 
         seen_ids.add(match_id)
 
-        # The sitemap time is only a pre-filter. The actual match
-        # page time wins when it is available.
         if not is_selected(
             match,
             config,
