@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-from fotmob import extract_next_data, recursive_find
+from fotmob import extract_next_data, extract_round_info, recursive_find
 
 
 CONFIG_FILE = "auto_matches.json"
@@ -274,47 +274,73 @@ def extract_page_match(data):
     if not isinstance(home, dict) or not isinstance(away, dict):
         return None
 
-    match_id = (
-        general.get("matchId")
-        or general.get("id")
-    )
-
+    match_id = general.get("matchId") or general.get("id")
     if match_id is None:
         return None
 
+    # Use the same round extractor already used by the main FotMob
+    # parser. It knows the real FotMob paths, including playoff
+    # values such as 1/8, 1/4 and 1/2.
     stage = None
+    try:
+        round_info = extract_round_info(data)
+    except Exception as error:
+        print(f"[DISCOVERY] Round extraction failed for {match_id}: {error}")
+        round_info = None
 
-    sources = [
-        general,
-        recursive_find(data, {"tournament"}),
-        recursive_find(data, {"league"}),
-        recursive_find(data, {"competition"}),
-        recursive_find(data, {"uniqueTournament"}),
-        recursive_find(data, {"matchFacts"}),
-    ]
-
-    for source in sources:
-        if not isinstance(source, dict):
-            continue
-
-        for key in (
-            "stage",
-            "stageName",
-            "roundName",
-            "round",
-            "tournamentStage",
-            "leagueRoundName",
-            "matchRound",
+    if isinstance(round_info, dict):
+        for value in (
+            round_info.get("raw"),
+            round_info.get("name"),
+            round_info.get("name_fa"),
         ):
-            value = source.get(key)
             normalized = normalize_stage(value)
-
             if normalized:
                 stage = normalized
                 break
 
-        if stage:
-            break
+    # Direct page fields are a fallback for page variants that do not
+    # expose a usable round through extract_round_info().
+    if stage is None:
+        sources = [
+            general,
+            recursive_find(data, {"tournament"}),
+            recursive_find(data, {"league"}),
+            recursive_find(data, {"competition"}),
+            recursive_find(data, {"uniqueTournament"}),
+            recursive_find(data, {"matchFacts"}),
+        ]
+
+        for source in sources:
+            if not isinstance(source, dict):
+                continue
+
+            for key in (
+                "stage",
+                "stageName",
+                "roundName",
+                "round",
+                "tournamentStage",
+                "leagueRoundName",
+                "matchRound",
+            ):
+                value = source.get(key)
+
+                if isinstance(value, dict):
+                    value = (
+                        value.get("name")
+                        or value.get("label")
+                        or value.get("value")
+                    )
+
+                normalized = normalize_stage(value)
+
+                if normalized:
+                    stage = normalized
+                    break
+
+            if stage:
+                break
 
     home_id = home.get("id") or home.get("teamId") or home.get("teamID")
     away_id = away.get("id") or away.get("teamId") or away.get("teamID")
