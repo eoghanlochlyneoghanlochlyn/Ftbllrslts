@@ -100,7 +100,13 @@ def extract_details(data):
 
 
 # These competitions are intentionally excluded from previous-season testing.
-EXCLUDED_PREVIOUS_SEASON_IDS = {\n    "77", "78", "50", "9806", "44", "290", "289", "297",\n    "10607", "10199",\n}\n\n\nEXCLUDED_PREVIOUS_SEASON_NAMES = {
+EXCLUDED_PREVIOUS_SEASON_IDS = {
+    "77", "78", "50", "9806", "44", "290", "289", "297",
+    "10607", "10199",
+}
+
+
+EXCLUDED_PREVIOUS_SEASON_NAMES = {
     "world cup", "fifa club world cup", "euro", "european championship",
     "asian cup", "afc asian cup", "africa cup of nations",
     "african cup of nations", "concacaf gold cup", "copa america",
