@@ -243,259 +243,135 @@ def sitemap_locations(text):
     return list(dict.fromkeys(urls)), list(dict.fromkeys(sitemaps))
 
 
-def fetch_sitemap_urls():
-    print(f"[DISCOVERY] Fetching sitemap: {SITEMAP_URL}")
-
-    text = fetch_url(SITEMAP_URL)
-
-    if text is None:
-        return []
-
-    urls, child_sitemaps = sitemap_locations(text)
-
-    if urls:
-        print(
-            f"[DISCOVERY] Match sitemap contains "
-            f"{len(urls)} match URLs"
-        )
-        return urls
-
-    if not child_sitemaps:
-        print("[DISCOVERY] Sitemap contains no match URLs.")
-        return []
-
-    print(
-        f"[DISCOVERY] Sitemap index contains "
-        f"{len(child_sitemaps)} child sitemaps"
+def fetch_matches_for_date(date):
+    url = (
+        "https://www.fotmob.com/api/data/matches"
+        f"?date={date}"
     )
 
-    all_urls = []
+    print(f"[DISCOVERY] Fetching daily matches: {date}")
 
-    for index, child_url in enumerate(child_sitemaps, 1):
-        print(
-            f"[DISCOVERY] Fetching child sitemap "
-            f"{index}/{len(child_sitemaps)}"
-        )
-
-        child_text = fetch_url(child_url)
-        child_urls, _ = sitemap_locations(child_text)
-
-        all_urls.extend(child_urls)
-
-    return list(dict.fromkeys(all_urls))
-
-
-def sitemap_match_time(url):
-    """
-    FotMob's match sitemap can append the scheduled UTC time to the
-    match code, e.g.:
-        .../37gy4p2025-09-04T11:00:00Z
-    """
-    match = re.search(
-        r"(20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)",
-        url,
-    )
-
-    if not match:
-        return None
-
-    return parse_datetime(match.group(1))
-
-
-def extract_page_match(data, fallback_url):
-    if not isinstance(data, dict):
-        return None
-
-    general = recursive_find(data, {"general"})
-
-    if not isinstance(general, dict):
-        return None
-
-    home = (
-        general.get("homeTeam")
-        or general.get("home")
-    )
-
-    away = (
-        general.get("awayTeam")
-        or general.get("away")
-    )
-
-    if not isinstance(home, dict) or not isinstance(away, dict):
-        return None
-
-    match_id = (
-        general.get("matchId")
-        or general.get("id")
-        or extract_match_id(data)
-    )
-
-    if match_id is None:
-        return None
-
-    start = (
-        general.get("matchTimeUTC")
-        or general.get("matchTime")
-        or general.get("startTime")
-        or general.get("utcTime")
-    )
-
-    start_dt = parse_datetime(start)
-
-    if start_dt is None:
-        start_dt = sitemap_match_time(fallback_url)
-
-    competition = recursive_find(
-        data,
-        {
-            "tournament",
-            "league",
-            "competition",
-            "uniqueTournament",
-        },
-    )
-
-    competition_id = None
-    competition_name = ""
-
-    if isinstance(competition, dict):
-        for key in (
-            "parentLeagueId",
-            "parentTournamentId",
-            "parentCompetitionId",
-            "leagueId",
-            "tournamentId",
-            "uniqueTournamentId",
-            "competitionId",
-            "id",
-        ):
-            if competition.get(key) is not None:
-                competition_id = str(competition[key])
-                break
-
-        for key in (
-            "name",
-            "title",
-            "shortName",
-            "displayName",
-            "leagueName",
-            "tournamentName",
-            "competitionName",
-        ):
-            if competition.get(key):
-                competition_name = clean_text(
-                    competition[key]
-                )
-                break
-
-    if isinstance(competition, dict):
-        for key in (
-            "parentLeagueId",
-            "parentTournamentId",
-            "parentCompetitionId",
-        ):
-            if competition.get(key) is not None:
-                competition_id = str(competition[key])
-                break
-
-    stage = None
-
-    for source in (
-        general,
-        competition,
-        recursive_find(
-            data,
-            {
-                "matchFacts",
+    try:
+        response = requests.get(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/140.0.0.0 Safari/537.36"
+                ),
+                "Accept": "application/json,text/plain,*/*",
+                "Accept-Language": "en-US,en;q=0.9",
             },
-        ),
-    ):
-        if not isinstance(source, dict):
+            timeout=TIMEOUT,
+        )
+        print(f"[DISCOVERY] Daily matches {date}: HTTP {response.status_code}")
+        response.raise_for_status()
+        data = response.json()
+    except (requests.RequestException, ValueError) as error:
+        print(f"[DISCOVERY] Daily matches failed for {date}: {error}")
+        return []
+
+    if not isinstance(data, dict):
+        return []
+
+    result = []
+
+    for league in data.get("leagues", []):
+        if not isinstance(league, dict):
             continue
 
-        for key in (
-            "tournamentStage",
-            "stage",
-            "stageName",
-            "roundName",
-            "round",
-            "leagueRoundName",
-            "matchRound",
-        ):
-            value = source.get(key)
+        league_id = (
+            league.get("id")
+            or league.get("leagueId")
+            or league.get("competitionId")
+        )
+        league_id = str(league_id) if league_id is not None else ""
+        league_name = clean_text(league.get("name"))
 
-            if value is None:
+        for match in league.get("matches", []):
+            if not isinstance(match, dict):
                 continue
 
-            normalized = normalize_stage(value)
+            match_id = match.get("id") or match.get("matchId")
+            if match_id is None:
+                continue
 
-            if normalized:
-                stage = normalized
-                break
+            status = match.get("status")
+            if not isinstance(status, dict):
+                status = {}
 
-        if stage:
-            break
+            start_value = (
+                status.get("utcTime")
+                or match.get("utcTime")
+                or match.get("startTime")
+                or match.get("matchTimeUTC")
+            )
+            start_dt = parse_datetime(start_value)
+            if start_dt is None:
+                continue
 
-    home_id = (
-        home.get("id")
-        or home.get("teamId")
-        or home.get("teamID")
-    )
+            home = match.get("home") or match.get("homeTeam") or {}
+            away = match.get("away") or match.get("awayTeam") or {}
+            if not isinstance(home, dict):
+                home = {}
+            if not isinstance(away, dict):
+                away = {}
 
-    away_id = (
-        away.get("id")
-        or away.get("teamId")
-        or away.get("teamID")
-    )
+            result.append({
+                "id": str(match_id),
+                "start": start_dt.isoformat(),
+                "home": {
+                    "id": str(home.get("id") or home.get("teamId") or ""),
+                    "name": clean_text(
+                        home.get("longName") or home.get("name") or home.get("shortName")
+                    ),
+                },
+                "away": {
+                    "id": str(away.get("id") or away.get("teamId") or ""),
+                    "name": clean_text(
+                        away.get("longName") or away.get("name") or away.get("shortName")
+                    ),
+                },
+                "leagueId": league_id,
+                "competitionName": league_name,
+                "stage": None,
+                "pageUrl": (
+                    match.get("pageUrl")
+                    or match.get("url")
+                    or f"{FOTMOB_BASE_URL}/match/{match_id}"
+                ),
+                "dailyMatch": match,
+                "dailyLeague": league,
+            })
 
-    return {
-        "id": str(match_id),
-        "start": (
-            start_dt.isoformat()
-            if start_dt is not None
-            else None
-        ),
-        "home": {
-            "id": str(home_id) if home_id is not None else "",
-            "name": clean_text(
-                home.get("longName")
-                or home.get("name")
-                or home.get("shortName")
-            ),
-        },
-        "away": {
-            "id": str(away_id) if away_id is not None else "",
-            "name": clean_text(
-                away.get("longName")
-                or away.get("name")
-                or away.get("shortName")
-            ),
-        },
-        "leagueId": (
-            competition_id
-            if competition_id is not None
-            else ""
-        ),
-        "competitionName": competition_name,
-        "stage": stage,
-    }
+    return result
 
 
-def fetch_match_from_sitemap(url):
+def enrich_match_from_page(match):
+    url = match.get("pageUrl") or f"{FOTMOB_BASE_URL}/match/{match['id']}"
     html = fetch_url(url)
-
     if html is None:
-        return None
+        return match
 
     data = extract_next_data(html)
-
     if data is None:
-        print(
-            f"[DISCOVERY] No __NEXT_DATA__ on match page: {url}"
-        )
-        return None
+        return match
 
-    return extract_page_match(data, url)
+    page_match = extract_page_match(data, url)
+    if not page_match:
+        return match
+
+    # Keep the competition identity from the reliable daily-matches endpoint.
+    # The page is used only to enrich stage/leg/other match-page information.
+    page_match["leagueId"] = match.get("leagueId") or page_match.get("leagueId")
+    page_match["competitionName"] = (
+        match.get("competitionName") or page_match.get("competitionName")
+    )
+    page_match["pageUrl"] = url
+    page_match["dailyMatch"] = match.get("dailyMatch")
+    page_match["dailyLeague"] = match.get("dailyLeague")
+    return page_match
 
 
 def load_team_config():
@@ -812,45 +688,22 @@ def merge_matches(
 
 
 def main():
-    config = load_json(
-        CONFIG_FILE,
-        {},
-    )
-
+    config = load_json(CONFIG_FILE, {})
     if not isinstance(config, dict):
-        raise RuntimeError(
-            "auto_matches.json is invalid"
-        )
+        raise RuntimeError("auto_matches.json is invalid")
 
     by_name, by_country = load_team_config()
-
     selected_team_ids = {
         str(value)
-        for value in config.get(
-            "team_ids",
-            [],
-        )
+        for value in config.get("team_ids", [])
         if str(value).strip()
     }
 
     # Historical test window:
     # 20 September 2026 00:00 Iran time -> current moment.
-    # This is intentionally used for testing discovery against a day
-    # that already has completed matches.
-    test_start = datetime(
-        2026,
-        9,
-        20,
-        0,
-        0,
-        0,
-        tzinfo=timezone(timedelta(hours=3, minutes=30)),
-    ).astimezone(timezone.utc)
-
-    now = datetime.now(timezone.utc)
-
-    window_start = test_start
-    window_end = now
+    iran_tz = timezone(timedelta(hours=3, minutes=30))
+    window_start = datetime(2026, 9, 20, 0, 0, 0, tzinfo=iran_tz).astimezone(timezone.utc)
+    window_end = datetime.now(timezone.utc)
 
     print(
         "[DISCOVERY] TEST Window:",
@@ -859,67 +712,68 @@ def main():
         window_end.isoformat(),
     )
 
-    sitemap_urls = fetch_sitemap_urls()
+    # FotMob's daily matches endpoint is the source of truth for the list of
+    # matches. We only fetch the match page for candidates that can actually
+    # match auto_matches.json rules; this avoids hundreds of matchDetails calls.
+    dates = []
+    current = window_start.date()
+    while current <= window_end.date():
+        dates.append(current.strftime("%Y%m%d"))
+        current += timedelta(days=1)
 
-    if not sitemap_urls:
-        raise RuntimeError(
-            "FotMob match sitemap returned no URLs"
-        )
+    all_matches = []
+    for date in dates:
+        all_matches.extend(fetch_matches_for_date(date))
+
+    unique = {}
+    for match in all_matches:
+        match_id = str(match.get("id"))
+        if match_id and match_id not in unique:
+            unique[match_id] = match
 
     candidates = []
-
-    for url in sitemap_urls:
-        scheduled = sitemap_match_time(url)
-
-        if scheduled is None:
+    for match in unique.values():
+        start = parse_datetime(match.get("start"))
+        if start is None or start < window_start or start > window_end:
             continue
+        candidates.append(match)
 
-        if scheduled < now:
-            continue
+    candidates.sort(key=lambda item: item.get("start") or "")
 
-        if scheduled > window_end:
-            continue
-
-        candidates.append(
-            (
-                scheduled,
-                url,
-            )
-        )
-
-    candidates.sort(
-        key=lambda item: item[0]
-    )
-
-    print(
-        f"[DISCOVERY] Sitemap candidates in window: "
-        f"{len(candidates)}"
-    )
+    print(f"[DISCOVERY] Daily endpoint matches in window: {len(candidates)}")
 
     discovered = []
     seen_ids = set()
 
-    for index, (scheduled, url) in enumerate(
-        candidates,
-        1,
-    ):
-        print(
-            f"[DISCOVERY] Match page "
-            f"{index}/{len(candidates)}: "
-            f"{scheduled.isoformat()}"
+    for index, match in enumerate(candidates, 1):
+        # Fast pre-filter: direct team selection and competition identity.
+        team_ids = match_team_ids(match)
+        direct_team = bool(team_ids & selected_team_ids)
+        matching_rules = []
+
+        for rule in config.get("competitions", []):
+            if not isinstance(rule, dict):
+                continue
+            if str(match.get("leagueId")) == str(rule.get("id")):
+                matching_rules.append(rule)
+
+        if not direct_team and not matching_rules:
+            continue
+
+        # Rules requiring a stage cannot be decided from the daily endpoint,
+        # because tournamentStage there is a competition-specific numeric code.
+        needs_page = direct_team or any(
+            normalize(rule.get("mode") or "all") in {"from", "final_only"}
+            for rule in matching_rules
         )
 
-        match = fetch_match_from_sitemap(url)
-
-        if not match:
-            continue
-
-        match_id = str(match["id"])
-
-        if match_id in seen_ids:
-            continue
-
-        seen_ids.add(match_id)
+        if needs_page:
+            print(
+                f"[DISCOVERY] Enriching candidate {index}/{len(candidates)}: "
+                f"{match.get('home', {}).get('name')} vs "
+                f"{match.get('away', {}).get('name')}"
+            )
+            match = enrich_match_from_page(match)
 
         if not is_selected(
             match,
@@ -930,20 +784,20 @@ def main():
         ):
             continue
 
-        discovered.append(
-            build_entry(match)
-        )
+        match_id = str(match["id"])
+        if match_id in seen_ids:
+            continue
+        seen_ids.add(match_id)
 
-        home = match["home"]["name"]
-        away = match["away"]["name"]
+        discovered.append(build_entry(match))
 
         print(
             "[DISCOVERED]",
             match_id,
             "|",
-            home,
+            match["home"]["name"],
             "vs",
-            away,
+            match["away"]["name"],
             "|",
             match.get("start"),
             "| competition:",
@@ -954,51 +808,20 @@ def main():
             match.get("stage"),
         )
 
-    current = existing_matches()
-
-    current, removed = prune_old_auto(
-        current,
-        float(
-            config.get(
-                "prune_auto_after_hours",
-                6,
-            )
-        ),
+    current_matches = existing_matches()
+    current_matches, removed = prune_old_auto(
+        current_matches,
+        float(config.get("prune_auto_after_hours", 6)),
     )
 
-    merged, added, updated = merge_matches(
-        current,
-        discovered,
-    )
-
-    save_json(
-        MATCHES_FILE,
-        merged,
-    )
+    merged, added, updated = merge_matches(current_matches, discovered)
+    save_json(MATCHES_FILE, merged)
 
     print("========================================")
-    print(
-        "[DISCOVERY] Discovered:",
-        len(discovered),
-    )
-    print(
-        "[DISCOVERY] Added:",
-        added,
-    )
-    print(
-        "[DISCOVERY] Updated:",
-        updated,
-    )
-    print(
-        "[DISCOVERY] Removed old auto matches:",
-        removed,
-    )
-    print(
-        "[DISCOVERY] Total matches:",
-        len(merged),
-    )
+    print("[DISCOVERY] Discovered:", len(discovered))
+    print("[DISCOVERY] Added:", added)
+    print("[DISCOVERY] Updated:", updated)
+    print("[DISCOVERY] Removed old auto matches:", removed)
+    print("[DISCOVERY] Total matches:", len(merged))
     print("========================================")
 
-
-if __name__ == "__main__":
-    main()
