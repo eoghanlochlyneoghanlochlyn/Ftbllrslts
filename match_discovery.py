@@ -415,7 +415,7 @@ def extract_page_match(data, fallback_url):
     start_dt = parse_datetime(start)
 
     if start_dt is None:
-        start_dt = sitemap_match_time(fallback_url)
+        start_dt = parse_datetime(fallback_url)\n        if start_dt is None:\n            start_dt = datetime.now(timezone.utc)
 
     competition = recursive_find(
         data,
