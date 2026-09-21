@@ -1,0 +1,62 @@
+name: Temporary Stage Regression
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  stage-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests
+
+      - name: Validate real historical knockout matches
+        run: |
+          python - <<'PY'
+          from match_discovery import (
+              fetch_matches_for_date,
+              fetch_match_page_stage,
+          )
+
+          matches = fetch_matches_for_date("20250701")
+          club_world_cup = [
+              m for m in matches
+              if str(m.get("leagueId")) == "78"
+          ]
+
+          print("Club World Cup matches:", len(club_world_cup))
+          if not club_world_cup:
+              raise SystemExit("No historical Club World Cup matches found")
+
+          found = {}
+          for match in club_world_cup:
+              stage = fetch_match_page_stage(match["id"])
+              found[match["id"]] = stage
+              print(
+                  match["id"],
+                  match["home"]["name"],
+                  "vs",
+                  match["away"]["name"],
+                  "=>",
+                  stage,
+              )
+
+          stages = set(v for v in found.values() if v)
+          print("Detected stages:", sorted(stages))
+
+          if "round_of_16" not in stages:
+              raise SystemExit(
+                  "Historical stage regression failed: "
+                  "no round_of_16 was detected"
+              )
+
+          print("STAGE REGRESSION PASSED")
+          PY
