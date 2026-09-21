@@ -374,6 +374,185 @@ def enrich_match_from_page(match):
     return page_match
 
 
+def extract_page_match(data, fallback_url):
+    if not isinstance(data, dict):
+        return None
+
+    general = recursive_find(data, {"general"})
+
+    if not isinstance(general, dict):
+        return None
+
+    home = (
+        general.get("homeTeam")
+        or general.get("home")
+    )
+
+    away = (
+        general.get("awayTeam")
+        or general.get("away")
+    )
+
+    if not isinstance(home, dict) or not isinstance(away, dict):
+        return None
+
+    match_id = (
+        general.get("matchId")
+        or general.get("id")
+        or extract_match_id(data)
+    )
+
+    if match_id is None:
+        return None
+
+    start = (
+        general.get("matchTimeUTC")
+        or general.get("matchTime")
+        or general.get("startTime")
+        or general.get("utcTime")
+    )
+
+    start_dt = parse_datetime(start)
+
+    if start_dt is None:
+        start_dt = sitemap_match_time(fallback_url)
+
+    competition = recursive_find(
+        data,
+        {
+            "tournament",
+            "league",
+            "competition",
+            "uniqueTournament",
+        },
+    )
+
+    competition_id = None
+    competition_name = ""
+
+    if isinstance(competition, dict):
+        for key in (
+            "parentLeagueId",
+            "parentTournamentId",
+            "parentCompetitionId",
+            "leagueId",
+            "tournamentId",
+            "uniqueTournamentId",
+            "competitionId",
+            "id",
+        ):
+            if competition.get(key) is not None:
+                competition_id = str(competition[key])
+                break
+
+        for key in (
+            "name",
+            "title",
+            "shortName",
+            "displayName",
+            "leagueName",
+            "tournamentName",
+            "competitionName",
+        ):
+            if competition.get(key):
+                competition_name = clean_text(
+                    competition[key]
+                )
+                break
+
+    if isinstance(competition, dict):
+        for key in (
+            "parentLeagueId",
+            "parentTournamentId",
+            "parentCompetitionId",
+        ):
+            if competition.get(key) is not None:
+                competition_id = str(competition[key])
+                break
+
+    stage = None
+
+    for source in (
+        general,
+        competition,
+        recursive_find(
+            data,
+            {
+                "matchFacts",
+            },
+        ),
+    ):
+        if not isinstance(source, dict):
+            continue
+
+        for key in (
+            "tournamentStage",
+            "stage",
+            "stageName",
+            "roundName",
+            "round",
+            "leagueRoundName",
+            "matchRound",
+        ):
+            value = source.get(key)
+
+            if value is None:
+                continue
+
+            normalized = normalize_stage(value)
+
+            if normalized:
+                stage = normalized
+                break
+
+        if stage:
+            break
+
+    home_id = (
+        home.get("id")
+        or home.get("teamId")
+        or home.get("teamID")
+    )
+
+    away_id = (
+        away.get("id")
+        or away.get("teamId")
+        or away.get("teamID")
+    )
+
+    return {
+        "id": str(match_id),
+        "start": (
+            start_dt.isoformat()
+            if start_dt is not None
+            else None
+        ),
+        "home": {
+            "id": str(home_id) if home_id is not None else "",
+            "name": clean_text(
+                home.get("longName")
+                or home.get("name")
+                or home.get("shortName")
+            ),
+        },
+        "away": {
+            "id": str(away_id) if away_id is not None else "",
+            "name": clean_text(
+                away.get("longName")
+                or away.get("name")
+                or away.get("shortName")
+            ),
+        },
+        "leagueId": (
+            competition_id
+            if competition_id is not None
+            else ""
+        ),
+        "competitionName": competition_name,
+        "stage": stage,
+    }
+
+
 def load_team_config():
     teams = load_json(TEAMS_FILE, [])
 
@@ -825,3 +1004,7 @@ def main():
     print("[DISCOVERY] Total matches:", len(merged))
     print("========================================")
 
+
+
+if __name__ == "__main__":
+    main()
