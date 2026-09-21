@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-from fotmob import extract_next_data, extract_round_info, recursive_find
+from fotmob import recursive_find
 
 
 CONFIG_FILE = "auto_matches.json"
@@ -260,116 +260,19 @@ def fetch_matches_for_date(date_text):
     return result
 
 
-def extract_page_match(data):
-    if not isinstance(data, dict):
+def fetch_league_structure(league_id):
+    """
+    ساختار کامل رقابت را از endpoint خود لیگ می‌گیرد.
+    برای مرحله حذفی، منبع اصلی stage همین ساختار است:
+    overview.playoff.rounds[*].stage
+    و matchupهای هر round شامل matchId / id هستند.
+    """
+    league_id = clean_text(league_id)
+
+    if not league_id:
         return None
 
-    general = recursive_find(data, {"general"})
-    if not isinstance(general, dict):
-        return None
-
-    home = general.get("homeTeam") or general.get("home")
-    away = general.get("awayTeam") or general.get("away")
-
-    if not isinstance(home, dict) or not isinstance(away, dict):
-        return None
-
-    match_id = general.get("matchId") or general.get("id")
-    if match_id is None:
-        return None
-
-    # Use the same round extractor already used by the main FotMob
-    # parser. It knows the real FotMob paths, including playoff
-    # values such as 1/8, 1/4 and 1/2.
-    stage = None
-    try:
-        round_info = extract_round_info(data)
-    except Exception as error:
-        print(f"[DISCOVERY] Round extraction failed for {match_id}: {error}")
-        round_info = None
-
-    if isinstance(round_info, dict):
-        for value in (
-            round_info.get("raw"),
-            round_info.get("name"),
-            round_info.get("name_fa"),
-        ):
-            normalized = normalize_stage(value)
-            if normalized:
-                stage = normalized
-                break
-
-    # Direct page fields are a fallback for page variants that do not
-    # expose a usable round through extract_round_info().
-    if stage is None:
-        sources = [
-            general,
-            recursive_find(data, {"tournament"}),
-            recursive_find(data, {"league"}),
-            recursive_find(data, {"competition"}),
-            recursive_find(data, {"uniqueTournament"}),
-            recursive_find(data, {"matchFacts"}),
-        ]
-
-        for source in sources:
-            if not isinstance(source, dict):
-                continue
-
-            for key in (
-                "stage",
-                "stageName",
-                "roundName",
-                "round",
-                "tournamentStage",
-                "leagueRoundName",
-                "matchRound",
-            ):
-                value = source.get(key)
-
-                if isinstance(value, dict):
-                    value = (
-                        value.get("name")
-                        or value.get("label")
-                        or value.get("value")
-                    )
-
-                normalized = normalize_stage(value)
-
-                if normalized:
-                    stage = normalized
-                    break
-
-            if stage:
-                break
-
-    home_id = home.get("id") or home.get("teamId") or home.get("teamID")
-    away_id = away.get("id") or away.get("teamId") or away.get("teamID")
-
-    return {
-        "id": str(match_id),
-        "home": {
-            "id": str(home_id) if home_id is not None else "",
-            "name": clean_text(
-                home.get("longName")
-                or home.get("name")
-                or home.get("shortName")
-            ),
-        },
-        "away": {
-            "id": str(away_id) if away_id is not None else "",
-            "name": clean_text(
-                away.get("longName")
-                or away.get("name")
-                or away.get("shortName")
-            ),
-        },
-        "stage": stage,
-    }
-
-
-def fetch_match_page(match):
-    match_id = str(match["id"])
-    url = match.get("pageUrl") or f"{FOTMOB_BASE_URL}/match/{match_id}"
+    url = f"{FOTMOB_BASE_URL}/api/data/leagues?id={league_id}"
 
     try:
         response = requests.get(
@@ -380,35 +283,227 @@ def fetch_match_page(match):
                     "AppleWebKit/537.36 (KHTML, like Gecko) "
                     "Chrome/140.0.0.0 Safari/537.36"
                 ),
-                "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
+                "Accept": "application/json,text/plain,*/*",
                 "Accept-Language": "en-US,en;q=0.9",
                 "Referer": FOTMOB_BASE_URL + "/",
             },
             timeout=TIMEOUT,
-            allow_redirects=True,
+        )
+        print(
+            f"[STAGE] League {league_id}: "
+            f"HTTP {response.status_code}"
         )
         response.raise_for_status()
-    except requests.RequestException as error:
-        print(f"[DISCOVERY] Page failed for {match_id}: {error}")
-        return match
+        data = response.json()
 
-    data = extract_next_data(response.text)
-    if data is None:
-        print(f"[DISCOVERY] No __NEXT_DATA__ for {match_id}")
-        return match
+        return data if isinstance(data, dict) else None
 
-    page_match = extract_page_match(data)
-    if not page_match:
-        print(f"[DISCOVERY] Could not extract page data for {match_id}")
-        return match
+    except (requests.RequestException, ValueError) as error:
+        print(
+            f"[STAGE] League {league_id}: "
+            f"structure fetch failed: {error}"
+        )
+        return None
 
-    # The daily endpoint is authoritative for kickoff time and competition ID.
-    # Never replace these with guessed/page-derived values.
-    enriched = dict(match)
-    enriched["home"] = page_match["home"] or match["home"]
-    enriched["away"] = page_match["away"] or match["away"]
-    enriched["stage"] = page_match.get("stage")
-    return enriched
+
+def _stage_from_round_value(value):
+    if isinstance(value, dict):
+        value = (
+            value.get("stage")
+            or value.get("name")
+            or value.get("label")
+            or value.get("value")
+        )
+
+    return normalize_stage(value)
+
+
+def _collect_match_ids(node):
+    """
+    همه شناسه‌های ممکن مسابقه را از یک matchup/round جمع می‌کند.
+    """
+    result = set()
+
+    if isinstance(node, dict):
+        for key in (
+            "matchId",
+            "matchID",
+            "match_id",
+            "eventId",
+            "eventID",
+            "event_id",
+            "id",
+        ):
+            value = node.get(key)
+
+            if value is not None:
+                text = clean_text(value)
+
+                if text.isdigit() and len(text) >= 5:
+                    result.add(text)
+
+        for key, value in node.items():
+            if key in {
+                "matchId",
+                "matchID",
+                "match_id",
+                "eventId",
+                "eventID",
+                "event_id",
+                "id",
+            }:
+                continue
+
+            if isinstance(value, (dict, list)):
+                result.update(_collect_match_ids(value))
+
+    elif isinstance(node, list):
+        for item in node:
+            result.update(_collect_match_ids(item))
+
+    return result
+
+
+def _iter_playoff_rounds(data):
+    """
+    roundهای واقعی playoff را از ساختار لیگ پیدا می‌کند.
+    ساختار مورد انتظار FotMob:
+    overview.playoff.rounds[*]
+    """
+    if not isinstance(data, dict):
+        return []
+
+    overview = data.get("overview")
+    if not isinstance(overview, dict):
+        overview = recursive_find(data, {"overview"})
+
+    if not isinstance(overview, dict):
+        return []
+
+    playoff = overview.get("playoff")
+
+    if not isinstance(playoff, dict):
+        return []
+
+    rounds = playoff.get("rounds")
+
+    if not isinstance(rounds, list):
+        return []
+
+    return [
+        item
+        for item in rounds
+        if isinstance(item, dict)
+    ]
+
+
+def build_league_stage_map(data):
+    """
+    خروجی:
+        {
+            "579....": "semi_final",
+            "580....": "quarter_final",
+            ...
+        }
+
+    مرحله فقط از round واقعی رقابت تعیین می‌شود، نه از
+    tournamentStage عددی endpoint روزانه و نه از matchRound صفحه مسابقه.
+    """
+    result = {}
+
+    for round_item in _iter_playoff_rounds(data):
+        stage = _stage_from_round_value(
+            round_item.get("stage")
+        )
+
+        if stage is None:
+            continue
+
+        match_ids = set()
+
+        for key in (
+            "matchups",
+            "matches",
+            "events",
+            "fixtures",
+            "games",
+        ):
+            value = round_item.get(key)
+
+            if isinstance(value, (dict, list)):
+                match_ids.update(
+                    _collect_match_ids(value)
+                )
+
+        # بعضی ساختارها ممکن است matchupها را زیر کل round
+        # با کلید دیگری نگه دارند؛ در این حالت کل round را
+        # بررسی می‌کنیم ولی فقط شناسه‌های عددی معتبر را می‌گیریم.
+        if not match_ids:
+            match_ids = _collect_match_ids(round_item)
+
+        for match_id in match_ids:
+            result[str(match_id)] = stage
+
+        print(
+            f"[STAGE] Round {round_item.get('stage')!r} "
+            f"-> {stage} | matches: {len(match_ids)}"
+        )
+
+    return result
+
+
+def build_stage_cache(candidates):
+    """
+    برای هر leagueId موجود در کاندیدها فقط یک بار endpoint لیگ را
+    می‌خواند و mapping matchId -> stage می‌سازد.
+    """
+    cache = {}
+    league_ids = []
+
+    for match in candidates:
+        league_id = clean_text(match.get("leagueId"))
+
+        if league_id and league_id not in league_ids:
+            league_ids.append(league_id)
+
+    print(
+        f"[STAGE] Building playoff stage cache for "
+        f"{len(league_ids)} competitions"
+    )
+
+    for league_id in league_ids:
+        data = fetch_league_structure(league_id)
+
+        if not data:
+            continue
+
+        mapping = build_league_stage_map(data)
+
+        if mapping:
+            cache[league_id] = mapping
+            print(
+                f"[STAGE] League {league_id}: "
+                f"{len(mapping)} match-stage mappings"
+            )
+        else:
+            print(
+                f"[STAGE] League {league_id}: "
+                "no playoff stage mappings"
+            )
+
+    return cache
+
+
+def apply_stage_cache(match, stage_cache):
+    league_id = clean_text(match.get("leagueId"))
+    match_id = clean_text(match.get("id"))
+
+    mapping = stage_cache.get(league_id, {})
+
+    if match_id in mapping:
+        match["stage"] = mapping[match_id]
+
+    return match
 
 
 def load_team_config():
@@ -702,6 +797,12 @@ def main():
         f"{len(candidates)}"
     )
 
+    stage_cache = build_stage_cache(candidates)
+
+    # مرحله مسابقات را قبل از اعمال mode=from/final_only تزریق می‌کنیم.
+    for match in candidates:
+        apply_stage_cache(match, stage_cache)
+
     discovered = []
     seen_ids = set()
 
@@ -723,24 +824,9 @@ def main():
         if not direct_team and not matching_rules:
             continue
 
-        needs_page = direct_team or any(
-            normalize(rule.get("mode") or "all")
-            in {"from", "final_only"}
-            for rule in matching_rules
-        )
-
-        if needs_page:
-            home_name = match.get("home", {}).get("name", "")
-            away_name = match.get("away", {}).get("name", "")
-
-            print(
-                f"[DISCOVERY] Enriching candidate "
-                f"{index}/{len(candidates)}: "
-                f"{home_name} vs {away_name}"
-            )
-
-            match = fetch_match_page(match)
-
+        # stage را از ساختار خود competition تعیین می‌کنیم.
+        # فقط برای مسابقات کاندید انجام می‌شود و برای هر leagueId
+        # فقط یک درخواست زده می‌شود.
         if not is_selected(
             match,
             config,
