@@ -661,10 +661,22 @@ def is_selected(
         config.get("window_hours", 24)
     )
 
-    if start < now:
+    window_start = datetime(
+        2026,
+        9,
+        20,
+        0,
+        0,
+        0,
+        tzinfo=timezone(timedelta(hours=3, minutes=30)),
+    ).astimezone(timezone.utc)
+
+    window_end = datetime.now(timezone.utc)
+
+    if start < window_start:
         return False
 
-    if start > now + timedelta(hours=window_hours):
+    if start > window_end:
         return False
 
     team_ids = match_team_ids(match)
@@ -821,19 +833,28 @@ def main():
         if str(value).strip()
     }
 
+    # Historical test window:
+    # 20 September 2026 00:00 Iran time -> current moment.
+    # This is intentionally used for testing discovery against a day
+    # that already has completed matches.
+    test_start = datetime(
+        2026,
+        9,
+        20,
+        0,
+        0,
+        0,
+        tzinfo=timezone(timedelta(hours=3, minutes=30)),
+    ).astimezone(timezone.utc)
+
     now = datetime.now(timezone.utc)
 
-    window_hours = float(
-        config.get("window_hours", 24)
-    )
-
-    window_end = (
-        now + timedelta(hours=window_hours)
-    )
+    window_start = test_start
+    window_end = now
 
     print(
-        "[DISCOVERY] Window:",
-        now.isoformat(),
+        "[DISCOVERY] TEST Window:",
+        window_start.isoformat(),
         "->",
         window_end.isoformat(),
     )
