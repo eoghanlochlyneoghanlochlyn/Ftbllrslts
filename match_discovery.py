@@ -520,12 +520,24 @@ def fetch_match_page_stage(match_id):
     # عددهای عمومی مثل tournamentStage یا round=1 قابل اعتماد نیستند.
     text = clean_text(html)
 
+    # فقط عبارت‌هایی را می‌پذیریم که واقعاً به مرحله مسابقات اشاره
+    # می‌کنند. جست‌وجوی \\bFinal\\b به‌تنهایی خطرناک است، چون
+    # کلمه final در متن خبری/توضیحات عادی صفحه هم زیاد دیده می‌شود.
     explicit_patterns = (
-        (r"\bRound\s+of\s+32\b", "round_of_32"),
-        (r"\bRound\s+of\s+16\b", "round_of_16"),
-        (r"\bQuarter[- ]?finals?\b", "quarter_final"),
-        (r"\bSemi[- ]?finals?\b", "semi_final"),
-        (r"\bFinal\b", "final"),
+        (r"\\bRound\\s+of\\s+32\\b", "round_of_32"),
+        (r"\\bRound\\s+of\\s+16\\b", "round_of_16"),
+        (r"\\bQuarter[- ]?finals?\\b", "quarter_final"),
+        (r"\\bSemi[- ]?finals?\\b", "semi_final"),
+        (
+            r"(?<![A-Za-z])"
+            r"(?:Champions League|Europa League|Conference League|"
+            r"Asian Champions League|AFC Champions League|"
+            r"World Cup|Euro|Copa America|FA Cup|EFL Cup|"
+            r"UEFA Nations League)"
+            r"\\s+Final\\b",
+            "final",
+        ),
+        (r"\\bFinal Stage\\b", "knockout"),
     )
 
     for pattern, stage in explicit_patterns:
@@ -787,11 +799,20 @@ def is_selected(match, config, selected_team_ids, by_name, by_country):
     if start is None:
         return False
 
-    iran_tz = timezone(timedelta(hours=3, minutes=30))
-    window_start = datetime(
-        2026, 9, 20, 0, 0, 0, tzinfo=iran_tz
-    ).astimezone(timezone.utc)
-    window_end = datetime.now(timezone.utc)
+    now_utc = datetime.now(timezone.utc)
+
+    window_hours = config.get("window_hours", 24)
+
+    try:
+        window_hours = float(window_hours)
+    except (TypeError, ValueError):
+        window_hours = 24
+
+    if window_hours <= 0:
+        window_hours = 24
+
+    window_start = now_utc
+    window_end = now_utc + timedelta(hours=window_hours)
 
     if start < window_start or start > window_end:
         return False
@@ -924,22 +945,37 @@ def main():
     }
 
     iran_tz = timezone(timedelta(hours=3, minutes=30))
-    window_start = datetime(
-        2026, 9, 20, 0, 0, 0, tzinfo=iran_tz
-    ).astimezone(timezone.utc)
-    window_end = datetime.now(timezone.utc)
+    now_utc = datetime.now(timezone.utc)
+
+    # بازه واقعی discovery باید از «الان» تا window_hours آینده باشد.
+    # بازه قبلی که از 2026-09-20 تا زمان اجرا بود صرفاً برای تست
+    # تاریخی بود و باعث می‌شد مسابقات آینده اصلاً وارد matches.json نشوند.
+    window_hours = config.get("window_hours", 24)
+
+    try:
+        window_hours = float(window_hours)
+    except (TypeError, ValueError):
+        window_hours = 24
+
+    if window_hours <= 0:
+        window_hours = 24
+
+    window_start = now_utc
+    window_end = now_utc + timedelta(hours=window_hours)
 
     print(
-        "[DISCOVERY] TEST Window:",
+        "[DISCOVERY] Window:",
         window_start.isoformat(),
         "->",
         window_end.isoformat(),
+        f"({window_hours:g}h)",
     )
 
     dates = []
-    current_date = window_start.date()
+    current_date = window_start.astimezone(iran_tz).date()
+    last_date = window_end.astimezone(iran_tz).date()
 
-    while current_date <= window_end.date():
+    while current_date <= last_date:
         dates.append(current_date.strftime("%Y%m%d"))
         current_date += timedelta(days=1)
 
