@@ -39,6 +39,10 @@ jobs:
         run: |
           python -m unittest -v test_historical_competitions.py
 
+      - name: Test 10 Champions League fixtures across stages
+        run: |
+          python -m unittest -v test_ucl_10_matches.py
+
       - name: Discover automatic matches
         run: |
           python match_discovery.py
