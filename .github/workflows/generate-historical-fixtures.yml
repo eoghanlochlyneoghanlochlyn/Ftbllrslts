@@ -2,6 +2,9 @@ name: Generate Frozen Historical Match List
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "generate_historical_fixtures.py"
 
 permissions:
   contents: write
