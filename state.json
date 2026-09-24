@@ -10,7 +10,8 @@
       "event_keys": [
         "react:1447953813Goal209405undefinedtrue",
         "react:1447960532Goal966019undefinedfalse",
-        "react:1447992590Goal0undefinedtrue"
+        "react:1447992590Goal0undefinedtrue",
+        "react:1447992590Goal806552undefinedtrue"
       ],
       "goals": [
         {
@@ -231,6 +232,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1447992590Goal806552undefinedtrue",
+          "player_id": 806552,
+          "player_name": "Cody Gakpo",
+          "assist_player_id": 1359970,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2323,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447992590Goal806552undefinedtrue",
+            "timeStr": "90 + 2",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 2,
+            "eventId": 14479925,
+            "player": {
+              "id": 806552,
+              "name": "Cody Gakpo",
+              "profileUrl": "/players/806552/cody-gakpo"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/806552/cody-gakpo",
+            "overloadTimeStr": "+2",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Cody Gakpo",
+            "firstName": "Cody",
+            "lastName": "Gakpo",
+            "fullName": "Cody Gakpo",
+            "playerId": 806552,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974418049,
+              "eventType": "Goal",
+              "teamId": 6708,
+              "playerId": 806552,
+              "playerName": "Cody Gakpo",
+              "x": 97.3771929818,
+              "y": 30.797499999999996,
+              "min": 90,
+              "minAdded": 2,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.95,
+              "goalCrossedZ": 1.0979999946,
+              "expectedGoals": 0.4142152667045593,
+              "expectedGoalsOnTarget": 0.7425259351730347,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.806878306878306,
+                "y": 0.29047618904761907,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 184554,
+              "firstName": "Cody",
+              "lastName": "Gakpo",
+              "fullName": "Cody Gakpo",
+              "teamColor": "#FB6132"
+            },
+            "assistStr": "assist by Ruben van Bommel",
+            "assistProfileUrl": "/players/1359970/ruben-van-bommel",
+            "assistPlayerId": 1359970,
+            "assistKey": "assist_by",
+            "assistInput": "Ruben van Bommel"
+          }
         }
       ],
       "observed_goal_events": [
@@ -340,10 +429,84 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1447992590Goal806552undefinedtrue",
+          "timeStr": "90 + 2",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 2,
+          "eventId": 14479925,
+          "player": {
+            "id": 806552,
+            "name": "Cody Gakpo",
+            "profileUrl": "/players/806552/cody-gakpo"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/806552/cody-gakpo",
+          "overloadTimeStr": "+2",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Cody Gakpo",
+          "firstName": "Cody",
+          "lastName": "Gakpo",
+          "fullName": "Cody Gakpo",
+          "playerId": 806552,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974418049,
+            "eventType": "Goal",
+            "teamId": 6708,
+            "playerId": 806552,
+            "playerName": "Cody Gakpo",
+            "x": 97.3771929818,
+            "y": 30.797499999999996,
+            "min": 90,
+            "minAdded": 2,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.95,
+            "goalCrossedZ": 1.0979999946,
+            "expectedGoals": 0.4142152667045593,
+            "expectedGoalsOnTarget": 0.7425259351730347,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.806878306878306,
+              "y": 0.29047618904761907,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 184554,
+            "firstName": "Cody",
+            "lastName": "Gakpo",
+            "fullName": "Cody Gakpo",
+            "teamColor": "#FB6132"
+          },
+          "assistStr": "assist by Ruben van Bommel",
+          "assistProfileUrl": "/players/1359970/ruben-van-bommel",
+          "assistPlayerId": 1359970,
+          "assistKey": "assist_by",
+          "assistInput": "Ruben van Bommel"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 0,
         "away": 1
       }
     },
@@ -356,7 +519,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:144795034Goal463268undefinedtrue",
-        "react:1447977374Goal1157237undefinedfalse"
+        "react:1447977374Goal1157237undefinedfalse",
+        "react:1447993190Goal873270undefinedfalse"
       ],
       "goals": [
         {
@@ -534,6 +698,94 @@
             "assistKey": "assist_by",
             "assistInput": "Vangelis Pavlidis"
           }
+        },
+        {
+          "event_key": "react:1447993190Goal873270undefinedfalse",
+          "player_id": 873270,
+          "player_name": "Anastasios Douvikas",
+          "assist_player_id": 671529,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 5",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2324,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447993190Goal873270undefinedfalse",
+            "timeStr": "90 + 5",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 5,
+            "eventId": 14479931,
+            "player": {
+              "id": 873270,
+              "name": "Anastasios Douvikas",
+              "profileUrl": "/players/873270/anastasios-douvikas"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/873270/anastasios-douvikas",
+            "overloadTimeStr": "+5",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Anastasios Douvikas",
+            "firstName": "Anastasios",
+            "lastName": "Douvikas",
+            "fullName": "Anastasios Douvikas",
+            "playerId": 873270,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974418473,
+              "eventType": "Goal",
+              "teamId": 6383,
+              "playerId": 873270,
+              "playerName": "Anastasios Douvikas",
+              "x": 100.9224137934,
+              "y": 38.78857143,
+              "min": 90,
+              "minAdded": 4,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34,
+              "goalCrossedZ": 1.990526306,
+              "expectedGoals": 0.29091769456863403,
+              "expectedGoalsOnTarget": 0.3329606056213379,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1,
+                "y": 0.5265942608465608,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 543021,
+              "firstName": "Anastasios",
+              "lastName": "Douvikas",
+              "fullName": "Anastasios Douvikas",
+              "teamColor": "#2A5CAA"
+            },
+            "assistStr": "assist by Konstantinos Tsimikas",
+            "assistProfileUrl": "/players/671529/konstantinos-tsimikas",
+            "assistPlayerId": 671529,
+            "assistKey": "assist_by",
+            "assistInput": "Konstantinos Tsimikas"
+          }
         }
       ],
       "observed_goal_events": [
@@ -679,11 +931,82 @@
             "fullName": "Christos Tzolis",
             "teamColor": "#2A5CAA"
           },
-          "assistStr": "assist by Vangelis Pavlidis",
-          "assistProfileUrl": "/players/637749/vangelis-pavlidis",
-          "assistPlayerId": 637749,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1447993190Goal873270undefinedfalse",
+          "timeStr": "90 + 5",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 5,
+          "eventId": 14479931,
+          "player": {
+            "id": 873270,
+            "name": "Anastasios Douvikas",
+            "profileUrl": "/players/873270/anastasios-douvikas"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/873270/anastasios-douvikas",
+          "overloadTimeStr": "+5",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Anastasios Douvikas",
+          "firstName": "Anastasios",
+          "lastName": "Douvikas",
+          "fullName": "Anastasios Douvikas",
+          "playerId": 873270,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974418473,
+            "eventType": "Goal",
+            "teamId": 6383,
+            "playerId": 873270,
+            "playerName": "Anastasios Douvikas",
+            "x": 100.9224137934,
+            "y": 38.78857143,
+            "min": 90,
+            "minAdded": 4,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34,
+            "goalCrossedZ": 1.990526306,
+            "expectedGoals": 0.29091769456863403,
+            "expectedGoalsOnTarget": 0.3329606056213379,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1,
+              "y": 0.5265942608465608,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 543021,
+            "firstName": "Anastasios",
+            "lastName": "Douvikas",
+            "fullName": "Anastasios Douvikas",
+            "teamColor": "#2A5CAA"
+          },
+          "assistStr": "assist by Konstantinos Tsimikas",
+          "assistProfileUrl": "/players/671529/konstantinos-tsimikas",
+          "assistPlayerId": 671529,
           "assistKey": "assist_by",
-          "assistInput": "Vangelis Pavlidis"
+          "assistInput": "Konstantinos Tsimikas"
         }
       ],
       "observed_score": {
