@@ -166,10 +166,11 @@ def extract_fixture_payload(data, competition_id):
     container = recursive_find(data, "matchesCombinedByRound")
 
     raw = []
-    if container is not None:
-        extract_matches(container, raw)
-    else:
-        extract_matches(data, raw)
+    # The league payload can expose knockout matches under
+    # matchesCombinedByRound, while group/league-phase matches live elsewhere.
+    # Walk the entire payload so the historical benchmark contains EVERY
+    # fixture, not just the knockout tree.
+    extract_matches(data, raw)
 
     result = {}
     for match in raw:
