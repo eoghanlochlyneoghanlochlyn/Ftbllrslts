@@ -451,7 +451,8 @@
       "event_keys": [
         "react:1447953714Goal1113790undefinedtrue",
         "react:1447955618Goal737066undefinedtrue",
-        "react:1447957625Goal888912undefinedfalse"
+        "react:1447957625Goal888912undefinedfalse",
+        "react:1447969960Goal1199272undefinedfalse"
       ],
       "goals": [
         {
@@ -714,6 +715,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1447969960Goal1199272undefinedfalse",
+          "player_id": 1199272,
+          "player_name": "Rasmus Højlund",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "60",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2316,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447969960Goal1199272undefinedfalse",
+            "timeStr": 60,
+            "type": "goal",
+            "time": 60,
+            "overloadTime": null,
+            "eventId": 14479699,
+            "player": {
+              "id": 1199272,
+              "name": "Rasmus Højlund",
+              "profileUrl": "/players/1199272/rasmus-hojlund"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/1199272/rasmus-hojlund",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Rasmus Højlund",
+            "firstName": "Rasmus",
+            "lastName": "Højlund",
+            "fullName": "Rasmus Højlund",
+            "playerId": 1199272,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974402095,
+              "eventType": "Goal",
+              "teamId": 8238,
+              "playerId": 1199272,
+              "playerName": "Rasmus Højlund",
+              "x": 102.629310345,
+              "y": 34.1525,
+              "min": 60,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.22875,
+              "goalCrossedZ": 1.3034736778000002,
+              "expectedGoals": 0.5674436688423157,
+              "expectedGoalsOnTarget": 0.5221977829933167,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.9394841269841275,
+                "y": 0.34483430629629636,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 73409,
+              "firstName": "Rasmus",
+              "lastName": "Højlund",
+              "fullName": "Rasmus Højlund",
+              "teamColor": "#D2151A"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "observed_goal_events": [
@@ -935,11 +1021,82 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1447969960Goal1199272undefinedfalse",
+          "timeStr": 60,
+          "type": "goal",
+          "time": 60,
+          "overloadTime": null,
+          "eventId": 14479699,
+          "player": {
+            "id": 1199272,
+            "name": "Rasmus Højlund",
+            "profileUrl": "/players/1199272/rasmus-hojlund"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/1199272/rasmus-hojlund",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Rasmus Højlund",
+          "firstName": "Rasmus",
+          "lastName": "Højlund",
+          "fullName": "Rasmus Højlund",
+          "playerId": 1199272,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974402095,
+            "eventType": "Goal",
+            "teamId": 8238,
+            "playerId": 1199272,
+            "playerName": "Rasmus Højlund",
+            "x": 102.629310345,
+            "y": 34.1525,
+            "min": 60,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.22875,
+            "goalCrossedZ": 1.3034736778000002,
+            "expectedGoals": 0.5674436688423157,
+            "expectedGoalsOnTarget": 0.5221977829933167,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.9394841269841275,
+              "y": 0.34483430629629636,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 73409,
+            "firstName": "Rasmus",
+            "lastName": "Højlund",
+            "fullName": "Rasmus Højlund",
+            "teamColor": "#D2151A"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       },
       "cancelled_goal_keys": []
     },
@@ -1364,7 +1521,7 @@
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 1,
         "away": 0
       }
     }
