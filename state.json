@@ -11,7 +11,7 @@
       "goals": []
     },
     "5181826": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -21,7 +21,7 @@
       "goals": []
     },
     "5181861": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -31,7 +31,7 @@
       "goals": []
     },
     "5181862": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
