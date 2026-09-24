@@ -2533,10 +2533,13 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
             f"full-production selected={production_selected}"
         )
 
-        expected = [f for f in FIXTURES if f["stage"] in {"semi_final", "final"}]
-        self.assertEqual(len(expected), 5)
-        self.assertEqual(rule_selected, 5)
-        self.assertEqual(rule_rejected, 184)
+        expected = [
+            f for f in FIXTURES
+            if f["stage"] in {"round_of_16", "quarter_final", "semi_final", "final"}
+        ]
+        self.assertEqual(len(expected), 29)
+        self.assertEqual(rule_selected, 29)
+        self.assertEqual(rule_rejected, 160)
 
         for fixture in expected:
             reasons = selection_reasons(
@@ -2546,7 +2549,9 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
             self.assertTrue(reasons)
 
         for fixture in FIXTURES:
-            if fixture["stage"] not in {"semi_final", "final"}:
+            if fixture["stage"] not in {
+                "round_of_16", "quarter_final", "semi_final", "final"
+            }:
                 reasons = selection_reasons(
                     fixture, {"competitions": [self.rule]}, set(),
                     self.by_name, self.by_country,
