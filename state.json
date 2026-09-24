@@ -1096,7 +1096,7 @@
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       },
       "cancelled_goal_keys": []
     },
@@ -1521,7 +1521,7 @@
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 1,
         "away": 0
       }
     }
