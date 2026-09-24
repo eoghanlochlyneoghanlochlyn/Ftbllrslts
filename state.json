@@ -951,7 +951,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1447956622Goal794427undefinedtrue"
+        "react:1447956622Goal794427undefinedtrue",
+        "react:1447967959Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -1041,6 +1042,56 @@
             "assistKey": "assist_by",
             "assistInput": "Nuno Mendes"
           }
+        },
+        {
+          "event_key": "react:1447967959Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "59",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2314,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1447967959Goal0undefinedtrue",
+            "timeStr": 59,
+            "type": "goal",
+            "time": 59,
+            "overloadTime": null,
+            "eventId": 14479679,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "observed_goal_events": [
@@ -1117,10 +1168,46 @@
           "assistPlayerId": 1158945,
           "assistKey": "assist_by",
           "assistInput": "Nuno Mendes"
+        },
+        {
+          "reactKey": "1447967959Goal0undefinedtrue",
+          "timeStr": 59,
+          "type": "goal",
+          "time": 59,
+          "overloadTime": null,
+          "eventId": 14479679,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     }
