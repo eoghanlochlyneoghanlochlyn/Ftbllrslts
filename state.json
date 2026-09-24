@@ -268,7 +268,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:144795034Goal463268undefinedtrue"
+        "react:144795034Goal463268undefinedtrue",
+        "react:1447977374Goal1157237undefinedfalse"
       ],
       "goals": [
         {
@@ -358,6 +359,94 @@
             "assistKey": "assist_by",
             "assistInput": "Dušan Tadić"
           }
+        },
+        {
+          "event_key": "react:1447977374Goal1157237undefinedfalse",
+          "player_id": 1157237,
+          "player_name": "Christos Tzolis",
+          "assist_player_id": 637749,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "74",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2317,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447977374Goal1157237undefinedfalse",
+            "timeStr": 74,
+            "type": "goal",
+            "time": 74,
+            "overloadTime": null,
+            "eventId": 14479773,
+            "player": {
+              "id": 1157237,
+              "name": "Christos Tzolis",
+              "profileUrl": "/players/1157237/christos-tzolis"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1157237/christos-tzolis",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Christos Tzolis",
+            "firstName": "Christos",
+            "lastName": "Tzolis",
+            "fullName": "Christos Tzolis",
+            "playerId": 1157237,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974408417,
+              "eventType": "Goal",
+              "teamId": 6383,
+              "playerId": 1157237,
+              "playerName": "Christos Tzolis",
+              "x": 96.0263157884,
+              "y": 45.6822929897,
+              "min": 74,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.95,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.07520239800214767,
+              "expectedGoalsOnTarget": 0.5782837867736816,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.806878306878306,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 543021,
+              "firstName": "Christos",
+              "lastName": "Tzolis",
+              "fullName": "Christos Tzolis",
+              "teamColor": "#2A5CAA"
+            },
+            "assistStr": "assist by Vangelis Pavlidis",
+            "assistProfileUrl": "/players/637749/vangelis-pavlidis",
+            "assistPlayerId": 637749,
+            "assistKey": "assist_by",
+            "assistInput": "Vangelis Pavlidis"
+          }
         }
       ],
       "observed_goal_events": [
@@ -434,11 +523,85 @@
           "assistPlayerId": 94267,
           "assistKey": "assist_by",
           "assistInput": "Dušan Tadić"
+        },
+        {
+          "reactKey": "1447977374Goal1157237undefinedfalse",
+          "timeStr": 74,
+          "type": "goal",
+          "time": 74,
+          "overloadTime": null,
+          "eventId": 14479773,
+          "player": {
+            "id": 1157237,
+            "name": "Christos Tzolis",
+            "profileUrl": "/players/1157237/christos-tzolis"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1157237/christos-tzolis",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Christos Tzolis",
+          "firstName": "Christos",
+          "lastName": "Tzolis",
+          "fullName": "Christos Tzolis",
+          "playerId": 1157237,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974408417,
+            "eventType": "Goal",
+            "teamId": 6383,
+            "playerId": 1157237,
+            "playerName": "Christos Tzolis",
+            "x": 96.0263157884,
+            "y": 45.6822929897,
+            "min": 74,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.95,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.07520239800214767,
+            "expectedGoalsOnTarget": 0.5782837867736816,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.806878306878306,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 543021,
+            "firstName": "Christos",
+            "lastName": "Tzolis",
+            "fullName": "Christos Tzolis",
+            "teamColor": "#2A5CAA"
+          },
+          "assistStr": "assist by Vangelis Pavlidis",
+          "assistProfileUrl": "/players/637749/vangelis-pavlidis",
+          "assistPlayerId": 637749,
+          "assistKey": "assist_by",
+          "assistInput": "Vangelis Pavlidis"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5181861": {
@@ -452,7 +615,8 @@
         "react:1447953714Goal1113790undefinedtrue",
         "react:1447955618Goal737066undefinedtrue",
         "react:1447957625Goal888912undefinedfalse",
-        "react:1447969960Goal1199272undefinedfalse"
+        "react:1447969960Goal1199272undefinedfalse",
+        "react:1447977174Goal737066undefinedtrue"
       ],
       "goals": [
         {
@@ -800,6 +964,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1447977174Goal737066undefinedtrue",
+          "player_id": 737066,
+          "player_name": "Erling Haaland",
+          "assist_player_id": 534670,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "74",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2318,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447977174Goal737066undefinedtrue",
+            "timeStr": 74,
+            "type": "goal",
+            "time": 74,
+            "overloadTime": null,
+            "eventId": 14479771,
+            "player": {
+              "id": 737066,
+              "name": "Erling Haaland",
+              "profileUrl": "/players/737066/erling-haaland"
+            },
+            "homeScore": 2,
+            "awayScore": 2,
+            "profileUrl": "/players/737066/erling-haaland",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Erling Haaland",
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "playerId": 737066,
+            "newScore": [
+              3,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974408109,
+              "eventType": "Goal",
+              "teamId": 8492,
+              "playerId": 737066,
+              "playerName": "Erling Haaland",
+              "x": 94.7719298231,
+              "y": 38.78857143,
+              "min": 74,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.21125,
+              "goalCrossedZ": 1.3805263090000002,
+              "expectedGoals": 0.13607600331306458,
+              "expectedGoalsOnTarget": 0.20756688714027405,
+              "shotType": "LeftFoot",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.41501322751322767,
+                "y": 0.3652186002645503,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1200984,
+              "firstName": "Erling",
+              "lastName": "Haaland",
+              "fullName": "Erling Haaland",
+              "teamColor": "#b53032"
+            },
+            "assistStr": "assist by Martin Ødegaard",
+            "assistProfileUrl": "/players/534670/martin-odegaard",
+            "assistPlayerId": 534670,
+            "assistKey": "assist_by",
+            "assistInput": "Martin Ødegaard"
+          }
         }
       ],
       "observed_goal_events": [
@@ -1092,10 +1344,84 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1447977174Goal737066undefinedtrue",
+          "timeStr": 74,
+          "type": "goal",
+          "time": 74,
+          "overloadTime": null,
+          "eventId": 14479771,
+          "player": {
+            "id": 737066,
+            "name": "Erling Haaland",
+            "profileUrl": "/players/737066/erling-haaland"
+          },
+          "homeScore": 2,
+          "awayScore": 2,
+          "profileUrl": "/players/737066/erling-haaland",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Erling Haaland",
+          "firstName": "Erling",
+          "lastName": "Haaland",
+          "fullName": "Erling Haaland",
+          "playerId": 737066,
+          "newScore": [
+            3,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974408109,
+            "eventType": "Goal",
+            "teamId": 8492,
+            "playerId": 737066,
+            "playerName": "Erling Haaland",
+            "x": 94.7719298231,
+            "y": 38.78857143,
+            "min": 74,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.21125,
+            "goalCrossedZ": 1.3805263090000002,
+            "expectedGoals": 0.13607600331306458,
+            "expectedGoalsOnTarget": 0.20756688714027405,
+            "shotType": "LeftFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.41501322751322767,
+              "y": 0.3652186002645503,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1200984,
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "teamColor": "#b53032"
+          },
+          "assistStr": "assist by Martin Ødegaard",
+          "assistProfileUrl": "/players/534670/martin-odegaard",
+          "assistPlayerId": 534670,
+          "assistKey": "assist_by",
+          "assistInput": "Martin Ødegaard"
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 2
       },
       "cancelled_goal_keys": []
