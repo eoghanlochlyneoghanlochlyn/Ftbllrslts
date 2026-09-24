@@ -2546,29 +2546,49 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
             f"full-production selected={production_selected}"
         )
 
-        expected = [
+        # UCL production rule starts from the configured semi-final.
+        # Therefore the competition-only rule selects exactly the 4
+        # semi-final matches + 1 final.
+        stage_rule_expected = [
             f for f in FIXTURES
-            if f["stage"] in {"round_of_16", "quarter_final", "semi_final", "final"}
+            if f["stage"] in {"semi_final", "final"}
         ]
-        # The UCL competition rule is only the stage-based fallback.
-        # The globally configured teams are selected at EVERY stage.
-        self.assertEqual(len(expected), 29)
+        self.assertEqual(len(stage_rule_expected), 5)
         self.assertEqual(rule_selected, 5)
         self.assertEqual(rule_rejected, 184)
 
-        # The globally configured teams are selected at EVERY stage.
-        # In this edition they account for 125 of the 189 fixtures.
-        # All semi-final/final fixtures also involve one of those teams,
-        # so the stage rule adds no extra fixture beyond those 125.
+        # The preselected teams are an independent global OR rule:
+        # if either side is one of the configured teams, the match is
+        # selected regardless of whether it is league phase, playoff,
+        # round of 16, quarter-final, semi-final, or final.
+        expected_team_selected = [
+            f for f in FIXTURES
+            if bool(
+                {str(f["home"]["id"]), str(f["away"]["id"])}
+                & self.selected_team_ids
+            )
+        ]
+        self.assertEqual(len(expected_team_selected), 125)
+
+        # In this edition every semi-final/final also contains a
+        # preselected team, so the stage rule adds no new production
+        # fixture beyond the 125 selected by team.
         self.assertEqual(expected_production_selected, 125)
         self.assertEqual(production_selected, 125)
 
-        for fixture in expected:
+        for fixture in stage_rule_expected:
             reasons = selection_reasons(
                 fixture, {"competitions": [self.rule]}, set(),
                 self.by_name, self.by_country,
             )
-            self.assertTrue(reasons)
+            self.assertTrue(
+                reasons,
+                msg=(
+                    f"Stage rule must select {fixture['id']} "
+                    f"({fixture['home']['name']} vs {fixture['away']['name']}), "
+                    f"stage={fixture['stage']}"
+                ),
+            )
 
         for fixture in FIXTURES:
             has_selected_team = bool(
