@@ -43,6 +43,10 @@ jobs:
         run: |
           python -m unittest -v test_ucl_10_matches.py
 
+      - name: Test all 32 Copa America 2024 fixtures
+        run: |
+          python -m unittest -v test_copa_america_2024.py
+
       - name: Discover automatic matches
         run: |
           python match_discovery.py
