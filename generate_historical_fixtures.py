@@ -294,11 +294,6 @@ def main():
             f"season {season}"
         )
 
-        season, matches = selected
-        print(
-            f"[GENERATE] {competition_id}: {season} -> {len(matches)} fixtures"
-        )
-
         mode = str(rule.get("mode") or "all").lower()
         if mode in {"from", "final_only"}:
             missing = [m["id"] for m in matches if not m["stage"]]
