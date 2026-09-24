@@ -190,6 +190,9 @@ def get_goal_event_from_cancellation(
     ):
         return event
 
+    goal_event = cancelled_goal.get('goal_event')
+    if isinstance(goal_event, dict):
+        return goal_event
     return cancelled_goal
 
 
@@ -849,6 +852,9 @@ def process_live_events(
             goal_key,
         )
 
+        sent_keys = match_state.setdefault('cancelled_goal_keys', [])
+        if str(goal_key) in {str(k) for k in sent_keys}:
+            continue
         was_cancelled = False
 
         if goal is not None:
@@ -905,6 +911,8 @@ def process_live_events(
                     "Timing: Telegram send =",
                     f"{telegram_finished_at - telegram_started_at:.2f}s",
                 )
+
+                sent_keys.append(str(goal_key))
 
             except Exception as error:
 
