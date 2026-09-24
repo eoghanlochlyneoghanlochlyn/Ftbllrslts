@@ -3,7 +3,7 @@
     "5181825": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -13,12 +13,103 @@
     "5181826": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "react:144795034Goal463268undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:144795034Goal463268undefinedtrue",
+          "player_id": 463268,
+          "player_name": "Andrija Živković",
+          "assist_player_id": 94267,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "4",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2305,
+          "needs_update": false,
+          "event": {
+            "reactKey": "144795034Goal463268undefinedtrue",
+            "timeStr": 4,
+            "type": "goal",
+            "time": 4,
+            "overloadTime": null,
+            "eventId": 14479503,
+            "player": {
+              "id": 463268,
+              "name": "Andrija Živković",
+              "profileUrl": "/players/463268/andrija-zivkovic"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/463268/andrija-zivkovic",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Andrija Živković",
+            "firstName": "Andrija",
+            "lastName": "Živković",
+            "fullName": "Andrija Živković",
+            "playerId": 463268,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974372749,
+              "eventType": "Goal",
+              "teamId": 8205,
+              "playerId": 463268,
+              "playerName": "Andrija Živković",
+              "x": 96.3157894727,
+              "y": 32.24625,
+              "min": 4,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 1.3034736778000002,
+              "expectedGoals": 0.4530681371688843,
+              "expectedGoalsOnTarget": 0.6193843483924866,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2738095238095226,
+                "y": 0.34483430629629636,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1072068,
+              "firstName": "Andrija",
+              "lastName": "Živković",
+              "fullName": "Andrija Živković",
+              "teamColor": "#CA2739"
+            },
+            "assistStr": "assist by Dušan Tadić",
+            "assistProfileUrl": "/players/94267/dusan-tadic",
+            "assistPlayerId": 94267,
+            "assistKey": "assist_by",
+            "assistInput": "Dušan Tadić"
+          }
+        }
+      ]
     },
     "5181861": {
       "lineup_sent": true,
