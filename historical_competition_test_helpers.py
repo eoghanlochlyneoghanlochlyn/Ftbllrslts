@@ -15,15 +15,12 @@ import unittest
 from pathlib import Path
 
 from match_discovery import (
-    STAGE_RANK,
-    build_league_stage_map,
-    configured_extra_team_ids,
-    fetch_league_structure,
     load_team_config,
-    match_team_ids,
     normalize,
     selection_reasons,
 )
+
+from historical_fixtures import HISTORICAL_FIXTURES
 
 CONFIG_FILE = Path("auto_matches.json")
 
@@ -115,200 +112,122 @@ def _extract_match_nodes(node, output):
             _extract_match_nodes(value, output)
 
 
-def _status_finished(match):
-    status = match.get("status")
-    if not isinstance(status, dict):
-        status = {}
-
-    if status.get("finished") is True:
-        return True
-
-    if status.get("cancelled") is True:
-        return True
-
-    reason = status.get("reason")
-    if isinstance(reason, dict):
-        text = " ".join(
-            _clean(reason.get(key))
-            for key in ("short", "long", "key")
-        ).lower()
-        if any(
-            marker in text
-            for marker in (
-                "full-time",
-                "full time",
-                "after extra time",
-                "penalties",
-                "ft",
-                "aet",
-                "cancelled",
-            )
-        ):
-            return True
-
-    return False
-
-
-def _extract_season_candidates(data):
-    seasons = data.get("seasons")
-    if seasons is None:
-        seasons = _recursive_find_key(data, "seasons")
-
-    if isinstance(seasons, dict):
-        seasons = seasons.get("seasons") or list(seasons.values())
-
-    if not isinstance(seasons, list):
-        return []
-
-    result = []
-    seen = set()
-
-    for item in seasons:
-        if isinstance(item, dict):
-            value = (
-                item.get("id")
-                or item.get("season")
-                or item.get("name")
-            )
-        else:
-            value = item
-
-        value = _clean(value)
-        if value and value not in seen:
-            seen.add(value)
-            result.append(value)
-
-    return result
-
-
-def _extract_matches(data, stage_map):
-    container = _recursive_find_key(data, "matchesCombinedByRound")
-    if container is None:
-        raise AssertionError("FotMob season payload has no matchesCombinedByRound")
-
-    raw = []
-    _extract_match_nodes(container, raw)
-
-    by_id = {}
-
-    for match in raw:
-        match_id = str(match.get("id") or match.get("matchId"))
-        if not match_id:
-            continue
-
-        home = match.get("home") or {}
-        away = match.get("away") or {}
-
-        stage = stage_map.get(match_id)
-
-        if stage is None:
-            stage = _stage_from_text(
-                match.get("roundName")
-                or match.get("round")
-                or match.get("stage")
-            )
-
-        normalized = {
-            "id": match_id,
-            "leagueId": str(
-                match.get("leagueId")
-                or match.get("primaryLeagueId")
-                or match.get("tournamentId")
-                or ""
-            ),
-            "stage": stage,
-            "roundName": _clean(match.get("roundName")),
-            "home": {
-                "id": str(
-                    home.get("id")
-                    or home.get("teamId")
-                    or home.get("teamID")
-                    or ""
-                ),
-                "name": _clean(
-                    home.get("longName")
-                    or home.get("name")
-                    or home.get("shortName")
-                ),
-            },
-            "away": {
-                "id": str(
-                    away.get("id")
-                    or away.get("teamId")
-                    or away.get("teamID")
-                    or ""
-                ),
-                "name": _clean(
-                    away.get("longName")
-                    or away.get("name")
-                    or away.get("shortName")
-                ),
-            },
-            "status": match.get("status") or {},
-        }
-
-        # Prefer the stage map from overview.playoff.rounds because that is
-        # the same stage source production discovery uses.
-        by_id[match_id] = normalized
-
-    return list(by_id.values())
-
-
-def _season_is_complete(matches):
-    if not matches:
-        return False
-    return all(_status_finished(match) for match in matches)
-
-
-def fetch_latest_completed_season(competition_id):
-    """Return (season_name, payload, matches) for the newest fully finished season."""
-    base = fetch_league_structure(competition_id)
-    if not isinstance(base, dict):
-        raise AssertionError(
-            f"Could not fetch competition {competition_id} season list"
-        )
-
-    candidates = _extract_season_candidates(base)
-    if not candidates:
-        raise AssertionError(
-            f"FotMob returned no seasons for competition {competition_id}"
-        )
-
-    print(
-        f"[HISTORICAL] Competition {competition_id}: "
-        f"checking {len(candidates)} seasons newest -> oldest"
-    )
-
-    for season in candidates:
-        data = fetch_league_structure(competition_id, season=season)
-        if not isinstance(data, dict):
-            continue
-
-        stage_map = build_league_stage_map(data)
-        matches = _extract_matches(data, stage_map)
-
-        if not matches:
-            continue
-
-        if _season_is_complete(matches):
-            return season, data, matches
-
-        unfinished = [
-            match["id"]
-            for match in matches
-            if not _status_finished(match)
-        ]
-        print(
-            f"[HISTORICAL] {competition_id} season {season}: "
-            f"INCOMPLETE ({len(unfinished)} unfinished matches)"
-        )
-
-    raise AssertionError(
-        f"No fully completed season found for competition {competition_id}"
-    )
-
-
 def _rule_for(config, competition_id):
+    for rule in config.get("competitions", []):
+        if str(rule.get("id")) == str(competition_id):
+            return rule
+    raise AssertionError(
+        f"Configured competition {competition_id} not found in auto_matches.json"
+    )
+
+
+def run_exhaustive_competition_test(test_case, competition_id):
+    config = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+    rule = _rule_for(config, competition_id)
+
+    selected_team_ids = {str(value) for value in config.get("team_ids", [])}
+    by_name, by_country = load_team_config()
+
+    entry = HISTORICAL_FIXTURES.get(str(competition_id))
+    if not isinstance(entry, dict):
+        raise AssertionError(
+            f"No frozen historical fixture manifest for competition {competition_id}"
+        )
+
+    season = entry.get("season")
+    matches = entry.get("matches") or []
+    if not matches:
+        raise AssertionError(
+            f"Frozen historical fixture manifest is empty for competition {competition_id}"
+        )
+
+    test_case.assertEqual(
+        str(entry.get("mode")), str(rule.get("mode")),
+        f"Manifest mode mismatch for competition {competition_id}",
+    )
+    test_case.assertEqual(
+        entry.get("stage"), rule.get("stage"),
+        f"Manifest stage mismatch for competition {competition_id}",
+    )
+    test_case.assertEqual(
+        len(matches), len({str(m.get("id")) for m in matches}),
+        "Duplicate match IDs found in frozen historical fixture set",
+    )
+
+    print("\n" + "=" * 110)
+    print(
+        f"[EXHAUSTIVE TEST] competition={competition_id} "
+        f"| frozen_latest_completed_edition={season} "
+        f"| mode={rule.get('mode')} | threshold={rule.get('stage')}"
+    )
+    print(f"[EXHAUSTIVE TEST] FROZEN FIXTURES: {len(matches)}")
+    print("=" * 110)
+
+    selected_count = rejected_count = production_selected_count = 0
+
+    for index, match in enumerate(matches, 1):
+        match = dict(match)
+        match["id"] = str(match.get("id"))
+        match["leagueId"] = str(match.get("leagueId") or competition_id)
+
+        isolated_reasons = selection_reasons(
+            match, {"competitions": [rule]}, set(), by_name, by_country
+        )
+        production_reasons = selection_reasons(
+            match, config, selected_team_ids, by_name, by_country
+        )
+
+        isolated_selected = bool(isolated_reasons)
+        production_selected = bool(production_reasons)
+        if isolated_selected:
+            selected_count += 1
+            rule_decision, rule_reason = "SELECTED", ", ".join(isolated_reasons)
+        else:
+            rejected_count += 1
+            rule_decision, rule_reason = "REJECTED", "no matching competition rule"
+        if production_selected:
+            production_selected_count += 1
+
+        home = (match.get("home") or {}).get("name", "")
+        away = (match.get("away") or {}).get("name", "")
+        stage = match.get("stage") or "unknown"
+
+        print(
+            f"{index:03d}. {match['id']} | {stage:<14} | "
+            f"{home} vs {away} | RULE={rule_decision:<8} | reason: {rule_reason}"
+        )
+        print(
+            f"     PRODUCTION={'SELECTED' if production_selected else 'REJECTED':<8} | "
+            f"reason: {', '.join(production_reasons) if production_reasons else 'no matching rule'}"
+        )
+
+        test_case.assertEqual(
+            str(match["leagueId"]), str(competition_id),
+            f"Wrong competition id on match {match['id']}",
+        )
+        if rule.get("mode") in {"from", "final_only"} and not match.get("stage"):
+            test_case.fail(
+                f"Missing stage for stage-based competition {competition_id}, "
+                f"match {match['id']}: {home} vs {away}"
+            )
+
+    print("-" * 110)
+    print(
+        f"[EXHAUSTIVE SUMMARY] competition={competition_id} | season={season} "
+        f"| matches={len(matches)} | rule_selected={selected_count} "
+        f"| rule_rejected={rejected_count} | production_selected={production_selected_count}"
+    )
+    print("=" * 110 + "\n")
+
+    test_case.assertEqual(selected_count + rejected_count, len(matches))
+    if normalize(rule.get("mode") or "all") == "all":
+        test_case.assertEqual(
+            rejected_count, 0,
+            f"mode=all rejected {rejected_count} real fixtures",
+        )
+    test_case.assertGreater(len(matches), 0)
+
+
     for rule in config.get("competitions", []):
         if str(rule.get("id")) == str(competition_id):
             return rule
