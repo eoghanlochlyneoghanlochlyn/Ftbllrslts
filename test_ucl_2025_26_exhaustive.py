@@ -2513,7 +2513,7 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
                 & self.selected_team_ids
             )
             stage_selected = fixture["stage"] in {
-                "semi_final", "final"
+                "round_of_16", "quarter_final", "semi_final", "final"
             }
             expected_production = has_selected_team or stage_selected
 
@@ -2546,16 +2546,18 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
             f"full-production selected={production_selected}"
         )
 
-        # UCL production rule starts from the configured semi-final.
-        # Therefore the competition-only rule selects exactly the 4
-        # semi-final matches + 1 final.
+        # UCL production rule starts from the configured round of 16.
+        # Therefore the competition-only rule selects all R16, QF, SF,
+        # and final matches: 16 + 8 + 4 + 1 = 29.
         stage_rule_expected = [
             f for f in FIXTURES
-            if f["stage"] in {"semi_final", "final"}
+            if f["stage"] in {
+                "round_of_16", "quarter_final", "semi_final", "final"
+            }
         ]
-        self.assertEqual(len(stage_rule_expected), 5)
-        self.assertEqual(rule_selected, 5)
-        self.assertEqual(rule_rejected, 184)
+        self.assertEqual(len(stage_rule_expected), 29)
+        self.assertEqual(rule_selected, 29)
+        self.assertEqual(rule_rejected, 160)
 
         # The preselected teams are an independent global OR rule:
         # if either side is one of the configured teams, the match is
@@ -2570,11 +2572,11 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
         ]
         self.assertEqual(len(expected_team_selected), 125)
 
-        # In this edition every semi-final/final also contains a
-        # preselected team, so the stage rule adds no new production
-        # fixture beyond the 125 selected by team.
-        self.assertEqual(expected_production_selected, 125)
-        self.assertEqual(production_selected, 125)
+        # The stage rule adds the two R16 legs involving no preselected
+        # team (Bodø/Glimt vs Sporting and the return leg). All other
+        # stage-rule fixtures already contain a preselected team.
+        self.assertEqual(expected_production_selected, 127)
+        self.assertEqual(production_selected, 127)
 
         for fixture in stage_rule_expected:
             reasons = selection_reasons(
@@ -2595,7 +2597,9 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
                 {str(fixture["home"]["id"]), str(fixture["away"]["id"])}
                 & self.selected_team_ids
             )
-            stage_selected = fixture["stage"] in {"semi_final", "final"}
+            stage_selected = fixture["stage"] in {
+                "round_of_16", "quarter_final", "semi_final", "final"
+            }
             expected_production = has_selected_team or stage_selected
 
             production_reasons = selection_reasons(
