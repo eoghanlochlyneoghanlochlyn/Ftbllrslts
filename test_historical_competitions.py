@@ -12,6 +12,7 @@ and then uses the real match page to resolve knockout stages.
 
 import json
 import unittest
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -31,7 +32,9 @@ CONFIG_FILE = Path("auto_matches.json")
 
 # Three years gives enough coverage for the configured annual/international
 # competitions while keeping the test independent from a specific season.
-LOOKBACK_DAYS = 0
+MAX_HISTORICAL_SEASONS = 2
+MAX_WORKERS = 8
+REQUEST_TIMEOUT = 8
 
 # Keep several real fixtures per competition so stage/team_only tests can
 # find both positive and negative examples without hard-coding match IDs.
@@ -40,8 +43,6 @@ MAX_FIXTURES_PER_COMPETITION = 8
 # Daily endpoint calls are cheap compared with guessing historical league
 # response shapes. A 3-day stride gives good coverage; once all competitions
 # have enough candidates we stop immediately.
-DATE_STEP_DAYS = 1
-
 KNOCKOUT_STAGES = {
     "round_of_32",
     "round_of_16",
@@ -100,13 +101,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
 
     @classmethod
     def discover_historical_fixtures(cls):
-        """Discover real historical fixtures from FotMob league seasons.
-
-        The daily endpoint is intentionally not used here: it only exposes a
-        small recent date window. For historical regression coverage we first
-        ask FotMob for the competition's season list, then fetch each prior
-        season and extract real fixture objects from that season response.
-        """
+        """Discover a bounded set of historical fixtures in parallel."""
         wanted = {
             str(rule["id"]): rule
             for rule in cls.rules
@@ -115,39 +110,44 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
         found = {competition_id: {} for competition_id in wanted}
 
         print(
-            f"[HISTORICAL] Searching prior FotMob seasons for "
-            f"{len(wanted)} configured competitions (max 2 seasons/competition)"
+            f"[HISTORICAL] {len(wanted)} competitions; "
+            f"max {MAX_HISTORICAL_SEASONS} seasons/competition, "
+            f"{MAX_WORKERS} workers"
         )
 
-        for competition_id, rule in wanted.items():
+        def load_competition(competition_id):
             seasons = cls.fetch_historical_seasons(competition_id)
-            print(
-                f"[HISTORICAL] competition={competition_id} "
-                f"seasons={len(seasons)}"
-            )
-
-            for season in seasons[:2]:
-                data = cls.fetch_league_season(
-                    competition_id, season
-                )
+            matches = {}
+            for season in seasons[:MAX_HISTORICAL_SEASONS]:
+                data = cls.fetch_league_season(competition_id, season)
                 for match in cls.extract_historical_matches(data):
-                    if not match.get("id"):
-                        continue
-                    found[competition_id][str(match["id"])] = match
-
-                    if (
-                        len(found[competition_id])
-                        >= MAX_FIXTURES_PER_COMPETITION
-                    ):
+                    if match.get("id"):
+                        matches[str(match["id"])] = match
+                    if len(matches) >= MAX_FIXTURES_PER_COMPETITION:
                         break
-
-                if len(found[competition_id]) >= MAX_FIXTURES_PER_COMPETITION:
+                if len(matches) >= MAX_FIXTURES_PER_COMPETITION:
                     break
+            return competition_id, seasons, matches
 
-            print(
-                f"[HISTORICAL] competition={competition_id} "
-                f"fixtures={len(found[competition_id])}"
-            )
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+            futures = {
+                pool.submit(load_competition, competition_id): competition_id
+                for competition_id in wanted
+            }
+            for future in as_completed(futures):
+                competition_id = futures[future]
+                try:
+                    cid, seasons, matches = future.result()
+                    found[cid] = matches
+                    print(
+                        f"[HISTORICAL] competition={cid} "
+                        f"seasons={len(seasons)} fixtures={len(matches)}"
+                    )
+                except Exception as error:
+                    print(
+                        f"[HISTORICAL] competition={competition_id} "
+                        f"failed: {error}"
+                    )
 
         return {
             competition_id: list(matches.values())
@@ -180,7 +180,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
             response = requests.get(
                 url,
                 headers=cls.fotmob_headers(),
-                timeout=10,
+                timeout=REQUEST_TIMEOUT,
             )
             response.raise_for_status()
             data = response.json()
@@ -261,7 +261,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
             response = requests.get(
                 url,
                 headers=cls.fotmob_headers(),
-                timeout=30,
+                timeout=REQUEST_TIMEOUT,
             )
             response.raise_for_status()
             data = response.json()
