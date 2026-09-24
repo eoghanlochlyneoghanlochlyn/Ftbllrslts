@@ -952,7 +952,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1447956622Goal794427undefinedtrue",
-        "react:1447967959Goal0undefinedtrue"
+        "react:1447967959Goal0undefinedtrue",
+        "react:1447967959Goal30893undefinedtrue"
       ],
       "goals": [
         {
@@ -1092,6 +1093,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1447967959Goal30893undefinedtrue",
+          "player_id": 30893,
+          "player_name": "Cristiano Ronaldo",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "59",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2315,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447967959Goal30893undefinedtrue",
+            "timeStr": 59,
+            "type": "goal",
+            "time": 59,
+            "overloadTime": null,
+            "eventId": 14479679,
+            "player": {
+              "id": 30893,
+              "name": "Cristiano Ronaldo",
+              "profileUrl": "/players/30893/cristiano-ronaldo"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/30893/cristiano-ronaldo",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Cristiano Ronaldo",
+            "firstName": "Cristiano",
+            "lastName": "Ronaldo",
+            "fullName": "Cristiano Ronaldo",
+            "playerId": 30893,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974401121,
+              "eventType": "Goal",
+              "teamId": 8361,
+              "playerId": 30893,
+              "playerName": "Cristiano Ronaldo",
+              "x": 95.4473684198,
+              "y": 39.545000001,
+              "min": 59,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.865,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.5327,
+              "expectedGoalsOnTarget": 0.9287,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.5648148148148162,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 254472,
+              "firstName": "Cristiano",
+              "lastName": "Ronaldo",
+              "fullName": "Cristiano Ronaldo",
+              "teamColor": "#ab0027"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "observed_goal_events": [
@@ -1202,6 +1288,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1447967959Goal30893undefinedtrue",
+          "timeStr": 59,
+          "type": "goal",
+          "time": 59,
+          "overloadTime": null,
+          "eventId": 14479679,
+          "player": {
+            "id": 30893,
+            "name": "Cristiano Ronaldo",
+            "profileUrl": "/players/30893/cristiano-ronaldo"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/30893/cristiano-ronaldo",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Cristiano Ronaldo",
+          "firstName": "Cristiano",
+          "lastName": "Ronaldo",
+          "fullName": "Cristiano Ronaldo",
+          "playerId": 30893,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974401121,
+            "eventType": "Goal",
+            "teamId": 8361,
+            "playerId": 30893,
+            "playerName": "Cristiano Ronaldo",
+            "x": 95.4473684198,
+            "y": 39.545000001,
+            "min": 59,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.865,
+            "goalCrossedZ": 0.160526315,
+            "expectedGoals": 0.5327,
+            "expectedGoalsOnTarget": 0.9287,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.5648148148148162,
+              "y": 0.042467279100529096,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 254472,
+            "firstName": "Cristiano",
+            "lastName": "Ronaldo",
+            "fullName": "Cristiano Ronaldo",
+            "teamColor": "#ab0027"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
