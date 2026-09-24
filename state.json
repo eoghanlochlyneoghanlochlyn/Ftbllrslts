@@ -182,7 +182,79 @@
           }
         }
       ],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1447960532Goal966019undefinedfalse",
+          "timeStr": 32,
+          "type": "goal",
+          "time": 32,
+          "overloadTime": null,
+          "eventId": 14479605,
+          "player": {
+            "id": 966019,
+            "name": "Felix Nmecha",
+            "profileUrl": "/players/966019/felix-nmecha"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/966019/felix-nmecha",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Felix Nmecha",
+          "firstName": "Felix",
+          "lastName": "Nmecha",
+          "fullName": "Felix Nmecha",
+          "playerId": 966019,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974385779,
+            "eventType": "Goal",
+            "teamId": 8570,
+            "playerId": 966019,
+            "playerName": "Felix Nmecha",
+            "x": 100.5431034486,
+            "y": 32.70374999999999,
+            "min": 32,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.75375,
+            "goalCrossedZ": 1.0979999946,
+            "expectedGoals": 0.38327449560165405,
+            "expectedGoalsOnTarget": 0.8258403539657593,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5360449735449745,
+              "y": 0.29047618904761907,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1131987,
+            "firstName": "Felix",
+            "lastName": "Nmecha",
+            "fullName": "Felix Nmecha",
+            "teamColor": "#464646"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 0,
         "away": 0
