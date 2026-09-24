@@ -117,6 +117,41 @@ class CopaAmerica2024Tests(unittest.TestCase):
         self.assertEqual(len(FIXTURES), 32)
         self.assertEqual(len({f["id"] for f in FIXTURES}), 32)
 
+    def test_log_every_fixture_decision(self):
+        # Print every Copa America 2024 fixture in tournament order so the
+        # GitHub Actions log shows the exact selection decision and reason.
+        print("\n===== COPA AMERICA 2024 — MATCH-BY-MATCH SELECTION =====")
+        for index, fixture in enumerate(FIXTURES, 1):
+            reasons = self.reasons(fixture, selected_ids=set())
+            selected = bool(reasons)
+
+            home = fixture["home"]["name"]
+            away = fixture["away"]["name"]
+            stage = fixture["stage"]
+
+            if selected:
+                reason_text = ", ".join(reasons)
+                print(
+                    f"{index:02d}. {stage:<14} | "
+                    f"{home} vs {away} | SELECTED | reason: {reason_text}"
+                )
+            else:
+                print(
+                    f"{index:02d}. {stage:<14} | "
+                    f"{home} vs {away} | REJECTED | reason: no matching Copa rule"
+                )
+
+            # Expected Copa America rule:
+            # - group stage: only Brazil/Argentina
+            # - knockout: every match from the quarterfinal onward
+            has_extra_team = bool(
+                {"8256", "6706"} &
+                {fixture["home"]["id"], fixture["away"]["id"]}
+            )
+            expected_selected = fixture["stage"] != "group_stage" or has_extra_team
+            self.assertEqual(selected, expected_selected, fixture["id"])
+
+        print("===== END COPA AMERICA 2024 =====\n")
     def test_every_fixture_is_copa_america_2024(self):
         self.assertTrue(all(str(f["leagueId"]) == "44" for f in FIXTURES))
         self.assertEqual(
