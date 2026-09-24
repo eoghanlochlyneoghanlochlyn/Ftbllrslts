@@ -253,6 +253,24 @@ def main():
                 break
 
         if selected is None:
+            print(f"[DEBUG] No fully completed season for {competition_id}")
+            for season in season_candidates(competition_id)[:3]:
+                data = league(competition_id, season)
+                debug_matches = extract_fixture_payload(data, competition_id)
+                print(
+                    f"[DEBUG] season={season} fixtures={len(debug_matches)} "
+                    f"finished={sum(finished(m) for m in debug_matches)}"
+                )
+                for m in debug_matches[:10]:
+                    print(
+                        "[DEBUG-MATCH]",
+                        m["id"],
+                        m["home"]["name"],
+                        "vs",
+                        m["away"]["name"],
+                        "stage=",
+                        m["stage"],
+                    )
             raise RuntimeError(
                 f"No fully completed season found for competition {competition_id}"
             )
