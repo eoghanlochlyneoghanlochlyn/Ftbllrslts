@@ -107,7 +107,19 @@ def normalize_stage(value):
     if text in STAGE_ALIASES:
         return STAGE_ALIASES[text]
 
-    return text if text in STAGE_RANK else None
+    # Config/tests and some FotMob payloads may already use the
+    # canonical internal form (for example round_of_16). Accept
+    # those values directly instead of treating them as unknown.
+    if text in STAGE_RANK:
+        return text
+
+    # Be tolerant of common separator variants while keeping the
+    # stage vocabulary closed to STAGE_RANK.
+    compact = re.sub(r"[_-]+", " ", text)
+    if compact in STAGE_ALIASES:
+        return STAGE_ALIASES[compact]
+
+    return None
 
 
 def parse_datetime(value):
