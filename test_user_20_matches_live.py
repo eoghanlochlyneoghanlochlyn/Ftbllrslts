@@ -13,7 +13,7 @@ from urllib.parse import urlsplit
 from fotmob import extract_match_id, fetch_match_api, fetch_match_page, extract_next_data, extract_basic_info
 from match_discovery import (
     fetch_league_structure, build_league_stage_map, fetch_match_page_stage,
-    load_team_config, normalize_stage, selection_reasons,
+    load_team_config, normalize_stage, selection_reasons, recursive_find,
 )
 
 CASES = [{"url":"https://www.fotmob.com/matches/esteghlal-vs-al-sadd/9ih3qny#6050065","expected":True},{"url":"https://www.fotmob.com/matches/al-ahli-vs-pakhtakor-tashkent/2ilhx82#6050068","expected":False},{"url":"https://www.fotmob.com/matches/shabab-al-ahli-dubai-fc-vs-tractor/ht8nrj0#6050066","expected":True},{"url":"https://www.fotmob.com/matches/al-hussein-sc-vs-al-seeb/9i9lc8z#6054511","expected":False},{"url":"https://www.fotmob.com/matches/al-jazira-vs-gol-gohar/1jli52pf#6054591","expected":True},{"url":"https://www.fotmob.com/matches/angers-vs-brest/2agfd8#5802946","expected":False},{"url":"https://www.fotmob.com/matches/rayo-vallecano-vs-crystal-palace/2qknn8#5206271","expected":True},{"url":"https://www.fotmob.com/matches/rayo-vallecano-vs-strasbourg/2qt8qn#5206268","expected":True},{"url":"https://www.fotmob.com/matches/rayo-vallecano-vs-aek-athens/2dd4xe#5206261","expected":False},{"url":"https://www.fotmob.com/matches/freiburg-vs-aston-villa/2v3xep#5206177","expected":True},{"url":"https://www.fotmob.com/matches/freiburg-vs-braga/2v8ps7#5206175","expected":True},{"url":"https://www.fotmob.com/matches/freiburg-vs-celta-vigo/2rcsmk#5206166","expected":True},{"url":"https://www.fotmob.com/matches/brann-vs-bologna/2rz5bc#5161883","expected":False},{"url":"https://www.fotmob.com/matches/rangers-vs-ludogorets-razgrad/azl33ed#4947790","expected":False},{"url":"https://www.fotmob.com/matches/milan-vs-lecce/2td7ci#4932342","expected":True},{"url":"https://www.fotmob.com/matches/pisa-vs-torino/26xs06#4932346","expected":False},{"url":"https://www.fotmob.com/matches/atalanta-vs-lazio/2epyoh#4935322","expected":True},{"url":"https://www.fotmob.com/matches/milan-vs-napoli/2t82b3#4934509","expected":True},{"url":"https://www.fotmob.com/matches/inter-vs-bologna/2ttfqc#4934510","expected":True},{"url":"https://www.fotmob.com/matches/bologna-vs-napoli/37x04l#4934511","expected":True}]
@@ -115,8 +115,19 @@ class LiveUserMatchTest(unittest.TestCase):
                 needs_stage = any(r.get("mode") in ("from", "final_only") for r in rules)
                 stage_source = "not required"
                 if needs_stage:
-                    general = data.get("general", {}) if isinstance(data.get("general"), dict) else {}
-                    season = general.get("season") or general.get("parentLeagueSeason")
+                    general = {}
+                    if isinstance(data.get("general"), dict):
+                        general = data["general"]
+                    elif isinstance(data.get("props"), dict):
+                        page_props = data["props"].get("pageProps", {})
+                        if isinstance(page_props, dict) and isinstance(page_props.get("general"), dict):
+                            general = page_props["general"]
+                    season = (
+                        general.get("season")
+                        or general.get("parentLeagueSeason")
+                        or recursive_find(data, {"parentLeagueSeason"})
+                        or recursive_find(data, {"season"})
+                    )
                     key = (lid, str(season or ""))
                     if key not in league_cache:
                         structure = fetch_league_structure(lid, season)
