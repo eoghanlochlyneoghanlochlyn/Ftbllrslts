@@ -2,48 +2,184 @@
   "window_hours": 24,
   "prune_auto_after_hours": 6,
   "team_ids": [
-    "8650", "9825", "8456", "10260", "8455",
-    "8586", "9885", "8564", "8636", "9823",
-    "9789", "9847", "8633", "8634", "9906"
+    "8650",
+    "9825",
+    "8456",
+    "10260",
+    "8455",
+    "8586",
+    "9885",
+    "8564",
+    "8636",
+    "9823",
+    "9789",
+    "9847",
+    "8633",
+    "8634",
+    "9906"
   ],
   "competitions": [
-    {"id": 77, "mode": "all"},
-    {"id": 50, "mode": "from", "stage": "round_of_16"},
-    {"id": 9806, "mode": "all"},
-    {"id": 44, "mode": "from", "stage": "round_of_16", "extra_teams": ["Brazil", "Argentina"]},
-    {"id": 290, "mode": "from", "stage": "semi_final"},
-    {"id": 289, "mode": "from", "stage": "semi_final"},
-    {"id": 297, "mode": "from", "stage": "semi_final"},
-    {"id": 525, "mode": "from", "stage": "quarter_final", "extra_country": "Iran"},
-    {"id": 9469, "mode": "from", "stage": "semi_final", "extra_country": "Iran"},
-    {"id": 526, "mode": "final_only"},
-    {"id": 45, "mode": "from", "stage": "round_of_16"},
-    {"id": 42, "mode": "from", "stage": "round_of_16"},
-    {"id": 73, "mode": "from", "stage": "quarter_final"},
-    {"id": 10216, "mode": "from", "stage": "semi_final"},
-    {"id": 78, "mode": "from", "stage": "round_of_16"},
-    {"id": 10703, "mode": "all"},
-    {"id": 247, "mode": "all"},
-    {"id": 139, "mode": "all"},
-    {"id": 11015, "mode": "all"},
-    {"id": 8924, "mode": "all"},
-    {"id": 207, "mode": "all"},
-    {"id": 74, "mode": "all"},
-    {"id": 132, "mode": "from", "stage": "semi_final"},
-    {"id": 133, "mode": "from", "stage": "semi_final"},
-    {"id": 209, "mode": "from", "stage": "semi_final"},
-    {"id": 141, "mode": "from", "stage": "semi_final"},
-    {"id": 134, "mode": "from", "stage": "semi_final"},
-    {"id": 138, "mode": "from", "stage": "semi_final"},
+    {
+      "id": 222,
+      "mode": "all"
+    },
+    {
+      "id": 77,
+      "mode": "all"
+    },
+    {
+      "id": 50,
+      "mode": "from",
+      "stage": "round_of_16"
+    },
+    {
+      "id": 9806,
+      "mode": "all"
+    },
+    {
+      "id": 44,
+      "mode": "from",
+      "stage": "round_of_16",
+      "extra_teams": [
+        "Brazil",
+        "Argentina"
+      ]
+    },
+    {
+      "id": 290,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 289,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 297,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 525,
+      "mode": "from",
+      "stage": "quarter_final",
+      "extra_country": "Iran"
+    },
+    {
+      "id": 9469,
+      "mode": "from",
+      "stage": "semi_final",
+      "extra_country": "Iran"
+    },
+    {
+      "id": 526,
+      "mode": "final_only"
+    },
+    {
+      "id": 45,
+      "mode": "from",
+      "stage": "round_of_16"
+    },
+    {
+      "id": 42,
+      "mode": "from",
+      "stage": "round_of_16"
+    },
+    {
+      "id": 73,
+      "mode": "from",
+      "stage": "quarter_final"
+    },
+    {
+      "id": 10216,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 78,
+      "mode": "from",
+      "stage": "round_of_16"
+    },
+    {
+      "id": 10703,
+      "mode": "all"
+    },
+    {
+      "id": 247,
+      "mode": "all"
+    },
+    {
+      "id": 139,
+      "mode": "all"
+    },
+    {
+      "id": 11015,
+      "mode": "all"
+    },
+    {
+      "id": 8924,
+      "mode": "all"
+    },
+    {
+      "id": 207,
+      "mode": "all"
+    },
+    {
+      "id": 74,
+      "mode": "all"
+    },
+    {
+      "id": 132,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 133,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 209,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 141,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 134,
+      "mode": "from",
+      "stage": "semi_final"
+    },
+    {
+      "id": 138,
+      "mode": "from",
+      "stage": "semi_final"
+    },
     {
       "id": 10607,
       "mode": "team_only",
-      "extra_teams": ["England", "France", "Portugal", "Belgium", "Netherlands", "Germany", "Croatia", "Italy"]
+      "extra_teams": [
+        "England",
+        "France",
+        "Portugal",
+        "Belgium",
+        "Netherlands",
+        "Germany",
+        "Croatia",
+        "Italy"
+      ]
     },
     {
       "id": 10199,
       "mode": "team_only",
-      "extra_teams": ["Brazil", "Argentina"]
+      "extra_teams": [
+        "Brazil",
+        "Argentina"
+      ]
     }
   ]
 }
