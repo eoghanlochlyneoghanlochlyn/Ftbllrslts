@@ -173,10 +173,16 @@ def fetch_matches_for_date(date_text):
         if not isinstance(league, dict):
             continue
 
+        # FotMob's daily endpoint can expose a temporary/season-specific
+        # tournament id in `id`, while the stable competition id used by
+        # /api/data/leagues and auto_matches.json is in `primaryId`.
+        # Always prefer primaryId so current fixtures match our configured
+        # competition rules.
         league_id = (
-            league.get("id")
+            league.get("primaryId")
             or league.get("leagueId")
             or league.get("competitionId")
+            or league.get("id")
         )
         league_id = str(league_id) if league_id is not None else ""
 
