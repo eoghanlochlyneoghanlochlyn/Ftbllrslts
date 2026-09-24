@@ -463,33 +463,135 @@ def is_finished_for_test(match):
     }
 
 
+def _season_value(item):
+    if isinstance(item, dict):
+        for key in (
+            "id", "seasonId", "season_id", "value", "season",
+            "slug", "name", "title",
+        ):
+            value = item.get(key)
+            if value is not None and str(value).strip():
+                return str(value).strip()
+        return None
+
+    if item is None:
+        return None
+
+    text = str(item).strip()
+    return text or None
+
+
+def _collect_season_candidates(node, result=None):
+    """Collect season identifiers from the actual FotMob payload."""
+    if result is None:
+        result = []
+
+    if isinstance(node, dict):
+        for key, value in node.items():
+            key_lower = str(key).lower()
+
+            if key_lower in {
+                "seasons", "seasonlist", "seasonoptions",
+                "availableseasons", "seasonlistitems",
+            }:
+                if isinstance(value, list):
+                    for item in value:
+                        season = _season_value(item)
+                        if season and season not in result:
+                            result.append(season)
+                elif isinstance(value, dict):
+                    season = _season_value(value)
+                    if season and season not in result:
+                        result.append(season)
+                    for nested in value.values():
+                        if isinstance(nested, (dict, list)):
+                            _collect_season_candidates(nested, result)
+
+            if isinstance(value, (dict, list)):
+                _collect_season_candidates(value, result)
+
+    elif isinstance(node, list):
+        for item in node:
+            if isinstance(item, (dict, list)):
+                _collect_season_candidates(item, result)
+
+    return result
+
+
+def _season_rank_key(value):
+    text = str(value).strip()
+
+    if "/" in text:
+        parts = text.split("/")
+        if len(parts) == 2 and all(part.isdigit() for part in parts):
+            return int(parts[0]), int(parts[1])
+
+    if re.match(r"^(19|20)\\d{2}$", text):
+        year = int(text)
+        return year, year
+
+    return -1, -1
+
+
+def _generated_previous_seasons(current_season):
+    """Generate plausible prior season labels when FotMob exposes no list."""
+    text = str(current_season or "").strip()
+    result = []
+
+    if "/" in text:
+        parts = text.split("/")
+        if len(parts) == 2 and all(part.isdigit() for part in parts):
+            start = int(parts[0])
+            end = int(parts[1])
+            length = end - start
+            if 0 < length <= 4:
+                for step in range(1, 9):
+                    candidate = f"{start - step * length}/{end - step * length}"
+                    result.append(candidate)
+            return result
+
+    if text.isdigit() and len(text) == 4:
+        year = int(text)
+        return [str(year - step) for step in range(1, 9)]
+
+    return result
+
+
+def _is_complete_season_payload(data):
+    matches = extract_all_matches_for_test(data)
+    if not matches:
+        return False, 0, 0
+
+    finished = sum(
+        1 for match in matches
+        if is_finished_for_test(match)
+    )
+    return finished == len(matches), len(matches), finished
+
+
 def find_last_completed_season_test(league_id, current_data):
     details = extract_details(current_data)
     current_season = details.get("selectedSeason")
-    raw_seasons = current_data.get("seasons", [])
 
-    if isinstance(raw_seasons, dict):
-        raw_seasons = list(raw_seasons.values())
+    discovered = _collect_season_candidates(current_data)
+    generated = _generated_previous_seasons(current_season)
 
-    candidates = []
+    current_text = str(current_season or "").strip()
+    candidates = [
+        value for value in discovered
+        if str(value).strip() and str(value).strip() != current_text
+    ]
 
-    for item in raw_seasons if isinstance(raw_seasons, list) else []:
-        if isinstance(item, dict):
-            season = (
-                item.get("id")
-                or item.get("season")
-                or item.get("value")
-            )
-        else:
-            season = item
+    candidates.sort(key=_season_rank_key, reverse=True)
 
-        if season is None:
-            continue
+    for value in generated:
+        if value not in candidates and value != current_text:
+            candidates.append(value)
 
-        season = str(season).strip()
-        if season and season != str(current_season).strip():
-            if season not in candidates:
-                candidates.append(season)
+    print(
+        f"  SEASON CANDIDATES: {candidates[:20]}"
+        + (" ..." if len(candidates) > 20 else "")
+    )
 
     for season in candidates:
         data = fetch_league(league_id, season=season)
@@ -497,18 +599,14 @@ def find_last_completed_season_test(league_id, current_data):
             print(f"  SEASON {season}: request failed")
             continue
 
-        matches = extract_all_matches_for_test(data)
-        finished = sum(
-            1 for match in matches
-            if is_finished_for_test(match)
-        )
+        complete, total, finished = _is_complete_season_payload(data)
 
         print(
             f"  SEASON {season}: "
-            f"{finished}/{len(matches)} finished"
+            f"{finished}/{total} finished"
         )
 
-        if matches and finished == len(matches):
+        if complete:
             return season, data
 
     return None, None
