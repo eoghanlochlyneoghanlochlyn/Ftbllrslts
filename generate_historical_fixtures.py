@@ -1,123 +1,69 @@
 import json
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
-from match_discovery import fetch_league_structure
-
 BASE = "https://www.fotmob.com"
-API = f"{BASE}/api/matchDetails"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140.0.0.0 Safari/537.36",
     "Accept": "application/json,text/plain,*/*",
     "Accept-Language": "en-US,en;q=0.9",
     "Referer": BASE + "/",
 }
-WORKERS = 12
 
-# Competition seasons that are not safely represented by "previous season"
-# because the 2026 edition is the completed reference edition.
-FIXED_REFERENCE_SEASONS = {
-    "77": "2026",  # FIFA World Cup 2026
+# IMPORTANT:
+# The historical test must use a manually fixed reference edition for every
+# configured competition. We do NOT let FotMob's "selected/current season"
+# decide which edition is used, because that can point to a future/current
+# season (for example EURO 2028 or UCL 2026/27).
+#
+# These are the exact reference editions we want as of 2026-09-24.
+#
+# The generator deliberately does NOT validate the number of fixtures.
+# Whatever fixture IDs FotMob returns for the specified season are frozen into
+# historical_test_matches.json and tested one by one later.
+REFERENCE_SEASONS = {
+    # International tournaments
+    "77": "2026",          # FIFA World Cup — explicit user requirement
+    "50": "2024",          # UEFA European Championship
+    "44": "2024",          # Copa América
+    "290": "2023",         # AFC Asian Cup (played Jan-Feb 2024)
+    "289": "2023",         # Africa Cup of Nations (played Jan-Feb 2024)
+    "9806": "2024/2025",   # UEFA Nations League A
+
+    # Continental / intercontinental club competitions
+    "525": "2024/2025",    # AFC Champions League Elite
+    "9469": "2024/2025",   # AFC Champions League Two
+    "297": "2025",         # CONCACAF Champions Cup
+    "526": "2024/2025",    # CAF Champions League
+    "45": "2025",          # Copa Libertadores
+    "42": "2025/2026",     # UEFA Champions League
+    "73": "2025/2026",     # UEFA Europa League
+    "10216": "2025/2026",  # UEFA Conference League
+
+    # FIFA club competitions
+    "78": "2025",          # FIFA Club World Cup
+    "10703": "2025",       # FIFA Intercontinental Cup
+
+    # Domestic cups / super cups — latest fully completed 2025/26 season
+    "132": "2025/2026",    # FA Cup
+    "133": "2025/2026",    # EFL Cup
+    "247": "2025",         # Community Shield
+    "138": "2025/2026",    # Copa del Rey
+    "139": "2025",         # Supercopa de España
+    "141": "2025/2026",    # Coppa Italia
+    "11015": "2025",       # Supercoppa Italiana
+    "209": "2025/2026",    # DFB-Pokal
+    "8924": "2025",        # DFL-Supercup
+    "134": "2025/2026",    # Coupe de France
+    "207": "2025",         # Trophée des Champions
+
+    # UEFA super cup
+    "74": "2025",          # UEFA Super Cup
 }
 
 
-def fetch_match(match_id):
-    try:
-        r = requests.get(
-            API,
-            params={"matchId": match_id},
-            headers=HEADERS,
-            timeout=30,
-        )
-        if r.status_code != 200:
-            return None
-        data = r.json()
-        return data if isinstance(data, dict) else None
-    except Exception:
-        return None
-
-
-def recursive_dicts(node):
-    if isinstance(node, dict):
-        yield node
-        for value in node.values():
-            yield from recursive_dicts(value)
-    elif isinstance(node, list):
-        for value in node:
-            yield from recursive_dicts(value)
-
-
-def extract_general(data):
-    for node in recursive_dicts(data):
-        home = node.get("homeTeam")
-        away = node.get("awayTeam")
-        league = node.get("league")
-        if isinstance(home, dict) and isinstance(away, dict):
-            if isinstance(league, dict) or node.get("leagueId") is not None:
-                return node
-    return None
-
-
-def actual_league_id(data):
-    node = extract_general(data)
-    if not node:
-        return None
-    league = node.get("league")
-    if isinstance(league, dict):
-        value = league.get("id")
-        if value is not None:
-            return str(value)
-    value = node.get("leagueId")
-    return str(value) if value is not None else None
-
-
-def match_is_finished(data):
-    for node in recursive_dicts(data):
-        status = node.get("status")
-        if isinstance(status, dict):
-            if status.get("finished") is True:
-                return True
-            reason = status.get("reason")
-            if isinstance(reason, dict):
-                reason = reason.get("long") or reason.get("short") or reason.get("key")
-            if str(reason or "").strip().lower() in {
-                "ft", "aet", "after penalties", "finished", "full-time"
-            }:
-                return True
-    return False
-
-
-def season_candidates(league_id):
-    current = fetch_league_season(league_id, None)
-    details = current.get("details", {}) if isinstance(current, dict) else {}
-    selected = str(details.get("selectedSeason") or "").strip()
-
-    if league_id in FIXED_REFERENCE_SEASONS:
-        return [FIXED_REFERENCE_SEASONS[league_id]]
-
-    result = []
-    if selected:
-        result.append(selected)
-
-        if "/" in selected:
-            a, b = selected.split("/", 1)
-            if a.isdigit() and b.isdigit():
-                length = int(b) - int(a)
-                if 0 < length <= 4:
-                    for step in range(1, 4):
-                        result.append(f"{int(a)-step*length}/{int(b)-step*length}")
-        elif selected.isdigit() and len(selected) == 4:
-            for step in range(1, 4):
-                result.append(str(int(selected)-step))
-
-    return list(dict.fromkeys(result))
-
-
 def fetch_league_season(league_id, season):
-    params = {"id": league_id}
-    if season:
-        params["season"] = season
+    params = {"id": league_id, "season": season}
     try:
         r = requests.get(
             f"{BASE}/api/data/leagues",
@@ -126,59 +72,62 @@ def fetch_league_season(league_id, season):
             timeout=45,
         )
         if r.status_code != 200:
+            print(f"  {league_id} {season}: HTTP {r.status_code}")
             return {}
         data = r.json()
         return data if isinstance(data, dict) else {}
-    except Exception:
+    except Exception as exc:
+        print(f"  {league_id} {season}: request failed: {exc}")
         return {}
 
 
-def collect_valid_match_ids(league_id, season):
-    payload = fetch_league_season(league_id, season)
+def collect_match_ids(payload):
+    """
+    Extract every fixture ID returned by the specified FotMob league-season
+    payload.
+
+    There is intentionally no expected-count check, no finished-match check,
+    and no matchDetails validation here. The requested season is authoritative.
+    """
     if not payload:
         return []
 
     candidates = set()
 
+    def add_id(value):
+        if value is not None and str(value).isdigit():
+            candidates.add(str(value))
+
     def walk(node):
         if isinstance(node, dict):
-            # FotMob league responses use several fixture containers.
+            # Common FotMob fixture containers.
             for key in ("matches", "allMatches", "fixtures", "events"):
                 value = node.get(key)
                 if isinstance(value, list):
                     for item in value:
-                        if isinstance(item, dict):
-                            match_id = (
-                                item.get("id")
-                                or item.get("matchId")
-                                or item.get("matchID")
-                                or item.get("eventId")
-                                or item.get("eventID")
-                            )
-                            if match_id is not None and str(match_id).isdigit():
-                                candidates.add(str(match_id))
+                        if not isinstance(item, dict):
+                            continue
+                        add_id(
+                            item.get("id")
+                            or item.get("matchId")
+                            or item.get("matchID")
+                            or item.get("eventId")
+                            or item.get("eventID")
+                        )
 
-            # Also accept a node when it itself is clearly a fixture.
+            # Also accept a node that is itself a fixture.
             home = node.get("home") or node.get("homeTeam")
             away = node.get("away") or node.get("awayTeam")
-            match_id = (
-                node.get("matchId")
-                or node.get("matchID")
-                or node.get("match_id")
-                or node.get("eventId")
-                or node.get("eventID")
-                or node.get("event_id")
-            )
-            if match_id is None and isinstance(home, dict) and isinstance(away, dict):
-                match_id = node.get("id")
-
-            if (
-                match_id is not None
-                and str(match_id).isdigit()
-                and isinstance(home, dict)
-                and isinstance(away, dict)
-            ):
-                candidates.add(str(match_id))
+            if isinstance(home, dict) and isinstance(away, dict):
+                add_id(
+                    node.get("id")
+                    or node.get("matchId")
+                    or node.get("matchID")
+                    or node.get("match_id")
+                    or node.get("eventId")
+                    or node.get("eventID")
+                    or node.get("event_id")
+                )
 
             for value in node.values():
                 if isinstance(value, (dict, list)):
@@ -190,20 +139,30 @@ def collect_valid_match_ids(league_id, season):
 
     walk(payload)
 
-    result = sorted(candidates, key=lambda x: int(x))
-    print(f"  {league_id} {season}: fixture ids found={len(result)}")
+    result = sorted(candidates, key=int)
     return result
 
-def season_is_complete(league_id, season, match_ids):
-    # Kept for compatibility; this generator does not validate completeness.
-    return bool(match_ids)
 
 def main():
     with open("auto_matches.json", "r", encoding="utf-8") as f:
         config = json.load(f)
 
+    configured_ids = {
+        str(rule.get("id", "")).strip()
+        for rule in config.get("competitions", [])
+        if str(rule.get("id", "")).strip()
+    }
+
+    missing = sorted(configured_ids - set(REFERENCE_SEASONS))
+    if missing:
+        raise RuntimeError(
+            "Reference season is missing for configured competition IDs: "
+            + ", ".join(missing)
+        )
+
     output = {
-        "generated_from": "FotMob league structures + matchDetails",
+        "generated_from": "FotMob league structures using manually fixed reference seasons",
+        "reference_policy": "Manually fixed per competition; no automatic season selection; no fixture-count validation.",
         "generated_at": None,
         "competitions": [],
     }
@@ -216,46 +175,40 @@ def main():
         if not league_id:
             continue
 
+        season = REFERENCE_SEASONS[league_id]
+
         print()
         print("=" * 100)
-        print(f"COMPETITION {league_id}")
+        print(f"COMPETITION {league_id} | FIXED REFERENCE SEASON {season}")
 
-        candidates = season_candidates(league_id)
-        chosen = None
-        chosen_ids = []
+        payload = fetch_league_season(league_id, season)
+        match_ids = collect_match_ids(payload)
 
-        for season in candidates:
-            ids = collect_valid_match_ids(league_id, season)
-            if league_id in FIXED_REFERENCE_SEASONS and season == FIXED_REFERENCE_SEASONS[league_id]:
-                if ids:
-                    chosen = season
-                    chosen_ids = ids
-                    print('  fixed World Cup 2026 reference accepted')
-                    break
-            elif ids:
-                chosen = season
-                chosen_ids = ids
-                break
-
-        if not chosen:
+        if not match_ids:
             raise RuntimeError(
-                f"No complete reference season could be generated for competition {league_id}"
+                f"FotMob returned no fixture IDs for configured competition "
+                f"{league_id} and fixed season {season}"
             )
 
         output["competitions"].append({
             "competition_id": league_id,
-            "season": chosen,
-            "match_ids": chosen_ids,
+            "season": season,
+            "match_ids": match_ids,
         })
-        print(f"  SELECTED REFERENCE: {chosen} ({len(chosen_ids)} matches)")
+
+        print(f"  FIXED REFERENCE ACCEPTED: {season}")
+        print(f"  fixture ids found: {len(match_ids)}")
 
     with open("historical_test_matches.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
-    total = sum(len(x["match_ids"]) for x in output["competitions"])
+    total = sum(len(item["match_ids"]) for item in output["competitions"])
     print()
-    print(f"GENERATED: {len(output['competitions'])} competitions / {total} matches")
+    print(
+        f"GENERATED: {len(output['competitions'])} competitions / "
+        f"{total} matches"
+    )
 
 
 if __name__ == "__main__":
