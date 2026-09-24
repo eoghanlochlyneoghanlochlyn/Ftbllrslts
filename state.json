@@ -8,7 +8,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1447953813Goal209405undefinedtrue"
+        "react:1447953813Goal209405undefinedtrue",
+        "react:1447960532Goal966019undefinedfalse"
       ],
       "goals": [
         {
@@ -98,12 +99,161 @@
             "assistKey": "assist_by",
             "assistInput": "Tijjani Reijnders"
           }
+        },
+        {
+          "event_key": "react:1447960532Goal966019undefinedfalse",
+          "player_id": 966019,
+          "player_name": "Felix Nmecha",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "32",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2312,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447960532Goal966019undefinedfalse",
+            "timeStr": 32,
+            "type": "goal",
+            "time": 32,
+            "overloadTime": null,
+            "eventId": 14479605,
+            "player": {
+              "id": 966019,
+              "name": "Felix Nmecha",
+              "profileUrl": "/players/966019/felix-nmecha"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/966019/felix-nmecha",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Felix Nmecha",
+            "firstName": "Felix",
+            "lastName": "Nmecha",
+            "fullName": "Felix Nmecha",
+            "playerId": 966019,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974385779,
+              "eventType": "Goal",
+              "teamId": 8570,
+              "playerId": 966019,
+              "playerName": "Felix Nmecha",
+              "x": 100.5431034486,
+              "y": 32.70374999999999,
+              "min": 32,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.255,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1131987,
+              "firstName": "Felix",
+              "lastName": "Nmecha",
+              "fullName": "Felix Nmecha",
+              "teamColor": "#464646"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1447960532Goal966019undefinedfalse",
+          "timeStr": 32,
+          "type": "goal",
+          "time": 32,
+          "overloadTime": null,
+          "eventId": 14479605,
+          "player": {
+            "id": 966019,
+            "name": "Felix Nmecha",
+            "profileUrl": "/players/966019/felix-nmecha"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/966019/felix-nmecha",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Felix Nmecha",
+          "firstName": "Felix",
+          "lastName": "Nmecha",
+          "fullName": "Felix Nmecha",
+          "playerId": 966019,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974385779,
+            "eventType": "Goal",
+            "teamId": 8570,
+            "playerId": 966019,
+            "playerName": "Felix Nmecha",
+            "x": 100.5431034486,
+            "y": 32.70374999999999,
+            "min": 32,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.255,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1131987,
+            "firstName": "Felix",
+            "lastName": "Nmecha",
+            "fullName": "Felix Nmecha",
+            "teamColor": "#464646"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "5181826": {
