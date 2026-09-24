@@ -2493,6 +2493,7 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
         rule_selected = 0
         rule_rejected = 0
         production_selected = 0
+        expected_production_selected = 0
 
         for index, fixture in enumerate(FIXTURES, 1):
             self.assertEqual(str(fixture["leagueId"]), "45")
@@ -2506,6 +2507,18 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
                 fixture, self.config, self.selected_team_ids,
                 self.by_name, self.by_country,
             )
+
+            has_selected_team = bool(
+                {str(fixture["home"]["id"]), str(fixture["away"]["id"])}
+                & self.selected_team_ids
+            )
+            stage_selected = fixture["stage"] in {
+                "semi_final", "final"
+            }
+            expected_production = has_selected_team or stage_selected
+
+            if expected_production:
+                expected_production_selected += 1
 
             if rule_reasons:
                 rule_selected += 1
@@ -2537,9 +2550,18 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
             f for f in FIXTURES
             if f["stage"] in {"round_of_16", "quarter_final", "semi_final", "final"}
         ]
+        # The UCL competition rule is only the stage-based fallback.
+        # The globally configured teams are selected at EVERY stage.
         self.assertEqual(len(expected), 29)
-        self.assertEqual(rule_selected, 29)
-        self.assertEqual(rule_rejected, 160)
+        self.assertEqual(rule_selected, 5)
+        self.assertEqual(rule_rejected, 184)
+
+        # 125 fixtures contain one of the globally selected teams.
+        # 2 additional fixtures (not involving those teams) are selected
+        # because the current UCL rule starts at the semi-final.
+        # Therefore production selection must be 127/189.
+        self.assertEqual(expected_production_selected, 127)
+        self.assertEqual(production_selected, 127)
 
         for fixture in expected:
             reasons = selection_reasons(
@@ -2549,14 +2571,37 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
             self.assertTrue(reasons)
 
         for fixture in FIXTURES:
-            if fixture["stage"] not in {
-                "round_of_16", "quarter_final", "semi_final", "final"
-            }:
-                reasons = selection_reasons(
-                    fixture, {"competitions": [self.rule]}, set(),
-                    self.by_name, self.by_country,
+            has_selected_team = bool(
+                {str(fixture["home"]["id"]), str(fixture["away"]["id"])}
+                & self.selected_team_ids
+            )
+            stage_selected = fixture["stage"] in {"semi_final", "final"}
+            expected_production = has_selected_team or stage_selected
+
+            production_reasons = selection_reasons(
+                fixture, self.config, self.selected_team_ids,
+                self.by_name, self.by_country,
+            )
+
+            if expected_production:
+                self.assertTrue(
+                    production_reasons,
+                    msg=(
+                        f"Expected production selection for {fixture['id']} "
+                        f"({fixture['home']['name']} vs {fixture['away']['name']}), "
+                        f"stage={fixture['stage']}"
+                    ),
                 )
-                self.assertEqual(reasons, [])
+            else:
+                self.assertEqual(
+                    production_reasons,
+                    [],
+                    msg=(
+                        f"Unexpected production selection for {fixture['id']} "
+                        f"({fixture['home']['name']} vs {fixture['away']['name']}), "
+                        f"stage={fixture['stage']}"
+                    ),
+                )
 
 
 if __name__ == "__main__":
