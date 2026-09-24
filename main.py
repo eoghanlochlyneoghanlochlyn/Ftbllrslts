@@ -1195,6 +1195,17 @@ def process_match(
         "events"
     ] = events
 
+    # Keep a compact previous observation for safe VAR reconciliation.
+    # Only actual goal events are stored; avoid overwriting on fetch failure.
+    from event_detector import get_event_type
+    from fotmob import get_score
+    print(f"[{match_id}] Event details:", [
+        {"type": e.get("type"), "reactKey": e.get("reactKey"),
+         "isHome": e.get("isHome"), "time": e.get("time"),
+         "description": e.get("description")}
+        for e in events if isinstance(e, dict)
+    ])
+
     # -----------------------------------------------------
     # تشخیص تغییرات
     # -----------------------------------------------------
@@ -1419,6 +1430,20 @@ def process_match(
         match_state,
         changes,
     )
+
+    # Save observations only after comparing them with the previous run.
+    # Preserve older goal events until cancellation or match completion.
+    from event_detector import event_key, get_event_type
+    observed = {event_key(e): e for e in match_state.get("observed_goal_events", [])
+                if isinstance(e, dict)}
+    for e in events:
+        if isinstance(e, dict) and get_event_type(e) == "goal":
+            observed[event_key(e)] = e
+    cancelled_keys = {str(g.get("goal_key")) for g in changes.get("cancelled_goals", [])}
+    match_state["observed_goal_events"] = [e for k, e in observed.items()
+                                           if str(k) not in cancelled_keys]
+    if isinstance(snapshot.get("score"), dict):
+        match_state["observed_score"] = snapshot["score"]
 
     live_events_finished_at = time.monotonic()
 
