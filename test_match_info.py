@@ -3,6 +3,13 @@ import requests
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+from match_discovery import (
+    build_league_stage_map,
+    fetch_match_page_stage,
+    load_team_config,
+    selection_reasons,
+)
+
 
 HEADERS = {
     "User-Agent": (
