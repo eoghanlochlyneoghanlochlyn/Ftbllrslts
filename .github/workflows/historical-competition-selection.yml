@@ -1,0 +1,25 @@
+name: Historical Competition Selection Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  historical-selection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install requests
+      - name: Validate syntax
+        run: python -m py_compile match_discovery.py fotmob.py test_historical_competitions.py
+      - name: Run historical competition selection tests
+        run: python -m unittest -v test_historical_competitions.py
