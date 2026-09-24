@@ -392,7 +392,9 @@ def extract_all_matches_for_test(data):
     candidates = []
     matches = data.get("matches")
 
-    if isinstance(matches, dict):
+    if isinstance(matches, list):
+        candidates.extend(matches)
+    elif isinstance(matches, dict):
         for key in ("allMatches", "matches", "fixtures", "all"):
             value = matches.get(key)
             if isinstance(value, list):
@@ -402,6 +404,32 @@ def extract_all_matches_for_test(data):
         value = data.get(key)
         if isinstance(value, list):
             candidates.extend(value)
+
+    def walk(node):
+        if isinstance(node, dict):
+            home = node.get("home") or node.get("homeTeam")
+            away = node.get("away") or node.get("awayTeam")
+            match_id = (
+                node.get("id")
+                or node.get("matchId")
+                or node.get("eventId")
+            )
+            if (
+                match_id is not None
+                and isinstance(home, dict)
+                and isinstance(away, dict)
+            ):
+                candidates.append(node)
+
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                if isinstance(item, (dict, list)):
+                    walk(item)
+
+    walk(data)
 
     result = []
     seen = set()
@@ -545,14 +573,14 @@ def _generated_previous_seasons(current_season):
             end = int(parts[1])
             length = end - start
             if 0 < length <= 4:
-                for step in range(1, 9):
+                for step in range(1, 21):
                     candidate = f"{start - step * length}/{end - step * length}"
                     result.append(candidate)
             return result
 
     if text.isdigit() and len(text) == 4:
         year = int(text)
-        return [str(year - step) for step in range(1, 9)]
+        return [str(year - step) for step in range(1, 21)]
 
     return result
 
