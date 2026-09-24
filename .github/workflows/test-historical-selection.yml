@@ -1,0 +1,34 @@
+name: Exhaustive Historical Selection Test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "test_historical_selection.py"
+      - "historical_test_matches.json"
+      - "auto_matches.json"
+      - "match_discovery.py"
+      - "teams.json"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run exhaustive historical selection test
+        run: python -m unittest -v test_historical_selection.py
