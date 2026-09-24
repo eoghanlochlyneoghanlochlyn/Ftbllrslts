@@ -7,8 +7,99 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "react:1447953813Goal209405undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1447953813Goal209405undefinedtrue",
+          "player_id": 209405,
+          "player_name": "Virgil van Dijk",
+          "assist_player_id": 868344,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "13",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2306,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447953813Goal209405undefinedtrue",
+            "timeStr": 13,
+            "type": "goal",
+            "time": 13,
+            "overloadTime": null,
+            "eventId": 14479538,
+            "player": {
+              "id": 209405,
+              "name": "Virgil van Dijk",
+              "profileUrl": "/players/209405/virgil-van-dijk"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/209405/virgil-van-dijk",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Virgil van Dijk",
+            "firstName": "Virgil",
+            "lastName": "van Dijk",
+            "fullName": "Virgil van Dijk",
+            "playerId": 209405,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974375943,
+              "eventType": "Goal",
+              "teamId": 6708,
+              "playerId": 209405,
+              "playerName": "Virgil van Dijk",
+              "x": 101.58620689680001,
+              "y": 35.9825,
+              "min": 12,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.0175,
+              "goalCrossedZ": 0.6485263126,
+              "expectedGoals": 0.5680921077728271,
+              "expectedGoalsOnTarget": 0.9806283712387085,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.5244708994709,
+                "y": 0.17156780756613757,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 184554,
+              "firstName": "Virgil",
+              "lastName": "van Dijk",
+              "fullName": "Virgil van Dijk",
+              "teamColor": "#FB6132"
+            },
+            "assistStr": "assist by Tijjani Reijnders",
+            "assistProfileUrl": "/players/868344/tijjani-reijnders",
+            "assistPlayerId": 868344,
+            "assistKey": "assist_by",
+            "assistInput": "Tijjani Reijnders"
+          }
+        }
+      ]
     },
     "5181826": {
       "lineup_sent": true,
@@ -118,8 +209,99 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "react:1447953714Goal1113790undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1447953714Goal1113790undefinedtrue",
+          "player_id": 1113790,
+          "player_name": "Oscar Bobb",
+          "assist_player_id": 534670,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "14",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2307,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447953714Goal1113790undefinedtrue",
+            "timeStr": 14,
+            "type": "goal",
+            "time": 14,
+            "overloadTime": null,
+            "eventId": 14479537,
+            "player": {
+              "id": 1113790,
+              "name": "Oscar Bobb",
+              "profileUrl": "/players/1113790/oscar-bobb"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1113790/oscar-bobb",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Oscar Bobb",
+            "firstName": "Oscar",
+            "lastName": "Bobb",
+            "fullName": "Oscar Bobb",
+            "playerId": 1113790,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974375929,
+              "eventType": "Goal",
+              "teamId": 8492,
+              "playerId": 1113790,
+              "playerName": "Oscar Bobb",
+              "x": 98.7280701752,
+              "y": 23.9992356735,
+              "min": 14,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.21125,
+              "goalCrossedZ": 0.6934736808,
+              "expectedGoals": 0.13237737119197845,
+              "expectedGoalsOnTarget": 0.5818219780921936,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.41501322751322767,
+                "y": 0.18345864571428572,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1200984,
+              "firstName": "Oscar",
+              "lastName": "Bobb",
+              "fullName": "Oscar Bobb",
+              "teamColor": "#b53032"
+            },
+            "assistStr": "assist by Martin Ødegaard",
+            "assistProfileUrl": "/players/534670/martin-odegaard",
+            "assistPlayerId": 534670,
+            "assistKey": "assist_by",
+            "assistInput": "Martin Ødegaard"
+          }
+        }
+      ]
     },
     "5181862": {
       "lineup_sent": true,
