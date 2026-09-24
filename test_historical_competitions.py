@@ -100,7 +100,13 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
 
     @classmethod
     def discover_historical_fixtures(cls):
-        """Discover real old fixtures from the same daily source as production."""
+        """Discover real historical fixtures from FotMob league seasons.
+
+        The daily endpoint is intentionally not used here: it only exposes a
+        small recent date window. For historical regression coverage we first
+        ask FotMob for the competition's season list, then fetch each prior
+        season and extract real fixture objects from that season response.
+        """
         wanted = {
             str(rule["id"]): rule
             for rule in cls.rules
@@ -109,58 +115,247 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
         found = {competition_id: {} for competition_id in wanted}
 
         print(
-            f"[HISTORICAL] Searching {len(wanted)} configured competitions "
-            f"over the last {LOOKBACK_DAYS} days"
+            f"[HISTORICAL] Searching prior FotMob seasons for "
+            f"{len(wanted)} configured competitions"
         )
 
-        for date_text in date_strings():
-            if all(
-                enough_for_rule(
-                    wanted[competition_id],
-                    list(found[competition_id].values()),
+        for competition_id, rule in wanted.items():
+            seasons = cls.fetch_historical_seasons(competition_id)
+            print(
+                f"[HISTORICAL] competition={competition_id} "
+                f"seasons={len(seasons)}"
+            )
+
+            for season in seasons[:8]:
+                data = cls.fetch_league_season(
+                    competition_id, season
                 )
-                for competition_id in wanted
-            ):
-                break
+                for match in cls.extract_historical_matches(data):
+                    if not match.get("id"):
+                        continue
+                    found[competition_id][str(match["id"])] = match
 
-            matches = fetch_matches_for_date(date_text)
-            if not matches:
-                continue
+                    if (
+                        len(found[competition_id])
+                        >= MAX_FIXTURES_PER_COMPETITION
+                    ):
+                        break
 
-            for match in matches:
-                competition_id = str(match.get("leagueId") or "")
-                if competition_id not in wanted:
-                    continue
+                if len(found[competition_id]) >= MAX_FIXTURES_PER_COMPETITION:
+                    break
 
-                match_id = fixture_key(match)
-                if not match_id:
-                    continue
-
-                # Production's daily endpoint is historical by construction
-                # here, because every scanned date is at least several days old.
-                found[competition_id][match_id] = match
-
-                if (
-                    len(found[competition_id])
-                    >= MAX_FIXTURES_PER_COMPETITION
-                ):
-                    # No need to keep every domestic fixture from a date.
-                    found[competition_id].pop(
-                        next(iter(found[competition_id]))
-                    )
-
-            if date_text.endswith("01") or date_text.endswith("15"):
-                summary = ", ".join(
-                    f"{cid}={len(items)}"
-                    for cid, items in found.items()
-                    if items
-                )
-                print(f"[HISTORICAL] {date_text}: {summary}")
+            print(
+                f"[HISTORICAL] competition={competition_id} "
+                f"fixtures={len(found[competition_id])}"
+            )
 
         return {
             competition_id: list(matches.values())
             for competition_id, matches in found.items()
         }
+
+    @staticmethod
+    def fotmob_headers():
+        return {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/140.0.0.0 Safari/537.36"
+            ),
+            "Accept": "application/json,text/plain,*/*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": "https://www.fotmob.com/",
+        }
+
+    @classmethod
+    def fetch_historical_seasons(cls, competition_id):
+        """Return prior season IDs/names advertised by FotMob."""
+        import requests
+
+        url = (
+            "https://www.fotmob.com/api/data/leagues"
+            f"?id={competition_id}"
+        )
+        try:
+            response = requests.get(
+                url,
+                headers=cls.fotmob_headers(),
+                timeout=30,
+            )
+            response.raise_for_status()
+            data = response.json()
+        except (requests.RequestException, ValueError) as error:
+            print(
+                f"[HISTORICAL] competition={competition_id} "
+                f"season-list failed: {error}"
+            )
+            return []
+
+        candidates = []
+
+        def walk(node):
+            if isinstance(node, dict):
+                for key, value in node.items():
+                    key_norm = str(key).lower()
+                    if key_norm in {
+                        "seasons", "seasonlist", "available_seasons",
+                        "availableSeasons",
+                    } and isinstance(value, list):
+                        for item in value:
+                            if isinstance(item, dict):
+                                season_id = (
+                                    item.get("id")
+                                    or item.get("seasonId")
+                                    or item.get("seasonID")
+                                )
+                                name = (
+                                    item.get("name")
+                                    or item.get("title")
+                                    or item.get("label")
+                                )
+                                if season_id is not None:
+                                    candidates.append(
+                                        (str(season_id), str(name or ""))
+                                    )
+                    for value in node.values():
+                        if isinstance(value, (dict, list)):
+                            walk(value)
+            elif isinstance(node, list):
+                for item in node:
+                    walk(item)
+
+        walk(data)
+
+        current_year = datetime.now(timezone.utc).year
+        unique = []
+        seen = set()
+
+        def season_year(name):
+            import re
+            years = re.findall(r"20\\d{2}", name or "")
+            return int(years[-1]) if years else 0
+
+        for season_id, name in sorted(
+            candidates,
+            key=lambda item: season_year(item[1]),
+            reverse=True,
+        ):
+            if season_id in seen:
+                continue
+            if season_year(name) >= current_year:
+                continue
+            seen.add(season_id)
+            unique.append(season_id)
+
+        return unique
+
+    @classmethod
+    def fetch_league_season(cls, competition_id, season_id):
+        import requests
+
+        url = (
+            "https://www.fotmob.com/api/data/leagues"
+            f"?id={competition_id}&season={season_id}"
+        )
+        try:
+            response = requests.get(
+                url,
+                headers=cls.fotmob_headers(),
+                timeout=30,
+            )
+            response.raise_for_status()
+            data = response.json()
+            return data if isinstance(data, dict) else {}
+        except (requests.RequestException, ValueError) as error:
+            print(
+                f"[HISTORICAL] competition={competition_id} "
+                f"season={season_id} failed: {error}"
+            )
+            return {}
+
+    @classmethod
+    def extract_historical_matches(cls, data):
+        """Extract only objects that clearly look like real FotMob fixtures."""
+        result = []
+
+        def parse_team(value):
+            if not isinstance(value, dict):
+                return {}
+            team_id = (
+                value.get("id")
+                or value.get("teamId")
+                or value.get("teamID")
+            )
+            name = (
+                value.get("longName")
+                or value.get("name")
+                or value.get("shortName")
+            )
+            return {
+                "id": str(team_id) if team_id is not None else "",
+                "name": str(name or ""),
+            }
+
+        def walk(node):
+            if isinstance(node, dict):
+                home = node.get("home") or node.get("homeTeam")
+                away = node.get("away") or node.get("awayTeam")
+                match_id = node.get("id") or node.get("matchId")
+                status = node.get("status")
+                start = (
+                    node.get("utcTime")
+                    or node.get("startTime")
+                    or node.get("matchTimeUTC")
+                    or (
+                        status.get("utcTime")
+                        if isinstance(status, dict)
+                        else None
+                    )
+                )
+
+                if (
+                    match_id is not None
+                    and home is not None
+                    and away is not None
+                    and start is not None
+                ):
+                    home_team = parse_team(home)
+                    away_team = parse_team(away)
+                    if home_team.get("name") and away_team.get("name"):
+                        result.append({
+                            "id": str(match_id),
+                            "start": str(start),
+                            "home": home_team,
+                            "away": away_team,
+                            "leagueId": str(
+                                node.get("leagueId")
+                                or node.get("tournamentId")
+                                or node.get("competitionId")
+                                or ""
+                            ),
+                            "competitionName": "",
+                            "stage": (
+                                node.get("stage")
+                                or node.get("round")
+                                or node.get("roundName")
+                            ),
+                        })
+
+                for value in node.values():
+                    if isinstance(value, (dict, list)):
+                        walk(value)
+
+            elif isinstance(node, list):
+                for item in node:
+                    walk(item)
+
+        walk(data)
+
+        unique = {}
+        for match in result:
+            unique[match["id"]] = match
+        return list(unique.values())
+
 
     def stage(self, match):
         """Resolve stage from the match page when the daily payload lacks it."""
