@@ -613,6 +613,9 @@ def fetch_match_page_stage(match_id):
             return structured_stage
 
     # 2) fallback روی متن/JSON خام صفحه.
+    # فازهای غیرحذفی را هم فقط وقتی عبارت صریح خود FotMob
+    # وجود دارد ثبت می‌کنیم؛ این کار از UNKNOWN کاذب جلوگیری می‌کند
+    # بدون اینکه یک بازی را صرفاً با حدس، حذفی اعلام کنیم.
     # فقط عبارت‌های صریح مرحله را قبول می‌کنیم؛
     # عددهای عمومی مثل tournamentStage یا round=1 قابل اعتماد نیستند.
     text = clean_text(html)
@@ -872,7 +875,11 @@ def selection_reasons(match, config, selected_team_ids, by_name, by_country):
     for rule in config.get("competitions", []):
         if not isinstance(rule, dict):
             continue
-        if str(match.get("leagueId")) != str(rule.get("id")):
+        rule_ids = {str(rule.get("id"))}
+        aliases = rule.get("aliases", [])
+        if isinstance(aliases, list):
+            rule_ids.update(str(value) for value in aliases if str(value).strip())
+        if str(match.get("leagueId")) not in rule_ids:
             continue
 
         mode = normalize(rule.get("mode") or "all")
