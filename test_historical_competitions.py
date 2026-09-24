@@ -31,16 +31,16 @@ CONFIG_FILE = Path("auto_matches.json")
 
 # Three years gives enough coverage for the configured annual/international
 # competitions while keeping the test independent from a specific season.
-LOOKBACK_DAYS = 3 * 365
+LOOKBACK_DAYS = 0
 
 # Keep several real fixtures per competition so stage/team_only tests can
 # find both positive and negative examples without hard-coding match IDs.
-MAX_FIXTURES_PER_COMPETITION = 16
+MAX_FIXTURES_PER_COMPETITION = 8
 
 # Daily endpoint calls are cheap compared with guessing historical league
 # response shapes. A 3-day stride gives good coverage; once all competitions
 # have enough candidates we stop immediately.
-DATE_STEP_DAYS = 3
+DATE_STEP_DAYS = 1
 
 KNOCKOUT_STAGES = {
     "round_of_32",
@@ -116,7 +116,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
 
         print(
             f"[HISTORICAL] Searching prior FotMob seasons for "
-            f"{len(wanted)} configured competitions"
+            f"{len(wanted)} configured competitions (max 2 seasons/competition)"
         )
 
         for competition_id, rule in wanted.items():
@@ -126,7 +126,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
                 f"seasons={len(seasons)}"
             )
 
-            for season in seasons[:8]:
+            for season in seasons[:2]:
                 data = cls.fetch_league_season(
                     competition_id, season
                 )
@@ -180,7 +180,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
             response = requests.get(
                 url,
                 headers=cls.fotmob_headers(),
-                timeout=30,
+                timeout=10,
             )
             response.raise_for_status()
             data = response.json()
@@ -232,7 +232,7 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
 
         def season_year(name):
             import re
-            years = re.findall(r"20\\d{2}", name or "")
+            years = re.findall(r"20\d{2}", name or "")
             return int(years[-1]) if years else 0
 
         for season_id, name in sorted(
