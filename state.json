@@ -99,7 +99,12 @@
             "assistInput": "Tijjani Reijnders"
           }
         }
-      ]
+      ],
+      "observed_goal_events": [],
+      "observed_score": {
+        "home": 0,
+        "away": 0
+      }
     },
     "5181826": {
       "lineup_sent": true,
@@ -200,7 +205,87 @@
             "assistInput": "Dušan Tadić"
           }
         }
-      ]
+      ],
+      "observed_goal_events": [
+        {
+          "reactKey": "144795034Goal463268undefinedtrue",
+          "timeStr": 4,
+          "type": "goal",
+          "time": 4,
+          "overloadTime": null,
+          "eventId": 14479503,
+          "player": {
+            "id": 463268,
+            "name": "Andrija Živković",
+            "profileUrl": "/players/463268/andrija-zivkovic"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/463268/andrija-zivkovic",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Andrija Živković",
+          "firstName": "Andrija",
+          "lastName": "Živković",
+          "fullName": "Andrija Živković",
+          "playerId": 463268,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974372749,
+            "eventType": "Goal",
+            "teamId": 8205,
+            "playerId": 463268,
+            "playerName": "Andrija Živković",
+            "x": 96.3157894727,
+            "y": 32.24625,
+            "min": 4,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.745000000000005,
+            "goalCrossedZ": 1.3034736778000002,
+            "expectedGoals": 0.24500849843025208,
+            "expectedGoalsOnTarget": 0.37994638085365295,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.2738095238095226,
+              "y": 0.34483430629629636,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1072068,
+            "firstName": "Andrija",
+            "lastName": "Živković",
+            "fullName": "Andrija Živković",
+            "teamColor": "#CA2739"
+          },
+          "assistStr": "assist by Dušan Tadić",
+          "assistProfileUrl": "/players/94267/dusan-tadic",
+          "assistPlayerId": 94267,
+          "assistKey": "assist_by",
+          "assistInput": "Dušan Tadić"
+        }
+      ],
+      "observed_score": {
+        "home": 1,
+        "away": 0
+      }
     },
     "5181861": {
       "lineup_sent": true,
@@ -211,7 +296,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1447953714Goal1113790undefinedtrue",
-        "react:1447955618Goal737066undefinedtrue"
+        "react:1447955618Goal737066undefinedtrue",
+        "react:1447957625Goal888912undefinedfalse"
       ],
       "goals": [
         {
@@ -389,8 +475,318 @@
             "assistKey": "assist_by",
             "assistInput": "Antonio Nusa"
           }
+        },
+        {
+          "event_key": "react:1447957625Goal888912undefinedfalse",
+          "player_id": 888912,
+          "player_name": "Mikkel Damsgaard",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "25",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2309,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447957625Goal888912undefinedfalse",
+            "timeStr": 25,
+            "type": "goal",
+            "time": 25,
+            "overloadTime": null,
+            "eventId": 14479576,
+            "player": {
+              "id": 888912,
+              "name": "Mikkel Damsgaard",
+              "profileUrl": "/players/888912/mikkel-damsgaard"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/888912/mikkel-damsgaard",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Direct freekick",
+            "goalDescriptionKey": "direct_free_kick",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mikkel Damsgaard",
+            "firstName": "Mikkel",
+            "lastName": "Damsgaard",
+            "fullName": "Mikkel Damsgaard",
+            "playerId": 888912,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974381203,
+              "eventType": "Goal",
+              "teamId": 8238,
+              "playerId": 888912,
+              "playerName": "Mikkel Damsgaard",
+              "x": 80.5703883504,
+              "y": 33.39,
+              "min": 25,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.39875,
+              "goalCrossedZ": 1.7465263072000001,
+              "expectedGoals": 0.07509373128414154,
+              "expectedGoalsOnTarget": 0.1489197164773941,
+              "shotType": "RightFoot",
+              "situation": "FreeKick",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.4236111111111112,
+                "y": 0.4620439966137566,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 73409,
+              "firstName": "Mikkel",
+              "lastName": "Damsgaard",
+              "fullName": "Mikkel Damsgaard",
+              "teamColor": "#D2151A"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
-      ]
+      ],
+      "observed_goal_events": [
+        {
+          "reactKey": "1447953714Goal1113790undefinedtrue",
+          "timeStr": 14,
+          "type": "goal",
+          "time": 14,
+          "overloadTime": null,
+          "eventId": 14479537,
+          "player": {
+            "id": 1113790,
+            "name": "Oscar Bobb",
+            "profileUrl": "/players/1113790/oscar-bobb"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1113790/oscar-bobb",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Oscar Bobb",
+          "firstName": "Oscar",
+          "lastName": "Bobb",
+          "fullName": "Oscar Bobb",
+          "playerId": 1113790,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974375929,
+            "eventType": "Goal",
+            "teamId": 8492,
+            "playerId": 1113790,
+            "playerName": "Oscar Bobb",
+            "x": 98.7280701752,
+            "y": 23.9992356735,
+            "min": 14,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.21125,
+            "goalCrossedZ": 0.6934736808,
+            "expectedGoals": 0.13237737119197845,
+            "expectedGoalsOnTarget": 0.5818219780921936,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.41501322751322767,
+              "y": 0.18345864571428572,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1200984,
+            "firstName": "Oscar",
+            "lastName": "Bobb",
+            "fullName": "Oscar Bobb",
+            "teamColor": "#b53032"
+          },
+          "assistStr": "assist by Martin Ødegaard",
+          "assistProfileUrl": "/players/534670/martin-odegaard",
+          "assistPlayerId": 534670,
+          "assistKey": "assist_by",
+          "assistInput": "Martin Ødegaard"
+        },
+        {
+          "reactKey": "1447955618Goal737066undefinedtrue",
+          "timeStr": 18,
+          "type": "goal",
+          "time": 18,
+          "overloadTime": null,
+          "eventId": 14479556,
+          "player": {
+            "id": 737066,
+            "name": "Erling Haaland",
+            "profileUrl": "/players/737066/erling-haaland"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/737066/erling-haaland",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Erling Haaland",
+          "firstName": "Erling",
+          "lastName": "Haaland",
+          "fullName": "Erling Haaland",
+          "playerId": 737066,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974377439,
+            "eventType": "Goal",
+            "teamId": 8492,
+            "playerId": 737066,
+            "playerName": "Erling Haaland",
+            "x": 97.6666666661,
+            "y": 44.2810191037,
+            "min": 18,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.448750000000004,
+            "goalCrossedZ": 0.20547368320000003,
+            "expectedGoals": 0.14149342477321625,
+            "expectedGoalsOnTarget": 0.1686260849237442,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6167328042328032,
+              "y": 0.05435811724867726,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1200984,
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "teamColor": "#b53032"
+          },
+          "assistStr": "assist by Antonio Nusa",
+          "assistProfileUrl": "/players/1248482/antonio-nusa",
+          "assistPlayerId": 1248482,
+          "assistKey": "assist_by",
+          "assistInput": "Antonio Nusa"
+        },
+        {
+          "reactKey": "1447957625Goal888912undefinedfalse",
+          "timeStr": 25,
+          "type": "goal",
+          "time": 25,
+          "overloadTime": null,
+          "eventId": 14479576,
+          "player": {
+            "id": 888912,
+            "name": "Mikkel Damsgaard",
+            "profileUrl": "/players/888912/mikkel-damsgaard"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/888912/mikkel-damsgaard",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Direct freekick",
+          "goalDescriptionKey": "direct_free_kick",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mikkel Damsgaard",
+          "firstName": "Mikkel",
+          "lastName": "Damsgaard",
+          "fullName": "Mikkel Damsgaard",
+          "playerId": 888912,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974381203,
+            "eventType": "Goal",
+            "teamId": 8238,
+            "playerId": 888912,
+            "playerName": "Mikkel Damsgaard",
+            "x": 80.5703883504,
+            "y": 33.39,
+            "min": 25,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.39875,
+            "goalCrossedZ": 1.7465263072000001,
+            "expectedGoals": 0.07509373128414154,
+            "expectedGoalsOnTarget": 0.1489197164773941,
+            "shotType": "RightFoot",
+            "situation": "FreeKick",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.4236111111111112,
+              "y": 0.4620439966137566,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 73409,
+            "firstName": "Mikkel",
+            "lastName": "Damsgaard",
+            "fullName": "Mikkel Damsgaard",
+            "teamColor": "#D2151A"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
+      "observed_score": {
+        "home": 2,
+        "away": 1
+      }
     },
     "5181862": {
       "lineup_sent": true,
@@ -399,8 +795,179 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": []
+      "event_keys": [
+        "react:1447956622Goal794427undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1447956622Goal794427undefinedtrue",
+          "player_id": 794427,
+          "player_name": "Joao Félix",
+          "assist_player_id": 1158945,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "22",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2310,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1447956622Goal794427undefinedtrue",
+            "timeStr": 22,
+            "type": "goal",
+            "time": 22,
+            "overloadTime": null,
+            "eventId": 14479566,
+            "player": {
+              "id": 794427,
+              "name": "Joao Félix",
+              "profileUrl": "/players/794427/joao-felix"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/794427/joao-felix",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Joao Félix",
+            "firstName": "Joao",
+            "lastName": "Félix",
+            "fullName": "Joao Félix",
+            "playerId": 794427,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974379915,
+              "eventType": "Goal",
+              "teamId": 8361,
+              "playerId": 794427,
+              "playerName": "Joao Félix",
+              "x": 81.80922330160001,
+              "y": 32.856249999999996,
+              "min": 22,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.36375,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.036682385951280594,
+              "expectedGoalsOnTarget": 0.13499483466148376,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.37466931216931143,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 254472,
+              "firstName": "Joao",
+              "lastName": "Félix",
+              "fullName": "Joao Félix",
+              "teamColor": "#ab0027"
+            },
+            "assistStr": "assist by Nuno Mendes",
+            "assistProfileUrl": "/players/1158945/nuno-mendes",
+            "assistPlayerId": 1158945,
+            "assistKey": "assist_by",
+            "assistInput": "Nuno Mendes"
+          }
+        }
+      ],
+      "observed_goal_events": [
+        {
+          "reactKey": "1447956622Goal794427undefinedtrue",
+          "timeStr": 22,
+          "type": "goal",
+          "time": 22,
+          "overloadTime": null,
+          "eventId": 14479566,
+          "player": {
+            "id": 794427,
+            "name": "Joao Félix",
+            "profileUrl": "/players/794427/joao-felix"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/794427/joao-felix",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Joao Félix",
+          "firstName": "Joao",
+          "lastName": "Félix",
+          "fullName": "Joao Félix",
+          "playerId": 794427,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974379915,
+            "eventType": "Goal",
+            "teamId": 8361,
+            "playerId": 794427,
+            "playerName": "Joao Félix",
+            "x": 81.80922330160001,
+            "y": 32.856249999999996,
+            "min": 22,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.36375,
+            "goalCrossedZ": 0.160526315,
+            "expectedGoals": 0.036682385951280594,
+            "expectedGoalsOnTarget": 0.13499483466148376,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.37466931216931143,
+              "y": 0.042467279100529096,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 254472,
+            "firstName": "Joao",
+            "lastName": "Félix",
+            "fullName": "Joao Félix",
+            "teamColor": "#ab0027"
+          },
+          "assistStr": "assist by Nuno Mendes",
+          "assistProfileUrl": "/players/1158945/nuno-mendes",
+          "assistPlayerId": 1158945,
+          "assistKey": "assist_by",
+          "assistInput": "Nuno Mendes"
+        }
+      ],
+      "observed_score": {
+        "home": 1,
+        "away": 0
+      }
     }
   }
 }
