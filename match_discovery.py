@@ -384,6 +384,39 @@ def _collect_match_ids(node):
     return result
 
 
+def _team_id_from_node(node):
+    if not isinstance(node, dict):
+        return None
+    for key in ("id", "teamId", "teamID", "team_id"):
+        value = node.get(key)
+        if value is not None and clean_text(value).isdigit():
+            return clean_text(value)
+    return None
+
+
+def _team_pair_key(home_id, away_id):
+    if not home_id or not away_id:
+        return None
+    return "teams:" + "|".join(sorted((str(home_id), str(away_id))))
+
+
+def _collect_team_pairs(node):
+    result = set()
+    if isinstance(node, dict):
+        home = node.get("home") or node.get("homeTeam") or node.get("home_team")
+        away = node.get("away") or node.get("awayTeam") or node.get("away_team")
+        key = _team_pair_key(_team_id_from_node(home), _team_id_from_node(away))
+        if key:
+            result.add(key)
+        for value in node.values():
+            if isinstance(value, (dict, list)):
+                result.update(_collect_team_pairs(value))
+    elif isinstance(node, list):
+        for item in node:
+            result.update(_collect_team_pairs(item))
+    return result
+
+
 def _iter_playoff_rounds(data):
     """
     roundهای واقعی playoff را از ساختار لیگ پیدا می‌کند.
@@ -440,6 +473,7 @@ def build_league_stage_map(data):
             continue
 
         match_ids = set()
+        team_pairs = set()
 
         for key in (
             "matchups",
@@ -449,24 +483,24 @@ def build_league_stage_map(data):
             "games",
         ):
             value = round_item.get(key)
-
             if isinstance(value, (dict, list)):
-                match_ids.update(
-                    _collect_match_ids(value)
-                )
+                match_ids.update(_collect_match_ids(value))
+                team_pairs.update(_collect_team_pairs(value))
 
-        # بعضی ساختارها ممکن است matchupها را زیر کل round
-        # با کلید دیگری نگه دارند؛ در این حالت کل round را
-        # بررسی می‌کنیم ولی فقط شناسه‌های عددی معتبر را می‌گیریم.
         if not match_ids:
             match_ids = _collect_match_ids(round_item)
+        if not team_pairs:
+            team_pairs = _collect_team_pairs(round_item)
 
         for match_id in match_ids:
             result[str(match_id)] = stage
+        for pair_key in team_pairs:
+            result[pair_key] = stage
 
         print(
             f"[STAGE] Round {round_item.get('stage')!r} "
-            f"-> {stage} | matches: {len(match_ids)}"
+            f"-> {stage} | matches: {len(match_ids)} | "
+            f"team_pairs: {len(team_pairs)}"
         )
 
     return result
@@ -710,6 +744,13 @@ def apply_stage_cache(match, stage_cache):
 
     if match_id in mapping:
         match["stage"] = mapping[match_id]
+        return match
+
+    home_id = clean_text((match.get("home") or {}).get("id"))
+    away_id = clean_text((match.get("away") or {}).get("id"))
+    pair_key = _team_pair_key(home_id, away_id)
+    if pair_key and pair_key in mapping:
+        match["stage"] = mapping[pair_key]
 
     return match
 
