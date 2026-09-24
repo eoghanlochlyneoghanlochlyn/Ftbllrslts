@@ -1,7 +1,7 @@
 {
   "generated_from": "FotMob league structures using manually fixed reference seasons",
   "reference_policy": "Manually fixed per configured competition; no automatic season selection; no fixture-count validation.",
-  "generated_at": "2026-09-24T14:49:25.290911+00:00",
+  "generated_at": "2026-09-24T14:50:04.690256+00:00",
   "competitions": [
     {
       "competition_id": "77",
