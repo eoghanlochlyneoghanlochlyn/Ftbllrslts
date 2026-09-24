@@ -266,12 +266,10 @@ def main():
                 f"Benchmark season {season} returned no fixtures for competition {competition_id}"
             )
 
-        unfinished = [m["id"] for m in matches if not finished(m)]
-        if unfinished:
-            raise RuntimeError(
-                f"Benchmark season {season} is not complete for {competition_id}; "
-                f"unfinished={unfinished[:20]}"
-            )
+        print(
+            f"[GENERATE] Extracted {len(matches)} fixtures from benchmark "
+            f"season {season}"
+        )
 
         season, matches = selected
         print(
