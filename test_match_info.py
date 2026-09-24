@@ -1,6 +1,7 @@
 import json
 import requests
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 HEADERS = {
@@ -369,144 +370,485 @@ def print_competition_result(
     return True
 
 
+# =========================================================
+# Exhaustive historical match test helpers
+# =========================================================
+
+STAGE_PAGE_WORKERS = 8
+
+
+def extract_all_matches_for_test(data):
+    """Extract every historical fixture from FotMob league payload."""
+    if not isinstance(data, dict):
+        return []
+
+    candidates = []
+    matches = data.get("matches")
+
+    if isinstance(matches, dict):
+        for key in ("allMatches", "matches", "fixtures", "all"):
+            value = matches.get(key)
+            if isinstance(value, list):
+                candidates.extend(value)
+
+    for key in ("allMatches", "fixtures"):
+        value = data.get(key)
+        if isinstance(value, list):
+            candidates.extend(value)
+
+    result = []
+    seen = set()
+
+    for match in candidates:
+        if not isinstance(match, dict):
+            continue
+
+        match_id = (
+            match.get("id")
+            or match.get("matchId")
+            or match.get("eventId")
+        )
+        if match_id is None:
+            continue
+
+        match_id = str(match_id)
+        if not match_id.isdigit() or match_id in seen:
+            continue
+
+        home = match.get("home") or match.get("homeTeam")
+        away = match.get("away") or match.get("awayTeam")
+
+        if not isinstance(home, dict) or not isinstance(away, dict):
+            continue
+
+        home_id = home.get("id") or home.get("teamId")
+        away_id = away.get("id") or away.get("teamId")
+        if home_id is None or away_id is None:
+            continue
+
+        seen.add(match_id)
+        result.append(match)
+
+    return result
+
+
+def is_finished_for_test(match):
+    status = match.get("status")
+    if not isinstance(status, dict):
+        return False
+
+    if status.get("cancelled") is True:
+        return True
+
+    if status.get("finished") is True:
+        return True
+
+    reason = status.get("reason")
+    if isinstance(reason, dict):
+        reason = (
+            reason.get("long")
+            or reason.get("short")
+            or reason.get("key")
+        )
+
+    return str(reason or "").strip().lower() in {
+        "ft", "aet", "after penalties", "finished", "full-time"
+    }
+
+
+def find_last_completed_season_test(league_id, current_data):
+    details = extract_details(current_data)
+    current_season = details.get("selectedSeason")
+    raw_seasons = current_data.get("seasons", [])
+
+    if isinstance(raw_seasons, dict):
+        raw_seasons = list(raw_seasons.values())
+
+    candidates = []
+
+    for item in raw_seasons if isinstance(raw_seasons, list) else []:
+        if isinstance(item, dict):
+            season = (
+                item.get("id")
+                or item.get("season")
+                or item.get("value")
+            )
+        else:
+            season = item
+
+        if season is None:
+            continue
+
+        season = str(season).strip()
+        if season and season != str(current_season).strip():
+            if season not in candidates:
+                candidates.append(season)
+
+    for season in candidates:
+        data = fetch_league(league_id, season=season)
+        if not data:
+            print(f"  SEASON {season}: request failed")
+            continue
+
+        matches = extract_all_matches_for_test(data)
+        finished = sum(
+            1 for match in matches
+            if is_finished_for_test(match)
+        )
+
+        print(
+            f"  SEASON {season}: "
+            f"{finished}/{len(matches)} finished"
+        )
+
+        if matches and finished == len(matches):
+            return season, data
+
+    return None, None
+
+
+def historical_stage_for_test(match, stage_map):
+    match_id = str(
+        match.get("id")
+        or match.get("matchId")
+        or match.get("eventId")
+        or ""
+    )
+
+    if match_id in stage_map:
+        return stage_map[match_id], "league_stage_map"
+
+    home = match.get("home") or match.get("homeTeam") or {}
+    away = match.get("away") or match.get("awayTeam") or {}
+    home_id = home.get("id") or home.get("teamId")
+    away_id = away.get("id") or away.get("teamId")
+
+    if home_id and away_id:
+        pair_key = (
+            "teams:"
+            + "|".join(sorted((str(home_id), str(away_id))))
+        )
+        if pair_key in stage_map:
+            return stage_map[pair_key], "team_pair"
+
+    return None, None
+
+
+def _fetch_stage_page_test(match_id):
+    try:
+        return match_id, fetch_match_page_stage(match_id)
+    except Exception as error:
+        print(f"  STAGE PAGE ERROR {match_id}: {error}")
+        return match_id, None
+
+
+def prefetch_missing_stage_pages(matches, rule, stage_map):
+    mode = str(rule.get("mode") or "all").lower()
+    if mode not in {"from", "final_only"}:
+        return {}
+
+    missing = []
+    for match in matches:
+        stage, _ = historical_stage_for_test(match, stage_map)
+        if stage:
+            continue
+
+        match_id = str(match.get("id") or match.get("matchId") or "")
+        if match_id:
+            missing.append(match_id)
+
+    missing = list(dict.fromkeys(missing))
+    if not missing:
+        return {}
+
+    print(
+        f"  STAGE PAGE FALLBACK: {len(missing)} matches "
+        f"(workers={STAGE_PAGE_WORKERS})"
+    )
+
+    result = {}
+    with ThreadPoolExecutor(max_workers=STAGE_PAGE_WORKERS) as executor:
+        futures = {
+            executor.submit(_fetch_stage_page_test, match_id): match_id
+            for match_id in missing
+        }
+
+        for future in as_completed(futures):
+            match_id, stage = future.result()
+            if stage:
+                result[match_id] = normalize_stage(stage)
+
+    print(
+        f"  STAGE PAGE RESOLVED: {len(result)}/{len(missing)}"
+    )
+    return result
+
+
+def historical_selection_test(
+    match,
+    rule,
+    stage,
+    selected_team_ids,
+    by_name,
+    by_country,
+):
+    prepared = dict(match)
+
+    # The historical endpoint is already scoped to this competition.
+    # Canonicalizing only the temporary test object lets the exact
+    # production selection_reasons() logic evaluate this fixture.
+    prepared["leagueId"] = str(rule["id"])
+
+    if stage:
+        prepared["stage"] = stage
+
+    reasons = selection_reasons(
+        prepared,
+        {"competitions": [rule]},
+        selected_team_ids,
+        by_name,
+        by_country,
+    )
+
+    if reasons:
+        return "SELECT", reasons
+
+    mode = str(rule.get("mode") or "all").lower()
+    if mode in {"from", "final_only"} and not stage:
+        return "INCONCLUSIVE", ["stage_unresolved"]
+
+    return "REJECT", ["no_selection_rule"]
+
+
+def test_match_label(match):
+    home = match.get("home") or {}
+    away = match.get("away") or {}
+    home_name = home.get("longName") or home.get("name") or "?"
+    away_name = away.get("longName") or away.get("name") or "?"
+    return (
+        f"{home_name} ({home.get('id')}) "
+        f"vs {away_name} ({away.get('id')})"
+    )
+
 def main():
     with open("auto_matches.json", "r", encoding="utf-8") as file:
         config = json.load(file)
 
-    configured = [
-        item
-        for item in config.get("competitions", [])
-        if item.get("id") is not None
-    ]
+    competitions = config.get("competitions", [])
+    selected_team_ids = {
+        str(value)
+        for value in config.get("team_ids", [])
+        if str(value).strip()
+    }
+    by_name, by_country = load_team_config()
 
     print()
-    print("=" * 110)
-    print("FOTMOB PREVIOUS-SEASON COMPETITION TEST")
-    print("=" * 110)
+    print("=" * 120)
+    print("FOTMOB EXHAUSTIVE HISTORICAL SELECTION TEST")
+    print("=" * 120)
     print(
-        "هدف: بررسی ساختار لیگ‌ها و تورنمنت‌ها بر اساس فصل قبلی، "
-        "نه فصل جاری."
+        "برای هر competition فصل فعلی از FotMob خوانده می‌شود، "
+        "آخرین فصل قبلی که تمام مسابقاتش تمام شده پیدا می‌شود، "
+        "و تک‌تک بازی‌های آن فصل SELECT/REJECT می‌شوند."
     )
     print(
-        "برای هر competition ابتدا فصل جاری از FotMob خوانده می‌شود، "
-        "سپس فصل قبلی از فهرست seasons انتخاب و با پارامتر season "
-        "به /api/data/leagues درخواست می‌شود."
+        "Stage فقط از ساختار واقعی FotMob یا صفحه همان مسابقه "
+        "استخراج می‌شود؛ هیچ stageای داخل تست hardcode نشده است."
     )
 
-    all_leagues = fetch_all_leagues()
-    directory = collect_leagues(all_leagues)
+    summary = {
+        "competitions": 0,
+        "completed_seasons": 0,
+        "matches": 0,
+        "selected": 0,
+        "rejected": 0,
+        "inconclusive": 0,
+        "errors": 0,
+    }
+    failures = []
 
-    by_id = defaultdict(list)
-    for item in directory:
-        by_id[item["id"]].append(item)
-
-    print()
-    print("Configured competitions:", len(configured))
-    print("Global directory entries:", len(directory))
-
-    unresolved = []
-    current_failures = []
-    previous_failures = []
-    no_previous_season = []
-    stage_failures = []
-
-    checked = 0
-
-    for configured_item in configured:
-        league_id = str(configured_item["id"])
-
-        print()
-        print("-" * 110)
-        print(
-            f"CONFIGURED ID {league_id} | "
-            f"mode={configured_item.get('mode')} | "
-            f"stage={configured_item.get('stage')}"
-        )
-
-        directory_matches = by_id.get(league_id, [])
-
-        if not directory_matches:
-            print("  NOT FOUND IN allLeagues")
-            unresolved.append(league_id)
+    for rule in competitions:
+        if not isinstance(rule, dict):
             continue
 
+        league_id = str(rule.get("id", "")).strip()
+        if not league_id:
+            continue
+
+        summary["competitions"] += 1
+
+        print()
+        print("#" * 120)
         print(
-            "  GLOBAL:",
-            " | ".join(
-                f"{item['name']} | pageUrl={item.get('pageUrl')}"
-                for item in directory_matches
+            f"COMPETITION {league_id} | "
+            f"mode={rule.get('mode')} | "
+            f"stage={rule.get('stage')}"
+        )
+
+        current_data = fetch_league(league_id)
+        if not current_data:
+            print("  ERROR: current league request failed")
+            summary["errors"] += 1
+            failures.append((league_id, "current_request_failed"))
+            continue
+
+        details = extract_details(current_data)
+        print(
+            "  CURRENT SEASON:",
+            details.get("selectedSeason")
+        )
+
+        season, historical_data = (
+            find_last_completed_season_test(
+                league_id,
+                current_data,
+            )
+        )
+
+        if not historical_data:
+            print(
+                "  ERROR: no fully completed previous season found"
+            )
+            summary["errors"] += 1
+            failures.append(
+                (league_id, "no_completed_previous_season")
+            )
+            continue
+
+        summary["completed_seasons"] += 1
+
+        matches = extract_all_matches_for_test(
+            historical_data
+        )
+        print(f"  COMPLETED SEASON: {season}")
+        print(f"  MATCHES: {len(matches)}")
+
+        if not matches:
+            summary["errors"] += 1
+            failures.append((league_id, "no_matches"))
+            continue
+
+        summary["matches"] += len(matches)
+
+        # Stage is built from the same historical competition payload.
+        stage_map = build_league_stage_map(historical_data)
+        print(f"  STAGE MAP ENTRIES: {len(stage_map)}")
+
+        page_stage_map = prefetch_missing_stage_pages(
+            matches,
+            rule,
+            stage_map,
+        )
+
+        counts = {
+            "SELECT": 0,
+            "REJECT": 0,
+            "INCONCLUSIVE": 0,
+        }
+
+        ordered = sorted(
+            matches,
+            key=lambda match: (
+                str(
+                    (
+                        match.get("status")
+                        or {}
+                    ).get("utcTime")
+                    or match.get("utcTime")
+                    or match.get("timeTS")
+                    or ""
+                ),
+                str(
+                    match.get("id")
+                    or match.get("matchId")
+                    or ""
+                ),
             ),
         )
 
-        competition_name = directory_matches[0].get("name")
+        for index, match in enumerate(ordered, 1):
+            stage, stage_source = historical_stage_for_test(
+                match,
+                stage_map,
+            )
 
-        if is_excluded_competition(competition_name, league_id):
-            print("  PREVIOUS-SEASON TEST: SKIPPED")
-            print("  REASON: excluded national/international competition")
-            continue
+            if not stage:
+                match_id = str(
+                    match.get("id")
+                    or match.get("matchId")
+                    or ""
+                )
+                if match_id in page_stage_map:
+                    stage = page_stage_map[match_id]
+                    stage_source = "match_page"
 
-        current_data = fetch_league(league_id)
+            status, reasons = historical_selection_test(
+                match,
+                rule,
+                stage,
+                selected_team_ids,
+                by_name,
+                by_country,
+            )
 
-        if not current_data:
-            current_failures.append(league_id)
-            print("  CURRENT SEASON REQUEST FAILED")
-            continue
+            counts[status] += 1
+            summary[status.lower()] += 1
 
-        current_season, previous_season, seasons = choose_previous_season(
-            current_data
-        )
+            print(
+                f"  [{index}/{len(ordered)}] "
+                f"{match.get('id')} | "
+                f"{test_match_label(match)} | "
+                f"stage={stage or 'UNKNOWN'} | "
+                f"stage_source={stage_source or 'NONE'} | "
+                f"{status} | "
+                f"reason={','.join(reasons)}"
+            )
 
+            if status == "INCONCLUSIVE":
+                failures.append(
+                    (
+                        league_id,
+                        str(
+                            match.get("id")
+                            or match.get("matchId")
+                        ),
+                        "stage_unresolved",
+                    )
+                )
+
+        print()
         print(
-            f"  DETECTED CURRENT={current_season!r} | "
-            f"PREVIOUS={previous_season!r}"
+            f"  SUMMARY {league_id} | "
+            f"season={season} | "
+            f"matches={len(ordered)} | "
+            f"SELECT={counts['SELECT']} | "
+            f"REJECT={counts['REJECT']} | "
+            f"INCONCLUSIVE={counts['INCONCLUSIVE']}"
         )
-
-        if not previous_season:
-            no_previous_season.append(league_id)
-            print("  NO PREVIOUS SEASON AVAILABLE")
-            continue
-
-        previous_data = fetch_league(
-            league_id,
-            season=previous_season,
-        )
-
-        if not previous_data:
-            previous_failures.append(league_id)
-            print("  PREVIOUS-SEASON REQUEST FAILED")
-            continue
-
-        checked += 1
-
-        ok = print_competition_result(
-            configured_item,
-            current_data,
-            previous_data,
-            league_id,
-        )
-
-        if not ok:
-            stage_failures.append(league_id)
 
     print()
-    print("=" * 110)
-    print("FINAL RESULT")
-    print("=" * 110)
-    print("Configured competitions:", len(configured))
-    print("Resolved in allLeagues:", len(configured) - len(unresolved))
-    print("Previous seasons checked:", checked)
-    print("Unresolved:", unresolved or "NONE")
-    print("Current-season request failures:", current_failures or "NONE")
-    print("Previous-season request failures:", previous_failures or "NONE")
-    print("No previous season available:", no_previous_season or "NONE")
-    print("No stage structure:", stage_failures or "NONE")
+    print("=" * 120)
+    print("FINAL SUMMARY")
+    print("=" * 120)
+
+    for key, value in summary.items():
+        print(f"{key}: {value}")
+
+    if failures:
+        print()
+        print("FAILURES / INCONCLUSIVE:")
+        for failure in failures:
+            print("  ", failure)
+
+        raise AssertionError(
+            f"Historical exhaustive test failed: "
+            f"{len(failures)} unresolved/error case(s)."
+        )
 
     print()
-    print("IMPORTANT:")
     print(
-        "این تست فقط برای کشف ساختار واقعی فصل قبلی است. "
-        "هیچ تغییری در auto_matches.json یا منطق ربات اعمال نمی‌کند "
-        "و هیچ matchDetails برای تک‌تک بازی‌ها صدا زده نمی‌شود."
+        "PASS: همه competitionهای تنظیم‌شده و تمام مسابقات "
+        "آخرین فصل کامل قبلی بدون stage unresolved بررسی شدند."
     )
 
 
