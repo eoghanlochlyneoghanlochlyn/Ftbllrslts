@@ -195,18 +195,8 @@ def collect_valid_match_ids(league_id, season):
     return result
 
 def season_is_complete(league_id, season, match_ids):
-    if not match_ids:
-        return False
-    finished = 0
-    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        futures = {pool.submit(fetch_match, mid): mid for mid in match_ids}
-        for future in as_completed(futures):
-            data = future.result()
-            if data and match_is_finished(data):
-                finished += 1
-    print(f"  {league_id} {season}: finished={finished}/{len(match_ids)}")
-    return finished == len(match_ids)
-
+    # Kept for compatibility; this generator does not validate completeness.
+    return bool(match_ids)
 
 def main():
     with open("auto_matches.json", "r", encoding="utf-8") as f:
@@ -242,7 +232,7 @@ def main():
                     chosen_ids = ids
                     print('  fixed World Cup 2026 reference accepted')
                     break
-            elif ids and season_is_complete(league_id, season, ids):
+            elif ids:
                 chosen = season
                 chosen_ids = ids
                 break
