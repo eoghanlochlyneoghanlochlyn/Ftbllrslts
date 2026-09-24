@@ -138,26 +138,61 @@ def collect_valid_match_ids(league_id, season):
     if not payload:
         return []
 
-    candidates = sorted(_collect_match_ids(payload), key=lambda x: int(x))
-    print(f"  {league_id} {season}: raw candidate ids={len(candidates)}")
+    candidates = set()
 
-    valid = []
-    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
-        futures = {pool.submit(fetch_match, mid): mid for mid in candidates}
-        for future in as_completed(futures):
-            mid = futures[future]
-            data = future.result()
-            if not data:
-                continue
-            lid = actual_league_id(data)
-            aliases = {str(league_id)}
-            if lid in aliases:
-                valid.append(mid)
+    def walk(node):
+        if isinstance(node, dict):
+            # FotMob league responses use several fixture containers.
+            for key in ("matches", "allMatches", "fixtures", "events"):
+                value = node.get(key)
+                if isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            match_id = (
+                                item.get("id")
+                                or item.get("matchId")
+                                or item.get("matchID")
+                                or item.get("eventId")
+                                or item.get("eventID")
+                            )
+                            if match_id is not None and str(match_id).isdigit():
+                                candidates.add(str(match_id))
 
-    valid = sorted(set(valid), key=lambda x: int(x))
-    print(f"  {league_id} {season}: verified matches={len(valid)}")
-    return candidates
+            # Also accept a node when it itself is clearly a fixture.
+            home = node.get("home") or node.get("homeTeam")
+            away = node.get("away") or node.get("awayTeam")
+            match_id = (
+                node.get("matchId")
+                or node.get("matchID")
+                or node.get("match_id")
+                or node.get("eventId")
+                or node.get("eventID")
+                or node.get("event_id")
+            )
+            if match_id is None and isinstance(home, dict) and isinstance(away, dict):
+                match_id = node.get("id")
 
+            if (
+                match_id is not None
+                and str(match_id).isdigit()
+                and isinstance(home, dict)
+                and isinstance(away, dict)
+            ):
+                candidates.add(str(match_id))
+
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    walk(value)
+
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(payload)
+
+    result = sorted(candidates, key=lambda x: int(x))
+    print(f"  {league_id} {season}: fixture ids found={len(result)}")
+    return result
 
 def season_is_complete(league_id, season, match_ids):
     if not match_ids:
