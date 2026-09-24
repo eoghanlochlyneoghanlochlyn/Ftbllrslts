@@ -137,6 +137,20 @@ def collect_match_ids(payload):
     return sorted(candidates, key=int)
 
 
+# Super-cup competitions whose historical fixture list must be complete.
+# The expected counts are based on the actual tournament formats for the
+# fixed reference editions. A mismatch is a hard failure: the generator must
+# never silently freeze an incomplete super-cup into the historical manifest.
+EXPECTED_SUPERCUP_FIXTURE_COUNTS = {
+    "247": 1,       # Community Shield
+    "139": 3,       # Supercopa de España
+    "11015": 3,     # Supercoppa Italiana: 2 semifinals + final
+    "8924": 1,      # DFL-Supercup
+    "207": 1,       # Trophée des Champions
+    "74": 1,        # UEFA Super Cup
+}
+
+
 def main():
     with open("auto_matches.json", "r", encoding="utf-8") as f:
         config = json.load(f)
@@ -178,19 +192,59 @@ def main():
         print("=" * 100)
         print(f"COMPETITION {league_id} | FIXED REFERENCE SEASON {season}")
 
-        payload = fetch_league_season(league_id, season)
-        match_ids = collect_match_ids(payload)
+        # Some FotMob competition IDs are aliases/season-specific IDs.
+        # Example: men's Supercoppa Italiana fixtures have historically
+        # appeared under a different ID (222) while the configured stable
+        # competition is 11015. For historical completeness we MUST merge
+        # the primary ID and every configured alias instead of trusting one
+        # endpoint blindly.
+        source_ids = [league_id]
+        aliases = rule.get("aliases", [])
+        if isinstance(aliases, list):
+            for alias in aliases:
+                alias_text = str(alias).strip()
+                if alias_text and alias_text not in source_ids:
+                    source_ids.append(alias_text)
+
+        match_id_set = set()
+
+        for source_id in source_ids:
+            source_payload = fetch_league_season(source_id, season)
+            source_match_ids = collect_match_ids(source_payload)
+            print(
+                f"  source competition {source_id}: "
+                f"{len(source_match_ids)} fixture ids"
+            )
+            match_id_set.update(source_match_ids)
+
+        match_ids = sorted(match_id_set, key=int)
 
         if not match_ids:
             raise RuntimeError(
                 f"FotMob returned no fixture IDs for configured competition "
-                f"{league_id} and fixed season {season}"
+                f"{league_id} (sources: {', '.join(source_ids)}) and "
+                f"fixed season {season}"
+            )
+
+        expected_supercup_count = EXPECTED_SUPERCUP_FIXTURE_COUNTS.get(league_id)
+        if expected_supercup_count is not None:
+            if len(match_ids) != expected_supercup_count:
+                raise RuntimeError(
+                    f"SUPER-CUP COMPLETENESS CHECK FAILED for competition "
+                    f"{league_id} / season {season}: expected exactly "
+                    f"{expected_supercup_count} fixtures, found {len(match_ids)} "
+                    f"from sources {', '.join(source_ids)}"
+                )
+            print(
+                f"  SUPER-CUP COMPLETENESS CHECK: PASS "
+                f"({len(match_ids)}/{expected_supercup_count})"
             )
 
         output["competitions"].append({
             "competition_id": league_id,
             "season": season,
             "match_ids": match_ids,
+            "source_competition_ids": source_ids,
         })
 
         print(f"  FIXED REFERENCE ACCEPTED: {season}")
