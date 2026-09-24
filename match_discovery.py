@@ -1016,6 +1016,41 @@ def main():
         f"{len(candidates)}"
     )
 
+    # دیباگ کامل payload روزانه قبل از هرگونه انتخاب.
+    # این لاگ عمداً همه مسابقات بازه را چاپ می‌کند تا مشخص شود
+    # کدام competition/team در payload واقعی FotMob دیده شده و
+    # چرا یک مسابقه بعداً انتخاب یا رد می‌شود.
+    for index, match in enumerate(candidates, 1):
+        teams = match_team_ids(match)
+        direct_team = bool(teams & selected_team_ids)
+        matching_rules = [
+            rule for rule in config.get("competitions", [])
+            if isinstance(rule, dict)
+            and str(match.get("leagueId")) == str(rule.get("id"))
+        ]
+        print(
+            "[RAW-MATCH]",
+            index,
+            "| id:", match.get("id"),
+            "| competition:", match.get("competitionName"),
+            "| leagueId:", match.get("leagueId"),
+            "| home:", match.get("home", {}).get("name"),
+            "(", match.get("home", {}).get("id"), ")",
+            "| away:", match.get("away", {}).get("name"),
+            "(", match.get("away", {}).get("id"), ")",
+            "| direct_selected_team:", direct_team,
+            "| configured_rules:", [
+                {
+                    "id": rule.get("id"),
+                    "mode": rule.get("mode"),
+                    "stage": rule.get("stage"),
+                    "extra_teams": rule.get("extra_teams"),
+                    "extra_country": rule.get("extra_country"),
+                }
+                for rule in matching_rules
+            ],
+        )
+
     # ساختار مرحله را از خود competitionهای تعریف‌شده در
     # auto_matches.json می‌گیریم، نه از competitionهایی که
     # اتفاقاً در endpoint مسابقات روزانه ظاهر شده‌اند.
