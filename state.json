@@ -568,7 +568,7 @@
           "minute": "25",
           "penalty": false,
           "own_goal": false,
-          "cancelled": true,
+          "cancelled": false,
           "telegram_message_id": 2309,
           "needs_update": false,
           "event": {
@@ -868,7 +868,8 @@
       "observed_score": {
         "home": 2,
         "away": 1
-      }
+      },
+      "cancelled_goal_keys": []
     },
     "5181862": {
       "lineup_sent": true,
