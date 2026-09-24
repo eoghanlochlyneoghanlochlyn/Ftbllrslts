@@ -23,6 +23,17 @@ from match_discovery import (
 )
 
 CONFIG_FILE = Path("auto_matches.json")
+BENCHMARK_SEASONS = {
+    "77": "2022", "50": "2024", "9806": "2024", "44": "2024",
+    "290": "2023", "289": "2023", "297": "2023", "525": "2024",
+    "9469": "2024", "526": "2023", "45": "2023", "42": "2023",
+    "73": "2023", "10216": "2024", "78": "2024", "10703": "2024",
+    "247": "2024", "139": "2024", "11015": "2024", "8924": "2024",
+    "207": "2024", "74": "2024", "132": "2024", "133": "2024",
+    "209": "2024", "141": "2024", "134": "2024", "138": "2024",
+    "10607": "2024", "10199": "2024",
+}
+
 OUTPUT_FILE = Path("historical_fixtures.py")
 BASE = "https://www.fotmob.com"
 TIMEOUT = 30
@@ -242,37 +253,24 @@ def main():
     for competition_id, rule in rules.items():
         print(f"\n[GENERATE] Competition {competition_id}")
 
-        selected = None
-        for season in season_candidates(competition_id):
-            print(f"[GENERATE] Checking season {season}")
-            data = league(competition_id, season)
-            matches = extract_fixture_payload(data, competition_id)
+        season = BENCHMARK_SEASONS.get(competition_id)
+        if season is None:
+            raise RuntimeError(f"No explicit benchmark season configured for {competition_id}")
 
-            if matches and all(finished(match) for match in matches):
-                selected = (season, matches)
-                break
+        print(f"[GENERATE] Using fixed benchmark season {season}")
+        data = league(competition_id, season)
+        matches = extract_fixture_payload(data, competition_id)
 
-        if selected is None:
-            print(f"[DEBUG] No fully completed season for {competition_id}")
-            for season in season_candidates(competition_id)[:3]:
-                data = league(competition_id, season)
-                debug_matches = extract_fixture_payload(data, competition_id)
-                print(
-                    f"[DEBUG] season={season} fixtures={len(debug_matches)} "
-                    f"finished={sum(finished(m) for m in debug_matches)}"
-                )
-                for m in debug_matches[:10]:
-                    print(
-                        "[DEBUG-MATCH]",
-                        m["id"],
-                        m["home"]["name"],
-                        "vs",
-                        m["away"]["name"],
-                        "stage=",
-                        m["stage"],
-                    )
+        if not matches:
             raise RuntimeError(
-                f"No fully completed season found for competition {competition_id}"
+                f"Benchmark season {season} returned no fixtures for competition {competition_id}"
+            )
+
+        unfinished = [m["id"] for m in matches if not finished(m)]
+        if unfinished:
+            raise RuntimeError(
+                f"Benchmark season {season} is not complete for {competition_id}; "
+                f"unfinished={unfinished[:20]}"
             )
 
         season, matches = selected
