@@ -260,7 +260,7 @@ def fetch_matches_for_date(date_text):
     return result
 
 
-def fetch_league_structure(league_id):
+def fetch_league_structure(league_id, season=None):
     """
     ساختار کامل رقابت را از endpoint خود لیگ می‌گیرد.
     برای مرحله حذفی، منبع اصلی stage همین ساختار است:
@@ -273,6 +273,8 @@ def fetch_league_structure(league_id):
         return None
 
     url = f"{FOTMOB_BASE_URL}/api/data/leagues?id={league_id}"
+    if season:
+        url += f"&season={requests.utils.quote(str(season), safe="/")}"
 
     try:
         response = requests.get(
