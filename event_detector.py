@@ -1452,4 +1452,36 @@ def detect_state_changes(
                 item
             )
 
+    # A goal may disappear from FotMob's timeline after VAR.
+    # Only infer cancellation when the authoritative score has fallen;
+    # missing timeline entries alone are not reliable evidence.
+    previous_observed = match_state.get("observed_goal_events", [])
+    previous_score = match_state.get("observed_score")
+    current_score = snapshot.get("score") if isinstance(snapshot, dict) else None
+    current_keys = {event_key(e) for e in events if isinstance(e, dict)}
+    if (isinstance(previous_score, dict) and isinstance(current_score, dict)
+            and isinstance(previous_observed, list)):
+        for old in previous_observed:
+            if not isinstance(old, dict):
+                continue
+            key = event_key(old)
+            team = get_event_team(old)
+            side = "home" if team is True else "away" if team is False else None
+            if not side or key in current_keys or not key:
+                continue
+            try:
+                score_fell = int(current_score[side]) < int(previous_score[side])
+            except (KeyError, ValueError, TypeError):
+                score_fell = False
+            if not score_fell or str(key) in previous_cancelled:
+                continue
+            if any(str(item.get("goal_key")) == str(key)
+                   for item in changes["cancelled_goals"]):
+                continue
+            changes["cancelled_goals"].append({
+                "goal_key": key, "goal_event": old,
+                "is_home": team, "minute": get_goal_minute(old),
+                "reason": "removed_from_timeline_and_score_reduced",
+            })
+
     return changes
