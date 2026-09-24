@@ -165,11 +165,11 @@ class CopaAmerica2024Tests(unittest.TestCase):
         self.assertEqual(self.reasons(fixture, selected_ids=set()), [])
 
     def test_selected_team_rule_still_works_outside_competition_rule(self):
-        # Argentina is globally selected in the project, but this test proves
-        # that the global team rule is independent from competition 44.
+        # Manchester City is globally selected in the project, but this test
+        # proves that the global team rule is independent from competition 44.
         fixture = next(f for f in FIXTURES if f["id"] == "copa24-b-mex-jam")
         fixture = {**fixture, "leagueId": "999999"}
-        fixture["home"] = {"id": "6706", "name": "Argentina"}
+        fixture["home"] = {"id": "8456", "name": "Manchester City"}
         fixture["away"] = {"id": "5806", "name": "Jamaica"}
         reasons = selection_reasons(
             fixture,
