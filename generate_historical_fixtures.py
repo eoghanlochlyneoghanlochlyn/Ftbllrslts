@@ -1,335 +1,230 @@
-"""One-time generator for the frozen historical competition fixture manifest.
-
-This script is intentionally a data-preparation tool, not part of the test
-runtime. It discovers the latest completed season once, extracts every real
-fixture, and writes the result to historical_fixtures.py. The generated
-manifest is then committed and the network-discovery step is removed from the
-regression tests.
-"""
-
 import json
-import re
-from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
-from match_discovery import (
-    build_league_stage_map,
-    clean_text,
-    extract_next_data,
-    fetch_match_page_stage,
-    load_json,
-    normalize_stage,
-)
+from match_discovery import fetch_league_structure, _collect_match_ids
 
-CONFIG_FILE = Path("auto_matches.json")
-BENCHMARK_SEASONS = {
-    # Latest completed edition as of 2026-09-24.
-    "77": "2026",
-    "50": "2024",
-    "9806": "2024",
-    "44": "2024",
-    "290": "2023",
-    "289": "2023",
-    "297": "2025",
-    "525": "2024/2025",
-    "9469": "2024/2025",
-    "526": "2025",
-    "45": "2025/2026",
-    "42": "2025/2026",
-    "73": "2025/2026",
-    "10216": "2025",
-    "78": "2025",
-    "10703": "2025/2026",
-    "247": "2025/2026",
-    "139": "2025/2026",
-    "11015": "2025/2026",
-    "8924": "2025/2026",
-    "207": "2025/2026",
-    "74": "2025",
-    "132": "2025",
-    "133": "2025",
-    "209": "2025/2026",
-    "141": "2025/2026",
-    "134": "2025",
-    "138": "2025",
-    "10607": "2024",
-    "10199": "2026",
+BASE = "https://www.fotmob.com"
+API = f"{BASE}/api/matchDetails"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140.0.0.0 Safari/537.36",
+    "Accept": "application/json,text/plain,*/*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": BASE + "/",
+}
+WORKERS = 12
+
+# Competition seasons that are not safely represented by "previous season"
+# because the 2026 edition is the completed reference edition.
+FIXED_REFERENCE_SEASONS = {
+    "77": "2026",  # FIFA World Cup 2026
 }
 
-OUTPUT_FILE = Path("historical_fixtures.py")
-BASE = "https://www.fotmob.com"
-TIMEOUT = 30
 
-
-def page(url):
-    response = requests.get(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/140.0.0.0 Safari/537.36"
-            ),
-            "Accept": "text/html,application/xhtml+xml,*/*",
-            "Accept-Language": "en-US,en;q=0.9",
-        },
-        timeout=TIMEOUT,
-    )
-    response.raise_for_status()
-    return response.text
-
-
-def league(competition_id, season=None):
-    url = f"{BASE}/api/data/leagues?id={competition_id}"
-    if season:
-        url += "&season=" + requests.utils.quote(str(season), safe="/")
-    response = requests.get(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/140.0.0.0 Safari/537.36"
-            ),
-            "Accept": "application/json,text/plain,*/*",
-            "Accept-Language": "en-US,en;q=0.9",
-            "Referer": BASE + "/",
-        },
-        timeout=TIMEOUT,
-    )
-    response.raise_for_status()
-    return response.json()
-
-
-def season_candidates(competition_id):
-    html = page(f"{BASE}/leagues/{competition_id}/fixtures")
-    candidates = set()
-
-    # Season links are present in the rendered HTML/Next data on FotMob.
-    for match in re.findall(r"(?:season=|season%3D)([0-9]{4}(?:-[0-9]{4})?)", html):
-        candidates.add(match)
-
-    data = extract_next_data(html)
-    if isinstance(data, dict):
-        blob = json.dumps(data, ensure_ascii=False)
-        for match in re.findall(r"(?:season|seasonId)[^0-9]{0,20}([0-9]{4}(?:-[0-9]{4})?)", blob):
-            candidates.add(match)
-
-    if not candidates:
-        raise RuntimeError(
-            f"Could not discover season links for competition {competition_id}"
+def fetch_match(match_id):
+    try:
+        r = requests.get(
+            API,
+            params={"matchId": match_id},
+            headers=HEADERS,
+            timeout=30,
         )
+        if r.status_code != 200:
+            return None
+        data = r.json()
+        return data if isinstance(data, dict) else None
+    except Exception:
+        return None
 
-    def sort_key(value):
-        years = [int(x) for x in re.findall(r"20[0-9]{2}", value)]
-        return years[0] if years else 0
 
-    return sorted(candidates, key=sort_key, reverse=True)
-
-
-def recursive_find(node, key):
+def recursive_dicts(node):
     if isinstance(node, dict):
-        if key in node:
-            return node[key]
+        yield node
         for value in node.values():
-            found = recursive_find(value, key)
-            if found is not None:
-                return found
+            yield from recursive_dicts(value)
     elif isinstance(node, list):
         for value in node:
-            found = recursive_find(value, key)
-            if found is not None:
-                return found
+            yield from recursive_dicts(value)
+
+
+def extract_general(data):
+    for node in recursive_dicts(data):
+        home = node.get("homeTeam")
+        away = node.get("awayTeam")
+        league = node.get("league")
+        if isinstance(home, dict) and isinstance(away, dict):
+            if isinstance(league, dict) or node.get("leagueId") is not None:
+                return node
     return None
 
 
-def extract_matches(node, output):
-    if isinstance(node, dict):
-        match_id = node.get("id") or node.get("matchId")
-        home = node.get("home")
-        away = node.get("away")
-
-        if (
-            match_id is not None
-            and isinstance(home, dict)
-            and isinstance(away, dict)
-            and (
-                home.get("id") or home.get("teamId") or home.get("teamID")
-            ) is not None
-            and (
-                away.get("id") or away.get("teamId") or away.get("teamID")
-            ) is not None
-        ):
-            output.append(node)
-            return
-
-        for value in node.values():
-            extract_matches(value, output)
-
-    elif isinstance(node, list):
-        for value in node:
-            extract_matches(value, output)
+def actual_league_id(data):
+    node = extract_general(data)
+    if not node:
+        return None
+    league = node.get("league")
+    if isinstance(league, dict):
+        value = league.get("id")
+        if value is not None:
+            return str(value)
+    value = node.get("leagueId")
+    return str(value) if value is not None else None
 
 
-def finished(match):
-    status = match.get("status") or {}
-    if status.get("finished") is True or status.get("cancelled") is True:
-        return True
-    reason = status.get("reason") or {}
-    text = " ".join(
-        clean_text(reason.get(key))
-        for key in ("short", "long", "key")
-    ).lower()
-    return any(
-        marker in text
-        for marker in (
-            "full-time",
-            "full time",
-            "after extra time",
-            "penalties",
-            "ft",
-            "aet",
-            "cancelled",
+def match_is_finished(data):
+    for node in recursive_dicts(data):
+        status = node.get("status")
+        if isinstance(status, dict):
+            if status.get("finished") is True:
+                return True
+            reason = status.get("reason")
+            if isinstance(reason, dict):
+                reason = reason.get("long") or reason.get("short") or reason.get("key")
+            if str(reason or "").strip().lower() in {
+                "ft", "aet", "after penalties", "finished", "full-time"
+            }:
+                return True
+    return False
+
+
+def season_candidates(league_id):
+    current = fetch_league_season(league_id, None)
+    details = current.get("details", {}) if isinstance(current, dict) else {}
+    selected = str(details.get("selectedSeason") or "").strip()
+
+    if league_id in FIXED_REFERENCE_SEASONS:
+        return [FIXED_REFERENCE_SEASONS[league_id]]
+
+    result = []
+    if selected:
+        result.append(selected)
+
+        if "/" in selected:
+            a, b = selected.split("/", 1)
+            if a.isdigit() and b.isdigit():
+                length = int(b) - int(a)
+                if 0 < length <= 4:
+                    for step in range(1, 4):
+                        result.append(f"{int(a)-step*length}/{int(b)-step*length}")
+        elif selected.isdigit() and len(selected) == 4:
+            for step in range(1, 4):
+                result.append(str(int(selected)-step))
+
+    return list(dict.fromkeys(result))
+
+
+def fetch_league_season(league_id, season):
+    params = {"id": league_id}
+    if season:
+        params["season"] = season
+    try:
+        r = requests.get(
+            f"{BASE}/api/data/leagues",
+            params=params,
+            headers=HEADERS,
+            timeout=45,
         )
-    )
+        if r.status_code != 200:
+            return {}
+        data = r.json()
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
 
 
-def extract_fixture_payload(data, competition_id):
-    stage_map = build_league_stage_map(data)
-    container = recursive_find(data, "matchesCombinedByRound")
+def collect_valid_match_ids(league_id, season):
+    payload = fetch_league_season(league_id, season)
+    if not payload:
+        return []
 
-    raw = []
-    # The league payload can expose knockout matches under
-    # matchesCombinedByRound, while group/league-phase matches live elsewhere.
-    # Walk the entire payload so the historical benchmark contains EVERY
-    # fixture, not just the knockout tree.
-    extract_matches(data, raw)
+    candidates = sorted(_collect_match_ids(payload))
+    print(f"  {league_id} {season}: raw candidate ids={len(candidates)}")
 
-    result = {}
-    for match in raw:
-        match_id = str(match.get("id") or match.get("matchId"))
-        home = match.get("home") or {}
-        away = match.get("away") or {}
+    valid = []
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        futures = {pool.submit(fetch_match, mid): mid for mid in candidates}
+        for future in as_completed(futures):
+            mid = futures[future]
+            data = future.result()
+            if not data:
+                continue
+            lid = actual_league_id(data)
+            aliases = {str(league_id)}
+            if lid in aliases:
+                valid.append(mid)
 
-        stage = stage_map.get(match_id)
-        if stage is None:
-            for value in (
-                match.get("roundName"),
-                match.get("round"),
-                match.get("stage"),
-            ):
-                stage = normalize_stage(value)
-                if stage:
-                    break
+    valid = sorted(set(valid), key=lambda x: int(x))
+    print(f"  {league_id} {season}: verified matches={len(valid)}")
+    return valid
 
-        result[match_id] = {
-            "id": match_id,
-            "leagueId": str(
-                match.get("leagueId")
-                or match.get("primaryLeagueId")
-                or match.get("tournamentId")
-                or competition_id
-            ),
-            "stage": stage,
-            "home": {
-                "id": str(
-                    home.get("id")
-                    or home.get("teamId")
-                    or home.get("teamID")
-                    or ""
-                ),
-                "name": clean_text(
-                    home.get("longName")
-                    or home.get("name")
-                    or home.get("shortName")
-                ),
-            },
-            "away": {
-                "id": str(
-                    away.get("id")
-                    or away.get("teamId")
-                    or away.get("teamID")
-                    or ""
-                ),
-                "name": clean_text(
-                    away.get("longName")
-                    or away.get("name")
-                    or away.get("shortName")
-                ),
-            },
-        }
 
-    return list(result.values())
+def season_is_complete(league_id, season, match_ids):
+    if not match_ids:
+        return False
+    finished = 0
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        futures = {pool.submit(fetch_match, mid): mid for mid in match_ids}
+        for future in as_completed(futures):
+            data = future.result()
+            if data and match_is_finished(data):
+                finished += 1
+    print(f"  {league_id} {season}: finished={finished}/{len(match_ids)}")
+    return finished == len(match_ids)
 
 
 def main():
-    config = load_json(CONFIG_FILE, {})
-    rules = {
-        str(rule["id"]): rule
-        for rule in config.get("competitions", [])
-        if isinstance(rule, dict) and rule.get("id") is not None
+    with open("auto_matches.json", "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+    output = {
+        "generated_from": "FotMob league structures + matchDetails",
+        "generated_at": None,
+        "competitions": [],
     }
 
-    manifest = {}
+    from datetime import datetime, timezone
+    output["generated_at"] = datetime.now(timezone.utc).isoformat()
 
-    for competition_id, rule in rules.items():
-        print(f"\n[GENERATE] Competition {competition_id}")
+    for rule in config.get("competitions", []):
+        league_id = str(rule.get("id", "")).strip()
+        if not league_id:
+            continue
 
-        season = BENCHMARK_SEASONS.get(competition_id)
-        if season is None:
-            raise RuntimeError(f"No explicit benchmark season configured for {competition_id}")
+        print()
+        print("=" * 100)
+        print(f"COMPETITION {league_id}")
 
-        print(f"[GENERATE] Using fixed benchmark season {season}")
-        data = league(competition_id, season)
-        matches = extract_fixture_payload(data, competition_id)
+        candidates = season_candidates(league_id)
+        chosen = None
+        chosen_ids = []
 
-        if not matches:
+        for season in candidates:
+            ids = collect_valid_match_ids(league_id, season)
+            if ids and season_is_complete(league_id, season, ids):
+                chosen = season
+                chosen_ids = ids
+                break
+
+        if not chosen:
             raise RuntimeError(
-                f"Benchmark season {season} returned no fixtures for competition {competition_id}"
+                f"No complete reference season could be generated for competition {league_id}"
             )
 
-        print(
-            f"[GENERATE] Extracted {len(matches)} fixtures from benchmark "
-            f"season {season}"
-        )
+        output["competitions"].append({
+            "competition_id": league_id,
+            "season": chosen,
+            "match_ids": chosen_ids,
+        })
+        print(f"  SELECTED REFERENCE: {chosen} ({len(chosen_ids)} matches)")
 
-        mode = str(rule.get("mode") or "all").lower()
-        if mode in {"from", "final_only"}:
-            missing = [m["id"] for m in matches if not m["stage"]]
-            for index, match_id in enumerate(missing, 1):
-                print(
-                    f"[GENERATE] stage fallback {competition_id}: "
-                    f"{index}/{len(missing)} match {match_id}"
-                )
-                stage = fetch_match_page_stage(match_id)
-                if stage:
-                    next(item for item in matches if item["id"] == match_id)["stage"] = stage
+    with open("historical_test_matches.json", "w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+        f.write("\n")
 
-            still_missing = [m["id"] for m in matches if not m["stage"]]
-            if still_missing:
-                raise RuntimeError(
-                    f"Missing stage for {competition_id}: {still_missing[:20]}"
-                )
-
-        manifest[competition_id] = {
-            "season": season,
-            "mode": rule.get("mode"),
-            "stage": rule.get("stage"),
-            "matches": sorted(matches, key=lambda item: int(item["id"])),
-        }
-
-    text = (
-        '"""Frozen historical fixtures used by deterministic competition tests.\n\n'
-        'Generated once from FotMob historical data. Do not discover seasons or\n'
-        'fixtures at test runtime; update this manifest deliberately when the\n'
-        'benchmark edition is changed.\n"""\n\n'
-        "HISTORICAL_FIXTURES = "
-        + repr(manifest)
-        + "\n"
-    )
-    OUTPUT_FILE.write_text(text, encoding="utf-8")
-    print(f"[GENERATE] Wrote {OUTPUT_FILE}")
+    total = sum(len(x["match_ids"]) for x in output["competitions"])
+    print()
+    print(f"GENERATED: {len(output['competitions'])} competitions / {total} matches")
 
 
 if __name__ == "__main__":
