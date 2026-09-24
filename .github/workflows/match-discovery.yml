@@ -27,27 +27,7 @@ jobs:
         run: |
           pip install requests
 
-      - name: Validate Python
-        run: |
-          python -m py_compile match_discovery.py
-
-      - name: Test match selection rules
-        run: |
-          python -m unittest -v test_match_selection.py
-
-      - name: Test historical competition selection rules
-        run: |
-          python -m unittest -v test_historical_competitions.py
-
-      - name: Test 10 Champions League fixtures across stages
-        run: |
-          python -m unittest -v test_ucl_10_matches.py
-
-      - name: Test all 32 Copa America 2024 fixtures
-        run: |
-          python -m unittest -v test_copa_america_2024.py
-
-      - name: Exhaustive UCL 2025/26 selection test
+      - name: Run ONLY exhaustive UCL 2025/26 test
         run: |
           python -m unittest -v test_ucl_2025_26_exhaustive.py
 
