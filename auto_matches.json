@@ -17,7 +17,7 @@
     {"id": 525, "mode": "from", "stage": "quarter_final", "extra_country": "Iran"},
     {"id": 9469, "mode": "from", "stage": "semi_final", "extra_country": "Iran"},
     {"id": 526, "mode": "final_only"},
-    {"id": 45, "mode": "from", "stage": "semi_final"},
+    {"id": 45, "mode": "from", "stage": "round_of_16"},
     {"id": 42, "mode": "from", "stage": "round_of_16"},
     {"id": 73, "mode": "from", "stage": "quarter_final"},
     {"id": 10216, "mode": "from", "stage": "semi_final"},
