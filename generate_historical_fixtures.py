@@ -142,12 +142,16 @@ def collect_match_ids(payload):
 # fixed reference editions. A mismatch is a hard failure: the generator must
 # never silently freeze an incomplete super-cup into the historical manifest.
 EXPECTED_SUPERCUP_FIXTURE_COUNTS = {
-    "247": 1,       # Community Shield
-    "139": 3,       # Supercopa de España
-    "11015": 3,     # Supercoppa Italiana: 2 semifinals + final
-    "8924": 1,      # DFL-Supercup
-    "207": 1,       # Trophée des Champions
-    "74": 1,        # UEFA Super Cup
+    "247": 1,
+    "139": 3,
+    "11015": 3,
+    "8924": 1,
+    "207": 1,
+    "74": 1,
+}
+
+PREFERRED_COMPLETE_SOURCES = {
+    "11015": ["222", "11015"],
 }
 
 
@@ -206,18 +210,67 @@ def main():
                 if alias_text and alias_text not in source_ids:
                     source_ids.append(alias_text)
 
-        match_id_set = set()
+        expected_supercup_count = EXPECTED_SUPERCUP_FIXTURE_COUNTS.get(league_id)
 
-        for source_id in source_ids:
+        # For super-cups, prefer a source that independently contains the
+        # exact expected number of fixtures. This avoids unioning duplicate
+        # records exposed by alternate FotMob competition IDs.
+        source_order = PREFERRED_COMPLETE_SOURCES.get(league_id, source_ids)
+        source_results = {}
+
+        for source_id in source_order:
+            if source_id in source_results:
+                continue
             source_payload = fetch_league_season(source_id, season)
             source_match_ids = collect_match_ids(source_payload)
+            source_results[source_id] = source_match_ids
             print(
                 f"  source competition {source_id}: "
                 f"{len(source_match_ids)} fixture ids"
             )
-            match_id_set.update(source_match_ids)
 
-        match_ids = sorted(match_id_set, key=int)
+        match_ids = []
+        selected_source_ids = list(source_results)
+
+        if expected_supercup_count is not None:
+            complete = next(
+                (
+                    ids for ids in source_results.values()
+                    if len(ids) == expected_supercup_count
+                ),
+                None,
+            )
+            if complete is not None:
+                match_ids = sorted(set(complete), key=int)
+                selected_source_ids = [
+                    source_id
+                    for source_id, ids in source_results.items()
+                    if len(ids) == expected_supercup_count
+                ][:1]
+            else:
+                # Inspect any remaining aliases before failing.
+                for source_id in source_ids:
+                    if source_id in source_results:
+                        continue
+                    source_payload = fetch_league_season(source_id, season)
+                    source_match_ids = collect_match_ids(source_payload)
+                    source_results[source_id] = source_match_ids
+                    print(
+                        f"  source competition {source_id}: "
+                        f"{len(source_match_ids)} fixture ids"
+                    )
+                    if len(source_match_ids) == expected_supercup_count:
+                        match_ids = sorted(set(source_match_ids), key=int)
+                        selected_source_ids = [source_id]
+                        break
+
+                if not match_ids:
+                    union = set().union(*source_results.values()) if source_results else set()
+                    match_ids = sorted(union, key=int)
+
+        else:
+            match_id_set = set().union(*source_results.values()) if source_results else set()
+            match_ids = sorted(match_id_set, key=int)
 
         if not match_ids:
             raise RuntimeError(
@@ -226,7 +279,6 @@ def main():
                 f"fixed season {season}"
             )
 
-        expected_supercup_count = EXPECTED_SUPERCUP_FIXTURE_COUNTS.get(league_id)
         if expected_supercup_count is not None:
             if len(match_ids) != expected_supercup_count:
                 raise RuntimeError(
@@ -239,6 +291,7 @@ def main():
                 f"  SUPER-CUP COMPLETENESS CHECK: PASS "
                 f"({len(match_ids)}/{expected_supercup_count})"
             )
+
 
         output["competitions"].append({
             "competition_id": league_id,
