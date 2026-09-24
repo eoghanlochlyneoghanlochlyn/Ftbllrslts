@@ -757,41 +757,66 @@ def match_team_ids(match):
     return result
 
 
+def selection_reasons(match, config, selected_team_ids, by_name, by_country):
+    """Independent OR rules: global teams, competition-wide, stage, extras."""
+    reasons = []
+    teams = match_team_ids(match)
+
+    if teams & set(selected_team_ids):
+        reasons.append("selected_team")
+
+    for rule in config.get("competitions", []):
+        if not isinstance(rule, dict):
+            continue
+        if str(match.get("leagueId")) != str(rule.get("id")):
+            continue
+
+        mode = normalize(rule.get("mode") or "all")
+        extras = configured_extra_team_ids(rule, by_name, by_country)
+
+        # Extra teams are unconditional *within this competition*.
+        # This preserves Brazil/Argentina in all Copa America rounds,
+        # and Iranian teams in all AFC rounds.
+        if teams & extras:
+            reasons.append("extra_team:" + str(rule.get("id")))
+
+        if mode == "all":
+            reasons.append("competition_all:" + str(rule.get("id")))
+        elif mode == "team_only":
+            if teams & (set(selected_team_ids) | extras):
+                reasons.append("competition_team:" + str(rule.get("id")))
+        elif mode in {"from", "final_only"}:
+            stage = normalize_stage(match.get("stage"))
+            required = (
+                "final" if mode == "final_only"
+                else normalize_stage(rule.get("stage"))
+            )
+            # Unknown stage must never be accepted by a stage rule.
+            # Do not interpret group/league phases as knockout rounds.
+            knockout = {
+                "round_of_32", "round_of_16", "quarter_final",
+                "semi_final", "final", "third_place",
+            }
+            if mode == "final_only" and stage == "final":
+                reasons.append("competition_final:" + str(rule.get("id")))
+            elif (
+                mode == "from"
+                and stage in knockout
+                and required in knockout
+                and STAGE_RANK[stage] <= STAGE_RANK[required]
+            ):
+                reasons.append("competition_stage:" + str(rule.get("id")))
+
+    return list(dict.fromkeys(reasons))
+
+
 def selected_by_rule(match, rule, selected_team_ids, by_name, by_country):
     if str(match.get("leagueId")) != str(rule.get("id")):
         return False
-
-    mode = normalize(rule.get("mode") or "all")
-
-    teams = match_team_ids(match)
-    rule_teams = (
-        set(selected_team_ids)
-        | configured_extra_team_ids(rule, by_name, by_country)
-    )
-
-    if mode == "all":
-        return True
-
-    if mode == "team_only":
-        return bool(teams & rule_teams)
-
-    stage = normalize_stage(match.get("stage"))
-
-    if mode == "final_only":
-        return stage == "final"
-
-    if mode == "from":
-        required = normalize_stage(rule.get("stage"))
-
-        if required is None or stage is None:
-            return False
-
-        return (
-            STAGE_RANK.get(stage, 999)
-            <= STAGE_RANK.get(required, 999)
-        )
-
-    return False
+    return bool(selection_reasons(
+        match, {"competitions": [rule]}, set(),
+        by_name, by_country,
+    ))
 
 
 def is_selected(match, config, selected_team_ids, by_name, by_country):
@@ -800,44 +825,18 @@ def is_selected(match, config, selected_team_ids, by_name, by_country):
         return False
 
     now_utc = datetime.now(timezone.utc)
-
-    window_hours = config.get("window_hours", 24)
-
     try:
-        window_hours = float(window_hours)
+        hours = float(config.get("window_hours", 24))
     except (TypeError, ValueError):
-        window_hours = 24
-
-    if window_hours <= 0:
-        window_hours = 24
-
-    window_start = now_utc
-    window_end = now_utc + timedelta(hours=window_hours)
-
-    if start < window_start or start > window_end:
+        hours = 24
+    if hours <= 0:
+        hours = 24
+    if not now_utc <= start <= now_utc + timedelta(hours=hours):
         return False
 
-    if match_team_ids(match) & selected_team_ids:
-        return True
-
-    competitions = config.get("competitions", [])
-    if not isinstance(competitions, list):
-        return False
-
-    for rule in competitions:
-        if not isinstance(rule, dict):
-            continue
-
-        if selected_by_rule(
-            match,
-            rule,
-            selected_team_ids,
-            by_name,
-            by_country,
-        ):
-            return True
-
-    return False
+    return bool(selection_reasons(
+        match, config, selected_team_ids, by_name, by_country,
+    ))
 
 
 def build_entry(match):
@@ -1070,6 +1069,9 @@ def main():
 
         seen_ids.add(match_id)
         discovered.append(build_entry(match))
+        print("[SELECT-REASONS]", match_id, selection_reasons(
+            match, config, selected_team_ids, by_name, by_country,
+        ))
 
         print(
             "[DISCOVERED]",
