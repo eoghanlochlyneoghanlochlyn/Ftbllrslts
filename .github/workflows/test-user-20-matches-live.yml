@@ -1,0 +1,20 @@
+name: Live User 20 Match URL Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-match-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install requests
+      - name: Fetch 20 FotMob URLs and test actual selection
+        run: python -u -m unittest -v test_user_20_matches_live.py
