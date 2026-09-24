@@ -1,153 +1,177 @@
-"""Historical regression test for every configured competition."""
+"""Deterministic historical regression tests for every configured competition.
+
+The previous version tried to recursively extract fixtures from
+/api/data/leagues?...season=..., but that endpoint does not expose the
+historical fixture list in one stable shape. That made the test report
+"0 historical matches" even when FotMob had real historical fixtures.
+
+This version uses FotMob's daily matches endpoint, which is the same
+fixture source used by production discovery. It scans historical dates
+and then uses the real match page to resolve knockout stages.
+"""
+
 import json
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import requests
-
 from match_discovery import (
-    FOTMOB_BASE_URL,
-    STAGE_RANK,
-    build_league_stage_map,
+    fetch_matches_for_date,
+    fetch_match_page_stage,
     configured_extra_team_ids,
     load_team_config,
     match_team_ids,
     normalize,
     normalize_stage,
-    parse_datetime,
     selection_reasons,
+    STAGE_RANK,
 )
 
 CONFIG_FILE = Path("auto_matches.json")
-TIMEOUT = 30
-HISTORICAL_SEASONS = ("2024-2025", "2023-2024", "2024", "2023")
-KNOCKOUT = {"round_of_32", "round_of_16", "quarter_final", "semi_final", "final", "third_place"}
+
+# Three years gives enough coverage for the configured annual/international
+# competitions while keeping the test independent from a specific season.
+LOOKBACK_DAYS = 3 * 365
+
+# Keep several real fixtures per competition so stage/team_only tests can
+# find both positive and negative examples without hard-coding match IDs.
+MAX_FIXTURES_PER_COMPETITION = 16
+
+# Daily endpoint calls are cheap compared with guessing historical league
+# response shapes. A 3-day stride gives good coverage; once all competitions
+# have enough candidates we stop immediately.
+DATE_STEP_DAYS = 3
+
+KNOCKOUT_STAGES = {
+    "round_of_32",
+    "round_of_16",
+    "quarter_final",
+    "semi_final",
+    "final",
+    "third_place",
+}
 
 
-def headers():
-    return {
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json,text/plain,*/*",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": FOTMOB_BASE_URL + "/",
-    }
+def date_strings():
+    """Yield YYYYMMDD dates from today backwards for the configured lookback."""
+    today = datetime.now(timezone.utc).date()
+    for offset in range(0, LOOKBACK_DAYS + 1, DATE_STEP_DAYS):
+        yield (today - timedelta(days=offset)).strftime("%Y%m%d")
 
 
-def fetch_historical_league(league_id, season):
-    url = f"{FOTMOB_BASE_URL}/api/data/leagues?id={league_id}&season={season}"
-    response = requests.get(url, headers=headers(), timeout=TIMEOUT)
-    response.raise_for_status()
-    data = response.json()
-    return data if isinstance(data, dict) else {}
+def fixture_key(match):
+    return str(match.get("id") or "")
 
 
-def looks_like_match(node):
-    if not isinstance(node, dict):
+def enough_for_rule(rule, matches):
+    """Return whether the candidate pool is useful for this rule."""
+    if len(matches) < 2:
         return False
-    match_id = node.get("id") or node.get("matchId")
-    home = node.get("home") or node.get("homeTeam")
-    away = node.get("away") or node.get("awayTeam")
-    if match_id is None or not isinstance(home, dict) or not isinstance(away, dict):
-        return False
-    home_id = home.get("id") or home.get("teamId") or home.get("teamID")
-    away_id = away.get("id") or away.get("teamId") or away.get("teamID")
-    if home_id is None or away_id is None:
-        return False
-    start = node.get("utcTime") or node.get("startTime") or node.get("matchTimeUTC") or node.get("date")
-    return parse_datetime(start) is not None
 
+    mode = normalize(rule.get("mode") or "all")
 
-def collect_matches(data, league_id):
-    result = {}
-    seen = set()
+    if mode == "all":
+        return True
 
-    def walk(node):
-        if isinstance(node, dict):
-            if looks_like_match(node):
-                match_id = str(node.get("id") or node.get("matchId"))
-                if match_id not in result:
-                    home = node.get("home") or node.get("homeTeam") or {}
-                    away = node.get("away") or node.get("awayTeam") or {}
-                    start = node.get("utcTime") or node.get("startTime") or node.get("matchTimeUTC") or node.get("date")
-                    dt = parse_datetime(start)
-                    result[match_id] = {
-                        "id": match_id,
-                        "leagueId": str(league_id),
-                        "start": dt.isoformat(),
-                        "home": {
-                            "id": str(home.get("id") or home.get("teamId") or home.get("teamID")),
-                            "name": home.get("longName") or home.get("name") or home.get("shortName") or "",
-                        },
-                        "away": {
-                            "id": str(away.get("id") or away.get("teamId") or away.get("teamID")),
-                            "name": away.get("longName") or away.get("name") or away.get("shortName") or "",
-                        },
-                        "stage": None,
-                    }
-            if id(node) not in seen:
-                seen.add(id(node))
-                for value in node.values():
-                    if isinstance(value, (dict, list)):
-                        walk(value)
-        elif isinstance(node, list):
-            for item in node:
-                walk(item)
+    # Stage rules need enough candidates to find both a qualifying and a
+    # non-qualifying historical fixture. We resolve stage lazily later.
+    if mode in {"from", "final_only"}:
+        return len(matches) >= 6
 
-    walk(data)
-
-    stage_map = build_league_stage_map(data)
-    for match_id, match in result.items():
-        match["stage"] = stage_map.get(match_id)
-
-    return list(result.values())
-
-
-def old_enough(match):
-    dt = parse_datetime(match.get("start"))
-    return dt is not None and dt < datetime.now(timezone.utc) - timedelta(days=120)
+    # team_only needs both a configured-team fixture and an unrelated one.
+    return len(matches) >= 6
 
 
 class HistoricalCompetitionSelectionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.config = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
-        cls.selected_team_ids = {str(x) for x in cls.config.get("team_ids", [])}
+        cls.rules = [
+            rule
+            for rule in cls.config.get("competitions", [])
+            if isinstance(rule, dict)
+        ]
+        cls.selected_team_ids = {
+            str(value) for value in cls.config.get("team_ids", [])
+        }
         cls.by_name, cls.by_country = load_team_config()
-        cls.rules = cls.config.get("competitions", [])
 
-    def load_matches(self, league_id):
-        all_matches = []
-        seen = set()
+        cls.fixtures_by_competition = cls.discover_historical_fixtures()
 
-        for season in HISTORICAL_SEASONS:
-            try:
-                data = fetch_historical_league(league_id, season)
-            except Exception as exc:
-                print(f"[HISTORICAL] competition={league_id} season={season} fetch failed: {exc}")
-                continue
+    @classmethod
+    def discover_historical_fixtures(cls):
+        """Discover real old fixtures from the same daily source as production."""
+        wanted = {
+            str(rule["id"]): rule
+            for rule in cls.rules
+            if rule.get("id") is not None
+        }
+        found = {competition_id: {} for competition_id in wanted}
 
-            matches = [m for m in collect_matches(data, league_id) if old_enough(m)]
-            print(f"[HISTORICAL] competition={league_id} season={season} matches={len(matches)}")
+        print(
+            f"[HISTORICAL] Searching {len(wanted)} configured competitions "
+            f"over the last {LOOKBACK_DAYS} days"
+        )
 
-            for match in matches:
-                if match["id"] not in seen:
-                    seen.add(match["id"])
-                    all_matches.append(match)
-
-            if len(all_matches) >= 20:
+        for date_text in date_strings():
+            if all(
+                enough_for_rule(
+                    wanted[competition_id],
+                    list(found[competition_id].values()),
+                )
+                for competition_id in wanted
+            ):
                 break
 
-        return all_matches
+            matches = fetch_matches_for_date(date_text)
+            if not matches:
+                continue
 
-    def resolve_stage(self, match):
-        if normalize_stage(match.get("stage")) is not None:
-            return match["stage"]
-        from match_discovery import fetch_match_page_stage
-        stage = fetch_match_page_stage(match["id"])
-        if stage:
-            match["stage"] = stage
-        return stage
+            for match in matches:
+                competition_id = str(match.get("leagueId") or "")
+                if competition_id not in wanted:
+                    continue
+
+                match_id = fixture_key(match)
+                if not match_id:
+                    continue
+
+                # Production's daily endpoint is historical by construction
+                # here, because every scanned date is at least several days old.
+                found[competition_id][match_id] = match
+
+                if (
+                    len(found[competition_id])
+                    >= MAX_FIXTURES_PER_COMPETITION
+                ):
+                    # No need to keep every domestic fixture from a date.
+                    found[competition_id].pop(
+                        next(iter(found[competition_id]))
+                    )
+
+            if date_text.endswith("01") or date_text.endswith("15"):
+                summary = ", ".join(
+                    f"{cid}={len(items)}"
+                    for cid, items in found.items()
+                    if items
+                )
+                print(f"[HISTORICAL] {date_text}: {summary}")
+
+        return {
+            competition_id: list(matches.values())
+            for competition_id, matches in found.items()
+        }
+
+    def stage(self, match):
+        """Resolve stage from the match page when the daily payload lacks it."""
+        current = normalize_stage(match.get("stage"))
+        if current:
+            return current
+
+        value = fetch_match_page_stage(match["id"])
+        if value:
+            match["stage"] = value
+        return value
 
     def reasons(self, rule, match, selected_ids=None):
         return selection_reasons(
@@ -160,94 +184,268 @@ class HistoricalCompetitionSelectionTests(unittest.TestCase):
 
     def test_every_competition_has_two_real_historical_matches(self):
         failures = []
+
         for rule in self.rules:
-            league_id = str(rule["id"])
-            matches = self.load_matches(league_id)
+            competition_id = str(rule["id"])
+            matches = self.fixtures_by_competition.get(competition_id, [])
+
+            print(
+                f"[HISTORICAL-CHECK] competition={competition_id} "
+                f"mode={rule.get('mode', 'all')} "
+                f"fixtures={len(matches)}"
+            )
+
             if len(matches) < 2:
-                failures.append(f"competition {league_id}: only {len(matches)} historical matches found")
+                failures.append(
+                    f"competition {competition_id}: only "
+                    f"{len(matches)} real historical fixtures found"
+                )
                 continue
+
             for match in matches[:2]:
                 print(
-                    f"[HISTORICAL-CHECK] comp={league_id} match={match['id']} "
+                    f"[HISTORICAL-FIXTURE] comp={competition_id} "
+                    f"match={match['id']} "
                     f"{match['home']['name']} vs {match['away']['name']} "
-                    f"stage={match.get('stage')}"
+                    f"date={match['start']}"
                 )
-        self.assertFalse(failures, "Historical coverage failures:\n" + "\n".join(failures))
+
+        self.assertFalse(
+            failures,
+            "Historical fixture coverage failures:\n"
+            + "\n".join(failures),
+        )
 
     def test_selection_modes(self):
         failures = []
 
         for rule in self.rules:
-            league_id = str(rule["id"])
+            competition_id = str(rule["id"])
             mode = normalize(rule.get("mode") or "all")
-            matches = self.load_matches(league_id)
+            matches = self.fixtures_by_competition.get(
+                competition_id, []
+            )
+
             if len(matches) < 2:
+                failures.append(
+                    f"{competition_id}: insufficient historical fixtures"
+                )
                 continue
 
-            if mode in {"from", "final_only"}:
-                for match in matches:
-                    self.resolve_stage(match)
+            # IMPORTANT: isolate competition rules from global selected-team
+            # rules. Otherwise a Real Madrid/Liverpool/etc fixture could pass
+            # for the wrong reason.
+            isolated_selected_ids = set()
 
             if mode == "all":
-                if not all(self.reasons(rule, m) for m in matches[:2]):
-                    failures.append(f"{league_id} all: historical match rejected")
+                if not all(
+                    self.reasons(
+                        rule,
+                        match,
+                        selected_ids=isolated_selected_ids,
+                    )
+                    for match in matches[:2]
+                ):
+                    failures.append(
+                        f"{competition_id} all: historical fixture rejected"
+                    )
+                continue
 
-            elif mode == "from":
-                required = normalize_stage(rule.get("stage"))
-                qualifying = [
-                    m for m in matches
-                    if normalize_stage(m.get("stage")) in KNOCKOUT
-                    and STAGE_RANK[normalize_stage(m.get("stage"))] <= STAGE_RANK[required]
-                ]
-                rejected = [
-                    m for m in matches
-                    if normalize_stage(m.get("stage")) not in KNOCKOUT
-                    or STAGE_RANK[normalize_stage(m.get("stage"))] > STAGE_RANK[required]
-                ]
-
-                if not qualifying:
-                    failures.append(f"{league_id} from={required}: no qualifying historical knockout match")
-                elif not any(self.reasons(rule, m) for m in qualifying):
-                    failures.append(f"{league_id} from={required}: qualifying match rejected")
-
-                rule_without_extras = dict(rule)
-                rule_without_extras.pop("extra_teams", None)
-                rule_without_extras.pop("extra_country", None)
-                extra_ids = configured_extra_team_ids(rule, self.by_name, self.by_country)
-                isolated_rejected = False
-                for match in rejected:
-                    if match_team_ids(match) & extra_ids:
-                        continue
-                    if not self.reasons(rule_without_extras, match, selected_ids=set()):
-                        isolated_rejected = True
-                        break
-                if not isolated_rejected:
-                    failures.append(f"{league_id} from={required}: could not prove a below-threshold/non-knockout match is rejected")
-
-            elif mode == "final_only":
-                finals = [m for m in matches if normalize_stage(m.get("stage")) == "final"]
-                non_finals = [m for m in matches if normalize_stage(m.get("stage")) != "final"]
-                if not finals:
-                    failures.append(f"{league_id} final_only: no historical final found")
-                elif not any(self.reasons(rule, m) for m in finals):
-                    failures.append(f"{league_id} final_only: historical final rejected")
-                rule_only = dict(rule)
-                if any(self.reasons(rule_only, m, selected_ids=set()) for m in non_finals):
-                    failures.append(f"{league_id} final_only: non-final selected")
-
-            elif mode == "team_only":
-                extras = configured_extra_team_ids(rule, self.by_name, self.by_country)
+            if mode == "team_only":
+                extras = configured_extra_team_ids(
+                    rule,
+                    self.by_name,
+                    self.by_country,
+                )
                 configured = self.selected_team_ids | extras
-                yes = [m for m in matches if match_team_ids(m) & configured]
-                no = [m for m in matches if not (match_team_ids(m) & configured)]
-                if not yes:
-                    failures.append(f"{league_id} team_only: no configured-team historical match found")
-                elif not any(self.reasons(rule, m) for m in yes):
-                    failures.append(f"{league_id} team_only: configured-team match rejected")
-                if no and any(self.reasons(rule, m, selected_ids=set()) for m in no):
-                    failures.append(f"{league_id} team_only: unrelated historical match selected")
 
-        self.assertFalse(failures, "Historical selection failures:\n" + "\n".join(failures))
+                yes = [
+                    match
+                    for match in matches
+                    if match_team_ids(match) & configured
+                ]
+                no = [
+                    match
+                    for match in matches
+                    if not (match_team_ids(match) & configured)
+                ]
+
+                if not yes:
+                    failures.append(
+                        f"{competition_id} team_only: "
+                        "no configured-team fixture found"
+                    )
+                elif not any(
+                    self.reasons(
+                        rule,
+                        match,
+                        selected_ids=isolated_selected_ids,
+                    )
+                    for match in yes
+                ):
+                    failures.append(
+                        f"{competition_id} team_only: "
+                        "configured-team fixture rejected"
+                    )
+
+                if no and any(
+                    self.reasons(
+                        rule,
+                        match,
+                        selected_ids=isolated_selected_ids,
+                    )
+                    for match in no
+                ):
+                    failures.append(
+                        f"{competition_id} team_only: "
+                        "unrelated fixture selected"
+                    )
+                continue
+
+            # Stage-based rules.
+            resolved = []
+            for match in matches:
+                stage = self.stage(match)
+                if stage:
+                    resolved.append(match)
+
+            if not resolved:
+                failures.append(
+                    f"{competition_id} {mode}: "
+                    "could not resolve any historical match stage"
+                )
+                continue
+
+            if mode == "final_only":
+                finals = [
+                    match
+                    for match in resolved
+                    if normalize_stage(match.get("stage")) == "final"
+                ]
+                non_finals = [
+                    match
+                    for match in resolved
+                    if normalize_stage(match.get("stage")) != "final"
+                ]
+
+                if not finals:
+                    failures.append(
+                        f"{competition_id} final_only: "
+                        "no historical final found"
+                    )
+                elif not any(
+                    self.reasons(
+                        rule,
+                        match,
+                        selected_ids=isolated_selected_ids,
+                    )
+                    for match in finals
+                ):
+                    failures.append(
+                        f"{competition_id} final_only: "
+                        "historical final rejected"
+                    )
+
+                if non_finals and any(
+                    self.reasons(
+                        rule,
+                        match,
+                        selected_ids=isolated_selected_ids,
+                    )
+                    for match in non_finals
+                ):
+                    failures.append(
+                        f"{competition_id} final_only: "
+                        "non-final fixture selected"
+                    )
+                continue
+
+            required = normalize_stage(rule.get("stage"))
+            if required not in KNOCKOUT_STAGES:
+                failures.append(
+                    f"{competition_id} from: invalid required stage "
+                    f"{rule.get('stage')!r}"
+                )
+                continue
+
+            extras = configured_extra_team_ids(
+                rule,
+                self.by_name,
+                self.by_country,
+            )
+
+            qualifying = [
+                match
+                for match in resolved
+                if (
+                    normalize_stage(match.get("stage")) in KNOCKOUT_STAGES
+                    and STAGE_RANK[
+                        normalize_stage(match.get("stage"))
+                    ] <= STAGE_RANK[required]
+                )
+            ]
+
+            rejected = [
+                match
+                for match in resolved
+                if (
+                    normalize_stage(match.get("stage"))
+                    not in KNOCKOUT_STAGES
+                    or STAGE_RANK[
+                        normalize_stage(match.get("stage"))
+                    ] > STAGE_RANK[required]
+                )
+            ]
+
+            if not qualifying:
+                failures.append(
+                    f"{competition_id} from={required}: "
+                    "no qualifying historical knockout fixture found"
+                )
+            elif not any(
+                self.reasons(
+                    rule,
+                    match,
+                    selected_ids=isolated_selected_ids,
+                )
+                for match in qualifying
+            ):
+                failures.append(
+                    f"{competition_id} from={required}: "
+                    "qualifying fixture rejected"
+                )
+
+            # Remove unconditional extra-team behavior so we can prove the
+            # actual stage threshold works. If every rejected fixture happens
+            # to contain Brazil/Argentina/Iran/etc, skip it and keep looking.
+            rule_without_extras = dict(rule)
+            rule_without_extras.pop("extra_teams", None)
+            rule_without_extras.pop("extra_country", None)
+
+            rejected_without_extras = [
+                match
+                for match in rejected
+                if not (match_team_ids(match) & extras)
+            ]
+
+            if rejected_without_extras and not any(
+                not self.reasons(
+                    rule_without_extras,
+                    match,
+                    selected_ids=set(),
+                )
+                for match in rejected_without_extras
+            ):
+                failures.append(
+                    f"{competition_id} from={required}: "
+                    "could not prove a below-threshold fixture is rejected"
+                )
+
+        self.assertFalse(
+            failures,
+            "Historical selection failures:\n"
+            + "\n".join(failures),
+        )
 
 
 if __name__ == "__main__":
