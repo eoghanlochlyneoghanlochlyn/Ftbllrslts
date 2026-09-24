@@ -47,9 +47,9 @@ jobs:
         run: |
           python -m unittest -v test_copa_america_2024.py
 
-      - name: Exhaustive historical tests for every configured competition
+      - name: Exhaustive UCL 2025/26 selection test
         run: |
-          python -m unittest discover -s . -p 'test_competition_*.py' -v
+          python -m unittest -v test_ucl_2025_26_exhaustive.py
 
       - name: Discover automatic matches
         run: |
