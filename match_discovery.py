@@ -292,7 +292,7 @@ def fetch_league_structure(league_id, season=None):
 
     url = f"{FOTMOB_BASE_URL}/api/data/leagues?id={league_id}"
     if season:
-        url += f"&season={requests.utils.quote(str(season), safe="/")}"
+        url += f"&season={requests.utils.quote(str(season), safe=chr(47))}"
 
     try:
         response = requests.get(
