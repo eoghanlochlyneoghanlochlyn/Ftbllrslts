@@ -1,1 +1,30 @@
-
+[
+  {
+    "id": "5181825",
+    "url": "https://www.fotmob.com/match/5181825",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "5181826",
+    "url": "https://www.fotmob.com/match/5181826",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "5181861",
+    "url": "https://www.fotmob.com/match/5181861",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "5181862",
+    "url": "https://www.fotmob.com/match/5181862",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-24T18:45:00+00:00"
+  }
+]
