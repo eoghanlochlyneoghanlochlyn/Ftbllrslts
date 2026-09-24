@@ -111,7 +111,14 @@ class LiveUserMatchTest(unittest.TestCase):
             try:
                 match, info, data, source = resolve(url)
                 lid = match["leagueId"]
-                rules = [r for r in config["competitions"] if str(r.get("id")) == lid]
+                rules = []
+                for r in config["competitions"]:
+                    ids = {str(r.get("id"))}
+                    aliases = r.get("aliases", [])
+                    if isinstance(aliases, list):
+                        ids.update(str(v) for v in aliases if str(v).strip())
+                    if lid in ids:
+                        rules.append(r)
                 needs_stage = any(r.get("mode") in ("from", "final_only") for r in rules)
                 stage_source = "not required"
                 if needs_stage:
