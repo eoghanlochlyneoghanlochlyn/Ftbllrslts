@@ -59,7 +59,7 @@ class UclTenMatchesTests(unittest.TestCase):
             self.assertIn("competition_stage:42",self.reasons(fixture,set()))
 
     def test_global_selected_team_is_independent_of_ucl_stage_rule(self):
-        fixture=FIXTURES[1]
+        fixture=FIXTURES[0]  # Manchester City vs RB Leipzig, group stage.
         reasons=self.reasons(fixture,self.selected_team_ids)
         self.assertIn("selected_team",reasons)
         self.assertNotIn("competition_stage:42",reasons)
