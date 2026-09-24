@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - generate_historical_fixtures.py
-      - auto_matches.json
 
 permissions:
   contents: write
