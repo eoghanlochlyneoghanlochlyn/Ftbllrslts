@@ -2556,12 +2556,12 @@ class ChampionsLeague202526ExhaustiveTests(unittest.TestCase):
         self.assertEqual(rule_selected, 5)
         self.assertEqual(rule_rejected, 184)
 
-        # 125 fixtures contain one of the globally selected teams.
-        # 2 additional fixtures (not involving those teams) are selected
-        # because the current UCL rule starts at the semi-final.
-        # Therefore production selection must be 127/189.
-        self.assertEqual(expected_production_selected, 127)
-        self.assertEqual(production_selected, 127)
+        # The globally configured teams are selected at EVERY stage.
+        # In this edition they account for 125 of the 189 fixtures.
+        # All semi-final/final fixtures also involve one of those teams,
+        # so the stage rule adds no extra fixture beyond those 125.
+        self.assertEqual(expected_production_selected, 125)
+        self.assertEqual(production_selected, 125)
 
         for fixture in expected:
             reasons = selection_reasons(
