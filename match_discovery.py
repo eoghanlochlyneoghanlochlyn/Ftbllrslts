@@ -569,6 +569,49 @@ def fetch_match_page_stage(match_id):
                     )
                     return stage
 
+    # 1.5) جست‌وجوی مستقل در __NEXT_DATA__ برای stage صریح.
+    # extract_round_info ممکن است matchRound عددی را به‌عنوان هفته برگرداند؛
+    # این مسیر فقط کلیدهایی را بررسی می‌کند که ذاتاً stage را توصیف می‌کنند.
+    if isinstance(next_data, dict):
+        stage_keys = {
+            "stage", "stageName", "roundName", "knockoutRound",
+            "phaseName", "roundLabel", "playoffRound",
+        }
+
+        def walk_explicit_stage(node):
+            if isinstance(node, dict):
+                for key, value in node.items():
+                    if str(key).lower() in {item.lower() for item in stage_keys}:
+                        candidate = value
+                        if isinstance(candidate, dict):
+                            candidate = (
+                                candidate.get("name")
+                                or candidate.get("label")
+                                or candidate.get("value")
+                            )
+                        stage = normalize_stage(candidate)
+                        if stage:
+                            return stage
+                for value in node.values():
+                    if isinstance(value, (dict, list)):
+                        found = walk_explicit_stage(value)
+                        if found:
+                            return found
+            elif isinstance(node, list):
+                for value in node:
+                    found = walk_explicit_stage(value)
+                    if found:
+                        return found
+            return None
+
+        structured_stage = walk_explicit_stage(next_data)
+        if structured_stage:
+            print(
+                f"[STAGE-PAGE] Match {match_id}: "
+                f"structured NEXT_DATA -> {structured_stage}"
+            )
+            return structured_stage
+
     # 2) fallback روی متن/JSON خام صفحه.
     # فقط عبارت‌های صریح مرحله را قبول می‌کنیم؛
     # عددهای عمومی مثل tournamentStage یا round=1 قابل اعتماد نیستند.
