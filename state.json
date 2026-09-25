@@ -1,7 +1,7 @@
 {
   "matches": {
     "5181788": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -17,7 +17,7 @@
       }
     },
     "5181789": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -3167,7 +3167,7 @@
       }
     },
     "6040372": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
