@@ -5,6 +5,7 @@ import time
 import unittest
 
 from event_detector import detect_cancelled_goals, detect_updated_goals
+from formatter import get_competition_display_name
 from telegram_sender import send_telegram
 import requests
 
@@ -85,6 +86,34 @@ class TelegramLogicTests(unittest.TestCase):
             "cancelled": False,
             "event": goal,
         }
+
+    def test_00_group_display(self):
+        grouped = {
+            "league_fa": "لیگ ملت‌های اروپا",
+            "group_info": {"name_fa": "گروه 2"},
+            "round_info": {"name_fa": None},
+        }
+        knockout = {
+            "league_fa": "جام جهانی",
+            "group_info": {"name_fa": None},
+            "round_info": {"name_fa": "یک‌چهارم نهایی"},
+        }
+
+        self.assertEqual(
+            get_competition_display_name(grouped),
+            "لیگ ملت‌های اروپا | گروه 2",
+        )
+        self.assertEqual(
+            get_competition_display_name(knockout),
+            "جام جهانی | یک‌چهارم نهایی",
+        )
+
+        self.report(
+            0,
+            "نمایش گروه",
+            "مسابقه گروهی: گروه 2 | حذفی: بدون گروه ✅",
+        )
+        self.wait()
 
     def test_01_immediate_var(self):
         self.assertEqual(
