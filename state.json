@@ -5,8 +5,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1448227320Goal1396372undefinedfalse",
         "react:1448289569Goal688876undefinedfalse"
@@ -3754,8 +3754,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [],
       "goals": [],
       "cancelled_goal_keys": [],
@@ -3770,8 +3770,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1448224120Goal690107undefinedtrue",
         "react:1448233229Goal805767undefinedfalse",
@@ -4771,7 +4771,7 @@
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
