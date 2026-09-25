@@ -555,6 +555,19 @@ def process_updated_goal(
             goal_key,
         )
 
+        # If FotMob rebuilt the goal event and assigned a new reactKey,
+        # remember that key after the Telegram edit succeeds so the rebuilt
+        # event is not treated as a new event on the next poll.
+        new_event_key = goal_info.get(
+            "_new_event_key"
+        )
+
+        if new_event_key is not None:
+            add_event_keys(
+                match_state,
+                [new_event_key],
+            )
+
         print(
             "[GOAL UPDATE] "
             "Previous Telegram message edited."
