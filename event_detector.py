@@ -1574,6 +1574,25 @@ def detect_state_changes(
         events,
     )
 
+    # A TBD goal can be rebuilt by FotMob with a new reactKey when the
+    # scorer becomes available. detect_updated_goals() deliberately keeps
+    # the original event_key so the existing Telegram message can be edited.
+    # Do not also expose that rebuilt event as a brand-new goal, otherwise
+    # the production loop would send a duplicate Telegram message.
+    rebuilt_goal_keys = {
+        str(item.get("_new_event_key"))
+        for item in updated_goals
+        if isinstance(item, dict)
+        and item.get("_new_event_key") is not None
+    }
+
+    if rebuilt_goal_keys:
+        new_events = [
+            event
+            for event in new_events
+            if str(event_key(event)) not in rebuilt_goal_keys
+        ]
+
     changes = {
         "events": new_events,
 
