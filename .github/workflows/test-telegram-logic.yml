@@ -23,6 +23,6 @@ jobs:
 
       - name: Run live Telegram logic tests
         env:
-          TELEGRAMBOT: \${{ secrets.TELEGRAMBOT }}
-          TELEGRAMCHANNEL: \${{ secrets.TELEGRAMCHANNEL }}
+          TELEGRAMBOT: ${{ secrets.TELEGRAMBOT }}
+          TELEGRAMCHANNEL: ${{ secrets.TELEGRAMCHANNEL }}
         run: python -m unittest -v test_telegram_logic.py
