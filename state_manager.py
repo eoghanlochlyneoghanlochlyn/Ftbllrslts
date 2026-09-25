@@ -769,6 +769,8 @@ def mark_goal_update_complete(
 def cancel_goal(
     match_state,
     goal_key,
+    cancel_reason=None,
+    cancelled_by_var=False,
 ):
 
     goal = find_goal(
@@ -779,9 +781,13 @@ def cancel_goal(
     if goal is None:
         return False
 
-    goal[
-        "cancelled"
-    ] = True
+    goal["cancelled"] = True
+
+    if cancel_reason:
+        goal["cancel_reason"] = cancel_reason
+
+    if cancelled_by_var:
+        goal["cancelled_by_var"] = True
 
     return True
 
