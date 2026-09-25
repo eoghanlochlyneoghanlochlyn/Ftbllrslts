@@ -190,8 +190,68 @@ def run_group_structure_test():
     print("PASS: real FotMob match-page payloads were fetched and inspected without assuming a group schema.")
 
 
+API_NEW = f"{BASE}/api/data/matchDetails"
+TEST_MATCH_ID = "5868463"
+
+
+def test_direct_fotmob_api():
+    """Diagnostic test for direct access to FotMob's current API."""
+    import time
+
+    print("=" * 120)
+    print("FOTMOB DIRECT API ACCESS TEST")
+    print("=" * 120)
+    print(f"Match ID: {TEST_MATCH_ID}")
+    print()
+
+    endpoints = [
+        ("CURRENT /api/data/matchDetails", f"{API_NEW}?matchId={TEST_MATCH_ID}"),
+        ("OLD /api/matchDetails", f"{API}?matchId={TEST_MATCH_ID}"),
+    ]
+
+    for label, url in endpoints:
+        print("-" * 120)
+        print(label)
+        print(f"URL: {url}")
+        try:
+            started = time.perf_counter()
+            response = requests.get(url, headers=HEADERS, timeout=30)
+            elapsed = time.perf_counter() - started
+
+            print(f"HTTP status: {response.status_code}")
+            print(f"Elapsed: {elapsed:.3f}s")
+            print(f"Content-Type: {response.headers.get('content-type', '')}")
+            print(f"Cache-Control: {response.headers.get('cache-control', '')}")
+            print(f"Response length: {len(response.content)} bytes")
+
+            if response.status_code == 200:
+                try:
+                    payload = response.json()
+                    print("JSON: YES")
+                    if isinstance(payload, dict):
+                        print(f"Top-level keys: {list(payload.keys())[:30]}")
+                    else:
+                        print(f"JSON type: {type(payload).__name__}")
+                    print("RESULT: ACCESSIBLE")
+                except ValueError:
+                    print("JSON: NO")
+                    print(f"First 200 chars: {response.text[:200]!r}")
+                    print("RESULT: HTTP 200 BUT NOT JSON")
+            else:
+                print(f"First 200 chars: {response.text[:200]!r}")
+                print(f"RESULT: HTTP {response.status_code}")
+        except requests.RequestException as error:
+            print(f"REQUEST ERROR: {error}")
+            print("RESULT: REQUEST FAILED")
+
+    print()
+    print("=" * 120)
+    print("DIRECT API TEST COMPLETE")
+    print("=" * 120)
+
+
 def main():
-    run_group_structure_test()
+    test_direct_fotmob_api()
     return
 
     with open("auto_matches.json", "r", encoding="utf-8") as f:
