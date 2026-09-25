@@ -1048,7 +1048,7 @@ def extract_group_info(data):
                     "source": "FotMob leagueName",
                 }
 
-        match = re.search(r"\\bGroup\\s+(?!Stage\\b)([A-Za-z0-9]+)", league_name, re.IGNORECASE)
+        match = re.search(r"\bGroup\s+(?!Stage\b)([A-Za-z0-9]+)", league_name, re.IGNORECASE)
         if match:
             raw = clean_text(match.group(1))
             if raw:
