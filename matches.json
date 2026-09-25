@@ -12,5 +12,54 @@
     "enabled": true,
     "auto": true,
     "start": "2026-09-25T18:45:00+00:00"
+  },
+  {
+    "id": "5181825",
+    "url": "https://www.fotmob.com/matches/netherlands-vs-germany/1xhtgz#5181825",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "5181861",
+    "url": "https://www.fotmob.com/matches/denmark-vs-norway/2bbwdn#5181861",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "5181813",
+    "url": "https://www.fotmob.com/matches/ireland-vs-kosovo/17nji1o1#5181813",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "5181874",
+    "url": "https://www.fotmob.com/matches/malta-vs-andorra/2uc27h#5181874",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-24T16:00:00+00:00"
+  },
+  {
+    "id": "5181880",
+    "url": "https://www.fotmob.com/matches/liechtenstein-vs-lithuania/1msqot#5181880",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-24T18:45:00+00:00"
+  },
+  {
+    "id": "4667757",
+    "url": "https://www.fotmob.com/matches/canada-vs-bosnia-herzegovina/23f1qo#4667757",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-06-12T19:00:00+00:00"
+  },
+  {
+    "id": "4653852",
+    "url": "https://www.fotmob.com/matches/england-vs-norway/2dvb4w#4653852",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-07-11T21:00:00+00:00"
   }
 ]
