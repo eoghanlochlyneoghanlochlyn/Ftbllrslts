@@ -4062,7 +4062,7 @@
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 0,
         "away": 0
       }
     },
@@ -4364,7 +4364,7 @@
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 1,
         "away": 1
       }
     },
