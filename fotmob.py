@@ -1324,11 +1324,23 @@ def _build_competition_context(
     league_fa,
     round_info,
     leg_info,
+    group_info=None,
 ):
     parts = []
 
     if league_fa:
         parts.append(league_fa)
+
+    # گروه فقط وقتی اضافه می‌شود که FotMob برای همین مسابقه
+    # group_info معتبر استخراج کرده باشد.
+    group_name = (
+        group_info.get("name_fa")
+        or group_info.get("name")
+        if isinstance(group_info, dict)
+        else None
+    )
+    if group_name:
+        parts.append(group_name)
 
     round_name = (
         round_info.get("name_fa")
@@ -5626,6 +5638,7 @@ def get_match_snapshot(match_url):
             league_fa,
             round_info,
             leg_info,
+            group_info,
         ),
 
         "start": info.get("start"),
