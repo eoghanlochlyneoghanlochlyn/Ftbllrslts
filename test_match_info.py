@@ -97,7 +97,81 @@ def fetch_stage(match_id):
         return None
 
 
+GROUP_TEST_MATCHES = [
+    ("5181825", "Netherlands vs Germany"),
+    ("5181861", "Denmark vs Norway"),
+    ("5181813", "Ireland vs Kosovo"),
+    ("5181874", "Malta vs Andorra"),
+    ("5181880", "Liechtenstein vs Lithuania"),
+    ("4667757", "Canada vs Bosnia and Herzegovina"),
+    ("4653852", "England vs Norway"),
+]
+
+
+def inspect_group_structure(data):
+    """Print every FotMob node that may describe a group/league stage."""
+    findings = []
+    seen = set()
+
+    for node in recursive_dicts(data):
+        interesting = {}
+        for key, value in node.items():
+            key_l = str(key).lower()
+            if (
+                "group" in key_l
+                or key_l in {"leaguename", "league", "stage", "round", "phase", "playoff"}
+            ):
+                interesting[key] = value
+
+        if interesting:
+            # Avoid dumping huge repeated league/team objects.
+            marker = repr(interesting)
+            if marker not in seen:
+                seen.add(marker)
+                findings.append(interesting)
+
+    return findings
+
+
+def run_group_structure_test():
+    print("=" * 120)
+    print("FOTMOB GROUP STRUCTURE DISCOVERY TEST")
+    print("=" * 120)
+    print("Goal: discover the REAL group representation in FotMob matchDetails.")
+    print("No competition-specific group names are assumed or generated.")
+    print()
+
+    all_findings = {}
+    for match_id, label in GROUP_TEST_MATCHES:
+        data = fetch_match(match_id)
+        if data is None:
+            raise AssertionError(f"Could not fetch FotMob matchDetails for {match_id}")
+
+        findings = inspect_group_structure(data)
+        all_findings[match_id] = findings
+
+        print("-" * 120)
+        print(f"{match_id} | {label}")
+        print(f"candidate_nodes={len(findings)}")
+        for index, item in enumerate(findings, 1):
+            print(f"  [{index}] {json.dumps(item, ensure_ascii=False, default=str)}")
+
+    print()
+    print("=" * 120)
+    print("GROUP STRUCTURE DISCOVERY SUMMARY")
+    print("=" * 120)
+    for match_id, label in GROUP_TEST_MATCHES:
+        findings = all_findings[match_id]
+        print(f"{match_id} | {label} | candidate_nodes={len(findings)}")
+
+    print()
+    print("PASS: FotMob payloads were fetched and inspected without assuming a group schema.")
+
+
 def main():
+    run_group_structure_test()
+    return
+
     with open("auto_matches.json", "r", encoding="utf-8") as f:
         config = json.load(f)
     with open("historical_test_matches.json", "r", encoding="utf-8") as f:
