@@ -4116,7 +4116,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1448270755Goal637744undefinedfalse"
+        "react:1448270755Goal637744undefinedfalse",
+        "react:1448284666Goal833638undefinedtrue"
       ],
       "goals": [
         {
@@ -4206,6 +4207,91 @@
             "assistKey": "assist_by",
             "assistInput": "Nicholas Tsaroulla"
           }
+        },
+        {
+          "event_key": "react:1448284666Goal833638undefinedtrue",
+          "player_id": 833638,
+          "player_name": "Nikola Krstović",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "66",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2554,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448284666Goal833638undefinedtrue",
+            "timeStr": 66,
+            "type": "goal",
+            "time": 66,
+            "overloadTime": null,
+            "eventId": 14482846,
+            "player": {
+              "id": 833638,
+              "name": "Nikola Krstović",
+              "profileUrl": "/players/833638/nikola-krstovic"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/833638/nikola-krstovic",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nikola Krstović",
+            "firstName": "Nikola",
+            "lastName": "Krstović",
+            "fullName": "Nikola Krstović",
+            "playerId": 833638,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974602727,
+              "eventType": "Goal",
+              "teamId": 49437,
+              "playerId": 833638,
+              "playerName": "Nikola Krstović",
+              "x": 94,
+              "y": 34,
+              "min": 66,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.797499999999996,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.7884,
+              "expectedGoalsOnTarget": 0.9332453012466431,
+              "shotType": "RightFoot",
+              "situation": "Penalty",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.8472222222222223,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 124127,
+              "firstName": "Nikola",
+              "lastName": "Krstović",
+              "fullName": "Nikola Krstović",
+              "teamColor": "#F85048"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -4283,10 +4369,81 @@
           "assistPlayerId": 1206282,
           "assistKey": "assist_by",
           "assistInput": "Nicholas Tsaroulla"
+        },
+        {
+          "reactKey": "1448284666Goal833638undefinedtrue",
+          "timeStr": 66,
+          "type": "goal",
+          "time": 66,
+          "overloadTime": null,
+          "eventId": 14482846,
+          "player": {
+            "id": 833638,
+            "name": "Nikola Krstović",
+            "profileUrl": "/players/833638/nikola-krstovic"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/833638/nikola-krstovic",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Penalty",
+          "goalDescriptionKey": "penalty",
+          "suffix": "Pen",
+          "suffixKey": "penalties_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Nikola Krstović",
+          "firstName": "Nikola",
+          "lastName": "Krstović",
+          "fullName": "Nikola Krstović",
+          "playerId": 833638,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974602727,
+            "eventType": "Goal",
+            "teamId": 49437,
+            "playerId": 833638,
+            "playerName": "Nikola Krstović",
+            "x": 94,
+            "y": 34,
+            "min": 66,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.797499999999996,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": 0.7884,
+            "expectedGoalsOnTarget": 0.9332453012466431,
+            "shotType": "RightFoot",
+            "situation": "Penalty",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.8472222222222223,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 124127,
+            "firstName": "Nikola",
+            "lastName": "Krstović",
+            "fullName": "Nikola Krstović",
+            "teamColor": "#F85048"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
