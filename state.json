@@ -333,11 +333,8 @@
             "fullName": "Dodi Lukébakio",
             "teamColor": "#9f2533"
           },
-          "assistStr": "assist by Charles De Ketelaere",
-          "assistProfileUrl": "/players/1095432/charles-de-ketelaere",
-          "assistPlayerId": 1095432,
-          "assistKey": "assist_by",
-          "assistInput": "Charles De Ketelaere"
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
@@ -350,8 +347,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1448270454Goal701154undefinedfalse",
         "react:1448318287Card603669undefinedtrue"
@@ -3571,8 +3568,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1448246242Goal955572undefinedfalse",
         "react:1448327290Card975983undefinedfalse"
@@ -4278,8 +4275,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1448270755Goal637744undefinedfalse",
         "react:1448284666Goal833638undefinedtrue",
@@ -4783,7 +4780,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1448251836Goal775539undefinedtrue"
+        "react:1448251836Goal775539undefinedtrue",
+        "react:1448331184Goal988749undefinedtrue"
       ],
       "goals": [
         {
@@ -4836,6 +4834,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1448331184Goal988749undefinedtrue",
+          "player_id": 988749,
+          "player_name": "Soufiane Rahimi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "84",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2576,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448331184Goal988749undefinedtrue",
+            "timeStr": 84,
+            "type": "goal",
+            "time": 84,
+            "overloadTime": null,
+            "eventId": 14483311,
+            "player": {
+              "id": 988749,
+              "name": "Soufiane Rahimi",
+              "profileUrl": "/players/988749/soufiane-rahimi"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/988749/soufiane-rahimi",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Soufiane Rahimi",
+            "firstName": "Soufiane",
+            "lastName": "Rahimi",
+            "fullName": "Soufiane Rahimi",
+            "playerId": 988749,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -4876,10 +4925,47 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1448331184Goal988749undefinedtrue",
+          "timeStr": 84,
+          "type": "goal",
+          "time": 84,
+          "overloadTime": null,
+          "eventId": 14483311,
+          "player": {
+            "id": 988749,
+            "name": "Soufiane Rahimi",
+            "profileUrl": "/players/988749/soufiane-rahimi"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/988749/soufiane-rahimi",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Soufiane Rahimi",
+          "firstName": "Soufiane",
+          "lastName": "Rahimi",
+          "fullName": "Soufiane Rahimi",
+          "playerId": 988749,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
