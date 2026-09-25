@@ -452,6 +452,65 @@ class VarCancellationTests(unittest.TestCase):
         self.assertEqual(result, [])
 
 
+    def test_15_rebuilt_tbd_goal_is_not_emitted_as_new_goal(self):
+        from event_detector import detect_state_changes
+
+        tbd_goal = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=None,
+            player_name="TBD",
+            react_key="goal-original",
+        )
+
+        match_state = {
+            "event_keys": ["react:goal-original"],
+            "goals": [
+                {
+                    "event_key": "react:goal-original",
+                    "player_id": None,
+                    "player_name": "TBD",
+                    "is_home": True,
+                    "minute": "25",
+                    "telegram_message_id": 500,
+                    "needs_update": True,
+                    "cancelled": False,
+                    "event": tbd_goal,
+                }
+            ],
+        }
+
+        enriched_goal = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=7777,
+            player_name="Real Scorer",
+            react_key="goal-rebuilt-with-scorer",
+        )
+
+        changes = detect_state_changes(
+            match_state,
+            [enriched_goal],
+        )
+
+        self.assertEqual(
+            len(changes["goals"]),
+            0,
+        )
+        self.assertEqual(
+            len(changes["updated_goals"]),
+            1,
+        )
+        self.assertEqual(
+            changes["updated_goals"][0]["event_key"],
+            "react:goal-original",
+        )
+        self.assertEqual(
+            changes["updated_goals"][0]["_new_event_key"],
+            "react:goal-rebuilt-with-scorer",
+        )
+
+
     def test_14_tbd_fallback_rejects_wrong_team(self):
         from event_detector import detect_updated_goals
 
