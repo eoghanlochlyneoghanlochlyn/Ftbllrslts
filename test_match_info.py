@@ -3,14 +3,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
-from match_discovery import (
-    load_team_config,
-    selection_reasons,
-    fetch_match_page_stage,
-    extract_next_data,
-)
-
-
 BASE = "https://www.fotmob.com"
 API = f"{BASE}/api/matchDetails"
 HEADERS = {
@@ -47,6 +39,8 @@ def fetch_match_page_html(match_id):
 
 
 def fetch_match(match_id):
+    from match_discovery import extract_next_data
+
     html = fetch_match_page_html(match_id)
     if html is None:
         return None
@@ -99,6 +93,8 @@ def extract_match_object(data):
 
 
 def fetch_stage(match_id):
+    from match_discovery import fetch_match_page_stage
+
     try:
         stage = fetch_match_page_stage(match_id)
         return stage
