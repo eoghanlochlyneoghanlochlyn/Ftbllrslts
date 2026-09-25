@@ -1288,11 +1288,93 @@ def detect_new_events(
 # تشخیص تغییر اطلاعات گل‌های قبلی
 # =========================================================
 
+def _pending_tbd_goal_match(
+    event,
+    previous_goals,
+):
+    """
+    Fallback identity for a goal whose scorer was initially unknown.
+
+    FotMob normally keeps the same reactKey when it enriches an event, but
+    the live feed can also replace/rebuild the event. In that case the event
+    key may change. We only bridge that gap when the evidence is unique:
+    - stored goal is still waiting for an update;
+    - both events belong to the same team;
+    - the goal minute matches;
+    - a known player id never conflicts;
+    - exactly one pending goal is a candidate.
+
+    If more than one candidate exists, we deliberately do not guess.
+    """
+    if not isinstance(event, dict):
+        return None
+
+    if get_event_type(event) != "goal":
+        return None
+
+    if is_cancelled_goal_event(event):
+        return None
+
+    new_player_name = get_event_player_name(event)
+    new_player_id = get_event_player_id(event)
+
+    if _is_missing_player_name(new_player_name):
+        return None
+
+    new_team = get_event_team(event)
+    new_minute = get_event_time(event)
+
+    if new_team is None or new_minute is None:
+        return None
+
+    candidates = []
+
+    for stored_goal in previous_goals or []:
+        if not isinstance(stored_goal, dict):
+            continue
+
+        if stored_goal.get("cancelled"):
+            continue
+
+        if not stored_goal.get("needs_update"):
+            continue
+
+        if stored_goal.get("telegram_message_id") is None:
+            continue
+
+        if not _is_missing_player_name(stored_goal.get("player_name")):
+            continue
+
+        old_event = _stored_goal_to_event(stored_goal)
+        if not isinstance(old_event, dict):
+            continue
+
+        old_team = get_event_team(old_event)
+        old_minute = get_event_time(old_event)
+
+        if old_team is None or old_minute is None:
+            continue
+
+        if old_team != new_team or old_minute != new_minute:
+            continue
+
+        old_player_id = stored_goal.get("player_id")
+        if old_player_id is not None and new_player_id is not None:
+            if str(old_player_id) != str(new_player_id):
+                continue
+
+        candidates.append(stored_goal)
+
+    if len(candidates) != 1:
+        return None
+
+    return candidates[0]
+
+
 def detect_updated_goals(
     match_state,
     events,
 ):
-
     result = []
 
     if not isinstance(
@@ -1364,6 +1446,15 @@ def detect_updated_goals(
             str(key)
         )
 
+        matched_by_fallback = False
+
+        if existing is None:
+            existing = _pending_tbd_goal_match(
+                event,
+                previous_goals,
+            )
+            matched_by_fallback = existing is not None
+
         if existing is None:
             continue
 
@@ -1383,8 +1474,10 @@ def detect_updated_goals(
             "player_name"
         )
 
-        old_assist_name = existing.get(
-            "assist_player_name"
+        old_assist_name = (
+            existing.get(
+                "assist_player_name"
+            )
         )
 
         player_improved = (
@@ -1430,11 +1523,18 @@ def detect_updated_goals(
             or assist_id_improved
         ):
 
-            result.append(
-                get_goal_info(
-                    event
-                )
-            )
+            goal_info = get_goal_info(event)
+
+            if not isinstance(goal_info, dict):
+                continue
+
+            if matched_by_fallback:
+                # Preserve the original state/message identity. The current
+                # FotMob event may have received a new reactKey.
+                goal_info["_new_event_key"] = key
+                goal_info["event_key"] = existing.get("event_key")
+
+            result.append(goal_info)
 
     return result
 
