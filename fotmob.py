@@ -1037,7 +1037,7 @@ def extract_group_info(data):
             continue
         seen.add(normalized)
 
-        match = re.search(r"\\bGrp\\.\\s*([^|]+?)\\s*$", league_name, re.IGNORECASE)
+        match = re.search(r"\\bGrp\\.\\s*([A-Za-z0-9]+)", league_name, re.IGNORECASE)
         if match:
             raw = clean_text(match.group(1))
             if raw:
@@ -1048,7 +1048,7 @@ def extract_group_info(data):
                     "source": "FotMob leagueName",
                 }
 
-        match = re.search(r"\\bGroup\\s+([^|]+?)\\s*$", league_name, re.IGNORECASE)
+        match = re.search(r"\\bGroup\\s+(?!Stage\\b)([A-Za-z0-9]+)", league_name, re.IGNORECASE)
         if match:
             raw = clean_text(match.group(1))
             if raw:
@@ -5557,6 +5557,7 @@ def get_match_snapshot(match_url):
     print(
         f"FotMob {match_id}: competition debug | "
         f"league={league_fa!r} | "
+        f"group_info={group_info!r} | "
         f"round_info={round_info!r} | "
         f"leg_info={leg_info!r} | "
         f"aggregate={aggregate!r}"
