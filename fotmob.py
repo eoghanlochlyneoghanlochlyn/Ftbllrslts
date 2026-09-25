@@ -966,6 +966,102 @@ def _translate_round_name(value):
     return text
 
 
+def extract_group_info(data):
+    """
+    استخراج گروه فقط از ساختار خود FotMob.
+
+    منبع اول: شیء لیگ/رقابت با isGroup=True و groupName.
+    منبع دوم: leagueName خود FotMob، فقط وقتی خود FotMob عبارت
+    Grp. / Group را در نام رقابت قرار داده باشد.
+
+    هیچ نام گروهی بر اساس اسم رقابت، مرحله یا حدس داخلی ساخته نمی‌شود.
+    """
+    if not isinstance(data, dict):
+        return {"raw": None, "name": None, "name_fa": None, "source": None}
+
+    candidates = []
+
+    def add_group(value, source):
+        value = clean_text(value)
+        if value:
+            candidates.append((value, source))
+
+    def walk(node):
+        if isinstance(node, dict):
+            if node.get("isGroup") is True:
+                add_group(node.get("groupName"), "isGroup/groupName")
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(data)
+
+    if candidates:
+        raw, source = candidates[0]
+        return {
+            "raw": raw,
+            "name": raw,
+            "name_fa": f"گروه {raw}",
+            "source": source,
+        }
+
+    # در بعضی payloadهای matchDetails، شیء گروه داخل پاسخ نیست، اما
+    # leagueName همان برچسب رسمی FotMob را دارد؛ مثل:
+    # "World Cup Grp. A" / "UEFA Nations League A Grp. 4".
+    league_names = []
+
+    for container in (
+        get_nested(data, "props", "pageProps", "general"),
+        data.get("general"),
+        get_nested(data, "props", "pageProps", "content", "general"),
+        get_content(data),
+    ):
+        if not isinstance(container, dict):
+            continue
+        for key in ("leagueName", "name"):
+            value = clean_text(container.get(key))
+            if value:
+                league_names.append(value)
+
+    value = clean_text(recursive_find(data, {"leagueName"}) or "")
+    if value:
+        league_names.append(value)
+
+    seen = set()
+    for league_name in league_names:
+        normalized = league_name.lower()
+        if normalized in seen:
+            continue
+        seen.add(normalized)
+
+        match = re.search(r"\\bGrp\\.\\s*([^|]+?)\\s*$", league_name, re.IGNORECASE)
+        if match:
+            raw = clean_text(match.group(1))
+            if raw:
+                return {
+                    "raw": raw,
+                    "name": raw,
+                    "name_fa": f"گروه {raw}",
+                    "source": "FotMob leagueName",
+                }
+
+        match = re.search(r"\\bGroup\\s+([^|]+?)\\s*$", league_name, re.IGNORECASE)
+        if match:
+            raw = clean_text(match.group(1))
+            if raw:
+                return {
+                    "raw": raw,
+                    "name": raw,
+                    "name_fa": f"گروه {raw}",
+                    "source": "FotMob leagueName",
+                }
+
+    return {"raw": None, "name": None, "name_fa": None, "source": None}
+
+
 def extract_round_info(data):
     """
     استخراج نام هفته/مرحله/راند از ساختارهای FotMob.
@@ -1720,6 +1816,7 @@ def extract_basic_info(data):
 
     leg_info = extract_leg_info(data)
     round_info = extract_round_info(data)
+    group_info = extract_group_info(data)
 
     # -----------------------------------------------------
     # زمان
@@ -1823,6 +1920,7 @@ def extract_basic_info(data):
 
         "round_info": round_info,
 
+        "group_info": group_info,
 
         "start": start,
     }
@@ -5450,6 +5548,7 @@ def get_match_snapshot(match_url):
 
     leg_info = extract_leg_info(data)
     round_info = extract_round_info(data)
+    group_info = extract_group_info(data)
     aggregate = extract_aggregate_info(
         data,
         leg_info,
@@ -5513,6 +5612,8 @@ def get_match_snapshot(match_url):
         "aggregate": aggregate,
 
         "round_info": round_info,
+
+        "group_info": group_info,
 
         "competition_context": _build_competition_context(
             league_fa,
