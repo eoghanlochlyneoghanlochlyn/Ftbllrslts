@@ -3415,7 +3415,7 @@
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 0
       }
     },
     "5181837": {
@@ -3938,7 +3938,7 @@
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 1,
         "away": 1
       }
     },
@@ -4589,7 +4589,7 @@
             "goalCrossedY": 35.9825,
             "goalCrossedZ": 2.0354736742,
             "expectedGoals": 0.1722293347120285,
-            "expectedGoalsOnTarget": 0.7707065939903259,
+            "expectedGoalsOnTarget": 0.7621274590492249,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
