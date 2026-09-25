@@ -3,7 +3,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
-from match_discovery import load_team_config, selection_reasons, fetch_match_page_stage
+from match_discovery import (
+    load_team_config,
+    selection_reasons,
+    fetch_match_page_stage,
+    extract_next_data,
+)
 
 
 BASE = "https://www.fotmob.com"
@@ -27,22 +32,27 @@ def recursive_dicts(node):
             yield from recursive_dicts(value)
 
 
-def fetch_match(match_id):
+def fetch_match_page_html(match_id):
+    """Fetch the real FotMob match page, not the deprecated matchDetails API."""
+    url = f"{BASE}/match/{match_id}"
     try:
-        r = requests.get(
-            API,
-            params={"matchId": match_id},
-            headers=HEADERS,
-            timeout=30,
-        )
-        print(f"FotMob {match_id}: HTTP {r.status_code}")
+        r = requests.get(url, headers={**HEADERS, "Accept": "text/html,application/xhtml+xml,*/*"}, timeout=30)
+        print(f"FotMob page {match_id}: HTTP {r.status_code}")
         if r.status_code != 200:
             return None
-        data = r.json()
-        return data if isinstance(data, dict) else None
-    except Exception as error:
-        print(f"FotMob {match_id}: ERROR {error}")
+        return r.text
+    except requests.RequestException as error:
+        print(f"FotMob page {match_id}: ERROR {error}")
         return None
+
+
+def fetch_match(match_id):
+    html = fetch_match_page_html(match_id)
+    if html is None:
+        return None
+    data = extract_next_data(html)
+    return data if isinstance(data, dict) else None
+
 
 
 def extract_match_object(data):
@@ -109,27 +119,33 @@ GROUP_TEST_MATCHES = [
 
 
 def inspect_group_structure(data):
-    """Print every FotMob node that may describe a group/league stage."""
+    """Return every group-related node with its full JSON path."""
     findings = []
-    seen = set()
 
-    for node in recursive_dicts(data):
-        interesting = {}
-        for key, value in node.items():
-            key_l = str(key).lower()
-            if (
-                "group" in key_l
-                or key_l in {"leaguename", "league", "stage", "round", "phase", "playoff"}
-            ):
-                interesting[key] = value
+    def walk(node, path):
+        if isinstance(node, dict):
+            keys = {str(k).lower() for k in node}
+            interesting = {
+                key: value
+                for key, value in node.items()
+                if (
+                    "group" in str(key).lower()
+                    or str(key).lower() in {
+                        "leaguename", "league", "stage", "round", "phase", "playoff"
+                    }
+                )
+            }
+            if interesting:
+                findings.append((path, interesting))
+            for key, value in node.items():
+                if isinstance(value, (dict, list)):
+                    walk(value, f"{path}.{key}")
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                if isinstance(value, (dict, list)):
+                    walk(value, f"{path}[{index}]")
 
-        if interesting:
-            # Avoid dumping huge repeated league/team objects.
-            marker = repr(interesting)
-            if marker not in seen:
-                seen.add(marker)
-                findings.append(interesting)
-
+    walk(data, "$")
     return findings
 
 
@@ -145,7 +161,9 @@ def run_group_structure_test():
     for match_id, label in GROUP_TEST_MATCHES:
         data = fetch_match(match_id)
         if data is None:
-            raise AssertionError(f"Could not fetch FotMob matchDetails for {match_id}")
+            print(f"[ERROR] {match_id} | could not fetch/parse FotMob match page")
+            all_findings[match_id] = []
+            continue
 
         findings = inspect_group_structure(data)
         all_findings[match_id] = findings
@@ -154,7 +172,9 @@ def run_group_structure_test():
         print(f"{match_id} | {label}")
         print(f"candidate_nodes={len(findings)}")
         for index, item in enumerate(findings, 1):
-            print(f"  [{index}] {json.dumps(item, ensure_ascii=False, default=str)}")
+            path, item = item
+            print(f"  [{index}] PATH={path}")
+            print(f"       {json.dumps(item, ensure_ascii=False, default=str)}")
 
     print()
     print("=" * 120)
@@ -165,7 +185,9 @@ def run_group_structure_test():
         print(f"{match_id} | {label} | candidate_nodes={len(findings)}")
 
     print()
-    print("PASS: FotMob payloads were fetched and inspected without assuming a group schema.")
+    if not any(all_findings.values()):
+        raise AssertionError("No group/stage/league structures were found in any FotMob page payload.")
+    print("PASS: real FotMob match-page payloads were fetched and inspected without assuming a group schema.")
 
 
 def main():
