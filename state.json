@@ -3276,7 +3276,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1448224120Goal690107undefinedtrue"
+        "react:1448224120Goal690107undefinedtrue",
+        "react:1448233229Goal805767undefinedfalse"
       ],
       "goals": [
         {
@@ -3366,6 +3367,91 @@
             "assistKey": "assist_by",
             "assistInput": "Yasin Ayari"
           }
+        },
+        {
+          "event_key": "react:1448233229Goal805767undefinedfalse",
+          "player_id": 805767,
+          "player_name": "Dennis Man",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "29",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2546,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448233229Goal805767undefinedfalse",
+            "timeStr": 29,
+            "type": "goal",
+            "time": 29,
+            "overloadTime": null,
+            "eventId": 14482332,
+            "player": {
+              "id": 805767,
+              "name": "Dennis Man",
+              "profileUrl": "/players/805767/dennis-man"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/805767/dennis-man",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Dennis Man",
+            "firstName": "Dennis",
+            "lastName": "Man",
+            "fullName": "Dennis Man",
+            "playerId": 805767,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974571015,
+              "eventType": "Goal",
+              "teamId": 9730,
+              "playerId": 805767,
+              "playerName": "Dennis Man",
+              "x": 95.35087719170001,
+              "y": 31.254999999999995,
+              "min": 29,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.1025,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.1072,
+              "expectedGoalsOnTarget": 0.3679,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7665343915343916,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 546252,
+              "firstName": "Dennis",
+              "lastName": "Man",
+              "fullName": "Dennis Man",
+              "teamColor": "#d89f00"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -3443,11 +3529,82 @@
           "assistPlayerId": 1168311,
           "assistKey": "assist_by",
           "assistInput": "Yasin Ayari"
+        },
+        {
+          "reactKey": "1448233229Goal805767undefinedfalse",
+          "timeStr": 29,
+          "type": "goal",
+          "time": 29,
+          "overloadTime": null,
+          "eventId": 14482332,
+          "player": {
+            "id": 805767,
+            "name": "Dennis Man",
+            "profileUrl": "/players/805767/dennis-man"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/805767/dennis-man",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Dennis Man",
+          "firstName": "Dennis",
+          "lastName": "Man",
+          "fullName": "Dennis Man",
+          "playerId": 805767,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974571015,
+            "eventType": "Goal",
+            "teamId": 9730,
+            "playerId": 805767,
+            "playerName": "Dennis Man",
+            "x": 95.35087719170001,
+            "y": 31.254999999999995,
+            "min": 29,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.1025,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": 0.1072,
+            "expectedGoalsOnTarget": 0.3679,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7665343915343916,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 546252,
+            "firstName": "Dennis",
+            "lastName": "Man",
+            "fullName": "Dennis Man",
+            "teamColor": "#d89f00"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5181922": {
@@ -3704,7 +3861,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:144819866Goal748380undefinedtrue",
-        "react:1448232743Goal0undefinedtrue"
+        "react:1448232743Goal0undefinedtrue",
+        "react:1448232743Goal612836undefinedtrue"
       ],
       "goals": [
         {
@@ -3844,6 +4002,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1448232743Goal612836undefinedtrue",
+          "player_id": 612836,
+          "player_name": "Donny van de Beek",
+          "assist_player_id": 873297,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "43",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2547,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448232743Goal612836undefinedtrue",
+            "timeStr": 43,
+            "type": "goal",
+            "time": 43,
+            "overloadTime": null,
+            "eventId": 14482327,
+            "player": {
+              "id": 612836,
+              "name": "Donny van de Beek",
+              "profileUrl": "/players/612836/donny-van-de-beek"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/612836/donny-van-de-beek",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Donny van de Beek",
+            "firstName": "Donny",
+            "lastName": "van de Beek",
+            "fullName": "Donny van de Beek",
+            "playerId": 612836,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974570621,
+              "eventType": "Goal",
+              "teamId": 7732,
+              "playerId": 612836,
+              "playerName": "Donny van de Beek",
+              "x": 94,
+              "y": 29.295476189000002,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.90625,
+              "goalCrossedZ": 2.0739999898,
+              "expectedGoals": 0.1722293347120285,
+              "expectedGoalsOnTarget": 0.7621274590492249,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.49570105820105825,
+                "y": 0.5486772459788359,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1106821,
+              "firstName": "Donny",
+              "lastName": "van de Beek",
+              "fullName": "Donny van de Beek",
+              "teamColor": "#CF152D"
+            },
+            "assistStr": "assist by Carles Pérez",
+            "assistProfileUrl": "/players/873297/carles-perez",
+            "assistPlayerId": 873297,
+            "assistKey": "assist_by",
+            "assistInput": "Carles Pérez"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -3957,6 +4203,80 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1448232743Goal612836undefinedtrue",
+          "timeStr": 43,
+          "type": "goal",
+          "time": 43,
+          "overloadTime": null,
+          "eventId": 14482327,
+          "player": {
+            "id": 612836,
+            "name": "Donny van de Beek",
+            "profileUrl": "/players/612836/donny-van-de-beek"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/612836/donny-van-de-beek",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Donny van de Beek",
+          "firstName": "Donny",
+          "lastName": "van de Beek",
+          "fullName": "Donny van de Beek",
+          "playerId": 612836,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974570621,
+            "eventType": "Goal",
+            "teamId": 7732,
+            "playerId": 612836,
+            "playerName": "Donny van de Beek",
+            "x": 94,
+            "y": 29.295476189000002,
+            "min": 43,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.90625,
+            "goalCrossedZ": 2.0739999898,
+            "expectedGoals": 0.1722293347120285,
+            "expectedGoalsOnTarget": 0.7621274590492249,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.49570105820105825,
+              "y": 0.5486772459788359,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1106821,
+            "firstName": "Donny",
+            "lastName": "van de Beek",
+            "fullName": "Donny van de Beek",
+            "teamColor": "#CF152D"
+          },
+          "assistStr": "assist by Carles Pérez",
+          "assistProfileUrl": "/players/873297/carles-perez",
+          "assistPlayerId": 873297,
+          "assistKey": "assist_by",
+          "assistInput": "Carles Pérez"
         }
       ],
       "observed_score": {
