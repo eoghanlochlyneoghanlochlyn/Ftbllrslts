@@ -701,23 +701,22 @@ def _goal_var_match_score(goal_event, var_event):
         score += 60
 
     time_diff = _time_difference(goal_event, var_event)
-    if time_diff > 5:
-        return None
 
+    # زمان فقط برای اولویت‌بندی گزینه‌هاست و هرگز نباید باعث شود
+    # یک گل که بعد از بررسی طولانی مردود شده، از تشخیص خارج شود.
+    # بنابراین هیچ سقف زمانی برای VAR -> Goal نداریم.
     if time_diff <= 1:
         score += 30
     elif time_diff <= 2:
         score += 20
     elif time_diff <= 3:
+        score += 15
+    elif time_diff <= 5:
         score += 10
-    else:
+    elif time_diff <= 10:
         score += 5
-
-    # If we have neither team nor player, require very tight temporal
-    # proximity. This prevents an unrelated explicit VAR decision from
-    # cancelling a random goal in the same match.
-    if same_team is None and same_player is None and time_diff > 2:
-        return None
+    else:
+        score += 1
 
     return score
 
