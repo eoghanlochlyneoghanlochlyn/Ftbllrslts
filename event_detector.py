@@ -527,17 +527,17 @@ def _explicit_goal_cancellation_text(text):
     if not text:
         return False
 
-    text = re.sub(r"\\s+", " ", text).strip()
+    text = re.sub(r"\s+", " ", text).strip()
 
     positive_patterns = (
-        r"\\bgoal\\s+(?:has\\s+been\\s+)?ruled\\s+out\\b",
-        r"\\bgoal\\s+(?:has\\s+been\\s+)?disallowed\\b",
-        r"\\bgoal\\s+(?:has\\s+been\\s+)?cancelled\\b",
-        r"\\bgoal\\s+(?:has\\s+been\\s+)?canceled\\b",
-        r"\\bdisallowed\\s+goal\\b",
-        r"\\bcancelled\\s+goal\\b",
-        r"\\bcanceled\\s+goal\\b",
-        r"\\bgoal\\s+ruled\\s+out\\b",
+        r"\bgoal\\s+(?:has\\s+been\\s+)?ruled\\s+out\\b",
+        r"\bgoal\\s+(?:has\\s+been\\s+)?disallowed\\b",
+        r"\bgoal\\s+(?:has\\s+been\\s+)?cancelled\\b",
+        r"\bgoal\\s+(?:has\\s+been\\s+)?canceled\\b",
+        r"\bdisallowed\\s+goal\\b",
+        r"\bcancelled\\s+goal\\b",
+        r"\bcanceled\\s+goal\\b",
+        r"\bgoal\\s+ruled\\s+out\\b",
     )
 
     return any(
