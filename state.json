@@ -3071,7 +3071,7 @@
       }
     },
     "5181801": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -3087,7 +3087,7 @@
       }
     },
     "5181837": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -3103,7 +3103,7 @@
       }
     },
     "5181838": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -3119,7 +3119,7 @@
       }
     },
     "5181922": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -3183,7 +3183,7 @@
       }
     },
     "5868463": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
