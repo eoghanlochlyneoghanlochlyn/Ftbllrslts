@@ -5,7 +5,24 @@ import time
 import unittest
 
 from event_detector import detect_cancelled_goals, detect_updated_goals
-from telegram_sender import send_telegram, edit_rich_message
+from telegram_sender import send_telegram
+import requests
+
+
+def edit_telegram_test_message(message_id, text):
+    token = os.getenv("TELEGRAMBOT")
+    chat_id = os.getenv("TELEGRAMCHANNEL")
+    response = requests.post(
+        f"https://api.telegram.org/bot{token}/editMessageText",
+        data={"chat_id": chat_id, "message_id": int(message_id), "text": text},
+        timeout=30,
+    )
+    response.raise_for_status()
+    data = response.json()
+    if not data.get("ok"):
+        raise RuntimeError(f"Telegram edit failed: {data}")
+    return data
+
 
 
 class TelegramLogicTests(unittest.TestCase):
@@ -224,7 +241,7 @@ class TelegramLogicTests(unittest.TestCase):
             player_name="TBD",
             react_key="goal-original",
         )
-        message_id = self.report(
+        message = self.report(
             12,
             "TBD — مرحله اول",
             "⚽️ گل ثبت شد\n👤 زننده گل: TBD\n\n⏳ منتظر اطلاعات FotMob...",
@@ -254,25 +271,13 @@ class TelegramLogicTests(unittest.TestCase):
         self.assertEqual(result[0]["event_key"], "react:goal-original")
         self.assertEqual(result[0]["_new_event_key"], "react:goal-rebuilt-with-scorer")
 
-        edit_rich_message(
+        edit_telegram_test_message(
             message_id,
-            {
-                "is_rtl": True,
-                "blocks": [
-                    {
-                        "type": "paragraph",
-                        "text": "🧪 تست زنده ربات — 12 — TBD → Real Scorer",
-                    },
-                    {
-                        "type": "paragraph",
-                        "text": "⚽️ گل ثبت شد | 👤 Real Scorer",
-                    },
-                    {
-                        "type": "paragraph",
-                        "text": "✅ همان پیام قبلی ویرایش شد.",
-                    },
-                ],
-            },
+            (
+                "🧪 تست زنده ربات — 12 — TBD → Real Scorer\\n\\n"
+                "⚽️ گل ثبت شد | 👤 Real Scorer\\n\\n"
+                "✅ همان پیام قبلی ویرایش شد."
+            ),
         )
         self.wait()
 
