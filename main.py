@@ -857,25 +857,33 @@ def process_live_events(
             continue
         was_cancelled = False
 
-        if goal is not None:
-
-            was_cancelled = bool(
-                goal.get(
-                    "cancelled",
-                    False,
-                )
+        if goal is None:
+            # Never publish a cancellation for a goal that is not present
+            # in our stored goal history. This is an important safety guard:
+            # an explicit VAR decision must still be linked to a real goal.
+            print(
+                "[CANCELLED GOAL] "
+                "Matching stored goal not found; skipping."
             )
+            continue
 
-            if not was_cancelled:
+        was_cancelled = bool(
+            goal.get(
+                "cancelled",
+                False,
+            )
+        )
 
-                cancel_goal(
-                    match_state,
-                    goal_key,
-                    cancel_reason=cancelled_goal.get("cancel_reason"),
-                    cancelled_by_var=bool(
-                        cancelled_goal.get("cancelled_by_var", False)
-                    ),
-                )
+        if not was_cancelled:
+
+            cancel_goal(
+                match_state,
+                goal_key,
+                cancel_reason=cancelled_goal.get("cancel_reason"),
+                cancelled_by_var=bool(
+                    cancelled_goal.get("cancelled_by_var", False)
+                ),
+            )
 
         if was_cancelled:
             continue
