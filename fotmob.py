@@ -968,16 +968,19 @@ def _translate_round_name(value):
 
 def extract_group_info(data):
     """
-    استخراج گروه فقط از ساختار خود FotMob.
+    استخراج گروه فقط از اطلاعات مربوط به همین مسابقه در FotMob.
 
-    منبع اول: شیء لیگ/رقابت با isGroup=True و groupName.
-    منبع دوم: leagueName خود FotMob، فقط وقتی خود FotMob عبارت
-    Grp. / Group را در نام رقابت قرار داده باشد.
+    اولویت:
+    1) ساختار صریح isGroup=True / groupName.
+    2) leagueName مربوط به general خود مسابقه.
+    3) Tournament.leagueName داخل matchFacts.infoBox خود مسابقه.
 
-    هیچ نام گروهی بر اساس اسم رقابت، مرحله یا حدس داخلی ساخته نمی‌شود.
+    از leagueNameهای عمومی/تاریخی مثل H2H استفاده نمی‌شود؛ بنابراین
+    وجود گروه در مسابقات قبلی دو تیم باعث نمایش گروه اشتباه نمی‌شود.
     """
+    empty = {"raw": None, "name": None, "name_fa": None, "source": None}
     if not isinstance(data, dict):
-        return {"raw": None, "name": None, "name_fa": None, "source": None}
+        return empty
 
     candidates = []
 
@@ -986,19 +989,19 @@ def extract_group_info(data):
         if value:
             candidates.append((value, source))
 
-    def walk(node):
+    def walk_explicit_group(node, path="$"):
         if isinstance(node, dict):
             if node.get("isGroup") is True:
-                add_group(node.get("groupName"), "isGroup/groupName")
-            for value in node.values():
+                add_group(node.get("groupName"), f"{path}.groupName")
+            for key, value in node.items():
                 if isinstance(value, (dict, list)):
-                    walk(value)
+                    walk_explicit_group(value, f"{path}.{key}")
         elif isinstance(node, list):
-            for item in node:
-                walk(item)
+            for index, value in enumerate(node):
+                if isinstance(value, (dict, list)):
+                    walk_explicit_group(value, f"{path}[{index}]")
 
-    walk(data)
-
+    walk_explicit_group(data)
     if candidates:
         raw, source = candidates[0]
         return {
@@ -1008,58 +1011,61 @@ def extract_group_info(data):
             "source": source,
         }
 
-    # در بعضی payloadهای matchDetails، شیء گروه داخل پاسخ نیست، اما
-    # leagueName همان برچسب رسمی FotMob را دارد؛ مثل:
-    # "World Cup Grp. A" / "UEFA Nations League A Grp. 4".
-    league_names = []
-
-    for container in (
-        get_nested(data, "props", "pageProps", "general"),
-        data.get("general"),
-        get_nested(data, "props", "pageProps", "content", "general"),
-        get_content(data),
-    ):
-        if not isinstance(container, dict):
-            continue
-        for key in ("leagueName", "name"):
-            value = clean_text(container.get(key))
-            if value:
-                league_names.append(value)
-
-    value = clean_text(recursive_find(data, {"leagueName"}) or "")
-    if value:
-        league_names.append(value)
-
-    seen = set()
-    for league_name in league_names:
-        normalized = league_name.lower()
-        if normalized in seen:
-            continue
-        seen.add(normalized)
-
-        match = re.search(r"\\bGrp\\.\\s*([A-Za-z0-9]+)", league_name, re.IGNORECASE)
-        if match:
-            raw = clean_text(match.group(1))
-            if raw:
+    general = get_nested(data, "props", "pageProps", "general")
+    if isinstance(general, dict):
+        league_name = clean_text(general.get("leagueName"))
+        if league_name:
+            match = re.search(r"\bGrp\.\s*([A-Za-z0-9]+)", league_name, re.IGNORECASE)
+            if match:
+                raw = clean_text(match.group(1))
                 return {
                     "raw": raw,
                     "name": raw,
                     "name_fa": f"گروه {raw}",
-                    "source": "FotMob leagueName",
+                    "source": "props.pageProps.general.leagueName",
                 }
-
-        match = re.search(r"\bGroup\s+(?!Stage\b)([A-Za-z0-9]+)", league_name, re.IGNORECASE)
-        if match:
-            raw = clean_text(match.group(1))
-            if raw:
+            match = re.search(r"\bGroup\s+(?!Stage\b)([A-Za-z0-9]+)", league_name, re.IGNORECASE)
+            if match:
+                raw = clean_text(match.group(1))
                 return {
                     "raw": raw,
                     "name": raw,
                     "name_fa": f"گروه {raw}",
-                    "source": "FotMob leagueName",
+                    "source": "props.pageProps.general.leagueName",
                 }
 
-    return {"raw": None, "name": None, "name_fa": None, "source": None}
+    tournament = get_nested(
+        data,
+        "props",
+        "pageProps",
+        "content",
+        "matchFacts",
+        "infoBox",
+        "Tournament",
+    )
+    if isinstance(tournament, dict):
+        league_name = clean_text(tournament.get("leagueName"))
+        if league_name:
+            match = re.search(r"\bGrp\.\s*([A-Za-z0-9]+)", league_name, re.IGNORECASE)
+            if match:
+                raw = clean_text(match.group(1))
+                return {
+                    "raw": raw,
+                    "name": raw,
+                    "name_fa": f"گروه {raw}",
+                    "source": "props.pageProps.content.matchFacts.infoBox.Tournament.leagueName",
+                }
+            match = re.search(r"\bGroup\s+(?!Stage\b)([A-Za-z0-9]+)", league_name, re.IGNORECASE)
+            if match:
+                raw = clean_text(match.group(1))
+                return {
+                    "raw": raw,
+                    "name": raw,
+                    "name_fa": f"گروه {raw}",
+                    "source": "props.pageProps.content.matchFacts.infoBox.Tournament.leagueName",
+                }
+
+    return empty
 
 
 def extract_round_info(data):
