@@ -3135,7 +3135,7 @@
       }
     },
     "6040199": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -3360,7 +3360,7 @@
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     }
