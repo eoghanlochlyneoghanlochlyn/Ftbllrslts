@@ -1,0 +1,20 @@
+name: VAR Cancellation Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-var-cancellation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run VAR cancellation tests
+        run: python -m unittest -v test_var_cancellation.py
