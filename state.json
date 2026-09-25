@@ -179,7 +179,7 @@
       ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "5181789": {
@@ -3446,7 +3446,7 @@
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
@@ -3691,8 +3691,8 @@
         }
       ],
       "observed_score": {
-        "home": 0,
-        "away": 0
+        "home": 1,
+        "away": 1
       }
     },
     "5868463": {
@@ -3960,7 +3960,7 @@
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     }
