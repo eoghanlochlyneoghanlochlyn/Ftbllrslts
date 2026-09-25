@@ -61,5 +61,61 @@
     "enabled": true,
     "auto": false,
     "start": "2026-07-11T21:00:00+00:00"
+  },
+  {
+    "id": "5181801",
+    "url": "https://www.fotmob.com/matches/ukraine-vs-hungary/1xjgf7#5181801",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T18:45:00+00:00"
+  },
+  {
+    "id": "5181837",
+    "url": "https://www.fotmob.com/matches/poland-vs-bosnia-herzegovina/2vti6r#5181837",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T18:45:00+00:00"
+  },
+  {
+    "id": "5181838",
+    "url": "https://www.fotmob.com/matches/sweden-vs-romania/2r5qvt#5181838",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T18:45:00+00:00"
+  },
+  {
+    "id": "5181922",
+    "url": "https://www.fotmob.com/matches/cyprus-vs-montenegro/p82jgi#5181922",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T18:45:00+00:00"
+  },
+  {
+    "id": "6040199",
+    "url": "https://www.fotmob.com/matches/gabon-vs-morocco/17yk0q#6040199",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T19:00:00+00:00"
+  },
+  {
+    "id": "6040212",
+    "url": "https://www.fotmob.com/matches/angola-vs-egypt/2dpg6s#6040212",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T19:00:00+00:00"
+  },
+  {
+    "id": "6040372",
+    "url": "https://www.fotmob.com/matches/mali-vs-cape-verde/14s0n8#6040372",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T19:00:00+00:00"
+  },
+  {
+    "id": "5868463",
+    "url": "https://www.fotmob.com/matches/girona-vs-albacete/25evd8#5868463",
+    "enabled": true,
+    "auto": false,
+    "start": "2026-09-25T18:30:00+00:00"
   }
 ]
