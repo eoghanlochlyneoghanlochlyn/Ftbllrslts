@@ -331,5 +331,169 @@ class VarCancellationTests(unittest.TestCase):
                 )
 
 
+
+    def test_12_tbd_scorer_is_updated_even_if_fotmob_changes_react_key(self):
+        from event_detector import detect_updated_goals
+
+        tbd_goal = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=None,
+            player_name="TBD",
+            react_key="goal-original",
+        )
+
+        match_state = {
+            "goals": [
+                {
+                    "event_key": "react:goal-original",
+                    "player_id": None,
+                    "player_name": "TBD",
+                    "is_home": True,
+                    "minute": "25",
+                    "telegram_message_id": 500,
+                    "needs_update": True,
+                    "cancelled": False,
+                    "event": tbd_goal,
+                }
+            ]
+        }
+
+        enriched_goal = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=7777,
+            player_name="Real Scorer",
+            react_key="goal-rebuilt-with-scorer",
+        )
+
+        result = detect_updated_goals(
+            match_state,
+            [enriched_goal],
+        )
+
+        self.assertEqual(len(result), 1)
+        self.assertEqual(
+            result[0]["event_key"],
+            "react:goal-original",
+        )
+        self.assertEqual(
+            result[0]["_new_event_key"],
+            "react:goal-rebuilt-with-scorer",
+        )
+        self.assertEqual(
+            result[0]["player_name"],
+            "Real Scorer",
+        )
+        self.assertEqual(
+            result[0]["player_id"],
+            7777,
+        )
+
+
+    def test_13_tbd_fallback_does_not_guess_between_two_same_minute_goals(self):
+        from event_detector import detect_updated_goals
+
+        goal_one = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=None,
+            player_name="TBD",
+            react_key="goal-one",
+        )
+        goal_two = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=None,
+            player_name="TBD",
+            react_key="goal-two",
+        )
+
+        match_state = {
+            "goals": [
+                {
+                    "event_key": "react:goal-one",
+                    "player_id": None,
+                    "player_name": "TBD",
+                    "is_home": True,
+                    "minute": "25",
+                    "telegram_message_id": 500,
+                    "needs_update": True,
+                    "cancelled": False,
+                    "event": goal_one,
+                },
+                {
+                    "event_key": "react:goal-two",
+                    "player_id": None,
+                    "player_name": "TBD",
+                    "is_home": True,
+                    "minute": "25",
+                    "telegram_message_id": 501,
+                    "needs_update": True,
+                    "cancelled": False,
+                    "event": goal_two,
+                },
+            ]
+        }
+
+        enriched_goal = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=7777,
+            player_name="Real Scorer",
+            react_key="goal-rebuilt-with-scorer",
+        )
+
+        result = detect_updated_goals(
+            match_state,
+            [enriched_goal],
+        )
+
+        self.assertEqual(result, [])
+
+
+    def test_14_tbd_fallback_rejects_wrong_team(self):
+        from event_detector import detect_updated_goals
+
+        tbd_goal = fotmob_goal(
+            minute=25,
+            is_home=True,
+            player_id=None,
+            player_name="TBD",
+            react_key="goal-original",
+        )
+
+        match_state = {
+            "goals": [
+                {
+                    "event_key": "react:goal-original",
+                    "player_id": None,
+                    "player_name": "TBD",
+                    "is_home": True,
+                    "minute": "25",
+                    "telegram_message_id": 500,
+                    "needs_update": True,
+                    "cancelled": False,
+                    "event": tbd_goal,
+                }
+            ]
+        }
+
+        enriched_goal = fotmob_goal(
+            minute=25,
+            is_home=False,
+            player_id=7777,
+            player_name="Real Scorer",
+            react_key="goal-rebuilt-with-scorer",
+        )
+
+        result = detect_updated_goals(
+            match_state,
+            [enriched_goal],
+        )
+
+        self.assertEqual(result, [])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
