@@ -871,6 +871,10 @@ def process_live_events(
                 cancel_goal(
                     match_state,
                     goal_key,
+                    cancel_reason=cancelled_goal.get("cancel_reason"),
+                    cancelled_by_var=bool(
+                        cancelled_goal.get("cancelled_by_var", False)
+                    ),
                 )
 
         if was_cancelled:
