@@ -323,3 +323,63 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def test_extract_group_info_uses_current_match_league_only():
+    from fotmob import extract_group_info
+
+    data = {
+        "props": {
+            "pageProps": {
+                "general": {"leagueName": "UEFA Nations League A Grp. 2"},
+                "content": {
+                    "h2h": {"matches": [{"league": {"name": "EURO Grp. B"}}]},
+                    "matchFacts": {
+                        "infoBox": {
+                            "Tournament": {"leagueName": "UEFA Nations League A Grp. 2"}
+                        }
+                    },
+                },
+            }
+        }
+    }
+    result = extract_group_info(data)
+    assert result["raw"] == "2"
+    assert result["name_fa"] == "گروه 2"
+    assert result["source"] == "props.pageProps.general.leagueName"
+
+
+def test_extract_group_info_returns_none_for_knockout_match():
+    from fotmob import extract_group_info
+
+    data = {
+        "props": {
+            "pageProps": {
+                "general": {"leagueName": "World Cup"},
+                "content": {
+                    "matchFacts": {
+                        "infoBox": {
+                            "Tournament": {"leagueName": "World Cup"}
+                        }
+                    },
+                    "h2h": {
+                        "matches": [
+                            {"league": {"name": "World Cup Grp. B"}}
+                        ]
+                    },
+                },
+            }
+        }
+    }
+    result = extract_group_info(data)
+    assert result["raw"] is None
+    assert result["name_fa"] is None
+
+
+def test_extract_group_info_supports_explicit_is_group_schema():
+    from fotmob import extract_group_info
+
+    data = {"props": {"pageProps": {"general": {"isGroup": True, "groupName": "A"}}}}
+    result = extract_group_info(data)
+    assert result["raw"] == "A"
+    assert result["name_fa"] == "گروه A"
