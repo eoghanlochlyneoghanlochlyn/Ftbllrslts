@@ -679,6 +679,40 @@ def _same_player_strict(event_a, event_b):
     return str(a) == str(b)
 
 
+def _event_minute_value(event):
+    if not isinstance(event, dict):
+        return None
+
+    value = event.get("time")
+    if value is None:
+        value = event.get("minute")
+
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    if isinstance(value, str):
+        import re
+
+        match = re.search(r"\d+(?:\.\d+)?", value)
+        if match:
+            try:
+                return float(match.group(0))
+            except ValueError:
+                return None
+
+    return None
+
+
+def _time_difference(event_a, event_b):
+    minute_a = _event_minute_value(event_a)
+    minute_b = _event_minute_value(event_b)
+
+    if minute_a is None or minute_b is None:
+        return 0.0
+
+    return abs(minute_a - minute_b)
+
+
 def _goal_var_match_score(goal_event, var_event):
     """
     Higher score = stronger evidence that this VAR decision belongs to this goal.
