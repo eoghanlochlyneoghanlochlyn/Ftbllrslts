@@ -333,8 +333,11 @@
             "fullName": "Dodi Lukébakio",
             "teamColor": "#9f2533"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Charles De Ketelaere",
+          "assistProfileUrl": "/players/1095432/charles-de-ketelaere",
+          "assistPlayerId": 1095432,
+          "assistKey": "assist_by",
+          "assistInput": "Charles De Ketelaere"
         }
       ],
       "observed_score": {
