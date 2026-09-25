@@ -336,7 +336,7 @@
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 1
       }
     },
     "5181789": {
@@ -4600,7 +4600,7 @@
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 0,
         "away": 1
       }
     },
@@ -5099,7 +5099,7 @@
         }
       ],
       "observed_score": {
-        "home": 3,
+        "home": 2,
         "away": 1
       }
     },
@@ -5113,7 +5113,8 @@
       "event_keys": [
         "react:144819866Goal748380undefinedtrue",
         "react:1448232743Goal0undefinedtrue",
-        "react:1448232743Goal612836undefinedtrue"
+        "react:1448232743Goal612836undefinedtrue",
+        "react:1448299290Card1322880undefinedfalse"
       ],
       "goals": [
         {
