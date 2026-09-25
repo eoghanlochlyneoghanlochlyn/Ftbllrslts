@@ -464,14 +464,167 @@ def event_key(event):
 # گل مردود
 # =========================================================
 
-def is_cancelled_goal_event(event):
+def _collect_event_text(event):
+    """Collect human-readable text from an event, including nested decision/reason fields."""
+    parts = []
 
-    if not isinstance(
-        event,
-        dict,
-    ):
+    def walk(value, depth=0):
+        if depth > 3:
+            return
+
+        if isinstance(value, str):
+            value = clean_text(value)
+            if value:
+                parts.append(value)
+            return
+
+        if isinstance(value, (int, float, bool)) or value is None:
+            return
+
+        if isinstance(value, dict):
+            preferred = (
+                "description",
+                "text",
+                "incidentDescription",
+                "reason",
+                "decision",
+                "label",
+                "title",
+                "name",
+                "value",
+                "type",
+            )
+
+            for key in preferred:
+                if key in value:
+                    walk(value.get(key), depth + 1)
+
+            for key, child in value.items():
+                if key not in preferred:
+                    walk(child, depth + 1)
+
+            return
+
+        if isinstance(value, list):
+            for child in value:
+                walk(child, depth + 1)
+
+    walk(event)
+    return " ".join(parts)
+
+
+def _normalized_event_text(event):
+    return clean_text(
+        _collect_event_text(event)
+    ).lower()
+
+
+def _explicit_goal_cancellation_text(text):
+    """
+    True only for an explicit final decision that a goal was cancelled.
+    A generic VAR review/check is deliberately not enough.
+    """
+    if not text:
         return False
 
+    text = re.sub(r"\\s+", " ", text).strip()
+
+    positive_patterns = (
+        r"\\bgoal\\s+(?:has\\s+been\\s+)?ruled\\s+out\\b",
+        r"\\bgoal\\s+(?:has\\s+been\\s+)?disallowed\\b",
+        r"\\bgoal\\s+(?:has\\s+been\\s+)?cancelled\\b",
+        r"\\bgoal\\s+(?:has\\s+been\\s+)?canceled\\b",
+        r"\\bdisallowed\\s+goal\\b",
+        r"\\bcancelled\\s+goal\\b",
+        r"\\bcanceled\\s+goal\\b",
+        r"\\bgoal\\s+ruled\\s+out\\b",
+    )
+
+    return any(
+        re.search(pattern, text)
+        for pattern in positive_patterns
+    )
+
+
+def _extract_cancellation_reason(event):
+    """
+    Extract FotMob's explicit reason when it is present, without guessing.
+    """
+    text = _normalized_event_text(event)
+
+    if not _explicit_goal_cancellation_text(text):
+        return None
+
+    reason_patterns = (
+        ("foul", "foul"),
+        ("offside", "offside"),
+        ("handball", "handball"),
+        ("simulation", "simulation"),
+        ("dangerous play", "dangerous play"),
+        ("keeper interference", "keeper interference"),
+        ("goalkeeper interference", "goalkeeper interference"),
+    )
+
+    for needle, reason in reason_patterns:
+        if needle in text:
+            return reason
+
+    return None
+
+
+def get_var_decision(event):
+    """
+    Return a structured VAR decision.
+
+    Important:
+    - 'VAR check', 'VAR review', and generic 'VAR' are NOT cancellations.
+    - Only FotMob's explicit goal-cancellation wording is accepted.
+    """
+    if not isinstance(event, dict):
+        return {
+            "is_var": False,
+            "is_goal_cancellation": False,
+            "reason": None,
+        }
+
+    if get_event_type(event) != "var":
+        return {
+            "is_var": False,
+            "is_goal_cancellation": False,
+            "reason": None,
+        }
+
+    text = _normalized_event_text(event)
+
+    # Explicit structured flags are authoritative when present.
+    explicit_cancel = any(
+        event.get(key) is True
+        for key in (
+            "goalCancelled",
+            "goalCanceled",
+            "isGoalCancelled",
+            "isGoalCanceled",
+        )
+    )
+
+    is_goal_cancellation = (
+        explicit_cancel
+        or _explicit_goal_cancellation_text(text)
+    )
+
+    return {
+        "is_var": True,
+        "is_goal_cancellation": is_goal_cancellation,
+        "reason": _extract_cancellation_reason(event),
+        "text": text,
+    }
+
+
+def is_cancelled_goal_event(event):
+    if not isinstance(event, dict):
+        return False
+
+    # Explicit flags on the goal itself remain authoritative.
     for key in (
         "cancelled",
         "canceled",
@@ -479,291 +632,290 @@ def is_cancelled_goal_event(event):
         "isCanceled",
         "goalCancelled",
         "goalCanceled",
+        "isGoalCancelled",
+        "isGoalCanceled",
     ):
-
-        if event.get(
-            key
-        ) is True:
+        if event.get(key) is True:
             return True
 
-    text = " ".join(
-        [
-            clean_text(
-                event.get(
-                    "description"
-                )
-            ),
-            clean_text(
-                event.get(
-                    "text"
-                )
-            ),
-            clean_text(
-                event.get(
-                    "incidentDescription"
-                )
-            ),
-            clean_text(
-                event.get(
-                    "reason"
-                )
-            ),
-        ]
-    ).lower()
-
-    if any(
-        phrase in text
-        for phrase in (
-            "goal disallowed",
-            "goal cancelled",
-            "goal canceled",
-            "goal ruled out",
-            "disallowed goal",
-            "cancelled goal",
-            "canceled goal",
-        )
-    ):
-        return True
-
-    return False
+    return _explicit_goal_cancellation_text(
+        _normalized_event_text(event)
+    )
 
 
 def get_cancelled_var_events(events):
-
     result = []
 
     for event in events or []:
-
-        if not isinstance(
-            event,
-            dict,
-        ):
+        if not isinstance(event, dict):
             continue
 
-        if (
-            get_event_type(event)
-            == "var"
-        ):
+        if get_event_type(event) == "var":
+            decision = get_var_decision(event)
 
-            result.append(
-                event
-            )
+            if decision["is_goal_cancellation"]:
+                result.append(event)
 
     return result
 
 
-def _same_team(
-    event_a,
-    event_b,
-):
-
-    a = get_event_team(
-        event_a
-    )
-
-    b = get_event_team(
-        event_b
-    )
+def _same_team_strict(event_a, event_b):
+    a = get_event_team(event_a)
+    b = get_event_team(event_b)
 
     if a is None or b is None:
-        return True
+        return None
 
     return a == b
 
 
-def _same_player(
-    event_a,
-    event_b,
-):
-
-    a = get_event_player_id(
-        event_a
-    )
-
-    b = get_event_player_id(
-        event_b
-    )
+def _same_player_strict(event_a, event_b):
+    a = get_event_player_id(event_a)
+    b = get_event_player_id(event_b)
 
     if a is None or b is None:
-        return True
+        return None
 
     return str(a) == str(b)
 
 
-def _time_difference(
-    event_a,
-    event_b,
-):
+def _goal_var_match_score(goal_event, var_event):
+    """
+    Higher score = stronger evidence that this VAR decision belongs to this goal.
 
-    a = get_event_time(
-        event_a
-    )
+    A VAR decision must already be an explicit goal cancellation before this
+    function is used. We never infer cancellation from proximity alone.
+    """
+    score = 0
 
-    b = get_event_time(
-        event_b
-    )
+    same_team = _same_team_strict(goal_event, var_event)
+    if same_team is False:
+        return None
+    if same_team is True:
+        score += 40
 
-    if a is None or b is None:
-        return 999999
+    same_player = _same_player_strict(goal_event, var_event)
+    if same_player is False:
+        return None
+    if same_player is True:
+        score += 60
 
-    return abs(
-        float(a) - float(b)
-    )
+    time_diff = _time_difference(goal_event, var_event)
+    if time_diff > 5:
+        return None
+
+    if time_diff <= 1:
+        score += 30
+    elif time_diff <= 2:
+        score += 20
+    elif time_diff <= 3:
+        score += 10
+    else:
+        score += 5
+
+    # If we have neither team nor player, require very tight temporal
+    # proximity. This prevents an unrelated explicit VAR decision from
+    # cancelling a random goal in the same match.
+    if same_team is None and same_player is None and time_diff > 2:
+        return None
+
+    return score
 
 
 def find_cancelled_goal(
     goal_event,
     events,
 ):
+    if not isinstance(goal_event, dict):
+        return None
+
+    best = None
+    best_score = -1
 
     for event in events or []:
-
-        if not isinstance(
-            event,
-            dict,
-        ):
+        if not isinstance(event, dict):
             continue
 
-        if get_event_type(
-            event
-        ) != "var":
+        if get_event_type(event) != "var":
             continue
 
-        if not _same_team(
+        decision = get_var_decision(event)
+        if not decision["is_goal_cancellation"]:
+            continue
+
+        score = _goal_var_match_score(
             goal_event,
             event,
-        ):
-            continue
-
-        if not _same_player(
-            goal_event,
-            event,
-        ):
-            continue
-
-        if _time_difference(
-            goal_event,
-            event,
-        ) > 3:
-            continue
-
-        if is_cancelled_goal_event(
-            event
-        ):
-
-            return event
-
-        text = " ".join(
-            [
-                clean_text(
-                    event.get(
-                        "description"
-                    )
-                ),
-                clean_text(
-                    event.get(
-                        "text"
-                    )
-                ),
-                clean_text(
-                    event.get(
-                        "reason"
-                    )
-                ),
-            ]
-        ).lower()
-
-        if any(
-            phrase in text
-            for phrase in (
-                "disallowed",
-                "cancelled",
-                "canceled",
-                "ruled out",
-            )
-        ):
-
-            return event
-
-    return None
-
-
-def detect_cancelled_goals(events):
-
-    result = []
-
-    for goal_event in events or []:
-
-        if not isinstance(
-            goal_event,
-            dict,
-        ):
-            continue
-
-        if get_event_type(
-            goal_event
-        ) != "goal":
-            continue
-
-        if is_cancelled_goal_event(
-            goal_event
-        ):
-
-            result.append(
-                {
-                    "goal_key": event_key(
-                        goal_event
-                    ),
-                    "goal_event": goal_event,
-                    "is_home": get_event_team(
-                        goal_event
-                    ),
-                    "minute": get_goal_minute(
-                        goal_event
-                    ),
-                }
-            )
-
-            continue
-
-        var_event = find_cancelled_goal(
-            goal_event,
-            events,
         )
 
-        if var_event is not None:
+        if score is not None and score > best_score:
+            best = event
+            best_score = score
 
-            result.append(
-                {
-                    "goal_key": event_key(
-                        goal_event
-                    ),
-                    "goal_event": goal_event,
-                    "var_event": var_event,
-                    "is_home": get_event_team(
-                        goal_event
-                    ),
-                    "minute": get_goal_minute(
-                        goal_event
-                    ),
-                }
-            )
+    return best
+
+
+def _stored_goal_to_event(goal):
+    if not isinstance(goal, dict):
+        return None
+
+    event = goal.get("event")
+    if isinstance(event, dict):
+        return event
+
+    # Backward-compatible reconstruction for old state entries.
+    event = {
+        "type": "goal",
+        "player": {
+            "id": goal.get("player_id"),
+            "name": goal.get("player_name"),
+        },
+        "isHome": goal.get("is_home"),
+        "time": goal.get("minute"),
+        "reactKey": goal.get("event_key"),
+    }
+
+    return event
+
+
+def _find_best_goal_for_var(var_event, goal_events):
+    best = None
+    best_score = -1
+
+    for goal_event, stored_goal in goal_events:
+        if not isinstance(goal_event, dict):
+            continue
+
+        if get_event_type(goal_event) != "goal":
+            continue
+
+        if is_cancelled_goal_event(goal_event):
+            continue
+
+        score = _goal_var_match_score(
+            goal_event,
+            var_event,
+        )
+
+        if score is not None and score > best_score:
+            best = (goal_event, stored_goal)
+            best_score = score
+
+    return best
+
+
+def detect_cancelled_goals(
+    events,
+    match_state=None,
+):
+    """
+    Detect only confirmed goal cancellations.
+
+    The function considers both the current FotMob event list and goals already
+    stored in state. This is essential because FotMob may publish the original
+    goal first and add the final VAR decision on a later polling run.
+    """
+    events = events or []
+    result = []
+    seen_goal_keys = set()
+
+    goal_events = []
+
+    for event in events:
+        if (
+            isinstance(event, dict)
+            and get_event_type(event) == "goal"
+            and not is_cancelled_goal_event(event)
+        ):
+            goal_events.append((event, None))
+
+    if isinstance(match_state, dict):
+        for stored_goal in match_state.get("goals", []):
+            if not isinstance(stored_goal, dict):
+                continue
+
+            if stored_goal.get("cancelled"):
+                continue
+
+            stored_event = _stored_goal_to_event(stored_goal)
+            if not isinstance(stored_event, dict):
+                continue
+
+            goal_events.append((stored_event, stored_goal))
+
+    # Explicitly cancelled goal events can be handled without a separate VAR
+    # event. They are authoritative and do not require proximity matching.
+    for event in events:
+        if (
+            isinstance(event, dict)
+            and get_event_type(event) == "goal"
+            and is_cancelled_goal_event(event)
+        ):
+            key = event_key(event)
+            if key is None or str(key) in seen_goal_keys:
+                continue
+
+            seen_goal_keys.add(str(key))
+            result.append({
+                "goal_key": key,
+                "goal_event": event,
+                "is_home": get_event_team(event),
+                "minute": get_goal_minute(event),
+                "cancel_reason": _extract_cancellation_reason(event),
+                "cancelled_by_var": False,
+            })
+
+    # A VAR cancellation is accepted only after get_var_decision() confirms
+    # an explicit final goal-cancellation phrase/flag.
+    for var_event in get_cancelled_var_events(events):
+        match = _find_best_goal_for_var(
+            var_event,
+            goal_events,
+        )
+
+        if match is None:
+            continue
+
+        goal_event, stored_goal = match
+
+        goal_key = (
+            stored_goal.get("event_key")
+            if isinstance(stored_goal, dict)
+            else event_key(goal_event)
+        )
+
+        if goal_key is None:
+            goal_key = event_key(goal_event)
+
+        if goal_key is None or str(goal_key) in seen_goal_keys:
+            continue
+
+        seen_goal_keys.add(str(goal_key))
+
+        decision = get_var_decision(var_event)
+
+        result.append({
+            "goal_key": goal_key,
+            "goal_event": goal_event,
+            "var_event": var_event,
+            "is_home": get_event_team(goal_event),
+            "minute": get_goal_minute(goal_event),
+            "cancel_reason": decision.get("reason"),
+            "cancelled_by_var": True,
+            "var_text": decision.get("text", ""),
+        })
 
     return result
 
 
-def get_cancelled_goal_keys(events):
-
+def get_cancelled_goal_keys(events, match_state=None):
     return [
-        item.get(
-            "goal_key"
-        )
+        item.get("goal_key")
         for item in detect_cancelled_goals(
-            events
+            events,
+            match_state,
         )
-        if item.get(
-            "goal_key"
-        )
+        if item.get("goal_key")
     ]
 
 
