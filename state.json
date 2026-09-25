@@ -3574,7 +3574,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1448246242Goal955572undefinedfalse"
+        "react:1448246242Goal955572undefinedfalse",
+        "react:1448327290Card975983undefinedfalse"
       ],
       "goals": [
         {
@@ -4770,7 +4771,7 @@
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 1,
         "away": 1
       }
     },
