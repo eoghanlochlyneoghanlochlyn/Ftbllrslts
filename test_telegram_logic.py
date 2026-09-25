@@ -246,6 +246,7 @@ class TelegramLogicTests(unittest.TestCase):
             "TBD — مرحله اول",
             "⚽️ گل ثبت شد\n👤 زننده گل: TBD\n\n⏳ منتظر اطلاعات FotMob...",
         )
+        message_id = message["result"]["message_id"]
         self.wait()
 
         state = {
@@ -274,8 +275,8 @@ class TelegramLogicTests(unittest.TestCase):
         edit_telegram_test_message(
             message_id,
             (
-                "🧪 تست زنده ربات — 12 — TBD → Real Scorer\\n\\n"
-                "⚽️ گل ثبت شد | 👤 Real Scorer\\n\\n"
+                "🧪 تست زنده ربات — 12 — TBD → Real Scorer\n\n"
+                "⚽️ گل ثبت شد | 👤 Real Scorer\n\n"
                 "✅ همان پیام قبلی ویرایش شد."
             ),
         )
