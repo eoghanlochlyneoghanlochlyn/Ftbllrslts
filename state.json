@@ -328,18 +328,22 @@
             "min": 54,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0622,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 36.51625,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.3197126090526581,
+            "expectedGoalsOnTarget": 0.548311173915863,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.33432539682539697,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 603669,
@@ -348,13 +352,16 @@
             "fullName": "Kylian Mbappé",
             "teamColor": "#26406A"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Michael Olise",
+          "assistProfileUrl": "/players/1029063/michael-olise",
+          "assistPlayerId": 1029063,
+          "assistKey": "assist_by",
+          "assistInput": "Michael Olise"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "5181825": {
@@ -4247,18 +4254,22 @@
             "min": 55,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0466,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 30.72125,
+            "goalCrossedZ": 0.44947368200000004,
+            "expectedGoals": 0.04471210390329361,
+            "expectedGoalsOnTarget": 0.4515509307384491,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 1.8673941798941804,
+              "y": 0.11890838148148149,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": false,
             "keeperId": 1683553,
@@ -4267,13 +4278,16 @@
             "fullName": "Marcus Edwards",
             "teamColor": "#0054A6"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Nicholas Tsaroulla",
+          "assistProfileUrl": "/players/1206282/nicholas-tsaroulla",
+          "assistPlayerId": 1206282,
+          "assistKey": "assist_by",
+          "assistInput": "Nicholas Tsaroulla"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "6040199": {
