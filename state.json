@@ -3965,12 +3965,104 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1448251836Goal775539undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1448251836Goal775539undefinedtrue",
+          "player_id": 775539,
+          "player_name": "Noussair Mazraoui",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "36",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2550,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448251836Goal775539undefinedtrue",
+            "timeStr": 36,
+            "type": "goal",
+            "time": 36,
+            "overloadTime": null,
+            "eventId": 14482518,
+            "player": {
+              "id": 775539,
+              "name": "Noussair Mazraoui",
+              "profileUrl": "/players/775539/noussair-mazraoui"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/775539/noussair-mazraoui",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Noussair Mazraoui",
+            "firstName": "Noussair",
+            "lastName": "Mazraoui",
+            "fullName": "Noussair Mazraoui",
+            "playerId": 775539,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1448251836Goal775539undefinedtrue",
+          "timeStr": 36,
+          "type": "goal",
+          "time": 36,
+          "overloadTime": null,
+          "eventId": 14482518,
+          "player": {
+            "id": 775539,
+            "name": "Noussair Mazraoui",
+            "profileUrl": "/players/775539/noussair-mazraoui"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/775539/noussair-mazraoui",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Noussair Mazraoui",
+          "firstName": "Noussair",
+          "lastName": "Mazraoui",
+          "fullName": "Noussair Mazraoui",
+          "playerId": 775539,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
@@ -3999,7 +4091,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:144822795Goal1584084undefinedtrue",
-        "react:1448232810Goal1441786undefinedfalse"
+        "react:1448232810Goal1441786undefinedfalse",
+        "react:1448254239Goal1230287undefinedtrue"
       ],
       "goals": [
         {
@@ -4103,6 +4196,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1448254239Goal1230287undefinedtrue",
+          "player_id": 1230287,
+          "player_name": "Dorgeles Nene",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "39",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2551,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448254239Goal1230287undefinedtrue",
+            "timeStr": 39,
+            "type": "goal",
+            "time": 39,
+            "overloadTime": null,
+            "eventId": 14482542,
+            "player": {
+              "id": 1230287,
+              "name": "Dorgeles Nene",
+              "profileUrl": "/players/1230287/dorgeles-nene"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1230287/dorgeles-nene",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Dorgeles Nene",
+            "firstName": "Dorgeles",
+            "lastName": "Nene",
+            "fullName": "Dorgeles Nene",
+            "playerId": 1230287,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -4180,10 +4324,47 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1448254239Goal1230287undefinedtrue",
+          "timeStr": 39,
+          "type": "goal",
+          "time": 39,
+          "overloadTime": null,
+          "eventId": 14482542,
+          "player": {
+            "id": 1230287,
+            "name": "Dorgeles Nene",
+            "profileUrl": "/players/1230287/dorgeles-nene"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1230287/dorgeles-nene",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Dorgeles Nene",
+          "firstName": "Dorgeles",
+          "lastName": "Nene",
+          "fullName": "Dorgeles Nene",
+          "playerId": 1230287,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
