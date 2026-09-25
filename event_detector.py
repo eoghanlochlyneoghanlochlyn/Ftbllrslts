@@ -812,8 +812,12 @@ def _stored_goal_to_event(goal):
 
 
 def _find_best_goal_for_var(var_event, goal_events):
-    best = None
-    best_score = -1
+    # The same goal can appear twice here: once from the current FotMob
+    # events and once from persisted state. Collapse exact event-key
+    # duplicates before scoring so that persistence itself never creates
+    # artificial ambiguity.
+    unique_goals = []
+    seen_keys = set()
 
     for goal_event, stored_goal in goal_events:
         if not isinstance(goal_event, dict):
@@ -825,16 +829,56 @@ def _find_best_goal_for_var(var_event, goal_events):
         if is_cancelled_goal_event(goal_event):
             continue
 
+        key = event_key(goal_event)
+
+        if key is not None:
+            key = str(key)
+            if key in seen_keys:
+                # Prefer the persisted representation because it preserves
+                # the original Telegram/state identity.
+                if isinstance(stored_goal, dict):
+                    for index, (old_event, old_stored) in enumerate(unique_goals):
+                        if str(event_key(old_event)) == key:
+                            unique_goals[index] = (goal_event, stored_goal)
+                            break
+                continue
+            seen_keys.add(key)
+
+        unique_goals.append((goal_event, stored_goal))
+
+    scored = []
+
+    for goal_event, stored_goal in unique_goals:
         score = _goal_var_match_score(
             goal_event,
             var_event,
         )
 
-        if score is not None and score > best_score:
-            best = (goal_event, stored_goal)
-            best_score = score
+        if score is not None:
+            scored.append(
+                (score, goal_event, stored_goal)
+            )
 
-    return best
+    if not scored:
+        return None
+
+    best_score = max(
+        score
+        for score, _, _ in scored
+    )
+
+    best_matches = [
+        (goal_event, stored_goal)
+        for score, goal_event, stored_goal in scored
+        if score == best_score
+    ]
+
+    # Equal evidence means we cannot safely identify which goal was ruled
+    # out. Never guess; wait for stronger FotMob identity information.
+    if len(best_matches) != 1:
+        return None
+
+    return best_matches[0]
 
 
 def detect_cancelled_goals(
