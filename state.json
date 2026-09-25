@@ -314,8 +314,8 @@
             "blockedY": null,
             "goalCrossedY": 37.27875,
             "goalCrossedZ": 0.6934736808,
-            "expectedGoals": 0.03745273873209953,
-            "expectedGoalsOnTarget": 0.5130113959312439,
+            "expectedGoals": 0.0566,
+            "expectedGoalsOnTarget": 0.4108,
             "shotType": "LeftFoot",
             "situation": "FastBreak",
             "period": "SecondHalf",
@@ -333,11 +333,8 @@
             "fullName": "Dodi Lukébakio",
             "teamColor": "#9f2533"
           },
-          "assistStr": "assist by Charles De Ketelaere",
-          "assistProfileUrl": "/players/1095432/charles-de-ketelaere",
-          "assistPlayerId": 1095432,
-          "assistKey": "assist_by",
-          "assistInput": "Charles De Ketelaere"
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
