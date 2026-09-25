@@ -452,6 +452,69 @@ class VarCancellationTests(unittest.TestCase):
         self.assertEqual(result, [])
 
 
+    def test_16_ambiguous_var_match_does_not_guess(self):
+        goal_one = fotmob_goal(
+            minute=10,
+            player_id=111,
+            player_name="Same Player",
+            react_key="goal-one",
+        )
+        goal_two = fotmob_goal(
+            minute=20,
+            player_id=111,
+            player_name="Same Player",
+            react_key="goal-two",
+        )
+        var = fotmob_var(
+            minute=90,
+            player_id=111,
+            player_name="Same Player",
+            text="VAR: Goal ruled out - foul",
+        )
+
+        result = detect_cancelled_goals(
+            [goal_one, goal_two, var],
+            {},
+        )
+
+        self.assertEqual(result, [])
+
+
+    def test_17_current_and_stored_copy_of_same_goal_is_not_ambiguous(self):
+        goal = fotmob_goal(
+            minute=13,
+            player_id=9991,
+            player_name="Virgil van Dijk",
+            react_key="goal-stored-and-current",
+        )
+        match_state = {
+            "goals": [
+                {
+                    "event_key": "react:goal-stored-and-current",
+                    "player_id": 9991,
+                    "player_name": "Virgil van Dijk",
+                    "is_home": True,
+                    "minute": "13",
+                    "cancelled": False,
+                    "event": goal,
+                }
+            ]
+        }
+        var = fotmob_var(
+            minute=30,
+            player_id=9991,
+            player_name="Virgil van Dijk",
+            text="VAR: Goal ruled out - foul",
+        )
+
+        result = detect_cancelled_goals(
+            [goal, var],
+            match_state,
+        )
+
+        self.assert_one_cancelled(result)
+
+
     def test_15_rebuilt_tbd_goal_is_not_emitted_as_new_goal(self):
         from event_detector import detect_state_changes
 
