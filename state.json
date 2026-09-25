@@ -3277,7 +3277,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1448224120Goal690107undefinedtrue",
-        "react:1448233229Goal805767undefinedfalse"
+        "react:1448233229Goal805767undefinedfalse",
+        "react:1448243143Goal664500undefinedtrue"
       ],
       "goals": [
         {
@@ -3455,6 +3456,94 @@
             "assistKey": "assist_by",
             "assistInput": "Andrei Rațiu"
           }
+        },
+        {
+          "event_key": "react:1448243143Goal664500undefinedtrue",
+          "player_id": 664500,
+          "player_name": "Viktor Gyökeres",
+          "assist_player_id": 1386775,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "43",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2548,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1448243143Goal664500undefinedtrue",
+            "timeStr": 43,
+            "type": "goal",
+            "time": 43,
+            "overloadTime": null,
+            "eventId": 14482431,
+            "player": {
+              "id": 664500,
+              "name": "Viktor Gyökeres",
+              "profileUrl": "/players/664500/viktor-gyokeres"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/664500/viktor-gyokeres",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Viktor Gyökeres",
+            "firstName": "Viktor",
+            "lastName": "Gyökeres",
+            "fullName": "Viktor Gyökeres",
+            "playerId": 664500,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2974579825,
+              "eventType": "Goal",
+              "teamId": 8520,
+              "playerId": 664500,
+              "playerName": "Viktor Gyökeres",
+              "x": 101.1120689658,
+              "y": 28.959285713000003,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.31375,
+              "goalCrossedZ": 1.5859999922,
+              "expectedGoals": 0.1530069261789322,
+              "expectedGoalsOnTarget": 0.7157178521156311,
+              "shotType": "RightFoot",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.1815476190476193,
+                "y": 0.4195767175132275,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 681213,
+              "firstName": "Viktor",
+              "lastName": "Gyökeres",
+              "fullName": "Viktor Gyökeres",
+              "teamColor": "#dd9a00"
+            },
+            "assistStr": "assist by Lucas Bergvall",
+            "assistProfileUrl": "/players/1386775/lucas-bergvall",
+            "assistPlayerId": 1386775,
+            "assistKey": "assist_by",
+            "assistInput": "Lucas Bergvall"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -3606,10 +3695,84 @@
           "assistPlayerId": 970578,
           "assistKey": "assist_by",
           "assistInput": "Andrei Rațiu"
+        },
+        {
+          "reactKey": "1448243143Goal664500undefinedtrue",
+          "timeStr": 43,
+          "type": "goal",
+          "time": 43,
+          "overloadTime": null,
+          "eventId": 14482431,
+          "player": {
+            "id": 664500,
+            "name": "Viktor Gyökeres",
+            "profileUrl": "/players/664500/viktor-gyokeres"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/664500/viktor-gyokeres",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Viktor Gyökeres",
+          "firstName": "Viktor",
+          "lastName": "Gyökeres",
+          "fullName": "Viktor Gyökeres",
+          "playerId": 664500,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2974579825,
+            "eventType": "Goal",
+            "teamId": 8520,
+            "playerId": 664500,
+            "playerName": "Viktor Gyökeres",
+            "x": 101.1120689658,
+            "y": 28.959285713000003,
+            "min": 43,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.31375,
+            "goalCrossedZ": 1.5859999922,
+            "expectedGoals": 0.1530069261789322,
+            "expectedGoalsOnTarget": 0.7157178521156311,
+            "shotType": "RightFoot",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.1815476190476193,
+              "y": 0.4195767175132275,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 681213,
+            "firstName": "Viktor",
+            "lastName": "Gyökeres",
+            "fullName": "Viktor Gyökeres",
+            "teamColor": "#dd9a00"
+          },
+          "assistStr": "assist by Lucas Bergvall",
+          "assistProfileUrl": "/players/1386775/lucas-bergvall",
+          "assistPlayerId": 1386775,
+          "assistKey": "assist_by",
+          "assistInput": "Lucas Bergvall"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
