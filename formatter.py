@@ -1201,6 +1201,15 @@ def get_competition_display_name(snapshot):
         or "نامشخص"
     )
 
+    group_info = snapshot.get("group_info")
+    if isinstance(group_info, dict):
+        group_name = (
+            group_info.get("name_fa")
+            or group_info.get("name")
+        )
+        if group_name:
+            league = f"{league} | {group_name}"
+
     round_info = snapshot.get("round_info")
     if isinstance(round_info, dict):
         round_name = (
