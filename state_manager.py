@@ -25,6 +25,7 @@ def default_match_state():
         "finished_sent": False,
         "event_keys": [],
         "goals": [],
+        "cancelled_goal_keys": [],
     }
 
 
@@ -203,6 +204,17 @@ def get_match_state(
 
         match_state[
             "goals"
+        ] = []
+
+    if not isinstance(
+        match_state.get(
+            "cancelled_goal_keys"
+        ),
+        list,
+    ):
+
+        match_state[
+            "cancelled_goal_keys"
         ] = []
 
     # --------------------------------------------------------
