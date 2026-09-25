@@ -1569,89 +1569,60 @@ def build_cancelled_goal_message(
         "away",
     )
 
-    if not isinstance(
-        cancelled_goal,
-        dict,
-    ):
+    if not isinstance(cancelled_goal, dict):
         return ""
 
-    goal_event = (
-        cancelled_goal.get(
-            "goal_event"
-        )
-    )
-
-    if not isinstance(
-        goal_event,
-        dict,
-    ):
+    goal_event = cancelled_goal.get("goal_event")
+    if not isinstance(goal_event, dict):
         return ""
 
-    player_name = (
-        get_event_player_name(
-            goal_event
-        )
-    )
+    player_name = get_event_player_name(goal_event) or "بازیکن نامشخص"
 
-    if not player_name:
-        player_name = (
-            "بازیکن نامشخص"
-        )
-
-    event_team = (
-        cancelled_goal.get(
-            "event_team"
-        )
-    )
-
+    event_team = cancelled_goal.get("is_home")
     if event_team is None:
-        event_team = (
-            get_event_team(
-                goal_event
-            )
-        )
+        event_team = cancelled_goal.get("event_team")
+    if event_team is None:
+        event_team = get_event_team(goal_event)
 
     if event_team is True:
         team_name = home_name
-
     elif event_team is False:
         team_name = away_name
-
     else:
         team_name = ""
 
-    minute = (
-        cancelled_goal.get(
-            "minute"
-        )
-    )
-
+    minute = cancelled_goal.get("minute")
     if minute is None:
-        minute = get_goal_minute(
-            goal_event
-        )
+        minute = get_goal_minute(goal_event)
 
-    lines = [
-        "❌ گل مردود شد!",
-    ]
+    reason = cancelled_goal.get("cancel_reason")
+    reason_fa = {
+        "foul": "به دلیل خطا",
+        "offside": "به دلیل آفساید",
+        "handball": "به دلیل هند",
+        "simulation": "به دلیل تمارض",
+        "dangerous play": "به دلیل بازی خطرناک",
+        "keeper interference": "به دلیل دخالت روی دروازه‌بان",
+        "goalkeeper interference": "به دلیل دخالت روی دروازه‌بان",
+    }.get(reason)
+
+    lines = ["❌ گل مردود شد!"]
 
     if team_name:
-        lines.append(
-            f"گل {team_name}"
-        )
+        lines.append(f"گل {team_name}")
 
     if minute is not None:
-        lines.append(
-            f"⏱ دقیقه {minute}"
-        )
+        lines.append(f"⏱ دقیقه {minute}")
 
-    lines.append(
-        player_name
-    )
+    lines.append(player_name)
 
-    lines.append(
-        "🖥 VAR گل را مردود اعلام کرد."
-    )
+    if cancelled_goal.get("cancelled_by_var"):
+        decision_line = "🖥 VAR گل را مردود اعلام کرد."
+        if reason_fa:
+            decision_line += f" {reason_fa}."
+        lines.append(decision_line)
+    else:
+        lines.append("🖥 گل توسط فوت‌موب مردود ثبت شده است.")
 
     score_text = format_score(
         score,
@@ -1661,13 +1632,9 @@ def build_cancelled_goal_message(
 
     if score_text:
         lines.append("")
-        lines.append(
-            score_text
-        )
+        lines.append(score_text)
 
-    return "\n".join(
-        lines
-    )
+    return "\n".join(lines)
 
 
 # --------------------------------------------------------
