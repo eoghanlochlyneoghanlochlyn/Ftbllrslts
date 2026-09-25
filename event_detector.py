@@ -1555,7 +1555,8 @@ def detect_state_changes(
     # -----------------------------------------------------
 
     cancelled = detect_cancelled_goals(
-        events
+        events,
+        match_state,
     )
 
     previous_cancelled = set()
