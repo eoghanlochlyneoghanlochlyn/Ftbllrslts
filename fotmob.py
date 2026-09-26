@@ -25,7 +25,7 @@ IRAN_TIMEZONE = ZoneInfo("Asia/Tehran")
 FOTMOB_BASE_URL = "https://www.fotmob.com"
 
 FOTMOB_API_URL = (
-    "https://www.fotmob.com/api/matchDetails"
+    "https://www.fotmob.com/api/data/matchDetails"
 )
 
 FOTMOB_HEADERS = {
@@ -217,8 +217,23 @@ def fetch_match_api(match_id):
         data = response.json()
 
         if not isinstance(data, dict):
+            print(f"FotMob {match_id}: API returned non-object JSON; HTML backup.")
             return None
 
+        content = data.get("content")
+        header = data.get("header")
+        general = data.get("general")
+        if not isinstance(content, dict) or not (
+            isinstance(header, dict) or isinstance(general, dict)
+        ):
+            print(f"FotMob {match_id}: incomplete API payload; HTML backup.")
+            return None
+
+        print(
+            f"FotMob {match_id}: API PRIMARY OK | "
+            f"cache={response.headers.get('Cache-Control', 'unknown')} | "
+            f"bytes={len(response.content)}"
+        )
         return data
 
     except Exception as error:
@@ -1449,8 +1464,13 @@ def extract_basic_info(data):
     # تیم‌ها
     # -----------------------------------------------------
 
+    api_teams = header.get("teams")
+    if not isinstance(api_teams, dict):
+        api_teams = {}
+
     home = (
-        general.get("homeTeam")
+        api_teams.get("home")
+        or general.get("homeTeam")
         or page_general.get("homeTeam")
         or header.get("homeTeam")
         or content_general.get("homeTeam")
@@ -1459,7 +1479,8 @@ def extract_basic_info(data):
     )
 
     away = (
-        general.get("awayTeam")
+        api_teams.get("away")
+        or general.get("awayTeam")
         or page_general.get("awayTeam")
         or header.get("awayTeam")
         or content_general.get("awayTeam")
@@ -1549,9 +1570,10 @@ def extract_basic_info(data):
     # رقابت
     # -----------------------------------------------------
 
-    league = ""
-    competition_id = None
-    stage_id = None
+    # Current matchDetails API exposes direct general league fields.
+    league = clean_text(general.get("leagueName") or header.get("leagueName"))
+    competition_id = general.get("leagueId") or header.get("leagueId")
+    stage_id = competition_id
 
     tournament_candidates = [
         general.get("tournament"),
@@ -4643,7 +4665,14 @@ def get_match_events(match_url):
         )
 
         if events:
+            print(f"FotMob {match_id}: events from API PRIMARY ({len(events)}).")
             return events
+
+        status = get_match_status(data)
+        if not status.get("started"):
+            print(f"FotMob {match_id}: API reports no pre-match events.")
+            return []
+        print(f"FotMob {match_id}: API events empty; trying HTML BACKUP.")
 
     page = fetch_match_page(
         match_id
@@ -5312,6 +5341,7 @@ def get_match_snapshot(match_url):
 
     if not isinstance(data, dict):
 
+        print(f"FotMob {match_id}: switching to HTML BACKUP.")
         page = fetch_match_page(
             match_id
         )
