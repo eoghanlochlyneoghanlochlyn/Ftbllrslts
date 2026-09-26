@@ -4088,7 +4088,7 @@
           "event_key": "react:1449062036Goal906937undefinedtrue",
           "player_id": 906937,
           "player_name": "Anthony Gordon",
-          "assist_player_id": null,
+          "assist_player_id": 1077894,
           "assist_player_name": "",
           "is_home": true,
           "minute": "36",
@@ -4165,8 +4165,11 @@
               "fullName": "Anthony Gordon",
               "teamColor": "#6FA3E6"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Jude Bellingham",
+            "assistProfileUrl": "/players/1077894/jude-bellingham",
+            "assistPlayerId": 1077894,
+            "assistKey": "assist_by",
+            "assistInput": "Jude Bellingham"
           }
         }
       ],
@@ -4311,8 +4314,11 @@
             "fullName": "Anthony Gordon",
             "teamColor": "#6FA3E6"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Jude Bellingham",
+          "assistProfileUrl": "/players/1077894/jude-bellingham",
+          "assistPlayerId": 1077894,
+          "assistKey": "assist_by",
+          "assistInput": "Jude Bellingham"
         }
       ],
       "observed_score": {
