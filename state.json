@@ -396,8 +396,10 @@
       "started": true,
       "half_time": false,
       "finished": true,
-      "finished_sent": false,
-      "event_keys": [],
+      "finished_sent": true,
+      "event_keys": [
+        "react:1446239870Goal1047667undefinedfalse"
+      ],
       "goals": [
         {
           "event_key": "react:1446239870Goal1047667undefinedfalse",
@@ -410,7 +412,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2710,
           "needs_update": false,
           "event": {
             "reactKey": "1446239870Goal1047667undefinedfalse",
@@ -571,13 +573,16 @@
       }
     },
     "5749667": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": true,
-      "finished_sent": false,
-      "event_keys": [],
+      "finished_sent": true,
+      "event_keys": [
+        "react:1440440868Goal1445650undefinedfalse",
+        "react:1440463390Goal1189288undefinedtrue"
+      ],
       "goals": [
         {
           "event_key": "react:1440440868Goal1445650undefinedfalse",
@@ -590,7 +595,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2715,
           "needs_update": false,
           "event": {
             "reactKey": "1440440868Goal1445650undefinedfalse",
@@ -678,7 +683,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2716,
           "needs_update": false,
           "event": {
             "reactKey": "1440463390Goal1189288undefinedtrue",
@@ -913,13 +918,16 @@
       }
     },
     "4653716": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": true,
-      "finished_sent": false,
-      "event_keys": [],
+      "finished_sent": true,
+      "event_keys": [
+        "react:1422045713Goal979376undefinedfalse",
+        "react:1422054255Goal660213undefinedtrue"
+      ],
       "goals": [
         {
           "event_key": "react:1422045713Goal979376undefinedfalse",
@@ -932,7 +940,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2721,
           "needs_update": false,
           "event": {
             "reactKey": "1422045713Goal979376undefinedfalse",
@@ -1020,7 +1028,7 @@
           "penalty": false,
           "own_goal": true,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2722,
           "needs_update": false,
           "event": {
             "reactKey": "1422054255Goal660213undefinedtrue",
@@ -1249,13 +1257,16 @@
       }
     },
     "5802936": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": true,
       "finished_sent": false,
-      "event_keys": [],
+      "event_keys": [
+        "react:1442511152Goal1523208undefinedtrue",
+        "react:1442533571Goal1412956undefinedfalse"
+      ],
       "goals": [
         {
           "event_key": "react:1442511152Goal1523208undefinedtrue",
@@ -1268,7 +1279,7 @@
           "penalty": false,
           "own_goal": true,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2727,
           "needs_update": false,
           "event": {
             "reactKey": "1442511152Goal1523208undefinedtrue",
@@ -1353,7 +1364,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2728,
           "needs_update": false,
           "event": {
             "reactKey": "1442533571Goal1412956undefinedfalse",
