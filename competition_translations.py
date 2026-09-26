@@ -66,6 +66,10 @@ _COMPETITION_TRANSLATIONS = (
 # نام مرحله/نسخه رقابت برمی‌گرداند و ممکن است
 # شناسه‌شان در competitions.json ثبت نشده باشد.
 _FALLBACK_TRANSLATIONS = {
+    "uefa nations league a": "لیگ ملت‌های اروپا سطح A",
+    "uefa nations league b": "لیگ ملت‌های اروپا سطح B",
+    "uefa nations league c": "لیگ ملت‌های اروپا سطح C",
+    "uefa nations league d": "لیگ ملت‌های اروپا سطح D",
     "champions league qualification": (
         "انتخابی لیگ قهرمانان اروپا"
     ),
@@ -97,6 +101,16 @@ def get_persian_competition_name(
         normalized_name
     )
 
+    if translated:
+        return translated
+
+    base_name = normalized_name
+    for marker in (" grp. ", " grp ", " group "):
+        if marker in base_name:
+            base_name = base_name.split(marker, 1)[0].strip()
+            break
+
+    translated = _FALLBACK_TRANSLATIONS.get(base_name)
     if translated:
         return translated
 
