@@ -35,11 +35,11 @@ from event_detector import (
 
 from formatter import (
     build_cancelled_goal_message,
-    build_final_lineup_rich_message,
-    build_final_stats_rich_message,
+    build_final_lineup_message,
+    build_final_stats_message,
     build_goal_message,
     build_half_time_message,
-    build_lineup_rich_message,
+    build_lineup_message,
     build_red_card_message,
     build_start_message,
 )
@@ -1151,14 +1151,12 @@ def process_match(
             "Sending lineup rich message."
         )
 
-        rich_message = (
-            build_lineup_rich_message(
-                snapshot,
-                show_rating=False,
-            )
+        lineup_message = build_lineup_message(
+            snapshot,
+            show_rating=False,
         )
 
-        if rich_message:
+        if lineup_message:
 
             try:
 
@@ -1166,9 +1164,7 @@ def process_match(
                     time.monotonic()
                 )
 
-                response = send_rich_message(
-                    rich_message
-                )
+                send_long_message(lineup_message)
 
                 telegram_finished_at = (
                     time.monotonic()
@@ -1185,9 +1181,7 @@ def process_match(
                         response,
                         dict,
                     )
-                    and response.get(
-                        "ok"
-                    ) is True
+                    True
                 ):
 
                     match_state[
@@ -1537,11 +1531,9 @@ def process_match(
             # پیام اول
             # -------------------------------------------------
 
-            final_lineup_message = (
-                build_final_lineup_rich_message(
-                    snapshot,
-                    events,
-                )
+            final_lineup_message = build_final_lineup_message(
+                snapshot,
+                events,
             )
 
             lineup_sent = False
@@ -1554,9 +1546,7 @@ def process_match(
                         time.monotonic()
                     )
 
-                    response = send_rich_message(
-                        final_lineup_message
-                    )
+                    send_long_message(final_lineup_message)
 
                     telegram_finished_at = (
                         time.monotonic()
@@ -1568,15 +1558,7 @@ def process_match(
                         f"{telegram_finished_at - telegram_started_at:.2f}s",
                     )
 
-                    lineup_sent = (
-                        isinstance(
-                            response,
-                            dict,
-                        )
-                        and response.get(
-                            "ok"
-                        ) is True
-                    )
+                    lineup_sent = True
 
                 except Exception as error:
 
@@ -1594,11 +1576,9 @@ def process_match(
                 "Sending final stats rich message."
             )
 
-            final_stats_message = (
-                build_final_stats_rich_message(
-                    snapshot,
-                    final_score,
-                )
+            final_stats_message = build_final_stats_message(
+                snapshot,
+                final_score,
             )
 
             stats_sent = False
@@ -1611,9 +1591,7 @@ def process_match(
                         time.monotonic()
                     )
 
-                    response = send_rich_message(
-                        final_stats_message
-                    )
+                    send_long_message(final_stats_message)
 
                     telegram_finished_at = (
                         time.monotonic()
@@ -1625,15 +1603,7 @@ def process_match(
                         f"{telegram_finished_at - telegram_started_at:.2f}s",
                     )
 
-                    stats_sent = (
-                        isinstance(
-                            response,
-                            dict,
-                        )
-                        and response.get(
-                            "ok"
-                        ) is True
-                    )
+                    stats_sent = True
 
                 except Exception as error:
 
