@@ -4415,7 +4415,8 @@
         "react:1449062036Goal906937undefinedtrue",
         "react:1449066040Goal0undefinedtrue",
         "react:1449066040Goal194165undefinedtrue",
-        "react:1449112560Goal942372undefinedfalse"
+        "react:1449112560Goal942372undefinedfalse",
+        "react:1449135074Goal678234undefinedfalse"
       ],
       "goals": [
         {
@@ -4816,6 +4817,91 @@
             "assistKey": "assist_by",
             "assistInput": "Dani Olmo"
           }
+        },
+        {
+          "event_key": "react:1449135074Goal678234undefinedfalse",
+          "player_id": 678234,
+          "player_name": "Mikel Oyarzabal",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "74",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2784,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449135074Goal678234undefinedfalse",
+            "timeStr": 74,
+            "type": "goal",
+            "time": 74,
+            "overloadTime": null,
+            "eventId": 14491350,
+            "player": {
+              "id": 678234,
+              "name": "Mikel Oyarzabal",
+              "profileUrl": "/players/678234/mikel-oyarzabal"
+            },
+            "homeScore": 2,
+            "awayScore": 2,
+            "profileUrl": "/players/678234/mikel-oyarzabal",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mikel Oyarzabal",
+            "firstName": "Mikel",
+            "lastName": "Oyarzabal",
+            "fullName": "Mikel Oyarzabal",
+            "playerId": 678234,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975062741,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 678234,
+              "playerName": "Mikel Oyarzabal",
+              "x": 97.1842105256,
+              "y": 30.416249999999994,
+              "min": 74,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.305,
+              "goalCrossedZ": 0.6485263126,
+              "expectedGoals": 0.5063,
+              "expectedGoalsOnTarget": 0.4024,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.9193121693121694,
+                "y": 0.17156780756613757,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1187213,
+              "firstName": "Mikel",
+              "lastName": "Oyarzabal",
+              "fullName": "Mikel Oyarzabal",
+              "teamColor": "#c62035"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -5148,11 +5234,82 @@
           "assistPlayerId": 614834,
           "assistKey": "assist_by",
           "assistInput": "Dani Olmo"
+        },
+        {
+          "reactKey": "1449135074Goal678234undefinedfalse",
+          "timeStr": 74,
+          "type": "goal",
+          "time": 74,
+          "overloadTime": null,
+          "eventId": 14491350,
+          "player": {
+            "id": 678234,
+            "name": "Mikel Oyarzabal",
+            "profileUrl": "/players/678234/mikel-oyarzabal"
+          },
+          "homeScore": 2,
+          "awayScore": 2,
+          "profileUrl": "/players/678234/mikel-oyarzabal",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mikel Oyarzabal",
+          "firstName": "Mikel",
+          "lastName": "Oyarzabal",
+          "fullName": "Mikel Oyarzabal",
+          "playerId": 678234,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975062741,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 678234,
+            "playerName": "Mikel Oyarzabal",
+            "x": 97.1842105256,
+            "y": 30.416249999999994,
+            "min": 74,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.305,
+            "goalCrossedZ": 0.6485263126,
+            "expectedGoals": 0.5063,
+            "expectedGoalsOnTarget": 0.4024,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.9193121693121694,
+              "y": 0.17156780756613757,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1187213,
+            "firstName": "Mikel",
+            "lastName": "Oyarzabal",
+            "fullName": "Mikel Oyarzabal",
+            "teamColor": "#c62035"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 2
+        "away": 3
       }
     },
     "5181827": {
