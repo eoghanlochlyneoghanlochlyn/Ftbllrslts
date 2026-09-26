@@ -3627,13 +3627,16 @@
       }
     },
     "4935225": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": true,
-      "finished_sent": false,
-      "event_keys": [],
+      "finished_sent": true,
+      "event_keys": [
+        "react:1371437530Goal1282008undefinedtrue",
+        "react:1371462448Goal1282285undefinedfalse"
+      ],
       "goals": [
         {
           "event_key": "react:1371437530Goal1282008undefinedtrue",
@@ -3646,7 +3649,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2761,
           "needs_update": false,
           "event": {
             "reactKey": "1371437530Goal1282008undefinedtrue",
@@ -3734,7 +3737,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2762,
           "needs_update": false,
           "event": {
             "reactKey": "1371462448Goal1282285undefinedfalse",
