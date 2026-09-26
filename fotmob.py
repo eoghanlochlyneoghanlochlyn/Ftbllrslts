@@ -2938,80 +2938,141 @@ def _collect_explicit_shootout_sections(
 
 
 def _get_shootout_score_from_events(data):
+    """
+    استخراج نتیجه ضربات پنالتی فقط از رویدادهای واقعی shootout.
 
-    candidates = (
-        _get_current_match_event_candidates(
-            data
-        )
+    نکته مهم:
+    - رویدادهای عادی مسابقه نباید وارد شمارش شوند.
+    - یک ضربه ممکن است در چند مسیر API تکرار شود؛ برای همین
+      fingerprint رویداد استفاده می‌کنیم، نه playerId به‌تنهایی.
+      یک بازیکن می‌تواند در صورت طولانی شدن shootout بیش از یک بار
+      پنالتی بزند.
+    - home/away از teamId خود مسابقه تعیین می‌شود، نه از ترتیب
+      مسیرهای API.
+    """
+
+    content = get_content(data)
+    if not isinstance(content, dict):
+        return None
+
+    # فقط بخش‌های صریح مربوط به shootout را بررسی کن.
+    sections = _collect_explicit_shootout_sections(content)
+    if not sections:
+        match_facts = content.get("matchFacts")
+        if isinstance(match_facts, dict):
+            sections = _collect_explicit_shootout_sections(
+                match_facts
+            )
+
+    if not sections:
+        return None
+
+    header = (
+        data.get("header")
+        if isinstance(data, dict)
+        else None
+    )
+    if not isinstance(header, dict):
+        header = {}
+
+    teams = header.get("teams")
+    if not isinstance(teams, dict):
+        teams = {}
+
+    home_team = teams.get("home")
+    away_team = teams.get("away")
+
+    home_id = (
+        home_team.get("id")
+        if isinstance(home_team, dict)
+        else None
+    )
+    away_id = (
+        away_team.get("id")
+        if isinstance(away_team, dict)
+        else None
     )
 
+    # در بعضی پاسخ‌ها شناسه تیم داخل general است.
+    general = (
+        data.get("general")
+        if isinstance(data, dict)
+        else None
+    )
+    if isinstance(general, dict):
+        if home_id is None:
+            home = general.get("homeTeam")
+            if isinstance(home, dict):
+                home_id = home.get("id")
+        if away_id is None:
+            away = general.get("awayTeam")
+            if isinstance(away, dict):
+                away_id = away.get("id")
+
+    event_lists = []
+    for section in sections:
+        event_lists.extend(
+            _collect_event_lists(section)
+        )
+
+    if not event_lists:
+        return None
+
+    seen = set()
     home_score = 0
     away_score = 0
     found = False
-    seen_shootout_events = set()
 
-    for candidate in candidates:
+    def _fingerprint(event):
+        # این فیلدها هویت خودِ تلاش پنالتی را حفظ می‌کنند.
+        # عمداً playerId به‌تنهایی استفاده نمی‌شود چون یک بازیکن
+        # ممکن است در shootout طولانی دوباره پنالتی بزند.
+        fields = (
+            "teamId",
+            "isHome",
+            "playerId",
+            "playerName",
+            "minute",
+            "time",
+            "period",
+            "isScored",
+            "scored",
+            "converted",
+            "successful",
+            "success",
+            "description",
+            "eventType",
+            "incidentType",
+        )
+        values = []
+        for key in fields:
+            value = event.get(key)
+            if isinstance(value, (dict, list)):
+                value = json.dumps(
+                    value,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            values.append(
+                (key, str(value))
+            )
+        return tuple(values)
 
+    for candidate in event_lists:
         for event in candidate:
-
             if not isinstance(event, dict):
                 continue
 
-            # بعضی پاسخ‌های FotMob یک ضربه پنالتی را در چند مسیر
-            # مختلف برمی‌گردانند. قبل از شمارش باید همان رویداد را
-            # فقط یک بار حساب کنیم؛ وگرنه مثلاً 4-8 به 8-16 تبدیل می‌شود.
-            # در ضربات پنالتی ممکن است یک ضربه از چند مسیر API
-            # با reactKey/id متفاوت تکرار شود. هویت اصلی ضربه را
-            # بر اساس زننده + تیم می‌سازیم؛ اگر زننده شناخته نباشد،
-            # تیم + دقیقه/زمان + وضعیت تبدیل شدن را استفاده می‌کنیم.
-            player_id = event.get("playerId")
-            team_id = event.get("teamId")
-            player_name = event.get("playerName")
-            minute = event.get("minute")
-            event_time = event.get("time")
-
-            if player_id not in (None, "", 0, "0"):
-                event_key = (
-                    "player",
-                    str(player_id),
-                    str(team_id),
-                )
-            elif player_name:
-                event_key = (
-                    "player_name",
-                    clean_text(player_name).lower(),
-                    str(team_id),
-                )
-            else:
-                event_key = (
-                    "attempt",
-                    str(team_id),
-                    str(event.get("isHome")),
-                    str(minute),
-                    str(event_time),
-                    str(
-                        event.get("isScored")
-                        if event.get("isScored") is not None
-                        else event.get("scored")
-                    ),
-                )
-
-            event_key = str(event_key)
-
-            if event_key in seen_shootout_events:
+            if not _is_penalty_shootout_event(event):
                 continue
 
-            seen_shootout_events.add(event_key)
-
-            if not _is_penalty_shootout_event(
-                event
-            ):
+            fingerprint = _fingerprint(event)
+            if fingerprint in seen:
                 continue
-
+            seen.add(fingerprint)
             found = True
 
             scored = None
-
             for key in (
                 "isGoal",
                 "isScored",
@@ -3020,18 +3081,10 @@ def _get_shootout_score_from_events(data):
                 "success",
                 "successful",
             ):
-
-                if key in event:
-
-                    value = event.get(key)
-
-                    if isinstance(
-                        value,
-                        bool,
-                    ):
-
-                        scored = value
-                        break
+                value = event.get(key)
+                if isinstance(value, bool):
+                    scored = value
+                    break
 
             event_text = " ".join(
                 str(event.get(key, ""))
@@ -3055,128 +3108,51 @@ def _get_shootout_score_from_events(data):
                     "woodwork",
                 )
             ):
-
                 scored = False
 
             if scored is False:
                 continue
 
+            # اگر FotMob رویداد shootout را بدون فلگ موفقیت بدهد،
+            # آن را تلاش موفق در نظر می‌گیریم؛ چون این بخش فقط از
+            # رویدادهای صریح shootout آمده است.
             if scored is None:
                 scored = True
 
             if not scored:
                 continue
 
-            is_home = event.get(
-                "isHome"
-            )
+            team_id = event.get("teamId")
+            is_home = event.get("isHome")
 
-            if is_home is None:
-
-                team = event.get(
-                    "team"
-                )
-
-                if isinstance(
-                    team,
-                    dict,
+            if (
+                home_id is not None
+                and team_id is not None
+            ):
+                if str(team_id) == str(home_id):
+                    is_home = True
+                elif (
+                    away_id is not None
+                    and str(team_id) == str(away_id)
                 ):
-
-                    is_home = (
-                        team.get("isHome")
-                        if "isHome" in team
-                        else team.get("home")
-                    )
+                    is_home = False
 
             if is_home is True:
                 home_score += 1
-
             elif is_home is False:
                 away_score += 1
 
-    if (
-        found
-        and (
-            home_score > 0
-            or away_score > 0
-        )
-    ):
-
-        return {
-            "home": home_score,
-            "away": away_score,
-        }
-
-    return None
-
-
-def _get_penalty_score_from_page(
-    data
-):
-
-    if not isinstance(data, dict):
+    if not found:
         return None
 
-    match_id = recursive_find(
-        data,
-        {
-            "matchId",
-            "matchID",
-            "match_id",
-        },
-    )
-
-    match_id = extract_match_id(
-        match_id
-    )
-
-    if not match_id:
+    # اگر هیچ رویدادی به تیمی قابل انتساب نبود، نتیجه قابل اعتماد نیست.
+    if home_score == 0 and away_score == 0:
         return None
 
-    html = fetch_match_page(
-        match_id
-    )
-
-    if not html:
-        return None
-
-    patterns = [
-        r"\bPen(?:alties)?\s*:\s*"
-        r"(\d+)\s*[-:]\s*(\d+)",
-
-        r"\bPenalty\s+shootout"
-        r"[^0-9]{0,100}"
-        r"(\d+)\s*[-:]\s*(\d+)",
-    ]
-
-    for pattern in patterns:
-
-        match = re.search(
-            pattern,
-            html,
-            re.IGNORECASE | re.DOTALL,
-        )
-
-        if match:
-
-            try:
-
-                return {
-                    "home": int(
-                        match.group(1)
-                    ),
-                    "away": int(
-                        match.group(2)
-                    ),
-                }
-
-            except (
-                TypeError,
-                ValueError,
-            ):
-                continue
-
-    return None
+    return {
+        "home": home_score,
+        "away": away_score,
+    }
 
 
 def get_penalty_shootout_score(data):
