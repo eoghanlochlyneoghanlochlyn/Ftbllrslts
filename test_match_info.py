@@ -1,248 +1,144 @@
+"""Read-only FotMob match report. Run: python test_match_info.py [match_id]"""
 import json
+import sys
 import time
-
 import requests
 
 BASE = "https://www.fotmob.com"
-API_NEW = f"{BASE}/api/data/matchDetails"
-LTC_API = f"{BASE}/api/data/ltc"
-TEST_MATCH_ID = "5868463"
-
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140.0.0.0 Safari/537.36",
     "Accept": "application/json,text/plain,*/*",
-    "Accept-Language": "en-US,en;q=0.9",
     "Referer": BASE + "/",
 }
 
 
-def walk(node, path="$"):
-    yield path, node
-    if isinstance(node, dict):
-        for key, value in node.items():
-            yield from walk(value, f"{path}.{key}")
-    elif isinstance(node, list):
-        for i, value in enumerate(node):
-            yield from walk(value, f"{path}[{i}]")
+def show(value):
+    return json.dumps(value, ensure_ascii=False, default=str)
 
 
-def compact(value, limit=900):
-    try:
-        raw = json.dumps(value, ensure_ascii=False, default=str)
-    except Exception:
-        raw = repr(value)
-    return raw if len(raw) <= limit else raw[:limit] + "...<truncated>"
+def heading(title):
+    print("\n" + "=" * 90)
+    print(title)
+    print("=" * 90)
 
 
-def section(name, ok, detail=""):
-    print(f"{name}: {'PASS' if ok else 'FAIL'}" + (f" | {detail}" if detail else ""))
+def match_report(data, match_id):
+    general = data.get("general") or {}
+    header = data.get("header") or {}
+    content = data.get("content") or {}
+    facts = content.get("matchFacts") or {}
+    lineup = content.get("lineup") or {}
+    status = header.get("status") or {}
 
+    heading("MATCH / COMPETITION / TEAMS")
+    print("Match ID:", match_id)
+    print("Competition:", general.get("leagueName") or header.get("leagueName") or "Not available")
+    print("Competition ID:", general.get("leagueId") or header.get("leagueId") or "Not available")
+    print("Round:", general.get("roundName") or general.get("round") or facts.get("round") or "Not available")
+    for side in ("home", "away"):
+        team = header.get("teams", {}).get(side, {}) if isinstance(header.get("teams"), dict) else {}
+        lineup_team = lineup.get(side + "Team") or {}
+        print(f"{side.upper()} TEAM:", team.get("name") or lineup_team.get("name") or "Not available",
+              "| ID:", team.get("id") or lineup_team.get("id"))
+    print("Kickoff UTC:", status.get("utcTime") or general.get("matchTimeUTC") or "Not available")
+    print("Score:", status.get("scoreStr") or "Not available")
+    print("Status:", show({k: status.get(k) for k in ("started", "finished", "ongoing", "cancelled", "reason", "liveTime", "halfs")}))
 
-def fetch_api():
-    url = f"{API_NEW}?matchId={TEST_MATCH_ID}"
-    print("=" * 100)
-    print("FOTMOB CURRENT API COMPREHENSIVE TEST")
-    print("=" * 100)
-    print(f"Match ID: {TEST_MATCH_ID}")
-    print(f"API URL: {url}")
-    started = time.perf_counter()
-    response = requests.get(url, headers=HEADERS, timeout=30)
-    elapsed = time.perf_counter() - started
-    print(f"HTTP status: {response.status_code}")
-    print(f"Elapsed: {elapsed:.3f}s")
-    print(f"Content-Type: {response.headers.get('content-type', '')}")
-    print(f"Cache-Control: {response.headers.get('cache-control', '')}")
-    print(f"Response length: {len(response.content)} bytes")
-    response.raise_for_status()
-    data = response.json()
-    if not isinstance(data, dict):
-        raise AssertionError(f"Expected JSON object, got {type(data).__name__}")
-    print(f"Top-level keys: {list(data.keys())}")
-    return data
+    heading("LINEUPS AND PLAYER RATINGS")
+    print("Lineup type:", lineup.get("lineupType") or "Not available")
+    for side in ("home", "away"):
+        team = lineup.get(side + "Team") or {}
+        print(f"\n{side.upper()}: {team.get('name', '?')} | Formation: {team.get('formation', '?')} | Team rating: {team.get('rating', 'N/A')}")
+        for group in ("starters", "subs"):
+            players = team.get(group) or []
+            print(f"  {group.upper()} ({len(players)}):")
+            for player in players:
+                if not isinstance(player, dict):
+                    continue
+                performance = player.get("performance") or {}
+                print(f"    #{player.get('shirtNumber', '-')} {player.get('name', '?')} "
+                      f"| id={player.get('id')} | position={player.get('positionId', '-')} "
+                      f"| rating={performance.get('rating', 'N/A')} "
+                      f"| performance={show(performance)}")
 
-
-def find_key_nodes(data, wanted):
-    wanted = {x.lower() for x in wanted}
-    hits = []
-    for path, node in walk(data):
-        if isinstance(node, dict):
-            for key, value in node.items():
-                if str(key).lower() in wanted:
-                    hits.append((f"{path}.{key}", value))
-    return hits
-
-
-def inspect_status(data):
-    candidates = []
-    for path, node in walk(data):
-        if not isinstance(node, dict):
-            continue
-        keys = {str(k).lower() for k in node}
-        if ("started" in keys or "finished" in keys or "statusid" in keys) and (
-            "scorestr" in keys or "score" in keys or "reason" in keys
-        ):
-            candidates.append((path, node))
-    print("\nMATCH STATUS / RESULT")
-    for path, node in candidates[:5]:
-        print(f"  {path}: {compact(node, 1200)}")
-    ok = bool(candidates)
-    section("MATCH STATUS / RESULT", ok, f"candidate_objects={len(candidates)}")
-    return ok
-
-
-def inspect_lineups(data):
-    hits = find_key_nodes(data, {"lineups", "lineup"})
-    print("\nLINEUPS")
-    useful = []
-    for path, value in hits:
-        if isinstance(value, (dict, list)):
-            useful.append((path, value))
-            print(f"  {path}: type={type(value).__name__}, size={len(value) if hasattr(value, '__len__') else '?'}")
-            print(f"    {compact(value, 1400)}")
-    ok = bool(useful)
-    section("LINEUPS", ok, f"candidate_nodes={len(useful)}")
-    return ok
-
-
-def inspect_events(data):
-    hits = find_key_nodes(data, {"events", "incidents"})
-    print("\nEVENTS / INCIDENTS")
-    useful = [(p, v) for p, v in hits if isinstance(v, list) and v]
-    for path, events in useful[:8]:
-        print(f"  {path}: {len(events)} objects")
-        for event in events[:8]:
-            print(f"    {compact(event, 1000)}")
-    all_events = [v for _, v in useful]
-    ok = bool(all_events)
-    categories = set()
-    for events in all_events:
-        for event in events:
-            if isinstance(event, dict):
-                raw = " ".join(str(event.get(k, "")) for k in ("type", "eventType", "incidentType", "incidentClass")).lower()
-                if "goal" in raw:
-                    categories.add("goal")
-                if "card" in raw or "yellow" in raw or "red" in raw:
-                    categories.add("card")
-                if "sub" in raw:
-                    categories.add("substitution")
-    print(f"  Detected categories: {sorted(categories)}")
-    section("EVENTS / INCIDENTS", ok, f"non_empty_arrays={len(useful)}")
-    return ok
-
-
-def inspect_team_stats(data):
-    hits = find_key_nodes(data, {"stats", "statistics"})
-    useful = [(p, v) for p, v in hits if isinstance(v, list) and v]
-    print("\nTEAM STATS")
-    for path, stats in useful[:6]:
-        print(f"  {path}: {len(stats)} objects")
-        for item in stats[:12]:
-            print(f"    {compact(item, 700)}")
-    ok = bool(useful)
-    section("TEAM STATS", ok, f"non_empty_arrays={len(useful)}")
-    return ok
-
-
-def inspect_player_ratings(data):
-    hits = []
-    for path, node in walk(data):
-        if not isinstance(node, dict):
-            continue
-        keys = {str(k).lower() for k in node}
-        rating_keys = {"rating", "ratingnum", "matchrating"} & keys
-        if rating_keys:
-            rating_key = next(iter(rating_keys))
-            if node.get(rating_key) is not None:
-                hits.append((path, rating_key, node.get(rating_key), node))
-    print("\nPLAYER RATINGS")
-    for path, key, rating, node in hits[:15]:
-        print(f"  {path}: {key}={rating} | {compact(node, 800)}")
-    ok = bool(hits)
-    section("PLAYER RATINGS", ok, f"rating_fields={len(hits)}")
-    return ok
-
-
-def inspect_player_stats(data):
-    hits = []
-    for path, node in walk(data):
-        if not isinstance(node, dict):
-            continue
-        keys = {str(k).lower() for k in node}
-        has_player = bool({"player", "playername", "playerid", "playerid"} & keys)
-        has_stats = bool({"stats", "statistics"} & keys)
-        if has_player and has_stats:
-            hits.append((path, node))
-    print("\nPLAYER STATS")
-    for path, node in hits[:10]:
-        print(f"  {path}: {compact(node, 1000)}")
-    ok = bool(hits)
-    section("PLAYER STATS", ok, f"candidate_objects={len(hits)}")
-    return ok
-
-
-def inspect_liveticker(data):
-    print("\nLIVE TICKER")
-    candidates = find_key_nodes(data, {"liveticker"})
-    for path, value in candidates[:5]:
-        print(f"  {path}: {compact(value, 1400)}")
-    liveticker = None
-    for _, value in candidates:
+    heading("MATCH EVENTS (CHRONOLOGICAL SOURCE ORDER)")
+    event_lists = []
+    for label, value in (
+        ("content.matchFacts.events", facts.get("events")),
+        ("content.events", content.get("events")),
+        ("content.liveticker.events", (content.get("liveticker") or {}).get("events")),
+    ):
         if isinstance(value, dict):
-            liveticker = value
-            break
-    if not liveticker:
-        section("LIVE TICKER", False, "content.liveticker not found")
-        return False
-    ltc_url = liveticker.get("ltcUrl") or liveticker.get("ltcURL") or liveticker.get("url")
-    if not ltc_url:
-        section("LIVE TICKER", True, "liveticker object exists; no ltcUrl exposed")
-        return True
+            value = value.get("events") or value.get("list")
+        if isinstance(value, list) and value:
+            event_lists.append((label, value))
+    if not event_lists:
+        print("No match-event list found in the known API paths.")
+        print("matchFacts keys:", list(facts.keys()))
+    else:
+        for label, events in event_lists:
+            print(f"\nSource: {label} | Total: {len(events)}")
+            for i, event in enumerate(events, 1):
+                if not isinstance(event, dict):
+                    print(f"  [{i}] {show(event)}")
+                    continue
+                print(f"  [{i}] minute={event.get('time', event.get('minute', '?'))} "
+                      f"type={event.get('type', event.get('eventType', '?'))} "
+                      f"player={event.get('nameStr', event.get('playerName', event.get('name', '?')))} "
+                      f"team={'HOME' if event.get('isHome') is True else 'AWAY' if event.get('isHome') is False else '?'} "
+                      f"score={show(event.get('newScore'))} "
+                      f"reactKey={event.get('reactKey')}")
+                print("       RAW:", show(event))
 
-    url = f"{LTC_API}?ltcUrl={requests.utils.quote(str(ltc_url), safe='')}"
-    try:
-        started = time.perf_counter()
-        response = requests.get(url, headers=HEADERS, timeout=30)
-        elapsed = time.perf_counter() - started
-        print(f"  LTC URL: {url}")
-        print(f"  LTC status={response.status_code}, elapsed={elapsed:.3f}s, bytes={len(response.content)}")
-        if response.status_code == 200:
-            payload = response.json()
-            print(f"  LTC type={type(payload).__name__}")
-            print(f"  LTC sample={compact(payload, 1800)}")
-            section("LTC ENDPOINT", True)
-            return True
-        print(f"  LTC body={response.text[:500]!r}")
-    except Exception as error:
-        print(f"  LTC ERROR: {error}")
-    section("LTC ENDPOINT", False)
-    return False
+    heading("TEAM MATCH STATISTICS")
+    stats = content.get("stats") or {}
+    periods = stats.get("Periods") or stats.get("periods") or {}
+    print("Available periods:", list(periods.keys()) if isinstance(periods, dict) else type(periods).__name__)
+    if isinstance(periods, dict):
+        for period, period_data in periods.items():
+            print(f"\nPERIOD: {period}")
+            groups = period_data.get("stats") or [] if isinstance(period_data, dict) else []
+            for group in groups:
+                if not isinstance(group, dict):
+                    continue
+                print("\n ", group.get("title", group.get("key", "Other")))
+                for item in group.get("stats") or []:
+                    if isinstance(item, dict):
+                        values = item.get("stats")
+                        print(f"    {item.get('title', item.get('key', '?'))}: "
+                              f"home={values[0] if isinstance(values, list) and len(values)>0 else 'N/A'} | "
+                              f"away={values[1] if isinstance(values, list) and len(values)>1 else 'N/A'} "
+                              f"| key={item.get('key')}")
+    else:
+        print("Raw stats:", show(stats))
+
+    heading("PLAYER-SPECIFIC MATCH STATISTICS (IF EXPOSED)")
+    player_stats = content.get("playerStats") or content.get("playerstats")
+    if player_stats:
+        print(show(player_stats))
+    else:
+        print("No dedicated playerStats section in this matchDetails response.")
+        print("Player performance fields from lineups are printed above; season top scorers are not match stats.")
+
+    heading("REPORT COMPLETE")
 
 
 def main():
-    data = fetch_api()
-    results = [
-        ("MATCH STATUS / RESULT", inspect_status(data)),
-        ("LINEUPS", inspect_lineups(data)),
-        ("EVENTS / INCIDENTS", inspect_events(data)),
-        ("TEAM STATS", inspect_team_stats(data)),
-        ("PLAYER RATINGS", inspect_player_ratings(data)),
-        ("PLAYER STATS", inspect_player_stats(data)),
-        ("LIVE TICKER", inspect_liveticker(data)),
-    ]
-
-    print("\n" + "=" * 100)
-    print("FINAL SUMMARY")
-    print("=" * 100)
-    for name, ok in results:
-        print(f"{name}: {'PASS' if ok else 'FAIL'}")
-    print()
-    failed = [name for name, ok in results if not ok]
-    if failed:
-        print("INCOMPLETE:", ", ".join(failed))
-        print("The API was reachable, but one or more required categories were not detected.")
-    else:
-        print("PASS: all requested categories were detected.")
-    print("No production files were imported or modified by this test.")
+    match_id = sys.argv[1] if len(sys.argv) > 1 else "5868463"
+    if not match_id.isdigit():
+        raise SystemExit("Match ID must be numeric")
+    url = f"{BASE}/api/data/matchDetails?matchId={match_id}"
+    print("FOTMOB FULL MATCH REPORT TEST STARTED", flush=True)
+    print("URL:", url)
+    start = time.perf_counter()
+    response = requests.get(url, headers=HEADERS, timeout=30)
+    print(f"HTTP {response.status_code} | {time.perf_counter()-start:.3f}s | "
+          f"Cache-Control: {response.headers.get('cache-control')} | Bytes: {len(response.content)}", flush=True)
+    response.raise_for_status()
+    data = response.json()
+    if not isinstance(data, dict):
+        raise ValueError("Expected JSON object from matchDetails")
+    match_report(data, match_id)
 
 
 if __name__ == "__main__":
