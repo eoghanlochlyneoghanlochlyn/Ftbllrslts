@@ -4414,7 +4414,8 @@
         "react:144903372Goal1467236undefinedfalse",
         "react:1449062036Goal906937undefinedtrue",
         "react:1449066040Goal0undefinedtrue",
-        "react:1449066040Goal194165undefinedtrue"
+        "react:1449066040Goal194165undefinedtrue",
+        "react:1449112560Goal942372undefinedfalse"
       ],
       "goals": [
         {
@@ -4727,6 +4728,94 @@
             "assistKey": "assist_by",
             "assistInput": "Nico O'Reilly"
           }
+        },
+        {
+          "event_key": "react:1449112560Goal942372undefinedfalse",
+          "player_id": 942372,
+          "player_name": "Álex Baena",
+          "assist_player_id": 614834,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "60",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2781,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449112560Goal942372undefinedfalse",
+            "timeStr": 60,
+            "type": "goal",
+            "time": 60,
+            "overloadTime": null,
+            "eventId": 14491125,
+            "player": {
+              "id": 942372,
+              "name": "Álex Baena",
+              "profileUrl": "/players/942372/alex-baena"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/942372/alex-baena",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Álex Baena",
+            "firstName": "Álex",
+            "lastName": "Baena",
+            "fullName": "Álex Baena",
+            "playerId": 942372,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975055015,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 942372,
+              "playerName": "Álex Baena",
+              "x": 86.4602941172,
+              "y": 32.779999999999994,
+              "min": 60,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.48375,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.0515,
+              "expectedGoalsOnTarget": 0.2326,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.665674603174603,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1187213,
+              "firstName": "Álex",
+              "lastName": "Baena",
+              "fullName": "Álex Baena",
+              "teamColor": "#c62035"
+            },
+            "assistStr": "assist by Dani Olmo",
+            "assistProfileUrl": "/players/614834/dani-olmo",
+            "assistPlayerId": 614834,
+            "assistKey": "assist_by",
+            "assistInput": "Dani Olmo"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -4985,11 +5074,85 @@
           "assistPlayerId": 1300526,
           "assistKey": "assist_by",
           "assistInput": "Nico O'Reilly"
+        },
+        {
+          "reactKey": "1449112560Goal942372undefinedfalse",
+          "timeStr": 60,
+          "type": "goal",
+          "time": 60,
+          "overloadTime": null,
+          "eventId": 14491125,
+          "player": {
+            "id": 942372,
+            "name": "Álex Baena",
+            "profileUrl": "/players/942372/alex-baena"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/942372/alex-baena",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Álex Baena",
+          "firstName": "Álex",
+          "lastName": "Baena",
+          "fullName": "Álex Baena",
+          "playerId": 942372,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975055015,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 942372,
+            "playerName": "Álex Baena",
+            "x": 86.4602941172,
+            "y": 32.779999999999994,
+            "min": 60,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.48375,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": 0.0515,
+            "expectedGoalsOnTarget": 0.2326,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.665674603174603,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1187213,
+            "firstName": "Álex",
+            "lastName": "Baena",
+            "fullName": "Álex Baena",
+            "teamColor": "#c62035"
+          },
+          "assistStr": "assist by Dani Olmo",
+          "assistProfileUrl": "/players/614834/dani-olmo",
+          "assistPlayerId": 614834,
+          "assistKey": "assist_by",
+          "assistInput": "Dani Olmo"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "5181827": {
