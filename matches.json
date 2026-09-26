@@ -52,5 +52,19 @@
     "url": "https://www.fotmob.com/matches/shamrock-rovers-vs-molde/1mr9rh#4695843",
     "enabled": true,
     "auto": false
+  },
+  {
+    "id": "5181849",
+    "url": "https://www.fotmob.com/match/5181849",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-26T18:45:00+00:00"
+  },
+  {
+    "id": "5181850",
+    "url": "https://www.fotmob.com/match/5181850",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-26T18:45:00+00:00"
   }
 ]
