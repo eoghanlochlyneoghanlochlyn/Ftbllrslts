@@ -5315,6 +5315,51 @@ def build_team_object(
 
 
 # =========================================================
+# Round / competition API backup
+# =========================================================
+
+def fetch_league_round_api(match_id, league_id):
+    """Get the match round from FotMob's league API without HTML."""
+    if not match_id or league_id is None:
+        return None
+
+    try:
+        response = requests.get(
+            f"{FOTMOB_BASE_URL}/api/data/leagueDataForMatch",
+            params={"matchId": match_id, "leagueId": league_id},
+            headers=FOTMOB_HEADERS,
+            timeout=15,
+        )
+
+        print(
+            f"FotMob {match_id}: "
+            f"leagueDataForMatch API HTTP {response.status_code}"
+        )
+
+        if response.status_code != 200:
+            return None
+
+        payload = response.json()
+        if not isinstance(payload, dict):
+            return None
+
+        current_round = (
+            payload.get("currentRound")
+            or payload.get("roundName")
+            or payload.get("round")
+        )
+
+        return clean_text(current_round) or None
+
+    except Exception as error:
+        print(
+            f"FotMob {match_id}: "
+            f"leagueDataForMatch API error: {error}"
+        )
+        return None
+
+
+# =========================================================
 # Snapshot
 # =========================================================
 
@@ -5360,6 +5405,24 @@ def get_match_snapshot(match_url):
             return None
 
     info = extract_basic_info(data)
+
+    # If matchDetails has no week, use FotMob's league API.
+    # This remains an API-only fallback; HTML is not involved.
+    round_info = info.get("round_info")
+    if not isinstance(round_info, dict) or not round_info.get("name_fa"):
+        api_round = fetch_league_round_api(
+            match_id,
+            info.get("competition_id"),
+        )
+        if api_round:
+            translated = _translate_round_name(api_round)
+            if api_round.isdigit():
+                translated = f"هفته {api_round}"
+            info["round_info"] = {
+                "raw": api_round,
+                "name": api_round,
+                "name_fa": translated or api_round,
+            }
 
     status = get_match_status(data)
 
