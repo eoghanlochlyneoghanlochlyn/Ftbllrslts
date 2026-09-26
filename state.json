@@ -3996,7 +3996,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:144903372Goal1467236undefinedfalse",
-        "react:1449062036Goal906937undefinedtrue"
+        "react:1449062036Goal906937undefinedtrue",
+        "react:1449066040Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -4171,6 +4172,56 @@
             "assistKey": "assist_by",
             "assistInput": "Jude Bellingham"
           }
+        },
+        {
+          "event_key": "react:1449066040Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "40",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2771,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1449066040Goal0undefinedtrue",
+            "timeStr": 40,
+            "type": "goal",
+            "time": 40,
+            "overloadTime": null,
+            "eventId": 14490660,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -4319,10 +4370,46 @@
           "assistPlayerId": 1077894,
           "assistKey": "assist_by",
           "assistInput": "Jude Bellingham"
+        },
+        {
+          "reactKey": "1449066040Goal0undefinedtrue",
+          "timeStr": 40,
+          "type": "goal",
+          "time": 40,
+          "overloadTime": null,
+          "eventId": 14490660,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
