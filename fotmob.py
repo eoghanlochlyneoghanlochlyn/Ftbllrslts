@@ -3185,6 +3185,7 @@ def get_penalty_shootout_score(data):
         # merely because an explicit shootout marker exists but the
         # penalty score itself is not exposed here. HTML remains the
         # full-response backup when the API payload is unusable.
+        pass
 
     event_score = (
         _get_shootout_score_from_events(
