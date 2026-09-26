@@ -1323,6 +1323,9 @@ def extract_round_info(data):
                 "week",
                 "matchweek",
                 "gameweek",
+                "matchround",
+                "leagueroundname",
+                "roundname",
             }:
                 fa = f"هفته {raw}"
             else:
