@@ -3981,7 +3981,8 @@
       "event_keys": [
         "react:1449093147Goal31097undefinedfalse",
         "react:1449102754Goal0undefinedtrue",
-        "react:1449102754Goal1135655undefinedtrue"
+        "react:1449102754Goal1135655undefinedtrue",
+        "react:1449135977Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -4209,6 +4210,56 @@
             "assistKey": "assist_by",
             "assistInput": "Adam Hložek"
           }
+        },
+        {
+          "event_key": "react:1449135977Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "77",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2785,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1449135977Goal0undefinedfalse",
+            "timeStr": 77,
+            "type": "goal",
+            "time": 77,
+            "overloadTime": null,
+            "eventId": 14491359,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -4396,11 +4447,47 @@
           "assistPlayerId": 969870,
           "assistKey": "assist_by",
           "assistInput": "Adam Hložek"
+        },
+        {
+          "reactKey": "1449135977Goal0undefinedfalse",
+          "timeStr": 77,
+          "type": "goal",
+          "time": 77,
+          "overloadTime": null,
+          "eventId": 14491359,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5181850": {
@@ -4822,7 +4909,7 @@
           "event_key": "react:1449135074Goal678234undefinedfalse",
           "player_id": 678234,
           "player_name": "Mikel Oyarzabal",
-          "assist_player_id": null,
+          "assist_player_id": 942372,
           "assist_player_name": "",
           "is_home": false,
           "minute": "74",
@@ -4880,8 +4967,8 @@
               "blockedY": null,
               "goalCrossedY": 34.305,
               "goalCrossedZ": 0.6485263126,
-              "expectedGoals": 0.5063,
-              "expectedGoalsOnTarget": 0.4024,
+              "expectedGoals": 0.6987633109092712,
+              "expectedGoalsOnTarget": 0.2925216853618622,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -4899,8 +4986,11 @@
               "fullName": "Mikel Oyarzabal",
               "teamColor": "#c62035"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Álex Baena",
+            "assistProfileUrl": "/players/942372/alex-baena",
+            "assistPlayerId": 942372,
+            "assistKey": "assist_by",
+            "assistInput": "Álex Baena"
           }
         }
       ],
@@ -5284,8 +5374,8 @@
             "blockedY": null,
             "goalCrossedY": 34.305,
             "goalCrossedZ": 0.6485263126,
-            "expectedGoals": 0.5063,
-            "expectedGoalsOnTarget": 0.4024,
+            "expectedGoals": 0.6987633109092712,
+            "expectedGoalsOnTarget": 0.2925216853618622,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -5303,8 +5393,11 @@
             "fullName": "Mikel Oyarzabal",
             "teamColor": "#c62035"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Álex Baena",
+          "assistProfileUrl": "/players/942372/alex-baena",
+          "assistPlayerId": 942372,
+          "assistKey": "assist_by",
+          "assistInput": "Álex Baena"
         }
       ],
       "observed_score": {
