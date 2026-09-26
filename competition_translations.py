@@ -66,6 +66,15 @@ _COMPETITION_TRANSLATIONS = (
 # نام مرحله/نسخه رقابت برمی‌گرداند و ممکن است
 # شناسه‌شان در competitions.json ثبت نشده باشد.
 _FALLBACK_TRANSLATIONS = {
+    "champions league": "لیگ قهرمانان اروپا",
+    "uefa champions league": "لیگ قهرمانان اروپا",
+    "europa league": "لیگ اروپا",
+    "uefa europa league": "لیگ اروپا",
+    "conference league": "لیگ کنفرانس اروپا",
+    "conference league final stage": "لیگ کنفرانس اروپا",
+    "uefa conference league": "لیگ کنفرانس اروپا",
+    "world cup": "جام جهانی",
+    "fifa world cup": "جام جهانی",
     "uefa nations league a": "لیگ ملت‌های اروپا سطح A",
     "uefa nations league b": "لیگ ملت‌های اروپا سطح B",
     "uefa nations league c": "لیگ ملت‌های اروپا سطح C",
@@ -104,13 +113,30 @@ def get_persian_competition_name(
     if translated:
         return translated
 
+    # بعضی نام‌ها در FotMob همراه با پسوند مرحله/گروه
+    # می‌آیند؛ ابتدا بخش اصلی نام رقابت را جدا می‌کنیم.
     base_name = normalized_name
-    for marker in (" grp. ", " grp ", " group "):
+
+    for marker in (
+        " final stage",
+        " grp. ",
+        " grp ",
+        " group ",
+    ):
         if marker in base_name:
-            base_name = base_name.split(marker, 1)[0].strip()
+            base_name = (
+                base_name.split(
+                    marker,
+                    1,
+                )[0]
+                .strip()
+            )
             break
 
-    translated = _FALLBACK_TRANSLATIONS.get(base_name)
+    translated = _FALLBACK_TRANSLATIONS.get(
+        base_name
+    )
+
     if translated:
         return translated
 
