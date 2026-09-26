@@ -73,6 +73,8 @@ _FALLBACK_TRANSLATIONS = {
     "conference league": "لیگ کنفرانس اروپا",
     "conference league final stage": "لیگ کنفرانس اروپا",
     "uefa conference league": "لیگ کنفرانس اروپا",
+    "coppa italia": "جام حذفی ایتالیا",
+    "coppa italia frecciarossa": "جام حذفی ایتالیا",
     "world cup": "جام جهانی",
     "fifa world cup": "جام جهانی",
     "uefa nations league a": "لیگ ملت‌های اروپا سطح A",
