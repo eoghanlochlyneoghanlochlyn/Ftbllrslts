@@ -2948,6 +2948,7 @@ def _get_shootout_score_from_events(data):
     home_score = 0
     away_score = 0
     found = False
+    seen_shootout_events = set()
 
     for candidate in candidates:
 
@@ -2955,6 +2956,35 @@ def _get_shootout_score_from_events(data):
 
             if not isinstance(event, dict):
                 continue
+
+            # بعضی پاسخ‌های FotMob یک ضربه پنالتی را در چند مسیر
+            # مختلف برمی‌گردانند. قبل از شمارش باید همان رویداد را
+            # فقط یک بار حساب کنیم؛ وگرنه مثلاً 4-8 به 8-16 تبدیل می‌شود.
+            event_key = (
+                event.get("reactKey")
+                or event.get("id")
+                or event.get("eventId")
+            )
+
+            if event_key is None:
+                event_key = (
+                    event.get("playerId"),
+                    event.get("playerName"),
+                    event.get("teamId"),
+                    event.get("isHome"),
+                    event.get("time"),
+                    event.get("minute"),
+                    event.get("description"),
+                    event.get("isScored"),
+                    event.get("scored"),
+                )
+
+            event_key = str(event_key)
+
+            if event_key in seen_shootout_events:
+                continue
+
+            seen_shootout_events.add(event_key)
 
             if not _is_penalty_shootout_event(
                 event
