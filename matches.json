@@ -1,19 +1,5 @@
 [
   {
-    "id": "5181788",
-    "url": "https://www.fotmob.com/match/5181788",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-09-25T18:45:00+00:00"
-  },
-  {
-    "id": "5181789",
-    "url": "https://www.fotmob.com/match/5181789",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-09-25T18:45:00+00:00"
-  },
-  {
     "id": "5181825",
     "url": "https://www.fotmob.com/matches/netherlands-vs-germany/1xhtgz#5181825",
     "enabled": true,
@@ -117,5 +103,19 @@
     "enabled": true,
     "auto": false,
     "start": "2026-09-25T18:30:00+00:00"
+  },
+  {
+    "id": "5181849",
+    "url": "https://www.fotmob.com/match/5181849",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-26T18:45:00+00:00"
+  },
+  {
+    "id": "5181850",
+    "url": "https://www.fotmob.com/match/5181850",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-09-26T18:45:00+00:00"
   }
 ]
