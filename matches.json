@@ -1,70 +1,26 @@
 [
   {
-    "id": "5795455",
-    "url": "https://www.fotmob.com/matches/liverpool-vs-afc-bournemouth/2he69q#5795455",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "5205796",
-    "url": "https://www.fotmob.com/matches/sporting-cp-vs-arsenal/36af66#5205796",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "5868076",
-    "url": "https://www.fotmob.com/matches/getafe-vs-malaga/2qa4v1#5868076",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "6112315",
-    "url": "https://www.fotmob.com/matches/rennes-vs-sturm-graz/39hfy8#6112315",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "5881177",
-    "url": "https://www.fotmob.com/matches/borussia-dortmund-vs-vfb-stuttgart/3bs0n0#5881177",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "5749667",
-    "url": "https://www.fotmob.com/matches/milan-vs-juventus/2tc0mu#5749667",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "4653716",
-    "url": "https://www.fotmob.com/matches/australia-vs-egypt/2dqwke#4653716",
-    "enabled": true,
-    "auto": false
-  },
-  {
-    "id": "5802936",
-    "url": "https://www.fotmob.com/matches/monaco-vs-strasbourg/379ruz#5802936",
-    "enabled": true,
-    "auto": false
-  },
-  {
     "id": "4695843",
     "url": "https://www.fotmob.com/matches/shamrock-rovers-vs-molde/1mr9rh#4695843",
     "enabled": true,
     "auto": false
   },
   {
-    "id": "5181849",
-    "url": "https://www.fotmob.com/match/5181849",
+    "id": "4737736",
+    "url": "https://www.fotmob.com/matches/nk-celje-vs-lugano/1anmal#4737736",
     "enabled": true,
-    "auto": true,
-    "start": "2026-09-26T18:45:00+00:00"
+    "auto": false
   },
   {
-    "id": "5181850",
-    "url": "https://www.fotmob.com/match/5181850",
+    "id": "4935215",
+    "url": "https://www.fotmob.com/matches/cagliari-vs-napoli/2su8st#4935215",
     "enabled": true,
-    "auto": true,
-    "start": "2026-09-26T18:45:00+00:00"
+    "auto": false
+  },
+  {
+    "id": "4935225",
+    "url": "https://www.fotmob.com/matches/lazio-vs-bologna/2ssnzl#4935225",
+    "enabled": true,
+    "auto": false
   }
 ]
