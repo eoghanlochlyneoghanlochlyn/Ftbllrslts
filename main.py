@@ -35,11 +35,11 @@ from event_detector import (
 
 from formatter import (
     build_cancelled_goal_message,
-    build_final_lineup_message,
-    build_final_stats_message,
+    build_final_lineup_rich_message,
+    build_final_stats_rich_message,
     build_goal_message,
     build_half_time_message,
-    build_lineup_message,
+    build_lineup_rich_message,
     build_red_card_message,
     build_start_message,
 )
@@ -1151,12 +1151,12 @@ def process_match(
             "Sending lineup rich message."
         )
 
-        lineup_message = build_lineup_message(
+        rich_message = build_lineup_rich_message(
             snapshot,
             show_rating=False,
         )
 
-        if lineup_message:
+        if rich_message:
 
             try:
 
@@ -1164,7 +1164,7 @@ def process_match(
                     time.monotonic()
                 )
 
-                send_long_message(lineup_message)
+                send_rich_message(rich_message)
 
                 telegram_finished_at = (
                     time.monotonic()
@@ -1523,7 +1523,7 @@ def process_match(
             # پیام اول
             # -------------------------------------------------
 
-            final_lineup_message = build_final_lineup_message(
+            final_lineup_message = build_final_lineup_rich_message(
                 snapshot,
                 events,
             )
@@ -1538,7 +1538,7 @@ def process_match(
                         time.monotonic()
                     )
 
-                    send_long_message(final_lineup_message)
+                    send_rich_message(final_lineup_message)
 
                     telegram_finished_at = (
                         time.monotonic()
@@ -1568,7 +1568,7 @@ def process_match(
                 "Sending final stats rich message."
             )
 
-            final_stats_message = build_final_stats_message(
+            final_stats_message = build_final_stats_rich_message(
                 snapshot,
                 final_score,
             )
@@ -1583,7 +1583,7 @@ def process_match(
                         time.monotonic()
                     )
 
-                    send_long_message(final_stats_message)
+                    send_rich_message(final_stats_message)
 
                     telegram_finished_at = (
                         time.monotonic()
