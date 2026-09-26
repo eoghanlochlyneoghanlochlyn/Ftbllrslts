@@ -2960,29 +2960,40 @@ def _get_shootout_score_from_events(data):
             # بعضی پاسخ‌های FotMob یک ضربه پنالتی را در چند مسیر
             # مختلف برمی‌گردانند. قبل از شمارش باید همان رویداد را
             # فقط یک بار حساب کنیم؛ وگرنه مثلاً 4-8 به 8-16 تبدیل می‌شود.
-            event_key = event.get("reactKey")
+            # در ضربات پنالتی ممکن است یک ضربه از چند مسیر API
+            # با reactKey/id متفاوت تکرار شود. هویت اصلی ضربه را
+            # بر اساس زننده + تیم می‌سازیم؛ اگر زننده شناخته نباشد،
+            # تیم + دقیقه/زمان + وضعیت تبدیل شدن را استفاده می‌کنیم.
+            player_id = event.get("playerId")
+            team_id = event.get("teamId")
+            player_name = event.get("playerName")
+            minute = event.get("minute")
+            event_time = event.get("time")
 
-            if not event_key:
-                candidate_id = event.get("id")
-                if candidate_id not in (None, "", 0, "0"):
-                    event_key = candidate_id
-
-            if not event_key:
-                candidate_id = event.get("eventId")
-                if candidate_id not in (None, "", 0, "0"):
-                    event_key = candidate_id
-
-            if event_key is None:
+            if player_id not in (None, "", 0, "0"):
                 event_key = (
-                    event.get("playerId"),
-                    event.get("playerName"),
-                    event.get("teamId"),
-                    event.get("isHome"),
-                    event.get("time"),
-                    event.get("minute"),
-                    event.get("description"),
-                    event.get("isScored"),
-                    event.get("scored"),
+                    "player",
+                    str(player_id),
+                    str(team_id),
+                )
+            elif player_name:
+                event_key = (
+                    "player_name",
+                    clean_text(player_name).lower(),
+                    str(team_id),
+                )
+            else:
+                event_key = (
+                    "attempt",
+                    str(team_id),
+                    str(event.get("isHome")),
+                    str(minute),
+                    str(event_time),
+                    str(
+                        event.get("isScored")
+                        if event.get("isScored") is not None
+                        else event.get("scored")
+                    ),
                 )
 
             event_key = str(event_key)
