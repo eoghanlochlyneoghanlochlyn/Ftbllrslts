@@ -2960,11 +2960,17 @@ def _get_shootout_score_from_events(data):
             # بعضی پاسخ‌های FotMob یک ضربه پنالتی را در چند مسیر
             # مختلف برمی‌گردانند. قبل از شمارش باید همان رویداد را
             # فقط یک بار حساب کنیم؛ وگرنه مثلاً 4-8 به 8-16 تبدیل می‌شود.
-            event_key = (
-                event.get("reactKey")
-                or event.get("id")
-                or event.get("eventId")
-            )
+            event_key = event.get("reactKey")
+
+            if not event_key:
+                candidate_id = event.get("id")
+                if candidate_id not in (None, "", 0, "0"):
+                    event_key = candidate_id
+
+            if not event_key:
+                candidate_id = event.get("eventId")
+                if candidate_id not in (None, "", 0, "0"):
+                    event_key = candidate_id
 
             if event_key is None:
                 event_key = (
