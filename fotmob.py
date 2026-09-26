@@ -3181,14 +3181,10 @@ def get_penalty_shootout_score(data):
         )
     ):
 
-        page_score = (
-            _get_penalty_score_from_page(
-                data
-            )
-        )
-
-        if page_score is not None:
-            return page_score
+        # API is the primary source. Do not make an HTML request
+        # merely because an explicit shootout marker exists but the
+        # penalty score itself is not exposed here. HTML remains the
+        # full-response backup when the API payload is unusable.
 
     event_score = (
         _get_shootout_score_from_events(
@@ -3218,14 +3214,8 @@ def get_penalty_shootout_score(data):
             if result is not None:
                 return result
 
-            page_score = (
-                _get_penalty_score_from_page(
-                    data
-                )
-            )
-
-            if page_score is not None:
-                return page_score
+            # Keep the primary API path HTML-free. If the API
+            # response itself is unusable, the caller uses HTML backup.
 
     return None
 
