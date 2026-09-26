@@ -1,9 +1,32 @@
 [
   {
-    "id": "5181789",
-    "url": "https://www.fotmob.com/matches/turkiye-vs-france/1gt3rs#5181789",
+    "id": "5181825",
+    "url": "https://www.fotmob.com/matches/netherlands-vs-germany/1xhtgz#5181825",
     "enabled": true,
-    "auto": false,
-    "start": "2026-09-25T18:45:00+00:00"
+    "auto": false
+  },
+  {
+    "id": "5181862",
+    "url": "https://www.fotmob.com/matches/wales-vs-portugal/1nmd5x#5181862",
+    "enabled": true,
+    "auto": false
+  },
+  {
+    "id": "5181801",
+    "url": "https://www.fotmob.com/matches/ukraine-vs-hungary/1xjgf7#5181801",
+    "enabled": true,
+    "auto": false
+  },
+  {
+    "id": "5181921",
+    "url": "https://www.fotmob.com/matches/latvia-vs-armenia/19m8ja#5181921",
+    "enabled": true,
+    "auto": false
+  },
+  {
+    "id": "5181880",
+    "url": "https://www.fotmob.com/matches/liechtenstein-vs-lithuania/1msqot#5181880",
+    "enabled": true,
+    "auto": false
   }
 ]
