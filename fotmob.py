@@ -1026,7 +1026,7 @@ def extract_group_info(data):
             "source": source,
         }
 
-    general = get_nested(data, "props", "pageProps", "general")
+    general = (get_nested(data, "props", "pageProps", "general") or (data.get("general") if isinstance(data, dict) else None))
     if isinstance(general, dict):
         league_name = clean_text(general.get("leagueName"))
         if league_name:
@@ -1049,15 +1049,7 @@ def extract_group_info(data):
                     "source": "props.pageProps.general.leagueName",
                 }
 
-    tournament = get_nested(
-        data,
-        "props",
-        "pageProps",
-        "content",
-        "matchFacts",
-        "infoBox",
-        "Tournament",
-    )
+    tournament = (get_nested(data, "props", "pageProps", "content", "matchFacts", "infoBox", "Tournament") or get_nested(data, "content", "matchFacts", "infoBox", "Tournament"))
     if isinstance(tournament, dict):
         league_name = clean_text(tournament.get("leagueName"))
         if league_name:
@@ -1139,6 +1131,20 @@ def extract_round_info(data):
             }
 
     candidates = []
+
+    api_general = data.get("general") if isinstance(data, dict) else None
+    if isinstance(api_general, dict):
+        for key in ("matchRound", "leagueRoundName", "roundName", "round", "matchweek", "matchWeek", "gameweek", "week", "tournamentStage", "stageName"):
+            value = api_general.get(key)
+            if value is not None:
+                candidates.append((value, key))
+
+    api_header = data.get("header") if isinstance(data, dict) else None
+    if isinstance(api_header, dict):
+        for key in ("roundName", "round", "matchweek", "matchWeek", "gameweek", "week", "tournamentStage", "stageName"):
+            value = api_header.get(key)
+            if value is not None:
+                candidates.append((value, key))
 
     match_facts = get_nested(
         data,
