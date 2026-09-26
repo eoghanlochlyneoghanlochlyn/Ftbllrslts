@@ -1262,7 +1262,7 @@
       "started": true,
       "half_time": false,
       "finished": true,
-      "finished_sent": false,
+      "finished_sent": true,
       "event_keys": [
         "react:1442511152Goal1523208undefinedtrue",
         "react:1442533571Goal1412956undefinedfalse"
@@ -1596,13 +1596,16 @@
       }
     },
     "4695843": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": true,
-      "finished_sent": false,
-      "event_keys": [],
+      "finished_sent": true,
+      "event_keys": [
+        "react:1242854410Goal185389undefinedfalse",
+        "react:1242893490Card1136680undefinedfalse"
+      ],
       "goals": [
         {
           "event_key": "react:1242854410Goal185389undefinedfalse",
@@ -1615,7 +1618,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 2734,
           "needs_update": false,
           "event": {
             "reactKey": "1242854410Goal185389undefinedfalse",
