@@ -1176,17 +1176,9 @@ def process_match(
                     f"{telegram_finished_at - telegram_started_at:.2f}s",
                 )
 
-                if (
-                    isinstance(
-                        response,
-                        dict,
-                    )
-                    True
-                ):
-
-                    match_state[
-                        "lineup_sent"
-                    ] = True
+                match_state[
+                    "lineup_sent"
+                ] = True
 
             except Exception as error:
 
