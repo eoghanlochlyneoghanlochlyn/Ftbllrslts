@@ -6929,7 +6929,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1449727017Goal794427undefinedfalse"
+        "react:1449727017Goal794427undefinedfalse",
+        "react:1449752551Goal737066undefinedtrue"
       ],
       "goals": [
         {
@@ -7019,6 +7020,94 @@
             "assistKey": "assist_by",
             "assistInput": "Pedro Neto"
           }
+        },
+        {
+          "event_key": "react:1449752551Goal737066undefinedtrue",
+          "player_id": 737066,
+          "player_name": "Erling Haaland",
+          "assist_player_id": 530635,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "51",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2827,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449752551Goal737066undefinedtrue",
+            "timeStr": 51,
+            "type": "goal",
+            "time": 51,
+            "overloadTime": null,
+            "eventId": 14497525,
+            "player": {
+              "id": 737066,
+              "name": "Erling Haaland",
+              "profileUrl": "/players/737066/erling-haaland"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/737066/erling-haaland",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Erling Haaland",
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "playerId": 737066,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975589581,
+              "eventType": "Goal",
+              "teamId": 8492,
+              "playerId": 737066,
+              "playerName": "Erling Haaland",
+              "x": 101.3965517244,
+              "y": 32.9325,
+              "min": 51,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.7625,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.7479321360588074,
+              "expectedGoalsOnTarget": 0.9851009249687195,
+              "shotType": "LeftFoot",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.7982804232804226,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 795630,
+              "firstName": "Erling",
+              "lastName": "Haaland",
+              "fullName": "Erling Haaland",
+              "teamColor": "#b53032"
+            },
+            "assistStr": "assist by Patrick Berg",
+            "assistProfileUrl": "/players/530635/patrick-berg",
+            "assistPlayerId": 530635,
+            "assistKey": "assist_by",
+            "assistInput": "Patrick Berg"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -7096,10 +7185,84 @@
           "assistPlayerId": 843040,
           "assistKey": "assist_by",
           "assistInput": "Pedro Neto"
+        },
+        {
+          "reactKey": "1449752551Goal737066undefinedtrue",
+          "timeStr": 51,
+          "type": "goal",
+          "time": 51,
+          "overloadTime": null,
+          "eventId": 14497525,
+          "player": {
+            "id": 737066,
+            "name": "Erling Haaland",
+            "profileUrl": "/players/737066/erling-haaland"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/737066/erling-haaland",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Erling Haaland",
+          "firstName": "Erling",
+          "lastName": "Haaland",
+          "fullName": "Erling Haaland",
+          "playerId": 737066,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975589581,
+            "eventType": "Goal",
+            "teamId": 8492,
+            "playerId": 737066,
+            "playerName": "Erling Haaland",
+            "x": 101.3965517244,
+            "y": 32.9325,
+            "min": 51,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.7625,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.7479321360588074,
+            "expectedGoalsOnTarget": 0.9851009249687195,
+            "shotType": "LeftFoot",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.7982804232804226,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 795630,
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "teamColor": "#b53032"
+          },
+          "assistStr": "assist by Patrick Berg",
+          "assistProfileUrl": "/players/530635/patrick-berg",
+          "assistPlayerId": 530635,
+          "assistKey": "assist_by",
+          "assistInput": "Patrick Berg"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     }
