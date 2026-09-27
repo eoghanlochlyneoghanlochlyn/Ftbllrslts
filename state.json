@@ -6079,7 +6079,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1449637724Goal1016093undefinedtrue",
-        "react:1449673553Goal0undefinedtrue"
+        "react:1449673553Goal0undefinedtrue",
+        "react:1449673553Goal1199272undefinedtrue"
       ],
       "goals": [
         {
@@ -6219,6 +6220,59 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1449673553Goal1199272undefinedtrue",
+          "player_id": 1199272,
+          "player_name": "Rasmus Højlund",
+          "assist_player_id": 888912,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "53",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2814,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449673553Goal1199272undefinedtrue",
+            "timeStr": 53,
+            "type": "goal",
+            "time": 53,
+            "overloadTime": null,
+            "eventId": 14496735,
+            "player": {
+              "id": 1199272,
+              "name": "Rasmus Højlund",
+              "profileUrl": "/players/1199272/rasmus-hojlund"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1199272/rasmus-hojlund",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Rasmus Højlund",
+            "firstName": "Rasmus",
+            "lastName": "Højlund",
+            "fullName": "Rasmus Højlund",
+            "playerId": 1199272,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Mikkel Damsgaard",
+            "assistProfileUrl": "/players/888912/mikkel-damsgaard",
+            "assistPlayerId": 888912,
+            "assistKey": "assist_by",
+            "assistInput": "Mikkel Damsgaard"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -6332,6 +6386,45 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1449673553Goal1199272undefinedtrue",
+          "timeStr": 53,
+          "type": "goal",
+          "time": 53,
+          "overloadTime": null,
+          "eventId": 14496735,
+          "player": {
+            "id": 1199272,
+            "name": "Rasmus Højlund",
+            "profileUrl": "/players/1199272/rasmus-hojlund"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1199272/rasmus-hojlund",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Rasmus Højlund",
+          "firstName": "Rasmus",
+          "lastName": "Højlund",
+          "fullName": "Rasmus Højlund",
+          "playerId": 1199272,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Mikkel Damsgaard",
+          "assistProfileUrl": "/players/888912/mikkel-damsgaard",
+          "assistPlayerId": 888912,
+          "assistKey": "assist_by",
+          "assistInput": "Mikkel Damsgaard"
         }
       ],
       "observed_score": {
