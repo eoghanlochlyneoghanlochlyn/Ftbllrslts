@@ -6913,7 +6913,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1449765774Goal0undefinedfalse"
+        "react:1449765774Goal0undefinedfalse",
+        "react:1449765774Goal260750undefinedfalse"
       ],
       "goals": [
         {
@@ -6965,6 +6966,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1449765774Goal260750undefinedfalse",
+          "player_id": 260750,
+          "player_name": "Dimitrios Kourbelis",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "74",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2831,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449765774Goal260750undefinedfalse",
+            "timeStr": 74,
+            "type": "goal",
+            "time": 74,
+            "overloadTime": null,
+            "eventId": 14497657,
+            "player": {
+              "id": 260750,
+              "name": "Dimitrios Kourbelis",
+              "profileUrl": "/players/260750/dimitrios-kourbelis"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/260750/dimitrios-kourbelis",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Dimitrios Kourbelis",
+            "firstName": "Dimitrios",
+            "lastName": "Kourbelis",
+            "fullName": "Dimitrios Kourbelis",
+            "playerId": 260750,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975601659,
+              "eventType": "Goal",
+              "teamId": 6383,
+              "playerId": 260750,
+              "playerName": "Dimitrios Kourbelis",
+              "x": 91.1,
+              "y": 39.208809525,
+              "min": 74,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.355000000000004,
+              "goalCrossedZ": 0.0385263156,
+              "expectedGoals": 0.1684878021478653,
+              "expectedGoalsOnTarget": 0.6793547868728638,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.11243386243386144,
+                "y": 0.010192146984126984,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 554534,
+              "firstName": "Dimitrios",
+              "lastName": "Kourbelis",
+              "fullName": "Dimitrios Kourbelis",
+              "teamColor": "#2A5CAA"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -7002,6 +7088,77 @@
             1
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1449765774Goal260750undefinedfalse",
+          "timeStr": 74,
+          "type": "goal",
+          "time": 74,
+          "overloadTime": null,
+          "eventId": 14497657,
+          "player": {
+            "id": 260750,
+            "name": "Dimitrios Kourbelis",
+            "profileUrl": "/players/260750/dimitrios-kourbelis"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/260750/dimitrios-kourbelis",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Dimitrios Kourbelis",
+          "firstName": "Dimitrios",
+          "lastName": "Kourbelis",
+          "fullName": "Dimitrios Kourbelis",
+          "playerId": 260750,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975601659,
+            "eventType": "Goal",
+            "teamId": 6383,
+            "playerId": 260750,
+            "playerName": "Dimitrios Kourbelis",
+            "x": 91.1,
+            "y": 39.208809525,
+            "min": 74,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 37.355000000000004,
+            "goalCrossedZ": 0.0385263156,
+            "expectedGoals": 0.1684878021478653,
+            "expectedGoalsOnTarget": 0.6793547868728638,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.11243386243386144,
+              "y": 0.010192146984126984,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 554534,
+            "firstName": "Dimitrios",
+            "lastName": "Kourbelis",
+            "fullName": "Dimitrios Kourbelis",
+            "teamColor": "#2A5CAA"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
