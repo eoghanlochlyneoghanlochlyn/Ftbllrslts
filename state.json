@@ -6906,7 +6906,7 @@
       }
     },
     "5181828": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -6922,7 +6922,7 @@
       }
     },
     "5181864": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
