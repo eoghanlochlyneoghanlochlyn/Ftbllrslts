@@ -6930,7 +6930,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1449727017Goal794427undefinedfalse",
-        "react:1449752551Goal737066undefinedtrue"
+        "react:1449752551Goal737066undefinedtrue",
+        "react:1449754154Goal940087undefinedfalse"
       ],
       "goals": [
         {
@@ -7108,6 +7109,91 @@
             "assistKey": "assist_by",
             "assistInput": "Patrick Berg"
           }
+        },
+        {
+          "event_key": "react:1449754154Goal940087undefinedfalse",
+          "player_id": 940087,
+          "player_name": "Gonçalo Ramos",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "54",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2828,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449754154Goal940087undefinedfalse",
+            "timeStr": 54,
+            "type": "goal",
+            "time": 54,
+            "overloadTime": null,
+            "eventId": 14497541,
+            "player": {
+              "id": 940087,
+              "name": "Gonçalo Ramos",
+              "profileUrl": "/players/940087/goncalo-ramos"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/940087/goncalo-ramos",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Gonçalo Ramos",
+            "firstName": "Gonçalo",
+            "lastName": "Ramos",
+            "fullName": "Gonçalo Ramos",
+            "playerId": 940087,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975591285,
+              "eventType": "Goal",
+              "teamId": 8361,
+              "playerId": 940087,
+              "playerName": "Gonçalo Ramos",
+              "x": 79.55679611760002,
+              "y": 35.9825,
+              "min": 54,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.83,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.0318,
+              "expectedGoalsOnTarget": 0.1098,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5158730158730164,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 73409,
+              "firstName": "Gonçalo",
+              "lastName": "Ramos",
+              "fullName": "Gonçalo Ramos",
+              "teamColor": "#ab0027"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -7235,8 +7321,8 @@
             "blockedY": null,
             "goalCrossedY": 34.7625,
             "goalCrossedZ": 0.2439999988,
-            "expectedGoals": 0.7479321360588074,
-            "expectedGoalsOnTarget": 0.9851009249687195,
+            "expectedGoals": 0.7232944965362549,
+            "expectedGoalsOnTarget": 0.9550886154174805,
             "shotType": "LeftFoot",
             "situation": "SetPiece",
             "period": "SecondHalf",
@@ -7259,11 +7345,82 @@
           "assistPlayerId": 530635,
           "assistKey": "assist_by",
           "assistInput": "Patrick Berg"
+        },
+        {
+          "reactKey": "1449754154Goal940087undefinedfalse",
+          "timeStr": 54,
+          "type": "goal",
+          "time": 54,
+          "overloadTime": null,
+          "eventId": 14497541,
+          "player": {
+            "id": 940087,
+            "name": "Gonçalo Ramos",
+            "profileUrl": "/players/940087/goncalo-ramos"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/940087/goncalo-ramos",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Gonçalo Ramos",
+          "firstName": "Gonçalo",
+          "lastName": "Ramos",
+          "fullName": "Gonçalo Ramos",
+          "playerId": 940087,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975591285,
+            "eventType": "Goal",
+            "teamId": 8361,
+            "playerId": 940087,
+            "playerName": "Gonçalo Ramos",
+            "x": 79.55679611760002,
+            "y": 35.9825,
+            "min": 54,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.83,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": 0.0318,
+            "expectedGoalsOnTarget": 0.1098,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5158730158730164,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 73409,
+            "firstName": "Gonçalo",
+            "lastName": "Ramos",
+            "fullName": "Gonçalo Ramos",
+            "teamColor": "#ab0027"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     }
   }
