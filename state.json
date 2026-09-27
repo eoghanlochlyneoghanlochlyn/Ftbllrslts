@@ -6936,7 +6936,7 @@
           "event_key": "react:1449727017Goal794427undefinedfalse",
           "player_id": 794427,
           "player_name": "Joao Félix",
-          "assist_player_id": null,
+          "assist_player_id": 843040,
           "assist_player_name": "",
           "is_home": false,
           "minute": "17",
@@ -6994,8 +6994,8 @@
               "blockedY": null,
               "goalCrossedY": 36.745000000000005,
               "goalCrossedZ": 0.0834736838,
-              "expectedGoals": 0.0571,
-              "expectedGoalsOnTarget": 0.3685,
+              "expectedGoals": 0.050776369869709015,
+              "expectedGoalsOnTarget": 0.5564785003662109,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -7013,8 +7013,11 @@
               "fullName": "Joao Félix",
               "teamColor": "#ab0027"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Pedro Neto",
+            "assistProfileUrl": "/players/843040/pedro-neto",
+            "assistPlayerId": 843040,
+            "assistKey": "assist_by",
+            "assistInput": "Pedro Neto"
           }
         }
       ],
@@ -7069,8 +7072,8 @@
             "blockedY": null,
             "goalCrossedY": 36.745000000000005,
             "goalCrossedZ": 0.0834736838,
-            "expectedGoals": 0.0571,
-            "expectedGoalsOnTarget": 0.3685,
+            "expectedGoals": 0.050776369869709015,
+            "expectedGoalsOnTarget": 0.5564785003662109,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
@@ -7088,8 +7091,11 @@
             "fullName": "Joao Félix",
             "teamColor": "#ab0027"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Pedro Neto",
+          "assistProfileUrl": "/players/843040/pedro-neto",
+          "assistPlayerId": 843040,
+          "assistKey": "assist_by",
+          "assistInput": "Pedro Neto"
         }
       ],
       "observed_score": {
