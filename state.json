@@ -5740,7 +5740,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1449644330Goal1321125undefinedfalse",
-        "react:1449667946Goal463291undefinedtrue"
+        "react:1449667946Goal463291undefinedtrue",
+        "react:1449688769Goal1321125undefinedfalse"
       ],
       "goals": [
         {
@@ -5915,6 +5916,87 @@
             "assistKey": "assist_by",
             "assistInput": "Saša Lukić"
           }
+        },
+        {
+          "event_key": "react:1449688769Goal1321125undefinedfalse",
+          "player_id": 1321125,
+          "player_name": "Mexx Meerdink",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2817,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449688769Goal1321125undefinedfalse",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14496887,
+            "player": {
+              "id": 1321125,
+              "name": "Mexx Meerdink",
+              "profileUrl": "/players/1321125/mexx-meerdink"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1321125/mexx-meerdink",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mexx Meerdink",
+            "firstName": "Mexx",
+            "lastName": "Meerdink",
+            "fullName": "Mexx Meerdink",
+            "playerId": 1321125,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975512339,
+              "eventType": "Goal",
+              "teamId": 6708,
+              "playerId": 1321125,
+              "playerName": "Mexx Meerdink",
+              "x": 97.6666666661,
+              "y": 42.8709375,
+              "min": 69,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0756,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 543021,
+              "firstName": "Mexx",
+              "lastName": "Meerdink",
+              "fullName": "Mexx Meerdink",
+              "teamColor": "#FB6132"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -6063,11 +6145,78 @@
           "assistPlayerId": 556972,
           "assistKey": "assist_by",
           "assistInput": "Saša Lukić"
+        },
+        {
+          "reactKey": "1449688769Goal1321125undefinedfalse",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14496887,
+          "player": {
+            "id": 1321125,
+            "name": "Mexx Meerdink",
+            "profileUrl": "/players/1321125/mexx-meerdink"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1321125/mexx-meerdink",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mexx Meerdink",
+          "firstName": "Mexx",
+          "lastName": "Meerdink",
+          "fullName": "Mexx Meerdink",
+          "playerId": 1321125,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975512339,
+            "eventType": "Goal",
+            "teamId": 6708,
+            "playerId": 1321125,
+            "playerName": "Mexx Meerdink",
+            "x": 97.6666666661,
+            "y": 42.8709375,
+            "min": 69,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0756,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 543021,
+            "firstName": "Mexx",
+            "lastName": "Meerdink",
+            "fullName": "Mexx Meerdink",
+            "teamColor": "#FB6132"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5181863": {
