@@ -7852,7 +7852,8 @@
         "react:1449935822Goal815431undefinedfalse",
         "react:1449936727Goal1429912undefinedfalse",
         "react:1449943047Goal0undefinedtrue",
-        "react:1449943047Goal890232undefinedtrue"
+        "react:1449943047Goal890232undefinedtrue",
+        "react:1449943351Goal1367618undefinedfalse"
       ],
       "goals": [
         {
@@ -8295,6 +8296,91 @@
             "assistKey": "assist_by",
             "assistInput": "Oğuz Aydın"
           }
+        },
+        {
+          "event_key": "react:1449943351Goal1367618undefinedfalse",
+          "player_id": 1367618,
+          "player_name": "Francesco Pio Esposito",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "51",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2864,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449943351Goal1367618undefinedfalse",
+            "timeStr": 51,
+            "type": "goal",
+            "time": 51,
+            "overloadTime": null,
+            "eventId": 14499433,
+            "player": {
+              "id": 1367618,
+              "name": "Francesco Pio Esposito",
+              "profileUrl": "/players/1367618/francesco-pio-esposito"
+            },
+            "homeScore": 1,
+            "awayScore": 3,
+            "profileUrl": "/players/1367618/francesco-pio-esposito",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Francesco Pio Esposito",
+            "firstName": "Francesco Pio",
+            "lastName": "Esposito",
+            "fullName": "Francesco Pio Esposito",
+            "playerId": 1367618,
+            "newScore": [
+              1,
+              4
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975808969,
+              "eventType": "Goal",
+              "teamId": 8204,
+              "playerId": 1367618,
+              "playerName": "Francesco Pio Esposito",
+              "x": 95.640350876,
+              "y": 33.695,
+              "min": 50,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.7625,
+              "goalCrossedZ": 0.6485263126,
+              "expectedGoals": 0.2779,
+              "expectedGoalsOnTarget": 0.1505,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.7982804232804226,
+                "y": 0.17156780756613757,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 866967,
+              "firstName": "Francesco Pio",
+              "lastName": "Esposito",
+              "fullName": "Francesco Pio Esposito",
+              "teamColor": "#0064aa"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -8663,11 +8749,82 @@
           "assistPlayerId": 1092015,
           "assistKey": "assist_by",
           "assistInput": "Oğuz Aydın"
+        },
+        {
+          "reactKey": "1449943351Goal1367618undefinedfalse",
+          "timeStr": 51,
+          "type": "goal",
+          "time": 51,
+          "overloadTime": null,
+          "eventId": 14499433,
+          "player": {
+            "id": 1367618,
+            "name": "Francesco Pio Esposito",
+            "profileUrl": "/players/1367618/francesco-pio-esposito"
+          },
+          "homeScore": 1,
+          "awayScore": 3,
+          "profileUrl": "/players/1367618/francesco-pio-esposito",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Francesco Pio Esposito",
+          "firstName": "Francesco Pio",
+          "lastName": "Esposito",
+          "fullName": "Francesco Pio Esposito",
+          "playerId": 1367618,
+          "newScore": [
+            1,
+            4
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975808969,
+            "eventType": "Goal",
+            "teamId": 8204,
+            "playerId": 1367618,
+            "playerName": "Francesco Pio Esposito",
+            "x": 95.640350876,
+            "y": 33.695,
+            "min": 50,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.7625,
+            "goalCrossedZ": 0.6485263126,
+            "expectedGoals": 0.2779,
+            "expectedGoalsOnTarget": 0.1505,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.7982804232804226,
+              "y": 0.17156780756613757,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 866967,
+            "firstName": "Francesco Pio",
+            "lastName": "Esposito",
+            "fullName": "Francesco Pio Esposito",
+            "teamColor": "#0064aa"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 3
+        "away": 4
       }
     },
     "5181851": {
