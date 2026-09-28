@@ -7850,7 +7850,8 @@
         "react:144993309Goal805451undefinedfalse",
         "react:1449935822Goal0undefinedfalse",
         "react:1449935822Goal815431undefinedfalse",
-        "react:1449936727Goal1429912undefinedfalse"
+        "react:1449936727Goal1429912undefinedfalse",
+        "react:1449943047Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -8155,6 +8156,56 @@
             "assistKey": "assist_by",
             "assistInput": "Francesco Pio Esposito"
           }
+        },
+        {
+          "event_key": "react:1449943047Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "47",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2862,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1449943047Goal0undefinedtrue",
+            "timeStr": 47,
+            "type": "goal",
+            "time": 47,
+            "overloadTime": null,
+            "eventId": 14499430,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -8413,10 +8464,46 @@
           "assistPlayerId": 1367618,
           "assistKey": "assist_by",
           "assistInput": "Francesco Pio Esposito"
+        },
+        {
+          "reactKey": "1449943047Goal0undefinedtrue",
+          "timeStr": 47,
+          "type": "goal",
+          "time": 47,
+          "overloadTime": null,
+          "eventId": 14499430,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 3
       }
     },
