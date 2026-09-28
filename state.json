@@ -7849,7 +7849,8 @@
       "event_keys": [
         "react:144993309Goal805451undefinedfalse",
         "react:1449935822Goal0undefinedfalse",
-        "react:1449935822Goal815431undefinedfalse"
+        "react:1449935822Goal815431undefinedfalse",
+        "react:1449936727Goal1429912undefinedfalse"
       ],
       "goals": [
         {
@@ -8070,6 +8071,90 @@
             "assistKey": "assist_by",
             "assistInput": "Michael Kayode"
           }
+        },
+        {
+          "event_key": "react:1449936727Goal1429912undefinedfalse",
+          "player_id": 1429912,
+          "player_name": "Michael Kayode",
+          "assist_player_id": 1367618,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "27",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 2861,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1449936727Goal1429912undefinedfalse",
+            "timeStr": 27,
+            "type": "goal",
+            "time": 27,
+            "overloadTime": null,
+            "eventId": 14499367,
+            "player": {
+              "id": 1429912,
+              "name": "Michael Kayode",
+              "profileUrl": "/players/1429912/michael-kayode"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1429912/michael-kayode",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Michael Kayode",
+            "firstName": "Michael",
+            "lastName": "Kayode",
+            "fullName": "Michael Kayode",
+            "playerId": 1429912,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2975788307,
+              "eventType": "Goal",
+              "teamId": 8204,
+              "playerId": 1429912,
+              "playerName": "Michael Kayode",
+              "x": 95.4473684198,
+              "y": 27.278333333000003,
+              "min": 27,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.077,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 866967,
+              "firstName": "Michael",
+              "lastName": "Kayode",
+              "fullName": "Michael Kayode",
+              "teamColor": "#0064aa"
+            },
+            "assistStr": "assist by Francesco Pio Esposito",
+            "assistProfileUrl": "/players/1367618/francesco-pio-esposito",
+            "assistPlayerId": 1367618,
+            "assistKey": "assist_by",
+            "assistInput": "Francesco Pio Esposito"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -8254,11 +8339,81 @@
           "assistPlayerId": 1429912,
           "assistKey": "assist_by",
           "assistInput": "Michael Kayode"
+        },
+        {
+          "reactKey": "1449936727Goal1429912undefinedfalse",
+          "timeStr": 27,
+          "type": "goal",
+          "time": 27,
+          "overloadTime": null,
+          "eventId": 14499367,
+          "player": {
+            "id": 1429912,
+            "name": "Michael Kayode",
+            "profileUrl": "/players/1429912/michael-kayode"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/1429912/michael-kayode",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Michael Kayode",
+          "firstName": "Michael",
+          "lastName": "Kayode",
+          "fullName": "Michael Kayode",
+          "playerId": 1429912,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2975788307,
+            "eventType": "Goal",
+            "teamId": 8204,
+            "playerId": 1429912,
+            "playerName": "Michael Kayode",
+            "x": 95.4473684198,
+            "y": 27.278333333000003,
+            "min": 27,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.077,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 866967,
+            "firstName": "Michael",
+            "lastName": "Kayode",
+            "fullName": "Michael Kayode",
+            "teamColor": "#0064aa"
+          },
+          "assistStr": "assist by Francesco Pio Esposito",
+          "assistProfileUrl": "/players/1367618/francesco-pio-esposito",
+          "assistPlayerId": 1367618,
+          "assistKey": "assist_by",
+          "assistInput": "Francesco Pio Esposito"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "5181851": {
