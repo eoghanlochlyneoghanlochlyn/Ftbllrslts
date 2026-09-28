@@ -8228,7 +8228,7 @@
             "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": 36.135000000000005,
+            "goalCrossedY": 36.36375,
             "goalCrossedZ": 0.20547368320000003,
             "expectedGoals": 0.6839939951896667,
             "expectedGoalsOnTarget": 0.9925422668457031,
@@ -8237,7 +8237,7 @@
             "period": "FirstHalf",
             "isOwnGoal": false,
             "onGoalShot": {
-              "x": 0.4351851851851839,
+              "x": 0.37466931216931143,
               "y": 0.05435811724867726,
               "zoomRatio": 1
             },
