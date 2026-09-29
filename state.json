@@ -9189,7 +9189,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:145012202Goal0undefinedtrue",
-        "react:145012202Goal1467236undefinedtrue"
+        "react:145012202Goal1467236undefinedtrue",
+        "react:1450145828Goal1186606undefinedfalse"
       ],
       "goals": [
         {
@@ -9330,6 +9331,87 @@
             "assistKey": "assist_by",
             "assistInput": "Fermín López"
           }
+        },
+        {
+          "event_key": "react:1450145828Goal1186606undefinedfalse",
+          "player_id": 1186606,
+          "player_name": "Dion Drena Beljo",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "28",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3249,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450145828Goal1186606undefinedfalse",
+            "timeStr": 28,
+            "type": "goal",
+            "time": 28,
+            "overloadTime": null,
+            "eventId": 14501458,
+            "player": {
+              "id": 1186606,
+              "name": "Dion Drena Beljo",
+              "profileUrl": "/players/1186606/dion-drena-beljo"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1186606/dion-drena-beljo",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Dion Drena Beljo",
+            "firstName": "Dion Drena",
+            "lastName": "Beljo",
+            "fullName": "Dion Drena Beljo",
+            "playerId": 1186606,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976107335,
+              "eventType": "Goal",
+              "teamId": 10155,
+              "playerId": 1186606,
+              "playerName": "Dion Drena Beljo",
+              "x": 98.24561403470001,
+              "y": 34.915000000000006,
+              "min": 28,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1059,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 660625,
+              "firstName": "Dion Drena",
+              "lastName": "Beljo",
+              "fullName": "Dion Drena Beljo",
+              "teamColor": "#CC3737"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -9444,11 +9526,78 @@
           "assistPlayerId": 942372,
           "assistKey": "assist_by",
           "assistInput": "Álex Baena"
+        },
+        {
+          "reactKey": "1450145828Goal1186606undefinedfalse",
+          "timeStr": 28,
+          "type": "goal",
+          "time": 28,
+          "overloadTime": null,
+          "eventId": 14501458,
+          "player": {
+            "id": 1186606,
+            "name": "Dion Drena Beljo",
+            "profileUrl": "/players/1186606/dion-drena-beljo"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1186606/dion-drena-beljo",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Dion Drena Beljo",
+          "firstName": "Dion Drena",
+          "lastName": "Beljo",
+          "fullName": "Dion Drena Beljo",
+          "playerId": 1186606,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976107335,
+            "eventType": "Goal",
+            "teamId": 10155,
+            "playerId": 1186606,
+            "playerName": "Dion Drena Beljo",
+            "x": 98.24561403470001,
+            "y": 34.915000000000006,
+            "min": 28,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1059,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 660625,
+            "firstName": "Dion Drena",
+            "lastName": "Beljo",
+            "fullName": "Dion Drena Beljo",
+            "teamColor": "#CC3737"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     }
   }
