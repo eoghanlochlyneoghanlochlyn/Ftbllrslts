@@ -9167,8 +9167,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1450141825Card1037539undefinedtrue",
         "react:1450166147Goal906937undefinedfalse",
