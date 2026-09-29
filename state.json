@@ -9186,7 +9186,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:145012202Goal0undefinedtrue"
+        "react:145012202Goal0undefinedtrue",
+        "react:145012202Goal1467236undefinedtrue"
       ],
       "goals": [
         {
@@ -9239,6 +9240,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:145012202Goal1467236undefinedtrue",
+          "player_id": 1467236,
+          "player_name": "Lamine Yamal",
+          "assist_player_id": 1404415,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3247,
+          "needs_update": false,
+          "event": {
+            "reactKey": "145012202Goal1467236undefinedtrue",
+            "timeStr": 2,
+            "type": "goal",
+            "time": 2,
+            "overloadTime": null,
+            "eventId": 14501220,
+            "player": {
+              "id": 1467236,
+              "name": "Lamine Yamal",
+              "profileUrl": "/players/1467236/lamine-yamal"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1467236/lamine-yamal",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Lamine Yamal",
+            "firstName": "Lamine",
+            "lastName": "Yamal",
+            "fullName": "Lamine Yamal",
+            "playerId": 1467236,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976090113,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 1467236,
+              "playerName": "Lamine Yamal",
+              "x": 91,
+              "y": 25.1290625,
+              "min": 2,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 0.6934736808,
+              "expectedGoals": 0.2159,
+              "expectedGoalsOnTarget": 0.6513,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.18345864571428572,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 383971,
+              "firstName": "Lamine",
+              "lastName": "Yamal",
+              "fullName": "Lamine Yamal",
+              "teamColor": "#c62035"
+            },
+            "assistStr": "assist by Fermín López",
+            "assistProfileUrl": "/players/1404415/fermin-lopez",
+            "assistPlayerId": 1404415,
+            "assistKey": "assist_by",
+            "assistInput": "Fermín López"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -9279,10 +9368,84 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "145012202Goal1467236undefinedtrue",
+          "timeStr": 2,
+          "type": "goal",
+          "time": 2,
+          "overloadTime": null,
+          "eventId": 14501220,
+          "player": {
+            "id": 1467236,
+            "name": "Lamine Yamal",
+            "profileUrl": "/players/1467236/lamine-yamal"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1467236/lamine-yamal",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Lamine Yamal",
+          "firstName": "Lamine",
+          "lastName": "Yamal",
+          "fullName": "Lamine Yamal",
+          "playerId": 1467236,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976090113,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 1467236,
+            "playerName": "Lamine Yamal",
+            "x": 91,
+            "y": 25.1290625,
+            "min": 2,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.97375,
+            "goalCrossedZ": 0.6934736808,
+            "expectedGoals": 0.2159,
+            "expectedGoalsOnTarget": 0.6513,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.21329365079365015,
+              "y": 0.18345864571428572,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 383971,
+            "firstName": "Lamine",
+            "lastName": "Yamal",
+            "fullName": "Lamine Yamal",
+            "teamColor": "#c62035"
+          },
+          "assistStr": "assist by Fermín López",
+          "assistProfileUrl": "/players/1404415/fermin-lopez",
+          "assistPlayerId": 1404415,
+          "assistKey": "assist_by",
+          "assistInput": "Fermín López"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     }
