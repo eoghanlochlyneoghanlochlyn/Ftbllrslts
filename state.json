@@ -9190,7 +9190,8 @@
       "event_keys": [
         "react:145012202Goal0undefinedtrue",
         "react:145012202Goal1467236undefinedtrue",
-        "react:1450145828Goal1186606undefinedfalse"
+        "react:1450145828Goal1186606undefinedfalse",
+        "react:1450147431Goal1323897undefinedtrue"
       ],
       "goals": [
         {
@@ -9419,6 +9420,94 @@
             "assistKey": "assist_by",
             "assistInput": "Ivan Perišić"
           }
+        },
+        {
+          "event_key": "react:1450147431Goal1323897undefinedtrue",
+          "player_id": 1323897,
+          "player_name": "Marc Pubill",
+          "assist_player_id": 1467236,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "31",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3250,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450147431Goal1323897undefinedtrue",
+            "timeStr": 31,
+            "type": "goal",
+            "time": 31,
+            "overloadTime": null,
+            "eventId": 14501474,
+            "player": {
+              "id": 1323897,
+              "name": "Marc Pubill",
+              "profileUrl": "/players/1323897/marc-pubill"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1323897/marc-pubill",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Marc Pubill",
+            "firstName": "Marc",
+            "lastName": "Pubill",
+            "fullName": "Marc Pubill",
+            "playerId": 1323897,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976109163,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 1323897,
+              "playerName": "Marc Pubill",
+              "x": 100.44827586240001,
+              "y": 33.8475,
+              "min": 31,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.77125,
+              "goalCrossedZ": 1.6694736760000002,
+              "expectedGoals": 0.4831,
+              "expectedGoalsOnTarget": 0.5374,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.0605158730158726,
+                "y": 0.44165970264550264,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 383971,
+              "firstName": "Marc",
+              "lastName": "Pubill",
+              "fullName": "Marc Pubill",
+              "teamColor": "#c62035"
+            },
+            "assistStr": "assist by Lamine Yamal",
+            "assistProfileUrl": "/players/1467236/lamine-yamal",
+            "assistPlayerId": 1467236,
+            "assistKey": "assist_by",
+            "assistInput": "Lamine Yamal"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -9607,10 +9696,84 @@
           "assistPlayerId": 163670,
           "assistKey": "assist_by",
           "assistInput": "Ivan Perišić"
+        },
+        {
+          "reactKey": "1450147431Goal1323897undefinedtrue",
+          "timeStr": 31,
+          "type": "goal",
+          "time": 31,
+          "overloadTime": null,
+          "eventId": 14501474,
+          "player": {
+            "id": 1323897,
+            "name": "Marc Pubill",
+            "profileUrl": "/players/1323897/marc-pubill"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1323897/marc-pubill",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Marc Pubill",
+          "firstName": "Marc",
+          "lastName": "Pubill",
+          "fullName": "Marc Pubill",
+          "playerId": 1323897,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976109163,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 1323897,
+            "playerName": "Marc Pubill",
+            "x": 100.44827586240001,
+            "y": 33.8475,
+            "min": 31,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.77125,
+            "goalCrossedZ": 1.6694736760000002,
+            "expectedGoals": 0.4831,
+            "expectedGoalsOnTarget": 0.5374,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.0605158730158726,
+              "y": 0.44165970264550264,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 383971,
+            "firstName": "Marc",
+            "lastName": "Pubill",
+            "fullName": "Marc Pubill",
+            "teamColor": "#c62035"
+          },
+          "assistStr": "assist by Lamine Yamal",
+          "assistProfileUrl": "/players/1467236/lamine-yamal",
+          "assistPlayerId": 1467236,
+          "assistKey": "assist_by",
+          "assistInput": "Lamine Yamal"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     }
