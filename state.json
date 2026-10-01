@@ -10572,7 +10572,7 @@
           "event_key": "react:1450666011Goal1113790undefinedfalse",
           "player_id": 1113790,
           "player_name": "Oscar Bobb",
-          "assist_player_id": null,
+          "assist_player_id": 534670,
           "assist_player_name": "",
           "is_home": false,
           "minute": "11",
@@ -10630,8 +10630,8 @@
               "blockedY": null,
               "goalCrossedY": 31.254999999999995,
               "goalCrossedZ": 0.1219999994,
-              "expectedGoals": 0.654,
-              "expectedGoalsOnTarget": 0.9714,
+              "expectedGoals": 0.620111346244812,
+              "expectedGoalsOnTarget": 0.8652389049530029,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -10649,8 +10649,11 @@
               "fullName": "Oscar Bobb",
               "teamColor": "#b53032"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Martin Ødegaard",
+            "assistProfileUrl": "/players/534670/martin-odegaard",
+            "assistPlayerId": 534670,
+            "assistKey": "assist_by",
+            "assistInput": "Martin Ødegaard"
           }
         }
       ],
@@ -10705,8 +10708,8 @@
             "blockedY": null,
             "goalCrossedY": 31.254999999999995,
             "goalCrossedZ": 0.1219999994,
-            "expectedGoals": 0.654,
-            "expectedGoalsOnTarget": 0.9714,
+            "expectedGoals": 0.620111346244812,
+            "expectedGoalsOnTarget": 0.8652389049530029,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
@@ -10724,8 +10727,11 @@
             "fullName": "Oscar Bobb",
             "teamColor": "#b53032"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Martin Ødegaard",
+          "assistProfileUrl": "/players/534670/martin-odegaard",
+          "assistPlayerId": 534670,
+          "assistKey": "assist_by",
+          "assistInput": "Martin Ødegaard"
         }
       ],
       "observed_score": {
