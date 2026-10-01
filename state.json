@@ -11693,7 +11693,8 @@
       "event_keys": [
         "react:1450666011Goal1113790undefinedfalse",
         "react:1450674538Goal717176undefinedtrue",
-        "react:1450679746Card935550undefinedfalse"
+        "react:1450679746Card935550undefinedfalse",
+        "react:1450679848Goal1078788undefinedtrue"
       ],
       "goals": [
         {
@@ -11871,6 +11872,91 @@
             "assistKey": "assist_by",
             "assistInput": "Sorba Thomas"
           }
+        },
+        {
+          "event_key": "react:1450679848Goal1078788undefinedtrue",
+          "player_id": 1078788,
+          "player_name": "Neco Williams",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "48",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3303,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450679848Goal1078788undefinedtrue",
+            "timeStr": 48,
+            "type": "goal",
+            "time": 48,
+            "overloadTime": null,
+            "eventId": 14506798,
+            "player": {
+              "id": 1078788,
+              "name": "Neco Williams",
+              "profileUrl": "/players/1078788/neco-williams"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1078788/neco-williams",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Direct freekick",
+            "goalDescriptionKey": "direct_free_kick",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Neco Williams",
+            "firstName": "Neco",
+            "lastName": "Williams",
+            "fullName": "Neco Williams",
+            "playerId": 1078788,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976484245,
+              "eventType": "Goal",
+              "teamId": 5790,
+              "playerId": 1078788,
+              "playerName": "Neco Williams",
+              "x": 83.6111650488,
+              "y": 26.6321875,
+              "min": 48,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.2025,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.0746,
+              "expectedGoalsOnTarget": 0.5195,
+              "shotType": "RightFoot",
+              "situation": "FreeKick",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.15277777777777768,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 73409,
+              "firstName": "Neco",
+              "lastName": "Williams",
+              "fullName": "Neco Williams",
+              "teamColor": "#E5231B"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -12022,10 +12108,81 @@
           "assistPlayerId": 812982,
           "assistKey": "assist_by",
           "assistInput": "Sorba Thomas"
+        },
+        {
+          "reactKey": "1450679848Goal1078788undefinedtrue",
+          "timeStr": 48,
+          "type": "goal",
+          "time": 48,
+          "overloadTime": null,
+          "eventId": 14506798,
+          "player": {
+            "id": 1078788,
+            "name": "Neco Williams",
+            "profileUrl": "/players/1078788/neco-williams"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1078788/neco-williams",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Direct freekick",
+          "goalDescriptionKey": "direct_free_kick",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Neco Williams",
+          "firstName": "Neco",
+          "lastName": "Williams",
+          "fullName": "Neco Williams",
+          "playerId": 1078788,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976484245,
+            "eventType": "Goal",
+            "teamId": 5790,
+            "playerId": 1078788,
+            "playerName": "Neco Williams",
+            "x": 83.6111650488,
+            "y": 26.6321875,
+            "min": 48,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 37.2025,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": 0.0746,
+            "expectedGoalsOnTarget": 0.5195,
+            "shotType": "RightFoot",
+            "situation": "FreeKick",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.15277777777777768,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 73409,
+            "firstName": "Neco",
+            "lastName": "Williams",
+            "fullName": "Neco Williams",
+            "teamColor": "#E5231B"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
