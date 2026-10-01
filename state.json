@@ -10803,7 +10803,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1450668513Goal0undefinedfalse",
-        "react:1450668513Goal361757undefinedfalse"
+        "react:1450668513Goal361757undefinedfalse",
+        "react:1450671923Goal888912undefinedtrue"
       ],
       "goals": [
         {
@@ -10943,6 +10944,94 @@
             "assistKey": "assist_by",
             "assistInput": "Gonçalo Ramos"
           }
+        },
+        {
+          "event_key": "react:1450671923Goal888912undefinedtrue",
+          "player_id": 888912,
+          "player_name": "Mikkel Damsgaard",
+          "assist_player_id": 759097,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "23",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3297,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450671923Goal888912undefinedtrue",
+            "timeStr": 23,
+            "type": "goal",
+            "time": 23,
+            "overloadTime": null,
+            "eventId": 14506719,
+            "player": {
+              "id": 888912,
+              "name": "Mikkel Damsgaard",
+              "profileUrl": "/players/888912/mikkel-damsgaard"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/888912/mikkel-damsgaard",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mikkel Damsgaard",
+            "firstName": "Mikkel",
+            "lastName": "Damsgaard",
+            "fullName": "Mikkel Damsgaard",
+            "playerId": 888912,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976473383,
+              "eventType": "Goal",
+              "teamId": 8238,
+              "playerId": 888912,
+              "playerName": "Mikkel Damsgaard",
+              "x": 90.9,
+              "y": 46.2428025441,
+              "min": 23,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.873749999999998,
+              "goalCrossedZ": 1.2585263096000001,
+              "expectedGoals": 0.0502,
+              "expectedGoalsOnTarget": 0.5375,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.8270502645502642,
+                "y": 0.3329434681481482,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 795630,
+              "firstName": "Mikkel",
+              "lastName": "Damsgaard",
+              "fullName": "Mikkel Damsgaard",
+              "teamColor": "#D2151A"
+            },
+            "assistStr": "assist by Joakim Mæhle",
+            "assistProfileUrl": "/players/759097/joakim-maehle",
+            "assistPlayerId": 759097,
+            "assistKey": "assist_by",
+            "assistInput": "Joakim Mæhle"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -11056,10 +11145,84 @@
           "assistPlayerId": 940087,
           "assistKey": "assist_by",
           "assistInput": "Gonçalo Ramos"
+        },
+        {
+          "reactKey": "1450671923Goal888912undefinedtrue",
+          "timeStr": 23,
+          "type": "goal",
+          "time": 23,
+          "overloadTime": null,
+          "eventId": 14506719,
+          "player": {
+            "id": 888912,
+            "name": "Mikkel Damsgaard",
+            "profileUrl": "/players/888912/mikkel-damsgaard"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/888912/mikkel-damsgaard",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mikkel Damsgaard",
+          "firstName": "Mikkel",
+          "lastName": "Damsgaard",
+          "fullName": "Mikkel Damsgaard",
+          "playerId": 888912,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976473383,
+            "eventType": "Goal",
+            "teamId": 8238,
+            "playerId": 888912,
+            "playerName": "Mikkel Damsgaard",
+            "x": 90.9,
+            "y": 46.2428025441,
+            "min": 23,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.873749999999998,
+            "goalCrossedZ": 1.2585263096000001,
+            "expectedGoals": 0.0502,
+            "expectedGoalsOnTarget": 0.5375,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.8270502645502642,
+              "y": 0.3329434681481482,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 795630,
+            "firstName": "Mikkel",
+            "lastName": "Damsgaard",
+            "fullName": "Mikkel Damsgaard",
+            "teamColor": "#D2151A"
+          },
+          "assistStr": "assist by Joakim Mæhle",
+          "assistProfileUrl": "/players/759097/joakim-maehle",
+          "assistPlayerId": 759097,
+          "assistKey": "assist_by",
+          "assistInput": "Joakim Mæhle"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
