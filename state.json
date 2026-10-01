@@ -10804,7 +10804,8 @@
       "event_keys": [
         "react:1450668513Goal0undefinedfalse",
         "react:1450668513Goal361757undefinedfalse",
-        "react:1450671923Goal888912undefinedtrue"
+        "react:1450671923Goal888912undefinedtrue",
+        "react:1450672425Goal940087undefinedfalse"
       ],
       "goals": [
         {
@@ -11032,6 +11033,59 @@
             "assistKey": "assist_by",
             "assistInput": "Joakim Mæhle"
           }
+        },
+        {
+          "event_key": "react:1450672425Goal940087undefinedfalse",
+          "player_id": 940087,
+          "player_name": "Gonçalo Ramos",
+          "assist_player_id": 422685,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "25",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3298,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450672425Goal940087undefinedfalse",
+            "timeStr": 25,
+            "type": "goal",
+            "time": 25,
+            "overloadTime": null,
+            "eventId": 14506724,
+            "player": {
+              "id": 940087,
+              "name": "Gonçalo Ramos",
+              "profileUrl": "/players/940087/goncalo-ramos"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/940087/goncalo-ramos",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Gonçalo Ramos",
+            "firstName": "Gonçalo",
+            "lastName": "Ramos",
+            "fullName": "Gonçalo Ramos",
+            "playerId": 940087,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Bruno Fernandes",
+            "assistProfileUrl": "/players/422685/bruno-fernandes",
+            "assistPlayerId": 422685,
+            "assistKey": "assist_by",
+            "assistInput": "Bruno Fernandes"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -11219,11 +11273,50 @@
           "assistPlayerId": 759097,
           "assistKey": "assist_by",
           "assistInput": "Joakim Mæhle"
+        },
+        {
+          "reactKey": "1450672425Goal940087undefinedfalse",
+          "timeStr": 25,
+          "type": "goal",
+          "time": 25,
+          "overloadTime": null,
+          "eventId": 14506724,
+          "player": {
+            "id": 940087,
+            "name": "Gonçalo Ramos",
+            "profileUrl": "/players/940087/goncalo-ramos"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/940087/goncalo-ramos",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Gonçalo Ramos",
+          "firstName": "Gonçalo",
+          "lastName": "Ramos",
+          "fullName": "Gonçalo Ramos",
+          "playerId": 940087,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Bruno Fernandes",
+          "assistProfileUrl": "/players/422685/bruno-fernandes",
+          "assistPlayerId": 422685,
+          "assistKey": "assist_by",
+          "assistInput": "Bruno Fernandes"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5181866": {
