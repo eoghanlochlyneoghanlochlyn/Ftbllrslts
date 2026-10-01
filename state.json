@@ -10954,7 +10954,8 @@
         "react:1450676645Goal575227undefinedtrue",
         "react:1450683759Goal0undefinedfalse",
         "react:1450683759Goal209405undefinedfalse",
-        "react:1450686665Goal593118undefinedfalse"
+        "react:1450686665Goal593118undefinedfalse",
+        "react:1450703389Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -11405,6 +11406,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1450703389Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "89",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3312,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1450703389Goal0undefinedfalse",
+            "timeStr": 89,
+            "type": "goal",
+            "time": 89,
+            "overloadTime": null,
+            "eventId": 14507033,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -11773,11 +11824,47 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1450703389Goal0undefinedfalse",
+          "timeStr": 89,
+          "type": "goal",
+          "time": 89,
+          "overloadTime": null,
+          "eventId": 14507033,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "5181865": {
@@ -12256,7 +12343,7 @@
           "event_key": "react:1450702387Goal794427undefinedfalse",
           "player_id": 794427,
           "player_name": "Joao Félix",
-          "assist_player_id": null,
+          "assist_player_id": 751550,
           "assist_player_name": "",
           "is_home": false,
           "minute": "87",
@@ -12298,8 +12385,46 @@
               4
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "shotmapEvent": {
+              "id": 2976502775,
+              "eventType": "Goal",
+              "teamId": 8361,
+              "playerId": 794427,
+              "playerName": "Joao Félix",
+              "x": 93.3,
+              "y": 30.328,
+              "min": 87,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.525000000000006,
+              "goalCrossedZ": 1.3419999934,
+              "expectedGoals": 0.3229,
+              "expectedGoalsOnTarget": 0.5084,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5965608465608451,
+                "y": 0.35502645328042326,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 967941,
+              "firstName": "Joao",
+              "lastName": "Félix",
+              "fullName": "Joao Félix",
+              "teamColor": "#ab0027"
+            },
+            "assistStr": "assist by Diogo Dalot",
+            "assistProfileUrl": "/players/751550/diogo-dalot",
+            "assistPlayerId": 751550,
+            "assistKey": "assist_by",
+            "assistInput": "Diogo Dalot"
           }
         }
       ],
@@ -12744,8 +12869,46 @@
             4
           ],
           "penShootoutScore": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "shotmapEvent": {
+            "id": 2976502775,
+            "eventType": "Goal",
+            "teamId": 8361,
+            "playerId": 794427,
+            "playerName": "Joao Félix",
+            "x": 93.3,
+            "y": 30.328,
+            "min": 87,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.525000000000006,
+            "goalCrossedZ": 1.3419999934,
+            "expectedGoals": 0.3229,
+            "expectedGoalsOnTarget": 0.5084,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5965608465608451,
+              "y": 0.35502645328042326,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 967941,
+            "firstName": "Joao",
+            "lastName": "Félix",
+            "fullName": "Joao Félix",
+            "teamColor": "#ab0027"
+          },
+          "assistStr": "assist by Diogo Dalot",
+          "assistProfileUrl": "/players/751550/diogo-dalot",
+          "assistPlayerId": 751550,
+          "assistKey": "assist_by",
+          "assistInput": "Diogo Dalot"
         }
       ],
       "observed_score": {
