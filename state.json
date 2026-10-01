@@ -11793,7 +11793,8 @@
         "react:1450671923Goal888912undefinedtrue",
         "react:1450672425Goal940087undefinedfalse",
         "react:1450682553Goal1199272undefinedtrue",
-        "react:1450688467Goal1061249undefinedfalse"
+        "react:1450688467Goal1061249undefinedfalse",
+        "react:1450702387Goal794427undefinedfalse"
       ],
       "goals": [
         {
@@ -12250,6 +12251,56 @@
             "assistKey": "assist_by",
             "assistInput": "Bruno Fernandes"
           }
+        },
+        {
+          "event_key": "react:1450702387Goal794427undefinedfalse",
+          "player_id": 794427,
+          "player_name": "Joao Félix",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "87",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3311,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450702387Goal794427undefinedfalse",
+            "timeStr": 87,
+            "type": "goal",
+            "time": 87,
+            "overloadTime": null,
+            "eventId": 14507023,
+            "player": {
+              "id": 794427,
+              "name": "Joao Félix",
+              "profileUrl": "/players/794427/joao-felix"
+            },
+            "homeScore": 2,
+            "awayScore": 3,
+            "profileUrl": "/players/794427/joao-felix",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Joao Félix",
+            "firstName": "Joao",
+            "lastName": "Félix",
+            "fullName": "Joao Félix",
+            "playerId": 794427,
+            "newScore": [
+              2,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -12659,11 +12710,47 @@
           "assistPlayerId": 422685,
           "assistKey": "assist_by",
           "assistInput": "Bruno Fernandes"
+        },
+        {
+          "reactKey": "1450702387Goal794427undefinedfalse",
+          "timeStr": 87,
+          "type": "goal",
+          "time": 87,
+          "overloadTime": null,
+          "eventId": 14507023,
+          "player": {
+            "id": 794427,
+            "name": "Joao Félix",
+            "profileUrl": "/players/794427/joao-felix"
+          },
+          "homeScore": 2,
+          "awayScore": 3,
+          "profileUrl": "/players/794427/joao-felix",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Joao Félix",
+          "firstName": "Joao",
+          "lastName": "Félix",
+          "fullName": "Joao Félix",
+          "playerId": 794427,
+          "newScore": [
+            2,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 3
+        "away": 4
       }
     },
     "5181866": {
