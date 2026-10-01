@@ -11792,7 +11792,8 @@
         "react:1450668513Goal361757undefinedfalse",
         "react:1450671923Goal888912undefinedtrue",
         "react:1450672425Goal940087undefinedfalse",
-        "react:1450682553Goal1199272undefinedtrue"
+        "react:1450682553Goal1199272undefinedtrue",
+        "react:1450688467Goal1061249undefinedfalse"
       ],
       "goals": [
         {
@@ -12161,6 +12162,87 @@
             "assistKey": "assist_by",
             "assistInput": "Mikkel Damsgaard"
           }
+        },
+        {
+          "event_key": "react:1450688467Goal1061249undefinedfalse",
+          "player_id": 1061249,
+          "player_name": "Vítinha",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "67",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3310,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450688467Goal1061249undefinedfalse",
+            "timeStr": 67,
+            "type": "goal",
+            "time": 67,
+            "overloadTime": null,
+            "eventId": 14506884,
+            "player": {
+              "id": 1061249,
+              "name": "Vítinha",
+              "profileUrl": "/players/1061249/vitinha"
+            },
+            "homeScore": 2,
+            "awayScore": 2,
+            "profileUrl": "/players/1061249/vitinha",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Vítinha",
+            "firstName": "",
+            "lastName": "Vítinha",
+            "fullName": "Vítinha",
+            "playerId": 1061249,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976493813,
+              "eventType": "Goal",
+              "teamId": 8361,
+              "playerId": 1061249,
+              "playerName": "Vítinha",
+              "x": 98.24561403470001,
+              "y": 37.05,
+              "min": 67,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.096,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 967941,
+              "firstName": "",
+              "lastName": "Vítinha",
+              "fullName": "Vítinha",
+              "teamColor": "#ab0027"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -12496,11 +12578,78 @@
           "assistPlayerId": 888912,
           "assistKey": "assist_by",
           "assistInput": "Mikkel Damsgaard"
+        },
+        {
+          "reactKey": "1450688467Goal1061249undefinedfalse",
+          "timeStr": 67,
+          "type": "goal",
+          "time": 67,
+          "overloadTime": null,
+          "eventId": 14506884,
+          "player": {
+            "id": 1061249,
+            "name": "Vítinha",
+            "profileUrl": "/players/1061249/vitinha"
+          },
+          "homeScore": 2,
+          "awayScore": 2,
+          "profileUrl": "/players/1061249/vitinha",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Vítinha",
+          "firstName": "",
+          "lastName": "Vítinha",
+          "fullName": "Vítinha",
+          "playerId": 1061249,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976493813,
+            "eventType": "Goal",
+            "teamId": 8361,
+            "playerId": 1061249,
+            "playerName": "Vítinha",
+            "x": 98.24561403470001,
+            "y": 37.05,
+            "min": 67,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.096,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 967941,
+            "firstName": "",
+            "lastName": "Vítinha",
+            "fullName": "Vítinha",
+            "teamColor": "#ab0027"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 2
+        "away": 3
       }
     },
     "5181866": {
