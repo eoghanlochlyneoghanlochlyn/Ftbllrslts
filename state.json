@@ -10690,7 +10690,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1450667613Goal0undefinedtrue",
-        "react:1450671123Goal899701undefinedtrue"
+        "react:1450671123Goal899701undefinedtrue",
+        "react:1450676645Goal575227undefinedtrue"
       ],
       "goals": [
         {
@@ -10830,6 +10831,94 @@
             "assistKey": "assist_by",
             "assistInput": "Giorgos Masouras"
           }
+        },
+        {
+          "event_key": "react:1450676645Goal575227undefinedtrue",
+          "player_id": 575227,
+          "player_name": "Giorgos Masouras",
+          "assist_player_id": 899701,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "45 + 2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3301,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450676645Goal575227undefinedtrue",
+            "timeStr": "45 + 2",
+            "type": "goal",
+            "time": 45,
+            "overloadTime": 2,
+            "eventId": 14506766,
+            "player": {
+              "id": 575227,
+              "name": "Giorgos Masouras",
+              "profileUrl": "/players/575227/giorgos-masouras"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/575227/giorgos-masouras",
+            "overloadTimeStr": "+2",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Giorgos Masouras",
+            "firstName": "Giorgos",
+            "lastName": "Masouras",
+            "fullName": "Giorgos Masouras",
+            "playerId": 575227,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976481669,
+              "eventType": "Goal",
+              "teamId": 6383,
+              "playerId": 575227,
+              "playerName": "Giorgos Masouras",
+              "x": 96.9912280694,
+              "y": 33.8475,
+              "min": 45,
+              "minAdded": 2,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.75375,
+              "goalCrossedZ": 0.44947368200000004,
+              "expectedGoals": 0.4631,
+              "expectedGoalsOnTarget": 0.7282,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5360449735449745,
+                "y": 0.11890838148148149,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1131987,
+              "firstName": "Giorgos",
+              "lastName": "Masouras",
+              "fullName": "Giorgos Masouras",
+              "teamColor": "#2A5CAA"
+            },
+            "assistStr": "assist by Fotis Ioannidis",
+            "assistProfileUrl": "/players/899701/fotis-ioannidis",
+            "assistPlayerId": 899701,
+            "assistKey": "assist_by",
+            "assistInput": "Fotis Ioannidis"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -10943,10 +11032,84 @@
           "assistPlayerId": 575227,
           "assistKey": "assist_by",
           "assistInput": "Giorgos Masouras"
+        },
+        {
+          "reactKey": "1450676645Goal575227undefinedtrue",
+          "timeStr": "45 + 2",
+          "type": "goal",
+          "time": 45,
+          "overloadTime": 2,
+          "eventId": 14506766,
+          "player": {
+            "id": 575227,
+            "name": "Giorgos Masouras",
+            "profileUrl": "/players/575227/giorgos-masouras"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/575227/giorgos-masouras",
+          "overloadTimeStr": "+2",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Giorgos Masouras",
+          "firstName": "Giorgos",
+          "lastName": "Masouras",
+          "fullName": "Giorgos Masouras",
+          "playerId": 575227,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976481669,
+            "eventType": "Goal",
+            "teamId": 6383,
+            "playerId": 575227,
+            "playerName": "Giorgos Masouras",
+            "x": 96.9912280694,
+            "y": 33.8475,
+            "min": 45,
+            "minAdded": 2,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.75375,
+            "goalCrossedZ": 0.44947368200000004,
+            "expectedGoals": 0.4631,
+            "expectedGoalsOnTarget": 0.7282,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5360449735449745,
+              "y": 0.11890838148148149,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1131987,
+            "firstName": "Giorgos",
+            "lastName": "Masouras",
+            "fullName": "Giorgos Masouras",
+            "teamColor": "#2A5CAA"
+          },
+          "assistStr": "assist by Fotis Ioannidis",
+          "assistProfileUrl": "/players/899701/fotis-ioannidis",
+          "assistPlayerId": 899701,
+          "assistKey": "assist_by",
+          "assistInput": "Fotis Ioannidis"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
