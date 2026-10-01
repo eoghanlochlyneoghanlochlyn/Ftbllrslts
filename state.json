@@ -10524,7 +10524,7 @@
           "event_key": "react:1450674940Goal1286183undefinedtrue",
           "player_id": 1286183,
           "player_name": "Tom Bischof",
-          "assist_player_id": null,
+          "assist_player_id": 1152455,
           "assist_player_name": "",
           "is_home": true,
           "minute": "40",
@@ -10577,18 +10577,22 @@
               "min": 39,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.158,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 36.135000000000005,
+              "goalCrossedZ": 1.5025263084,
+              "expectedGoals": 0.25165069103240967,
+              "expectedGoalsOnTarget": 0.7305727005004883,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.4351851851851839,
+                "y": 0.39749373238095237,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 1067256,
@@ -10597,8 +10601,11 @@
               "fullName": "Tom Bischof",
               "teamColor": "#464646"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Florian Wirtz",
+            "assistProfileUrl": "/players/1152455/florian-wirtz",
+            "assistPlayerId": 1152455,
+            "assistKey": "assist_by",
+            "assistInput": "Florian Wirtz"
           }
         }
       ],
@@ -10672,8 +10679,11 @@
             "fullName": "Tom Bischof",
             "teamColor": "#464646"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Florian Wirtz",
+          "assistProfileUrl": "/players/1152455/florian-wirtz",
+          "assistPlayerId": 1152455,
+          "assistKey": "assist_by",
+          "assistInput": "Florian Wirtz"
         }
       ],
       "observed_score": {
