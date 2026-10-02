@@ -13752,10 +13752,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1450766112Goal543306undefinedfalse"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1450766112Goal543306undefinedfalse",
+          "player_id": 543306,
+          "player_name": "Federico Bonazzoli",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "12",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3326,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1450766112Goal543306undefinedfalse",
+            "timeStr": 12,
+            "type": "goal",
+            "time": 12,
+            "overloadTime": null,
+            "eventId": 14507661,
+            "player": {
+              "id": 543306,
+              "name": "Federico Bonazzoli",
+              "profileUrl": "/players/543306/federico-bonazzoli"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/543306/federico-bonazzoli",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Federico Bonazzoli",
+            "firstName": "Federico",
+            "lastName": "Bonazzoli",
+            "fullName": "Federico Bonazzoli",
+            "playerId": 543306,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1450766112Goal543306undefinedfalse",
+          "timeStr": 12,
+          "type": "goal",
+          "time": 12,
+          "overloadTime": null,
+          "eventId": 14507661,
+          "player": {
+            "id": 543306,
+            "name": "Federico Bonazzoli",
+            "profileUrl": "/players/543306/federico-bonazzoli"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/543306/federico-bonazzoli",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Federico Bonazzoli",
+          "firstName": "Federico",
+          "lastName": "Bonazzoli",
+          "fullName": "Federico Bonazzoli",
+          "playerId": 543306,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 0,
         "away": 1
