@@ -13861,7 +13861,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1450978610Goal169200undefinedtrue"
+        "react:1450978610Goal169200undefinedtrue",
+        "react:1451043760Goal169200undefinedtrue"
       ],
       "goals": [
         {
@@ -13951,6 +13952,94 @@
             "assistKey": "assist_by",
             "assistInput": "Dodi Lukébakio"
           }
+        },
+        {
+          "event_key": "react:1451043760Goal169200undefinedtrue",
+          "player_id": 169200,
+          "player_name": "Kevin De Bruyne",
+          "assist_player_id": 465960,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "60",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3337,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451043760Goal169200undefinedtrue",
+            "timeStr": 60,
+            "type": "goal",
+            "time": 60,
+            "overloadTime": null,
+            "eventId": 14510437,
+            "player": {
+              "id": 169200,
+              "name": "Kevin De Bruyne",
+              "profileUrl": "/players/169200/kevin-de-bruyne"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/169200/kevin-de-bruyne",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Kevin De Bruyne",
+            "firstName": "Kevin",
+            "lastName": "De Bruyne",
+            "fullName": "Kevin De Bruyne",
+            "playerId": 169200,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976675039,
+              "eventType": "Goal",
+              "teamId": 8263,
+              "playerId": 169200,
+              "playerName": "Kevin De Bruyne",
+              "x": 79.8946601952,
+              "y": 42.235,
+              "min": 59,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 1.6245263078,
+              "expectedGoals": 0.0305,
+              "expectedGoalsOnTarget": 0.3343,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.42976886449735446,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 603669,
+              "firstName": "Kevin",
+              "lastName": "De Bruyne",
+              "fullName": "Kevin De Bruyne",
+              "teamColor": "#9f2533"
+            },
+            "assistStr": "assist by Youri Tielemans",
+            "assistProfileUrl": "/players/465960/youri-tielemans",
+            "assistPlayerId": 465960,
+            "assistKey": "assist_by",
+            "assistInput": "Youri Tielemans"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -14028,10 +14117,84 @@
           "assistPlayerId": 688876,
           "assistKey": "assist_by",
           "assistInput": "Dodi Lukébakio"
+        },
+        {
+          "reactKey": "1451043760Goal169200undefinedtrue",
+          "timeStr": 60,
+          "type": "goal",
+          "time": 60,
+          "overloadTime": null,
+          "eventId": 14510437,
+          "player": {
+            "id": 169200,
+            "name": "Kevin De Bruyne",
+            "profileUrl": "/players/169200/kevin-de-bruyne"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/169200/kevin-de-bruyne",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Kevin De Bruyne",
+          "firstName": "Kevin",
+          "lastName": "De Bruyne",
+          "fullName": "Kevin De Bruyne",
+          "playerId": 169200,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976675039,
+            "eventType": "Goal",
+            "teamId": 8263,
+            "playerId": 169200,
+            "playerName": "Kevin De Bruyne",
+            "x": 79.8946601952,
+            "y": 42.235,
+            "min": 59,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.97375,
+            "goalCrossedZ": 1.6245263078,
+            "expectedGoals": 0.0305,
+            "expectedGoalsOnTarget": 0.3343,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.21329365079365015,
+              "y": 0.42976886449735446,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 603669,
+            "firstName": "Kevin",
+            "lastName": "De Bruyne",
+            "fullName": "Kevin De Bruyne",
+            "teamColor": "#9f2533"
+          },
+          "assistStr": "assist by Youri Tielemans",
+          "assistProfileUrl": "/players/465960/youri-tielemans",
+          "assistPlayerId": 465960,
+          "assistKey": "assist_by",
+          "assistInput": "Youri Tielemans"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
