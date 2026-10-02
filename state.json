@@ -14207,7 +14207,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1451039455Goal0undefinedtrue",
-        "react:1451039455Goal1029063undefinedtrue"
+        "react:1451039455Goal1029063undefinedtrue",
+        "react:1451059768Goal805451undefinedfalse"
       ],
       "goals": [
         {
@@ -14343,6 +14344,91 @@
             "assistKey": "assist_by",
             "assistInput": "Rayan Cherki"
           }
+        },
+        {
+          "event_key": "react:1451059768Goal805451undefinedfalse",
+          "player_id": 805451,
+          "player_name": "Alessandro Bastoni",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "68",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3338,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451059768Goal805451undefinedfalse",
+            "timeStr": 68,
+            "type": "goal",
+            "time": 68,
+            "overloadTime": null,
+            "eventId": 14510597,
+            "player": {
+              "id": 805451,
+              "name": "Alessandro Bastoni",
+              "profileUrl": "/players/805451/alessandro-bastoni"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/805451/alessandro-bastoni",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Alessandro Bastoni",
+            "firstName": "Alessandro",
+            "lastName": "Bastoni",
+            "fullName": "Alessandro Bastoni",
+            "playerId": 805451,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976678897,
+              "eventType": "Goal",
+              "teamId": 8204,
+              "playerId": 805451,
+              "playerName": "Alessandro Bastoni",
+              "x": 87.963235294,
+              "y": 31.865,
+              "min": 68,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.4075,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.2562,
+              "expectedGoalsOnTarget": 0.619,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.6858465608465611,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 466439,
+              "firstName": "Alessandro",
+              "lastName": "Bastoni",
+              "fullName": "Alessandro Bastoni",
+              "teamColor": "#0064aa"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -14456,11 +14542,82 @@
           "assistPlayerId": 1104053,
           "assistKey": "assist_by",
           "assistInput": "Rayan Cherki"
+        },
+        {
+          "reactKey": "1451059768Goal805451undefinedfalse",
+          "timeStr": 68,
+          "type": "goal",
+          "time": 68,
+          "overloadTime": null,
+          "eventId": 14510597,
+          "player": {
+            "id": 805451,
+            "name": "Alessandro Bastoni",
+            "profileUrl": "/players/805451/alessandro-bastoni"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/805451/alessandro-bastoni",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Alessandro Bastoni",
+          "firstName": "Alessandro",
+          "lastName": "Bastoni",
+          "fullName": "Alessandro Bastoni",
+          "playerId": 805451,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976678897,
+            "eventType": "Goal",
+            "teamId": 8204,
+            "playerId": 805451,
+            "playerName": "Alessandro Bastoni",
+            "x": 87.963235294,
+            "y": 31.865,
+            "min": 68,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.4075,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.2562,
+            "expectedGoalsOnTarget": 0.619,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.6858465608465611,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 466439,
+            "firstName": "Alessandro",
+            "lastName": "Bastoni",
+            "fullName": "Alessandro Bastoni",
+            "teamColor": "#0064aa"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "6367342": {
