@@ -13862,7 +13862,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1450978610Goal169200undefinedtrue",
-        "react:1451043760Goal169200undefinedtrue"
+        "react:1451043760Goal169200undefinedtrue",
+        "react:1451066276Goal181276undefinedtrue"
       ],
       "goals": [
         {
@@ -14040,6 +14041,91 @@
             "assistKey": "assist_by",
             "assistInput": "Youri Tielemans"
           }
+        },
+        {
+          "event_key": "react:1451066276Goal181276undefinedtrue",
+          "player_id": 181276,
+          "player_name": "Romelu Lukaku",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "76",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3339,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451066276Goal181276undefinedtrue",
+            "timeStr": 76,
+            "type": "goal",
+            "time": 76,
+            "overloadTime": null,
+            "eventId": 14510662,
+            "player": {
+              "id": 181276,
+              "name": "Romelu Lukaku",
+              "profileUrl": "/players/181276/romelu-lukaku"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/181276/romelu-lukaku",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Romelu Lukaku",
+            "firstName": "Romelu",
+            "lastName": "Lukaku",
+            "fullName": "Romelu Lukaku",
+            "playerId": 181276,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2976681767,
+              "eventType": "Goal",
+              "teamId": 8263,
+              "playerId": 181276,
+              "playerName": "Romelu Lukaku",
+              "x": 96.605263157,
+              "y": 34.1525,
+              "min": 76,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.8475,
+              "goalCrossedZ": 0.8925263114,
+              "expectedGoals": 0.102,
+              "expectedGoalsOnTarget": 0.0239,
+              "shotType": "RightFoot",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.0403439153439162,
+                "y": 0.2361180717989418,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 603669,
+              "firstName": "Romelu",
+              "lastName": "Lukaku",
+              "fullName": "Romelu Lukaku",
+              "teamColor": "#9f2533"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -14191,10 +14277,81 @@
           "assistPlayerId": 465960,
           "assistKey": "assist_by",
           "assistInput": "Youri Tielemans"
+        },
+        {
+          "reactKey": "1451066276Goal181276undefinedtrue",
+          "timeStr": 76,
+          "type": "goal",
+          "time": 76,
+          "overloadTime": null,
+          "eventId": 14510662,
+          "player": {
+            "id": 181276,
+            "name": "Romelu Lukaku",
+            "profileUrl": "/players/181276/romelu-lukaku"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/181276/romelu-lukaku",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Romelu Lukaku",
+          "firstName": "Romelu",
+          "lastName": "Lukaku",
+          "fullName": "Romelu Lukaku",
+          "playerId": 181276,
+          "newScore": [
+            3,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2976681767,
+            "eventType": "Goal",
+            "teamId": 8263,
+            "playerId": 181276,
+            "playerName": "Romelu Lukaku",
+            "x": 96.605263157,
+            "y": 34.1525,
+            "min": 76,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.8475,
+            "goalCrossedZ": 0.8925263114,
+            "expectedGoals": 0.102,
+            "expectedGoalsOnTarget": 0.0239,
+            "shotType": "RightFoot",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.0403439153439162,
+              "y": 0.2361180717989418,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 603669,
+            "firstName": "Romelu",
+            "lastName": "Lukaku",
+            "fullName": "Romelu Lukaku",
+            "teamColor": "#9f2533"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 0
       }
     },
