@@ -14787,7 +14787,7 @@
     "6367342": {
       "lineup_sent": false,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
