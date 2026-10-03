@@ -15917,7 +15917,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:145188926Goal1467236undefinedtrue"
+        "react:145188926Goal1467236undefinedtrue",
+        "react:1451914435Goal675088undefinedtrue"
       ],
       "goals": [
         {
@@ -16007,6 +16008,87 @@
             "assistKey": "assist_by",
             "assistInput": "Dani Olmo"
           }
+        },
+        {
+          "event_key": "react:1451914435Goal675088undefinedtrue",
+          "player_id": 675088,
+          "player_name": "Rodri",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "35",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3364,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451914435Goal675088undefinedtrue",
+            "timeStr": 35,
+            "type": "goal",
+            "time": 35,
+            "overloadTime": null,
+            "eventId": 14519144,
+            "player": {
+              "id": 675088,
+              "name": "Rodri",
+              "profileUrl": "/players/675088/rodri"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/675088/rodri",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Rodri",
+            "firstName": "",
+            "lastName": "Rodri",
+            "fullName": "Rodri",
+            "playerId": 675088,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2977117045,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 675088,
+              "playerName": "Rodri",
+              "x": 94.7719298231,
+              "y": 32.474999999999994,
+              "min": 35,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0891,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1341475,
+              "firstName": "",
+              "lastName": "Rodri",
+              "fullName": "Rodri",
+              "teamColor": "#c62035"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -16084,10 +16166,77 @@
           "assistPlayerId": 614834,
           "assistKey": "assist_by",
           "assistInput": "Dani Olmo"
+        },
+        {
+          "reactKey": "1451914435Goal675088undefinedtrue",
+          "timeStr": 35,
+          "type": "goal",
+          "time": 35,
+          "overloadTime": null,
+          "eventId": 14519144,
+          "player": {
+            "id": 675088,
+            "name": "Rodri",
+            "profileUrl": "/players/675088/rodri"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/675088/rodri",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Rodri",
+          "firstName": "",
+          "lastName": "Rodri",
+          "fullName": "Rodri",
+          "playerId": 675088,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2977117045,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 675088,
+            "playerName": "Rodri",
+            "x": 94.7719298231,
+            "y": 32.474999999999994,
+            "min": 35,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0891,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1341475,
+            "firstName": "",
+            "lastName": "Rodri",
+            "fullName": "Rodri",
+            "teamColor": "#c62035"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     }
