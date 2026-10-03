@@ -14813,7 +14813,8 @@
         "react:1451751939Goal906937undefinedfalse",
         "react:1451755045Goal961995undefinedfalse",
         "react:1451782753Goal194165undefinedfalse",
-        "react:1451807068Goal961995undefinedfalse"
+        "react:1451807068Goal961995undefinedfalse",
+        "react:1451829687Goal883080undefinedfalse"
       ],
       "goals": [
         {
@@ -15292,6 +15293,87 @@
             "assistKey": "assist_by",
             "assistInput": "Harry Kane"
           }
+        },
+        {
+          "event_key": "react:1451829687Goal883080undefinedfalse",
+          "player_id": 883080,
+          "player_name": "Morgan Rogers",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "87",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3359,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451829687Goal883080undefinedfalse",
+            "timeStr": 87,
+            "type": "goal",
+            "time": 87,
+            "overloadTime": null,
+            "eventId": 14518296,
+            "player": {
+              "id": 883080,
+              "name": "Morgan Rogers",
+              "profileUrl": "/players/883080/morgan-rogers"
+            },
+            "homeScore": 0,
+            "awayScore": 6,
+            "profileUrl": "/players/883080/morgan-rogers",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Morgan Rogers",
+            "firstName": "Morgan",
+            "lastName": "Rogers",
+            "fullName": "Morgan Rogers",
+            "playerId": 883080,
+            "newScore": [
+              0,
+              7
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2977067807,
+              "eventType": "Goal",
+              "teamId": 8491,
+              "playerId": 883080,
+              "playerName": "Morgan Rogers",
+              "x": 96.2192982446,
+              "y": 46.2428025441,
+              "min": 87,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0861,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 383971,
+              "firstName": "Morgan",
+              "lastName": "Rogers",
+              "fullName": "Morgan Rogers",
+              "teamColor": "#6FA3E6"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -15739,11 +15821,78 @@
           "assistPlayerId": 194165,
           "assistKey": "assist_by",
           "assistInput": "Harry Kane"
+        },
+        {
+          "reactKey": "1451829687Goal883080undefinedfalse",
+          "timeStr": 87,
+          "type": "goal",
+          "time": 87,
+          "overloadTime": null,
+          "eventId": 14518296,
+          "player": {
+            "id": 883080,
+            "name": "Morgan Rogers",
+            "profileUrl": "/players/883080/morgan-rogers"
+          },
+          "homeScore": 0,
+          "awayScore": 6,
+          "profileUrl": "/players/883080/morgan-rogers",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Morgan Rogers",
+          "firstName": "Morgan",
+          "lastName": "Rogers",
+          "fullName": "Morgan Rogers",
+          "playerId": 883080,
+          "newScore": [
+            0,
+            7
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2977067807,
+            "eventType": "Goal",
+            "teamId": 8491,
+            "playerId": 883080,
+            "playerName": "Morgan Rogers",
+            "x": 96.2192982446,
+            "y": 46.2428025441,
+            "min": 87,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0861,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 383971,
+            "firstName": "Morgan",
+            "lastName": "Rogers",
+            "fullName": "Morgan Rogers",
+            "teamColor": "#6FA3E6"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 6
+        "away": 7
       }
     },
     "5181854": {
