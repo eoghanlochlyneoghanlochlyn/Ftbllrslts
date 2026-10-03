@@ -14809,7 +14809,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:145170368Goal194165undefinedfalse",
-        "react:1451730521Goal1077894undefinedfalse"
+        "react:1451730521Goal1077894undefinedfalse",
+        "react:1451751939Goal906937undefinedfalse"
       ],
       "goals": [
         {
@@ -14983,6 +14984,90 @@
             "assistKey": "assist_by",
             "assistInput": "Anthony Gordon"
           }
+        },
+        {
+          "event_key": "react:1451751939Goal906937undefinedfalse",
+          "player_id": 906937,
+          "player_name": "Anthony Gordon",
+          "assist_player_id": 1107620,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "39",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3354,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451751939Goal906937undefinedfalse",
+            "timeStr": 39,
+            "type": "goal",
+            "time": 39,
+            "overloadTime": null,
+            "eventId": 14517519,
+            "player": {
+              "id": 906937,
+              "name": "Anthony Gordon",
+              "profileUrl": "/players/906937/anthony-gordon"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/906937/anthony-gordon",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Anthony Gordon",
+            "firstName": "Anthony",
+            "lastName": "Gordon",
+            "fullName": "Anthony Gordon",
+            "playerId": 906937,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2977025947,
+              "eventType": "Goal",
+              "teamId": 8491,
+              "playerId": 906937,
+              "playerName": "Anthony Gordon",
+              "x": 98.8245614033,
+              "y": 37.2025,
+              "min": 39,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1053,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 383971,
+              "firstName": "Anthony",
+              "lastName": "Gordon",
+              "fullName": "Anthony Gordon",
+              "teamColor": "#6FA3E6"
+            },
+            "assistStr": "assist by Jarell Quansah",
+            "assistProfileUrl": "/players/1107620/jarell-quansah",
+            "assistPlayerId": 1107620,
+            "assistKey": "assist_by",
+            "assistInput": "Jarell Quansah"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -15134,11 +15219,81 @@
           "assistPlayerId": 906937,
           "assistKey": "assist_by",
           "assistInput": "Anthony Gordon"
+        },
+        {
+          "reactKey": "1451751939Goal906937undefinedfalse",
+          "timeStr": 39,
+          "type": "goal",
+          "time": 39,
+          "overloadTime": null,
+          "eventId": 14517519,
+          "player": {
+            "id": 906937,
+            "name": "Anthony Gordon",
+            "profileUrl": "/players/906937/anthony-gordon"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/906937/anthony-gordon",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Anthony Gordon",
+          "firstName": "Anthony",
+          "lastName": "Gordon",
+          "fullName": "Anthony Gordon",
+          "playerId": 906937,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2977025947,
+            "eventType": "Goal",
+            "teamId": 8491,
+            "playerId": 906937,
+            "playerName": "Anthony Gordon",
+            "x": 98.8245614033,
+            "y": 37.2025,
+            "min": 39,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1053,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 383971,
+            "firstName": "Anthony",
+            "lastName": "Gordon",
+            "fullName": "Anthony Gordon",
+            "teamColor": "#6FA3E6"
+          },
+          "assistStr": "assist by Jarell Quansah",
+          "assistProfileUrl": "/players/1107620/jarell-quansah",
+          "assistPlayerId": 1107620,
+          "assistKey": "assist_by",
+          "assistInput": "Jarell Quansah"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "5181854": {
