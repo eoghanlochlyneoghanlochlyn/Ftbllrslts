@@ -14810,7 +14810,8 @@
       "event_keys": [
         "react:145170368Goal194165undefinedfalse",
         "react:1451730521Goal1077894undefinedfalse",
-        "react:1451751939Goal906937undefinedfalse"
+        "react:1451751939Goal906937undefinedfalse",
+        "react:1451755045Goal961995undefinedfalse"
       ],
       "goals": [
         {
@@ -15068,6 +15069,59 @@
             "assistKey": "assist_by",
             "assistInput": "Jarell Quansah"
           }
+        },
+        {
+          "event_key": "react:1451755045Goal961995undefinedfalse",
+          "player_id": 961995,
+          "player_name": "Bukayo Saka",
+          "assist_player_id": 1077894,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "45",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3355,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1451755045Goal961995undefinedfalse",
+            "timeStr": 45,
+            "type": "goal",
+            "time": 45,
+            "overloadTime": null,
+            "eventId": 14517550,
+            "player": {
+              "id": 961995,
+              "name": "Bukayo Saka",
+              "profileUrl": "/players/961995/bukayo-saka"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/961995/bukayo-saka",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bukayo Saka",
+            "firstName": "Bukayo",
+            "lastName": "Saka",
+            "fullName": "Bukayo Saka",
+            "playerId": 961995,
+            "newScore": [
+              0,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Jude Bellingham",
+            "assistProfileUrl": "/players/1077894/jude-bellingham",
+            "assistPlayerId": 1077894,
+            "assistKey": "assist_by",
+            "assistInput": "Jude Bellingham"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -15293,11 +15347,50 @@
           "assistPlayerId": 1107620,
           "assistKey": "assist_by",
           "assistInput": "Jarell Quansah"
+        },
+        {
+          "reactKey": "1451755045Goal961995undefinedfalse",
+          "timeStr": 45,
+          "type": "goal",
+          "time": 45,
+          "overloadTime": null,
+          "eventId": 14517550,
+          "player": {
+            "id": 961995,
+            "name": "Bukayo Saka",
+            "profileUrl": "/players/961995/bukayo-saka"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/961995/bukayo-saka",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bukayo Saka",
+          "firstName": "Bukayo",
+          "lastName": "Saka",
+          "fullName": "Bukayo Saka",
+          "playerId": 961995,
+          "newScore": [
+            0,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Jude Bellingham",
+          "assistProfileUrl": "/players/1077894/jude-bellingham",
+          "assistPlayerId": 1077894,
+          "assistKey": "assist_by",
+          "assistInput": "Jude Bellingham"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 3
+        "away": 4
       }
     },
     "5181854": {
