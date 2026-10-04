@@ -16595,7 +16595,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1452582031Goal0undefinedtrue"
+        "react:1452582031Goal0undefinedtrue",
+        "react:1452582031Goal866516undefinedtrue"
       ],
       "goals": [
         {
@@ -16647,6 +16648,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1452582031Goal866516undefinedtrue",
+          "player_id": 866516,
+          "player_name": "Teun Koopmeiners",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "31",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3941,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1452582031Goal866516undefinedtrue",
+            "timeStr": 31,
+            "type": "goal",
+            "time": 31,
+            "overloadTime": null,
+            "eventId": 14525820,
+            "player": {
+              "id": 866516,
+              "name": "Teun Koopmeiners",
+              "profileUrl": "/players/866516/teun-koopmeiners"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/866516/teun-koopmeiners",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Direct freekick",
+            "goalDescriptionKey": "direct_free_kick",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Teun Koopmeiners",
+            "firstName": "Teun",
+            "lastName": "Koopmeiners",
+            "fullName": "Teun Koopmeiners",
+            "playerId": 866516,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2977546411,
+              "eventType": "Goal",
+              "teamId": 6708,
+              "playerId": 866516,
+              "playerName": "Teun Koopmeiners",
+              "x": 86.352941176,
+              "y": 12.593744083199999,
+              "min": 31,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.431250000000006,
+              "goalCrossedZ": 0.8539999958000001,
+              "expectedGoals": 0.0487,
+              "expectedGoalsOnTarget": 0.5575,
+              "shotType": "LeftFoot",
+              "situation": "FreeKick",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.09226190476190332,
+                "y": 0.22592592481481483,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 543021,
+              "firstName": "Teun",
+              "lastName": "Koopmeiners",
+              "fullName": "Teun Koopmeiners",
+              "teamColor": "#FB6132"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -16684,6 +16770,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1452582031Goal866516undefinedtrue",
+          "timeStr": 31,
+          "type": "goal",
+          "time": 31,
+          "overloadTime": null,
+          "eventId": 14525820,
+          "player": {
+            "id": 866516,
+            "name": "Teun Koopmeiners",
+            "profileUrl": "/players/866516/teun-koopmeiners"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/866516/teun-koopmeiners",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Direct freekick",
+          "goalDescriptionKey": "direct_free_kick",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Teun Koopmeiners",
+          "firstName": "Teun",
+          "lastName": "Koopmeiners",
+          "fullName": "Teun Koopmeiners",
+          "playerId": 866516,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2977546411,
+            "eventType": "Goal",
+            "teamId": 6708,
+            "playerId": 866516,
+            "playerName": "Teun Koopmeiners",
+            "x": 86.352941176,
+            "y": 12.593744083199999,
+            "min": 31,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 37.431250000000006,
+            "goalCrossedZ": 0.8539999958000001,
+            "expectedGoals": 0.0487,
+            "expectedGoalsOnTarget": 0.5575,
+            "shotType": "LeftFoot",
+            "situation": "FreeKick",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.09226190476190332,
+              "y": 0.22592592481481483,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 543021,
+            "firstName": "Teun",
+            "lastName": "Koopmeiners",
+            "fullName": "Teun Koopmeiners",
+            "teamColor": "#FB6132"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
