@@ -17281,7 +17281,7 @@
           "event_key": "react:1452585836Goal552718undefinedfalse",
           "player_id": 552718,
           "player_name": "Kristoffer Ajer",
-          "assist_player_id": null,
+          "assist_player_id": 534670,
           "assist_player_name": "",
           "is_home": false,
           "minute": "36",
@@ -17339,8 +17339,8 @@
               "blockedY": null,
               "goalCrossedY": 36.21125,
               "goalCrossedZ": 1.3034736778000002,
-              "expectedGoals": 0.0288,
-              "expectedGoalsOnTarget": 0.2559,
+              "expectedGoals": 0.020681992173194885,
+              "expectedGoalsOnTarget": 0.040653619915246964,
               "shotType": "RightFoot",
               "situation": "SetPiece",
               "period": "FirstHalf",
@@ -17358,8 +17358,11 @@
               "fullName": "Kristoffer Ajer",
               "teamColor": "#b53032"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Martin Ødegaard",
+            "assistProfileUrl": "/players/534670/martin-odegaard",
+            "assistPlayerId": 534670,
+            "assistKey": "assist_by",
+            "assistInput": "Martin Ødegaard"
           }
         }
       ],
@@ -17414,8 +17417,8 @@
             "blockedY": null,
             "goalCrossedY": 36.21125,
             "goalCrossedZ": 1.3034736778000002,
-            "expectedGoals": 0.0288,
-            "expectedGoalsOnTarget": 0.2559,
+            "expectedGoals": 0.020681992173194885,
+            "expectedGoalsOnTarget": 0.040653619915246964,
             "shotType": "RightFoot",
             "situation": "SetPiece",
             "period": "FirstHalf",
@@ -17433,8 +17436,11 @@
             "fullName": "Kristoffer Ajer",
             "teamColor": "#b53032"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Martin Ødegaard",
+          "assistProfileUrl": "/players/534670/martin-odegaard",
+          "assistPlayerId": 534670,
+          "assistKey": "assist_by",
+          "assistInput": "Martin Ødegaard"
         }
       ],
       "observed_score": {
