@@ -16850,7 +16850,8 @@
       "event_keys": [
         "react:1452582031Goal0undefinedtrue",
         "react:1452582031Goal866516undefinedtrue",
-        "react:1452583535Goal1480699undefinedfalse"
+        "react:1452583535Goal1480699undefinedfalse",
+        "react:1452610271Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -17075,6 +17076,56 @@
             "assistKey": "assist_by",
             "assistInput": "Aleksa Terzić"
           }
+        },
+        {
+          "event_key": "react:1452610271Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "71",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3947,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1452610271Goal0undefinedtrue",
+            "timeStr": 71,
+            "type": "goal",
+            "time": 71,
+            "overloadTime": null,
+            "eventId": 14526102,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -17259,10 +17310,46 @@
           "assistPlayerId": 992025,
           "assistKey": "assist_by",
           "assistInput": "Aleksa Terzić"
+        },
+        {
+          "reactKey": "1452610271Goal0undefinedtrue",
+          "timeStr": 71,
+          "type": "goal",
+          "time": 71,
+          "overloadTime": null,
+          "eventId": 14526102,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
