@@ -16579,7 +16579,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1452582732Goal0undefinedfalse"
+        "react:1452582732Goal0undefinedfalse",
+        "react:1452582732Goal947901undefinedfalse"
       ],
       "goals": [
         {
@@ -16631,6 +16632,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1452582732Goal947901undefinedfalse",
+          "player_id": 947901,
+          "player_name": "Jonathan Burkardt",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "32",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3943,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1452582732Goal947901undefinedfalse",
+            "timeStr": 32,
+            "type": "goal",
+            "time": 32,
+            "overloadTime": null,
+            "eventId": 14525827,
+            "player": {
+              "id": 947901,
+              "name": "Jonathan Burkardt",
+              "profileUrl": "/players/947901/jonathan-burkardt"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/947901/jonathan-burkardt",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jonathan Burkardt",
+            "firstName": "Jonathan",
+            "lastName": "Burkardt",
+            "fullName": "Jonathan Burkardt",
+            "playerId": 947901,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2977548269,
+              "eventType": "Goal",
+              "teamId": 8570,
+              "playerId": 947901,
+              "playerName": "Jonathan Burkardt",
+              "x": 100.732758621,
+              "y": 34.305,
+              "min": 32,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.4158,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1072068,
+              "firstName": "Jonathan",
+              "lastName": "Burkardt",
+              "fullName": "Jonathan Burkardt",
+              "teamColor": "#464646"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -16670,11 +16752,78 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1452582732Goal947901undefinedfalse",
+          "timeStr": 32,
+          "type": "goal",
+          "time": 32,
+          "overloadTime": null,
+          "eventId": 14525827,
+          "player": {
+            "id": 947901,
+            "name": "Jonathan Burkardt",
+            "profileUrl": "/players/947901/jonathan-burkardt"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/947901/jonathan-burkardt",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Jonathan Burkardt",
+          "firstName": "Jonathan",
+          "lastName": "Burkardt",
+          "fullName": "Jonathan Burkardt",
+          "playerId": 947901,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2977548269,
+            "eventType": "Goal",
+            "teamId": 8570,
+            "playerId": 947901,
+            "playerName": "Jonathan Burkardt",
+            "x": 100.732758621,
+            "y": 34.305,
+            "min": 32,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.4158,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "FastBreak",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1072068,
+            "firstName": "Jonathan",
+            "lastName": "Burkardt",
+            "fullName": "Jonathan Burkardt",
+            "teamColor": "#464646"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "5181832": {
