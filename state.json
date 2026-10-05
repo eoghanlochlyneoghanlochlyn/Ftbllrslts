@@ -18554,7 +18554,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1452774926Goal721089undefinedtrue"
+        "react:1452774926Goal721089undefinedtrue",
+        "react:1452783361Goal1126769undefinedfalse"
       ],
       "goals": [
         {
@@ -18637,6 +18638,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1452783361Goal1126769undefinedfalse",
+          "player_id": 1126769,
+          "player_name": "Aral Şimşir",
+          "assist_player_id": 1041660,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "61",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3969,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1452783361Goal1126769undefinedfalse",
+            "timeStr": 61,
+            "type": "goal",
+            "time": 61,
+            "overloadTime": null,
+            "eventId": 14527833,
+            "player": {
+              "id": 1126769,
+              "name": "Aral Şimşir",
+              "profileUrl": "/players/1126769/aral-simsir"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1126769/aral-simsir",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Aral Şimşir",
+            "firstName": "Aral",
+            "lastName": "Şimşir",
+            "fullName": "Aral Şimşir",
+            "playerId": 1126769,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2977827217,
+              "eventType": "Goal",
+              "teamId": 6595,
+              "playerId": 1126769,
+              "playerName": "Aral Şimşir",
+              "x": 100.732758621,
+              "y": 37.768,
+              "min": 61,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.29625000000001,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.28005045652389526,
+              "expectedGoalsOnTarget": 0.9524732232093811,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6570767195767175,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 618878,
+              "firstName": "Aral",
+              "lastName": "Şimşir",
+              "fullName": "Aral Şimşir",
+              "teamColor": "#d71c00"
+            },
+            "assistStr": "assist by Eren Elmalı",
+            "assistProfileUrl": "/players/1041660/eren-elmal",
+            "assistPlayerId": 1041660,
+            "assistKey": "assist_by",
+            "assistInput": "Eren Elmalı"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -18711,11 +18800,85 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1452783361Goal1126769undefinedfalse",
+          "timeStr": 61,
+          "type": "goal",
+          "time": 61,
+          "overloadTime": null,
+          "eventId": 14527833,
+          "player": {
+            "id": 1126769,
+            "name": "Aral Şimşir",
+            "profileUrl": "/players/1126769/aral-simsir"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1126769/aral-simsir",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Aral Şimşir",
+          "firstName": "Aral",
+          "lastName": "Şimşir",
+          "fullName": "Aral Şimşir",
+          "playerId": 1126769,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2977827217,
+            "eventType": "Goal",
+            "teamId": 6595,
+            "playerId": 1126769,
+            "playerName": "Aral Şimşir",
+            "x": 100.732758621,
+            "y": 37.768,
+            "min": 61,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.29625000000001,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.28005045652389526,
+            "expectedGoalsOnTarget": 0.9524732232093811,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6570767195767175,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 618878,
+            "firstName": "Aral",
+            "lastName": "Şimşir",
+            "fullName": "Aral Şimşir",
+            "teamColor": "#d71c00"
+          },
+          "assistStr": "assist by Eren Elmalı",
+          "assistProfileUrl": "/players/1041660/eren-elmal",
+          "assistPlayerId": 1041660,
+          "assistKey": "assist_by",
+          "assistInput": "Eren Elmalı"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5181855": {
