@@ -20676,8 +20676,11 @@
             "fullName": "Ivan Perišić",
             "teamColor": "#CC3737"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Igor Matanović",
+          "assistProfileUrl": "/players/1210893/igor-matanovic",
+          "assistPlayerId": 1210893,
+          "assistKey": "assist_by",
+          "assistInput": "Igor Matanović"
         }
       ],
       "observed_score": {
