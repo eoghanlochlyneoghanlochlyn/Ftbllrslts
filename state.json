@@ -20043,7 +20043,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1452969427Goal0undefinedtrue"
+        "react:1452969427Goal0undefinedtrue",
+        "react:1452969427Goal307317undefinedtrue"
       ],
       "goals": [
         {
@@ -20095,6 +20096,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1452969427Goal307317undefinedtrue",
+          "player_id": 307317,
+          "player_name": "Vladimír Coufal",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "27",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 3988,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1452969427Goal307317undefinedtrue",
+            "timeStr": 27,
+            "type": "goal",
+            "time": 27,
+            "overloadTime": null,
+            "eventId": 14529694,
+            "player": {
+              "id": 307317,
+              "name": "Vladimír Coufal",
+              "profileUrl": "/players/307317/vladimir-coufal"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/307317/vladimir-coufal",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Vladimír Coufal",
+            "firstName": "Vladimír",
+            "lastName": "Coufal",
+            "fullName": "Vladimír Coufal",
+            "playerId": 307317,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2978137605,
+              "eventType": "Goal",
+              "teamId": 8496,
+              "playerId": 307317,
+              "playerName": "Vladimír Coufal",
+              "x": 4.9310344824,
+              "y": 32.779999999999994,
+              "min": 27,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.92375,
+              "goalCrossedZ": 1.0594736790000001,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.0201719576719581,
+                "y": 0.28028404206349206,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1186978,
+              "firstName": "Vladimír",
+              "lastName": "Coufal",
+              "fullName": "Vladimír Coufal",
+              "teamColor": "#D9273C"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -20132,6 +20218,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1452969427Goal307317undefinedtrue",
+          "timeStr": 27,
+          "type": "goal",
+          "time": 27,
+          "overloadTime": null,
+          "eventId": 14529694,
+          "player": {
+            "id": 307317,
+            "name": "Vladimír Coufal",
+            "profileUrl": "/players/307317/vladimir-coufal"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/307317/vladimir-coufal",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Vladimír Coufal",
+          "firstName": "Vladimír",
+          "lastName": "Coufal",
+          "fullName": "Vladimír Coufal",
+          "playerId": 307317,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2978137605,
+            "eventType": "Goal",
+            "teamId": 8496,
+            "playerId": 307317,
+            "playerName": "Vladimír Coufal",
+            "x": 4.9310344824,
+            "y": 32.779999999999994,
+            "min": 27,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.92375,
+            "goalCrossedZ": 1.0594736790000001,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "FastBreak",
+            "period": "FirstHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.0201719576719581,
+              "y": 0.28028404206349206,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1186978,
+            "firstName": "Vladimír",
+            "lastName": "Coufal",
+            "fullName": "Vladimír Coufal",
+            "teamColor": "#D9273C"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
