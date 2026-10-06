@@ -19869,7 +19869,8 @@
       "event_keys": [
         "react:1452959618Goal163670undefinedtrue",
         "react:1453017861Goal574645undefinedfalse",
-        "react:1453041879Card163670undefinedtrue"
+        "react:1453041879Card163670undefinedtrue",
+        "react:1453047489Goal574645undefinedfalse"
       ],
       "goals": [
         {
@@ -20044,6 +20045,87 @@
             "assistKey": "assist_by",
             "assistInput": "Dani Olmo"
           }
+        },
+        {
+          "event_key": "react:1453047489Goal574645undefinedfalse",
+          "player_id": 574645,
+          "player_name": "Mikel Merino",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "89",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 3993,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1453047489Goal574645undefinedfalse",
+            "timeStr": 89,
+            "type": "goal",
+            "time": 89,
+            "overloadTime": null,
+            "eventId": 14530474,
+            "player": {
+              "id": 574645,
+              "name": "Mikel Merino",
+              "profileUrl": "/players/574645/mikel-merino"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/574645/mikel-merino",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mikel Merino",
+            "firstName": "Mikel",
+            "lastName": "Merino",
+            "fullName": "Mikel Merino",
+            "playerId": 574645,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2978200801,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 574645,
+              "playerName": "Mikel Merino",
+              "x": 94.7719298231,
+              "y": 38.536428573,
+              "min": 88,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0799,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 383971,
+              "firstName": "Mikel",
+              "lastName": "Merino",
+              "fullName": "Mikel Merino",
+              "teamColor": "#c62035"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -20192,11 +20274,78 @@
           "assistPlayerId": 614834,
           "assistKey": "assist_by",
           "assistInput": "Dani Olmo"
+        },
+        {
+          "reactKey": "1453047489Goal574645undefinedfalse",
+          "timeStr": 89,
+          "type": "goal",
+          "time": 89,
+          "overloadTime": null,
+          "eventId": 14530474,
+          "player": {
+            "id": 574645,
+            "name": "Mikel Merino",
+            "profileUrl": "/players/574645/mikel-merino"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/574645/mikel-merino",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mikel Merino",
+          "firstName": "Mikel",
+          "lastName": "Merino",
+          "fullName": "Mikel Merino",
+          "playerId": 574645,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2978200801,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 574645,
+            "playerName": "Mikel Merino",
+            "x": 94.7719298231,
+            "y": 38.536428573,
+            "min": 88,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0799,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 383971,
+            "firstName": "Mikel",
+            "lastName": "Merino",
+            "fullName": "Mikel Merino",
+            "teamColor": "#c62035"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5181856": {
