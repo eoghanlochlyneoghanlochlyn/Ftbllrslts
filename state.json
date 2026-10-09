@@ -21288,7 +21288,8 @@
         "react:1453926180Goal0undefinedtrue",
         "react:1453926180Goal1209228undefinedtrue",
         "react:1453932285Goal0undefinedtrue",
-        "react:1453932285Goal1002058undefinedtrue"
+        "react:1453932285Goal1002058undefinedtrue",
+        "react:1453936088Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -21566,6 +21567,56 @@
             "assistKey": "assist_by",
             "assistInput": "Joey Veerman"
           }
+        },
+        {
+          "event_key": "react:1453936088Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "88",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4008,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1453936088Goal0undefinedfalse",
+            "timeStr": 88,
+            "type": "goal",
+            "time": 88,
+            "overloadTime": null,
+            "eventId": 14539360,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -21789,11 +21840,47 @@
           "assistPlayerId": 792429,
           "assistKey": "assist_by",
           "assistInput": "Joey Veerman"
+        },
+        {
+          "reactKey": "1453936088Goal0undefinedfalse",
+          "timeStr": 88,
+          "type": "goal",
+          "time": 88,
+          "overloadTime": null,
+          "eventId": 14539360,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 0
+        "away": 1
       }
     },
     "5795465": {
