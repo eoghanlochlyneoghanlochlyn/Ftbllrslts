@@ -21712,7 +21712,7 @@
           "event_key": "react:1453941890Goal276791undefinedfalse",
           "player_id": 276791,
           "player_name": "Niclas Füllkrug",
-          "assist_player_id": null,
+          "assist_player_id": 1024292,
           "assist_player_name": "",
           "is_home": false,
           "minute": "90 + 3",
@@ -21760,8 +21760,8 @@
               "teamId": 8697,
               "playerId": 276791,
               "playerName": "Niclas Füllkrug",
-              "x": 96.1228070165,
-              "y": 37.672,
+              "x": 94.7719298231,
+              "y": 36.135000000000005,
               "min": 90,
               "minAdded": 2,
               "isBlocked": false,
@@ -21770,8 +21770,8 @@
               "blockedY": null,
               "goalCrossedY": 35.220000000000006,
               "goalCrossedZ": 1.6245263078,
-              "expectedGoals": 0.0834,
-              "expectedGoalsOnTarget": 0.12,
+              "expectedGoals": 0.46272507309913635,
+              "expectedGoalsOnTarget": 0.5608664751052856,
               "shotType": "Header",
               "situation": "SetPiece",
               "period": "SecondHalf",
@@ -21789,8 +21789,11 @@
               "fullName": "Niclas Füllkrug",
               "teamColor": "#007642"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Marco Grüll",
+            "assistProfileUrl": "/players/1024292/marco-grull",
+            "assistPlayerId": 1024292,
+            "assistKey": "assist_by",
+            "assistInput": "Marco Grüll"
           }
         }
       ],
@@ -22165,8 +22168,8 @@
             "teamId": 8697,
             "playerId": 276791,
             "playerName": "Niclas Füllkrug",
-            "x": 96.1228070165,
-            "y": 37.672,
+            "x": 94.7719298231,
+            "y": 36.135000000000005,
             "min": 90,
             "minAdded": 2,
             "isBlocked": false,
@@ -22175,8 +22178,8 @@
             "blockedY": null,
             "goalCrossedY": 35.220000000000006,
             "goalCrossedZ": 1.6245263078,
-            "expectedGoals": 0.0834,
-            "expectedGoalsOnTarget": 0.12,
+            "expectedGoals": 0.46272507309913635,
+            "expectedGoalsOnTarget": 0.5608664751052856,
             "shotType": "Header",
             "situation": "SetPiece",
             "period": "SecondHalf",
@@ -22194,8 +22197,11 @@
             "fullName": "Niclas Füllkrug",
             "teamColor": "#007642"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Marco Grüll",
+          "assistProfileUrl": "/players/1024292/marco-grull",
+          "assistPlayerId": 1024292,
+          "assistKey": "assist_by",
+          "assistInput": "Marco Grüll"
         }
       ],
       "observed_score": {
