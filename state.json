@@ -22131,10 +22131,10 @@
         },
         {
           "reactKey": "1453941890Goal276791undefinedfalse",
-          "timeStr": "90 + 3",
+          "timeStr": "90 + 2",
           "type": "goal",
           "time": 90,
-          "overloadTime": 3,
+          "overloadTime": 2,
           "eventId": 14539418,
           "player": {
             "id": 276791,
@@ -22144,7 +22144,7 @@
           "homeScore": 2,
           "awayScore": 1,
           "profileUrl": "/players/276791/niclas-fullkrug",
-          "overloadTimeStr": "+3",
+          "overloadTimeStr": "+2",
           "isHome": false,
           "ownGoal": null,
           "goalDescription": "Header",
