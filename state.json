@@ -27464,7 +27464,7 @@
             "goalCrossedY": 31.254999999999995,
             "goalCrossedZ": 0.2439999988,
             "expectedGoals": 0.7884,
-            "expectedGoalsOnTarget": 0.9921,
+            "expectedGoalsOnTarget": 0.7725507020950317,
             "shotType": "LeftFoot",
             "situation": "Penalty",
             "period": "FirstHalf",
