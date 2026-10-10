@@ -27326,7 +27326,8 @@
         "react:1455051319Goal1255209undefinedtrue",
         "react:1455110654Goal807955undefinedfalse",
         "react:1455121661Goal0undefinedtrue",
-        "react:1455121661Goal900433undefinedtrue"
+        "react:1455121661Goal900433undefinedtrue",
+        "react:1455130768Goal1305618undefinedtrue"
       ],
       "goals": [
         {
@@ -27636,6 +27637,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1455130768Goal1305618undefinedtrue",
+          "player_id": 1305618,
+          "player_name": "Maghnes Akliouche",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "68",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4089,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1455130768Goal1305618undefinedtrue",
+            "timeStr": 68,
+            "type": "goal",
+            "time": 68,
+            "overloadTime": null,
+            "eventId": 14551307,
+            "player": {
+              "id": 1305618,
+              "name": "Maghnes Akliouche",
+              "profileUrl": "/players/1305618/maghnes-akliouche"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/1305618/maghnes-akliouche",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Maghnes Akliouche",
+            "firstName": "Maghnes",
+            "lastName": "Akliouche",
+            "fullName": "Maghnes Akliouche",
+            "playerId": 1305618,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979750437,
+              "eventType": "Goal",
+              "teamId": 9847,
+              "playerId": 1305618,
+              "playerName": "Maghnes Akliouche",
+              "x": 92.1,
+              "y": 20.2157961813,
+              "min": 68,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.254999999999995,
+              "goalCrossedZ": 0.28252631440000003,
+              "expectedGoals": 0.0415,
+              "expectedGoalsOnTarget": 0.1728,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7261904761904774,
+                "y": 0.07474241121693122,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 722531,
+              "firstName": "Maghnes",
+              "lastName": "Akliouche",
+              "fullName": "Maghnes Akliouche",
+              "teamColor": "#273F6D"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -27891,10 +27977,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1455130768Goal1305618undefinedtrue",
+          "timeStr": 68,
+          "type": "goal",
+          "time": 68,
+          "overloadTime": null,
+          "eventId": 14551307,
+          "player": {
+            "id": 1305618,
+            "name": "Maghnes Akliouche",
+            "profileUrl": "/players/1305618/maghnes-akliouche"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/1305618/maghnes-akliouche",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Maghnes Akliouche",
+          "firstName": "Maghnes",
+          "lastName": "Akliouche",
+          "fullName": "Maghnes Akliouche",
+          "playerId": 1305618,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979750437,
+            "eventType": "Goal",
+            "teamId": 9847,
+            "playerId": 1305618,
+            "playerName": "Maghnes Akliouche",
+            "x": 92.1,
+            "y": 20.2157961813,
+            "min": 68,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.254999999999995,
+            "goalCrossedZ": 0.28252631440000003,
+            "expectedGoals": 0.0415,
+            "expectedGoalsOnTarget": 0.1728,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7261904761904774,
+              "y": 0.07474241121693122,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 722531,
+            "firstName": "Maghnes",
+            "lastName": "Akliouche",
+            "fullName": "Maghnes Akliouche",
+            "teamColor": "#273F6D"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 1
       }
     },
