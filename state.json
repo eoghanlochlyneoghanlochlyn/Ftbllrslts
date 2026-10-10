@@ -22989,7 +22989,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:145437092Goal156008undefinedtrue",
-        "react:145437293Goal0undefinedtrue"
+        "react:145437293Goal0undefinedtrue",
+        "react:145437293Goal883080undefinedtrue"
       ],
       "goals": [
         {
@@ -23125,6 +23126,59 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:145437293Goal883080undefinedtrue",
+          "player_id": 883080,
+          "player_name": "Morgan Rogers",
+          "assist_player_id": 156008,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "3",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4031,
+          "needs_update": false,
+          "event": {
+            "reactKey": "145437293Goal883080undefinedtrue",
+            "timeStr": 3,
+            "type": "goal",
+            "time": 3,
+            "overloadTime": null,
+            "eventId": 14543729,
+            "player": {
+              "id": 883080,
+              "name": "Morgan Rogers",
+              "profileUrl": "/players/883080/morgan-rogers"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/883080/morgan-rogers",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Morgan Rogers",
+            "firstName": "Morgan",
+            "lastName": "Rogers",
+            "fullName": "Morgan Rogers",
+            "playerId": 883080,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Jordan Henderson",
+            "assistProfileUrl": "/players/156008/jordan-henderson",
+            "assistPlayerId": 156008,
+            "assistKey": "assist_by",
+            "assistInput": "Jordan Henderson"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -23178,8 +23232,8 @@
             "blockedY": null,
             "goalCrossedY": 36.5925,
             "goalCrossedZ": 0.9759999952,
-            "expectedGoals": 0.0502,
-            "expectedGoalsOnTarget": 0.2499,
+            "expectedGoals": 0.06336003541946411,
+            "expectedGoalsOnTarget": 0.07369750738143921,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
@@ -23238,6 +23292,45 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "145437293Goal883080undefinedtrue",
+          "timeStr": 3,
+          "type": "goal",
+          "time": 3,
+          "overloadTime": null,
+          "eventId": 14543729,
+          "player": {
+            "id": 883080,
+            "name": "Morgan Rogers",
+            "profileUrl": "/players/883080/morgan-rogers"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/883080/morgan-rogers",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Morgan Rogers",
+          "firstName": "Morgan",
+          "lastName": "Rogers",
+          "fullName": "Morgan Rogers",
+          "playerId": 883080,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Jordan Henderson",
+          "assistProfileUrl": "/players/156008/jordan-henderson",
+          "assistPlayerId": 156008,
+          "assistKey": "assist_by",
+          "assistInput": "Jordan Henderson"
         }
       ],
       "observed_score": {
