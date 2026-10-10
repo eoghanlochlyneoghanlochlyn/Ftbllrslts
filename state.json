@@ -25360,7 +25360,8 @@
       "event_keys": [
         "react:1454498233Goal288406undefinedfalse",
         "react:1454537045Goal561164undefinedtrue",
-        "react:1454695361Card1563022undefinedtrue"
+        "react:1454695361Card1563022undefinedtrue",
+        "react:1454799587Goal789066undefinedfalse"
       ],
       "goals": [
         {
@@ -25527,6 +25528,90 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1454799587Goal789066undefinedfalse",
+          "player_id": 789066,
+          "player_name": "Cristian Romero",
+          "assist_player_id": 942372,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "87",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4058,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1454799587Goal789066undefinedfalse",
+            "timeStr": 87,
+            "type": "goal",
+            "time": 87,
+            "overloadTime": null,
+            "eventId": 14547995,
+            "player": {
+              "id": 789066,
+              "name": "Cristian Romero",
+              "profileUrl": "/players/789066/cristian-romero"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/789066/cristian-romero",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Cristian Romero",
+            "firstName": "Cristian",
+            "lastName": "Romero",
+            "fullName": "Cristian Romero",
+            "playerId": 789066,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979480967,
+              "eventType": "Goal",
+              "teamId": 9906,
+              "playerId": 789066,
+              "playerName": "Cristian Romero",
+              "x": 102.4396551726,
+              "y": 30.232,
+              "min": 87,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1874,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 530468,
+              "firstName": "Cristian",
+              "lastName": "Romero",
+              "fullName": "Cristian Romero",
+              "teamColor": "#C63527"
+            },
+            "assistStr": "assist by Álex Baena",
+            "assistProfileUrl": "/players/942372/alex-baena",
+            "assistPlayerId": 942372,
+            "assistKey": "assist_by",
+            "assistInput": "Álex Baena"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -25675,11 +25760,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1454799587Goal789066undefinedfalse",
+          "timeStr": 87,
+          "type": "goal",
+          "time": 87,
+          "overloadTime": null,
+          "eventId": 14547995,
+          "player": {
+            "id": 789066,
+            "name": "Cristian Romero",
+            "profileUrl": "/players/789066/cristian-romero"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/789066/cristian-romero",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Cristian Romero",
+          "firstName": "Cristian",
+          "lastName": "Romero",
+          "fullName": "Cristian Romero",
+          "playerId": 789066,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979480967,
+            "eventType": "Goal",
+            "teamId": 9906,
+            "playerId": 789066,
+            "playerName": "Cristian Romero",
+            "x": 102.4396551726,
+            "y": 30.232,
+            "min": 87,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1874,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 530468,
+            "firstName": "Cristian",
+            "lastName": "Romero",
+            "fullName": "Cristian Romero",
+            "teamColor": "#C63527"
+          },
+          "assistStr": "assist by Álex Baena",
+          "assistProfileUrl": "/players/942372/alex-baena",
+          "assistPlayerId": 942372,
+          "assistKey": "assist_by",
+          "assistInput": "Álex Baena"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5749694": {
