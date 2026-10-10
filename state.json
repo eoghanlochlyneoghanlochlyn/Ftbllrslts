@@ -22218,7 +22218,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1454253555Goal710158undefinedfalse",
-        "react:1454263862Goal1105912undefinedtrue"
+        "react:1454263862Goal1105912undefinedtrue",
+        "react:1454274470Goal850354undefinedtrue"
       ],
       "goals": [
         {
@@ -22396,6 +22397,94 @@
             "assistKey": "assist_by",
             "assistInput": "Ben White"
           }
+        },
+        {
+          "event_key": "react:1454274470Goal850354undefinedtrue",
+          "player_id": 850354,
+          "player_name": "Bruno Guimarães",
+          "assist_player_id": 654096,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "70",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4021,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1454274470Goal850354undefinedtrue",
+            "timeStr": 70,
+            "type": "goal",
+            "time": 70,
+            "overloadTime": null,
+            "eventId": 14542744,
+            "player": {
+              "id": 850354,
+              "name": "Bruno Guimarães",
+              "profileUrl": "/players/850354/bruno-guimaraes"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/850354/bruno-guimaraes",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bruno Guimarães",
+            "firstName": "Bruno",
+            "lastName": "Guimarães",
+            "fullName": "Bruno Guimarães",
+            "playerId": 850354,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979136295,
+              "eventType": "Goal",
+              "teamId": 9825,
+              "playerId": 850354,
+              "playerName": "Bruno Guimarães",
+              "x": 87.6411764704,
+              "y": 35.75375,
+              "min": 70,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.09781148284673691,
+              "expectedGoalsOnTarget": 0.3478086590766907,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.2738095238095226,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1187213,
+              "firstName": "Bruno",
+              "lastName": "Guimarães",
+              "fullName": "Bruno Guimarães",
+              "teamColor": "#bd0510"
+            },
+            "assistStr": "assist by Declan Rice",
+            "assistProfileUrl": "/players/654096/declan-rice",
+            "assistPlayerId": 654096,
+            "assistKey": "assist_by",
+            "assistInput": "Declan Rice"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -22547,10 +22636,84 @@
           "assistPlayerId": 776151,
           "assistKey": "assist_by",
           "assistInput": "Ben White"
+        },
+        {
+          "reactKey": "1454274470Goal850354undefinedtrue",
+          "timeStr": 70,
+          "type": "goal",
+          "time": 70,
+          "overloadTime": null,
+          "eventId": 14542744,
+          "player": {
+            "id": 850354,
+            "name": "Bruno Guimarães",
+            "profileUrl": "/players/850354/bruno-guimaraes"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/850354/bruno-guimaraes",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bruno Guimarães",
+          "firstName": "Bruno",
+          "lastName": "Guimarães",
+          "fullName": "Bruno Guimarães",
+          "playerId": 850354,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979136295,
+            "eventType": "Goal",
+            "teamId": 9825,
+            "playerId": 850354,
+            "playerName": "Bruno Guimarães",
+            "x": 87.6411764704,
+            "y": 35.75375,
+            "min": 70,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.745000000000005,
+            "goalCrossedZ": 0.1219999994,
+            "expectedGoals": 0.09781148284673691,
+            "expectedGoalsOnTarget": 0.3478086590766907,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.2738095238095226,
+              "y": 0.032275132116402115,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1187213,
+            "firstName": "Bruno",
+            "lastName": "Guimarães",
+            "fullName": "Bruno Guimarães",
+            "teamColor": "#bd0510"
+          },
+          "assistStr": "assist by Declan Rice",
+          "assistProfileUrl": "/players/654096/declan-rice",
+          "assistPlayerId": 654096,
+          "assistKey": "assist_by",
+          "assistInput": "Declan Rice"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
