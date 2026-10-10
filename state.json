@@ -22729,7 +22729,8 @@
         "react:145432841Goal1185609undefinedtrue",
         "react:1454478751Goal860914undefinedfalse",
         "react:1454490355Goal0undefinedfalse",
-        "react:1454490355Goal1180288undefinedfalse"
+        "react:1454490355Goal1180288undefinedfalse",
+        "react:1454512264Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -23092,6 +23093,56 @@
             "assistKey": "assist_by",
             "assistInput": "Harry Kane"
           }
+        },
+        {
+          "event_key": "react:1454512264Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "64",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4038,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1454512264Goal0undefinedtrue",
+            "timeStr": 64,
+            "type": "goal",
+            "time": 64,
+            "overloadTime": null,
+            "eventId": 14545122,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -23386,10 +23437,46 @@
           "assistPlayerId": 194165,
           "assistKey": "assist_by",
           "assistInput": "Harry Kane"
+        },
+        {
+          "reactKey": "1454512264Goal0undefinedtrue",
+          "timeStr": 64,
+          "type": "goal",
+          "time": 64,
+          "overloadTime": null,
+          "eventId": 14545122,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
