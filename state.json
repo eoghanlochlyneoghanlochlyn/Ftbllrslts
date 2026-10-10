@@ -22727,7 +22727,8 @@
       "event_keys": [
         "react:145432841Goal0undefinedtrue",
         "react:145432841Goal1185609undefinedtrue",
-        "react:1454478751Goal860914undefinedfalse"
+        "react:1454478751Goal860914undefinedfalse",
+        "react:1454490355Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -22952,6 +22953,56 @@
             "assistKey": "assist_by",
             "assistInput": "Ismael Saibari"
           }
+        },
+        {
+          "event_key": "react:1454490355Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "55",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4035,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1454490355Goal0undefinedfalse",
+            "timeStr": 55,
+            "type": "goal",
+            "time": 55,
+            "overloadTime": null,
+            "eventId": 14544903,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -23136,11 +23187,47 @@
           "assistPlayerId": 1180288,
           "assistKey": "assist_by",
           "assistInput": "Ismael Saibari"
+        },
+        {
+          "reactKey": "1454490355Goal0undefinedfalse",
+          "timeStr": 55,
+          "type": "goal",
+          "time": 55,
+          "overloadTime": null,
+          "eventId": 14544903,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5795467": {
