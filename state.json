@@ -28062,12 +28062,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1455142763Goal1735453undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1455142763Goal1735453undefinedtrue",
+          "player_id": 1735453,
+          "player_name": "Yan Diomande",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "63",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4090,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1455142763Goal1735453undefinedtrue",
+            "timeStr": 63,
+            "type": "goal",
+            "time": 63,
+            "overloadTime": null,
+            "eventId": 14551427,
+            "player": {
+              "id": 1735453,
+              "name": "Yan Diomande",
+              "profileUrl": "/players/1735453/yan-diomande"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1735453/yan-diomande",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Yan Diomande",
+            "firstName": "Yan",
+            "lastName": "Diomande",
+            "fullName": "Yan Diomande",
+            "playerId": 1735453,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1455142763Goal1735453undefinedtrue",
+          "timeStr": 63,
+          "type": "goal",
+          "time": 63,
+          "overloadTime": null,
+          "eventId": 14551427,
+          "player": {
+            "id": 1735453,
+            "name": "Yan Diomande",
+            "profileUrl": "/players/1735453/yan-diomande"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1735453/yan-diomande",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Yan Diomande",
+          "firstName": "Yan",
+          "lastName": "Diomande",
+          "fullName": "Yan Diomande",
+          "playerId": 1735453,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
