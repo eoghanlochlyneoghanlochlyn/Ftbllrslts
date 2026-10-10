@@ -26432,7 +26432,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1454975973Goal923312undefinedtrue"
+        "react:1454975973Goal923312undefinedtrue",
+        "react:1454986579Card620618undefinedfalse"
       ],
       "goals": [
         {
