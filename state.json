@@ -22990,7 +22990,8 @@
       "event_keys": [
         "react:145437092Goal156008undefinedtrue",
         "react:145437293Goal0undefinedtrue",
-        "react:145437293Goal883080undefinedtrue"
+        "react:145437293Goal883080undefinedtrue",
+        "react:145437293Goal1292092undefinedtrue"
       ],
       "goals": [
         {
@@ -23179,6 +23180,91 @@
             "assistKey": "assist_by",
             "assistInput": "Jordan Henderson"
           }
+        },
+        {
+          "event_key": "react:145437293Goal1292092undefinedtrue",
+          "player_id": 1292092,
+          "player_name": "António Silva",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "3",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 4032,
+          "needs_update": false,
+          "event": {
+            "reactKey": "145437293Goal1292092undefinedtrue",
+            "timeStr": 3,
+            "type": "goal",
+            "time": 3,
+            "overloadTime": null,
+            "eventId": 14543729,
+            "player": {
+              "id": 1292092,
+              "name": "António Silva",
+              "profileUrl": "/players/1292092/antonio-silva"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1292092/antonio-silva",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "António Silva",
+            "firstName": "António",
+            "lastName": "Silva",
+            "fullName": "António Silva",
+            "playerId": 1292092,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979213369,
+              "eventType": "Goal",
+              "teamId": 8678,
+              "playerId": 1292092,
+              "playerName": "António Silva",
+              "x": 6.6578947372,
+              "y": 32.9325,
+              "min": 3,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.1025,
+              "goalCrossedZ": 1.4639999928,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.7665343915343916,
+                "y": 0.38730158539682535,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1067256,
+              "firstName": "António",
+              "lastName": "Silva",
+              "fullName": "António Silva",
+              "teamColor": "#D71921"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -23331,6 +23417,77 @@
           "assistPlayerId": 156008,
           "assistKey": "assist_by",
           "assistInput": "Jordan Henderson"
+        },
+        {
+          "reactKey": "145437293Goal1292092undefinedtrue",
+          "timeStr": 3,
+          "type": "goal",
+          "time": 3,
+          "overloadTime": null,
+          "eventId": 14543729,
+          "player": {
+            "id": 1292092,
+            "name": "António Silva",
+            "profileUrl": "/players/1292092/antonio-silva"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1292092/antonio-silva",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "António Silva",
+          "firstName": "António",
+          "lastName": "Silva",
+          "fullName": "António Silva",
+          "playerId": 1292092,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979213369,
+            "eventType": "Goal",
+            "teamId": 8678,
+            "playerId": 1292092,
+            "playerName": "António Silva",
+            "x": 6.6578947372,
+            "y": 32.9325,
+            "min": 3,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.1025,
+            "goalCrossedZ": 1.4639999928,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.7665343915343916,
+              "y": 0.38730158539682535,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1067256,
+            "firstName": "António",
+            "lastName": "Silva",
+            "fullName": "António Silva",
+            "teamColor": "#D71921"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
