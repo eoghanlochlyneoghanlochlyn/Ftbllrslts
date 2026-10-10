@@ -25850,7 +25850,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1454824813Goal0undefinedtrue",
-        "react:1454824813Goal1382000undefinedtrue"
+        "react:1454824813Goal1382000undefinedtrue",
+        "react:1454832718Goal304733undefinedtrue"
       ],
       "goals": [
         {
@@ -25987,6 +25988,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1454832718Goal304733undefinedtrue",
+          "player_id": 304733,
+          "player_name": "Hakan Çalhanoglu",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "18",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4063,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1454832718Goal304733undefinedtrue",
+            "timeStr": 18,
+            "type": "goal",
+            "time": 18,
+            "overloadTime": null,
+            "eventId": 14548327,
+            "player": {
+              "id": 304733,
+              "name": "Hakan Çalhanoglu",
+              "profileUrl": "/players/304733/hakan-calhanoglu"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/304733/hakan-calhanoglu",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Hakan Çalhanoglu",
+            "firstName": "Hakan",
+            "lastName": "Çalhanoglu",
+            "fullName": "Hakan Çalhanoglu",
+            "playerId": 304733,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979502525,
+              "eventType": "Goal",
+              "teamId": 8636,
+              "playerId": 304733,
+              "playerName": "Hakan Çalhanoglu",
+              "x": 94,
+              "y": 34,
+              "min": 18,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.60125,
+              "goalCrossedZ": 0.6099999970000001,
+              "expectedGoals": 0.7884,
+              "expectedGoalsOnTarget": 0.9596,
+              "shotType": "RightFoot",
+              "situation": "Penalty",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5763888888888888,
+                "y": 0.16137566058201058,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1117310,
+              "firstName": "Hakan",
+              "lastName": "Çalhanoglu",
+              "fullName": "Hakan Çalhanoglu",
+              "teamColor": "#010E80"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -26097,10 +26183,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1454832718Goal304733undefinedtrue",
+          "timeStr": 18,
+          "type": "goal",
+          "time": 18,
+          "overloadTime": null,
+          "eventId": 14548327,
+          "player": {
+            "id": 304733,
+            "name": "Hakan Çalhanoglu",
+            "profileUrl": "/players/304733/hakan-calhanoglu"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/304733/hakan-calhanoglu",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Penalty",
+          "goalDescriptionKey": "penalty",
+          "suffix": "Pen",
+          "suffixKey": "penalties_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Hakan Çalhanoglu",
+          "firstName": "Hakan",
+          "lastName": "Çalhanoglu",
+          "fullName": "Hakan Çalhanoglu",
+          "playerId": 304733,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979502525,
+            "eventType": "Goal",
+            "teamId": 8636,
+            "playerId": 304733,
+            "playerName": "Hakan Çalhanoglu",
+            "x": 94,
+            "y": 34,
+            "min": 18,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.60125,
+            "goalCrossedZ": 0.6099999970000001,
+            "expectedGoals": 0.7884,
+            "expectedGoalsOnTarget": 0.9596,
+            "shotType": "RightFoot",
+            "situation": "Penalty",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5763888888888888,
+              "y": 0.16137566058201058,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1117310,
+            "firstName": "Hakan",
+            "lastName": "Çalhanoglu",
+            "fullName": "Hakan Çalhanoglu",
+            "teamColor": "#010E80"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
