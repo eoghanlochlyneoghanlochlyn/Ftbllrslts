@@ -22731,7 +22731,8 @@
         "react:1454490355Goal0undefinedfalse",
         "react:1454490355Goal1180288undefinedfalse",
         "react:1454512264Goal0undefinedtrue",
-        "react:1454512264Goal1343749undefinedtrue"
+        "react:1454512264Goal1343749undefinedtrue",
+        "react:1454556980Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -23229,6 +23230,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1454556980Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "80",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4043,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1454556980Goal0undefinedfalse",
+            "timeStr": 80,
+            "type": "goal",
+            "time": 80,
+            "overloadTime": null,
+            "eventId": 14545569,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -23630,11 +23681,47 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1454556980Goal0undefinedfalse",
+          "timeStr": 80,
+          "type": "goal",
+          "time": 80,
+          "overloadTime": null,
+          "eventId": 14545569,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "5795467": {
@@ -23649,7 +23736,8 @@
         "react:145437293Goal0undefinedtrue",
         "react:145437293Goal883080undefinedtrue",
         "react:145437293Goal1292092undefinedtrue",
-        "react:1454533646Goal1021382undefinedtrue"
+        "react:1454533646Goal1021382undefinedtrue",
+        "react:1454554352Goal1098096undefinedfalse"
       ],
       "goals": [
         {
@@ -24007,6 +24095,91 @@
             "assistKey": "assist_by",
             "assistInput": "Pedro Neto"
           }
+        },
+        {
+          "event_key": "react:1454554352Goal1098096undefinedfalse",
+          "player_id": 1098096,
+          "player_name": "Evanilson",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "52",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4044,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1454554352Goal1098096undefinedfalse",
+            "timeStr": 52,
+            "type": "goal",
+            "time": 52,
+            "overloadTime": null,
+            "eventId": 14545543,
+            "player": {
+              "id": 1098096,
+              "name": "Evanilson",
+              "profileUrl": "/players/1098096/evanilson"
+            },
+            "homeScore": 3,
+            "awayScore": 0,
+            "profileUrl": "/players/1098096/evanilson",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Evanilson",
+            "firstName": "",
+            "lastName": "Evanilson",
+            "fullName": "Evanilson",
+            "playerId": 1098096,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979367989,
+              "eventType": "Goal",
+              "teamId": 8678,
+              "playerId": 1098096,
+              "playerName": "Evanilson",
+              "x": 102.629310345,
+              "y": 33.8475,
+              "min": 51,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.8475,
+              "goalCrossedZ": 2.1510526210000003,
+              "expectedGoals": 0.738,
+              "expectedGoalsOnTarget": 0.9238,
+              "shotType": "RightFoot",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.0403439153439162,
+                "y": 0.56906153994709,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 268375,
+              "firstName": "",
+              "lastName": "Evanilson",
+              "fullName": "Evanilson",
+              "teamColor": "#D71921"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -24304,11 +24477,82 @@
           "assistPlayerId": 843040,
           "assistKey": "assist_by",
           "assistInput": "Pedro Neto"
+        },
+        {
+          "reactKey": "1454554352Goal1098096undefinedfalse",
+          "timeStr": 52,
+          "type": "goal",
+          "time": 52,
+          "overloadTime": null,
+          "eventId": 14545543,
+          "player": {
+            "id": 1098096,
+            "name": "Evanilson",
+            "profileUrl": "/players/1098096/evanilson"
+          },
+          "homeScore": 3,
+          "awayScore": 0,
+          "profileUrl": "/players/1098096/evanilson",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Evanilson",
+          "firstName": "",
+          "lastName": "Evanilson",
+          "fullName": "Evanilson",
+          "playerId": 1098096,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979367989,
+            "eventType": "Goal",
+            "teamId": 8678,
+            "playerId": 1098096,
+            "playerName": "Evanilson",
+            "x": 102.629310345,
+            "y": 33.8475,
+            "min": 51,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.8475,
+            "goalCrossedZ": 2.1510526210000003,
+            "expectedGoals": 0.738,
+            "expectedGoalsOnTarget": 0.9238,
+            "shotType": "RightFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.0403439153439162,
+              "y": 0.56906153994709,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 268375,
+            "firstName": "",
+            "lastName": "Evanilson",
+            "fullName": "Evanilson",
+            "teamColor": "#D71921"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 3,
-        "away": 0
+        "away": 1
       }
     },
     "5868081": {
