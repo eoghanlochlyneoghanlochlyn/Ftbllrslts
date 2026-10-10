@@ -27323,7 +27323,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1455051319Goal1255209undefinedtrue"
+        "react:1455051319Goal1255209undefinedtrue",
+        "react:1455110654Goal807955undefinedfalse"
       ],
       "goals": [
         {
@@ -27410,6 +27411,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1455110654Goal807955undefinedfalse",
+          "player_id": 807955,
+          "player_name": "Louis Mafouta",
+          "assist_player_id": 1317318,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "54",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4086,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1455110654Goal807955undefinedfalse",
+            "timeStr": 54,
+            "type": "goal",
+            "time": 54,
+            "overloadTime": null,
+            "eventId": 14551106,
+            "player": {
+              "id": 807955,
+              "name": "Louis Mafouta",
+              "profileUrl": "/players/807955/louis-mafouta"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/807955/louis-mafouta",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Louis Mafouta",
+            "firstName": "Louis",
+            "lastName": "Mafouta",
+            "fullName": "Louis Mafouta",
+            "playerId": 807955,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2979740379,
+              "eventType": "Goal",
+              "teamId": 8682,
+              "playerId": 807955,
+              "playerName": "Louis Mafouta",
+              "x": 98.14912280659999,
+              "y": 34.838750000000005,
+              "min": 54,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.29625000000001,
+              "goalCrossedZ": 1.9519999904,
+              "expectedGoals": 0.4236,
+              "expectedGoalsOnTarget": 0.7518,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6570767195767175,
+                "y": 0.5164021138624338,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 800880,
+              "firstName": "Louis",
+              "lastName": "Mafouta",
+              "fullName": "Louis Mafouta",
+              "teamColor": "#D60000"
+            },
+            "assistStr": "assist by Lucas Calodat",
+            "assistProfileUrl": "/players/1317318/lucas-calodat",
+            "assistPlayerId": 1317318,
+            "assistKey": "assist_by",
+            "assistInput": "Lucas Calodat"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -27484,11 +27573,85 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1455110654Goal807955undefinedfalse",
+          "timeStr": 54,
+          "type": "goal",
+          "time": 54,
+          "overloadTime": null,
+          "eventId": 14551106,
+          "player": {
+            "id": 807955,
+            "name": "Louis Mafouta",
+            "profileUrl": "/players/807955/louis-mafouta"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/807955/louis-mafouta",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Louis Mafouta",
+          "firstName": "Louis",
+          "lastName": "Mafouta",
+          "fullName": "Louis Mafouta",
+          "playerId": 807955,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2979740379,
+            "eventType": "Goal",
+            "teamId": 8682,
+            "playerId": 807955,
+            "playerName": "Louis Mafouta",
+            "x": 98.14912280659999,
+            "y": 34.838750000000005,
+            "min": 54,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.29625000000001,
+            "goalCrossedZ": 1.9519999904,
+            "expectedGoals": 0.4236,
+            "expectedGoalsOnTarget": 0.7518,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6570767195767175,
+              "y": 0.5164021138624338,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 800880,
+            "firstName": "Louis",
+            "lastName": "Mafouta",
+            "fullName": "Louis Mafouta",
+            "teamColor": "#D60000"
+          },
+          "assistStr": "assist by Lucas Calodat",
+          "assistProfileUrl": "/players/1317318/lucas-calodat",
+          "assistPlayerId": 1317318,
+          "assistKey": "assist_by",
+          "assistInput": "Lucas Calodat"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5868089": {
