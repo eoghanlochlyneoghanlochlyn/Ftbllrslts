@@ -28572,7 +28572,8 @@
         "react:1455977462Card956683undefinedtrue",
         "react:1455982365Goal737066undefinedfalse",
         "react:1455987368Goal942368undefinedfalse",
-        "react:1455999978Goal0undefinedfalse"
+        "react:1455999978Goal0undefinedfalse",
+        "react:1455999978Goal1104053undefinedfalse"
       ],
       "goals": [
         {
@@ -28793,6 +28794,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1455999978Goal1104053undefinedfalse",
+          "player_id": 1104053,
+          "player_name": "Rayan Cherki",
+          "assist_player_id": 1070712,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "78",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4110,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1455999978Goal1104053undefinedfalse",
+            "timeStr": 78,
+            "type": "goal",
+            "time": 78,
+            "overloadTime": null,
+            "eventId": 14559999,
+            "player": {
+              "id": 1104053,
+              "name": "Rayan Cherki",
+              "profileUrl": "/players/1104053/rayan-cherki"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1104053/rayan-cherki",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Rayan Cherki",
+            "firstName": "Rayan",
+            "lastName": "Cherki",
+            "fullName": "Rayan Cherki",
+            "playerId": 1104053,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2980438241,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1104053,
+              "playerName": "Rayan Cherki",
+              "x": 100.8275862072,
+              "y": 35.9825,
+              "min": 78,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.6275,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.7911,
+              "expectedGoalsOnTarget": 0.9714,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3630952380952386,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 319784,
+              "firstName": "Rayan",
+              "lastName": "Cherki",
+              "fullName": "Rayan Cherki",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": "assist by Joško Gvardiol",
+            "assistProfileUrl": "/players/1070712/josko-gvardiol",
+            "assistPlayerId": 1070712,
+            "assistKey": "assist_by",
+            "assistInput": "Joško Gvardiol"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -28977,11 +29066,85 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1455999978Goal1104053undefinedfalse",
+          "timeStr": 78,
+          "type": "goal",
+          "time": 78,
+          "overloadTime": null,
+          "eventId": 14559999,
+          "player": {
+            "id": 1104053,
+            "name": "Rayan Cherki",
+            "profileUrl": "/players/1104053/rayan-cherki"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/1104053/rayan-cherki",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Rayan Cherki",
+          "firstName": "Rayan",
+          "lastName": "Cherki",
+          "fullName": "Rayan Cherki",
+          "playerId": 1104053,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2980438241,
+            "eventType": "Goal",
+            "teamId": 8456,
+            "playerId": 1104053,
+            "playerName": "Rayan Cherki",
+            "x": 100.8275862072,
+            "y": 35.9825,
+            "min": 78,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.6275,
+            "goalCrossedZ": 0.20547368320000003,
+            "expectedGoals": 0.7911,
+            "expectedGoalsOnTarget": 0.9714,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.3630952380952386,
+              "y": 0.05435811724867726,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 319784,
+            "firstName": "Rayan",
+            "lastName": "Cherki",
+            "fullName": "Rayan Cherki",
+            "teamColor": "#69A8D8"
+          },
+          "assistStr": "assist by Joško Gvardiol",
+          "assistProfileUrl": "/players/1070712/josko-gvardiol",
+          "assistPlayerId": 1070712,
+          "assistKey": "assist_by",
+          "assistInput": "Joško Gvardiol"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "5749698": {
