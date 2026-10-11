@@ -28571,7 +28571,8 @@
       "event_keys": [
         "react:1455977462Card956683undefinedtrue",
         "react:1455982365Goal737066undefinedfalse",
-        "react:1455987368Goal942368undefinedfalse"
+        "react:1455987368Goal942368undefinedfalse",
+        "react:1455999978Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -28742,6 +28743,56 @@
             "assistKey": "assist_by",
             "assistInput": "Elliot Anderson"
           }
+        },
+        {
+          "event_key": "react:1455999978Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "78",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4109,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1455999978Goal0undefinedfalse",
+            "timeStr": 78,
+            "type": "goal",
+            "time": 78,
+            "overloadTime": null,
+            "eventId": 14559999,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -28890,6 +28941,42 @@
           "assistPlayerId": 1089691,
           "assistKey": "assist_by",
           "assistInput": "Elliot Anderson"
+        },
+        {
+          "reactKey": "1455999978Goal0undefinedfalse",
+          "timeStr": 78,
+          "type": "goal",
+          "time": 78,
+          "overloadTime": null,
+          "eventId": 14559999,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
