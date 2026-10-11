@@ -29162,7 +29162,7 @@
           "event_key": "react:1456033963Goal352879undefinedfalse",
           "player_id": 352879,
           "player_name": "Adrien Rabiot",
-          "assist_player_id": null,
+          "assist_player_id": 31097,
           "assist_player_name": "",
           "is_home": false,
           "minute": "63",
@@ -29215,18 +29215,22 @@
               "min": 63,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0364,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 36.2875,
+              "goalCrossedZ": 1.6245263078,
+              "expectedGoals": 0.049959201365709305,
+              "expectedGoalsOnTarget": 0.14719942212104797,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.39484126984126955,
+                "y": 0.42976886449735446,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 760752,
@@ -29235,8 +29239,11 @@
               "fullName": "Adrien Rabiot",
               "teamColor": "#CF2C27"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Luka Modrić",
+            "assistProfileUrl": "/players/31097/luka-modric",
+            "assistPlayerId": 31097,
+            "assistKey": "assist_by",
+            "assistInput": "Luka Modrić"
           }
         }
       ],
@@ -29286,18 +29293,22 @@
             "min": 63,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0364,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 36.2875,
+            "goalCrossedZ": 1.6245263078,
+            "expectedGoals": 0.049959201365709305,
+            "expectedGoalsOnTarget": 0.14719942212104797,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.39484126984126955,
+              "y": 0.42976886449735446,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 760752,
@@ -29306,8 +29317,11 @@
             "fullName": "Adrien Rabiot",
             "teamColor": "#CF2C27"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Luka Modrić",
+          "assistProfileUrl": "/players/31097/luka-modric",
+          "assistPlayerId": 31097,
+          "assistKey": "assist_by",
+          "assistInput": "Luka Modrić"
         }
       ],
       "observed_score": {
