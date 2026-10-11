@@ -28570,7 +28570,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1455977462Card956683undefinedtrue",
-        "react:1455982365Goal737066undefinedfalse"
+        "react:1455982365Goal737066undefinedfalse",
+        "react:1455987368Goal942368undefinedfalse"
       ],
       "goals": [
         {
@@ -28653,6 +28654,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1455987368Goal942368undefinedfalse",
+          "player_id": 942368,
+          "player_name": "Jérémy Doku",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "68",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4108,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1455987368Goal942368undefinedfalse",
+            "timeStr": 68,
+            "type": "goal",
+            "time": 68,
+            "overloadTime": null,
+            "eventId": 14559873,
+            "player": {
+              "id": 942368,
+              "name": "Jérémy Doku",
+              "profileUrl": "/players/942368/jeremy-doku"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/942368/jeremy-doku",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jérémy Doku",
+            "firstName": "Jérémy",
+            "lastName": "Doku",
+            "fullName": "Jérémy Doku",
+            "playerId": 942368,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2980430739,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 942368,
+              "playerName": "Jérémy Doku",
+              "x": 89.3,
+              "y": 44.5612738809,
+              "min": 68,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.1025,
+              "goalCrossedZ": 2.0354736742,
+              "expectedGoals": 0.0403,
+              "expectedGoalsOnTarget": 0.62,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7665343915343916,
+                "y": 0.538485098994709,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 319784,
+              "firstName": "Jérémy",
+              "lastName": "Doku",
+              "fullName": "Jérémy Doku",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -28727,11 +28813,82 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1455987368Goal942368undefinedfalse",
+          "timeStr": 68,
+          "type": "goal",
+          "time": 68,
+          "overloadTime": null,
+          "eventId": 14559873,
+          "player": {
+            "id": 942368,
+            "name": "Jérémy Doku",
+            "profileUrl": "/players/942368/jeremy-doku"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/942368/jeremy-doku",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Jérémy Doku",
+          "firstName": "Jérémy",
+          "lastName": "Doku",
+          "fullName": "Jérémy Doku",
+          "playerId": 942368,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2980430739,
+            "eventType": "Goal",
+            "teamId": 8456,
+            "playerId": 942368,
+            "playerName": "Jérémy Doku",
+            "x": 89.3,
+            "y": 44.5612738809,
+            "min": 68,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.1025,
+            "goalCrossedZ": 2.0354736742,
+            "expectedGoals": 0.0403,
+            "expectedGoalsOnTarget": 0.62,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7665343915343916,
+              "y": 0.538485098994709,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 319784,
+            "firstName": "Jérémy",
+            "lastName": "Doku",
+            "fullName": "Jérémy Doku",
+            "teamColor": "#69A8D8"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5749698": {
