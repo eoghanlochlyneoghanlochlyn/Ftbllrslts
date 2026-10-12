@@ -30052,7 +30052,7 @@
           "event_key": "react:1456524148Goal505866undefinedtrue",
           "player_id": 505866,
           "player_name": "Ferjani Sassi",
-          "assist_player_id": null,
+          "assist_player_id": 1478009,
           "assist_player_name": "",
           "is_home": true,
           "minute": "48",
@@ -30095,8 +30095,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Seydou Sano",
+            "assistProfileUrl": "/players/1478009/seydou-sano",
+            "assistPlayerId": 1478009,
+            "assistKey": "assist_by",
+            "assistInput": "Seydou Sano"
           }
         }
       ],
@@ -30213,8 +30216,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Seydou Sano",
+          "assistProfileUrl": "/players/1478009/seydou-sano",
+          "assistPlayerId": 1478009,
+          "assistKey": "assist_by",
+          "assistInput": "Seydou Sano"
         }
       ],
       "observed_score": {
