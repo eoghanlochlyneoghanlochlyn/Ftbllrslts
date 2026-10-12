@@ -29997,7 +29997,7 @@
           "event_key": "react:1456511637Goal637760undefinedfalse",
           "player_id": 637760,
           "player_name": "Jasir Asani",
-          "assist_player_id": null,
+          "assist_player_id": 1221526,
           "assist_player_name": "",
           "is_home": false,
           "minute": "37",
@@ -30040,8 +30040,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Saleh Hardani",
+            "assistProfileUrl": "/players/1221526/saleh-hardani",
+            "assistPlayerId": 1221526,
+            "assistKey": "assist_by",
+            "assistInput": "Saleh Hardani"
           }
         }
       ],
@@ -30118,8 +30121,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Saleh Hardani",
+          "assistProfileUrl": "/players/1221526/saleh-hardani",
+          "assistPlayerId": 1221526,
+          "assistKey": "assist_by",
+          "assistInput": "Saleh Hardani"
         }
       ],
       "observed_score": {
