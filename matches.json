@@ -12,5 +12,40 @@
     "enabled": true,
     "auto": true,
     "start": "2026-10-12T18:15:00+00:00"
+  },
+  {
+    "id": "6106260",
+    "url": "https://www.fotmob.com/match/6106260",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-13T19:00:00+00:00"
+  },
+  {
+    "id": "6106267",
+    "url": "https://www.fotmob.com/match/6106267",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-13T19:00:00+00:00"
+  },
+  {
+    "id": "6106338",
+    "url": "https://www.fotmob.com/match/6106338",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-13T19:00:00+00:00"
+  },
+  {
+    "id": "6106251",
+    "url": "https://www.fotmob.com/match/6106251",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-13T19:00:00+00:00"
+  },
+  {
+    "id": "6106417",
+    "url": "https://www.fotmob.com/match/6106417",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-13T19:00:00+00:00"
   }
 ]
