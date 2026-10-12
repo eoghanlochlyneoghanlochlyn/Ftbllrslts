@@ -29941,7 +29941,8 @@
         "react:1456511637Goal0undefinedfalse",
         "react:1456511637Goal637760undefinedfalse",
         "react:1456524148Goal505866undefinedtrue",
-        "react:1456528160Goal0undefinedfalse"
+        "react:1456528160Goal0undefinedfalse",
+        "react:1456528160Goal1448721undefinedfalse"
       ],
       "goals": [
         {
@@ -30153,6 +30154,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1456528160Goal1448721undefinedfalse",
+          "player_id": 1448721,
+          "player_name": "Hossein Goudarzi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "60",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4136,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456528160Goal1448721undefinedfalse",
+            "timeStr": 60,
+            "type": "goal",
+            "time": 60,
+            "overloadTime": null,
+            "eventId": 14565281,
+            "player": {
+              "id": 1448721,
+              "name": "Hossein Goudarzi",
+              "profileUrl": "/players/1448721/hossein-goudarzi"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1448721/hossein-goudarzi",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Hossein Goudarzi",
+            "firstName": "Hossein",
+            "lastName": "Goudarzi",
+            "fullName": "Hossein Goudarzi",
+            "playerId": 1448721,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -30302,6 +30354,43 @@
           "lastName": "Goudarzi",
           "fullName": "H. Goudarzi",
           "playerId": 0,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1456528160Goal1448721undefinedfalse",
+          "timeStr": 60,
+          "type": "goal",
+          "time": 60,
+          "overloadTime": null,
+          "eventId": 14565281,
+          "player": {
+            "id": 1448721,
+            "name": "Hossein Goudarzi",
+            "profileUrl": "/players/1448721/hossein-goudarzi"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1448721/hossein-goudarzi",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Hossein Goudarzi",
+          "firstName": "Hossein",
+          "lastName": "Goudarzi",
+          "fullName": "Hossein Goudarzi",
+          "playerId": 1448721,
           "newScore": [
             1,
             2
