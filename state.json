@@ -29938,7 +29938,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1456511637Goal0undefinedfalse"
+        "react:1456511637Goal0undefinedfalse",
+        "react:1456511637Goal637760undefinedfalse"
       ],
       "goals": [
         {
@@ -29991,6 +29992,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1456511637Goal637760undefinedfalse",
+          "player_id": 637760,
+          "player_name": "Jasir Asani",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "37",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4133,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456511637Goal637760undefinedfalse",
+            "timeStr": 37,
+            "type": "goal",
+            "time": 37,
+            "overloadTime": null,
+            "eventId": 14565116,
+            "player": {
+              "id": 637760,
+              "name": "Jasir Asani",
+              "profileUrl": "/players/637760/jasir-asani"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/637760/jasir-asani",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jasir Asani",
+            "firstName": "Jasir",
+            "lastName": "Asani",
+            "fullName": "Jasir Asani",
+            "playerId": 637760,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -30023,6 +30075,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1456511637Goal637760undefinedfalse",
+          "timeStr": 37,
+          "type": "goal",
+          "time": 37,
+          "overloadTime": null,
+          "eventId": 14565116,
+          "player": {
+            "id": 637760,
+            "name": "Jasir Asani",
+            "profileUrl": "/players/637760/jasir-asani"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/637760/jasir-asani",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Jasir Asani",
+          "firstName": "Jasir",
+          "lastName": "Asani",
+          "fullName": "Jasir Asani",
+          "playerId": 637760,
           "newScore": [
             0,
             1
