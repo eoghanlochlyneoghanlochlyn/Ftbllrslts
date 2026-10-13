@@ -31010,7 +31010,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:145680731Goal1338192undefinedtrue",
-        "react:1456872144Goal1173678undefinedtrue"
+        "react:1456872144Goal1173678undefinedtrue",
+        "react:1456958275Card1358581undefinedfalse"
       ],
       "goals": [
         {
@@ -33208,29 +33209,29 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": {
-            "id": 2981450857,
+            "id": 2981461331,
             "eventType": "Goal",
             "teamId": 8342,
             "playerId": 1334552,
             "playerName": "Nicolò Tresoldi",
-            "x": 92.5,
-            "y": 26.458750000000002,
-            "min": 63,
+            "x": 98.4385964909,
+            "y": 35.9825,
+            "min": 74,
             "minAdded": null,
             "isBlocked": false,
             "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": 34.533750000000005,
+            "goalCrossedY": 37.05,
             "goalCrossedZ": 0.1219999994,
-            "expectedGoals": 0.7810578942298889,
-            "expectedGoalsOnTarget": 0.9946004152297974,
+            "expectedGoals": 0.45282360911369324,
+            "expectedGoalsOnTarget": 0.9615848064422607,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
             "onGoalShot": {
-              "x": 0.8587962962962951,
+              "x": 0.19312169312169392,
               "y": 0.032275132116402115,
               "zoomRatio": 1
             },
