@@ -30522,7 +30522,7 @@
           "event_key": "react:1456872144Goal1173678undefinedtrue",
           "player_id": 1173678,
           "player_name": "Johnny Cardoso",
-          "assist_player_id": null,
+          "assist_player_id": 1338192,
           "assist_player_name": "",
           "is_home": true,
           "minute": "44",
@@ -30575,18 +30575,22 @@
               "min": 43,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
+              "goalCrossedY": 37.05,
+              "goalCrossedZ": 0.40452631380000004,
               "expectedGoals": 0.0458,
-              "expectedGoalsOnTarget": null,
+              "expectedGoalsOnTarget": 0.3549,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.19312169312169392,
+                "y": 0.10701754333333334,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": false,
               "keeperId": 1178602,
@@ -30595,8 +30599,11 @@
               "fullName": "Johnny Cardoso",
               "teamColor": "#C63527"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Pablo Barrios",
+            "assistProfileUrl": "/players/1338192/pablo-barrios",
+            "assistPlayerId": 1338192,
+            "assistKey": "assist_by",
+            "assistInput": "Pablo Barrios"
           }
         }
       ],
@@ -30720,18 +30727,22 @@
             "min": 43,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
+            "goalCrossedY": 37.05,
+            "goalCrossedZ": 0.40452631380000004,
             "expectedGoals": 0.0458,
-            "expectedGoalsOnTarget": null,
+            "expectedGoalsOnTarget": 0.3549,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.19312169312169392,
+              "y": 0.10701754333333334,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": false,
             "keeperId": 1178602,
@@ -30740,8 +30751,11 @@
             "fullName": "Johnny Cardoso",
             "teamColor": "#C63527"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Pablo Barrios",
+          "assistProfileUrl": "/players/1338192/pablo-barrios",
+          "assistPlayerId": 1338192,
+          "assistKey": "assist_by",
+          "assistInput": "Pablo Barrios"
         }
       ],
       "observed_score": {
@@ -31441,7 +31455,7 @@
           "event_key": "react:1456869044Goal690230undefinedtrue",
           "player_id": 690230,
           "player_name": "Lautaro Martínez",
-          "assist_player_id": null,
+          "assist_player_id": 605224,
           "assist_player_name": "",
           "is_home": true,
           "minute": "44",
@@ -31489,8 +31503,8 @@
               "teamId": 8636,
               "playerId": 690230,
               "playerName": "Lautaro Martínez",
-              "x": 99.6896551728,
-              "y": 38.536428573,
+              "x": 99.21052631570001,
+              "y": 37.66,
               "min": 44,
               "minAdded": null,
               "isBlocked": false,
@@ -31499,8 +31513,8 @@
               "blockedY": null,
               "goalCrossedY": 30.95,
               "goalCrossedZ": 0.160526315,
-              "expectedGoals": 0.7096,
-              "expectedGoalsOnTarget": 0.9947,
+              "expectedGoals": 0.5873506665229797,
+              "expectedGoalsOnTarget": 0.9431741833686829,
               "shotType": "RightFoot",
               "situation": "FastBreak",
               "period": "FirstHalf",
@@ -31518,8 +31532,11 @@
               "fullName": "Lautaro Martínez",
               "teamColor": "#010E80"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Federico Dimarco",
+            "assistProfileUrl": "/players/605224/federico-dimarco",
+            "assistPlayerId": 605224,
+            "assistKey": "assist_by",
+            "assistInput": "Federico Dimarco"
           }
         }
       ],
@@ -31664,8 +31681,11 @@
             "fullName": "Lautaro Martínez",
             "teamColor": "#010E80"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Federico Dimarco",
+          "assistProfileUrl": "/players/605224/federico-dimarco",
+          "assistPlayerId": 605224,
+          "assistKey": "assist_by",
+          "assistInput": "Federico Dimarco"
         }
       ],
       "observed_score": {
