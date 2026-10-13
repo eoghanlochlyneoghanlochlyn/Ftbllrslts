@@ -30610,7 +30610,8 @@
       "event_keys": [
         "react:1456847528Goal1504343undefinedtrue",
         "react:1456854134Goal0undefinedtrue",
-        "react:1456854134Goal890232undefinedtrue"
+        "react:1456854134Goal890232undefinedtrue",
+        "react:1456867743Goal361757undefinedfalse"
       ],
       "goals": [
         {
@@ -30838,6 +30839,87 @@
             "assistKey": "assist_by",
             "assistInput": "Victor Osimhen"
           }
+        },
+        {
+          "event_key": "react:1456867743Goal361757undefinedfalse",
+          "player_id": 361757,
+          "player_name": "João Cancelo",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "43",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4158,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456867743Goal361757undefinedfalse",
+            "timeStr": 43,
+            "type": "goal",
+            "time": 43,
+            "overloadTime": null,
+            "eventId": 14568677,
+            "player": {
+              "id": 361757,
+              "name": "João Cancelo",
+              "profileUrl": "/players/361757/joao-cancelo"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/361757/joao-cancelo",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "João Cancelo",
+            "firstName": "João",
+            "lastName": "Cancelo",
+            "fullName": "João Cancelo",
+            "playerId": 361757,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2981413819,
+              "eventType": "Goal",
+              "teamId": 8634,
+              "playerId": 361757,
+              "playerName": "João Cancelo",
+              "x": 94.38596491070001,
+              "y": 42.8709375,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0615,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 603669,
+              "firstName": "João",
+              "lastName": "Cancelo",
+              "fullName": "João Cancelo",
+              "teamColor": "#971e48"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -31025,11 +31107,78 @@
           "assistPlayerId": 687681,
           "assistKey": "assist_by",
           "assistInput": "Victor Osimhen"
+        },
+        {
+          "reactKey": "1456867743Goal361757undefinedfalse",
+          "timeStr": 43,
+          "type": "goal",
+          "time": 43,
+          "overloadTime": null,
+          "eventId": 14568677,
+          "player": {
+            "id": 361757,
+            "name": "João Cancelo",
+            "profileUrl": "/players/361757/joao-cancelo"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/361757/joao-cancelo",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "João Cancelo",
+          "firstName": "João",
+          "lastName": "Cancelo",
+          "fullName": "João Cancelo",
+          "playerId": 361757,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981413819,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 361757,
+            "playerName": "João Cancelo",
+            "x": 94.38596491070001,
+            "y": 42.8709375,
+            "min": 43,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0615,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 603669,
+            "firstName": "João",
+            "lastName": "Cancelo",
+            "fullName": "João Cancelo",
+            "teamColor": "#971e48"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "6106251": {
