@@ -31192,7 +31192,7 @@
           "event_key": "react:1456963879Goal690516undefinedtrue",
           "player_id": 690516,
           "player_name": "Ademola Lookman",
-          "assist_player_id": null,
+          "assist_player_id": 939569,
           "assist_player_name": "",
           "is_home": true,
           "minute": "79",
@@ -31234,8 +31234,46 @@
               0
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "shotmapEvent": {
+              "id": 2981466209,
+              "eventType": "Goal",
+              "teamId": 9906,
+              "playerId": 690516,
+              "playerName": "Ademola Lookman",
+              "x": 100.3534482762,
+              "y": 36.745000000000005,
+              "min": 79,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.525000000000006,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.8769046068191528,
+              "expectedGoalsOnTarget": 0.9952552914619446,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5965608465608451,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1178602,
+              "firstName": "Ademola",
+              "lastName": "Lookman",
+              "fullName": "Ademola Lookman",
+              "teamColor": "#C63527"
+            },
+            "assistStr": "assist by Jonathan David",
+            "assistProfileUrl": "/players/939569/jonathan-david",
+            "assistPlayerId": 939569,
+            "assistKey": "assist_by",
+            "assistInput": "Jonathan David"
           }
         }
       ],
@@ -31422,8 +31460,46 @@
             0
           ],
           "penShootoutScore": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "shotmapEvent": {
+            "id": 2981466209,
+            "eventType": "Goal",
+            "teamId": 9906,
+            "playerId": 690516,
+            "playerName": "Ademola Lookman",
+            "x": 100.3534482762,
+            "y": 36.745000000000005,
+            "min": 79,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.525000000000006,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.8769046068191528,
+            "expectedGoalsOnTarget": 0.9952552914619446,
+            "shotType": "RightFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5965608465608451,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1178602,
+            "firstName": "Ademola",
+            "lastName": "Lookman",
+            "fullName": "Ademola Lookman",
+            "teamColor": "#C63527"
+          },
+          "assistStr": "assist by Jonathan David",
+          "assistProfileUrl": "/players/939569/jonathan-david",
+          "assistPlayerId": 939569,
+          "assistKey": "assist_by",
+          "assistInput": "Jonathan David"
         }
       ],
       "observed_score": {
@@ -32610,7 +32686,8 @@
         "react:1456869044Goal690230undefinedtrue",
         "react:1456941763Goal0undefinedfalse",
         "react:1456941763Goal1334552undefinedfalse",
-        "react:1456957374Goal1334552undefinedfalse"
+        "react:1456957374Goal1334552undefinedfalse",
+        "react:1456964781Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -33007,6 +33084,56 @@
             "assistKey": "assist_by",
             "assistInput": "Carlos Forbs"
           }
+        },
+        {
+          "event_key": "react:1456964781Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "81",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4180,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1456964781Goal0undefinedtrue",
+            "timeStr": 81,
+            "type": "goal",
+            "time": 81,
+            "overloadTime": null,
+            "eventId": 14569647,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 3,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -33339,10 +33466,46 @@
           "assistPlayerId": 1186529,
           "assistKey": "assist_by",
           "assistInput": "Carlos Forbs"
+        },
+        {
+          "reactKey": "1456964781Goal0undefinedtrue",
+          "timeStr": 81,
+          "type": "goal",
+          "time": 81,
+          "overloadTime": null,
+          "eventId": 14569647,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 3,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 3
       }
     },
