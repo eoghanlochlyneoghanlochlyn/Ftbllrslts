@@ -32520,7 +32520,8 @@
         "react:1456849930Goal1334552undefinedfalse",
         "react:1456869044Goal690230undefinedtrue",
         "react:1456941763Goal0undefinedfalse",
-        "react:1456941763Goal1334552undefinedfalse"
+        "react:1456941763Goal1334552undefinedfalse",
+        "react:1456957374Goal1334552undefinedfalse"
       ],
       "goals": [
         {
@@ -32829,6 +32830,91 @@
             "assistKey": "assist_by",
             "assistInput": "Carlos Forbs"
           }
+        },
+        {
+          "event_key": "react:1456957374Goal1334552undefinedfalse",
+          "player_id": 1334552,
+          "player_name": "Nicolò Tresoldi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "74",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4175,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456957374Goal1334552undefinedfalse",
+            "timeStr": 74,
+            "type": "goal",
+            "time": 74,
+            "overloadTime": null,
+            "eventId": 14569573,
+            "player": {
+              "id": 1334552,
+              "name": "Nicolò Tresoldi",
+              "profileUrl": "/players/1334552/nicolo-tresoldi"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/1334552/nicolo-tresoldi",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nicolò Tresoldi",
+            "firstName": "Nicolò",
+            "lastName": "Tresoldi",
+            "fullName": "Nicolò Tresoldi",
+            "playerId": 1334552,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2981450857,
+              "eventType": "Goal",
+              "teamId": 8342,
+              "playerId": 1334552,
+              "playerName": "Nicolò Tresoldi",
+              "x": 92.5,
+              "y": 26.458750000000002,
+              "min": 63,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.533750000000005,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.7810578942298889,
+              "expectedGoalsOnTarget": 0.9946004152297974,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.8587962962962951,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 772168,
+              "firstName": "Nicolò",
+              "lastName": "Tresoldi",
+              "fullName": "Nicolò Tresoldi",
+              "teamColor": "#0572FF"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -33087,11 +33173,82 @@
           "assistPlayerId": 1186529,
           "assistKey": "assist_by",
           "assistInput": "Carlos Forbs"
+        },
+        {
+          "reactKey": "1456957374Goal1334552undefinedfalse",
+          "timeStr": 74,
+          "type": "goal",
+          "time": 74,
+          "overloadTime": null,
+          "eventId": 14569573,
+          "player": {
+            "id": 1334552,
+            "name": "Nicolò Tresoldi",
+            "profileUrl": "/players/1334552/nicolo-tresoldi"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/1334552/nicolo-tresoldi",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Nicolò Tresoldi",
+          "firstName": "Nicolò",
+          "lastName": "Tresoldi",
+          "fullName": "Nicolò Tresoldi",
+          "playerId": 1334552,
+          "newScore": [
+            1,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981450857,
+            "eventType": "Goal",
+            "teamId": 8342,
+            "playerId": 1334552,
+            "playerName": "Nicolò Tresoldi",
+            "x": 92.5,
+            "y": 26.458750000000002,
+            "min": 63,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.533750000000005,
+            "goalCrossedZ": 0.1219999994,
+            "expectedGoals": 0.7810578942298889,
+            "expectedGoalsOnTarget": 0.9946004152297974,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.8587962962962951,
+              "y": 0.032275132116402115,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 772168,
+            "firstName": "Nicolò",
+            "lastName": "Tresoldi",
+            "fullName": "Nicolò Tresoldi",
+            "teamColor": "#0572FF"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 2
+        "away": 3
       }
     },
     "6106417": {
@@ -33107,7 +33264,8 @@
         "react:1456923554Goal194165undefinedfalse",
         "react:1456935960Goal0undefinedfalse",
         "react:1456935960Goal194165undefinedfalse",
-        "react:1456953271Goal860914undefinedfalse"
+        "react:1456953271Goal860914undefinedfalse",
+        "react:1456956774Card1029063undefinedfalse"
       ],
       "goals": [
         {
