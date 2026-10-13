@@ -30759,7 +30759,7 @@
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 1,
         "away": 0
       }
     },
@@ -31327,8 +31327,8 @@
             "blockedY": null,
             "goalCrossedY": 31.636249999999997,
             "goalCrossedZ": 0.9759999952,
-            "expectedGoals": 0.17891082167625427,
-            "expectedGoalsOnTarget": 0.624899685382843,
+            "expectedGoals": 0.20847728848457336,
+            "expectedGoalsOnTarget": 0.635091245174408,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
@@ -31662,8 +31662,8 @@
             "blockedY": null,
             "goalCrossedY": 30.95,
             "goalCrossedZ": 0.160526315,
-            "expectedGoals": 0.5873506665229797,
-            "expectedGoalsOnTarget": 0.9431741833686829,
+            "expectedGoals": 0.7696073651313782,
+            "expectedGoalsOnTarget": 0.9782838821411133,
             "shotType": "RightFoot",
             "situation": "FastBreak",
             "period": "FirstHalf",
