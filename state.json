@@ -30609,7 +30609,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1456847528Goal1504343undefinedtrue",
-        "react:1456854134Goal0undefinedtrue"
+        "react:1456854134Goal0undefinedtrue",
+        "react:1456854134Goal890232undefinedtrue"
       ],
       "goals": [
         {
@@ -30749,6 +30750,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1456854134Goal890232undefinedtrue",
+          "player_id": 890232,
+          "player_name": "Barış Alper Yılmaz",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "34",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4156,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456854134Goal890232undefinedtrue",
+            "timeStr": 34,
+            "type": "goal",
+            "time": 34,
+            "overloadTime": null,
+            "eventId": 14568541,
+            "player": {
+              "id": 890232,
+              "name": "Barış Alper Yılmaz",
+              "profileUrl": "/players/890232/bars-alper-ylmaz"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/890232/bars-alper-ylmaz",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Barış Alper Yılmaz",
+            "firstName": "Barış Alper",
+            "lastName": "Yılmaz",
+            "fullName": "Barış Alper Yılmaz",
+            "playerId": 890232,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2981403993,
+              "eventType": "Goal",
+              "teamId": 8637,
+              "playerId": 890232,
+              "playerName": "Barış Alper Yılmaz",
+              "x": 102.72413793119999,
+              "y": 33.084999999999994,
+              "min": 34,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.448750000000004,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.7438,
+              "expectedGoalsOnTarget": 0.956,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6167328042328032,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1167220,
+              "firstName": "Barış Alper",
+              "lastName": "Yılmaz",
+              "fullName": "Barış Alper Yılmaz",
+              "teamColor": "#8D072A"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -30860,6 +30946,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1456854134Goal890232undefinedtrue",
+          "timeStr": 34,
+          "type": "goal",
+          "time": 34,
+          "overloadTime": null,
+          "eventId": 14568541,
+          "player": {
+            "id": 890232,
+            "name": "Barış Alper Yılmaz",
+            "profileUrl": "/players/890232/bars-alper-ylmaz"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/890232/bars-alper-ylmaz",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Barış Alper Yılmaz",
+          "firstName": "Barış Alper",
+          "lastName": "Yılmaz",
+          "fullName": "Barış Alper Yılmaz",
+          "playerId": 890232,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981403993,
+            "eventType": "Goal",
+            "teamId": 8637,
+            "playerId": 890232,
+            "playerName": "Barış Alper Yılmaz",
+            "x": 102.72413793119999,
+            "y": 33.084999999999994,
+            "min": 34,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.448750000000004,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": 0.7438,
+            "expectedGoalsOnTarget": 0.956,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6167328042328032,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1167220,
+            "firstName": "Barış Alper",
+            "lastName": "Yılmaz",
+            "fullName": "Barış Alper Yılmaz",
+            "teamColor": "#8D072A"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
