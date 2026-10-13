@@ -30755,7 +30755,7 @@
           "event_key": "react:1456854134Goal890232undefinedtrue",
           "player_id": 890232,
           "player_name": "Barış Alper Yılmaz",
-          "assist_player_id": null,
+          "assist_player_id": 687681,
           "assist_player_name": "",
           "is_home": true,
           "minute": "34",
@@ -30813,8 +30813,8 @@
               "blockedY": null,
               "goalCrossedY": 35.448750000000004,
               "goalCrossedZ": 1.2199999940000001,
-              "expectedGoals": 0.7438,
-              "expectedGoalsOnTarget": 0.956,
+              "expectedGoals": 0.4794285297393799,
+              "expectedGoalsOnTarget": 0.9634665846824646,
               "shotType": "Header",
               "situation": "FromCorner",
               "period": "FirstHalf",
@@ -30832,8 +30832,11 @@
               "fullName": "Barış Alper Yılmaz",
               "teamColor": "#8D072A"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Victor Osimhen",
+            "assistProfileUrl": "/players/687681/victor-osimhen",
+            "assistPlayerId": 687681,
+            "assistKey": "assist_by",
+            "assistInput": "Victor Osimhen"
           }
         }
       ],
@@ -30998,8 +31001,8 @@
             "blockedY": null,
             "goalCrossedY": 35.448750000000004,
             "goalCrossedZ": 1.2199999940000001,
-            "expectedGoals": 0.7438,
-            "expectedGoalsOnTarget": 0.956,
+            "expectedGoals": 0.4794285297393799,
+            "expectedGoalsOnTarget": 0.9634665846824646,
             "shotType": "Header",
             "situation": "FromCorner",
             "period": "FirstHalf",
@@ -31017,8 +31020,11 @@
             "fullName": "Barış Alper Yılmaz",
             "teamColor": "#8D072A"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Victor Osimhen",
+          "assistProfileUrl": "/players/687681/victor-osimhen",
+          "assistPlayerId": 687681,
+          "assistKey": "assist_by",
+          "assistInput": "Victor Osimhen"
         }
       ],
       "observed_score": {
