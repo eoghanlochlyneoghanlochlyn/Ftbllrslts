@@ -31012,7 +31012,8 @@
         "react:145680731Goal1338192undefinedtrue",
         "react:1456872144Goal1173678undefinedtrue",
         "react:1456958275Card1358581undefinedfalse",
-        "react:1456958274Card1358581undefinedfalse"
+        "react:1456958274Card1358581undefinedfalse",
+        "react:1456963879Goal690516undefinedtrue"
       ],
       "goals": [
         {
@@ -31186,6 +31187,56 @@
             "assistKey": "assist_by",
             "assistInput": "Pablo Barrios"
           }
+        },
+        {
+          "event_key": "react:1456963879Goal690516undefinedtrue",
+          "player_id": 690516,
+          "player_name": "Ademola Lookman",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "79",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4179,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456963879Goal690516undefinedtrue",
+            "timeStr": 79,
+            "type": "goal",
+            "time": 79,
+            "overloadTime": null,
+            "eventId": 14569638,
+            "player": {
+              "id": 690516,
+              "name": "Ademola Lookman",
+              "profileUrl": "/players/690516/ademola-lookman"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/690516/ademola-lookman",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ademola Lookman",
+            "firstName": "Ademola",
+            "lastName": "Lookman",
+            "fullName": "Ademola Lookman",
+            "playerId": 690516,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -31337,10 +31388,46 @@
           "assistPlayerId": 1338192,
           "assistKey": "assist_by",
           "assistInput": "Pablo Barrios"
+        },
+        {
+          "reactKey": "1456963879Goal690516undefinedtrue",
+          "timeStr": 79,
+          "type": "goal",
+          "time": 79,
+          "overloadTime": null,
+          "eventId": 14569638,
+          "player": {
+            "id": 690516,
+            "name": "Ademola Lookman",
+            "profileUrl": "/players/690516/ademola-lookman"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/690516/ademola-lookman",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ademola Lookman",
+          "firstName": "Ademola",
+          "lastName": "Lookman",
+          "fullName": "Ademola Lookman",
+          "playerId": 690516,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
