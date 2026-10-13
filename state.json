@@ -32688,7 +32688,8 @@
         "react:1456941763Goal1334552undefinedfalse",
         "react:1456957374Goal1334552undefinedfalse",
         "react:1456964781Goal0undefinedtrue",
-        "react:1456964781Goal690230undefinedtrue"
+        "react:1456964781Goal690230undefinedtrue",
+        "react:1456969687Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -33223,6 +33224,56 @@
             "assistKey": "assist_by",
             "assistInput": "Petar Sučić"
           }
+        },
+        {
+          "event_key": "react:1456969687Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "87",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4182,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1456969687Goal0undefinedfalse",
+            "timeStr": 87,
+            "type": "goal",
+            "time": 87,
+            "overloadTime": null,
+            "eventId": 14569696,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 3,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -33665,11 +33716,47 @@
           "assistPlayerId": 1382000,
           "assistKey": "assist_by",
           "assistInput": "Petar Sučić"
+        },
+        {
+          "reactKey": "1456969687Goal0undefinedfalse",
+          "timeStr": 87,
+          "type": "goal",
+          "time": 87,
+          "overloadTime": null,
+          "eventId": 14569696,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 3,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 3
+        "away": 4
       }
     },
     "6106417": {
