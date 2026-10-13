@@ -30607,12 +30607,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1456847528Goal1504343undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1456847528Goal1504343undefinedtrue",
+          "player_id": 1504343,
+          "player_name": "Aleksey Batrakov",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "28",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4153,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1456847528Goal1504343undefinedtrue",
+            "timeStr": 28,
+            "type": "goal",
+            "time": 28,
+            "overloadTime": null,
+            "eventId": 14568475,
+            "player": {
+              "id": 1504343,
+              "name": "Aleksey Batrakov",
+              "profileUrl": "/players/1504343/aleksey-batrakov"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1504343/aleksey-batrakov",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Aleksey Batrakov",
+            "firstName": "Aleksey",
+            "lastName": "Batrakov",
+            "fullName": "Aleksey Batrakov",
+            "playerId": 1504343,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1456847528Goal1504343undefinedtrue",
+          "timeStr": 28,
+          "type": "goal",
+          "time": 28,
+          "overloadTime": null,
+          "eventId": 14568475,
+          "player": {
+            "id": 1504343,
+            "name": "Aleksey Batrakov",
+            "profileUrl": "/players/1504343/aleksey-batrakov"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1504343/aleksey-batrakov",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Aleksey Batrakov",
+          "firstName": "Aleksey",
+          "lastName": "Batrakov",
+          "fullName": "Aleksey Batrakov",
+          "playerId": 1504343,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
