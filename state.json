@@ -35380,7 +35380,8 @@
         "react:1457117024Goal1297165undefinedfalse",
         "react:1457130337Goal1297165undefinedfalse",
         "react:1457160151Goal966018undefinedfalse",
-        "react:1457173863Goal939430undefinedtrue"
+        "react:1457173863Goal939430undefinedtrue",
+        "react:1457178366Goal1297165undefinedfalse"
       ],
       "goals": [
         {
@@ -35779,6 +35780,94 @@
             "assistKey": "assist_by",
             "assistInput": "Yvan Dibango"
           }
+        },
+        {
+          "event_key": "react:1457178366Goal1297165undefinedfalse",
+          "player_id": 1297165,
+          "player_name": "Bradley Barcola",
+          "assist_player_id": 966018,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "66",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4216,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457178366Goal1297165undefinedfalse",
+            "timeStr": 66,
+            "type": "goal",
+            "time": 66,
+            "overloadTime": null,
+            "eventId": 14571783,
+            "player": {
+              "id": 1297165,
+              "name": "Bradley Barcola",
+              "profileUrl": "/players/1297165/bradley-barcola"
+            },
+            "homeScore": 1,
+            "awayScore": 4,
+            "profileUrl": "/players/1297165/bradley-barcola",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bradley Barcola",
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "playerId": 1297165,
+            "newScore": [
+              1,
+              5
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2981676363,
+              "eventType": "Goal",
+              "teamId": 8650,
+              "playerId": 1297165,
+              "playerName": "Bradley Barcola",
+              "x": 101.681034483,
+              "y": 35.6775,
+              "min": 66,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.61,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.7613,
+              "expectedGoalsOnTarget": 0.9147,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.8386243386243388,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1156883,
+              "firstName": "Bradley",
+              "lastName": "Barcola",
+              "fullName": "Bradley Barcola",
+              "teamColor": "#911712"
+            },
+            "assistStr": "assist by Jeremie Frimpong",
+            "assistProfileUrl": "/players/966018/jeremie-frimpong",
+            "assistPlayerId": 966018,
+            "assistKey": "assist_by",
+            "assistInput": "Jeremie Frimpong"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -36152,11 +36241,85 @@
           "assistPlayerId": 1254266,
           "assistKey": "assist_by",
           "assistInput": "Yvan Dibango"
+        },
+        {
+          "reactKey": "1457178366Goal1297165undefinedfalse",
+          "timeStr": 66,
+          "type": "goal",
+          "time": 66,
+          "overloadTime": null,
+          "eventId": 14571783,
+          "player": {
+            "id": 1297165,
+            "name": "Bradley Barcola",
+            "profileUrl": "/players/1297165/bradley-barcola"
+          },
+          "homeScore": 1,
+          "awayScore": 4,
+          "profileUrl": "/players/1297165/bradley-barcola",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bradley Barcola",
+          "firstName": "Bradley",
+          "lastName": "Barcola",
+          "fullName": "Bradley Barcola",
+          "playerId": 1297165,
+          "newScore": [
+            1,
+            5
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981676363,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 1297165,
+            "playerName": "Bradley Barcola",
+            "x": 101.681034483,
+            "y": 35.6775,
+            "min": 66,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.61,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.7613,
+            "expectedGoalsOnTarget": 0.9147,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.8386243386243388,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1156883,
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "teamColor": "#911712"
+          },
+          "assistStr": "assist by Jeremie Frimpong",
+          "assistProfileUrl": "/players/966018/jeremie-frimpong",
+          "assistPlayerId": 966018,
+          "assistKey": "assist_by",
+          "assistInput": "Jeremie Frimpong"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 4
+        "away": 5
       }
     },
     "6106315": {
