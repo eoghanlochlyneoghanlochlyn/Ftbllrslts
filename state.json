@@ -35381,7 +35381,8 @@
         "react:1457130337Goal1297165undefinedfalse",
         "react:1457160151Goal966018undefinedfalse",
         "react:1457173863Goal939430undefinedtrue",
-        "react:1457178366Goal1297165undefinedfalse"
+        "react:1457178366Goal1297165undefinedfalse",
+        "react:1457184272Goal1364042undefinedfalse"
       ],
       "goals": [
         {
@@ -35868,6 +35869,56 @@
             "assistKey": "assist_by",
             "assistInput": "Jeremie Frimpong"
           }
+        },
+        {
+          "event_key": "react:1457184272Goal1364042undefinedfalse",
+          "player_id": 1364042,
+          "player_name": "Lewis Koumas",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "72",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4217,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457184272Goal1364042undefinedfalse",
+            "timeStr": 72,
+            "type": "goal",
+            "time": 72,
+            "overloadTime": null,
+            "eventId": 14571842,
+            "player": {
+              "id": 1364042,
+              "name": "Lewis Koumas",
+              "profileUrl": "/players/1364042/lewis-koumas"
+            },
+            "homeScore": 1,
+            "awayScore": 5,
+            "profileUrl": "/players/1364042/lewis-koumas",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Lewis Koumas",
+            "firstName": "Lewis",
+            "lastName": "Koumas",
+            "fullName": "Lewis Koumas",
+            "playerId": 1364042,
+            "newScore": [
+              1,
+              6
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -36315,11 +36366,47 @@
           "assistPlayerId": 966018,
           "assistKey": "assist_by",
           "assistInput": "Jeremie Frimpong"
+        },
+        {
+          "reactKey": "1457184272Goal1364042undefinedfalse",
+          "timeStr": 72,
+          "type": "goal",
+          "time": 72,
+          "overloadTime": null,
+          "eventId": 14571842,
+          "player": {
+            "id": 1364042,
+            "name": "Lewis Koumas",
+            "profileUrl": "/players/1364042/lewis-koumas"
+          },
+          "homeScore": 1,
+          "awayScore": 5,
+          "profileUrl": "/players/1364042/lewis-koumas",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Lewis Koumas",
+          "firstName": "Lewis",
+          "lastName": "Koumas",
+          "fullName": "Lewis Koumas",
+          "playerId": 1364042,
+          "newScore": [
+            1,
+            6
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 5
+        "away": 6
       }
     },
     "6106315": {
