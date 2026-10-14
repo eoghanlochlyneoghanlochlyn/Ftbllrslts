@@ -35173,7 +35173,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:048Goal637577undefinedtrue",
-        "react:055Card863683undefinedfalse"
+        "react:055Card863683undefinedfalse",
+        "react:090Goal1097521undefinedtrue"
       ],
       "goals": [
         {
@@ -35226,6 +35227,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:090Goal1097521undefinedtrue",
+          "player_id": 1097521,
+          "player_name": "Facundo Tobares",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 4",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4208,
+          "needs_update": false,
+          "event": {
+            "reactKey": "090Goal1097521undefinedtrue",
+            "timeStr": "90 + 4",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 4,
+            "eventId": 0,
+            "player": {
+              "id": 1097521,
+              "name": "Facundo Tobares",
+              "profileUrl": "/players/1097521/facundo-tobares"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1097521/facundo-tobares",
+            "overloadTimeStr": "+4",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Facundo Tobares",
+            "firstName": "Facundo",
+            "lastName": "Tobares",
+            "fullName": "Facundo Tobares",
+            "playerId": 1097521,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -35266,10 +35318,47 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "090Goal1097521undefinedtrue",
+          "timeStr": "90 + 4",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 4,
+          "eventId": 0,
+          "player": {
+            "id": 1097521,
+            "name": "Facundo Tobares",
+            "profileUrl": "/players/1097521/facundo-tobares"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1097521/facundo-tobares",
+          "overloadTimeStr": "+4",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Facundo Tobares",
+          "firstName": "Facundo",
+          "lastName": "Tobares",
+          "fullName": "Facundo Tobares",
+          "playerId": 1097521,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
@@ -35283,7 +35372,8 @@
       "event_keys": [
         "react:1457116222Goal921253undefinedfalse",
         "react:1457117024Goal1297165undefinedfalse",
-        "react:1457130337Goal1297165undefinedfalse"
+        "react:1457130337Goal1297165undefinedfalse",
+        "react:1457160151Goal966018undefinedfalse"
       ],
       "goals": [
         {
@@ -35541,6 +35631,59 @@
             "assistKey": "assist_by",
             "assistInput": "Florian Wirtz"
           }
+        },
+        {
+          "event_key": "react:1457160151Goal966018undefinedfalse",
+          "player_id": 966018,
+          "player_name": "Jeremie Frimpong",
+          "assist_player_id": 671529,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "51",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4209,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457160151Goal966018undefinedfalse",
+            "timeStr": 51,
+            "type": "goal",
+            "time": 51,
+            "overloadTime": null,
+            "eventId": 14571601,
+            "player": {
+              "id": 966018,
+              "name": "Jeremie Frimpong",
+              "profileUrl": "/players/966018/jeremie-frimpong"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/966018/jeremie-frimpong",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jeremie Frimpong",
+            "firstName": "Jeremie",
+            "lastName": "Frimpong",
+            "fullName": "Jeremie Frimpong",
+            "playerId": 966018,
+            "newScore": [
+              0,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Konstantinos Tsimikas",
+            "assistProfileUrl": "/players/671529/konstantinos-tsimikas",
+            "assistPlayerId": 671529,
+            "assistKey": "assist_by",
+            "assistInput": "Konstantinos Tsimikas"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -35766,11 +35909,50 @@
           "assistPlayerId": 1152455,
           "assistKey": "assist_by",
           "assistInput": "Florian Wirtz"
+        },
+        {
+          "reactKey": "1457160151Goal966018undefinedfalse",
+          "timeStr": 51,
+          "type": "goal",
+          "time": 51,
+          "overloadTime": null,
+          "eventId": 14571601,
+          "player": {
+            "id": 966018,
+            "name": "Jeremie Frimpong",
+            "profileUrl": "/players/966018/jeremie-frimpong"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/966018/jeremie-frimpong",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Jeremie Frimpong",
+          "firstName": "Jeremie",
+          "lastName": "Frimpong",
+          "fullName": "Jeremie Frimpong",
+          "playerId": 966018,
+          "newScore": [
+            0,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Konstantinos Tsimikas",
+          "assistProfileUrl": "/players/671529/konstantinos-tsimikas",
+          "assistPlayerId": 671529,
+          "assistKey": "assist_by",
+          "assistInput": "Konstantinos Tsimikas"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 3
+        "away": 4
       }
     },
     "6106315": {
