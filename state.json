@@ -35282,7 +35282,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1457116222Goal921253undefinedfalse",
-        "react:1457117024Goal1297165undefinedfalse"
+        "react:1457117024Goal1297165undefinedfalse",
+        "react:1457130337Goal1297165undefinedfalse"
       ],
       "goals": [
         {
@@ -35456,6 +35457,90 @@
             "assistKey": "assist_by",
             "assistInput": "Lewis Koumas"
           }
+        },
+        {
+          "event_key": "react:1457130337Goal1297165undefinedfalse",
+          "player_id": 1297165,
+          "player_name": "Bradley Barcola",
+          "assist_player_id": 1152455,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "37",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4207,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457130337Goal1297165undefinedfalse",
+            "timeStr": 37,
+            "type": "goal",
+            "time": 37,
+            "overloadTime": null,
+            "eventId": 14571303,
+            "player": {
+              "id": 1297165,
+              "name": "Bradley Barcola",
+              "profileUrl": "/players/1297165/bradley-barcola"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1297165/bradley-barcola",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bradley Barcola",
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "playerId": 1297165,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2981665311,
+              "eventType": "Goal",
+              "teamId": 8650,
+              "playerId": 1297165,
+              "playerName": "Bradley Barcola",
+              "x": 98.24561403470001,
+              "y": 38.368333335,
+              "min": 37,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1205,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1156883,
+              "firstName": "Bradley",
+              "lastName": "Barcola",
+              "fullName": "Bradley Barcola",
+              "teamColor": "#911712"
+            },
+            "assistStr": "assist by Florian Wirtz",
+            "assistProfileUrl": "/players/1152455/florian-wirtz",
+            "assistPlayerId": 1152455,
+            "assistKey": "assist_by",
+            "assistInput": "Florian Wirtz"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -35607,11 +35692,81 @@
           "assistPlayerId": 1364042,
           "assistKey": "assist_by",
           "assistInput": "Lewis Koumas"
+        },
+        {
+          "reactKey": "1457130337Goal1297165undefinedfalse",
+          "timeStr": 37,
+          "type": "goal",
+          "time": 37,
+          "overloadTime": null,
+          "eventId": 14571303,
+          "player": {
+            "id": 1297165,
+            "name": "Bradley Barcola",
+            "profileUrl": "/players/1297165/bradley-barcola"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/1297165/bradley-barcola",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bradley Barcola",
+          "firstName": "Bradley",
+          "lastName": "Barcola",
+          "fullName": "Bradley Barcola",
+          "playerId": 1297165,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981665311,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 1297165,
+            "playerName": "Bradley Barcola",
+            "x": 98.24561403470001,
+            "y": 38.368333335,
+            "min": 37,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1205,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1156883,
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "teamColor": "#911712"
+          },
+          "assistStr": "assist by Florian Wirtz",
+          "assistProfileUrl": "/players/1152455/florian-wirtz",
+          "assistPlayerId": 1152455,
+          "assistKey": "assist_by",
+          "assistInput": "Florian Wirtz"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "6106315": {
