@@ -37144,12 +37144,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1457237920Goal198559undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1457237920Goal198559undefinedtrue",
+          "player_id": 198559,
+          "player_name": "Marten de Roon",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "20",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4227,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457237920Goal198559undefinedtrue",
+            "timeStr": 20,
+            "type": "goal",
+            "time": 20,
+            "overloadTime": null,
+            "eventId": 14572379,
+            "player": {
+              "id": 198559,
+              "name": "Marten de Roon",
+              "profileUrl": "/players/198559/marten-de-roon"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/198559/marten-de-roon",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Marten de Roon",
+            "firstName": "Marten",
+            "lastName": "de Roon",
+            "fullName": "Marten de Roon",
+            "playerId": 198559,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1457237920Goal198559undefinedtrue",
+          "timeStr": 20,
+          "type": "goal",
+          "time": 20,
+          "overloadTime": null,
+          "eventId": 14572379,
+          "player": {
+            "id": 198559,
+            "name": "Marten de Roon",
+            "profileUrl": "/players/198559/marten-de-roon"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/198559/marten-de-roon",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Marten de Roon",
+          "firstName": "Marten",
+          "lastName": "de Roon",
+          "fullName": "Marten de Roon",
+          "playerId": 198559,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     }
