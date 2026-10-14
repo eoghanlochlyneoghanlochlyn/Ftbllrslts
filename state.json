@@ -35292,6 +35292,16 @@
           "time": 48,
           "overloadTime": null,
           "eventId": 0,
+          "highlight": {
+            "id": 2212006,
+            "eventId": 0,
+            "elapsed": "",
+            "title": "Al Muharraq 🇧🇭 vs Golgohar Sirjan SC 🇮🇷 | Highlights ACL Two™",
+            "image": "https://i.ytimg.com/vi/LPfJs20deN0/maxresdefault.jpg",
+            "url": "https://www.youtube.com/watch?v=LPfJs20deN0",
+            "source": "www.youtube.com",
+            "eventType": "1"
+          },
           "player": {
             "id": 637577,
             "name": "Arthur",
@@ -35329,6 +35339,16 @@
           "time": 90,
           "overloadTime": 4,
           "eventId": 0,
+          "highlight": {
+            "id": 2212006,
+            "eventId": 0,
+            "elapsed": "",
+            "title": "Al Muharraq 🇧🇭 vs Golgohar Sirjan SC 🇮🇷 | Highlights ACL Two™",
+            "image": "https://i.ytimg.com/vi/LPfJs20deN0/maxresdefault.jpg",
+            "url": "https://www.youtube.com/watch?v=LPfJs20deN0",
+            "source": "www.youtube.com",
+            "eventType": "1"
+          },
           "player": {
             "id": 1097521,
             "name": "Facundo Tobares",
