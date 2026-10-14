@@ -35169,8 +35169,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:048Goal637577undefinedtrue",
         "react:055Card863683undefinedfalse",
@@ -35232,7 +35232,7 @@
           "event_key": "react:090Goal1097521undefinedtrue",
           "player_id": 1097521,
           "player_name": "Facundo Tobares",
-          "assist_player_id": null,
+          "assist_player_id": 298381,
           "assist_player_name": "",
           "is_home": true,
           "minute": "90 + 4",
@@ -35275,8 +35275,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Abdulwahab Al Malood",
+            "assistProfileUrl": "/players/298381/abdulwahab-al-malood",
+            "assistPlayerId": 298381,
+            "assistKey": "assist_by",
+            "assistInput": "Abdulwahab Al Malood"
           }
         }
       ],
@@ -35353,8 +35356,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Abdulwahab Al Malood",
+          "assistProfileUrl": "/players/298381/abdulwahab-al-malood",
+          "assistPlayerId": 298381,
+          "assistKey": "assist_by",
+          "assistInput": "Abdulwahab Al Malood"
         }
       ],
       "observed_score": {
@@ -35943,6 +35949,41 @@
             4
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981674517,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 966018,
+            "playerName": "Jeremie Frimpong",
+            "x": 96.1228070165,
+            "y": 31.254999999999995,
+            "min": 51,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.568749999999998,
+            "goalCrossedZ": 0.44947368200000004,
+            "expectedGoals": 0.0626,
+            "expectedGoalsOnTarget": 0.3937,
+            "shotType": "Header",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.9077380952380967,
+              "y": 0.11890838148148149,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1156883,
+            "firstName": "Jeremie",
+            "lastName": "Frimpong",
+            "fullName": "Jeremie Frimpong",
+            "teamColor": "#911712"
+          },
           "assistStr": "assist by Konstantinos Tsimikas",
           "assistProfileUrl": "/players/671529/konstantinos-tsimikas",
           "assistPlayerId": 671529,
