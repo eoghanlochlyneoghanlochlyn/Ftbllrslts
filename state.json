@@ -37649,7 +37649,7 @@
           "event_key": "react:1457266063Goal1305618undefinedfalse",
           "player_id": 1305618,
           "player_name": "Maghnes Akliouche",
-          "assist_player_id": null,
+          "assist_player_id": 692984,
           "assist_player_name": "",
           "is_home": false,
           "minute": "63",
@@ -37705,17 +37705,17 @@
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 36.135000000000005,
-              "goalCrossedZ": 1.3034736778000002,
-              "expectedGoals": 0.0515,
-              "expectedGoalsOnTarget": 0.1876,
+              "goalCrossedY": 36.36375,
+              "goalCrossedZ": 1.0979999946,
+              "expectedGoals": 0.08527069538831711,
+              "expectedGoalsOnTarget": 0.08423405140638351,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.4351851851851839,
-                "y": 0.34483430629629636,
+                "x": 0.37466931216931143,
+                "y": 0.29047618904761907,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -37726,8 +37726,11 @@
               "fullName": "Maghnes Akliouche",
               "teamColor": "#273F6D"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Ousmane Dembélé",
+            "assistProfileUrl": "/players/692984/ousmane-dembele",
+            "assistPlayerId": 692984,
+            "assistKey": "assist_by",
+            "assistInput": "Ousmane Dembélé"
           }
         }
       ],
@@ -38076,17 +38079,17 @@
             "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": 36.135000000000005,
-            "goalCrossedZ": 1.3034736778000002,
-            "expectedGoals": 0.0515,
-            "expectedGoalsOnTarget": 0.1876,
+            "goalCrossedY": 36.36375,
+            "goalCrossedZ": 1.0979999946,
+            "expectedGoals": 0.08527069538831711,
+            "expectedGoalsOnTarget": 0.08423405140638351,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
             "onGoalShot": {
-              "x": 0.4351851851851839,
-              "y": 0.34483430629629636,
+              "x": 0.37466931216931143,
+              "y": 0.29047618904761907,
               "zoomRatio": 1
             },
             "isSavedOffLine": false,
@@ -38097,8 +38100,11 @@
             "fullName": "Maghnes Akliouche",
             "teamColor": "#273F6D"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Ousmane Dembélé",
+          "assistProfileUrl": "/players/692984/ousmane-dembele",
+          "assistPlayerId": 692984,
+          "assistKey": "assist_by",
+          "assistInput": "Ousmane Dembélé"
         }
       ],
       "observed_score": {
