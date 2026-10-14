@@ -35965,8 +35965,8 @@
             "blockedY": null,
             "goalCrossedY": 30.568749999999998,
             "goalCrossedZ": 0.44947368200000004,
-            "expectedGoals": 0.0626,
-            "expectedGoalsOnTarget": 0.3937,
+            "expectedGoals": 0.09697534143924713,
+            "expectedGoalsOnTarget": 0.6108836531639099,
             "shotType": "Header",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -35997,7 +35997,7 @@
       }
     },
     "6106315": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -36013,7 +36013,7 @@
       }
     },
     "6106254": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -36029,7 +36029,7 @@
       }
     },
     "6106274": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
