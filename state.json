@@ -35280,7 +35280,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1457116222Goal921253undefinedfalse"
+        "react:1457116222Goal921253undefinedfalse",
+        "react:1457117024Goal1297165undefinedfalse"
       ],
       "goals": [
         {
@@ -35366,6 +35367,94 @@
             "assistKey": "assist_by",
             "assistInput": "Konstantinos Tsimikas"
           }
+        },
+        {
+          "event_key": "react:1457117024Goal1297165undefinedfalse",
+          "player_id": 1297165,
+          "player_name": "Bradley Barcola",
+          "assist_player_id": 1364042,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "24",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4205,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457117024Goal1297165undefinedfalse",
+            "timeStr": 24,
+            "type": "goal",
+            "time": 24,
+            "overloadTime": null,
+            "eventId": 14571170,
+            "player": {
+              "id": 1297165,
+              "name": "Bradley Barcola",
+              "profileUrl": "/players/1297165/bradley-barcola"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1297165/bradley-barcola",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bradley Barcola",
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "playerId": 1297165,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2981659525,
+              "eventType": "Goal",
+              "teamId": 8650,
+              "playerId": 1297165,
+              "playerName": "Bradley Barcola",
+              "x": 93.5,
+              "y": 27.782619046999997,
+              "min": 24,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.355000000000004,
+              "goalCrossedZ": 0.9374736796,
+              "expectedGoals": 0.0771,
+              "expectedGoalsOnTarget": 0.5196,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.11243386243386144,
+                "y": 0.24800890994708993,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1156883,
+              "firstName": "Bradley",
+              "lastName": "Barcola",
+              "fullName": "Bradley Barcola",
+              "teamColor": "#911712"
+            },
+            "assistStr": "assist by Lewis Koumas",
+            "assistProfileUrl": "/players/1364042/lewis-koumas",
+            "assistPlayerId": 1364042,
+            "assistKey": "assist_by",
+            "assistInput": "Lewis Koumas"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -35443,11 +35532,85 @@
           "assistPlayerId": 671529,
           "assistKey": "assist_by",
           "assistInput": "Konstantinos Tsimikas"
+        },
+        {
+          "reactKey": "1457117024Goal1297165undefinedfalse",
+          "timeStr": 24,
+          "type": "goal",
+          "time": 24,
+          "overloadTime": null,
+          "eventId": 14571170,
+          "player": {
+            "id": 1297165,
+            "name": "Bradley Barcola",
+            "profileUrl": "/players/1297165/bradley-barcola"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1297165/bradley-barcola",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bradley Barcola",
+          "firstName": "Bradley",
+          "lastName": "Barcola",
+          "fullName": "Bradley Barcola",
+          "playerId": 1297165,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2981659525,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 1297165,
+            "playerName": "Bradley Barcola",
+            "x": 93.5,
+            "y": 27.782619046999997,
+            "min": 24,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 37.355000000000004,
+            "goalCrossedZ": 0.9374736796,
+            "expectedGoals": 0.0771,
+            "expectedGoalsOnTarget": 0.5196,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.11243386243386144,
+              "y": 0.24800890994708993,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1156883,
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "teamColor": "#911712"
+          },
+          "assistStr": "assist by Lewis Koumas",
+          "assistProfileUrl": "/players/1364042/lewis-koumas",
+          "assistPlayerId": 1364042,
+          "assistKey": "assist_by",
+          "assistInput": "Lewis Koumas"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "6106315": {
