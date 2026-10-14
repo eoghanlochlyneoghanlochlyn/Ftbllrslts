@@ -35379,7 +35379,8 @@
         "react:1457116222Goal921253undefinedfalse",
         "react:1457117024Goal1297165undefinedfalse",
         "react:1457130337Goal1297165undefinedfalse",
-        "react:1457160151Goal966018undefinedfalse"
+        "react:1457160151Goal966018undefinedfalse",
+        "react:1457173863Goal939430undefinedtrue"
       ],
       "goals": [
         {
@@ -35690,6 +35691,56 @@
             "assistKey": "assist_by",
             "assistInput": "Konstantinos Tsimikas"
           }
+        },
+        {
+          "event_key": "react:1457173863Goal939430undefinedtrue",
+          "player_id": 939430,
+          "player_name": "Robert Ljubičić",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "63",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4215,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1457173863Goal939430undefinedtrue",
+            "timeStr": 63,
+            "type": "goal",
+            "time": 63,
+            "overloadTime": null,
+            "eventId": 14571738,
+            "player": {
+              "id": 939430,
+              "name": "Robert Ljubičić",
+              "profileUrl": "/players/939430/robert-ljubicic"
+            },
+            "homeScore": 0,
+            "awayScore": 4,
+            "profileUrl": "/players/939430/robert-ljubicic",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Robert Ljubičić",
+            "firstName": "Robert",
+            "lastName": "Ljubičić",
+            "fullName": "Robert Ljubičić",
+            "playerId": 939430,
+            "newScore": [
+              1,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -35989,10 +36040,46 @@
           "assistPlayerId": 671529,
           "assistKey": "assist_by",
           "assistInput": "Konstantinos Tsimikas"
+        },
+        {
+          "reactKey": "1457173863Goal939430undefinedtrue",
+          "timeStr": 63,
+          "type": "goal",
+          "time": 63,
+          "overloadTime": null,
+          "eventId": 14571738,
+          "player": {
+            "id": 939430,
+            "name": "Robert Ljubičić",
+            "profileUrl": "/players/939430/robert-ljubicic"
+          },
+          "homeScore": 0,
+          "awayScore": 4,
+          "profileUrl": "/players/939430/robert-ljubicic",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Robert Ljubičić",
+          "firstName": "Robert",
+          "lastName": "Ljubičić",
+          "fullName": "Robert Ljubičić",
+          "playerId": 939430,
+          "newScore": [
+            1,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 4
       }
     },
