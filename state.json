@@ -43728,7 +43728,8 @@
         "react:1459066078Goal1140003undefinedfalse",
         "react:1459076886Goal0undefinedfalse",
         "react:1459076886Goal692984undefinedfalse",
-        "react:1459076885Goal692984undefinedfalse"
+        "react:1459076885Goal692984undefinedfalse",
+        "react:1459086690Goal1339208undefinedfalse"
       ],
       "goals": [
         {
@@ -44226,6 +44227,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1459086690Goal1339208undefinedfalse",
+          "player_id": 1339208,
+          "player_name": "Désiré Doué",
+          "assist_player_id": 881771,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 3",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4337,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459086690Goal1339208undefinedfalse",
+            "timeStr": "90 + 3",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 3,
+            "eventId": 14590866,
+            "player": {
+              "id": 1339208,
+              "name": "Désiré Doué",
+              "profileUrl": "/players/1339208/desire-doue"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/1339208/desire-doue",
+            "overloadTimeStr": "+3",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Désiré Doué",
+            "firstName": "Désiré",
+            "lastName": "Doué",
+            "fullName": "Désiré Doué",
+            "playerId": 1339208,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983117031,
+              "eventType": "Goal",
+              "teamId": 9847,
+              "playerId": 1339208,
+              "playerName": "Désiré Doué",
+              "x": 97.95614035039999,
+              "y": 37.708,
+              "min": 90,
+              "minAdded": 3,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.9825,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.2221,
+              "expectedGoalsOnTarget": 0.3543,
+              "shotType": "RightFoot",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.47552910052910013,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1200984,
+              "firstName": "Désiré",
+              "lastName": "Doué",
+              "fullName": "Désiré Doué",
+              "teamColor": "#273F6D"
+            },
+            "assistStr": "assist by Ferrán Torres",
+            "assistProfileUrl": "/players/881771/ferran-torres",
+            "assistPlayerId": 881771,
+            "assistKey": "assist_by",
+            "assistInput": "Ferrán Torres"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -44627,11 +44716,85 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1459086690Goal1339208undefinedfalse",
+          "timeStr": "90 + 3",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 3,
+          "eventId": 14590866,
+          "player": {
+            "id": 1339208,
+            "name": "Désiré Doué",
+            "profileUrl": "/players/1339208/desire-doue"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/1339208/desire-doue",
+          "overloadTimeStr": "+3",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Désiré Doué",
+          "firstName": "Désiré",
+          "lastName": "Doué",
+          "fullName": "Désiré Doué",
+          "playerId": 1339208,
+          "newScore": [
+            1,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983117031,
+            "eventType": "Goal",
+            "teamId": 9847,
+            "playerId": 1339208,
+            "playerName": "Désiré Doué",
+            "x": 97.95614035039999,
+            "y": 37.708,
+            "min": 90,
+            "minAdded": 3,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.9825,
+            "goalCrossedZ": 0.20547368320000003,
+            "expectedGoals": 0.2221,
+            "expectedGoalsOnTarget": 0.3543,
+            "shotType": "RightFoot",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.47552910052910013,
+              "y": 0.05435811724867726,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1200984,
+            "firstName": "Désiré",
+            "lastName": "Doué",
+            "fullName": "Désiré Doué",
+            "teamColor": "#273F6D"
+          },
+          "assistStr": "assist by Ferrán Torres",
+          "assistProfileUrl": "/players/881771/ferran-torres",
+          "assistPlayerId": 881771,
+          "assistKey": "assist_by",
+          "assistInput": "Ferrán Torres"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 2
+        "away": 3
       }
     },
     "5749702": {
@@ -45133,7 +45296,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1459056812Goal860914undefinedtrue",
-        "react:1459076426Goal1473580undefinedtrue"
+        "react:1459076426Goal1473580undefinedtrue",
+        "react:1459086934Goal1029063undefinedtrue"
       ],
       "goals": [
         {
@@ -45311,6 +45475,87 @@
             "assistKey": "assist_by",
             "assistInput": "Luis Díaz"
           }
+        },
+        {
+          "event_key": "react:1459086934Goal1029063undefinedtrue",
+          "player_id": 1029063,
+          "player_name": "Michael Olise",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "34",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4338,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459086934Goal1029063undefinedtrue",
+            "timeStr": 34,
+            "type": "goal",
+            "time": 34,
+            "overloadTime": null,
+            "eventId": 14590869,
+            "player": {
+              "id": 1029063,
+              "name": "Michael Olise",
+              "profileUrl": "/players/1029063/michael-olise"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1029063/michael-olise",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Michael Olise",
+            "firstName": "Michael",
+            "lastName": "Olise",
+            "fullName": "Michael Olise",
+            "playerId": 1029063,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983117397,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1029063,
+              "playerName": "Michael Olise",
+              "x": 85.6014705876,
+              "y": 36.8975,
+              "min": 34,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0409,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 972200,
+              "firstName": "Michael",
+              "lastName": "Olise",
+              "fullName": "Michael Olise",
+              "teamColor": "#C60428"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -45462,10 +45707,77 @@
           "assistPlayerId": 860914,
           "assistKey": "assist_by",
           "assistInput": "Luis Díaz"
+        },
+        {
+          "reactKey": "1459086934Goal1029063undefinedtrue",
+          "timeStr": 34,
+          "type": "goal",
+          "time": 34,
+          "overloadTime": null,
+          "eventId": 14590869,
+          "player": {
+            "id": 1029063,
+            "name": "Michael Olise",
+            "profileUrl": "/players/1029063/michael-olise"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/1029063/michael-olise",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Michael Olise",
+          "firstName": "Michael",
+          "lastName": "Olise",
+          "fullName": "Michael Olise",
+          "playerId": 1029063,
+          "newScore": [
+            3,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983117397,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 1029063,
+            "playerName": "Michael Olise",
+            "x": 85.6014705876,
+            "y": 36.8975,
+            "min": 34,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0409,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 972200,
+            "firstName": "Michael",
+            "lastName": "Olise",
+            "fullName": "Michael Olise",
+            "teamColor": "#C60428"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 0
       }
     },
