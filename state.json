@@ -45953,7 +45953,8 @@
         "react:1459140447Goal860914undefinedtrue",
         "react:1459150252Goal194165undefinedtrue",
         "react:1459150253Goal194165undefinedtrue",
-        "react:1459176569Goal860914undefinedtrue"
+        "react:1459176569Goal860914undefinedtrue",
+        "react:1459202090Goal1482209undefinedfalse"
       ],
       "goals": [
         {
@@ -46563,6 +46564,94 @@
             "assistKey": "assist_by",
             "assistInput": "Michael Olise"
           }
+        },
+        {
+          "event_key": "react:1459202090Goal1482209undefinedfalse",
+          "player_id": 1482209,
+          "player_name": "Andrija Maksimović",
+          "assist_player_id": 1430151,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 1",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4362,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459202090Goal1482209undefinedfalse",
+            "timeStr": "90 + 1",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 1,
+            "eventId": 14592020,
+            "player": {
+              "id": 1482209,
+              "name": "Andrija Maksimović",
+              "profileUrl": "/players/1482209/andrija-maksimovic"
+            },
+            "homeScore": 6,
+            "awayScore": 0,
+            "profileUrl": "/players/1482209/andrija-maksimovic",
+            "overloadTimeStr": "+1",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Andrija Maksimović",
+            "firstName": "Andrija",
+            "lastName": "Maksimović",
+            "fullName": "Andrija Maksimović",
+            "playerId": 1482209,
+            "newScore": [
+              6,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983201775,
+              "eventType": "Goal",
+              "teamId": 178475,
+              "playerId": 1482209,
+              "playerName": "Andrija Maksimović",
+              "x": 91.1,
+              "y": 32.24625,
+              "min": 90,
+              "minAdded": 1,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.779999999999994,
+              "goalCrossedZ": 1.8685263066000002,
+              "expectedGoals": 0.0769,
+              "expectedGoalsOnTarget": 0.1548,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3227513227513243,
+                "y": 0.49431912873015876,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1285872,
+              "firstName": "Andrija",
+              "lastName": "Maksimović",
+              "fullName": "Andrija Maksimović",
+              "teamColor": "#DD0741"
+            },
+            "assistStr": "assist by Brajan Gruda",
+            "assistProfileUrl": "/players/1430151/brajan-gruda",
+            "assistPlayerId": 1430151,
+            "assistKey": "assist_by",
+            "assistInput": "Brajan Gruda"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -47080,11 +47169,85 @@
           "assistPlayerId": 1029063,
           "assistKey": "assist_by",
           "assistInput": "Michael Olise"
+        },
+        {
+          "reactKey": "1459202090Goal1482209undefinedfalse",
+          "timeStr": "90 + 1",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 1,
+          "eventId": 14592020,
+          "player": {
+            "id": 1482209,
+            "name": "Andrija Maksimović",
+            "profileUrl": "/players/1482209/andrija-maksimovic"
+          },
+          "homeScore": 6,
+          "awayScore": 0,
+          "profileUrl": "/players/1482209/andrija-maksimovic",
+          "overloadTimeStr": "+1",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Andrija Maksimović",
+          "firstName": "Andrija",
+          "lastName": "Maksimović",
+          "fullName": "Andrija Maksimović",
+          "playerId": 1482209,
+          "newScore": [
+            6,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983201775,
+            "eventType": "Goal",
+            "teamId": 178475,
+            "playerId": 1482209,
+            "playerName": "Andrija Maksimović",
+            "x": 91.1,
+            "y": 32.24625,
+            "min": 90,
+            "minAdded": 1,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.779999999999994,
+            "goalCrossedZ": 1.8685263066000002,
+            "expectedGoals": 0.0769,
+            "expectedGoalsOnTarget": 0.1548,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.3227513227513243,
+              "y": 0.49431912873015876,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1285872,
+            "firstName": "Andrija",
+            "lastName": "Maksimović",
+            "fullName": "Andrija Maksimović",
+            "teamColor": "#DD0741"
+          },
+          "assistStr": "assist by Brajan Gruda",
+          "assistProfileUrl": "/players/1430151/brajan-gruda",
+          "assistPlayerId": 1430151,
+          "assistKey": "assist_by",
+          "assistInput": "Brajan Gruda"
         }
       ],
       "observed_score": {
         "home": 6,
-        "away": 0
+        "away": 1
       }
     },
     "5868091": {
