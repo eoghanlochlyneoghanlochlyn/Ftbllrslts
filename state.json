@@ -44080,7 +44080,7 @@
           "event_key": "react:1459004710Goal790732undefinedtrue",
           "player_id": 790732,
           "player_name": "Tommaso Pobega",
-          "assist_player_id": null,
+          "assist_player_id": 873956,
           "assist_player_name": "",
           "is_home": true,
           "minute": "10",
@@ -44157,8 +44157,11 @@
               "fullName": "Tommaso Pobega",
               "teamColor": "#102880"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Juan Miranda",
+            "assistProfileUrl": "/players/873956/juan-miranda",
+            "assistPlayerId": 873956,
+            "assistKey": "assist_by",
+            "assistInput": "Juan Miranda"
           }
         }
       ],
@@ -44299,8 +44302,11 @@
             "fullName": "Tommaso Pobega",
             "teamColor": "#102880"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Juan Miranda",
+          "assistProfileUrl": "/players/873956/juan-miranda",
+          "assistPlayerId": 873956,
+          "assistKey": "assist_by",
+          "assistInput": "Juan Miranda"
         }
       ],
       "observed_score": {
