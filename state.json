@@ -44317,7 +44317,7 @@
     "5881189": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -44333,7 +44333,7 @@
     "5868091": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
