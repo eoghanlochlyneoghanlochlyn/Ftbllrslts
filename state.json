@@ -43725,7 +43725,8 @@
         "react:1458886517Goal0undefinedtrue",
         "react:1458886517Goal1071179undefinedtrue",
         "react:1459066078Goal0undefinedfalse",
-        "react:1459066078Goal1140003undefinedfalse"
+        "react:1459066078Goal1140003undefinedfalse",
+        "react:1459076886Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -44003,6 +44004,56 @@
             "assistKey": "assist_by",
             "assistInput": "Ousmane Dembélé"
           }
+        },
+        {
+          "event_key": "react:1459076886Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "86",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4332,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1459076886Goal0undefinedfalse",
+            "timeStr": 86,
+            "type": "goal",
+            "time": 86,
+            "overloadTime": null,
+            "eventId": 14590768,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -44226,11 +44277,47 @@
           "assistPlayerId": 692984,
           "assistKey": "assist_by",
           "assistInput": "Ousmane Dembélé"
+        },
+        {
+          "reactKey": "1459076886Goal0undefinedfalse",
+          "timeStr": 86,
+          "type": "goal",
+          "time": 86,
+          "overloadTime": null,
+          "eventId": 14590768,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5749702": {
@@ -44731,7 +44818,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1459056812Goal860914undefinedtrue"
+        "react:1459056812Goal860914undefinedtrue",
+        "react:1459076426Goal1473580undefinedtrue"
       ],
       "goals": [
         {
@@ -44821,6 +44909,94 @@
             "assistKey": "assist_by",
             "assistInput": "Joshua Kimmich"
           }
+        },
+        {
+          "event_key": "react:1459076426Goal1473580undefinedtrue",
+          "player_id": 1473580,
+          "player_name": "Aleksandar Pavlović",
+          "assist_player_id": 860914,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "26",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4333,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459076426Goal1473580undefinedtrue",
+            "timeStr": 26,
+            "type": "goal",
+            "time": 26,
+            "overloadTime": null,
+            "eventId": 14590764,
+            "player": {
+              "id": 1473580,
+              "name": "Aleksandar Pavlović",
+              "profileUrl": "/players/1473580/aleksandar-pavlovic"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1473580/aleksandar-pavlovic",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Aleksandar Pavlović",
+            "firstName": "Aleksandar",
+            "lastName": "Pavlović",
+            "fullName": "Aleksandar Pavlović",
+            "playerId": 1473580,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983108035,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1473580,
+              "playerName": "Aleksandar Pavlović",
+              "x": 95.4473684198,
+              "y": 43.860636937900004,
+              "min": 26,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.525000000000006,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.2534,
+              "expectedGoalsOnTarget": 0.2531,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5965608465608451,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 972200,
+              "firstName": "Aleksandar",
+              "lastName": "Pavlović",
+              "fullName": "Aleksandar Pavlović",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Luis Díaz",
+            "assistProfileUrl": "/players/860914/luis-diaz",
+            "assistPlayerId": 860914,
+            "assistKey": "assist_by",
+            "assistInput": "Luis Díaz"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -44898,10 +45074,84 @@
           "assistPlayerId": 460632,
           "assistKey": "assist_by",
           "assistInput": "Joshua Kimmich"
+        },
+        {
+          "reactKey": "1459076426Goal1473580undefinedtrue",
+          "timeStr": 26,
+          "type": "goal",
+          "time": 26,
+          "overloadTime": null,
+          "eventId": 14590764,
+          "player": {
+            "id": 1473580,
+            "name": "Aleksandar Pavlović",
+            "profileUrl": "/players/1473580/aleksandar-pavlovic"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1473580/aleksandar-pavlovic",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Aleksandar Pavlović",
+          "firstName": "Aleksandar",
+          "lastName": "Pavlović",
+          "fullName": "Aleksandar Pavlović",
+          "playerId": 1473580,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983108035,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 1473580,
+            "playerName": "Aleksandar Pavlović",
+            "x": 95.4473684198,
+            "y": 43.860636937900004,
+            "min": 26,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.525000000000006,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": 0.2534,
+            "expectedGoalsOnTarget": 0.2531,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5965608465608451,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 972200,
+            "firstName": "Aleksandar",
+            "lastName": "Pavlović",
+            "fullName": "Aleksandar Pavlović",
+            "teamColor": "#C60428"
+          },
+          "assistStr": "assist by Luis Díaz",
+          "assistProfileUrl": "/players/860914/luis-diaz",
+          "assistPlayerId": 860914,
+          "assistKey": "assist_by",
+          "assistInput": "Luis Díaz"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
