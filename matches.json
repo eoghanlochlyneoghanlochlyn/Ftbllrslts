@@ -40,5 +40,26 @@
     "enabled": true,
     "auto": true,
     "start": "2026-10-17T15:15:00+00:00"
+  },
+  {
+    "id": "5749702",
+    "url": "https://www.fotmob.com/match/5749702",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-17T16:00:00+00:00"
+  },
+  {
+    "id": "5881189",
+    "url": "https://www.fotmob.com/match/5881189",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-17T16:30:00+00:00"
+  },
+  {
+    "id": "5868091",
+    "url": "https://www.fotmob.com/match/5868091",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-17T16:30:00+00:00"
   }
 ]
