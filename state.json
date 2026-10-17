@@ -45952,7 +45952,8 @@
         "react:1459086934Goal1029063undefinedtrue",
         "react:1459140447Goal860914undefinedtrue",
         "react:1459150252Goal194165undefinedtrue",
-        "react:1459150253Goal194165undefinedtrue"
+        "react:1459150253Goal194165undefinedtrue",
+        "react:1459176569Goal860914undefinedtrue"
       ],
       "goals": [
         {
@@ -46474,6 +46475,94 @@
             "assistKey": "assist_by",
             "assistInput": "Nathaniel Brown"
           }
+        },
+        {
+          "event_key": "react:1459176569Goal860914undefinedtrue",
+          "player_id": 860914,
+          "player_name": "Luis Díaz",
+          "assist_player_id": 1029063,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4358,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459176569Goal860914undefinedtrue",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14591765,
+            "player": {
+              "id": 860914,
+              "name": "Luis Díaz",
+              "profileUrl": "/players/860914/luis-diaz"
+            },
+            "homeScore": 5,
+            "awayScore": 0,
+            "profileUrl": "/players/860914/luis-diaz",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Luis Díaz",
+            "firstName": "Luis",
+            "lastName": "Díaz",
+            "fullName": "Luis Díaz",
+            "playerId": 860914,
+            "newScore": [
+              6,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983178399,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 860914,
+              "playerName": "Luis Díaz",
+              "x": 86.24558823480001,
+              "y": 36.135000000000005,
+              "min": 69,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.026249999999997,
+              "goalCrossedZ": 0.5714736814000001,
+              "expectedGoals": 0.0312,
+              "expectedGoalsOnTarget": 0.2623,
+              "shotType": "RightFoot",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7867063492063497,
+                "y": 0.15118351359788362,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 972200,
+              "firstName": "Luis",
+              "lastName": "Díaz",
+              "fullName": "Luis Díaz",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Michael Olise",
+            "assistProfileUrl": "/players/1029063/michael-olise",
+            "assistPlayerId": 1029063,
+            "assistKey": "assist_by",
+            "assistInput": "Michael Olise"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -46917,10 +47006,84 @@
           "assistPlayerId": 1395447,
           "assistKey": "assist_by",
           "assistInput": "Nathaniel Brown"
+        },
+        {
+          "reactKey": "1459176569Goal860914undefinedtrue",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14591765,
+          "player": {
+            "id": 860914,
+            "name": "Luis Díaz",
+            "profileUrl": "/players/860914/luis-diaz"
+          },
+          "homeScore": 5,
+          "awayScore": 0,
+          "profileUrl": "/players/860914/luis-diaz",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Luis Díaz",
+          "firstName": "Luis",
+          "lastName": "Díaz",
+          "fullName": "Luis Díaz",
+          "playerId": 860914,
+          "newScore": [
+            6,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983178399,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 860914,
+            "playerName": "Luis Díaz",
+            "x": 86.24558823480001,
+            "y": 36.135000000000005,
+            "min": 69,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.026249999999997,
+            "goalCrossedZ": 0.5714736814000001,
+            "expectedGoals": 0.0312,
+            "expectedGoalsOnTarget": 0.2623,
+            "shotType": "RightFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7867063492063497,
+              "y": 0.15118351359788362,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 972200,
+            "firstName": "Luis",
+            "lastName": "Díaz",
+            "fullName": "Luis Díaz",
+            "teamColor": "#C60428"
+          },
+          "assistStr": "assist by Michael Olise",
+          "assistProfileUrl": "/players/1029063/michael-olise",
+          "assistPlayerId": 1029063,
+          "assistKey": "assist_by",
+          "assistInput": "Michael Olise"
         }
       ],
       "observed_score": {
-        "home": 5,
+        "home": 6,
         "away": 0
       }
     },
@@ -46941,7 +47104,8 @@
         "react:1459161954Goal1209399undefinedtrue",
         "react:1459164155Card1436133undefinedtrue",
         "react:1459164154Card1436133undefinedtrue",
-        "react:1459158451Goal576165undefinedfalse"
+        "react:1459158451Goal576165undefinedfalse",
+        "react:1459175463Goal940573undefinedfalse"
       ],
       "goals": [
         {
@@ -47602,6 +47766,94 @@
             "assistKey": "assist_by",
             "assistInput": "Lamine Yamal"
           }
+        },
+        {
+          "event_key": "react:1459175463Goal940573undefinedfalse",
+          "player_id": 940573,
+          "player_name": "Eric García",
+          "assist_player_id": 1532137,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "63",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4359,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459175463Goal940573undefinedfalse",
+            "timeStr": 63,
+            "type": "goal",
+            "time": 63,
+            "overloadTime": null,
+            "eventId": 14591754,
+            "player": {
+              "id": 940573,
+              "name": "Eric García",
+              "profileUrl": "/players/940573/eric-garcia"
+            },
+            "homeScore": 2,
+            "awayScore": 3,
+            "profileUrl": "/players/940573/eric-garcia",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Eric García",
+            "firstName": "Eric",
+            "lastName": "García",
+            "fullName": "Eric García",
+            "playerId": 940573,
+            "newScore": [
+              2,
+              4
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983178089,
+              "eventType": "Goal",
+              "teamId": 8634,
+              "playerId": 940573,
+              "playerName": "Eric García",
+              "x": 102.155172414,
+              "y": 34.1525,
+              "min": 62,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.305,
+              "goalCrossedZ": 0.8154736802,
+              "expectedGoals": 0.7733,
+              "expectedGoalsOnTarget": 0.8213,
+              "shotType": "RightFoot",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.9193121693121694,
+                "y": 0.2157337778306878,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 999171,
+              "firstName": "Eric",
+              "lastName": "García",
+              "fullName": "Eric García",
+              "teamColor": "#971e48"
+            },
+            "assistStr": "assist by Pau Cubarsí",
+            "assistProfileUrl": "/players/1532137/pau-cubarsi",
+            "assistPlayerId": 1532137,
+            "assistKey": "assist_by",
+            "assistInput": "Pau Cubarsí"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -48156,11 +48408,85 @@
           "assistPlayerId": 1467236,
           "assistKey": "assist_by",
           "assistInput": "Lamine Yamal"
+        },
+        {
+          "reactKey": "1459175463Goal940573undefinedfalse",
+          "timeStr": 63,
+          "type": "goal",
+          "time": 63,
+          "overloadTime": null,
+          "eventId": 14591754,
+          "player": {
+            "id": 940573,
+            "name": "Eric García",
+            "profileUrl": "/players/940573/eric-garcia"
+          },
+          "homeScore": 2,
+          "awayScore": 3,
+          "profileUrl": "/players/940573/eric-garcia",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Eric García",
+          "firstName": "Eric",
+          "lastName": "García",
+          "fullName": "Eric García",
+          "playerId": 940573,
+          "newScore": [
+            2,
+            4
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983178089,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 940573,
+            "playerName": "Eric García",
+            "x": 102.155172414,
+            "y": 34.1525,
+            "min": 62,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.305,
+            "goalCrossedZ": 0.8154736802,
+            "expectedGoals": 0.7733,
+            "expectedGoalsOnTarget": 0.8213,
+            "shotType": "RightFoot",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.9193121693121694,
+              "y": 0.2157337778306878,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 999171,
+            "firstName": "Eric",
+            "lastName": "García",
+            "fullName": "Eric García",
+            "teamColor": "#971e48"
+          },
+          "assistStr": "assist by Pau Cubarsí",
+          "assistProfileUrl": "/players/1532137/pau-cubarsi",
+          "assistPlayerId": 1532137,
+          "assistKey": "assist_by",
+          "assistInput": "Pau Cubarsí"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 3
+        "away": 4
       }
     },
     "5795480": {
