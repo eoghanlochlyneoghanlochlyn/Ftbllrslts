@@ -47106,7 +47106,8 @@
         "react:1459164154Card1436133undefinedtrue",
         "react:1459158451Goal576165undefinedfalse",
         "react:1459175463Goal940573undefinedfalse",
-        "react:1459175462Goal940573undefinedfalse"
+        "react:1459175462Goal940573undefinedfalse",
+        "react:1459197581Goal614834undefinedfalse"
       ],
       "goals": [
         {
@@ -47943,6 +47944,87 @@
             "assistKey": "assist_by",
             "assistInput": "Pau Cubarsí"
           }
+        },
+        {
+          "event_key": "react:1459197581Goal614834undefinedfalse",
+          "player_id": 614834,
+          "player_name": "Dani Olmo",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "81",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4361,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459197581Goal614834undefinedfalse",
+            "timeStr": 81,
+            "type": "goal",
+            "time": 81,
+            "overloadTime": null,
+            "eventId": 14591975,
+            "player": {
+              "id": 614834,
+              "name": "Dani Olmo",
+              "profileUrl": "/players/614834/dani-olmo"
+            },
+            "homeScore": 2,
+            "awayScore": 4,
+            "profileUrl": "/players/614834/dani-olmo",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Dani Olmo",
+            "firstName": "Dani",
+            "lastName": "Olmo",
+            "fullName": "Dani Olmo",
+            "playerId": 614834,
+            "newScore": [
+              2,
+              5
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983197661,
+              "eventType": "Goal",
+              "teamId": 8634,
+              "playerId": 614834,
+              "playerName": "Dani Olmo",
+              "x": 85.9235294112,
+              "y": 32.779999999999994,
+              "min": 81,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.037,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 999171,
+              "firstName": "Dani",
+              "lastName": "Olmo",
+              "fullName": "Dani Olmo",
+              "teamColor": "#971e48"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -48645,11 +48727,78 @@
           "assistPlayerId": 1532137,
           "assistKey": "assist_by",
           "assistInput": "Pau Cubarsí"
+        },
+        {
+          "reactKey": "1459197581Goal614834undefinedfalse",
+          "timeStr": 81,
+          "type": "goal",
+          "time": 81,
+          "overloadTime": null,
+          "eventId": 14591975,
+          "player": {
+            "id": 614834,
+            "name": "Dani Olmo",
+            "profileUrl": "/players/614834/dani-olmo"
+          },
+          "homeScore": 2,
+          "awayScore": 4,
+          "profileUrl": "/players/614834/dani-olmo",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Dani Olmo",
+          "firstName": "Dani",
+          "lastName": "Olmo",
+          "fullName": "Dani Olmo",
+          "playerId": 614834,
+          "newScore": [
+            2,
+            5
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983197661,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 614834,
+            "playerName": "Dani Olmo",
+            "x": 85.9235294112,
+            "y": 32.779999999999994,
+            "min": 81,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.037,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 999171,
+            "firstName": "Dani",
+            "lastName": "Olmo",
+            "fullName": "Dani Olmo",
+            "teamColor": "#971e48"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 4
+        "away": 5
       }
     },
     "5795480": {
