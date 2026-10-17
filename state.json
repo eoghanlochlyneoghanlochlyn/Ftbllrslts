@@ -42059,7 +42059,8 @@
       "event_keys": [
         "react:1458733844Goal1010426undefinedtrue",
         "react:1458754745Card1157236undefinedtrue",
-        "react:1458875062Goal1553105undefinedfalse"
+        "react:1458875062Goal1553105undefinedfalse",
+        "react:1458911470Goal690107undefinedfalse"
       ],
       "goals": [
         {
@@ -42237,6 +42238,94 @@
             "assistKey": "assist_by",
             "assistInput": "Florian Wirtz"
           }
+        },
+        {
+          "event_key": "react:1458911470Goal690107undefinedfalse",
+          "player_id": 690107,
+          "player_name": "Alexander Isak",
+          "assist_player_id": 1297165,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "70",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4313,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1458911470Goal690107undefinedfalse",
+            "timeStr": 70,
+            "type": "goal",
+            "time": 70,
+            "overloadTime": null,
+            "eventId": 14589114,
+            "player": {
+              "id": 690107,
+              "name": "Alexander Isak",
+              "profileUrl": "/players/690107/alexander-isak"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/690107/alexander-isak",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Alexander Isak",
+            "firstName": "Alexander",
+            "lastName": "Isak",
+            "fullName": "Alexander Isak",
+            "playerId": 690107,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2982988461,
+              "eventType": "Goal",
+              "teamId": 8650,
+              "playerId": 690107,
+              "playerName": "Alexander Isak",
+              "x": 99.784482759,
+              "y": 37.696,
+              "min": 70,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.7125,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.1662,
+              "expectedGoalsOnTarget": 0.4842,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.6051587301587305,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 776689,
+              "firstName": "Alexander",
+              "lastName": "Isak",
+              "fullName": "Alexander Isak",
+              "teamColor": "#911712"
+            },
+            "assistStr": "assist by Bradley Barcola",
+            "assistProfileUrl": "/players/1297165/bradley-barcola",
+            "assistPlayerId": 1297165,
+            "assistKey": "assist_by",
+            "assistInput": "Bradley Barcola"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -42388,11 +42477,85 @@
           "assistPlayerId": 1152455,
           "assistKey": "assist_by",
           "assistInput": "Florian Wirtz"
+        },
+        {
+          "reactKey": "1458911470Goal690107undefinedfalse",
+          "timeStr": 70,
+          "type": "goal",
+          "time": 70,
+          "overloadTime": null,
+          "eventId": 14589114,
+          "player": {
+            "id": 690107,
+            "name": "Alexander Isak",
+            "profileUrl": "/players/690107/alexander-isak"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/690107/alexander-isak",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Alexander Isak",
+          "firstName": "Alexander",
+          "lastName": "Isak",
+          "fullName": "Alexander Isak",
+          "playerId": 690107,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2982988461,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 690107,
+            "playerName": "Alexander Isak",
+            "x": 99.784482759,
+            "y": 37.696,
+            "min": 70,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.7125,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.1662,
+            "expectedGoalsOnTarget": 0.4842,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.6051587301587305,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 776689,
+            "firstName": "Alexander",
+            "lastName": "Isak",
+            "fullName": "Alexander Isak",
+            "teamColor": "#911712"
+          },
+          "assistStr": "assist by Bradley Barcola",
+          "assistProfileUrl": "/players/1297165/bradley-barcola",
+          "assistPlayerId": 1297165,
+          "assistKey": "assist_by",
+          "assistInput": "Bradley Barcola"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5795481": {
