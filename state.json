@@ -45968,7 +45968,8 @@
       "event_keys": [
         "react:1459052810Goal1467236undefinedfalse",
         "react:1459077527Goal1338016undefinedtrue",
-        "react:1459094441Goal675088undefinedfalse"
+        "react:1459094441Goal675088undefinedfalse",
+        "react:1459096843Goal604126undefinedtrue"
       ],
       "goals": [
         {
@@ -46230,6 +46231,91 @@
             "assistKey": "assist_by",
             "assistInput": "Fermín López"
           }
+        },
+        {
+          "event_key": "react:1459096843Goal604126undefinedtrue",
+          "player_id": 604126,
+          "player_name": "Giovani Lo Celso",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "43",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4343,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459096843Goal604126undefinedtrue",
+            "timeStr": 43,
+            "type": "goal",
+            "time": 43,
+            "overloadTime": null,
+            "eventId": 14590968,
+            "player": {
+              "id": 604126,
+              "name": "Giovani Lo Celso",
+              "profileUrl": "/players/604126/giovani-lo-celso"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/604126/giovani-lo-celso",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Giovani Lo Celso",
+            "firstName": "Giovani",
+            "lastName": "Lo Celso",
+            "fullName": "Giovani Lo Celso",
+            "playerId": 604126,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983128803,
+              "eventType": "Goal",
+              "teamId": 8603,
+              "playerId": 604126,
+              "playerName": "Giovani Lo Celso",
+              "x": 79.55679611760002,
+              "y": 34.915000000000006,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.254999999999995,
+              "goalCrossedZ": 1.4639999928,
+              "expectedGoals": 0.0261,
+              "expectedGoalsOnTarget": 0.3099,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7261904761904774,
+                "y": 0.38730158539682535,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1167220,
+              "firstName": "Giovani",
+              "lastName": "Lo Celso",
+              "fullName": "Giovani Lo Celso",
+              "teamColor": "#009048"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -46455,10 +46541,81 @@
           "assistPlayerId": 1404415,
           "assistKey": "assist_by",
           "assistInput": "Fermín López"
+        },
+        {
+          "reactKey": "1459096843Goal604126undefinedtrue",
+          "timeStr": 43,
+          "type": "goal",
+          "time": 43,
+          "overloadTime": null,
+          "eventId": 14590968,
+          "player": {
+            "id": 604126,
+            "name": "Giovani Lo Celso",
+            "profileUrl": "/players/604126/giovani-lo-celso"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/604126/giovani-lo-celso",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Giovani Lo Celso",
+          "firstName": "Giovani",
+          "lastName": "Lo Celso",
+          "fullName": "Giovani Lo Celso",
+          "playerId": 604126,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983128803,
+            "eventType": "Goal",
+            "teamId": 8603,
+            "playerId": 604126,
+            "playerName": "Giovani Lo Celso",
+            "x": 79.55679611760002,
+            "y": 34.915000000000006,
+            "min": 43,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.254999999999995,
+            "goalCrossedZ": 1.4639999928,
+            "expectedGoals": 0.0261,
+            "expectedGoalsOnTarget": 0.3099,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7261904761904774,
+              "y": 0.38730158539682535,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1167220,
+            "firstName": "Giovani",
+            "lastName": "Lo Celso",
+            "fullName": "Giovani Lo Celso",
+            "teamColor": "#009048"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 2
       }
     },
