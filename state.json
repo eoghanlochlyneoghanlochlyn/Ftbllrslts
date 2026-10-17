@@ -42058,7 +42058,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1458733844Goal1010426undefinedtrue",
-        "react:1458754745Card1157236undefinedtrue"
+        "react:1458754745Card1157236undefinedtrue",
+        "react:1458875062Goal1553105undefinedfalse"
       ],
       "goals": [
         {
@@ -42148,6 +42149,94 @@
             "assistKey": "assist_by",
             "assistInput": "Igor Thiago"
           }
+        },
+        {
+          "event_key": "react:1458875062Goal1553105undefinedfalse",
+          "player_id": 1553105,
+          "player_name": "Víctor Muñoz",
+          "assist_player_id": 1152455,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "62",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4309,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1458875062Goal1553105undefinedfalse",
+            "timeStr": 62,
+            "type": "goal",
+            "time": 62,
+            "overloadTime": null,
+            "eventId": 14588750,
+            "player": {
+              "id": 1553105,
+              "name": "Víctor Muñoz",
+              "profileUrl": "/players/1553105/victor-munoz"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1553105/victor-munoz",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Víctor Muñoz",
+            "firstName": "Víctor",
+            "lastName": "Muñoz",
+            "fullName": "Víctor Muñoz",
+            "playerId": 1553105,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2982971351,
+              "eventType": "Goal",
+              "teamId": 8650,
+              "playerId": 1553105,
+              "playerName": "Víctor Muñoz",
+              "x": 93.5,
+              "y": 23.088407647599997,
+              "min": 62,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.525000000000006,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.1612,
+              "expectedGoalsOnTarget": 0.2764,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5965608465608451,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 776689,
+              "firstName": "Víctor",
+              "lastName": "Muñoz",
+              "fullName": "Víctor Muñoz",
+              "teamColor": "#911712"
+            },
+            "assistStr": "assist by Florian Wirtz",
+            "assistProfileUrl": "/players/1152455/florian-wirtz",
+            "assistPlayerId": 1152455,
+            "assistKey": "assist_by",
+            "assistInput": "Florian Wirtz"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -42225,11 +42314,85 @@
           "assistPlayerId": 1302005,
           "assistKey": "assist_by",
           "assistInput": "Igor Thiago"
+        },
+        {
+          "reactKey": "1458875062Goal1553105undefinedfalse",
+          "timeStr": 62,
+          "type": "goal",
+          "time": 62,
+          "overloadTime": null,
+          "eventId": 14588750,
+          "player": {
+            "id": 1553105,
+            "name": "Víctor Muñoz",
+            "profileUrl": "/players/1553105/victor-munoz"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1553105/victor-munoz",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Víctor Muñoz",
+          "firstName": "Víctor",
+          "lastName": "Muñoz",
+          "fullName": "Víctor Muñoz",
+          "playerId": 1553105,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2982971351,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 1553105,
+            "playerName": "Víctor Muñoz",
+            "x": 93.5,
+            "y": 23.088407647599997,
+            "min": 62,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.525000000000006,
+            "goalCrossedZ": 0.160526315,
+            "expectedGoals": 0.1612,
+            "expectedGoalsOnTarget": 0.2764,
+            "shotType": "LeftFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5965608465608451,
+              "y": 0.042467279100529096,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 776689,
+            "firstName": "Víctor",
+            "lastName": "Muñoz",
+            "fullName": "Víctor Muñoz",
+            "teamColor": "#911712"
+          },
+          "assistStr": "assist by Florian Wirtz",
+          "assistProfileUrl": "/players/1152455/florian-wirtz",
+          "assistPlayerId": 1152455,
+          "assistKey": "assist_by",
+          "assistInput": "Florian Wirtz"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5795481": {
@@ -42244,7 +42407,8 @@
         "react:1458638019Goal815006undefinedtrue",
         "react:1458652021Goal0undefinedfalse",
         "react:1458652021Goal728765undefinedfalse",
-        "react:1458704734Goal737066undefinedtrue"
+        "react:1458704734Goal737066undefinedtrue",
+        "react:1458873869Goal737066undefinedtrue"
       ],
       "goals": [
         {
@@ -42610,6 +42774,94 @@
             "assistKey": "assist_by",
             "assistInput": "Mateo Kovačić"
           }
+        },
+        {
+          "event_key": "react:1458873869Goal737066undefinedtrue",
+          "player_id": 737066,
+          "player_name": "Erling Haaland",
+          "assist_player_id": 965764,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4310,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1458873869Goal737066undefinedtrue",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14588738,
+            "player": {
+              "id": 737066,
+              "name": "Erling Haaland",
+              "profileUrl": "/players/737066/erling-haaland"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/737066/erling-haaland",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Erling Haaland",
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "playerId": 737066,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2982971177,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 737066,
+              "playerName": "Erling Haaland",
+              "x": 96.0263157884,
+              "y": 36.8975,
+              "min": 69,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.9325,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.6281,
+              "expectedGoalsOnTarget": 0.8823,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.282407407407408,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 512013,
+              "firstName": "Erling",
+              "lastName": "Haaland",
+              "fullName": "Erling Haaland",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": "assist by Iliman Ndiaye",
+            "assistProfileUrl": "/players/965764/iliman-ndiaye",
+            "assistPlayerId": 965764,
+            "assistKey": "assist_by",
+            "assistInput": "Iliman Ndiaye"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -42907,10 +43159,84 @@
           "assistPlayerId": 239219,
           "assistKey": "assist_by",
           "assistInput": "Mateo Kovačić"
+        },
+        {
+          "reactKey": "1458873869Goal737066undefinedtrue",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14588738,
+          "player": {
+            "id": 737066,
+            "name": "Erling Haaland",
+            "profileUrl": "/players/737066/erling-haaland"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/737066/erling-haaland",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Erling Haaland",
+          "firstName": "Erling",
+          "lastName": "Haaland",
+          "fullName": "Erling Haaland",
+          "playerId": 737066,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2982971177,
+            "eventType": "Goal",
+            "teamId": 8456,
+            "playerId": 737066,
+            "playerName": "Erling Haaland",
+            "x": 96.0263157884,
+            "y": 36.8975,
+            "min": 69,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.9325,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.6281,
+            "expectedGoalsOnTarget": 0.8823,
+            "shotType": "LeftFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.282407407407408,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 512013,
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "teamColor": "#69A8D8"
+          },
+          "assistStr": "assist by Iliman Ndiaye",
+          "assistProfileUrl": "/players/965764/iliman-ndiaye",
+          "assistPlayerId": 965764,
+          "assistKey": "assist_by",
+          "assistInput": "Iliman Ndiaye"
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 1
       }
     },
