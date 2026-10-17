@@ -44970,7 +44970,8 @@
       "event_keys": [
         "react:1459004711Goal790732undefinedtrue",
         "react:1459004710Goal790732undefinedtrue",
-        "react:1459059144Goal621562undefinedfalse"
+        "react:1459059144Goal621562undefinedfalse",
+        "react:1459123370Goal940829undefinedfalse"
       ],
       "goals": [
         {
@@ -45225,6 +45226,94 @@
             "assistKey": "assist_by",
             "assistInput": "Nicolò Barella"
           }
+        },
+        {
+          "event_key": "react:1459123370Goal940829undefinedfalse",
+          "player_id": 940829,
+          "player_name": "Carlos Augusto",
+          "assist_player_id": 362212,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "70",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4344,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459123370Goal940829undefinedfalse",
+            "timeStr": 70,
+            "type": "goal",
+            "time": 70,
+            "overloadTime": null,
+            "eventId": 14591233,
+            "player": {
+              "id": 940829,
+              "name": "Carlos Augusto",
+              "profileUrl": "/players/940829/carlos-augusto"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/940829/carlos-augusto",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Carlos Augusto",
+            "firstName": "Carlos",
+            "lastName": "Augusto",
+            "fullName": "Carlos Augusto",
+            "playerId": 940829,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2983145579,
+              "eventType": "Goal",
+              "teamId": 8636,
+              "playerId": 940829,
+              "playerName": "Carlos Augusto",
+              "x": 103.103448276,
+              "y": 37.2025,
+              "min": 69,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.915000000000006,
+              "goalCrossedZ": 0.9374736796,
+              "expectedGoals": 0.8232643604278564,
+              "expectedGoalsOnTarget": 0.9855976700782776,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.7579365079365064,
+                "y": 0.24800890994708993,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 178732,
+              "firstName": "Carlos",
+              "lastName": "Augusto",
+              "fullName": "Carlos Augusto",
+              "teamColor": "#010E80"
+            },
+            "assistStr": "assist by Piotr Zieliński",
+            "assistProfileUrl": "/players/362212/piotr-zielinski",
+            "assistPlayerId": 362212,
+            "assistKey": "assist_by",
+            "assistInput": "Piotr Zieliński"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -45443,11 +45532,85 @@
           "assistPlayerId": 541820,
           "assistKey": "assist_by",
           "assistInput": "Nicolò Barella"
+        },
+        {
+          "reactKey": "1459123370Goal940829undefinedfalse",
+          "timeStr": 70,
+          "type": "goal",
+          "time": 70,
+          "overloadTime": null,
+          "eventId": 14591233,
+          "player": {
+            "id": 940829,
+            "name": "Carlos Augusto",
+            "profileUrl": "/players/940829/carlos-augusto"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/940829/carlos-augusto",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Carlos Augusto",
+          "firstName": "Carlos",
+          "lastName": "Augusto",
+          "fullName": "Carlos Augusto",
+          "playerId": 940829,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2983145579,
+            "eventType": "Goal",
+            "teamId": 8636,
+            "playerId": 940829,
+            "playerName": "Carlos Augusto",
+            "x": 103.103448276,
+            "y": 37.2025,
+            "min": 69,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.915000000000006,
+            "goalCrossedZ": 0.9374736796,
+            "expectedGoals": 0.8232643604278564,
+            "expectedGoalsOnTarget": 0.9855976700782776,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.7579365079365064,
+              "y": 0.24800890994708993,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 178732,
+            "firstName": "Carlos",
+            "lastName": "Augusto",
+            "fullName": "Carlos Augusto",
+            "teamColor": "#010E80"
+          },
+          "assistStr": "assist by Piotr Zieliński",
+          "assistProfileUrl": "/players/362212/piotr-zielinski",
+          "assistPlayerId": 362212,
+          "assistKey": "assist_by",
+          "assistInput": "Piotr Zieliński"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "5881189": {
