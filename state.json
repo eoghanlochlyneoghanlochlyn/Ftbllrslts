@@ -42038,8 +42038,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [],
       "goals": [],
       "cancelled_goal_keys": [],
@@ -42963,7 +42963,7 @@
       }
     },
     "5868091": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
