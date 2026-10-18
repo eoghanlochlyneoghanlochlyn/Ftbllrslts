@@ -50046,7 +50046,7 @@
             "blockedY": null,
             "goalCrossedY": 36.745000000000005,
             "goalCrossedZ": 0.2439999988,
-            "expectedGoals": 0.0779690146446228,
+            "expectedGoals": 0.07679126411676407,
             "expectedGoalsOnTarget": 0.5892205238342285,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
