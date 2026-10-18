@@ -51812,6 +51812,41 @@
             3
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2984300439,
+            "eventType": "Goal",
+            "teamId": 8543,
+            "playerId": 1091907,
+            "playerName": "Fisayo Dele-Bashiru",
+            "x": 95.35087719170001,
+            "y": 22.177579621699998,
+            "min": 89,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.838750000000005,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.0791,
+            "expectedGoalsOnTarget": 0.0772,
+            "shotType": "RightFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.7781084656084645,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 538501,
+            "firstName": "Fisayo",
+            "lastName": "Dele-Bashiru",
+            "fullName": "Fisayo Dele-Bashiru",
+            "teamColor": "#75acd4"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
