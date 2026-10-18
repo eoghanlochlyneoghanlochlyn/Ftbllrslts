@@ -49156,6 +49156,70 @@
         "home": 0,
         "away": 0
       }
+    },
+    "5795483": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": [],
+      "cancelled_goal_keys": [],
+      "observed_goal_events": [],
+      "observed_score": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "5749700": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": [],
+      "cancelled_goal_keys": [],
+      "observed_goal_events": [],
+      "observed_score": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "5749705": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": [],
+      "cancelled_goal_keys": [],
+      "observed_goal_events": [],
+      "observed_score": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "5868098": {
+      "lineup_sent": false,
+      "fallback_sent": false,
+      "started": false,
+      "half_time": false,
+      "finished": false,
+      "finished_sent": false,
+      "event_keys": [],
+      "goals": [],
+      "cancelled_goal_keys": [],
+      "observed_goal_events": [],
+      "observed_score": {
+        "home": 0,
+        "away": 0
+      }
     }
   }
 }
