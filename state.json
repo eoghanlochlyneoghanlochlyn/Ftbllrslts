@@ -49770,7 +49770,8 @@
         "react:1460294158Goal1106074undefinedtrue",
         "react:1460294157Goal1106074undefinedtrue",
         "react:1460307067Goal0undefinedfalse",
-        "react:1460307066Goal1012842undefinedfalse"
+        "react:1460307066Goal1012842undefinedfalse",
+        "react:1460331382Goal833638undefinedfalse"
       ],
       "goals": [
         {
@@ -50390,6 +50391,94 @@
             "assistKey": "assist_by",
             "assistInput": "Nicola Zalewski"
           }
+        },
+        {
+          "event_key": "react:1460331382Goal833638undefinedfalse",
+          "player_id": 833638,
+          "player_name": "Nikola Krstović",
+          "assist_player_id": 902651,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "82",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4393,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460331382Goal833638undefinedfalse",
+            "timeStr": 82,
+            "type": "goal",
+            "time": 82,
+            "overloadTime": null,
+            "eventId": 14603313,
+            "player": {
+              "id": 833638,
+              "name": "Nikola Krstović",
+              "profileUrl": "/players/833638/nikola-krstovic"
+            },
+            "homeScore": 3,
+            "awayScore": 1,
+            "profileUrl": "/players/833638/nikola-krstovic",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nikola Krstović",
+            "firstName": "Nikola",
+            "lastName": "Krstović",
+            "fullName": "Nikola Krstović",
+            "playerId": 833638,
+            "newScore": [
+              3,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2984165259,
+              "eventType": "Goal",
+              "teamId": 8524,
+              "playerId": 833638,
+              "playerName": "Nikola Krstović",
+              "x": 94.2894736826,
+              "y": 30.416249999999994,
+              "min": 81,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 37.05,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.3069,
+              "expectedGoalsOnTarget": 0.8677,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.19312169312169392,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 466439,
+              "firstName": "Nikola",
+              "lastName": "Krstović",
+              "fullName": "Nikola Krstović",
+              "teamColor": "#004ca6"
+            },
+            "assistStr": "assist by Raoul Bellanova",
+            "assistProfileUrl": "/players/902651/raoul-bellanova",
+            "assistPlayerId": 902651,
+            "assistKey": "assist_by",
+            "assistInput": "Raoul Bellanova"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -50899,11 +50988,85 @@
           "assistPlayerId": 1053714,
           "assistKey": "assist_by",
           "assistInput": "Nicola Zalewski"
+        },
+        {
+          "reactKey": "1460331382Goal833638undefinedfalse",
+          "timeStr": 82,
+          "type": "goal",
+          "time": 82,
+          "overloadTime": null,
+          "eventId": 14603313,
+          "player": {
+            "id": 833638,
+            "name": "Nikola Krstović",
+            "profileUrl": "/players/833638/nikola-krstovic"
+          },
+          "homeScore": 3,
+          "awayScore": 1,
+          "profileUrl": "/players/833638/nikola-krstovic",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Nikola Krstović",
+          "firstName": "Nikola",
+          "lastName": "Krstović",
+          "fullName": "Nikola Krstović",
+          "playerId": 833638,
+          "newScore": [
+            3,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2984165259,
+            "eventType": "Goal",
+            "teamId": 8524,
+            "playerId": 833638,
+            "playerName": "Nikola Krstović",
+            "x": 94.2894736826,
+            "y": 30.416249999999994,
+            "min": 81,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 37.05,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.3069,
+            "expectedGoalsOnTarget": 0.8677,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.19312169312169392,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 466439,
+            "firstName": "Nikola",
+            "lastName": "Krstović",
+            "fullName": "Nikola Krstović",
+            "teamColor": "#004ca6"
+          },
+          "assistStr": "assist by Raoul Bellanova",
+          "assistProfileUrl": "/players/902651/raoul-bellanova",
+          "assistPlayerId": 902651,
+          "assistKey": "assist_by",
+          "assistInput": "Raoul Bellanova"
         }
       ],
       "observed_score": {
         "home": 3,
-        "away": 1
+        "away": 2
       }
     },
     "5749705": {
