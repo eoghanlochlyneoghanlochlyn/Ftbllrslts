@@ -51908,7 +51908,8 @@
         "react:1460422630Goal0undefinedtrue",
         "react:1460422630Goal1253890undefinedtrue",
         "react:1460429237Goal701154undefinedtrue",
-        "react:1460462563Goal701154undefinedtrue"
+        "react:1460462563Goal701154undefinedtrue",
+        "react:1460476380Goal1428849undefinedfalse"
       ],
       "goals": [
         {
@@ -52217,6 +52218,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1460476380Goal1428849undefinedfalse",
+          "player_id": 1428849,
+          "player_name": "Manu Bueno",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "80",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4411,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460476380Goal1428849undefinedfalse",
+            "timeStr": 80,
+            "type": "goal",
+            "time": 80,
+            "overloadTime": null,
+            "eventId": 14604763,
+            "player": {
+              "id": 1428849,
+              "name": "Manu Bueno",
+              "profileUrl": "/players/1428849/manu-bueno"
+            },
+            "homeScore": 3,
+            "awayScore": 0,
+            "profileUrl": "/players/1428849/manu-bueno",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Manu Bueno",
+            "firstName": "Manu",
+            "lastName": "Bueno",
+            "fullName": "Manu Bueno",
+            "playerId": 1428849,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2984310811,
+              "eventType": "Goal",
+              "teamId": 8302,
+              "playerId": 1428849,
+              "playerName": "Manu Bueno",
+              "x": 92.8,
+              "y": 26.942142857,
+              "min": 80,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.9825,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.0557,
+              "expectedGoalsOnTarget": 0.2203,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.47552910052910013,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 170323,
+              "firstName": "Manu",
+              "lastName": "Bueno",
+              "fullName": "Manu Bueno",
+              "teamColor": "#C90F20"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -52475,11 +52561,82 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1460476380Goal1428849undefinedfalse",
+          "timeStr": 80,
+          "type": "goal",
+          "time": 80,
+          "overloadTime": null,
+          "eventId": 14604763,
+          "player": {
+            "id": 1428849,
+            "name": "Manu Bueno",
+            "profileUrl": "/players/1428849/manu-bueno"
+          },
+          "homeScore": 3,
+          "awayScore": 0,
+          "profileUrl": "/players/1428849/manu-bueno",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Manu Bueno",
+          "firstName": "Manu",
+          "lastName": "Bueno",
+          "fullName": "Manu Bueno",
+          "playerId": 1428849,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2984310811,
+            "eventType": "Goal",
+            "teamId": 8302,
+            "playerId": 1428849,
+            "playerName": "Manu Bueno",
+            "x": 92.8,
+            "y": 26.942142857,
+            "min": 80,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.9825,
+            "goalCrossedZ": 0.1219999994,
+            "expectedGoals": 0.0557,
+            "expectedGoalsOnTarget": 0.2203,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.47552910052910013,
+              "y": 0.032275132116402115,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 170323,
+            "firstName": "Manu",
+            "lastName": "Bueno",
+            "fullName": "Manu Bueno",
+            "teamColor": "#C90F20"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 3,
-        "away": 0
+        "away": 1
       }
     }
   }
