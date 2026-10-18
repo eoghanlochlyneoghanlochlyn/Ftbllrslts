@@ -1,72 +1,37 @@
 [
   {
-    "id": "5795478",
-    "url": "https://www.fotmob.com/match/5795478",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T11:30:00+00:00"
-  },
-  {
-    "id": "5868094",
-    "url": "https://www.fotmob.com/match/5868094",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T12:00:00+00:00"
-  },
-  {
-    "id": "5881195",
-    "url": "https://www.fotmob.com/match/5881195",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T13:30:00+00:00"
-  },
-  {
-    "id": "5795476",
-    "url": "https://www.fotmob.com/match/5795476",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T14:00:00+00:00"
-  },
-  {
-    "id": "5795481",
-    "url": "https://www.fotmob.com/match/5795481",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T14:00:00+00:00"
-  },
-  {
-    "id": "5802962",
-    "url": "https://www.fotmob.com/match/5802962",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T15:15:00+00:00"
-  },
-  {
-    "id": "5749702",
-    "url": "https://www.fotmob.com/match/5749702",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T16:00:00+00:00"
-  },
-  {
-    "id": "5881189",
-    "url": "https://www.fotmob.com/match/5881189",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T16:30:00+00:00"
-  },
-  {
-    "id": "5868091",
-    "url": "https://www.fotmob.com/match/5868091",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-10-17T16:30:00+00:00"
-  },
-  {
     "id": "5795480",
     "url": "https://www.fotmob.com/match/5795480",
     "enabled": true,
     "auto": true,
     "start": "2026-10-18T13:00:00+00:00"
+  },
+  {
+    "id": "5795483",
+    "url": "https://www.fotmob.com/match/5795483",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-18T15:30:00+00:00"
+  },
+  {
+    "id": "5749700",
+    "url": "https://www.fotmob.com/match/5749700",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-18T16:00:00+00:00"
+  },
+  {
+    "id": "5749705",
+    "url": "https://www.fotmob.com/match/5749705",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-18T18:45:00+00:00"
+  },
+  {
+    "id": "5868098",
+    "url": "https://www.fotmob.com/match/5868098",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-18T19:00:00+00:00"
   }
 ]
