@@ -49149,7 +49149,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1459889735Goal923312undefinedfalse"
+        "react:1459889735Goal923312undefinedfalse",
+        "react:1459957251Goal612150undefinedtrue"
       ],
       "goals": [
         {
@@ -49239,6 +49240,56 @@
             "assistKey": "assist_by",
             "assistInput": "Youri Tielemans"
           }
+        },
+        {
+          "event_key": "react:1459957251Goal612150undefinedtrue",
+          "player_id": 612150,
+          "player_name": "Dominic Calvert-Lewin",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "51",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4374,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1459957251Goal612150undefinedtrue",
+            "timeStr": 51,
+            "type": "goal",
+            "time": 51,
+            "overloadTime": null,
+            "eventId": 14599572,
+            "player": {
+              "id": 612150,
+              "name": "Dominic Calvert-Lewin",
+              "profileUrl": "/players/612150/dominic-calvert-lewin"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/612150/dominic-calvert-lewin",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Dominic Calvert-Lewin",
+            "firstName": "Dominic",
+            "lastName": "Calvert-Lewin",
+            "fullName": "Dominic Calvert-Lewin",
+            "playerId": 612150,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -49316,10 +49367,46 @@
           "assistPlayerId": 465960,
           "assistKey": "assist_by",
           "assistInput": "Youri Tielemans"
+        },
+        {
+          "reactKey": "1459957251Goal612150undefinedtrue",
+          "timeStr": 51,
+          "type": "goal",
+          "time": 51,
+          "overloadTime": null,
+          "eventId": 14599572,
+          "player": {
+            "id": 612150,
+            "name": "Dominic Calvert-Lewin",
+            "profileUrl": "/players/612150/dominic-calvert-lewin"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/612150/dominic-calvert-lewin",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Dominic Calvert-Lewin",
+          "firstName": "Dominic",
+          "lastName": "Calvert-Lewin",
+          "fullName": "Dominic Calvert-Lewin",
+          "playerId": 612150,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
