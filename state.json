@@ -51398,7 +51398,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1460409337Goal1333331undefinedfalse",
-        "react:1460446966Goal1016093undefinedfalse"
+        "react:1460446966Goal1016093undefinedfalse",
+        "react:1460464389Goal1091907undefinedfalse"
       ],
       "goals": [
         {
@@ -51576,6 +51577,56 @@
             "assistKey": "assist_by",
             "assistInput": "Nuno Tavares"
           }
+        },
+        {
+          "event_key": "react:1460464389Goal1091907undefinedfalse",
+          "player_id": 1091907,
+          "player_name": "Fisayo Dele-Bashiru",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "89",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4408,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460464389Goal1091907undefinedfalse",
+            "timeStr": 89,
+            "type": "goal",
+            "time": 89,
+            "overloadTime": null,
+            "eventId": 14604643,
+            "player": {
+              "id": 1091907,
+              "name": "Fisayo Dele-Bashiru",
+              "profileUrl": "/players/1091907/fisayo-dele-bashiru"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1091907/fisayo-dele-bashiru",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Fisayo Dele-Bashiru",
+            "firstName": "Fisayo",
+            "lastName": "Dele-Bashiru",
+            "fullName": "Fisayo Dele-Bashiru",
+            "playerId": 1091907,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -51727,11 +51778,47 @@
           "assistPlayerId": 957118,
           "assistKey": "assist_by",
           "assistInput": "Nuno Tavares"
+        },
+        {
+          "reactKey": "1460464389Goal1091907undefinedfalse",
+          "timeStr": 89,
+          "type": "goal",
+          "time": 89,
+          "overloadTime": null,
+          "eventId": 14604643,
+          "player": {
+            "id": 1091907,
+            "name": "Fisayo Dele-Bashiru",
+            "profileUrl": "/players/1091907/fisayo-dele-bashiru"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/1091907/fisayo-dele-bashiru",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Fisayo Dele-Bashiru",
+          "firstName": "Fisayo",
+          "lastName": "Dele-Bashiru",
+          "fullName": "Fisayo Dele-Bashiru",
+          "playerId": 1091907,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "5868098": {
