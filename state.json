@@ -52819,7 +52819,8 @@
         "react:1460694714Goal493165undefinedtrue",
         "react:1460716850Goal1030830undefinedfalse",
         "react:1460719958Goal0undefinedtrue",
-        "react:1460719958Goal839204undefinedtrue"
+        "react:1460719958Goal839204undefinedtrue",
+        "react:1460733990Goal276121undefinedtrue"
       ],
       "goals": [
         {
@@ -53131,6 +53132,91 @@
             "assistKey": "assist_by",
             "assistInput": "Andrew Robertson"
           }
+        },
+        {
+          "event_key": "react:1460733990Goal276121undefinedtrue",
+          "player_id": 276121,
+          "player_name": "Ben Davies",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 6",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4423,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460733990Goal276121undefinedtrue",
+            "timeStr": "90 + 6",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 6,
+            "eventId": 14607339,
+            "player": {
+              "id": 276121,
+              "name": "Ben Davies",
+              "profileUrl": "/players/276121/ben-davies"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/276121/ben-davies",
+            "overloadTimeStr": "+6",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ben Davies",
+            "firstName": "Ben",
+            "lastName": "Davies",
+            "fullName": "Ben Davies",
+            "playerId": 276121,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2984766277,
+              "eventType": "Goal",
+              "teamId": 8586,
+              "playerId": 276121,
+              "playerName": "Ben Davies",
+              "x": 86.78235294080001,
+              "y": 33.77125,
+              "min": 90,
+              "minAdded": 6,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.0432,
+              "expectedGoalsOnTarget": 0.378,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1187236,
+              "firstName": "Ben",
+              "lastName": "Davies",
+              "fullName": "Ben Davies",
+              "teamColor": "#132257"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -53392,10 +53478,81 @@
           "assistPlayerId": 357880,
           "assistKey": "assist_by",
           "assistInput": "Andrew Robertson"
+        },
+        {
+          "reactKey": "1460733990Goal276121undefinedtrue",
+          "timeStr": "90 + 6",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 6,
+          "eventId": 14607339,
+          "player": {
+            "id": 276121,
+            "name": "Ben Davies",
+            "profileUrl": "/players/276121/ben-davies"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/276121/ben-davies",
+          "overloadTimeStr": "+6",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ben Davies",
+          "firstName": "Ben",
+          "lastName": "Davies",
+          "fullName": "Ben Davies",
+          "playerId": 276121,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2984766277,
+            "eventType": "Goal",
+            "teamId": 8586,
+            "playerId": 276121,
+            "playerName": "Ben Davies",
+            "x": 86.78235294080001,
+            "y": 33.77125,
+            "min": 90,
+            "minAdded": 6,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.97375,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.0432,
+            "expectedGoalsOnTarget": 0.378,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.21329365079365015,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1187236,
+            "firstName": "Ben",
+            "lastName": "Davies",
+            "fullName": "Ben Davies",
+            "teamColor": "#132257"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 1
       }
     },
