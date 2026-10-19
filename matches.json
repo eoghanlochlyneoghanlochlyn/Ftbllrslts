@@ -5,5 +5,12 @@
     "enabled": true,
     "auto": true,
     "start": "2026-10-19T19:00:00+00:00"
+  },
+  {
+    "id": "6106422",
+    "url": "https://www.fotmob.com/match/6106422",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-10-20T16:45:00+00:00"
   }
 ]
