@@ -53121,7 +53121,7 @@
             "expectedGoals": 0.09017220139503479,
             "expectedGoalsOnTarget": 0.15071240067481995,
             "shotType": "RightFoot",
-            "situation": "RegularPlay",
+            "situation": "FastBreak",
             "period": "SecondHalf",
             "isOwnGoal": false,
             "onGoalShot": {
