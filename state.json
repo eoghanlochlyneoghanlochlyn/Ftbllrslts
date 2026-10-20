@@ -54327,7 +54327,8 @@
         "react:146090834Goal1117069undefinedfalse",
         "react:1460929229Goal0undefinedfalse",
         "react:1460929229Goal1059657undefinedfalse",
-        "react:1460935236Goal831489undefinedtrue"
+        "react:1460935236Goal831489undefinedtrue",
+        "react:1460941845Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -54636,6 +54637,56 @@
             "assistKey": "assist_by",
             "assistInput": "Konstantinos Tsimikas"
           }
+        },
+        {
+          "event_key": "react:1460941845Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "45 + 2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4455,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1460941845Goal0undefinedtrue",
+            "timeStr": "45 + 2",
+            "type": "goal",
+            "time": 45,
+            "overloadTime": 2,
+            "eventId": 14609418,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "",
+            "overloadTimeStr": "+2",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -54894,10 +54945,46 @@
           "assistPlayerId": 671529,
           "assistKey": "assist_by",
           "assistInput": "Konstantinos Tsimikas"
+        },
+        {
+          "reactKey": "1460941845Goal0undefinedtrue",
+          "timeStr": "45 + 2",
+          "type": "goal",
+          "time": 45,
+          "overloadTime": 2,
+          "eventId": 14609418,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "",
+          "overloadTimeStr": "+2",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 2
       }
     },
