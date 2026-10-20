@@ -56000,7 +56000,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1460938438Goal1339208undefinedtrue"
+        "react:1460938438Goal1339208undefinedtrue",
+        "react:1460978255Goal1815149undefinedfalse"
       ],
       "goals": [
         {
@@ -56090,6 +56091,87 @@
             "assistKey": "assist_by",
             "assistInput": "João Neves"
           }
+        },
+        {
+          "event_key": "react:1460978255Goal1815149undefinedfalse",
+          "player_id": 1815149,
+          "player_name": "Xavi Espart",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "55",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4461,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460978255Goal1815149undefinedfalse",
+            "timeStr": 55,
+            "type": "goal",
+            "time": 55,
+            "overloadTime": null,
+            "eventId": 14609782,
+            "player": {
+              "id": 1815149,
+              "name": "Xavi Espart",
+              "profileUrl": "/players/1815149/xavi-espart"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1815149/xavi-espart",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Xavi Espart",
+            "firstName": "Xavi",
+            "lastName": "Espart",
+            "fullName": "Xavi Espart",
+            "playerId": 1815149,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2985128743,
+              "eventType": "Goal",
+              "teamId": 8634,
+              "playerId": 1815149,
+              "playerName": "Xavi Espart",
+              "x": 95.35087719170001,
+              "y": 25.013437500000002,
+              "min": 55,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0649,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 800880,
+              "firstName": "Xavi",
+              "lastName": "Espart",
+              "fullName": "Xavi Espart",
+              "teamColor": "#971e48"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -56167,11 +56249,78 @@
           "assistPlayerId": 1342757,
           "assistKey": "assist_by",
           "assistInput": "João Neves"
+        },
+        {
+          "reactKey": "1460978255Goal1815149undefinedfalse",
+          "timeStr": 55,
+          "type": "goal",
+          "time": 55,
+          "overloadTime": null,
+          "eventId": 14609782,
+          "player": {
+            "id": 1815149,
+            "name": "Xavi Espart",
+            "profileUrl": "/players/1815149/xavi-espart"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1815149/xavi-espart",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Xavi Espart",
+          "firstName": "Xavi",
+          "lastName": "Espart",
+          "fullName": "Xavi Espart",
+          "playerId": 1815149,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2985128743,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 1815149,
+            "playerName": "Xavi Espart",
+            "x": 95.35087719170001,
+            "y": 25.013437500000002,
+            "min": 55,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0649,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 800880,
+            "firstName": "Xavi",
+            "lastName": "Espart",
+            "fullName": "Xavi Espart",
+            "teamColor": "#971e48"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "6106397": {
