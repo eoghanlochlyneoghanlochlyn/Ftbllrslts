@@ -53735,7 +53735,8 @@
       "event_keys": [
         "react:1460847610Goal448540undefinedfalse",
         "react:1460857339Goal0undefinedtrue",
-        "react:1460857339Goal1337091undefinedtrue"
+        "react:1460857339Goal1337091undefinedtrue",
+        "react:1460867553Goal448540undefinedfalse"
       ],
       "goals": [
         {
@@ -53963,6 +53964,90 @@
             "assistKey": "assist_by",
             "assistInput": "Tymoteusz Puchacz"
           }
+        },
+        {
+          "event_key": "react:1460867553Goal448540undefinedfalse",
+          "player_id": 448540,
+          "player_name": "Serhou Guirassy",
+          "assist_player_id": 792429,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "53",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4436,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460867553Goal448540undefinedfalse",
+            "timeStr": 53,
+            "type": "goal",
+            "time": 53,
+            "overloadTime": null,
+            "eventId": 14608675,
+            "player": {
+              "id": 448540,
+              "name": "Serhou Guirassy",
+              "profileUrl": "/players/448540/serhou-guirassy"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/448540/serhou-guirassy",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Serhou Guirassy",
+            "firstName": "Serhou",
+            "lastName": "Guirassy",
+            "fullName": "Serhou Guirassy",
+            "playerId": 448540,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2984987919,
+              "eventType": "Goal",
+              "teamId": 9789,
+              "playerId": 448540,
+              "playerName": "Serhou Guirassy",
+              "x": 100.1637931038,
+              "y": 38.368333335,
+              "min": 53,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1565,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 489507,
+              "firstName": "Serhou",
+              "lastName": "Guirassy",
+              "fullName": "Serhou Guirassy",
+              "teamColor": "#d8a000"
+            },
+            "assistStr": "assist by Joey Veerman",
+            "assistProfileUrl": "/players/792429/joey-veerman",
+            "assistPlayerId": 792429,
+            "assistKey": "assist_by",
+            "assistInput": "Joey Veerman"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -54150,11 +54235,81 @@
           "assistPlayerId": 823121,
           "assistKey": "assist_by",
           "assistInput": "Tymoteusz Puchacz"
+        },
+        {
+          "reactKey": "1460867553Goal448540undefinedfalse",
+          "timeStr": 53,
+          "type": "goal",
+          "time": 53,
+          "overloadTime": null,
+          "eventId": 14608675,
+          "player": {
+            "id": 448540,
+            "name": "Serhou Guirassy",
+            "profileUrl": "/players/448540/serhou-guirassy"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/448540/serhou-guirassy",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Serhou Guirassy",
+          "firstName": "Serhou",
+          "lastName": "Guirassy",
+          "fullName": "Serhou Guirassy",
+          "playerId": 448540,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2984987919,
+            "eventType": "Goal",
+            "teamId": 9789,
+            "playerId": 448540,
+            "playerName": "Serhou Guirassy",
+            "x": 100.1637931038,
+            "y": 38.368333335,
+            "min": 53,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1565,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 489507,
+            "firstName": "Serhou",
+            "lastName": "Guirassy",
+            "fullName": "Serhou Guirassy",
+            "teamColor": "#d8a000"
+          },
+          "assistStr": "assist by Joey Veerman",
+          "assistProfileUrl": "/players/792429/joey-veerman",
+          "assistPlayerId": 792429,
+          "assistKey": "assist_by",
+          "assistInput": "Joey Veerman"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "6106248": {
