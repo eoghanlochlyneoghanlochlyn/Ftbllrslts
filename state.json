@@ -55161,7 +55161,8 @@
       "event_keys": [
         "react:1460916012Goal0undefinedtrue",
         "react:1460916012Goal1089691undefinedtrue",
-        "react:1460933734Goal815006undefinedtrue"
+        "react:1460933734Goal815006undefinedtrue",
+        "react:1460966252Goal1015750undefinedfalse"
       ],
       "goals": [
         {
@@ -55389,6 +55390,90 @@
             "assistKey": "assist_by",
             "assistInput": "Rico Lewis"
           }
+        },
+        {
+          "event_key": "react:1460966252Goal1015750undefinedfalse",
+          "player_id": 1015750,
+          "player_name": "Stavros Pilios",
+          "assist_player_id": 1106943,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "52",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4458,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1460966252Goal1015750undefinedfalse",
+            "timeStr": 52,
+            "type": "goal",
+            "time": 52,
+            "overloadTime": null,
+            "eventId": 14609662,
+            "player": {
+              "id": 1015750,
+              "name": "Stavros Pilios",
+              "profileUrl": "/players/1015750/stavros-pilios"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1015750/stavros-pilios",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Stavros Pilios",
+            "firstName": "Stavros",
+            "lastName": "Pilios",
+            "fullName": "Stavros Pilios",
+            "playerId": 1015750,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2985119321,
+              "eventType": "Goal",
+              "teamId": 8563,
+              "playerId": 1015750,
+              "playerName": "Stavros Pilios",
+              "x": 96.2192982446,
+              "y": 45.4020382125,
+              "min": 52,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1008,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 618878,
+              "firstName": "Stavros",
+              "lastName": "Pilios",
+              "fullName": "Stavros Pilios",
+              "teamColor": "#d99f00"
+            },
+            "assistStr": "assist by Zine",
+            "assistProfileUrl": "/players/1106943/zine",
+            "assistPlayerId": 1106943,
+            "assistKey": "assist_by",
+            "assistInput": "Zine"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -55576,11 +55661,81 @@
           "assistPlayerId": 1288450,
           "assistKey": "assist_by",
           "assistInput": "Rico Lewis"
+        },
+        {
+          "reactKey": "1460966252Goal1015750undefinedfalse",
+          "timeStr": 52,
+          "type": "goal",
+          "time": 52,
+          "overloadTime": null,
+          "eventId": 14609662,
+          "player": {
+            "id": 1015750,
+            "name": "Stavros Pilios",
+            "profileUrl": "/players/1015750/stavros-pilios"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/1015750/stavros-pilios",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Stavros Pilios",
+          "firstName": "Stavros",
+          "lastName": "Pilios",
+          "fullName": "Stavros Pilios",
+          "playerId": 1015750,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2985119321,
+            "eventType": "Goal",
+            "teamId": 8563,
+            "playerId": 1015750,
+            "playerName": "Stavros Pilios",
+            "x": 96.2192982446,
+            "y": 45.4020382125,
+            "min": 52,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1008,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 618878,
+            "firstName": "Stavros",
+            "lastName": "Pilios",
+            "fullName": "Stavros Pilios",
+            "teamColor": "#d99f00"
+          },
+          "assistStr": "assist by Zine",
+          "assistProfileUrl": "/players/1106943/zine",
+          "assistPlayerId": 1106943,
+          "assistKey": "assist_by",
+          "assistInput": "Zine"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 0
+        "away": 1
       }
     },
     "6106234": {
