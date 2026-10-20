@@ -56096,7 +56096,7 @@
           "event_key": "react:1460978255Goal1815149undefinedfalse",
           "player_id": 1815149,
           "player_name": "Xavi Espart",
-          "assist_player_id": null,
+          "assist_player_id": 1404415,
           "assist_player_name": "",
           "is_home": false,
           "minute": "55",
@@ -56149,18 +56149,22 @@
               "min": 55,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0649,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 32.39875,
+              "goalCrossedZ": 0.5265263132,
+              "expectedGoals": 0.28585782647132874,
+              "expectedGoalsOnTarget": 0.1811828464269638,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 1.4236111111111112,
+                "y": 0.13929267544973545,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 800880,
@@ -56169,8 +56173,11 @@
               "fullName": "Xavi Espart",
               "teamColor": "#971e48"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Fermín López",
+            "assistProfileUrl": "/players/1404415/fermin-lopez",
+            "assistPlayerId": 1404415,
+            "assistKey": "assist_by",
+            "assistInput": "Fermín López"
           }
         }
       ],
@@ -56294,18 +56301,22 @@
             "min": 55,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0649,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 32.39875,
+            "goalCrossedZ": 0.5265263132,
+            "expectedGoals": 0.28585782647132874,
+            "expectedGoalsOnTarget": 0.1811828464269638,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 1.4236111111111112,
+              "y": 0.13929267544973545,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 800880,
@@ -56314,8 +56325,11 @@
             "fullName": "Xavi Espart",
             "teamColor": "#971e48"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Fermín López",
+          "assistProfileUrl": "/players/1404415/fermin-lopez",
+          "assistPlayerId": 1404415,
+          "assistKey": "assist_by",
+          "assistInput": "Fermín López"
         }
       ],
       "observed_score": {
