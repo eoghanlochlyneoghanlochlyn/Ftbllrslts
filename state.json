@@ -60862,7 +60862,8 @@
         "react:043Goal488139undefinedtrue",
         "react:052Goal1253890undefinedtrue",
         "react:083Goal701154undefinedtrue",
-        "react:085Goal1482733undefinedfalse"
+        "react:085Goal1482733undefinedfalse",
+        "react:087Goal1735453undefinedtrue"
       ],
       "goals": [
         {
@@ -61213,6 +61214,56 @@
             "assistKey": "assist_by",
             "assistInput": "Christoph Baumgartner"
           }
+        },
+        {
+          "event_key": "react:087Goal1735453undefinedtrue",
+          "player_id": 1735453,
+          "player_name": "Yan Diomande",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "87",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4513,
+          "needs_update": false,
+          "event": {
+            "reactKey": "087Goal1735453undefinedtrue",
+            "timeStr": 87,
+            "type": "goal",
+            "time": 87,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 1735453,
+              "name": "Yan Diomande",
+              "profileUrl": "/players/1735453/yan-diomande"
+            },
+            "homeScore": 3,
+            "awayScore": 1,
+            "profileUrl": "/players/1735453/yan-diomande",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Yan Diomande",
+            "firstName": "Yan",
+            "lastName": "Diomande",
+            "fullName": "Yan Diomande",
+            "playerId": 1735453,
+            "newScore": [
+              4,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -61485,8 +61536,8 @@
             "blockedY": null,
             "goalCrossedY": 34.7625,
             "goalCrossedZ": 0.5265263132,
-            "expectedGoals": 0.3883,
-            "expectedGoalsOnTarget": 0.3347,
+            "expectedGoals": 0.4459725320339203,
+            "expectedGoalsOnTarget": 0.2380862534046173,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -61509,10 +61560,46 @@
           "assistPlayerId": 747718,
           "assistKey": "assist_by",
           "assistInput": "Christoph Baumgartner"
+        },
+        {
+          "reactKey": "087Goal1735453undefinedtrue",
+          "timeStr": 87,
+          "type": "goal",
+          "time": 87,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 1735453,
+            "name": "Yan Diomande",
+            "profileUrl": "/players/1735453/yan-diomande"
+          },
+          "homeScore": 3,
+          "awayScore": 1,
+          "profileUrl": "/players/1735453/yan-diomande",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Yan Diomande",
+          "firstName": "Yan",
+          "lastName": "Diomande",
+          "fullName": "Yan Diomande",
+          "playerId": 1735453,
+          "newScore": [
+            4,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 3,
+        "home": 4,
         "away": 1
       }
     }
