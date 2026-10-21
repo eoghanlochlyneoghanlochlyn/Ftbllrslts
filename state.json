@@ -58374,7 +58374,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:146120112Goal1347574undefinedtrue"
+        "react:146120112Goal1347574undefinedtrue",
+        "react:1461237649Goal873270undefinedtrue"
       ],
       "goals": [
         {
@@ -58464,6 +58465,56 @@
             "assistKey": "assist_by",
             "assistInput": "Lucas Da Cunha"
           }
+        },
+        {
+          "event_key": "react:1461237649Goal873270undefinedtrue",
+          "player_id": 873270,
+          "player_name": "Anastasios Douvikas",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "49",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4486,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1461237649Goal873270undefinedtrue",
+            "timeStr": 49,
+            "type": "goal",
+            "time": 49,
+            "overloadTime": null,
+            "eventId": 14612376,
+            "player": {
+              "id": 873270,
+              "name": "Anastasios Douvikas",
+              "profileUrl": "/players/873270/anastasios-douvikas"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/873270/anastasios-douvikas",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Anastasios Douvikas",
+            "firstName": "Anastasios",
+            "lastName": "Douvikas",
+            "fullName": "Anastasios Douvikas",
+            "playerId": 873270,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -58541,10 +58592,46 @@
           "assistPlayerId": 1076647,
           "assistKey": "assist_by",
           "assistInput": "Lucas Da Cunha"
+        },
+        {
+          "reactKey": "1461237649Goal873270undefinedtrue",
+          "timeStr": 49,
+          "type": "goal",
+          "time": 49,
+          "overloadTime": null,
+          "eventId": 14612376,
+          "player": {
+            "id": 873270,
+            "name": "Anastasios Douvikas",
+            "profileUrl": "/players/873270/anastasios-douvikas"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/873270/anastasios-douvikas",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Anastasios Douvikas",
+          "firstName": "Anastasios",
+          "lastName": "Douvikas",
+          "fullName": "Anastasios Douvikas",
+          "playerId": 873270,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
