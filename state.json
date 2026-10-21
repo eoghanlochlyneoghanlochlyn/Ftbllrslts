@@ -60673,8 +60673,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:068Card805451undefinedtrue",
         "react:077Goal940829undefinedtrue"
@@ -60856,8 +60856,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:043Goal488139undefinedtrue",
         "react:052Goal1253890undefinedtrue",
