@@ -60861,7 +60861,8 @@
       "event_keys": [
         "react:043Goal488139undefinedtrue",
         "react:052Goal1253890undefinedtrue",
-        "react:083Goal701154undefinedtrue"
+        "react:083Goal701154undefinedtrue",
+        "react:085Goal1482733undefinedfalse"
       ],
       "goals": [
         {
@@ -61124,6 +61125,94 @@
             "assistKey": "assist_by",
             "assistInput": "Yan Diomande"
           }
+        },
+        {
+          "event_key": "react:085Goal1482733undefinedfalse",
+          "player_id": 1482733,
+          "player_name": "Tidiam Gomis",
+          "assist_player_id": 747718,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "85",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4512,
+          "needs_update": false,
+          "event": {
+            "reactKey": "085Goal1482733undefinedfalse",
+            "timeStr": 85,
+            "type": "goal",
+            "time": 85,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 1482733,
+              "name": "Tidiam Gomis",
+              "profileUrl": "/players/1482733/tidiam-gomis"
+            },
+            "homeScore": 3,
+            "awayScore": 0,
+            "profileUrl": "/players/1482733/tidiam-gomis",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Tidiam Gomis",
+            "firstName": "Tidiam",
+            "lastName": "Gomis",
+            "fullName": "Tidiam Gomis",
+            "playerId": 1482733,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2985487173,
+              "eventType": "Goal",
+              "teamId": 178475,
+              "playerId": 1482733,
+              "playerName": "Tidiam Gomis",
+              "x": 95.8333333322,
+              "y": 30.279999999999998,
+              "min": 85,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.7625,
+              "goalCrossedZ": 0.5265263132,
+              "expectedGoals": 0.3883,
+              "expectedGoalsOnTarget": 0.3347,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.7982804232804226,
+                "y": 0.13929267544973545,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 170323,
+              "firstName": "Tidiam",
+              "lastName": "Gomis",
+              "fullName": "Tidiam Gomis",
+              "teamColor": "#DD0741"
+            },
+            "assistStr": "assist by Christoph Baumgartner",
+            "assistProfileUrl": "/players/747718/christoph-baumgartner",
+            "assistPlayerId": 747718,
+            "assistKey": "assist_by",
+            "assistInput": "Christoph Baumgartner"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -61322,8 +61411,8 @@
             "blockedY": null,
             "goalCrossedY": 30.797499999999996,
             "goalCrossedZ": 1.5474736766000001,
-            "expectedGoals": 0.0428,
-            "expectedGoalsOnTarget": 0.5854,
+            "expectedGoals": 0.0474981889128685,
+            "expectedGoalsOnTarget": 0.8787860870361328,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -61346,11 +61435,85 @@
           "assistPlayerId": 1735453,
           "assistKey": "assist_by",
           "assistInput": "Yan Diomande"
+        },
+        {
+          "reactKey": "085Goal1482733undefinedfalse",
+          "timeStr": 85,
+          "type": "goal",
+          "time": 85,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 1482733,
+            "name": "Tidiam Gomis",
+            "profileUrl": "/players/1482733/tidiam-gomis"
+          },
+          "homeScore": 3,
+          "awayScore": 0,
+          "profileUrl": "/players/1482733/tidiam-gomis",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Tidiam Gomis",
+          "firstName": "Tidiam",
+          "lastName": "Gomis",
+          "fullName": "Tidiam Gomis",
+          "playerId": 1482733,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2985487173,
+            "eventType": "Goal",
+            "teamId": 178475,
+            "playerId": 1482733,
+            "playerName": "Tidiam Gomis",
+            "x": 95.8333333322,
+            "y": 30.279999999999998,
+            "min": 85,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.7625,
+            "goalCrossedZ": 0.5265263132,
+            "expectedGoals": 0.3883,
+            "expectedGoalsOnTarget": 0.3347,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.7982804232804226,
+              "y": 0.13929267544973545,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 170323,
+            "firstName": "Tidiam",
+            "lastName": "Gomis",
+            "fullName": "Tidiam Gomis",
+            "teamColor": "#DD0741"
+          },
+          "assistStr": "assist by Christoph Baumgartner",
+          "assistProfileUrl": "/players/747718/christoph-baumgartner",
+          "assistPlayerId": 747718,
+          "assistKey": "assist_by",
+          "assistInput": "Christoph Baumgartner"
         }
       ],
       "observed_score": {
         "home": 3,
-        "away": 0
+        "away": 1
       }
     }
   }
