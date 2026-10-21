@@ -58680,8 +58680,8 @@
             "blockedY": null,
             "goalCrossedY": 31.4075,
             "goalCrossedZ": 1.6245263078,
-            "expectedGoals": 0.4384,
-            "expectedGoalsOnTarget": 0.9081,
+            "expectedGoals": 0.5672751665115356,
+            "expectedGoalsOnTarget": 0.8679962158203125,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -58712,7 +58712,7 @@
       }
     },
     "6106238": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -58744,7 +58744,7 @@
       }
     },
     "6106244": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
