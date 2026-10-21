@@ -59238,7 +59238,7 @@
       "cancelled_goal_keys": [],
       "observed_goal_events": [],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     }
