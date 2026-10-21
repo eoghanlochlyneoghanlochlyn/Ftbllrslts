@@ -60013,7 +60013,8 @@
       "event_keys": [
         "react:025Goal818975undefinedfalse",
         "react:035Goal751202undefinedtrue",
-        "react:061Goal194165undefinedtrue"
+        "react:061Goal194165undefinedtrue",
+        "react:082Goal654096undefinedfalse"
       ],
       "goals": [
         {
@@ -60276,6 +60277,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:082Goal654096undefinedfalse",
+          "player_id": 654096,
+          "player_name": "Declan Rice",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "82",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4510,
+          "needs_update": false,
+          "event": {
+            "reactKey": "082Goal654096undefinedfalse",
+            "timeStr": 82,
+            "type": "goal",
+            "time": 82,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 654096,
+              "name": "Declan Rice",
+              "profileUrl": "/players/654096/declan-rice"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/654096/declan-rice",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Declan Rice",
+            "firstName": "Declan",
+            "lastName": "Rice",
+            "fullName": "Declan Rice",
+            "playerId": 654096,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2985485319,
+              "eventType": "Goal",
+              "teamId": 9825,
+              "playerId": 654096,
+              "playerName": "Declan Rice",
+              "x": 97.6666666661,
+              "y": 21.897324844499998,
+              "min": 82,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0577,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 27299,
+              "firstName": "Declan",
+              "lastName": "Rice",
+              "fullName": "Declan Rice",
+              "teamColor": "#bd0510"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -60498,11 +60580,78 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "082Goal654096undefinedfalse",
+          "timeStr": 82,
+          "type": "goal",
+          "time": 82,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 654096,
+            "name": "Declan Rice",
+            "profileUrl": "/players/654096/declan-rice"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/654096/declan-rice",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Declan Rice",
+          "firstName": "Declan",
+          "lastName": "Rice",
+          "fullName": "Declan Rice",
+          "playerId": 654096,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2985485319,
+            "eventType": "Goal",
+            "teamId": 9825,
+            "playerId": 654096,
+            "playerName": "Declan Rice",
+            "x": 97.6666666661,
+            "y": 21.897324844499998,
+            "min": 82,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0577,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 27299,
+            "firstName": "Declan",
+            "lastName": "Rice",
+            "fullName": "Declan Rice",
+            "teamColor": "#bd0510"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "6106252": {
