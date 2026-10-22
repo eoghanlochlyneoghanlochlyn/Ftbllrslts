@@ -62464,7 +62464,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:146160508Goal794253undefinedtrue"
+        "react:146160508Goal794253undefinedtrue",
+        "react:1461614828Card466439undefinedfalse"
       ],
       "goals": [
         {
