@@ -62466,7 +62466,8 @@
       "event_keys": [
         "react:146160508Goal794253undefinedtrue",
         "react:1461614828Card466439undefinedfalse",
-        "react:1461616132Goal789630undefinedtrue"
+        "react:1461616132Goal789630undefinedtrue",
+        "react:1461674084Goal1079557undefinedtrue"
       ],
       "goals": [
         {
@@ -62638,6 +62639,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1461674084Goal1079557undefinedtrue",
+          "player_id": 1079557,
+          "player_name": "Amine Adli",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "84",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4536,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1461674084Goal1079557undefinedtrue",
+            "timeStr": 84,
+            "type": "goal",
+            "time": 84,
+            "overloadTime": null,
+            "eventId": 14616740,
+            "player": {
+              "id": 1079557,
+              "name": "Amine Adli",
+              "profileUrl": "/players/1079557/amine-adli"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/1079557/amine-adli",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Amine Adli",
+            "firstName": "Amine",
+            "lastName": "Adli",
+            "fullName": "Amine Adli",
+            "playerId": 1079557,
+            "newScore": [
+              3,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2985848089,
+              "eventType": "Goal",
+              "teamId": 8678,
+              "playerId": 1079557,
+              "playerName": "Amine Adli",
+              "x": 76.5160194192,
+              "y": 45.1217834353,
+              "min": 84,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.36375,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.0503,
+              "expectedGoalsOnTarget": 0.1676,
+              "shotType": "LeftFoot",
+              "situation": "FreeKick",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.37466931216931143,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1642393,
+              "firstName": "Amine",
+              "lastName": "Adli",
+              "fullName": "Amine Adli",
+              "teamColor": "#D71921"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -62783,10 +62869,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1461674084Goal1079557undefinedtrue",
+          "timeStr": 84,
+          "type": "goal",
+          "time": 84,
+          "overloadTime": null,
+          "eventId": 14616740,
+          "player": {
+            "id": 1079557,
+            "name": "Amine Adli",
+            "profileUrl": "/players/1079557/amine-adli"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/1079557/amine-adli",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Amine Adli",
+          "firstName": "Amine",
+          "lastName": "Adli",
+          "fullName": "Amine Adli",
+          "playerId": 1079557,
+          "newScore": [
+            3,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2985848089,
+            "eventType": "Goal",
+            "teamId": 8678,
+            "playerId": 1079557,
+            "playerName": "Amine Adli",
+            "x": 76.5160194192,
+            "y": 45.1217834353,
+            "min": 84,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.36375,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": 0.0503,
+            "expectedGoalsOnTarget": 0.1676,
+            "shotType": "LeftFoot",
+            "situation": "FreeKick",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.37466931216931143,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1642393,
+            "firstName": "Amine",
+            "lastName": "Adli",
+            "fullName": "Amine Adli",
+            "teamColor": "#D71921"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 0
       }
     }
