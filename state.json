@@ -64117,8 +64117,8 @@
             "blockedY": null,
             "goalCrossedY": 37.27875,
             "goalCrossedZ": 0.40452631380000004,
-            "expectedGoals": 0.27971136569976807,
-            "expectedGoalsOnTarget": 0.8543152809143066,
+            "expectedGoals": 0.23854167759418488,
+            "expectedGoalsOnTarget": 0.926688551902771,
             "shotType": "RightFoot",
             "situation": "FromCorner",
             "period": "FirstHalf",
@@ -64264,7 +64264,7 @@
             "blockedX": null,
             "blockedY": null,
             "goalCrossedY": 37.2025,
-            "goalCrossedZ": 0.9759999952,
+            "goalCrossedZ": 1.2199999940000001,
             "expectedGoals": 0.41753944754600525,
             "expectedGoalsOnTarget": 0.9825240969657898,
             "shotType": "Header",
@@ -64273,7 +64273,7 @@
             "isOwnGoal": false,
             "onGoalShot": {
               "x": 0.15277777777777768,
-              "y": 0.2582010569312169,
+              "y": 0.32275132116402117,
               "zoomRatio": 1
             },
             "isSavedOffLine": false,
