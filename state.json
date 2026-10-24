@@ -63713,7 +63713,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:146274517Goal0undefinedtrue"
+        "react:146274517Goal0undefinedtrue",
+        "react:146274517Goal710159undefinedtrue"
       ],
       "goals": [
         {
@@ -63765,6 +63766,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:146274517Goal710159undefinedtrue",
+          "player_id": 710159,
+          "player_name": "Ezri Konsa",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "7",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4556,
+          "needs_update": false,
+          "event": {
+            "reactKey": "146274517Goal710159undefinedtrue",
+            "timeStr": 7,
+            "type": "goal",
+            "time": 7,
+            "overloadTime": null,
+            "eventId": 14627451,
+            "player": {
+              "id": 710159,
+              "name": "Ezri Konsa",
+              "profileUrl": "/players/710159/ezri-konsa"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/710159/ezri-konsa",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ezri Konsa",
+            "firstName": "Ezri",
+            "lastName": "Konsa",
+            "fullName": "Ezri Konsa",
+            "playerId": 710159,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -63797,6 +63848,42 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "146274517Goal710159undefinedtrue",
+          "timeStr": 7,
+          "type": "goal",
+          "time": 7,
+          "overloadTime": null,
+          "eventId": 14627451,
+          "player": {
+            "id": 710159,
+            "name": "Ezri Konsa",
+            "profileUrl": "/players/710159/ezri-konsa"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/710159/ezri-konsa",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ezri Konsa",
+          "firstName": "Ezri",
+          "lastName": "Konsa",
+          "fullName": "Ezri Konsa",
+          "playerId": 710159,
           "newScore": [
             1,
             0
