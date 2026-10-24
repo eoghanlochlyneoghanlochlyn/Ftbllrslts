@@ -62956,7 +62956,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:146249206Goal0undefinedtrue",
-        "react:146249206Goal1197347undefinedtrue"
+        "react:146249206Goal1197347undefinedtrue",
+        "react:1462567453Goal737066undefinedfalse"
       ],
       "goals": [
         {
@@ -63096,6 +63097,87 @@
             "assistKey": "assist_by",
             "assistInput": "John McGinn"
           }
+        },
+        {
+          "event_key": "react:1462567453Goal737066undefinedfalse",
+          "player_id": 737066,
+          "player_name": "Erling Haaland",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "53",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4548,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1462567453Goal737066undefinedfalse",
+            "timeStr": 53,
+            "type": "goal",
+            "time": 53,
+            "overloadTime": null,
+            "eventId": 14625674,
+            "player": {
+              "id": 737066,
+              "name": "Erling Haaland",
+              "profileUrl": "/players/737066/erling-haaland"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/737066/erling-haaland",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Erling Haaland",
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "playerId": 737066,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2986531473,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 737066,
+              "playerName": "Erling Haaland",
+              "x": 100.44827586240001,
+              "y": 35.6775,
+              "min": 52,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.3115,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1053679,
+              "firstName": "Erling",
+              "lastName": "Haaland",
+              "fullName": "Erling Haaland",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -63209,11 +63291,78 @@
           "assistPlayerId": 356406,
           "assistKey": "assist_by",
           "assistInput": "John McGinn"
+        },
+        {
+          "reactKey": "1462567453Goal737066undefinedfalse",
+          "timeStr": 53,
+          "type": "goal",
+          "time": 53,
+          "overloadTime": null,
+          "eventId": 14625674,
+          "player": {
+            "id": 737066,
+            "name": "Erling Haaland",
+            "profileUrl": "/players/737066/erling-haaland"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/737066/erling-haaland",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Erling Haaland",
+          "firstName": "Erling",
+          "lastName": "Haaland",
+          "fullName": "Erling Haaland",
+          "playerId": 737066,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2986531473,
+            "eventType": "Goal",
+            "teamId": 8456,
+            "playerId": 737066,
+            "playerName": "Erling Haaland",
+            "x": 100.44827586240001,
+            "y": 35.6775,
+            "min": 52,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.3115,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1053679,
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "teamColor": "#69A8D8"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5795485": {
