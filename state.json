@@ -64304,7 +64304,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1463320377Goal0undefinedfalse"
+        "react:1463320377Goal0undefinedfalse",
+        "react:1463320377Goal1319972undefinedfalse"
       ],
       "goals": [
         {
@@ -64356,6 +64357,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1463320377Goal1319972undefinedfalse",
+          "player_id": 1319972,
+          "player_name": "Mike Penders",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "77",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 4566,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1463320377Goal1319972undefinedfalse",
+            "timeStr": 77,
+            "type": "goal",
+            "time": 77,
+            "overloadTime": null,
+            "eventId": 14633203,
+            "player": {
+              "id": 1319972,
+              "name": "Mike Penders",
+              "profileUrl": "/players/1319972/mike-penders"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1319972/mike-penders",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mike Penders",
+            "firstName": "Mike",
+            "lastName": "Penders",
+            "fullName": "Mike Penders",
+            "playerId": 1319972,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2987101349,
+              "eventType": "Goal",
+              "teamId": 8455,
+              "playerId": 1319972,
+              "playerName": "Mike Penders",
+              "x": 5.215517241000001,
+              "y": 32.779999999999994,
+              "min": 77,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.084999999999994,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "OtherBodyParts",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.2420634920634936,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1319972,
+              "firstName": "Mike",
+              "lastName": "Penders",
+              "fullName": "Mike Penders",
+              "teamColor": "#051495"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -64393,6 +64479,77 @@
             1
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1463320377Goal1319972undefinedfalse",
+          "timeStr": 77,
+          "type": "goal",
+          "time": 77,
+          "overloadTime": null,
+          "eventId": 14633203,
+          "player": {
+            "id": 1319972,
+            "name": "Mike Penders",
+            "profileUrl": "/players/1319972/mike-penders"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1319972/mike-penders",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mike Penders",
+          "firstName": "Mike",
+          "lastName": "Penders",
+          "fullName": "Mike Penders",
+          "playerId": 1319972,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2987101349,
+            "eventType": "Goal",
+            "teamId": 8455,
+            "playerId": 1319972,
+            "playerName": "Mike Penders",
+            "x": 5.215517241000001,
+            "y": 32.779999999999994,
+            "min": 77,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.084999999999994,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "OtherBodyParts",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.2420634920634936,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1319972,
+            "firstName": "Mike",
+            "lastName": "Penders",
+            "fullName": "Mike Penders",
+            "teamColor": "#051495"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
