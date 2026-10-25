@@ -67792,7 +67792,7 @@
             "goalCrossedZ": 0.9759999952,
             "expectedGoals": null,
             "expectedGoalsOnTarget": null,
-            "shotType": "LeftFoot",
+            "shotType": "OtherBodyParts",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": true,
