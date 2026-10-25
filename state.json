@@ -65265,7 +65265,8 @@
       "event_keys": [
         "react:1463909765Goal1526689undefinedfalse",
         "react:1463931290Goal0undefinedtrue",
-        "react:1463931290Goal621562undefinedtrue"
+        "react:1463931290Goal621562undefinedtrue",
+        "react:1463940290Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -65493,6 +65494,56 @@
             "assistKey": "assist_by",
             "assistInput": "Andy Diouf"
           }
+        },
+        {
+          "event_key": "react:1463940290Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 8",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4590,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1463940290Goal0undefinedtrue",
+            "timeStr": "90 + 8",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 8,
+            "eventId": 14639402,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": "+8",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -65680,10 +65731,46 @@
           "assistPlayerId": 1254297,
           "assistKey": "assist_by",
           "assistInput": "Andy Diouf"
+        },
+        {
+          "reactKey": "1463940290Goal0undefinedtrue",
+          "timeStr": "90 + 8",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 8,
+          "eventId": 14639402,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": "+8",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
