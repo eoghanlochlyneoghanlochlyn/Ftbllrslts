@@ -67239,7 +67239,8 @@
       "event_keys": [
         "react:1464246516Goal658554undefinedfalse",
         "react:1464298842Goal385437undefinedfalse",
-        "react:1464405982Goal0undefinedtrue"
+        "react:1464405982Goal0undefinedtrue",
+        "react:1464405982Goal1286183undefinedtrue"
       ],
       "goals": [
         {
@@ -67467,6 +67468,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1464405982Goal1286183undefinedtrue",
+          "player_id": 1286183,
+          "player_name": "Tom Bischof",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "82",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 4618,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464405982Goal1286183undefinedtrue",
+            "timeStr": 82,
+            "type": "goal",
+            "time": 82,
+            "overloadTime": null,
+            "eventId": 14644059,
+            "player": {
+              "id": 1286183,
+              "name": "Tom Bischof",
+              "profileUrl": "/players/1286183/tom-bischof"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1286183/tom-bischof",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Tom Bischof",
+            "firstName": "Tom",
+            "lastName": "Bischof",
+            "fullName": "Tom Bischof",
+            "playerId": 1286183,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2988076615,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1286183,
+              "playerName": "Tom Bischof",
+              "x": 4.74137931,
+              "y": 30.304,
+              "min": 82,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.745000000000005,
+              "goalCrossedZ": 0.9759999952,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 0.2738095238095226,
+                "y": 0.2582010569312169,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1285872,
+              "firstName": "Tom",
+              "lastName": "Bischof",
+              "fullName": "Tom Bischof",
+              "teamColor": "#C60428"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -67652,6 +67738,77 @@
             2
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1464405982Goal1286183undefinedtrue",
+          "timeStr": 82,
+          "type": "goal",
+          "time": 82,
+          "overloadTime": null,
+          "eventId": 14644059,
+          "player": {
+            "id": 1286183,
+            "name": "Tom Bischof",
+            "profileUrl": "/players/1286183/tom-bischof"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/1286183/tom-bischof",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Tom Bischof",
+          "firstName": "Tom",
+          "lastName": "Bischof",
+          "fullName": "Tom Bischof",
+          "playerId": 1286183,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2988076615,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 1286183,
+            "playerName": "Tom Bischof",
+            "x": 4.74137931,
+            "y": 30.304,
+            "min": 82,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.745000000000005,
+            "goalCrossedZ": 0.9759999952,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 0.2738095238095226,
+              "y": 0.2582010569312169,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1285872,
+            "firstName": "Tom",
+            "lastName": "Bischof",
+            "fullName": "Tom Bischof",
+            "teamColor": "#C60428"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
