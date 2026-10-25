@@ -67244,7 +67244,7 @@
           "event_key": "react:1464246516Goal658554undefinedfalse",
           "player_id": 658554,
           "player_name": "Dayot Upamecano",
-          "assist_player_id": null,
+          "assist_player_id": 1029063,
           "assist_player_name": "",
           "is_home": false,
           "minute": "16",
@@ -67302,8 +67302,8 @@
               "blockedY": null,
               "goalCrossedY": 32.9325,
               "goalCrossedZ": 0.6099999970000001,
-              "expectedGoals": 0.4714,
-              "expectedGoalsOnTarget": 0.5111,
+              "expectedGoals": 0.5518333315849304,
+              "expectedGoalsOnTarget": 0.3441338837146759,
               "shotType": "RightFoot",
               "situation": "FastBreak",
               "period": "FirstHalf",
@@ -67321,8 +67321,11 @@
               "fullName": "Dayot Upamecano",
               "teamColor": "#C60428"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Michael Olise",
+            "assistProfileUrl": "/players/1029063/michael-olise",
+            "assistPlayerId": 1029063,
+            "assistKey": "assist_by",
+            "assistInput": "Michael Olise"
           }
         }
       ],
@@ -67377,8 +67380,8 @@
             "blockedY": null,
             "goalCrossedY": 32.9325,
             "goalCrossedZ": 0.6099999970000001,
-            "expectedGoals": 0.4714,
-            "expectedGoalsOnTarget": 0.5111,
+            "expectedGoals": 0.5518333315849304,
+            "expectedGoalsOnTarget": 0.3441338837146759,
             "shotType": "RightFoot",
             "situation": "FastBreak",
             "period": "FirstHalf",
@@ -67396,8 +67399,11 @@
             "fullName": "Dayot Upamecano",
             "teamColor": "#C60428"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Michael Olise",
+          "assistProfileUrl": "/players/1029063/michael-olise",
+          "assistPlayerId": 1029063,
+          "assistKey": "assist_by",
+          "assistInput": "Michael Olise"
         }
       ],
       "observed_score": {
