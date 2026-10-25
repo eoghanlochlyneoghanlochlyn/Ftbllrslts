@@ -68912,7 +68912,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1464539141Goal701154undefinedfalse"
+        "react:1464539141Goal701154undefinedfalse",
+        "react:1464559861Goal696679undefinedtrue"
       ],
       "goals": [
         {
@@ -68963,6 +68964,59 @@
             "penShootoutScore": null,
             "assistStr": null,
             "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "react:1464559861Goal696679undefinedtrue",
+          "player_id": 696679,
+          "player_name": "Raphinha",
+          "assist_player_id": 1083323,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "61",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4634,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464559861Goal696679undefinedtrue",
+            "timeStr": 61,
+            "type": "goal",
+            "time": 61,
+            "overloadTime": null,
+            "eventId": 14645598,
+            "player": {
+              "id": 696679,
+              "name": "Raphinha",
+              "profileUrl": "/players/696679/raphinha"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/696679/raphinha",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Raphinha",
+            "firstName": "",
+            "lastName": "Raphinha",
+            "fullName": "Raphinha",
+            "playerId": 696679,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Pedri",
+            "assistProfileUrl": "/players/1083323/pedri",
+            "assistPlayerId": 1083323,
+            "assistKey": "assist_by",
+            "assistInput": "Pedri"
           }
         }
       ],
@@ -69038,10 +69092,49 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1464559861Goal696679undefinedtrue",
+          "timeStr": 61,
+          "type": "goal",
+          "time": 61,
+          "overloadTime": null,
+          "eventId": 14645598,
+          "player": {
+            "id": 696679,
+            "name": "Raphinha",
+            "profileUrl": "/players/696679/raphinha"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/696679/raphinha",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Raphinha",
+          "firstName": "",
+          "lastName": "Raphinha",
+          "fullName": "Raphinha",
+          "playerId": 696679,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Pedri",
+          "assistProfileUrl": "/players/1083323/pedri",
+          "assistPlayerId": 1083323,
+          "assistKey": "assist_by",
+          "assistInput": "Pedri"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     }
