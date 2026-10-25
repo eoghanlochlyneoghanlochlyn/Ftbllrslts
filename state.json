@@ -66480,7 +66480,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1464029938Goal0undefinedfalse",
-        "react:1464029938Goal1478295undefinedfalse"
+        "react:1464029938Goal1478295undefinedfalse",
+        "react:1464034442Goal789630undefinedfalse"
       ],
       "goals": [
         {
@@ -66620,6 +66621,94 @@
             "assistKey": "assist_by",
             "assistInput": "Justin Kluivert"
           }
+        },
+        {
+          "event_key": "react:1464034442Goal789630undefinedfalse",
+          "player_id": 789630,
+          "player_name": "Marcus Tavernier",
+          "assist_player_id": 1177358,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "42",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4602,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464034442Goal789630undefinedfalse",
+            "timeStr": 42,
+            "type": "goal",
+            "time": 42,
+            "overloadTime": null,
+            "eventId": 14640344,
+            "player": {
+              "id": 789630,
+              "name": "Marcus Tavernier",
+              "profileUrl": "/players/789630/marcus-tavernier"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/789630/marcus-tavernier",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Marcus Tavernier",
+            "firstName": "Marcus",
+            "lastName": "Tavernier",
+            "fullName": "Marcus Tavernier",
+            "playerId": 789630,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2987812333,
+              "eventType": "Goal",
+              "teamId": 8678,
+              "playerId": 789630,
+              "playerName": "Marcus Tavernier",
+              "x": 97.7631578942,
+              "y": 34.915000000000006,
+              "min": 43,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.70374999999999,
+              "goalCrossedZ": 0.0385263156,
+              "expectedGoals": 0.4351,
+              "expectedGoalsOnTarget": 0.6891,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3429232804232825,
+                "y": 0.010192146984126984,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1178602,
+              "firstName": "Marcus",
+              "lastName": "Tavernier",
+              "fullName": "Marcus Tavernier",
+              "teamColor": "#D71921"
+            },
+            "assistStr": "assist by Adrien Truffert",
+            "assistProfileUrl": "/players/1177358/adrien-truffert",
+            "assistPlayerId": 1177358,
+            "assistKey": "assist_by",
+            "assistInput": "Adrien Truffert"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -66733,11 +66822,85 @@
           "assistPlayerId": 794253,
           "assistKey": "assist_by",
           "assistInput": "Justin Kluivert"
+        },
+        {
+          "reactKey": "1464034442Goal789630undefinedfalse",
+          "timeStr": 42,
+          "type": "goal",
+          "time": 42,
+          "overloadTime": null,
+          "eventId": 14640344,
+          "player": {
+            "id": 789630,
+            "name": "Marcus Tavernier",
+            "profileUrl": "/players/789630/marcus-tavernier"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/789630/marcus-tavernier",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Marcus Tavernier",
+          "firstName": "Marcus",
+          "lastName": "Tavernier",
+          "fullName": "Marcus Tavernier",
+          "playerId": 789630,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2987812333,
+            "eventType": "Goal",
+            "teamId": 8678,
+            "playerId": 789630,
+            "playerName": "Marcus Tavernier",
+            "x": 97.7631578942,
+            "y": 34.915000000000006,
+            "min": 43,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.70374999999999,
+            "goalCrossedZ": 0.0385263156,
+            "expectedGoals": 0.4351,
+            "expectedGoalsOnTarget": 0.6891,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.3429232804232825,
+              "y": 0.010192146984126984,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1178602,
+            "firstName": "Marcus",
+            "lastName": "Tavernier",
+            "fullName": "Marcus Tavernier",
+            "teamColor": "#D71921"
+          },
+          "assistStr": "assist by Adrien Truffert",
+          "assistProfileUrl": "/players/1177358/adrien-truffert",
+          "assistPlayerId": 1177358,
+          "assistKey": "assist_by",
+          "assistInput": "Adrien Truffert"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5881200": {
