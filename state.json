@@ -68687,6 +68687,41 @@
             1
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2988195369,
+            "eventType": "Goal",
+            "teamId": 8633,
+            "playerId": 701154,
+            "playerName": "Kylian Mbappé",
+            "x": 98.0526315785,
+            "y": 37.2025,
+            "min": 41,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.5925,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": 0.49578964710235596,
+            "expectedGoalsOnTarget": 0.918615460395813,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.31415343915343885,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1167220,
+            "firstName": "Kylian",
+            "lastName": "Mbappé",
+            "fullName": "Kylian Mbappé",
+            "teamColor": "#085098"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
