@@ -68913,7 +68913,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1464539141Goal701154undefinedfalse",
-        "react:1464559861Goal696679undefinedtrue"
+        "react:1464559861Goal696679undefinedtrue",
+        "react:1464576488Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -69017,6 +69018,56 @@
             "assistPlayerId": 1083323,
             "assistKey": "assist_by",
             "assistInput": "Pedri"
+          }
+        },
+        {
+          "event_key": "react:1464576488Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "88",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4637,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1464576488Goal0undefinedfalse",
+            "timeStr": 88,
+            "type": "goal",
+            "time": 88,
+            "overloadTime": null,
+            "eventId": 14645764,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
           }
         }
       ],
@@ -69166,11 +69217,47 @@
           "assistPlayerId": 1083323,
           "assistKey": "assist_by",
           "assistInput": "Pedri"
+        },
+        {
+          "reactKey": "1464576488Goal0undefinedfalse",
+          "timeStr": 88,
+          "type": "goal",
+          "time": 88,
+          "overloadTime": null,
+          "eventId": 14645764,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     }
   }
