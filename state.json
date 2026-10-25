@@ -65264,7 +65264,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1463909765Goal1526689undefinedfalse",
-        "react:1463931290Goal0undefinedtrue"
+        "react:1463931290Goal0undefinedtrue",
+        "react:1463931290Goal621562undefinedtrue"
       ],
       "goals": [
         {
@@ -65404,6 +65405,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1463931290Goal621562undefinedtrue",
+          "player_id": 621562,
+          "player_name": "Marcus Thuram",
+          "assist_player_id": 1254297,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 1",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4589,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1463931290Goal621562undefinedtrue",
+            "timeStr": "90 + 1",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 1,
+            "eventId": 14639312,
+            "player": {
+              "id": 621562,
+              "name": "Marcus Thuram",
+              "profileUrl": "/players/621562/marcus-thuram"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/621562/marcus-thuram",
+            "overloadTimeStr": "+1",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Marcus Thuram",
+            "firstName": "Marcus",
+            "lastName": "Thuram",
+            "fullName": "Marcus Thuram",
+            "playerId": 621562,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2987702767,
+              "eventType": "Goal",
+              "teamId": 8636,
+              "playerId": 621562,
+              "playerName": "Marcus Thuram",
+              "x": 89.7,
+              "y": 30.304,
+              "min": 90,
+              "minAdded": 1,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.026249999999997,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.0765,
+              "expectedGoalsOnTarget": 0.3926,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7867063492063497,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 182917,
+              "firstName": "Marcus",
+              "lastName": "Thuram",
+              "fullName": "Marcus Thuram",
+              "teamColor": "#010E80"
+            },
+            "assistStr": "assist by Andy Diouf",
+            "assistProfileUrl": "/players/1254297/andy-diouf",
+            "assistPlayerId": 1254297,
+            "assistKey": "assist_by",
+            "assistInput": "Andy Diouf"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -65517,10 +65606,84 @@
           "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1463931290Goal621562undefinedtrue",
+          "timeStr": "90 + 1",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 1,
+          "eventId": 14639312,
+          "player": {
+            "id": 621562,
+            "name": "Marcus Thuram",
+            "profileUrl": "/players/621562/marcus-thuram"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/621562/marcus-thuram",
+          "overloadTimeStr": "+1",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Marcus Thuram",
+          "firstName": "Marcus",
+          "lastName": "Thuram",
+          "fullName": "Marcus Thuram",
+          "playerId": 621562,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2987702767,
+            "eventType": "Goal",
+            "teamId": 8636,
+            "playerId": 621562,
+            "playerName": "Marcus Thuram",
+            "x": 89.7,
+            "y": 30.304,
+            "min": 90,
+            "minAdded": 1,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.026249999999997,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.0765,
+            "expectedGoalsOnTarget": 0.3926,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7867063492063497,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 182917,
+            "firstName": "Marcus",
+            "lastName": "Thuram",
+            "fullName": "Marcus Thuram",
+            "teamColor": "#010E80"
+          },
+          "assistStr": "assist by Andy Diouf",
+          "assistProfileUrl": "/players/1254297/andy-diouf",
+          "assistPlayerId": 1254297,
+          "assistKey": "assist_by",
+          "assistInput": "Andy Diouf"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
