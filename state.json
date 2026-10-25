@@ -67237,7 +67237,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1464246516Goal658554undefinedfalse"
+        "react:1464246516Goal658554undefinedfalse",
+        "react:1464298842Goal385437undefinedfalse"
       ],
       "goals": [
         {
@@ -67327,6 +67328,94 @@
             "assistKey": "assist_by",
             "assistInput": "Michael Olise"
           }
+        },
+        {
+          "event_key": "react:1464298842Goal385437undefinedfalse",
+          "player_id": 385437,
+          "player_name": "Serge Gnabry",
+          "assist_player_id": 1395447,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "42",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4614,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464298842Goal385437undefinedfalse",
+            "timeStr": 42,
+            "type": "goal",
+            "time": 42,
+            "overloadTime": null,
+            "eventId": 14642988,
+            "player": {
+              "id": 385437,
+              "name": "Serge Gnabry",
+              "profileUrl": "/players/385437/serge-gnabry"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/385437/serge-gnabry",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Serge Gnabry",
+            "firstName": "Serge",
+            "lastName": "Gnabry",
+            "fullName": "Serge Gnabry",
+            "playerId": 385437,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2988004403,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 385437,
+              "playerName": "Serge Gnabry",
+              "x": 101.3017241382,
+              "y": 44.2810191037,
+              "min": 42,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.68625,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.3202,
+              "expectedGoalsOnTarget": 0.2487,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.8184523809523807,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1352996,
+              "firstName": "Serge",
+              "lastName": "Gnabry",
+              "fullName": "Serge Gnabry",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Nathaniel Brown",
+            "assistProfileUrl": "/players/1395447/nathaniel-brown",
+            "assistPlayerId": 1395447,
+            "assistKey": "assist_by",
+            "assistInput": "Nathaniel Brown"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -67404,11 +67493,85 @@
           "assistPlayerId": 1029063,
           "assistKey": "assist_by",
           "assistInput": "Michael Olise"
+        },
+        {
+          "reactKey": "1464298842Goal385437undefinedfalse",
+          "timeStr": 42,
+          "type": "goal",
+          "time": 42,
+          "overloadTime": null,
+          "eventId": 14642988,
+          "player": {
+            "id": 385437,
+            "name": "Serge Gnabry",
+            "profileUrl": "/players/385437/serge-gnabry"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/385437/serge-gnabry",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Serge Gnabry",
+          "firstName": "Serge",
+          "lastName": "Gnabry",
+          "fullName": "Serge Gnabry",
+          "playerId": 385437,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2988004403,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 385437,
+            "playerName": "Serge Gnabry",
+            "x": 101.3017241382,
+            "y": 44.2810191037,
+            "min": 42,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.68625,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.3202,
+            "expectedGoalsOnTarget": 0.2487,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.8184523809523807,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1352996,
+            "firstName": "Serge",
+            "lastName": "Gnabry",
+            "fullName": "Serge Gnabry",
+            "teamColor": "#C60428"
+          },
+          "assistStr": "assist by Nathaniel Brown",
+          "assistProfileUrl": "/players/1395447/nathaniel-brown",
+          "assistPlayerId": 1395447,
+          "assistKey": "assist_by",
+          "assistInput": "Nathaniel Brown"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5749716": {
