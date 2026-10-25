@@ -68330,7 +68330,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:146450256Goal0undefinedfalse",
-        "react:146450256Goal688295undefinedfalse"
+        "react:146450256Goal688295undefinedfalse",
+        "react:1464553766Goal1215652undefinedfalse"
       ],
       "goals": [
         {
@@ -68470,6 +68471,91 @@
             "assistKey": "assist_by",
             "assistInput": "Luka Modrić"
           }
+        },
+        {
+          "event_key": "react:1464553766Goal1215652undefinedfalse",
+          "player_id": 1215652,
+          "player_name": "Omari Hutchinson",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "66",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4632,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464553766Goal1215652undefinedfalse",
+            "timeStr": 66,
+            "type": "goal",
+            "time": 66,
+            "overloadTime": null,
+            "eventId": 14645537,
+            "player": {
+              "id": 1215652,
+              "name": "Omari Hutchinson",
+              "profileUrl": "/players/1215652/omari-hutchinson"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1215652/omari-hutchinson",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Omari Hutchinson",
+            "firstName": "Omari",
+            "lastName": "Hutchinson",
+            "fullName": "Omari Hutchinson",
+            "playerId": 1215652,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2988207785,
+              "eventType": "Goal",
+              "teamId": 8564,
+              "playerId": 1215652,
+              "playerName": "Omari Hutchinson",
+              "x": 100.732758621,
+              "y": 30.568749999999998,
+              "min": 65,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.636249999999997,
+              "goalCrossedZ": 1.5474736766000001,
+              "expectedGoals": 0.6265,
+              "expectedGoalsOnTarget": 0.9525,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.6253306878306886,
+                "y": 0.40938457052910054,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1091193,
+              "firstName": "Omari",
+              "lastName": "Hutchinson",
+              "fullName": "Omari Hutchinson",
+              "teamColor": "#CF2C27"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -68583,11 +68669,82 @@
           "assistPlayerId": 31097,
           "assistKey": "assist_by",
           "assistInput": "Luka Modrić"
+        },
+        {
+          "reactKey": "1464553766Goal1215652undefinedfalse",
+          "timeStr": 66,
+          "type": "goal",
+          "time": 66,
+          "overloadTime": null,
+          "eventId": 14645537,
+          "player": {
+            "id": 1215652,
+            "name": "Omari Hutchinson",
+            "profileUrl": "/players/1215652/omari-hutchinson"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1215652/omari-hutchinson",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Omari Hutchinson",
+          "firstName": "Omari",
+          "lastName": "Hutchinson",
+          "fullName": "Omari Hutchinson",
+          "playerId": 1215652,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2988207785,
+            "eventType": "Goal",
+            "teamId": 8564,
+            "playerId": 1215652,
+            "playerName": "Omari Hutchinson",
+            "x": 100.732758621,
+            "y": 30.568749999999998,
+            "min": 65,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.636249999999997,
+            "goalCrossedZ": 1.5474736766000001,
+            "expectedGoals": 0.6265,
+            "expectedGoalsOnTarget": 0.9525,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.6253306878306886,
+              "y": 0.40938457052910054,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1091193,
+            "firstName": "Omari",
+            "lastName": "Hutchinson",
+            "fullName": "Omari Hutchinson",
+            "teamColor": "#CF2C27"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5868105": {
