@@ -65941,7 +65941,8 @@
       "event_keys": [
         "react:1463997517Goal0undefinedtrue",
         "react:1463997517Goal1152455undefinedtrue",
-        "react:1464005821Goal690107undefinedtrue"
+        "react:1464005821Goal690107undefinedtrue",
+        "react:1463997517Goal167008undefinedtrue"
       ],
       "goals": [
         {
@@ -66158,6 +66159,91 @@
             "assistKey": "assist_by",
             "assistInput": "Bradley Barcola"
           }
+        },
+        {
+          "event_key": "react:1463997517Goal167008undefinedtrue",
+          "player_id": 167008,
+          "player_name": "Pascal Groß",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "17",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 4599,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1463997517Goal167008undefinedtrue",
+            "timeStr": 17,
+            "type": "goal",
+            "time": 17,
+            "overloadTime": null,
+            "eventId": 14639975,
+            "player": {
+              "id": 167008,
+              "name": "Pascal Groß",
+              "profileUrl": "/players/167008/pascal-gross"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/167008/pascal-gross",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Pascal Groß",
+            "firstName": "Pascal",
+            "lastName": "Groß",
+            "fullName": "Pascal Groß",
+            "playerId": 167008,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2987773991,
+              "eventType": "Goal",
+              "teamId": 10204,
+              "playerId": 167008,
+              "playerName": "Pascal Groß",
+              "x": 10.324561405,
+              "y": 40.385476190999995,
+              "min": 17,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.873749999999998,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": 0.2123957872390747,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.8270502645502642,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1131987,
+              "firstName": "Pascal",
+              "lastName": "Groß",
+              "fullName": "Pascal Groß",
+              "teamColor": "#0850A0"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -66307,6 +66393,77 @@
           "assistPlayerId": 1297165,
           "assistKey": "assist_by",
           "assistInput": "Bradley Barcola"
+        },
+        {
+          "reactKey": "1463997517Goal167008undefinedtrue",
+          "timeStr": 17,
+          "type": "goal",
+          "time": 17,
+          "overloadTime": null,
+          "eventId": 14639975,
+          "player": {
+            "id": 167008,
+            "name": "Pascal Groß",
+            "profileUrl": "/players/167008/pascal-gross"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/167008/pascal-gross",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Pascal Groß",
+          "firstName": "Pascal",
+          "lastName": "Groß",
+          "fullName": "Pascal Groß",
+          "playerId": 167008,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2987773991,
+            "eventType": "Goal",
+            "teamId": 10204,
+            "playerId": 167008,
+            "playerName": "Pascal Groß",
+            "x": 10.324561405,
+            "y": 40.385476190999995,
+            "min": 17,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.873749999999998,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": 0.2123957872390747,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.8270502645502642,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1131987,
+            "firstName": "Pascal",
+            "lastName": "Groß",
+            "fullName": "Pascal Groß",
+            "teamColor": "#0850A0"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
