@@ -65263,7 +65263,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1463909765Goal1526689undefinedfalse"
+        "react:1463909765Goal1526689undefinedfalse",
+        "react:1463931290Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -65353,6 +65354,56 @@
             "assistKey": "assist_by",
             "assistInput": "Nicolò Fagioli"
           }
+        },
+        {
+          "event_key": "react:1463931290Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 1",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4588,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1463931290Goal0undefinedtrue",
+            "timeStr": "90 + 1",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 1,
+            "eventId": 14639312,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": "+1",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -65430,6 +65481,42 @@
           "assistPlayerId": 951712,
           "assistKey": "assist_by",
           "assistInput": "Nicolò Fagioli"
+        },
+        {
+          "reactKey": "1463931290Goal0undefinedtrue",
+          "timeStr": "90 + 1",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 1,
+          "eventId": 14639312,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": "+1",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
