@@ -65352,6 +65352,41 @@
             1
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2987672593,
+            "eventType": "Goal",
+            "teamId": 8535,
+            "playerId": 1526689,
+            "playerName": "Álex Jiménez",
+            "x": 77.6422330112,
+            "y": 21.4769426787,
+            "min": 65,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.78875,
+            "goalCrossedZ": 1.6245263078,
+            "expectedGoals": 0.0217,
+            "expectedGoalsOnTarget": 0.177,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.5849867724867723,
+              "y": 0.42976886449735446,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 364822,
+            "firstName": "Álex",
+            "lastName": "Jiménez",
+            "fullName": "Álex Jiménez",
+            "teamColor": "#5F259F"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
