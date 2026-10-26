@@ -69593,10 +69593,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1464707421Goal505872undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1464707421Goal505872undefinedtrue",
+          "player_id": 505872,
+          "player_name": "Rami Rabia",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "21",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4649,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464707421Goal505872undefinedtrue",
+            "timeStr": 21,
+            "type": "goal",
+            "time": 21,
+            "overloadTime": null,
+            "eventId": 14647074,
+            "player": {
+              "id": 505872,
+              "name": "Rami Rabia",
+              "profileUrl": "/players/505872/rami-rabia"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/505872/rami-rabia",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Rami Rabia",
+            "firstName": "Rami",
+            "lastName": "Rabia",
+            "fullName": "Rami Rabia",
+            "playerId": 505872,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1464707421Goal505872undefinedtrue",
+          "timeStr": 21,
+          "type": "goal",
+          "time": 21,
+          "overloadTime": null,
+          "eventId": 14647074,
+          "player": {
+            "id": 505872,
+            "name": "Rami Rabia",
+            "profileUrl": "/players/505872/rami-rabia"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/505872/rami-rabia",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Rami Rabia",
+          "firstName": "Rami",
+          "lastName": "Rabia",
+          "fullName": "Rami Rabia",
+          "playerId": 505872,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 1,
         "away": 0
