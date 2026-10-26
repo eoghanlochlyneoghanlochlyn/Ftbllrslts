@@ -69596,7 +69596,8 @@
       "event_keys": [
         "react:1464707421Goal505872undefinedtrue",
         "react:1464713955Goal0undefinedfalse",
-        "react:1464713955Goal541552undefinedfalse"
+        "react:1464713955Goal541552undefinedfalse",
+        "react:1464719070Goal1295519undefinedtrue"
       ],
       "goals": [
         {
@@ -69754,6 +69755,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1464719070Goal1295519undefinedtrue",
+          "player_id": 1295519,
+          "player_name": "Houssine Rahimi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "70",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4653,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464719070Goal1295519undefinedtrue",
+            "timeStr": 70,
+            "type": "goal",
+            "time": 70,
+            "overloadTime": null,
+            "eventId": 14647190,
+            "player": {
+              "id": 1295519,
+              "name": "Houssine Rahimi",
+              "profileUrl": "/players/1295519/houssine-rahimi"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1295519/houssine-rahimi",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Houssine Rahimi",
+            "firstName": "Houssine",
+            "lastName": "Rahimi",
+            "fullName": "Houssine Rahimi",
+            "playerId": 1295519,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -69871,10 +69923,47 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1464719070Goal1295519undefinedtrue",
+          "timeStr": 70,
+          "type": "goal",
+          "time": 70,
+          "overloadTime": null,
+          "eventId": 14647190,
+          "player": {
+            "id": 1295519,
+            "name": "Houssine Rahimi",
+            "profileUrl": "/players/1295519/houssine-rahimi"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1295519/houssine-rahimi",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Houssine Rahimi",
+          "firstName": "Houssine",
+          "lastName": "Rahimi",
+          "fullName": "Houssine Rahimi",
+          "playerId": 1295519,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     },
