@@ -69978,8 +69978,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1464778072Goal1574189undefinedtrue",
         "react:1464781884Goal1396372undefinedtrue"
