@@ -70077,7 +70077,7 @@
           "event_key": "react:1464781884Goal1396372undefinedtrue",
           "player_id": 1396372,
           "player_name": "Mika Godts",
-          "assist_player_id": null,
+          "assist_player_id": 1699549,
           "assist_player_name": "",
           "is_home": true,
           "minute": "84",
@@ -70130,18 +70130,22 @@
               "min": 84,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0441,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 30.95,
+              "goalCrossedZ": 0.8539999958000001,
+              "expectedGoals": 0.10869351029396057,
+              "expectedGoalsOnTarget": 0.7382516264915466,
               "shotType": "RightFoot",
-              "situation": "RegularPlay",
+              "situation": "FastBreak",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 1.806878306878306,
+                "y": 0.22592592481481483,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": false,
               "keeperId": 651910,
@@ -70150,8 +70154,11 @@
               "fullName": "Mika Godts",
               "teamColor": "#273F6D"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Quentin Ndjantou",
+            "assistProfileUrl": "/players/1699549/quentin-ndjantou",
+            "assistPlayerId": 1699549,
+            "assistKey": "assist_by",
+            "assistInput": "Quentin Ndjantou"
           }
         }
       ],
@@ -70275,18 +70282,22 @@
             "min": 84,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0441,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 30.95,
+            "goalCrossedZ": 0.8539999958000001,
+            "expectedGoals": 0.10869351029396057,
+            "expectedGoalsOnTarget": 0.7382516264915466,
             "shotType": "RightFoot",
-            "situation": "RegularPlay",
+            "situation": "FastBreak",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 1.806878306878306,
+              "y": 0.22592592481481483,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": false,
             "keeperId": 651910,
@@ -70295,8 +70306,11 @@
             "fullName": "Mika Godts",
             "teamColor": "#273F6D"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Quentin Ndjantou",
+          "assistProfileUrl": "/players/1699549/quentin-ndjantou",
+          "assistPlayerId": 1699549,
+          "assistKey": "assist_by",
+          "assistInput": "Quentin Ndjantou"
         }
       ],
       "observed_score": {
