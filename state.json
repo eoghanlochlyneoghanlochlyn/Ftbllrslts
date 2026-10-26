@@ -69760,7 +69760,7 @@
           "event_key": "react:1464719070Goal1295519undefinedtrue",
           "player_id": 1295519,
           "player_name": "Houssine Rahimi",
-          "assist_player_id": null,
+          "assist_player_id": 1501222,
           "assist_player_name": "",
           "is_home": true,
           "minute": "70",
@@ -69803,8 +69803,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Yahya Ben Khaleq",
+            "assistProfileUrl": "/players/1501222/yahya-ben-khaleq",
+            "assistPlayerId": 1501222,
+            "assistKey": "assist_by",
+            "assistInput": "Yahya Ben Khaleq"
           }
         }
       ],
@@ -69958,8 +69961,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Yahya Ben Khaleq",
+          "assistProfileUrl": "/players/1501222/yahya-ben-khaleq",
+          "assistPlayerId": 1501222,
+          "assistKey": "assist_by",
+          "assistInput": "Yahya Ben Khaleq"
         }
       ],
       "observed_score": {
