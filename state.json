@@ -70492,7 +70492,7 @@
           "event_key": "react:1464899084Goal1556281undefinedtrue",
           "player_id": 1556281,
           "player_name": "Juan Bezerra",
-          "assist_player_id": null,
+          "assist_player_id": 441309,
           "assist_player_name": "",
           "is_home": true,
           "minute": "84",
@@ -70535,8 +70535,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Sardar Azmoun",
+            "assistProfileUrl": "/players/441309/sardar-azmoun",
+            "assistPlayerId": 441309,
+            "assistKey": "assist_by",
+            "assistInput": "Sardar Azmoun"
           }
         }
       ],
@@ -70690,8 +70693,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Sardar Azmoun",
+          "assistProfileUrl": "/players/441309/sardar-azmoun",
+          "assistPlayerId": 441309,
+          "assistKey": "assist_by",
+          "assistInput": "Sardar Azmoun"
         }
       ],
       "observed_score": {
