@@ -70328,7 +70328,8 @@
       "event_keys": [
         "react:1464893770Goal0undefinedtrue",
         "react:1464893769Goal1320954undefinedtrue",
-        "react:1464899085Goal0undefinedtrue"
+        "react:1464899085Goal0undefinedtrue",
+        "react:1464899084Goal1556281undefinedtrue"
       ],
       "goals": [
         {
@@ -70486,6 +70487,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1464899084Goal1556281undefinedtrue",
+          "player_id": 1556281,
+          "player_name": "Juan Bezerra",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "84",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4668,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464899084Goal1556281undefinedtrue",
+            "timeStr": 84,
+            "type": "goal",
+            "time": 84,
+            "overloadTime": null,
+            "eventId": 14648990,
+            "player": {
+              "id": 1556281,
+              "name": "Juan Bezerra",
+              "profileUrl": "/players/1556281/juan-bezerra"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1556281/juan-bezerra",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Juan Bezerra",
+            "firstName": "Juan",
+            "lastName": "Bezerra",
+            "fullName": "Juan Bezerra",
+            "playerId": 1556281,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -70595,6 +70647,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1464899084Goal1556281undefinedtrue",
+          "timeStr": 84,
+          "type": "goal",
+          "time": 84,
+          "overloadTime": null,
+          "eventId": 14648990,
+          "player": {
+            "id": 1556281,
+            "name": "Juan Bezerra",
+            "profileUrl": "/players/1556281/juan-bezerra"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1556281/juan-bezerra",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Juan Bezerra",
+          "firstName": "Juan",
+          "lastName": "Bezerra",
+          "fullName": "Juan Bezerra",
+          "playerId": 1556281,
           "newScore": [
             2,
             0
