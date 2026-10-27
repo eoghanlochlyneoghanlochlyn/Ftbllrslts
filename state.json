@@ -70720,7 +70720,7 @@
           "event_key": "react:146498056Goal448540undefinedtrue",
           "player_id": 448540,
           "player_name": "Serhou Guirassy",
-          "assist_player_id": null,
+          "assist_player_id": 659272,
           "assist_player_name": "",
           "is_home": true,
           "minute": "6",
@@ -70773,18 +70773,22 @@
               "min": 6,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.1328,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 36.97375,
+              "goalCrossedZ": 1.2585263096000001,
+              "expectedGoals": 0.3875149190425873,
+              "expectedGoalsOnTarget": 0.5319808125495911,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.21329365079365015,
+                "y": 0.3329434681481482,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 982692,
@@ -70793,8 +70797,11 @@
               "fullName": "Serhou Guirassy",
               "teamColor": "#d8a000"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Julian Ryerson",
+            "assistProfileUrl": "/players/659272/julian-ryerson",
+            "assistPlayerId": 659272,
+            "assistKey": "assist_by",
+            "assistInput": "Julian Ryerson"
           }
         }
       ],
@@ -70844,18 +70851,22 @@
             "min": 6,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.1328,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 36.97375,
+            "goalCrossedZ": 1.2585263096000001,
+            "expectedGoals": 0.3875149190425873,
+            "expectedGoalsOnTarget": 0.5319808125495911,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.21329365079365015,
+              "y": 0.3329434681481482,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 982692,
@@ -70864,8 +70875,11 @@
             "fullName": "Serhou Guirassy",
             "teamColor": "#d8a000"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Julian Ryerson",
+          "assistProfileUrl": "/players/659272/julian-ryerson",
+          "assistPlayerId": 659272,
+          "assistKey": "assist_by",
+          "assistInput": "Julian Ryerson"
         }
       ],
       "observed_score": {
