@@ -70809,7 +70809,7 @@
           "event_key": "react:1464990217Goal1089685undefinedtrue",
           "player_id": 1089685,
           "player_name": "Carney Chukwuemeka",
-          "assist_player_id": null,
+          "assist_player_id": 1287373,
           "assist_player_name": "",
           "is_home": true,
           "minute": "17",
@@ -70867,8 +70867,8 @@
               "blockedY": null,
               "goalCrossedY": 32.3225,
               "goalCrossedZ": 1.6245263078,
-              "expectedGoals": 0.0713,
-              "expectedGoalsOnTarget": 0.2005,
+              "expectedGoals": 0.157205730676651,
+              "expectedGoalsOnTarget": 0.21493306756019592,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -70886,8 +70886,11 @@
               "fullName": "Carney Chukwuemeka",
               "teamColor": "#d8a000"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Jobe Bellingham",
+            "assistProfileUrl": "/players/1287373/jobe-bellingham",
+            "assistPlayerId": 1287373,
+            "assistKey": "assist_by",
+            "assistInput": "Jobe Bellingham"
           }
         }
       ],
@@ -71035,8 +71038,11 @@
             "fullName": "Carney Chukwuemeka",
             "teamColor": "#d8a000"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Jobe Bellingham",
+          "assistProfileUrl": "/players/1287373/jobe-bellingham",
+          "assistPlayerId": 1287373,
+          "assistKey": "assist_by",
+          "assistInput": "Jobe Bellingham"
         }
       ],
       "observed_score": {
