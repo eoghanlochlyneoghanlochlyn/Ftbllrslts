@@ -70326,7 +70326,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1464893770Goal0undefinedtrue"
+        "react:1464893770Goal0undefinedtrue",
+        "react:1464893769Goal1320954undefinedtrue"
       ],
       "goals": [
         {
@@ -70379,6 +70380,60 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1464893769Goal1320954undefinedtrue",
+          "player_id": 1320954,
+          "player_name": "Mateusão",
+          "assist_player_id": 441309,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4666,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464893769Goal1320954undefinedtrue",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14648937,
+            "player": {
+              "id": 1320954,
+              "name": "Mateusão",
+              "profileUrl": "/players/1320954/mateusao"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1320954/mateusao",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mateusão",
+            "firstName": "",
+            "lastName": "Mateusão",
+            "fullName": "Mateusão",
+            "playerId": 1320954,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Sardar Azmoun",
+            "assistProfileUrl": "/players/441309/sardar-azmoun",
+            "assistPlayerId": 441309,
+            "assistKey": "assist_by",
+            "assistInput": "Sardar Azmoun"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -70419,6 +70474,46 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1464893769Goal1320954undefinedtrue",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14648937,
+          "player": {
+            "id": 1320954,
+            "name": "Mateusão",
+            "profileUrl": "/players/1320954/mateusao"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1320954/mateusao",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mateusão",
+          "firstName": "",
+          "lastName": "Mateusão",
+          "fullName": "Mateusão",
+          "playerId": 1320954,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": "assist by Sardar Azmoun",
+          "assistProfileUrl": "/players/441309/sardar-azmoun",
+          "assistPlayerId": 441309,
+          "assistKey": "assist_by",
+          "assistInput": "Sardar Azmoun"
         }
       ],
       "observed_score": {
