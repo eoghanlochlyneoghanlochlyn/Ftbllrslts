@@ -70715,7 +70715,8 @@
       "event_keys": [
         "react:146498056Goal448540undefinedtrue",
         "react:1464990217Goal1089685undefinedtrue",
-        "react:1465062565Goal276791undefinedfalse"
+        "react:1465062565Goal276791undefinedfalse",
+        "react:1465066369Goal276791undefinedfalse"
       ],
       "goals": [
         {
@@ -70974,6 +70975,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1465066369Goal276791undefinedfalse",
+          "player_id": 276791,
+          "player_name": "Niclas Füllkrug",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4681,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1465066369Goal276791undefinedfalse",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14650663,
+            "player": {
+              "id": 276791,
+              "name": "Niclas Füllkrug",
+              "profileUrl": "/players/276791/niclas-fullkrug"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/276791/niclas-fullkrug",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Niclas Füllkrug",
+            "firstName": "Niclas",
+            "lastName": "Füllkrug",
+            "fullName": "Niclas Füllkrug",
+            "playerId": 276791,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2989051735,
+              "eventType": "Goal",
+              "teamId": 8697,
+              "playerId": 276791,
+              "playerName": "Niclas Füllkrug",
+              "x": 82.7101941752,
+              "y": 38.704523811,
+              "min": 68,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0635,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 764018,
+              "firstName": "Niclas",
+              "lastName": "Füllkrug",
+              "fullName": "Niclas Füllkrug",
+              "teamColor": "#007642"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -71196,11 +71278,78 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1465066369Goal276791undefinedfalse",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14650663,
+          "player": {
+            "id": 276791,
+            "name": "Niclas Füllkrug",
+            "profileUrl": "/players/276791/niclas-fullkrug"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/276791/niclas-fullkrug",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Niclas Füllkrug",
+          "firstName": "Niclas",
+          "lastName": "Füllkrug",
+          "fullName": "Niclas Füllkrug",
+          "playerId": 276791,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2989051735,
+            "eventType": "Goal",
+            "teamId": 8697,
+            "playerId": 276791,
+            "playerName": "Niclas Füllkrug",
+            "x": 82.7101941752,
+            "y": 38.704523811,
+            "min": 68,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0635,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 764018,
+            "firstName": "Niclas",
+            "lastName": "Füllkrug",
+            "fullName": "Niclas Füllkrug",
+            "teamColor": "#007642"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "6275367": {
