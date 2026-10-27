@@ -70713,7 +70713,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:146498056Goal448540undefinedtrue"
+        "react:146498056Goal448540undefinedtrue",
+        "react:1464990217Goal1089685undefinedtrue"
       ],
       "goals": [
         {
@@ -70803,6 +70804,91 @@
             "assistKey": "assist_by",
             "assistInput": "Julian Ryerson"
           }
+        },
+        {
+          "event_key": "react:1464990217Goal1089685undefinedtrue",
+          "player_id": 1089685,
+          "player_name": "Carney Chukwuemeka",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "17",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4676,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1464990217Goal1089685undefinedtrue",
+            "timeStr": 17,
+            "type": "goal",
+            "time": 17,
+            "overloadTime": null,
+            "eventId": 14649902,
+            "player": {
+              "id": 1089685,
+              "name": "Carney Chukwuemeka",
+              "profileUrl": "/players/1089685/carney-chukwuemeka"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1089685/carney-chukwuemeka",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Carney Chukwuemeka",
+            "firstName": "Carney",
+            "lastName": "Chukwuemeka",
+            "fullName": "Carney Chukwuemeka",
+            "playerId": 1089685,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2988965135,
+              "eventType": "Goal",
+              "teamId": 9789,
+              "playerId": 1089685,
+              "playerName": "Carney Chukwuemeka",
+              "x": 90.4,
+              "y": 36.440000000000005,
+              "min": 17,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.3225,
+              "goalCrossedZ": 1.6245263078,
+              "expectedGoals": 0.0713,
+              "expectedGoalsOnTarget": 0.2005,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.4437830687830693,
+                "y": 0.42976886449735446,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 982692,
+              "firstName": "Carney",
+              "lastName": "Chukwuemeka",
+              "fullName": "Carney Chukwuemeka",
+              "teamColor": "#d8a000"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -70880,10 +70966,81 @@
           "assistPlayerId": 659272,
           "assistKey": "assist_by",
           "assistInput": "Julian Ryerson"
+        },
+        {
+          "reactKey": "1464990217Goal1089685undefinedtrue",
+          "timeStr": 17,
+          "type": "goal",
+          "time": 17,
+          "overloadTime": null,
+          "eventId": 14649902,
+          "player": {
+            "id": 1089685,
+            "name": "Carney Chukwuemeka",
+            "profileUrl": "/players/1089685/carney-chukwuemeka"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1089685/carney-chukwuemeka",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Carney Chukwuemeka",
+          "firstName": "Carney",
+          "lastName": "Chukwuemeka",
+          "fullName": "Carney Chukwuemeka",
+          "playerId": 1089685,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2988965135,
+            "eventType": "Goal",
+            "teamId": 9789,
+            "playerId": 1089685,
+            "playerName": "Carney Chukwuemeka",
+            "x": 90.4,
+            "y": 36.440000000000005,
+            "min": 17,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.3225,
+            "goalCrossedZ": 1.6245263078,
+            "expectedGoals": 0.0713,
+            "expectedGoalsOnTarget": 0.2005,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.4437830687830693,
+              "y": 0.42976886449735446,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 982692,
+            "firstName": "Carney",
+            "lastName": "Chukwuemeka",
+            "fullName": "Carney Chukwuemeka",
+            "teamColor": "#d8a000"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
