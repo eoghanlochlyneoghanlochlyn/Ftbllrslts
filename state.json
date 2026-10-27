@@ -71058,7 +71058,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1465002321Goal0undefinedtrue"
+        "react:1465002321Goal0undefinedtrue",
+        "react:1465002321Goal1290999undefinedtrue"
       ],
       "goals": [
         {
@@ -71110,6 +71111,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1465002321Goal1290999undefinedtrue",
+          "player_id": 1290999,
+          "player_name": "Aaron Loupalo-Bi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "21",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4678,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1465002321Goal1290999undefinedtrue",
+            "timeStr": 21,
+            "type": "goal",
+            "time": 21,
+            "overloadTime": null,
+            "eventId": 14650023,
+            "player": {
+              "id": 1290999,
+              "name": "Aaron Loupalo-Bi",
+              "profileUrl": "/players/1290999/aaron-loupalo-bi"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1290999/aaron-loupalo-bi",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Aaron Loupalo-Bi",
+            "firstName": "Aaron",
+            "lastName": "Loupalo-Bi",
+            "fullName": "Aaron Loupalo-Bi",
+            "playerId": 1290999,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2988987029,
+              "eventType": "Goal",
+              "teamId": 45723,
+              "playerId": 1290999,
+              "playerName": "Aaron Loupalo-Bi",
+              "x": 97.2807017537,
+              "y": 45.6822929897,
+              "min": 21,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.39,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.2462,
+              "expectedGoalsOnTarget": 0.1959,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.1613756613756612,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 952029,
+              "firstName": "Aaron",
+              "lastName": "Loupalo-Bi",
+              "fullName": "Aaron Loupalo-Bi",
+              "teamColor": "#C80808"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -71147,6 +71233,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1465002321Goal1290999undefinedtrue",
+          "timeStr": 21,
+          "type": "goal",
+          "time": 21,
+          "overloadTime": null,
+          "eventId": 14650023,
+          "player": {
+            "id": 1290999,
+            "name": "Aaron Loupalo-Bi",
+            "profileUrl": "/players/1290999/aaron-loupalo-bi"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1290999/aaron-loupalo-bi",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Aaron Loupalo-Bi",
+          "firstName": "Aaron",
+          "lastName": "Loupalo-Bi",
+          "fullName": "Aaron Loupalo-Bi",
+          "playerId": 1290999,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2988987029,
+            "eventType": "Goal",
+            "teamId": 45723,
+            "playerId": 1290999,
+            "playerName": "Aaron Loupalo-Bi",
+            "x": 97.2807017537,
+            "y": 45.6822929897,
+            "min": 21,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.39,
+            "goalCrossedZ": 0.160526315,
+            "expectedGoals": 0.2462,
+            "expectedGoalsOnTarget": 0.1959,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.1613756613756612,
+              "y": 0.042467279100529096,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 952029,
+            "firstName": "Aaron",
+            "lastName": "Loupalo-Bi",
+            "fullName": "Aaron Loupalo-Bi",
+            "teamColor": "#C80808"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
