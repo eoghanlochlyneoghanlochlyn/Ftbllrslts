@@ -74350,7 +74350,7 @@
           "event_key": "react:1465425340Goal239219undefinedtrue",
           "player_id": 239219,
           "player_name": "Mateo Kovačić",
-          "assist_player_id": null,
+          "assist_player_id": 815006,
           "assist_player_name": "",
           "is_home": true,
           "minute": "40",
@@ -74408,8 +74408,8 @@
               "blockedY": null,
               "goalCrossedY": 36.745000000000005,
               "goalCrossedZ": 0.5265263132,
-              "expectedGoals": 0.035,
-              "expectedGoalsOnTarget": 0.2233,
+              "expectedGoals": 0.044771283864974976,
+              "expectedGoalsOnTarget": 0.16706198453903198,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -74427,8 +74427,11 @@
               "fullName": "Mateo Kovačić",
               "teamColor": "#69A8D8"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Phil Foden",
+            "assistProfileUrl": "/players/815006/phil-foden",
+            "assistPlayerId": 815006,
+            "assistKey": "assist_by",
+            "assistInput": "Phil Foden"
           }
         }
       ],
@@ -74612,8 +74615,11 @@
             "fullName": "Mateo Kovačić",
             "teamColor": "#69A8D8"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Phil Foden",
+          "assistProfileUrl": "/players/815006/phil-foden",
+          "assistPlayerId": 815006,
+          "assistKey": "assist_by",
+          "assistInput": "Phil Foden"
         }
       ],
       "observed_score": {
