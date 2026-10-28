@@ -73204,7 +73204,8 @@
       "event_keys": [
         "react:1465246429Goal0undefinedtrue",
         "react:1465246429Goal866165undefinedtrue",
-        "react:1465351880Goal0undefinedfalse"
+        "react:1465351880Goal0undefinedfalse",
+        "react:1465351880Goal1605748undefinedfalse"
       ],
       "goals": [
         {
@@ -73391,6 +73392,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1465351880Goal1605748undefinedfalse",
+          "player_id": 1605748,
+          "player_name": "Matías Moreno",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "80",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 4716,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1465351880Goal1605748undefinedfalse",
+            "timeStr": 80,
+            "type": "goal",
+            "time": 80,
+            "overloadTime": null,
+            "eventId": 14653518,
+            "player": {
+              "id": 1605748,
+              "name": "Matías Moreno",
+              "profileUrl": "/players/1605748/matias-moreno"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1605748/matias-moreno",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Matías Moreno",
+            "firstName": "Matías",
+            "lastName": "Moreno",
+            "fullName": "Matías Moreno",
+            "playerId": 1605748,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2989375765,
+              "eventType": "Goal",
+              "teamId": 7881,
+              "playerId": 1605748,
+              "playerName": "Matías Moreno",
+              "x": 2.0862068964000002,
+              "y": 30.416249999999994,
+              "min": 79,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.525000000000006,
+              "goalCrossedZ": 0.8925263114,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 0.5965608465608451,
+                "y": 0.2361180717989418,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1130600,
+              "firstName": "Matías",
+              "lastName": "Moreno",
+              "fullName": "Matías Moreno",
+              "teamColor": "#101010"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -73535,6 +73621,77 @@
             1
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1465351880Goal1605748undefinedfalse",
+          "timeStr": 80,
+          "type": "goal",
+          "time": 80,
+          "overloadTime": null,
+          "eventId": 14653518,
+          "player": {
+            "id": 1605748,
+            "name": "Matías Moreno",
+            "profileUrl": "/players/1605748/matias-moreno"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1605748/matias-moreno",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Matías Moreno",
+          "firstName": "Matías",
+          "lastName": "Moreno",
+          "fullName": "Matías Moreno",
+          "playerId": 1605748,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2989375765,
+            "eventType": "Goal",
+            "teamId": 7881,
+            "playerId": 1605748,
+            "playerName": "Matías Moreno",
+            "x": 2.0862068964000002,
+            "y": 30.416249999999994,
+            "min": 79,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.525000000000006,
+            "goalCrossedZ": 0.8925263114,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 0.5965608465608451,
+              "y": 0.2361180717989418,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1130600,
+            "firstName": "Matías",
+            "lastName": "Moreno",
+            "fullName": "Matías Moreno",
+            "teamColor": "#101010"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
