@@ -72122,7 +72122,8 @@
         "react:146523168Goal0undefinedfalse",
         "react:146523168Goal1402900undefinedfalse",
         "react:1465234914Goal1445650undefinedtrue",
-        "react:1465244227Goal1445650undefinedtrue"
+        "react:1465244227Goal1445650undefinedtrue",
+        "react:1465328661Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -72435,6 +72436,56 @@
             "assistKey": "assist_by",
             "assistInput": "Fikayo Tomori"
           }
+        },
+        {
+          "event_key": "react:1465328661Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "61",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4708,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1465328661Goal0undefinedfalse",
+            "timeStr": 61,
+            "type": "goal",
+            "time": 61,
+            "overloadTime": null,
+            "eventId": 14653286,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -72693,11 +72744,47 @@
           "assistPlayerId": 749662,
           "assistKey": "assist_by",
           "assistInput": "Fikayo Tomori"
+        },
+        {
+          "reactKey": "1465328661Goal0undefinedfalse",
+          "timeStr": 61,
+          "type": "goal",
+          "time": 61,
+          "overloadTime": null,
+          "eventId": 14653286,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "5749729": {
