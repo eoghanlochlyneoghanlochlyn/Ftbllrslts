@@ -78582,11 +78582,8 @@
             "fullName": "Achraf Hakimi",
             "teamColor": "#273F6D"
           },
-          "assistStr": "assist by Mika Godts",
-          "assistProfileUrl": "/players/1396372/mika-godts",
-          "assistPlayerId": 1396372,
-          "assistKey": "assist_by",
-          "assistInput": "Mika Godts"
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
