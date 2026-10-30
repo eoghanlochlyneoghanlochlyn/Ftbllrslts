@@ -77776,7 +77776,7 @@
           "event_key": "react:1466141662Goal1574189undefinedfalse",
           "player_id": 1574189,
           "player_name": "Senny Mayulu",
-          "assist_player_id": null,
+          "assist_player_id": 770881,
           "assist_player_name": "",
           "is_home": false,
           "minute": "62",
@@ -77853,8 +77853,11 @@
               "fullName": "Senny Mayulu",
               "teamColor": "#273F6D"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Achraf Hakimi",
+            "assistProfileUrl": "/players/770881/achraf-hakimi",
+            "assistPlayerId": 770881,
+            "assistKey": "assist_by",
+            "assistInput": "Achraf Hakimi"
           }
         }
       ],
@@ -78329,8 +78332,11 @@
             "fullName": "Senny Mayulu",
             "teamColor": "#273F6D"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Achraf Hakimi",
+          "assistProfileUrl": "/players/770881/achraf-hakimi",
+          "assistPlayerId": 770881,
+          "assistKey": "assist_by",
+          "assistInput": "Achraf Hakimi"
         }
       ],
       "observed_score": {
