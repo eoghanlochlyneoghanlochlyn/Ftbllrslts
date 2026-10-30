@@ -77274,7 +77274,8 @@
         "react:1466053928Goal770881undefinedfalse",
         "react:1466129755Goal770881undefinedfalse",
         "react:1466141662Goal0undefinedfalse",
-        "react:1466141662Goal1574189undefinedfalse"
+        "react:1466141662Goal1574189undefinedfalse",
+        "react:1466155069Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -77859,6 +77860,56 @@
             "assistKey": "assist_by",
             "assistInput": "Achraf Hakimi"
           }
+        },
+        {
+          "event_key": "react:1466155069Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4771,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1466155069Goal0undefinedfalse",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14661550,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 4,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              5
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -78337,11 +78388,47 @@
           "assistPlayerId": 770881,
           "assistKey": "assist_by",
           "assistInput": "Achraf Hakimi"
+        },
+        {
+          "reactKey": "1466155069Goal0undefinedfalse",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14661550,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 4,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            5
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 4
+        "away": 5
       }
     },
     "5795498": {
