@@ -82116,7 +82116,8 @@
         "react:146767958Goal696679undefinedtrue",
         "react:1467693922Goal1404415undefinedtrue",
         "react:1467693923Goal1404415undefinedtrue",
-        "react:1467719941Goal696679undefinedtrue"
+        "react:1467719941Goal696679undefinedtrue",
+        "react:1467728045Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -82516,6 +82517,56 @@
             "assistKey": "assist_by",
             "assistInput": "Fermín López"
           }
+        },
+        {
+          "event_key": "react:1467728045Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "45 + 1",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4831,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1467728045Goal0undefinedtrue",
+            "timeStr": "45 + 1",
+            "type": "goal",
+            "time": 45,
+            "overloadTime": 1,
+            "eventId": 14677280,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 3,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": "+1",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              4,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -82851,10 +82902,46 @@
           "assistPlayerId": 1404415,
           "assistKey": "assist_by",
           "assistInput": "Fermín López"
+        },
+        {
+          "reactKey": "1467728045Goal0undefinedtrue",
+          "timeStr": "45 + 1",
+          "type": "goal",
+          "time": 45,
+          "overloadTime": 1,
+          "eventId": 14677280,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 3,
+          "awayScore": 0,
+          "profileUrl": "",
+          "overloadTimeStr": "+1",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            4,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 3,
+        "home": 4,
         "away": 0
       }
     },
