@@ -80375,7 +80375,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1467441434Goal1287373undefinedfalse"
+        "react:1467441434Goal1287373undefinedfalse",
+        "react:1467449438Goal526827undefinedtrue"
       ],
       "goals": [
         {
@@ -80465,6 +80466,91 @@
             "assistKey": "assist_by",
             "assistInput": "Carney Chukwuemeka"
           }
+        },
+        {
+          "event_key": "react:1467449438Goal526827undefinedtrue",
+          "player_id": 526827,
+          "player_name": "Konrad Laimer",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "38",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4808,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1467449438Goal526827undefinedtrue",
+            "timeStr": 38,
+            "type": "goal",
+            "time": 38,
+            "overloadTime": null,
+            "eventId": 14674494,
+            "player": {
+              "id": 526827,
+              "name": "Konrad Laimer",
+              "profileUrl": "/players/526827/konrad-laimer"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/526827/konrad-laimer",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Konrad Laimer",
+            "firstName": "Konrad",
+            "lastName": "Laimer",
+            "fullName": "Konrad Laimer",
+            "playerId": 526827,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2990948701,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 526827,
+              "playerName": "Konrad Laimer",
+              "x": 99.784482759,
+              "y": 31.4075,
+              "min": 38,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.24625,
+              "goalCrossedZ": 0.6934736808,
+              "expectedGoals": 0.6143,
+              "expectedGoalsOnTarget": 0.8503,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.4639550264550256,
+                "y": 0.18345864571428572,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 764018,
+              "firstName": "Konrad",
+              "lastName": "Laimer",
+              "fullName": "Konrad Laimer",
+              "teamColor": "#C60428"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -80542,10 +80628,81 @@
           "assistPlayerId": 1089685,
           "assistKey": "assist_by",
           "assistInput": "Carney Chukwuemeka"
+        },
+        {
+          "reactKey": "1467449438Goal526827undefinedtrue",
+          "timeStr": 38,
+          "type": "goal",
+          "time": 38,
+          "overloadTime": null,
+          "eventId": 14674494,
+          "player": {
+            "id": 526827,
+            "name": "Konrad Laimer",
+            "profileUrl": "/players/526827/konrad-laimer"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/526827/konrad-laimer",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Konrad Laimer",
+          "firstName": "Konrad",
+          "lastName": "Laimer",
+          "fullName": "Konrad Laimer",
+          "playerId": 526827,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2990948701,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 526827,
+            "playerName": "Konrad Laimer",
+            "x": 99.784482759,
+            "y": 31.4075,
+            "min": 38,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.24625,
+            "goalCrossedZ": 0.6934736808,
+            "expectedGoals": 0.6143,
+            "expectedGoalsOnTarget": 0.8503,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.4639550264550256,
+              "y": 0.18345864571428572,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 764018,
+            "firstName": "Konrad",
+            "lastName": "Laimer",
+            "fullName": "Konrad Laimer",
+            "teamColor": "#C60428"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
