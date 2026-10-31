@@ -80194,7 +80194,8 @@
       "event_keys": [
         "react:1467414413Card706297undefinedfalse",
         "react:1467432425Goal1323305undefinedtrue",
-        "react:1467554973Goal0undefinedtrue"
+        "react:1467554973Goal0undefinedtrue",
+        "react:1467554973Goal974618undefinedtrue"
       ],
       "goals": [
         {
@@ -80334,6 +80335,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1467554973Goal974618undefinedtrue",
+          "player_id": 974618,
+          "player_name": "Jan Paul van Hecke",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "73",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4813,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1467554973Goal974618undefinedtrue",
+            "timeStr": 73,
+            "type": "goal",
+            "time": 73,
+            "overloadTime": null,
+            "eventId": 14675549,
+            "player": {
+              "id": 974618,
+              "name": "Jan Paul van Hecke",
+              "profileUrl": "/players/974618/jan-paul-van-hecke"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/974618/jan-paul-van-hecke",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jan Paul van Hecke",
+            "firstName": "Jan Paul",
+            "lastName": "van Hecke",
+            "fullName": "Jan Paul van Hecke",
+            "playerId": 974618,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2991014365,
+              "eventType": "Goal",
+              "teamId": 8586,
+              "playerId": 974618,
+              "playerName": "Jan Paul van Hecke",
+              "x": 103.3879310346,
+              "y": 31.559999999999995,
+              "min": 73,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.92375,
+              "goalCrossedZ": 0.9759999952,
+              "expectedGoals": 0.42828568816185,
+              "expectedGoalsOnTarget": 0.7505028247833252,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.0201719576719581,
+                "y": 0.2582010569312169,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 719330,
+              "firstName": "Jan Paul",
+              "lastName": "van Hecke",
+              "fullName": "Jan Paul van Hecke",
+              "teamColor": "#132257"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -80445,6 +80531,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1467554973Goal974618undefinedtrue",
+          "timeStr": 73,
+          "type": "goal",
+          "time": 73,
+          "overloadTime": null,
+          "eventId": 14675549,
+          "player": {
+            "id": 974618,
+            "name": "Jan Paul van Hecke",
+            "profileUrl": "/players/974618/jan-paul-van-hecke"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/974618/jan-paul-van-hecke",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Jan Paul van Hecke",
+          "firstName": "Jan Paul",
+          "lastName": "van Hecke",
+          "fullName": "Jan Paul van Hecke",
+          "playerId": 974618,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2991014365,
+            "eventType": "Goal",
+            "teamId": 8586,
+            "playerId": 974618,
+            "playerName": "Jan Paul van Hecke",
+            "x": 103.3879310346,
+            "y": 31.559999999999995,
+            "min": 73,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.92375,
+            "goalCrossedZ": 0.9759999952,
+            "expectedGoals": 0.42828568816185,
+            "expectedGoalsOnTarget": 0.7505028247833252,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.0201719576719581,
+              "y": 0.2582010569312169,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 719330,
+            "firstName": "Jan Paul",
+            "lastName": "van Hecke",
+            "fullName": "Jan Paul van Hecke",
+            "teamColor": "#132257"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
