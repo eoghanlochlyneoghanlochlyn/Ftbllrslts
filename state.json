@@ -80193,7 +80193,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1467414413Card706297undefinedfalse",
-        "react:1467432425Goal1323305undefinedtrue"
+        "react:1467432425Goal1323305undefinedtrue",
+        "react:1467554973Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -80283,6 +80284,56 @@
             "assistKey": "assist_by",
             "assistInput": "Mohammed Kudus"
           }
+        },
+        {
+          "event_key": "react:1467554973Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "73",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4812,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1467554973Goal0undefinedtrue",
+            "timeStr": 73,
+            "type": "goal",
+            "time": 73,
+            "overloadTime": null,
+            "eventId": 14675549,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -80360,10 +80411,46 @@
           "assistPlayerId": 891743,
           "assistKey": "assist_by",
           "assistInput": "Mohammed Kudus"
+        },
+        {
+          "reactKey": "1467554973Goal0undefinedtrue",
+          "timeStr": 73,
+          "type": "goal",
+          "time": 73,
+          "overloadTime": null,
+          "eventId": 14675549,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
