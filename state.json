@@ -79423,7 +79423,8 @@
       "event_keys": [
         "react:1466695116Goal950199undefinedfalse",
         "react:1466739836Goal0undefinedfalse",
-        "react:1466739836Goal288406undefinedfalse"
+        "react:1466739836Goal288406undefinedfalse",
+        "react:1466838162Goal1226147undefinedfalse"
       ],
       "goals": [
         {
@@ -79648,6 +79649,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1466838162Goal1226147undefinedfalse",
+          "player_id": 1226147,
+          "player_name": "Giuliano Simeone",
+          "assist_player_id": 942372,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "62",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4792,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1466838162Goal1226147undefinedfalse",
+            "timeStr": 62,
+            "type": "goal",
+            "time": 62,
+            "overloadTime": null,
+            "eventId": 14668381,
+            "player": {
+              "id": 1226147,
+              "name": "Giuliano Simeone",
+              "profileUrl": "/players/1226147/giuliano-simeone"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1226147/giuliano-simeone",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Giuliano Simeone",
+            "firstName": "Giuliano",
+            "lastName": "Simeone",
+            "fullName": "Giuliano Simeone",
+            "playerId": 1226147,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2990545451,
+              "eventType": "Goal",
+              "teamId": 9906,
+              "playerId": 1226147,
+              "playerName": "Giuliano Simeone",
+              "x": 91.5,
+              "y": 27.950714285,
+              "min": 62,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.29625000000001,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": 0.3399,
+              "expectedGoalsOnTarget": 0.533,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6570767195767175,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 185644,
+              "firstName": "Giuliano",
+              "lastName": "Simeone",
+              "fullName": "Giuliano Simeone",
+              "teamColor": "#C63527"
+            },
+            "assistStr": "assist by Álex Baena",
+            "assistProfileUrl": "/players/942372/alex-baena",
+            "assistPlayerId": 942372,
+            "assistKey": "assist_by",
+            "assistInput": "Álex Baena"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -79832,11 +79921,85 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1466838162Goal1226147undefinedfalse",
+          "timeStr": 62,
+          "type": "goal",
+          "time": 62,
+          "overloadTime": null,
+          "eventId": 14668381,
+          "player": {
+            "id": 1226147,
+            "name": "Giuliano Simeone",
+            "profileUrl": "/players/1226147/giuliano-simeone"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1226147/giuliano-simeone",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Giuliano Simeone",
+          "firstName": "Giuliano",
+          "lastName": "Simeone",
+          "fullName": "Giuliano Simeone",
+          "playerId": 1226147,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2990545451,
+            "eventType": "Goal",
+            "teamId": 9906,
+            "playerId": 1226147,
+            "playerName": "Giuliano Simeone",
+            "x": 91.5,
+            "y": 27.950714285,
+            "min": 62,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.29625000000001,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": 0.3399,
+            "expectedGoalsOnTarget": 0.533,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6570767195767175,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 185644,
+            "firstName": "Giuliano",
+            "lastName": "Simeone",
+            "fullName": "Giuliano Simeone",
+            "teamColor": "#C63527"
+          },
+          "assistStr": "assist by Álex Baena",
+          "assistProfileUrl": "/players/942372/alex-baena",
+          "assistPlayerId": 942372,
+          "assistKey": "assist_by",
+          "assistInput": "Álex Baena"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5795502": {
