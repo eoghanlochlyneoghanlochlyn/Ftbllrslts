@@ -80191,7 +80191,9 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
+      "event_keys": [
+        "react:1467414413Card706297undefinedfalse"
+      ],
       "goals": [],
       "cancelled_goal_keys": [],
       "observed_goal_events": [],
