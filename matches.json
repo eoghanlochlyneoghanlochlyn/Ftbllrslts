@@ -5,5 +5,47 @@
     "enabled": true,
     "auto": true,
     "start": "2026-11-02T16:00:00+00:00"
+  },
+  {
+    "id": "6050094",
+    "url": "https://www.fotmob.com/match/6050094",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-03T16:00:00+00:00"
+  },
+  {
+    "id": "6106266",
+    "url": "https://www.fotmob.com/match/6106266",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-03T20:00:00+00:00"
+  },
+  {
+    "id": "6106263",
+    "url": "https://www.fotmob.com/match/6106263",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-03T20:00:00+00:00"
+  },
+  {
+    "id": "6106306",
+    "url": "https://www.fotmob.com/match/6106306",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-03T20:00:00+00:00"
+  },
+  {
+    "id": "6106291",
+    "url": "https://www.fotmob.com/match/6106291",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-03T20:00:00+00:00"
+  },
+  {
+    "id": "6106326",
+    "url": "https://www.fotmob.com/match/6106326",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-03T20:00:00+00:00"
   }
 ]
