@@ -85236,7 +85236,7 @@
           "event_key": "react:1468951855Goal401343undefinedfalse",
           "player_id": 401343,
           "player_name": "Stipe Perica",
-          "assist_player_id": null,
+          "assist_player_id": 1132522,
           "assist_player_name": "",
           "is_home": false,
           "minute": "55",
@@ -85279,8 +85279,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Abrorbek Ismoilov",
+            "assistProfileUrl": "/players/1132522/abrorbek-ismoilov",
+            "assistPlayerId": 1132522,
+            "assistKey": "assist_by",
+            "assistInput": "Abrorbek Ismoilov"
           }
         }
       ],
@@ -85357,8 +85360,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Abrorbek Ismoilov",
+          "assistProfileUrl": "/players/1132522/abrorbek-ismoilov",
+          "assistPlayerId": 1132522,
+          "assistKey": "assist_by",
+          "assistInput": "Abrorbek Ismoilov"
         }
       ],
       "observed_score": {
