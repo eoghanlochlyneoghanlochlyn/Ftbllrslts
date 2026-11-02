@@ -85183,7 +85183,8 @@
         "react:1468971082Goal661314undefinedtrue",
         "react:1468979590Goal0undefinedfalse",
         "react:1468979590Goal429902undefinedfalse",
-        "react:1468981290Goal0undefinedtrue"
+        "react:1468981290Goal0undefinedtrue",
+        "react:1468981290Goal1254310undefinedtrue"
       ],
       "goals": [
         {
@@ -85545,6 +85546,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1468981290Goal1254310undefinedtrue",
+          "player_id": 1254310,
+          "player_name": "Masood Kazemayni",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 9",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4880,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1468981290Goal1254310undefinedtrue",
+            "timeStr": "90 + 9",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 9,
+            "eventId": 14689812,
+            "player": {
+              "id": 1254310,
+              "name": "Masood Kazemayni",
+              "profileUrl": "/players/1254310/masood-kazemayni"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/1254310/masood-kazemayni",
+            "overloadTimeStr": "+9",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Masood Kazemayni",
+            "firstName": "Masood",
+            "lastName": "Kazemayni",
+            "fullName": "Masood Kazemayni",
+            "playerId": 1254310,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -85802,6 +85854,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1468981290Goal1254310undefinedtrue",
+          "timeStr": "90 + 9",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 9,
+          "eventId": 14689812,
+          "player": {
+            "id": 1254310,
+            "name": "Masood Kazemayni",
+            "profileUrl": "/players/1254310/masood-kazemayni"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/1254310/masood-kazemayni",
+          "overloadTimeStr": "+9",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Masood Kazemayni",
+          "firstName": "Masood",
+          "lastName": "Kazemayni",
+          "fullName": "Masood Kazemayni",
+          "playerId": 1254310,
           "newScore": [
             2,
             2
