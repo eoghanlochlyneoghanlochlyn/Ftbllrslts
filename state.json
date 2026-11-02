@@ -85181,7 +85181,8 @@
         "react:1468955461Card683837undefinedtrue",
         "react:1468971083Goal0undefinedtrue",
         "react:1468971082Goal661314undefinedtrue",
-        "react:1468979590Goal0undefinedfalse"
+        "react:1468979590Goal0undefinedfalse",
+        "react:1468979590Goal429902undefinedfalse"
       ],
       "goals": [
         {
@@ -85441,6 +85442,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1468979590Goal429902undefinedfalse",
+          "player_id": 429902,
+          "player_name": "Vladimir Jovović",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 4",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4878,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1468979590Goal429902undefinedfalse",
+            "timeStr": "90 + 4",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 4,
+            "eventId": 14689795,
+            "player": {
+              "id": 429902,
+              "name": "Vladimir Jovović",
+              "profileUrl": "/players/429902/vladimir-jovovic"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/429902/vladimir-jovovic",
+            "overloadTimeStr": "+4",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Vladimir Jovović",
+            "firstName": "Vladimir",
+            "lastName": "Jovović",
+            "fullName": "Vladimir Jovović",
+            "playerId": 429902,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -85624,6 +85676,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1468979590Goal429902undefinedfalse",
+          "timeStr": "90 + 4",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 4,
+          "eventId": 14689795,
+          "player": {
+            "id": 429902,
+            "name": "Vladimir Jovović",
+            "profileUrl": "/players/429902/vladimir-jovovic"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/429902/vladimir-jovovic",
+          "overloadTimeStr": "+4",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Vladimir Jovović",
+          "firstName": "Vladimir",
+          "lastName": "Jovović",
+          "fullName": "Vladimir Jovović",
+          "playerId": 429902,
           "newScore": [
             1,
             2
