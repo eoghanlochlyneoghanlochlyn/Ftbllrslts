@@ -85758,11 +85758,8 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": "assist by Amirhossein Hosseinzadeh",
-          "assistProfileUrl": "/players/1031319/amirhossein-hosseinzadeh",
-          "assistPlayerId": 1031319,
-          "assistKey": "assist_by",
-          "assistInput": "Amirhossein Hosseinzadeh"
+          "assistStr": null,
+          "assistProfileUrl": null
         },
         {
           "reactKey": "1468979590Goal0undefinedfalse",
@@ -85835,11 +85832,8 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": "assist by Jamshid Iskandarov",
-          "assistProfileUrl": "/players/431169/jamshid-iskandarov",
-          "assistPlayerId": 431169,
-          "assistKey": "assist_by",
-          "assistInput": "Jamshid Iskandarov"
+          "assistStr": null,
+          "assistProfileUrl": null
         },
         {
           "reactKey": "1468981290Goal0undefinedtrue",
@@ -85912,11 +85906,8 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": "assist by Amirhossein Hosseinzadeh",
-          "assistProfileUrl": "/players/1031319/amirhossein-hosseinzadeh",
-          "assistPlayerId": 1031319,
-          "assistKey": "assist_by",
-          "assistInput": "Amirhossein Hosseinzadeh"
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
