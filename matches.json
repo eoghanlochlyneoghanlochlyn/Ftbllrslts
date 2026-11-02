@@ -1,26 +1,5 @@
 [
   {
-    "id": "5868118",
-    "url": "https://www.fotmob.com/match/5868118",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-01T15:15:00+00:00"
-  },
-  {
-    "id": "5795501",
-    "url": "https://www.fotmob.com/match/5795501",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-01T16:30:00+00:00"
-  },
-  {
-    "id": "5749735",
-    "url": "https://www.fotmob.com/match/5749735",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-01T19:45:00+00:00"
-  },
-  {
     "id": "6050091",
     "url": "https://www.fotmob.com/match/6050091",
     "enabled": true,
