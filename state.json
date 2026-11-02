@@ -85179,7 +85179,8 @@
         "react:1468951855Goal401343undefinedfalse",
         "react:1468955462Card0undefinedtrue",
         "react:1468955461Card683837undefinedtrue",
-        "react:1468971083Goal0undefinedtrue"
+        "react:1468971083Goal0undefinedtrue",
+        "react:1468971082Goal661314undefinedtrue"
       ],
       "goals": [
         {
@@ -85337,6 +85338,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1468971082Goal661314undefinedtrue",
+          "player_id": 661314,
+          "player_name": "Tomislav Štrkalj",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "82",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4876,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1468971082Goal661314undefinedtrue",
+            "timeStr": 82,
+            "type": "goal",
+            "time": 82,
+            "overloadTime": null,
+            "eventId": 14689710,
+            "player": {
+              "id": 661314,
+              "name": "Tomislav Štrkalj",
+              "profileUrl": "/players/661314/tomislav-strkalj"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/661314/tomislav-strkalj",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Tomislav Štrkalj",
+            "firstName": "Tomislav",
+            "lastName": "Štrkalj",
+            "fullName": "Tomislav Štrkalj",
+            "playerId": 661314,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -85446,6 +85498,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1468971082Goal661314undefinedtrue",
+          "timeStr": 82,
+          "type": "goal",
+          "time": 82,
+          "overloadTime": null,
+          "eventId": 14689710,
+          "player": {
+            "id": 661314,
+            "name": "Tomislav Štrkalj",
+            "profileUrl": "/players/661314/tomislav-strkalj"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/661314/tomislav-strkalj",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Tomislav Štrkalj",
+          "firstName": "Tomislav",
+          "lastName": "Štrkalj",
+          "fullName": "Tomislav Štrkalj",
+          "playerId": 661314,
           "newScore": [
             1,
             1
