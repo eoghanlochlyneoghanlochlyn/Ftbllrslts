@@ -88729,7 +88729,8 @@
         "react:1469287513Goal0undefinedfalse",
         "react:1469287513Goal1574189undefinedfalse",
         "react:1469290917Goal605654undefinedfalse",
-        "react:1469330950Goal605654undefinedfalse"
+        "react:1469330950Goal605654undefinedfalse",
+        "react:1469370379Goal1830689undefinedfalse"
       ],
       "goals": [
         {
@@ -89221,6 +89222,56 @@
             "assistKey": "assist_by",
             "assistInput": "Vítinha"
           }
+        },
+        {
+          "event_key": "react:1469370379Goal1830689undefinedfalse",
+          "player_id": 1830689,
+          "player_name": "David Boly",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "79",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4926,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469370379Goal1830689undefinedfalse",
+            "timeStr": 79,
+            "type": "goal",
+            "time": 79,
+            "overloadTime": null,
+            "eventId": 14693703,
+            "player": {
+              "id": 1830689,
+              "name": "David Boly",
+              "profileUrl": "/players/1830689/david-boly"
+            },
+            "homeScore": 0,
+            "awayScore": 5,
+            "profileUrl": "/players/1830689/david-boly",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "David Boly",
+            "firstName": "David",
+            "lastName": "Boly",
+            "fullName": "David Boly",
+            "playerId": 1830689,
+            "newScore": [
+              0,
+              6
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -89630,11 +89681,47 @@
           "assistPlayerId": 1061249,
           "assistKey": "assist_by",
           "assistInput": "Vítinha"
+        },
+        {
+          "reactKey": "1469370379Goal1830689undefinedfalse",
+          "timeStr": 79,
+          "type": "goal",
+          "time": 79,
+          "overloadTime": null,
+          "eventId": 14693703,
+          "player": {
+            "id": 1830689,
+            "name": "David Boly",
+            "profileUrl": "/players/1830689/david-boly"
+          },
+          "homeScore": 0,
+          "awayScore": 5,
+          "profileUrl": "/players/1830689/david-boly",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "David Boly",
+          "firstName": "David",
+          "lastName": "Boly",
+          "fullName": "David Boly",
+          "playerId": 1830689,
+          "newScore": [
+            0,
+            6
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 5
+        "away": 6
       }
     },
     "6054596": {
