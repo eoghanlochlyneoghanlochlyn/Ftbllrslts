@@ -86891,7 +86891,8 @@
         "react:146928449Goal889535undefinedfalse",
         "react:146928448Goal889535undefinedfalse",
         "react:1469306034Goal0undefinedfalse",
-        "react:1469306034Goal1367618undefinedfalse"
+        "react:1469306034Goal1367618undefinedfalse",
+        "react:1469337554Goal362212undefinedfalse"
       ],
       "goals": [
         {
@@ -87257,6 +87258,87 @@
             "assistKey": "assist_by",
             "assistInput": "Djed Spence"
           }
+        },
+        {
+          "event_key": "react:1469337554Goal362212undefinedfalse",
+          "player_id": 362212,
+          "player_name": "Piotr Zieliński",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "54",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4920,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469337554Goal362212undefinedfalse",
+            "timeStr": 54,
+            "type": "goal",
+            "time": 54,
+            "overloadTime": null,
+            "eventId": 14693375,
+            "player": {
+              "id": 362212,
+              "name": "Piotr Zieliński",
+              "profileUrl": "/players/362212/piotr-zielinski"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/362212/piotr-zielinski",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Piotr Zieliński",
+            "firstName": "Piotr",
+            "lastName": "Zieliński",
+            "fullName": "Piotr Zieliński",
+            "playerId": 362212,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2992934475,
+              "eventType": "Goal",
+              "teamId": 8636,
+              "playerId": 362212,
+              "playerName": "Piotr Zieliński",
+              "x": 83.8364077672,
+              "y": 44.7014012695,
+              "min": 54,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0338,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1336731,
+              "firstName": "Piotr",
+              "lastName": "Zieliński",
+              "fullName": "Piotr Zieliński",
+              "teamColor": "#010E80"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -87554,11 +87636,78 @@
           "assistPlayerId": 894803,
           "assistKey": "assist_by",
           "assistInput": "Djed Spence"
+        },
+        {
+          "reactKey": "1469337554Goal362212undefinedfalse",
+          "timeStr": 54,
+          "type": "goal",
+          "time": 54,
+          "overloadTime": null,
+          "eventId": 14693375,
+          "player": {
+            "id": 362212,
+            "name": "Piotr Zieliński",
+            "profileUrl": "/players/362212/piotr-zielinski"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/362212/piotr-zielinski",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Piotr Zieliński",
+          "firstName": "Piotr",
+          "lastName": "Zieliński",
+          "fullName": "Piotr Zieliński",
+          "playerId": 362212,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2992934475,
+            "eventType": "Goal",
+            "teamId": 8636,
+            "playerId": 362212,
+            "playerName": "Piotr Zieliński",
+            "x": 83.8364077672,
+            "y": 44.7014012695,
+            "min": 54,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0338,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1336731,
+            "firstName": "Piotr",
+            "lastName": "Zieliński",
+            "fullName": "Piotr Zieliński",
+            "teamColor": "#010E80"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "6106291": {
