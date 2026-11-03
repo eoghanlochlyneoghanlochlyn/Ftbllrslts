@@ -86131,7 +86131,7 @@
     "6106266": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -86147,7 +86147,7 @@
     "6106263": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -86163,7 +86163,7 @@
     "6106306": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -86179,7 +86179,7 @@
     "6106291": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
@@ -86195,7 +86195,7 @@
     "6106326": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
