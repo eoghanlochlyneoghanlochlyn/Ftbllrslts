@@ -87593,7 +87593,8 @@
         "react:1469286412Goal1339208undefinedfalse",
         "react:1469287513Goal0undefinedfalse",
         "react:1469287513Goal1574189undefinedfalse",
-        "react:1469290917Goal605654undefinedfalse"
+        "react:1469290917Goal605654undefinedfalse",
+        "react:1469330950Goal605654undefinedfalse"
       ],
       "goals": [
         {
@@ -87997,6 +87998,94 @@
             "assistKey": "assist_by",
             "assistInput": "Maghnes Akliouche"
           }
+        },
+        {
+          "event_key": "react:1469330950Goal605654undefinedfalse",
+          "player_id": 605654,
+          "player_name": "Fabián Ruiz",
+          "assist_player_id": 1061249,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "50",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4917,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469330950Goal605654undefinedfalse",
+            "timeStr": 50,
+            "type": "goal",
+            "time": 50,
+            "overloadTime": null,
+            "eventId": 14693309,
+            "player": {
+              "id": 605654,
+              "name": "Fabián Ruiz",
+              "profileUrl": "/players/605654/fabian-ruiz"
+            },
+            "homeScore": 0,
+            "awayScore": 4,
+            "profileUrl": "/players/605654/fabian-ruiz",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Fabián Ruiz",
+            "firstName": "Fabián",
+            "lastName": "Ruiz",
+            "fullName": "Fabián Ruiz",
+            "playerId": 605654,
+            "newScore": [
+              0,
+              5
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2992929137,
+              "eventType": "Goal",
+              "teamId": 9847,
+              "playerId": 605654,
+              "playerName": "Fabián Ruiz",
+              "x": 97.6666666661,
+              "y": 37.431250000000006,
+              "min": 50,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.3225,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.576,
+              "expectedGoalsOnTarget": 0.9062,
+              "shotType": "LeftFoot",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.4437830687830693,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 151001,
+              "firstName": "Fabián",
+              "lastName": "Ruiz",
+              "fullName": "Fabián Ruiz",
+              "teamColor": "#273F6D"
+            },
+            "assistStr": "assist by Vítinha",
+            "assistProfileUrl": "/players/1061249/vitinha",
+            "assistPlayerId": 1061249,
+            "assistKey": "assist_by",
+            "assistInput": "Vítinha"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -88332,11 +88421,85 @@
           "assistPlayerId": 1305618,
           "assistKey": "assist_by",
           "assistInput": "Maghnes Akliouche"
+        },
+        {
+          "reactKey": "1469330950Goal605654undefinedfalse",
+          "timeStr": 50,
+          "type": "goal",
+          "time": 50,
+          "overloadTime": null,
+          "eventId": 14693309,
+          "player": {
+            "id": 605654,
+            "name": "Fabián Ruiz",
+            "profileUrl": "/players/605654/fabian-ruiz"
+          },
+          "homeScore": 0,
+          "awayScore": 4,
+          "profileUrl": "/players/605654/fabian-ruiz",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Fabián Ruiz",
+          "firstName": "Fabián",
+          "lastName": "Ruiz",
+          "fullName": "Fabián Ruiz",
+          "playerId": 605654,
+          "newScore": [
+            0,
+            5
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2992929137,
+            "eventType": "Goal",
+            "teamId": 9847,
+            "playerId": 605654,
+            "playerName": "Fabián Ruiz",
+            "x": 97.6666666661,
+            "y": 37.431250000000006,
+            "min": 50,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.3225,
+            "goalCrossedZ": 0.160526315,
+            "expectedGoals": 0.576,
+            "expectedGoalsOnTarget": 0.9062,
+            "shotType": "LeftFoot",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.4437830687830693,
+              "y": 0.042467279100529096,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 151001,
+            "firstName": "Fabián",
+            "lastName": "Ruiz",
+            "fullName": "Fabián Ruiz",
+            "teamColor": "#273F6D"
+          },
+          "assistStr": "assist by Vítinha",
+          "assistProfileUrl": "/players/1061249/vitinha",
+          "assistPlayerId": 1061249,
+          "assistKey": "assist_by",
+          "assistInput": "Vítinha"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 4
+        "away": 5
       }
     },
     "6054596": {
