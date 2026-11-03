@@ -87011,8 +87011,8 @@
             "blockedY": null,
             "goalCrossedY": 36.5925,
             "goalCrossedZ": 0.160526315,
-            "expectedGoals": 0.6237,
-            "expectedGoalsOnTarget": 0.9663,
+            "expectedGoals": 0.599152147769928,
+            "expectedGoalsOnTarget": 0.9410592913627625,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -87055,7 +87055,8 @@
         "react:146928448Goal889535undefinedfalse",
         "react:1469306034Goal0undefinedfalse",
         "react:1469306034Goal1367618undefinedfalse",
-        "react:1469337554Goal362212undefinedfalse"
+        "react:1469337554Goal362212undefinedfalse",
+        "react:1469354666Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -87509,6 +87510,56 @@
             "assistKey": "assist_by",
             "assistInput": "Nicolò Barella"
           }
+        },
+        {
+          "event_key": "react:1469354666Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "66",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4923,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1469354666Goal0undefinedfalse",
+            "timeStr": 66,
+            "type": "goal",
+            "time": 66,
+            "overloadTime": null,
+            "eventId": 14693546,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              0,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -87880,11 +87931,47 @@
           "assistPlayerId": 541820,
           "assistKey": "assist_by",
           "assistInput": "Nicolò Barella"
+        },
+        {
+          "reactKey": "1469354666Goal0undefinedfalse",
+          "timeStr": 66,
+          "type": "goal",
+          "time": 66,
+          "overloadTime": null,
+          "eventId": 14693546,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            0,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 3
+        "away": 4
       }
     },
     "6106291": {
