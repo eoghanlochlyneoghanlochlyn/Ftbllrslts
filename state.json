@@ -87297,8 +87297,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:146928449Goal0undefinedfalse",
         "react:146928449Goal889535undefinedfalse",
@@ -88229,8 +88229,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1469286311Goal1280082undefinedfalse",
         "react:1469292018Goal660301undefinedfalse",
