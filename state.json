@@ -87265,7 +87265,7 @@
           "event_key": "react:1469287513Goal1574189undefinedfalse",
           "player_id": 1574189,
           "player_name": "Senny Mayulu",
-          "assist_player_id": null,
+          "assist_player_id": 1342757,
           "assist_player_name": "",
           "is_home": false,
           "minute": "13",
@@ -87321,17 +87321,17 @@
               "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": 35.83,
-              "goalCrossedZ": 1.8299999910000002,
-              "expectedGoals": 0.3897,
-              "expectedGoalsOnTarget": 0.7581,
+              "goalCrossedY": 35.75375,
+              "goalCrossedZ": 1.8685263066000002,
+              "expectedGoals": 0.19543008506298065,
+              "expectedGoalsOnTarget": 0.6985791921615601,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
               "onGoalShot": {
-                "x": 0.5158730158730164,
-                "y": 0.48412698174603175,
+                "x": 0.5360449735449745,
+                "y": 0.49431912873015876,
                 "zoomRatio": 1
               },
               "isSavedOffLine": false,
@@ -87342,8 +87342,11 @@
               "fullName": "Senny Mayulu",
               "teamColor": "#273F6D"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by João Neves",
+            "assistProfileUrl": "/players/1342757/joao-neves",
+            "assistPlayerId": 1342757,
+            "assistKey": "assist_by",
+            "assistInput": "João Neves"
           }
         }
       ],
@@ -87601,8 +87604,11 @@
             "fullName": "Senny Mayulu",
             "teamColor": "#273F6D"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by João Neves",
+          "assistProfileUrl": "/players/1342757/joao-neves",
+          "assistPlayerId": 1342757,
+          "assistKey": "assist_by",
+          "assistInput": "João Neves"
         }
       ],
       "observed_score": {
