@@ -86574,7 +86574,8 @@
       "event_keys": [
         "react:146928449Goal0undefinedfalse",
         "react:146928449Goal889535undefinedfalse",
-        "react:146928448Goal889535undefinedfalse"
+        "react:146928448Goal889535undefinedfalse",
+        "react:1469306034Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -86802,6 +86803,56 @@
             "assistKey": "assist_by",
             "assistInput": "Djed Spence"
           }
+        },
+        {
+          "event_key": "react:1469306034Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "34",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4915,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1469306034Goal0undefinedfalse",
+            "timeStr": 34,
+            "type": "goal",
+            "time": 34,
+            "overloadTime": null,
+            "eventId": 14693060,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -86989,11 +87040,47 @@
           "assistPlayerId": 894803,
           "assistKey": "assist_by",
           "assistInput": "Djed Spence"
+        },
+        {
+          "reactKey": "1469306034Goal0undefinedfalse",
+          "timeStr": 34,
+          "type": "goal",
+          "time": 34,
+          "overloadTime": null,
+          "eventId": 14693060,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "6106291": {
