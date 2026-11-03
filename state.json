@@ -87263,7 +87263,7 @@
           "event_key": "react:1469337554Goal362212undefinedfalse",
           "player_id": 362212,
           "player_name": "Piotr Zieliński",
-          "assist_player_id": null,
+          "assist_player_id": 541820,
           "assist_player_name": "",
           "is_home": false,
           "minute": "54",
@@ -87316,18 +87316,22 @@
               "min": 54,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0338,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 36.8975,
+              "goalCrossedZ": 0.8925263114,
+              "expectedGoals": 0.01785614714026451,
+              "expectedGoalsOnTarget": 0.1905045360326767,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.23346560846560827,
+                "y": 0.2361180717989418,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": false,
               "keeperId": 1336731,
@@ -87336,8 +87340,11 @@
               "fullName": "Piotr Zieliński",
               "teamColor": "#010E80"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Nicolò Barella",
+            "assistProfileUrl": "/players/541820/nicolo-barella",
+            "assistPlayerId": 541820,
+            "assistKey": "assist_by",
+            "assistInput": "Nicolò Barella"
           }
         }
       ],
@@ -87687,7 +87694,7 @@
             "goalCrossedY": 36.8975,
             "goalCrossedZ": 0.8925263114,
             "expectedGoals": 0.01785614714026451,
-            "expectedGoalsOnTarget": 0.2300044447183609,
+            "expectedGoalsOnTarget": 0.1905045360326767,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -87705,8 +87712,11 @@
             "fullName": "Piotr Zieliński",
             "teamColor": "#010E80"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Nicolò Barella",
+          "assistProfileUrl": "/players/541820/nicolo-barella",
+          "assistPlayerId": 541820,
+          "assistKey": "assist_by",
+          "assistInput": "Nicolò Barella"
         }
       ],
       "observed_score": {
@@ -87723,7 +87733,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1469286311Goal1280082undefinedfalse",
-        "react:1469292018Goal660301undefinedfalse"
+        "react:1469292018Goal660301undefinedfalse",
+        "react:1469340358Goal422685undefinedtrue"
       ],
       "goals": [
         {
@@ -87894,6 +87905,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1469340358Goal422685undefinedtrue",
+          "player_id": 422685,
+          "player_name": "Bruno Fernandes",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "58",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4921,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469340358Goal422685undefinedtrue",
+            "timeStr": 58,
+            "type": "goal",
+            "time": 58,
+            "overloadTime": null,
+            "eventId": 14693403,
+            "player": {
+              "id": 422685,
+              "name": "Bruno Fernandes",
+              "profileUrl": "/players/422685/bruno-fernandes"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/422685/bruno-fernandes",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bruno Fernandes",
+            "firstName": "Bruno",
+            "lastName": "Fernandes",
+            "fullName": "Bruno Fernandes",
+            "playerId": 422685,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2992937787,
+              "eventType": "Goal",
+              "teamId": 10260,
+              "playerId": 422685,
+              "playerName": "Bruno Fernandes",
+              "x": 94,
+              "y": 34,
+              "min": 58,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.220000000000006,
+              "goalCrossedZ": 1.6694736760000002,
+              "expectedGoals": 0.7884,
+              "expectedGoalsOnTarget": 0.9726,
+              "shotType": "RightFoot",
+              "situation": "Penalty",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6772486772486757,
+                "y": 0.44165970264550264,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1186685,
+              "firstName": "Bruno",
+              "lastName": "Fernandes",
+              "fullName": "Bruno Fernandes",
+              "teamColor": "#C70101"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -88042,10 +88138,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1469340358Goal422685undefinedtrue",
+          "timeStr": 58,
+          "type": "goal",
+          "time": 58,
+          "overloadTime": null,
+          "eventId": 14693403,
+          "player": {
+            "id": 422685,
+            "name": "Bruno Fernandes",
+            "profileUrl": "/players/422685/bruno-fernandes"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/422685/bruno-fernandes",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Penalty",
+          "goalDescriptionKey": "penalty",
+          "suffix": "Pen",
+          "suffixKey": "penalties_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bruno Fernandes",
+          "firstName": "Bruno",
+          "lastName": "Fernandes",
+          "fullName": "Bruno Fernandes",
+          "playerId": 422685,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2992937787,
+            "eventType": "Goal",
+            "teamId": 10260,
+            "playerId": 422685,
+            "playerName": "Bruno Fernandes",
+            "x": 94,
+            "y": 34,
+            "min": 58,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.220000000000006,
+            "goalCrossedZ": 1.6694736760000002,
+            "expectedGoals": 0.7884,
+            "expectedGoalsOnTarget": 0.9726,
+            "shotType": "RightFoot",
+            "situation": "Penalty",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6772486772486757,
+              "y": 0.44165970264550264,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1186685,
+            "firstName": "Bruno",
+            "lastName": "Fernandes",
+            "fullName": "Bruno Fernandes",
+            "teamColor": "#C70101"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 2
       }
     },
