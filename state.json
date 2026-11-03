@@ -85991,7 +85991,7 @@
           "event_key": "react:1469242690Goal637760undefinedtrue",
           "player_id": 637760,
           "player_name": "Jasir Asani",
-          "assist_player_id": null,
+          "assist_player_id": 1344223,
           "assist_player_name": "",
           "is_home": true,
           "minute": "90 + 1",
@@ -86034,8 +86034,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Mohammadhossein Eslami",
+            "assistProfileUrl": "/players/1344223/mohammadhossein-eslami",
+            "assistPlayerId": 1344223,
+            "assistKey": "assist_by",
+            "assistInput": "Mohammadhossein Eslami"
           }
         }
       ],
@@ -86112,8 +86115,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Mohammadhossein Eslami",
+          "assistProfileUrl": "/players/1344223/mohammadhossein-eslami",
+          "assistPlayerId": 1344223,
+          "assistKey": "assist_by",
+          "assistInput": "Mohammadhossein Eslami"
         }
       ],
       "observed_score": {
