@@ -92730,7 +92730,7 @@
           "event_key": "react:1469521867Goal676533undefinedfalse",
           "player_id": 676533,
           "player_name": "Aitor Ruibal",
-          "assist_player_id": null,
+          "assist_player_id": 1209399,
           "assist_player_name": "",
           "is_home": false,
           "minute": "67",
@@ -92807,8 +92807,11 @@
               "fullName": "Aitor Ruibal",
               "teamColor": "#009048"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Abdessamad Ezzalzouli",
+            "assistProfileUrl": "/players/1209399/abdessamad-ezzalzouli",
+            "assistPlayerId": 1209399,
+            "assistKey": "assist_by",
+            "assistInput": "Abdessamad Ezzalzouli"
           }
         }
       ],
@@ -92989,8 +92992,11 @@
             "fullName": "Aitor Ruibal",
             "teamColor": "#009048"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Abdessamad Ezzalzouli",
+          "assistProfileUrl": "/players/1209399/abdessamad-ezzalzouli",
+          "assistPlayerId": 1209399,
+          "assistKey": "assist_by",
+          "assistInput": "Abdessamad Ezzalzouli"
         }
       ],
       "observed_score": {
