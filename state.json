@@ -91268,7 +91268,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1469479825Goal1436258undefinedfalse",
-        "react:1469480129Goal950473undefinedtrue"
+        "react:1469480129Goal950473undefinedtrue",
+        "react:1469490569Goal690107undefinedfalse"
       ],
       "goals": [
         {
@@ -91400,6 +91401,59 @@
             },
             "assistStr": null,
             "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "react:1469490569Goal690107undefinedfalse",
+          "player_id": 690107,
+          "player_name": "Alexander Isak",
+          "assist_player_id": 806552,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "69",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4962,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469490569Goal690107undefinedfalse",
+            "timeStr": 69,
+            "type": "goal",
+            "time": 69,
+            "overloadTime": null,
+            "eventId": 14694905,
+            "player": {
+              "id": 690107,
+              "name": "Alexander Isak",
+              "profileUrl": "/players/690107/alexander-isak"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/690107/alexander-isak",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Alexander Isak",
+            "firstName": "Alexander",
+            "lastName": "Isak",
+            "fullName": "Alexander Isak",
+            "playerId": 690107,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Cody Gakpo",
+            "assistProfileUrl": "/players/806552/cody-gakpo",
+            "assistPlayerId": 806552,
+            "assistKey": "assist_by",
+            "assistInput": "Cody Gakpo"
           }
         }
       ],
@@ -91546,11 +91600,50 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1469490569Goal690107undefinedfalse",
+          "timeStr": 69,
+          "type": "goal",
+          "time": 69,
+          "overloadTime": null,
+          "eventId": 14694905,
+          "player": {
+            "id": 690107,
+            "name": "Alexander Isak",
+            "profileUrl": "/players/690107/alexander-isak"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/690107/alexander-isak",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Alexander Isak",
+          "firstName": "Alexander",
+          "lastName": "Isak",
+          "fullName": "Alexander Isak",
+          "playerId": 690107,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Cody Gakpo",
+          "assistProfileUrl": "/players/806552/cody-gakpo",
+          "assistPlayerId": 806552,
+          "assistKey": "assist_by",
+          "assistInput": "Cody Gakpo"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "6106271": {
