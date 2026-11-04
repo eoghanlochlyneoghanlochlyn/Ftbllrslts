@@ -92586,7 +92586,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1469509850Goal0undefinedtrue"
+        "react:1469509850Goal0undefinedtrue",
+        "react:1469509849Goal1050158undefinedtrue"
       ],
       "goals": [
         {
@@ -92638,6 +92639,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1469509849Goal1050158undefinedtrue",
+          "player_id": 1050158,
+          "player_name": "Fábio Silva",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "49",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4982,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469509849Goal1050158undefinedtrue",
+            "timeStr": 49,
+            "type": "goal",
+            "time": 49,
+            "overloadTime": null,
+            "eventId": 14695098,
+            "player": {
+              "id": 1050158,
+              "name": "Fábio Silva",
+              "profileUrl": "/players/1050158/fabio-silva"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1050158/fabio-silva",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Fábio Silva",
+            "firstName": "Fábio",
+            "lastName": "Silva",
+            "fullName": "Fábio Silva",
+            "playerId": 1050158,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2993239477,
+              "eventType": "Goal",
+              "teamId": 9789,
+              "playerId": 1050158,
+              "playerName": "Fábio Silva",
+              "x": 102.155172414,
+              "y": 36.135000000000005,
+              "min": 49,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.6775,
+              "goalCrossedZ": 0.3274736826,
+              "expectedGoals": 0.7834,
+              "expectedGoalsOnTarget": 0.9617,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.5562169312169307,
+                "y": 0.08663324936507935,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 999171,
+              "firstName": "Fábio",
+              "lastName": "Silva",
+              "fullName": "Fábio Silva",
+              "teamColor": "#d8a000"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -92675,6 +92761,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1469509849Goal1050158undefinedtrue",
+          "timeStr": 49,
+          "type": "goal",
+          "time": 49,
+          "overloadTime": null,
+          "eventId": 14695098,
+          "player": {
+            "id": 1050158,
+            "name": "Fábio Silva",
+            "profileUrl": "/players/1050158/fabio-silva"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1050158/fabio-silva",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Fábio Silva",
+          "firstName": "Fábio",
+          "lastName": "Silva",
+          "fullName": "Fábio Silva",
+          "playerId": 1050158,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2993239477,
+            "eventType": "Goal",
+            "teamId": 9789,
+            "playerId": 1050158,
+            "playerName": "Fábio Silva",
+            "x": 102.155172414,
+            "y": 36.135000000000005,
+            "min": 49,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.6775,
+            "goalCrossedZ": 0.3274736826,
+            "expectedGoals": 0.7834,
+            "expectedGoalsOnTarget": 0.9617,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5562169312169307,
+              "y": 0.08663324936507935,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 999171,
+            "firstName": "Fábio",
+            "lastName": "Silva",
+            "fullName": "Fábio Silva",
+            "teamColor": "#d8a000"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
