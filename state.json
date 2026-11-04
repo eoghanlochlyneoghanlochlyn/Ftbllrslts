@@ -93013,8 +93013,11 @@
             "fullName": "Fábio Silva",
             "teamColor": "#d8a000"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Jobe Bellingham",
+          "assistProfileUrl": "/players/1287373/jobe-bellingham",
+          "assistPlayerId": 1287373,
+          "assistKey": "assist_by",
+          "assistInput": "Jobe Bellingham"
         },
         {
           "reactKey": "1469521867Goal676533undefinedfalse",
