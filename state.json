@@ -90930,13 +90930,103 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1469479825Goal1436258undefinedfalse"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1469479825Goal1436258undefinedfalse",
+          "player_id": 1436258,
+          "player_name": "Trey Nyoni",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "25",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4955,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469479825Goal1436258undefinedfalse",
+            "timeStr": 25,
+            "type": "goal",
+            "time": 25,
+            "overloadTime": null,
+            "eventId": 14694798,
+            "player": {
+              "id": 1436258,
+              "name": "Trey Nyoni",
+              "profileUrl": "/players/1436258/trey-nyoni"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1436258/trey-nyoni",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Trey Nyoni",
+            "firstName": "Trey",
+            "lastName": "Nyoni",
+            "fullName": "Trey Nyoni",
+            "playerId": 1436258,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1469479825Goal1436258undefinedfalse",
+          "timeStr": 25,
+          "type": "goal",
+          "time": 25,
+          "overloadTime": null,
+          "eventId": 14694798,
+          "player": {
+            "id": 1436258,
+            "name": "Trey Nyoni",
+            "profileUrl": "/players/1436258/trey-nyoni"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1436258/trey-nyoni",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Trey Nyoni",
+          "firstName": "Trey",
+          "lastName": "Nyoni",
+          "fullName": "Trey Nyoni",
+          "playerId": 1436258,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "6106271": {
