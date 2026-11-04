@@ -92691,7 +92691,7 @@
           "event_key": "react:1469508349Goal883087undefinedtrue",
           "player_id": 883087,
           "player_name": "Ridle Baku",
-          "assist_player_id": null,
+          "assist_player_id": 1430151,
           "assist_player_name": "",
           "is_home": true,
           "minute": "49",
@@ -92733,8 +92733,46 @@
               1
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "shotmapEvent": {
+              "id": 2993237789,
+              "eventType": "Goal",
+              "teamId": 178475,
+              "playerId": 883087,
+              "playerName": "Ridle Baku",
+              "x": 101.0172413796,
+              "y": 16.502420383399997,
+              "min": 49,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.838750000000005,
+              "goalCrossedZ": 0.2439999988,
+              "expectedGoals": 0.020453263074159622,
+              "expectedGoalsOnTarget": 0.04913594573736191,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.7781084656084645,
+                "y": 0.06455026423280423,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 618878,
+              "firstName": "Ridle",
+              "lastName": "Baku",
+              "fullName": "Ridle Baku",
+              "teamColor": "#DD0741"
+            },
+            "assistStr": "assist by Brajan Gruda",
+            "assistProfileUrl": "/players/1430151/brajan-gruda",
+            "assistPlayerId": 1430151,
+            "assistKey": "assist_by",
+            "assistInput": "Brajan Gruda"
           }
         }
       ],
@@ -92844,8 +92882,46 @@
             1
           ],
           "penShootoutScore": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "shotmapEvent": {
+            "id": 2993237789,
+            "eventType": "Goal",
+            "teamId": 178475,
+            "playerId": 883087,
+            "playerName": "Ridle Baku",
+            "x": 101.0172413796,
+            "y": 16.502420383399997,
+            "min": 49,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.838750000000005,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.020453263074159622,
+            "expectedGoalsOnTarget": 0.04913594573736191,
+            "shotType": "RightFoot",
+            "situation": "FastBreak",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.7781084656084645,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 618878,
+            "firstName": "Ridle",
+            "lastName": "Baku",
+            "fullName": "Ridle Baku",
+            "teamColor": "#DD0741"
+          },
+          "assistStr": "assist by Brajan Gruda",
+          "assistProfileUrl": "/players/1430151/brajan-gruda",
+          "assistPlayerId": 1430151,
+          "assistKey": "assist_by",
+          "assistInput": "Brajan Gruda"
         }
       ],
       "observed_score": {
