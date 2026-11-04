@@ -92602,7 +92602,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1469501837Goal1253852undefinedfalse"
+        "react:1469501837Goal1253852undefinedfalse",
+        "react:1469508349Goal883087undefinedtrue"
       ],
       "goals": [
         {
@@ -92685,6 +92686,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1469508349Goal883087undefinedtrue",
+          "player_id": 883087,
+          "player_name": "Ridle Baku",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "49",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4980,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469508349Goal883087undefinedtrue",
+            "timeStr": 49,
+            "type": "goal",
+            "time": 49,
+            "overloadTime": null,
+            "eventId": 14695083,
+            "player": {
+              "id": 883087,
+              "name": "Ridle Baku",
+              "profileUrl": "/players/883087/ridle-baku"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/883087/ridle-baku",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ridle Baku",
+            "firstName": "Ridle",
+            "lastName": "Baku",
+            "fullName": "Ridle Baku",
+            "playerId": 883087,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -92759,10 +92810,46 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1469508349Goal883087undefinedtrue",
+          "timeStr": 49,
+          "type": "goal",
+          "time": 49,
+          "overloadTime": null,
+          "eventId": 14695083,
+          "player": {
+            "id": 883087,
+            "name": "Ridle Baku",
+            "profileUrl": "/players/883087/ridle-baku"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/883087/ridle-baku",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ridle Baku",
+          "firstName": "Ridle",
+          "lastName": "Baku",
+          "fullName": "Ridle Baku",
+          "playerId": 883087,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
