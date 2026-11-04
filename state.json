@@ -91269,7 +91269,8 @@
       "event_keys": [
         "react:1469479825Goal1436258undefinedfalse",
         "react:1469480129Goal950473undefinedtrue",
-        "react:1469490569Goal690107undefinedfalse"
+        "react:1469490569Goal690107undefinedfalse",
+        "react:1469490973Goal1113704undefinedtrue"
       ],
       "goals": [
         {
@@ -91454,6 +91455,91 @@
             "assistPlayerId": 806552,
             "assistKey": "assist_by",
             "assistInput": "Cody Gakpo"
+          }
+        },
+        {
+          "event_key": "react:1469490973Goal1113704undefinedtrue",
+          "player_id": 1113704,
+          "player_name": "Archie Brown",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "73",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4963,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469490973Goal1113704undefinedtrue",
+            "timeStr": 73,
+            "type": "goal",
+            "time": 73,
+            "overloadTime": null,
+            "eventId": 14694909,
+            "player": {
+              "id": 1113704,
+              "name": "Archie Brown",
+              "profileUrl": "/players/1113704/archie-brown"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/1113704/archie-brown",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Archie Brown",
+            "firstName": "Archie",
+            "lastName": "Brown",
+            "fullName": "Archie Brown",
+            "playerId": 1113704,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2993196829,
+              "eventType": "Goal",
+              "teamId": 8695,
+              "playerId": 1113704,
+              "playerName": "Archie Brown",
+              "x": 103.4827586208,
+              "y": 39.545000001,
+              "min": 73,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.2875,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.4167,
+              "expectedGoalsOnTarget": 0.6739,
+              "shotType": "LeftFoot",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.39484126984126955,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 319784,
+              "firstName": "Archie",
+              "lastName": "Brown",
+              "fullName": "Archie Brown",
+              "teamColor": "#002D72"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
           }
         }
       ],
@@ -91674,10 +91760,81 @@
           "assistPlayerId": 806552,
           "assistKey": "assist_by",
           "assistInput": "Cody Gakpo"
+        },
+        {
+          "reactKey": "1469490973Goal1113704undefinedtrue",
+          "timeStr": 73,
+          "type": "goal",
+          "time": 73,
+          "overloadTime": null,
+          "eventId": 14694909,
+          "player": {
+            "id": 1113704,
+            "name": "Archie Brown",
+            "profileUrl": "/players/1113704/archie-brown"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/1113704/archie-brown",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Archie Brown",
+          "firstName": "Archie",
+          "lastName": "Brown",
+          "fullName": "Archie Brown",
+          "playerId": 1113704,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2993196829,
+            "eventType": "Goal",
+            "teamId": 8695,
+            "playerId": 1113704,
+            "playerName": "Archie Brown",
+            "x": 103.4827586208,
+            "y": 39.545000001,
+            "min": 73,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.2875,
+            "goalCrossedZ": 0.1219999994,
+            "expectedGoals": 0.4167,
+            "expectedGoalsOnTarget": 0.6739,
+            "shotType": "LeftFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.39484126984126955,
+              "y": 0.032275132116402115,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 319784,
+            "firstName": "Archie",
+            "lastName": "Brown",
+            "fullName": "Archie Brown",
+            "teamColor": "#002D72"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 2
       }
     },
