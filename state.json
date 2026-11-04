@@ -92618,7 +92618,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:146949729Goal1084981undefinedfalse"
+        "react:146949729Goal1084981undefinedfalse",
+        "react:1469501438Goal664500undefinedfalse"
       ],
       "goals": [
         {
@@ -92708,6 +92709,56 @@
             "assistKey": "assist_by",
             "assistInput": "Viktor Gyökeres"
           }
+        },
+        {
+          "event_key": "react:1469501438Goal664500undefinedfalse",
+          "player_id": 664500,
+          "player_name": "Viktor Gyökeres",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "38",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4978,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469501438Goal664500undefinedfalse",
+            "timeStr": 38,
+            "type": "goal",
+            "time": 38,
+            "overloadTime": null,
+            "eventId": 14695014,
+            "player": {
+              "id": 664500,
+              "name": "Viktor Gyökeres",
+              "profileUrl": "/players/664500/viktor-gyokeres"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/664500/viktor-gyokeres",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Viktor Gyökeres",
+            "firstName": "Viktor",
+            "lastName": "Gyökeres",
+            "fullName": "Viktor Gyökeres",
+            "playerId": 664500,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -92785,11 +92836,47 @@
           "assistPlayerId": 664500,
           "assistKey": "assist_by",
           "assistInput": "Viktor Gyökeres"
+        },
+        {
+          "reactKey": "1469501438Goal664500undefinedfalse",
+          "timeStr": 38,
+          "type": "goal",
+          "time": 38,
+          "overloadTime": null,
+          "eventId": 14695014,
+          "player": {
+            "id": 664500,
+            "name": "Viktor Gyökeres",
+            "profileUrl": "/players/664500/viktor-gyokeres"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/664500/viktor-gyokeres",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Viktor Gyökeres",
+          "firstName": "Viktor",
+          "lastName": "Gyökeres",
+          "fullName": "Viktor Gyökeres",
+          "playerId": 664500,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "6112255": {
