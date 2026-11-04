@@ -92851,7 +92851,8 @@
       "event_keys": [
         "react:1469501837Goal1253852undefinedfalse",
         "react:1469508349Goal883087undefinedtrue",
-        "react:1469512858Goal1137705undefinedfalse"
+        "react:1469512858Goal1137705undefinedfalse",
+        "react:1469515461Goal1248482undefinedtrue"
       ],
       "goals": [
         {
@@ -93110,6 +93111,56 @@
             "assistKey": "assist_by",
             "assistInput": "Iliman Ndiaye"
           }
+        },
+        {
+          "event_key": "react:1469515461Goal1248482undefinedtrue",
+          "player_id": 1248482,
+          "player_name": "Antonio Nusa",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "61",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4984,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469515461Goal1248482undefinedtrue",
+            "timeStr": 61,
+            "type": "goal",
+            "time": 61,
+            "overloadTime": null,
+            "eventId": 14695154,
+            "player": {
+              "id": 1248482,
+              "name": "Antonio Nusa",
+              "profileUrl": "/players/1248482/antonio-nusa"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/1248482/antonio-nusa",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Antonio Nusa",
+            "firstName": "Antonio",
+            "lastName": "Nusa",
+            "fullName": "Antonio Nusa",
+            "playerId": 1248482,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -93332,10 +93383,46 @@
           "assistPlayerId": 965764,
           "assistKey": "assist_by",
           "assistInput": "Iliman Ndiaye"
+        },
+        {
+          "reactKey": "1469515461Goal1248482undefinedtrue",
+          "timeStr": 61,
+          "type": "goal",
+          "time": 61,
+          "overloadTime": null,
+          "eventId": 14695154,
+          "player": {
+            "id": 1248482,
+            "name": "Antonio Nusa",
+            "profileUrl": "/players/1248482/antonio-nusa"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/1248482/antonio-nusa",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Antonio Nusa",
+          "firstName": "Antonio",
+          "lastName": "Nusa",
+          "fullName": "Antonio Nusa",
+          "playerId": 1248482,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 2
       }
     },
