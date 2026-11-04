@@ -90634,12 +90634,110 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:077Goal647502undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:077Goal647502undefinedtrue",
+          "player_id": 647502,
+          "player_name": "Ahmet Ataýew",
+          "assist_player_id": 1350054,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "77",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4947,
+          "needs_update": false,
+          "event": {
+            "reactKey": "077Goal647502undefinedtrue",
+            "timeStr": 77,
+            "type": "goal",
+            "time": 77,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 647502,
+              "name": "Ahmet Ataýew",
+              "profileUrl": "/players/647502/ahmet-atayew"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/647502/ahmet-atayew",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ahmet Ataýew",
+            "firstName": "Ahmet",
+            "lastName": "Ataýew",
+            "fullName": "Ahmet Ataýew",
+            "playerId": 647502,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Şanazar Tirkişow",
+            "assistProfileUrl": "/players/1350054/sanazar-tirkisow",
+            "assistPlayerId": 1350054,
+            "assistKey": "assist_by",
+            "assistInput": "Şanazar Tirkişow"
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "077Goal647502undefinedtrue",
+          "timeStr": 77,
+          "type": "goal",
+          "time": 77,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 647502,
+            "name": "Ahmet Ataýew",
+            "profileUrl": "/players/647502/ahmet-atayew"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/647502/ahmet-atayew",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ahmet Ataýew",
+          "firstName": "Ahmet",
+          "lastName": "Ataýew",
+          "fullName": "Ahmet Ataýew",
+          "playerId": 647502,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": "assist by Şanazar Tirkişow",
+          "assistProfileUrl": "/players/1350054/sanazar-tirkisow",
+          "assistPlayerId": 1350054,
+          "assistKey": "assist_by",
+          "assistInput": "Şanazar Tirkişow"
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
