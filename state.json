@@ -91122,7 +91122,7 @@
           "event_key": "react:1469492278Goal701154undefinedfalse",
           "player_id": 701154,
           "player_name": "Kylian Mbappé",
-          "assist_player_id": null,
+          "assist_player_id": 593118,
           "assist_player_name": "",
           "is_home": false,
           "minute": "78",
@@ -91164,8 +91164,46 @@
               2
             ],
             "penShootoutScore": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "shotmapEvent": {
+              "id": 2993197639,
+              "eventType": "Goal",
+              "teamId": 8633,
+              "playerId": 701154,
+              "playerName": "Kylian Mbappé",
+              "x": 101.58620689680001,
+              "y": 35.9825,
+              "min": 78,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.448750000000004,
+              "goalCrossedZ": 0.7319999964,
+              "expectedGoals": 0.7436,
+              "expectedGoalsOnTarget": 0.9103,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6167328042328032,
+                "y": 0.19365079269841268,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 299879,
+              "firstName": "Kylian",
+              "lastName": "Mbappé",
+              "fullName": "Kylian Mbappé",
+              "teamColor": "#085098"
+            },
+            "assistStr": "assist by Denzel Dumfries",
+            "assistProfileUrl": "/players/593118/denzel-dumfries",
+            "assistPlayerId": 593118,
+            "assistKey": "assist_by",
+            "assistInput": "Denzel Dumfries"
           }
         }
       ],
@@ -91500,8 +91538,46 @@
             2
           ],
           "penShootoutScore": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "shotmapEvent": {
+            "id": 2993197639,
+            "eventType": "Goal",
+            "teamId": 8633,
+            "playerId": 701154,
+            "playerName": "Kylian Mbappé",
+            "x": 101.58620689680001,
+            "y": 35.9825,
+            "min": 78,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.448750000000004,
+            "goalCrossedZ": 0.7319999964,
+            "expectedGoals": 0.7436,
+            "expectedGoalsOnTarget": 0.9103,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6167328042328032,
+              "y": 0.19365079269841268,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 299879,
+            "firstName": "Kylian",
+            "lastName": "Mbappé",
+            "fullName": "Kylian Mbappé",
+            "teamColor": "#085098"
+          },
+          "assistStr": "assist by Denzel Dumfries",
+          "assistProfileUrl": "/players/593118/denzel-dumfries",
+          "assistPlayerId": 593118,
+          "assistKey": "assist_by",
+          "assistInput": "Denzel Dumfries"
         }
       ],
       "observed_score": {
