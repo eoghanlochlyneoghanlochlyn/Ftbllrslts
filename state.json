@@ -90742,7 +90742,7 @@
       }
     },
     "6106401": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -90758,7 +90758,7 @@
       }
     },
     "6106330": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
