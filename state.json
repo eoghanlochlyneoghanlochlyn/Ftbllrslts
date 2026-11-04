@@ -91020,6 +91020,41 @@
             1
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2993181455,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 1436258,
+            "playerName": "Trey Nyoni",
+            "x": 89.1,
+            "y": 30.95,
+            "min": 25,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.1525,
+            "goalCrossedZ": 0.0385263156,
+            "expectedGoals": 0.0518,
+            "expectedGoalsOnTarget": 0.031,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.9596560846560838,
+              "y": 0.010192146984126984,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 363364,
+            "firstName": "Trey",
+            "lastName": "Nyoni",
+            "fullName": "Trey Nyoni",
+            "teamColor": "#911712"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
