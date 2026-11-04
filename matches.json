@@ -40,5 +40,12 @@
     "enabled": true,
     "auto": true,
     "start": "2026-11-04T20:00:00+00:00"
+  },
+  {
+    "id": "6112255",
+    "url": "https://www.fotmob.com/match/6112255",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-05T17:45:00+00:00"
   }
 ]
