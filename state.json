@@ -90763,7 +90763,8 @@
         "react:1469480533Goal1077894undefinedfalse",
         "react:1469480532Goal1077894undefinedfalse",
         "react:1469491175Goal1015750undefinedtrue",
-        "react:1469492278Goal701154undefinedfalse"
+        "react:1469492278Goal701154undefinedfalse",
+        "react:1469494590Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -91205,6 +91206,56 @@
             "assistKey": "assist_by",
             "assistInput": "Denzel Dumfries"
           }
+        },
+        {
+          "event_key": "react:1469494590Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 4967,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1469494590Goal0undefinedfalse",
+            "timeStr": "90 + 2",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 2,
+            "eventId": 14694945,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 2,
+            "profileUrl": "",
+            "overloadTimeStr": "+2",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -91578,11 +91629,47 @@
           "assistPlayerId": 593118,
           "assistKey": "assist_by",
           "assistInput": "Denzel Dumfries"
+        },
+        {
+          "reactKey": "1469494590Goal0undefinedfalse",
+          "timeStr": "90 + 2",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 2,
+          "eventId": 14694945,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 2,
+          "profileUrl": "",
+          "overloadTimeStr": "+2",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 2
+        "away": 3
       }
     },
     "6106330": {
