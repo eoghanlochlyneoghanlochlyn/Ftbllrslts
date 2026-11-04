@@ -92819,7 +92819,7 @@
           "event_key": "react:1469524872Goal1536436undefinedtrue",
           "player_id": 1536436,
           "player_name": "Konstantinos Karetsas",
-          "assist_player_id": null,
+          "assist_player_id": 1050158,
           "assist_player_name": "",
           "is_home": true,
           "minute": "72",
@@ -92872,18 +92872,22 @@
               "min": 72,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
+              "goalCrossedY": 32.3225,
+              "goalCrossedZ": 0.3659999982,
               "expectedGoals": 0.0471,
-              "expectedGoalsOnTarget": null,
+              "expectedGoalsOnTarget": 0.0825,
               "shotType": "LeftFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 1.4437830687830693,
+                "y": 0.09682539634920634,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 999171,
@@ -92892,8 +92896,11 @@
               "fullName": "Konstantinos Karetsas",
               "teamColor": "#d8a000"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Fábio Silva",
+            "assistProfileUrl": "/players/1050158/fabio-silva",
+            "assistPlayerId": 1050158,
+            "assistKey": "assist_by",
+            "assistInput": "Fábio Silva"
           }
         }
       ],
@@ -93124,18 +93131,22 @@
             "min": 72,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
+            "goalCrossedY": 32.3225,
+            "goalCrossedZ": 0.3659999982,
             "expectedGoals": 0.0471,
-            "expectedGoalsOnTarget": null,
+            "expectedGoalsOnTarget": 0.0825,
             "shotType": "LeftFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 1.4437830687830693,
+              "y": 0.09682539634920634,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 999171,
@@ -93144,8 +93155,11 @@
             "fullName": "Konstantinos Karetsas",
             "teamColor": "#d8a000"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Fábio Silva",
+          "assistProfileUrl": "/players/1050158/fabio-silva",
+          "assistPlayerId": 1050158,
+          "assistKey": "assist_by",
+          "assistInput": "Fábio Silva"
         }
       ],
       "observed_score": {
