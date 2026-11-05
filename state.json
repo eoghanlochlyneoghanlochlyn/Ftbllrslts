@@ -94942,7 +94942,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1469696519Goal866516undefinedfalse"
+        "react:1469696519Goal866516undefinedfalse",
+        "react:1469701337Goal823825undefinedfalse"
       ],
       "goals": [
         {
@@ -95028,6 +95029,90 @@
             "assistKey": "assist_by",
             "assistInput": "Randal Kolo Muani"
           }
+        },
+        {
+          "event_key": "react:1469701337Goal823825undefinedfalse",
+          "player_id": 823825,
+          "player_name": "Randal Kolo Muani",
+          "assist_player_id": 1106563,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "37",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5007,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1469701337Goal823825undefinedfalse",
+            "timeStr": 37,
+            "type": "goal",
+            "time": 37,
+            "overloadTime": null,
+            "eventId": 14697013,
+            "player": {
+              "id": 823825,
+              "name": "Randal Kolo Muani",
+              "profileUrl": "/players/823825/randal-kolo-muani"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/823825/randal-kolo-muani",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Randal Kolo Muani",
+            "firstName": "Randal Kolo",
+            "lastName": "Muani",
+            "fullName": "Randal Kolo Muani",
+            "playerId": 823825,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2993524625,
+              "eventType": "Goal",
+              "teamId": 9885,
+              "playerId": 823825,
+              "playerName": "Randal Kolo Muani",
+              "x": 90.3,
+              "y": 26.4009375,
+              "min": 37,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0507,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 824747,
+              "firstName": "Randal Kolo",
+              "lastName": "Muani",
+              "fullName": "Randal Kolo Muani",
+              "teamColor": "#000001"
+            },
+            "assistStr": "assist by Nick Woltemade",
+            "assistProfileUrl": "/players/1106563/nick-woltemade",
+            "assistPlayerId": 1106563,
+            "assistKey": "assist_by",
+            "assistInput": "Nick Woltemade"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -95105,11 +95190,81 @@
           "assistPlayerId": 823825,
           "assistKey": "assist_by",
           "assistInput": "Randal Kolo Muani"
+        },
+        {
+          "reactKey": "1469701337Goal823825undefinedfalse",
+          "timeStr": 37,
+          "type": "goal",
+          "time": 37,
+          "overloadTime": null,
+          "eventId": 14697013,
+          "player": {
+            "id": 823825,
+            "name": "Randal Kolo Muani",
+            "profileUrl": "/players/823825/randal-kolo-muani"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/823825/randal-kolo-muani",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Randal Kolo Muani",
+          "firstName": "Randal Kolo",
+          "lastName": "Muani",
+          "fullName": "Randal Kolo Muani",
+          "playerId": 823825,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2993524625,
+            "eventType": "Goal",
+            "teamId": 9885,
+            "playerId": 823825,
+            "playerName": "Randal Kolo Muani",
+            "x": 90.3,
+            "y": 26.4009375,
+            "min": 37,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0507,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 824747,
+            "firstName": "Randal Kolo",
+            "lastName": "Muani",
+            "fullName": "Randal Kolo Muani",
+            "teamColor": "#000001"
+          },
+          "assistStr": "assist by Nick Woltemade",
+          "assistProfileUrl": "/players/1106563/nick-woltemade",
+          "assistPlayerId": 1106563,
+          "assistKey": "assist_by",
+          "assistInput": "Nick Woltemade"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     }
   }
