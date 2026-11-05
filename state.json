@@ -94939,8 +94939,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1469696519Goal866516undefinedfalse",
         "react:1469701337Goal823825undefinedfalse",
