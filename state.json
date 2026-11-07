@@ -95977,7 +95977,8 @@
         "react:1470519214Goal0undefinedfalse",
         "react:1470519214Goal460632undefinedfalse",
         "react:1470562140Goal0undefinedtrue",
-        "react:1470562140Goal523749undefinedtrue"
+        "react:1470562140Goal523749undefinedtrue",
+        "react:1470702857Goal1737700undefinedfalse"
       ],
       "goals": [
         {
@@ -96248,6 +96249,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1470702857Goal1737700undefinedfalse",
+          "player_id": 1737700,
+          "player_name": "Lennart Karl",
+          "assist_player_id": 194165,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "57",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5032,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1470702857Goal1737700undefinedfalse",
+            "timeStr": 57,
+            "type": "goal",
+            "time": 57,
+            "overloadTime": null,
+            "eventId": 14707028,
+            "player": {
+              "id": 1737700,
+              "name": "Lennart Karl",
+              "profileUrl": "/players/1737700/lennart-karl"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1737700/lennart-karl",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Lennart Karl",
+            "firstName": "Lennart",
+            "lastName": "Karl",
+            "fullName": "Lennart Karl",
+            "playerId": 1737700,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2994420929,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1737700,
+              "playerName": "Lennart Karl",
+              "x": 95.35087719170001,
+              "y": 31.331249999999997,
+              "min": 57,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 35.3725,
+              "goalCrossedZ": 0.4879999976,
+              "expectedGoals": 0.3528,
+              "expectedGoalsOnTarget": 0.4522,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.6369047619047613,
+                "y": 0.12910052846560846,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 556505,
+              "firstName": "Lennart",
+              "lastName": "Karl",
+              "fullName": "Lennart Karl",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Harry Kane",
+            "assistProfileUrl": "/players/194165/harry-kane",
+            "assistPlayerId": 194165,
+            "assistKey": "assist_by",
+            "assistInput": "Harry Kane"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -96468,11 +96557,85 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1470702857Goal1737700undefinedfalse",
+          "timeStr": 57,
+          "type": "goal",
+          "time": 57,
+          "overloadTime": null,
+          "eventId": 14707028,
+          "player": {
+            "id": 1737700,
+            "name": "Lennart Karl",
+            "profileUrl": "/players/1737700/lennart-karl"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1737700/lennart-karl",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Lennart Karl",
+          "firstName": "Lennart",
+          "lastName": "Karl",
+          "fullName": "Lennart Karl",
+          "playerId": 1737700,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2994420929,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 1737700,
+            "playerName": "Lennart Karl",
+            "x": 95.35087719170001,
+            "y": 31.331249999999997,
+            "min": 57,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.3725,
+            "goalCrossedZ": 0.4879999976,
+            "expectedGoals": 0.3528,
+            "expectedGoalsOnTarget": 0.4522,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.6369047619047613,
+              "y": 0.12910052846560846,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 556505,
+            "firstName": "Lennart",
+            "lastName": "Karl",
+            "fullName": "Lennart Karl",
+            "teamColor": "#C60428"
+          },
+          "assistStr": "assist by Harry Kane",
+          "assistProfileUrl": "/players/194165/harry-kane",
+          "assistPlayerId": 194165,
+          "assistKey": "assist_by",
+          "assistInput": "Harry Kane"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5795505": {
