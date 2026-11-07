@@ -33,5 +33,19 @@
     "enabled": true,
     "auto": true,
     "start": "2026-11-07T17:30:00+00:00"
+  },
+  {
+    "id": "5868129",
+    "url": "https://www.fotmob.com/match/5868129",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-07T20:00:00+00:00"
+  },
+  {
+    "id": "5802987",
+    "url": "https://www.fotmob.com/match/5802987",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-07T20:05:00+00:00"
   }
 ]
