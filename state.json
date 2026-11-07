@@ -95707,7 +95707,8 @@
       "event_keys": [
         "react:1470688755Goal0undefinedtrue",
         "react:1470688755Goal966019undefinedtrue",
-        "react:1470730971Goal966019undefinedtrue"
+        "react:1470730971Goal966019undefinedtrue",
+        "react:1470755481Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -95935,6 +95936,56 @@
             "assistKey": "assist_by",
             "assistInput": "Maximilian Beier"
           }
+        },
+        {
+          "event_key": "react:1470755481Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "81",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5034,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1470755481Goal0undefinedfalse",
+            "timeStr": 81,
+            "type": "goal",
+            "time": 81,
+            "overloadTime": null,
+            "eventId": 14707554,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -96122,11 +96173,47 @@
           "assistPlayerId": 1047667,
           "assistKey": "assist_by",
           "assistInput": "Maximilian Beier"
+        },
+        {
+          "reactKey": "1470755481Goal0undefinedfalse",
+          "timeStr": 81,
+          "type": "goal",
+          "time": 81,
+          "overloadTime": null,
+          "eventId": 14707554,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 0
+        "away": 1
       }
     },
     "5881220": {
