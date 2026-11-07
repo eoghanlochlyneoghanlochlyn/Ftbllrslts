@@ -95669,10 +95669,10 @@
             "blockedY": null,
             "goalCrossedY": 36.745000000000005,
             "goalCrossedZ": 0.8539999958000001,
-            "expectedGoals": 0.4646,
-            "expectedGoalsOnTarget": 0.8262,
+            "expectedGoals": 0.31228137016296387,
+            "expectedGoalsOnTarget": 0.7411486506462097,
             "shotType": "RightFoot",
-            "situation": "RegularPlay",
+            "situation": "ThrowInSetPiece",
             "period": "SecondHalf",
             "isOwnGoal": false,
             "onGoalShot": {
