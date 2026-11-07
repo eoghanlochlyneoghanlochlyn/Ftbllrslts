@@ -97540,7 +97540,7 @@
           "event_key": "react:1471024318Goal1113903undefinedtrue",
           "player_id": 1113903,
           "player_name": "Liam Delap",
-          "assist_player_id": null,
+          "assist_player_id": 620027,
           "assist_player_name": "",
           "is_home": true,
           "minute": "18",
@@ -97593,18 +97593,22 @@
               "min": 18,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0788,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 34.838750000000005,
+              "goalCrossedZ": 2.0739999898,
+              "expectedGoals": 0.0612250380218029,
+              "expectedGoalsOnTarget": 0.2933703064918518,
               "shotType": "RightFoot",
               "situation": "FastBreak",
               "period": "FirstHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.7781084656084645,
+                "y": 0.5486772459788359,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 618878,
@@ -97613,8 +97617,11 @@
               "fullName": "Liam Delap",
               "teamColor": "#C8102E"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Xaver Schlager",
+            "assistProfileUrl": "/players/620027/xaver-schlager",
+            "assistPlayerId": 620027,
+            "assistKey": "assist_by",
+            "assistInput": "Xaver Schlager"
           }
         }
       ],
@@ -97772,18 +97779,22 @@
             "min": 18,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0788,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 34.838750000000005,
+            "goalCrossedZ": 2.0739999898,
+            "expectedGoals": 0.0612250380218029,
+            "expectedGoalsOnTarget": 0.2933703064918518,
             "shotType": "RightFoot",
             "situation": "FastBreak",
             "period": "FirstHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.7781084656084645,
+              "y": 0.5486772459788359,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 618878,
@@ -97792,8 +97803,11 @@
             "fullName": "Liam Delap",
             "teamColor": "#C8102E"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Xaver Schlager",
+          "assistProfileUrl": "/players/620027/xaver-schlager",
+          "assistPlayerId": 620027,
+          "assistKey": "assist_by",
+          "assistInput": "Xaver Schlager"
         }
       ],
       "observed_score": {
