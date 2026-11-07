@@ -96257,11 +96257,8 @@
             "fullName": "Felix Nmecha",
             "teamColor": "#d8a000"
           },
-          "assistStr": "assist by Maximilian Beier",
-          "assistProfileUrl": "/players/1047667/maximilian-beier",
-          "assistPlayerId": 1047667,
-          "assistKey": "assist_by",
-          "assistInput": "Maximilian Beier"
+          "assistStr": null,
+          "assistProfileUrl": null
         },
         {
           "reactKey": "1470755481Goal0undefinedfalse",
