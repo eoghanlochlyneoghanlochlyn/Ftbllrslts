@@ -98393,7 +98393,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1471186528Goal743533undefinedfalse"
+        "react:1471186528Goal743533undefinedfalse",
+        "react:1471192536Goal1253890undefinedfalse"
       ],
       "goals": [
         {
@@ -98480,6 +98481,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1471192536Goal1253890undefinedfalse",
+          "player_id": 1253890,
+          "player_name": "Arda Güler",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "36",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5060,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1471192536Goal1253890undefinedfalse",
+            "timeStr": 36,
+            "type": "goal",
+            "time": 36,
+            "overloadTime": null,
+            "eventId": 14711925,
+            "player": {
+              "id": 1253890,
+              "name": "Arda Güler",
+              "profileUrl": "/players/1253890/arda-guler"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1253890/arda-guler",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Arda Güler",
+            "firstName": "Arda",
+            "lastName": "Güler",
+            "fullName": "Arda Güler",
+            "playerId": 1253890,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -98554,11 +98605,47 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1471192536Goal1253890undefinedfalse",
+          "timeStr": 36,
+          "type": "goal",
+          "time": 36,
+          "overloadTime": null,
+          "eventId": 14711925,
+          "player": {
+            "id": 1253890,
+            "name": "Arda Güler",
+            "profileUrl": "/players/1253890/arda-guler"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1253890/arda-guler",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Arda Güler",
+          "firstName": "Arda",
+          "lastName": "Güler",
+          "fullName": "Arda Güler",
+          "playerId": 1253890,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5802987": {
