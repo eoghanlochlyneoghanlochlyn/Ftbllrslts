@@ -99120,7 +99120,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1471765540Goal831489undefinedfalse"
+        "react:1471765540Goal831489undefinedfalse",
+        "react:1471812254Goal1152455undefinedfalse"
       ],
       "goals": [
         {
@@ -99206,6 +99207,90 @@
             "assistKey": "assist_by",
             "assistInput": "Dominik Szoboszlai"
           }
+        },
+        {
+          "event_key": "react:1471812254Goal1152455undefinedfalse",
+          "player_id": 1152455,
+          "player_name": "Florian Wirtz",
+          "assist_player_id": 1297165,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "54",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5084,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1471812254Goal1152455undefinedfalse",
+            "timeStr": 54,
+            "type": "goal",
+            "time": 54,
+            "overloadTime": null,
+            "eventId": 14718122,
+            "player": {
+              "id": 1152455,
+              "name": "Florian Wirtz",
+              "profileUrl": "/players/1152455/florian-wirtz"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1152455/florian-wirtz",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Florian Wirtz",
+            "firstName": "Florian",
+            "lastName": "Wirtz",
+            "fullName": "Florian Wirtz",
+            "playerId": 1152455,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2995408511,
+              "eventType": "Goal",
+              "teamId": 8650,
+              "playerId": 1152455,
+              "playerName": "Florian Wirtz",
+              "x": 92.4,
+              "y": 39.208809525,
+              "min": 54,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0633,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 719330,
+              "firstName": "Florian",
+              "lastName": "Wirtz",
+              "fullName": "Florian Wirtz",
+              "teamColor": "#911712"
+            },
+            "assistStr": "assist by Bradley Barcola",
+            "assistProfileUrl": "/players/1297165/bradley-barcola",
+            "assistPlayerId": 1297165,
+            "assistKey": "assist_by",
+            "assistInput": "Bradley Barcola"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -99283,11 +99368,81 @@
           "assistPlayerId": 846005,
           "assistKey": "assist_by",
           "assistInput": "Dominik Szoboszlai"
+        },
+        {
+          "reactKey": "1471812254Goal1152455undefinedfalse",
+          "timeStr": 54,
+          "type": "goal",
+          "time": 54,
+          "overloadTime": null,
+          "eventId": 14718122,
+          "player": {
+            "id": 1152455,
+            "name": "Florian Wirtz",
+            "profileUrl": "/players/1152455/florian-wirtz"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1152455/florian-wirtz",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Florian Wirtz",
+          "firstName": "Florian",
+          "lastName": "Wirtz",
+          "fullName": "Florian Wirtz",
+          "playerId": 1152455,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2995408511,
+            "eventType": "Goal",
+            "teamId": 8650,
+            "playerId": 1152455,
+            "playerName": "Florian Wirtz",
+            "x": 92.4,
+            "y": 39.208809525,
+            "min": 54,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0633,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 719330,
+            "firstName": "Florian",
+            "lastName": "Wirtz",
+            "fullName": "Florian Wirtz",
+            "teamColor": "#911712"
+          },
+          "assistStr": "assist by Bradley Barcola",
+          "assistProfileUrl": "/players/1297165/bradley-barcola",
+          "assistPlayerId": 1297165,
+          "assistKey": "assist_by",
+          "assistInput": "Bradley Barcola"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5795514": {
