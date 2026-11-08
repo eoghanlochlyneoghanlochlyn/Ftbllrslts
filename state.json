@@ -100602,7 +100602,8 @@
         "react:1471988616Goal422685undefinedtrue",
         "react:1472037844Goal0undefinedtrue",
         "react:1472037844Goal465960undefinedtrue",
-        "react:1472072648Goal356406undefinedfalse"
+        "react:1472072648Goal356406undefinedfalse",
+        "react:1472079153Goal343748undefinedfalse"
       ],
       "goals": [
         {
@@ -101135,6 +101136,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1472079153Goal343748undefinedfalse",
+          "player_id": 343748,
+          "player_name": "Leon Goretzka",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "53",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5108,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1472079153Goal343748undefinedfalse",
+            "timeStr": 53,
+            "type": "goal",
+            "time": 53,
+            "overloadTime": null,
+            "eventId": 14720791,
+            "player": {
+              "id": 343748,
+              "name": "Leon Goretzka",
+              "profileUrl": "/players/343748/leon-goretzka"
+            },
+            "homeScore": 2,
+            "awayScore": 3,
+            "profileUrl": "/players/343748/leon-goretzka",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Leon Goretzka",
+            "firstName": "Leon",
+            "lastName": "Goretzka",
+            "fullName": "Leon Goretzka",
+            "playerId": 343748,
+            "newScore": [
+              2,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -101571,11 +101622,47 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1472079153Goal343748undefinedfalse",
+          "timeStr": 53,
+          "type": "goal",
+          "time": 53,
+          "overloadTime": null,
+          "eventId": 14720791,
+          "player": {
+            "id": 343748,
+            "name": "Leon Goretzka",
+            "profileUrl": "/players/343748/leon-goretzka"
+          },
+          "homeScore": 2,
+          "awayScore": 3,
+          "profileUrl": "/players/343748/leon-goretzka",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Leon Goretzka",
+          "firstName": "Leon",
+          "lastName": "Goretzka",
+          "fullName": "Leon Goretzka",
+          "playerId": 343748,
+          "newScore": [
+            2,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 3
+        "away": 4
       }
     },
     "5749744": {
