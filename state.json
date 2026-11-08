@@ -102569,7 +102569,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:147219324Goal1224237undefinedtrue"
+        "react:147219324Goal1224237undefinedtrue",
+        "react:1472210432Goal1106563undefinedfalse"
       ],
       "goals": [
         {
@@ -102659,6 +102660,90 @@
             "assistKey": "assist_by",
             "assistInput": "Pote"
           }
+        },
+        {
+          "event_key": "react:1472210432Goal1106563undefinedfalse",
+          "player_id": 1106563,
+          "player_name": "Nick Woltemade",
+          "assist_player_id": 823825,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "32",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5122,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1472210432Goal1106563undefinedfalse",
+            "timeStr": 32,
+            "type": "goal",
+            "time": 32,
+            "overloadTime": null,
+            "eventId": 14722104,
+            "player": {
+              "id": 1106563,
+              "name": "Nick Woltemade",
+              "profileUrl": "/players/1106563/nick-woltemade"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1106563/nick-woltemade",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nick Woltemade",
+            "firstName": "Nick",
+            "lastName": "Woltemade",
+            "fullName": "Nick Woltemade",
+            "playerId": 1106563,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2995793437,
+              "eventType": "Goal",
+              "teamId": 9885,
+              "playerId": 1106563,
+              "playerName": "Nick Woltemade",
+              "x": 95.35087719170001,
+              "y": 36.745000000000005,
+              "min": 32,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1476,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 182917,
+              "firstName": "Nick",
+              "lastName": "Woltemade",
+              "fullName": "Nick Woltemade",
+              "teamColor": "#000001"
+            },
+            "assistStr": "assist by Randal Kolo Muani",
+            "assistProfileUrl": "/players/823825/randal-kolo-muani",
+            "assistPlayerId": 823825,
+            "assistKey": "assist_by",
+            "assistInput": "Randal Kolo Muani"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -102736,11 +102821,81 @@
           "assistPlayerId": 875133,
           "assistKey": "assist_by",
           "assistInput": "Pote"
+        },
+        {
+          "reactKey": "1472210432Goal1106563undefinedfalse",
+          "timeStr": 32,
+          "type": "goal",
+          "time": 32,
+          "overloadTime": null,
+          "eventId": 14722104,
+          "player": {
+            "id": 1106563,
+            "name": "Nick Woltemade",
+            "profileUrl": "/players/1106563/nick-woltemade"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1106563/nick-woltemade",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Nick Woltemade",
+          "firstName": "Nick",
+          "lastName": "Woltemade",
+          "fullName": "Nick Woltemade",
+          "playerId": 1106563,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2995793437,
+            "eventType": "Goal",
+            "teamId": 9885,
+            "playerId": 1106563,
+            "playerName": "Nick Woltemade",
+            "x": 95.35087719170001,
+            "y": 36.745000000000005,
+            "min": 32,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1476,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "FastBreak",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 182917,
+            "firstName": "Nick",
+            "lastName": "Woltemade",
+            "fullName": "Nick Woltemade",
+            "teamColor": "#000001"
+          },
+          "assistStr": "assist by Randal Kolo Muani",
+          "assistProfileUrl": "/players/823825/randal-kolo-muani",
+          "assistPlayerId": 823825,
+          "assistKey": "assist_by",
+          "assistInput": "Randal Kolo Muani"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5868121": {
