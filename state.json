@@ -102712,7 +102712,7 @@
             "blockedY": null,
             "goalCrossedY": 32.3225,
             "goalCrossedZ": 1.6694736760000002,
-            "expectedGoals": 0.1750865876674652,
+            "expectedGoals": 0.1798030436038971,
             "expectedGoalsOnTarget": 0.5744154453277588,
             "shotType": "Header",
             "situation": "FromCorner",
