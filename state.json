@@ -99152,7 +99152,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1471724013Goal1445650undefinedfalse"
+        "react:1471724013Goal1445650undefinedfalse",
+        "react:1471735019Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -99238,6 +99239,56 @@
             "assistKey": "assist_by",
             "assistInput": "Adrien Rabiot"
           }
+        },
+        {
+          "event_key": "react:1471735019Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "19",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5080,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1471735019Goal0undefinedfalse",
+            "timeStr": 19,
+            "type": "goal",
+            "time": 19,
+            "overloadTime": null,
+            "eventId": 14717350,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -99315,11 +99366,47 @@
           "assistPlayerId": 352879,
           "assistKey": "assist_by",
           "assistInput": "Adrien Rabiot"
+        },
+        {
+          "reactKey": "1471735019Goal0undefinedfalse",
+          "timeStr": 19,
+          "type": "goal",
+          "time": 19,
+          "overloadTime": null,
+          "eventId": 14717350,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5795512": {
