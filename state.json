@@ -99635,7 +99635,8 @@
       "event_keys": [
         "react:1471724013Goal1445650undefinedfalse",
         "react:1471735019Goal0undefinedfalse",
-        "react:1471735019Goal688295undefinedfalse"
+        "react:1471735019Goal688295undefinedfalse",
+        "react:1471884288Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -99859,6 +99860,56 @@
             "assistKey": "assist_by",
             "assistInput": "Gonçalo Ramos"
           }
+        },
+        {
+          "event_key": "react:1471884288Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "88",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5086,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1471884288Goal0undefinedtrue",
+            "timeStr": 88,
+            "type": "goal",
+            "time": 88,
+            "overloadTime": null,
+            "eventId": 14718842,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -100046,10 +100097,46 @@
           "assistPlayerId": 940087,
           "assistKey": "assist_by",
           "assistInput": "Gonçalo Ramos"
+        },
+        {
+          "reactKey": "1471884288Goal0undefinedtrue",
+          "timeStr": 88,
+          "type": "goal",
+          "time": 88,
+          "overloadTime": null,
+          "eventId": 14718842,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 2
       }
     },
