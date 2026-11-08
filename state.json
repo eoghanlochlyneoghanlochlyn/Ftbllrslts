@@ -103227,7 +103227,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1472203410Goal1226147undefinedtrue",
-        "react:1472223245Goal1404415undefinedfalse"
+        "react:1472223245Goal1404415undefinedfalse",
+        "react:1472241066Goal1404415undefinedfalse"
       ],
       "goals": [
         {
@@ -103398,6 +103399,90 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1472241066Goal1404415undefinedfalse",
+          "player_id": 1404415,
+          "player_name": "Fermín López",
+          "assist_player_id": 1467236,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "66",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5126,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1472241066Goal1404415undefinedfalse",
+            "timeStr": 66,
+            "type": "goal",
+            "time": 66,
+            "overloadTime": null,
+            "eventId": 14722410,
+            "player": {
+              "id": 1404415,
+              "name": "Fermín López",
+              "profileUrl": "/players/1404415/fermin-lopez"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/1404415/fermin-lopez",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Fermín López",
+            "firstName": "Fermín",
+            "lastName": "López",
+            "fullName": "Fermín López",
+            "playerId": 1404415,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2995822801,
+              "eventType": "Goal",
+              "teamId": 8634,
+              "playerId": 1404415,
+              "playerName": "Fermín López",
+              "x": 98.0526315785,
+              "y": 25.4759375,
+              "min": 66,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0758,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 177126,
+              "firstName": "Fermín",
+              "lastName": "López",
+              "fullName": "Fermín López",
+              "teamColor": "#971e48"
+            },
+            "assistStr": "assist by Lamine Yamal",
+            "assistProfileUrl": "/players/1467236/lamine-yamal",
+            "assistPlayerId": 1467236,
+            "assistKey": "assist_by",
+            "assistInput": "Lamine Yamal"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -103546,11 +103631,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1472241066Goal1404415undefinedfalse",
+          "timeStr": 66,
+          "type": "goal",
+          "time": 66,
+          "overloadTime": null,
+          "eventId": 14722410,
+          "player": {
+            "id": 1404415,
+            "name": "Fermín López",
+            "profileUrl": "/players/1404415/fermin-lopez"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/1404415/fermin-lopez",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Fermín López",
+          "firstName": "Fermín",
+          "lastName": "López",
+          "fullName": "Fermín López",
+          "playerId": 1404415,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2995822801,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 1404415,
+            "playerName": "Fermín López",
+            "x": 98.0526315785,
+            "y": 25.4759375,
+            "min": 66,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0758,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 177126,
+            "firstName": "Fermín",
+            "lastName": "López",
+            "fullName": "Fermín López",
+            "teamColor": "#971e48"
+          },
+          "assistStr": "assist by Lamine Yamal",
+          "assistProfileUrl": "/players/1467236/lamine-yamal",
+          "assistPlayerId": 1467236,
+          "assistKey": "assist_by",
+          "assistInput": "Lamine Yamal"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     }
   }
