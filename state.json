@@ -103189,7 +103189,7 @@
             "goalCrossedZ": 0.9759999952,
             "expectedGoals": 0.6121832132339478,
             "expectedGoalsOnTarget": 0.7648111581802368,
-            "shotType": "Header",
+            "shotType": "OtherBodyParts",
             "situation": "FromCorner",
             "period": "SecondHalf",
             "isOwnGoal": false,
