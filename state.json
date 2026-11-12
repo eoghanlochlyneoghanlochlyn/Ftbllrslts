@@ -105105,7 +105105,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1472807224Goal0undefinedtrue",
-        "react:1472807224Goal883080undefinedtrue"
+        "react:1472807224Goal883080undefinedtrue",
+        "react:1472829959Goal1382000undefinedfalse"
       ],
       "goals": [
         {
@@ -105245,6 +105246,87 @@
             "assistKey": "assist_by",
             "assistInput": "Jude Bellingham"
           }
+        },
+        {
+          "event_key": "react:1472829959Goal1382000undefinedfalse",
+          "player_id": 1382000,
+          "player_name": "Petar Sučić",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "59",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5159,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1472829959Goal1382000undefinedfalse",
+            "timeStr": 59,
+            "type": "goal",
+            "time": 59,
+            "overloadTime": null,
+            "eventId": 14728299,
+            "player": {
+              "id": 1382000,
+              "name": "Petar Sučić",
+              "profileUrl": "/players/1382000/petar-sucic"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1382000/petar-sucic",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Petar Sučić",
+            "firstName": "Petar",
+            "lastName": "Sučić",
+            "fullName": "Petar Sučić",
+            "playerId": 1382000,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2996762435,
+              "eventType": "Goal",
+              "teamId": 10155,
+              "playerId": 1382000,
+              "playerName": "Petar Sučić",
+              "x": 101.58620689680001,
+              "y": 34.305,
+              "min": 59,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.2951,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 303919,
+              "firstName": "Petar",
+              "lastName": "Sučić",
+              "fullName": "Petar Sučić",
+              "teamColor": "#CC3737"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -105358,11 +105440,78 @@
           "assistPlayerId": 1077894,
           "assistKey": "assist_by",
           "assistInput": "Jude Bellingham"
+        },
+        {
+          "reactKey": "1472829959Goal1382000undefinedfalse",
+          "timeStr": 59,
+          "type": "goal",
+          "time": 59,
+          "overloadTime": null,
+          "eventId": 14728299,
+          "player": {
+            "id": 1382000,
+            "name": "Petar Sučić",
+            "profileUrl": "/players/1382000/petar-sucic"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1382000/petar-sucic",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Petar Sučić",
+          "firstName": "Petar",
+          "lastName": "Sučić",
+          "fullName": "Petar Sučić",
+          "playerId": 1382000,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2996762435,
+            "eventType": "Goal",
+            "teamId": 10155,
+            "playerId": 1382000,
+            "playerName": "Petar Sučić",
+            "x": 101.58620689680001,
+            "y": 34.305,
+            "min": 59,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.2951,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 303919,
+            "firstName": "Petar",
+            "lastName": "Sučić",
+            "fullName": "Petar Sučić",
+            "teamColor": "#CC3737"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     }
   }
