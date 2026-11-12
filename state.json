@@ -104773,7 +104773,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1472812839Goal942372undefinedfalse"
+        "react:1472812839Goal942372undefinedfalse",
+        "react:1472827848Goal1047676undefinedfalse"
       ],
       "goals": [
         {
@@ -104856,6 +104857,90 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1472827848Goal1047676undefinedfalse",
+          "player_id": 1047676,
+          "player_name": "Yéremi Pino",
+          "assist_player_id": 660625,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "48",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5158,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1472827848Goal1047676undefinedfalse",
+            "timeStr": 48,
+            "type": "goal",
+            "time": 48,
+            "overloadTime": null,
+            "eventId": 14728278,
+            "player": {
+              "id": 1047676,
+              "name": "Yéremi Pino",
+              "profileUrl": "/players/1047676/yeremi-pino"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1047676/yeremi-pino",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Yéremi Pino",
+            "firstName": "Yéremi",
+            "lastName": "Pino",
+            "fullName": "Yéremi Pino",
+            "playerId": 1047676,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2996759165,
+              "eventType": "Goal",
+              "teamId": 6720,
+              "playerId": 1047676,
+              "playerName": "Yéremi Pino",
+              "x": 97.0877192975,
+              "y": 20.5661146528,
+              "min": 48,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0516,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1077903,
+              "firstName": "Yéremi",
+              "lastName": "Pino",
+              "fullName": "Yéremi Pino",
+              "teamColor": "#c62035"
+            },
+            "assistStr": "assist by Unai Simón",
+            "assistProfileUrl": "/players/660625/unai-simon",
+            "assistPlayerId": 660625,
+            "assistKey": "assist_by",
+            "assistInput": "Unai Simón"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -104930,11 +105015,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1472827848Goal1047676undefinedfalse",
+          "timeStr": 48,
+          "type": "goal",
+          "time": 48,
+          "overloadTime": null,
+          "eventId": 14728278,
+          "player": {
+            "id": 1047676,
+            "name": "Yéremi Pino",
+            "profileUrl": "/players/1047676/yeremi-pino"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1047676/yeremi-pino",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Yéremi Pino",
+          "firstName": "Yéremi",
+          "lastName": "Pino",
+          "fullName": "Yéremi Pino",
+          "playerId": 1047676,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2996759165,
+            "eventType": "Goal",
+            "teamId": 6720,
+            "playerId": 1047676,
+            "playerName": "Yéremi Pino",
+            "x": 97.0877192975,
+            "y": 20.5661146528,
+            "min": 48,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0516,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1077903,
+            "firstName": "Yéremi",
+            "lastName": "Pino",
+            "fullName": "Yéremi Pino",
+            "teamColor": "#c62035"
+          },
+          "assistStr": "assist by Unai Simón",
+          "assistProfileUrl": "/players/660625/unai-simon",
+          "assistPlayerId": 660625,
+          "assistKey": "assist_by",
+          "assistInput": "Unai Simón"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5181858": {
