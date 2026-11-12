@@ -105106,7 +105106,8 @@
       "event_keys": [
         "react:1472807224Goal0undefinedtrue",
         "react:1472807224Goal883080undefinedtrue",
-        "react:1472829959Goal1382000undefinedfalse"
+        "react:1472829959Goal1382000undefinedfalse",
+        "react:1472832464Goal194165undefinedtrue"
       ],
       "goals": [
         {
@@ -105327,6 +105328,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1472832464Goal194165undefinedtrue",
+          "player_id": 194165,
+          "player_name": "Harry Kane",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "64",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5160,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1472832464Goal194165undefinedtrue",
+            "timeStr": 64,
+            "type": "goal",
+            "time": 64,
+            "overloadTime": null,
+            "eventId": 14728324,
+            "player": {
+              "id": 194165,
+              "name": "Harry Kane",
+              "profileUrl": "/players/194165/harry-kane"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/194165/harry-kane",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Harry Kane",
+            "firstName": "Harry",
+            "lastName": "Kane",
+            "fullName": "Harry Kane",
+            "playerId": 194165,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2996763555,
+              "eventType": "Goal",
+              "teamId": 8491,
+              "playerId": 194165,
+              "playerName": "Harry Kane",
+              "x": 94,
+              "y": 34,
+              "min": 64,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0822,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 383971,
+              "firstName": "Harry",
+              "lastName": "Kane",
+              "fullName": "Harry Kane",
+              "teamColor": "#6FA3E6"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -105511,10 +105593,77 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1472832464Goal194165undefinedtrue",
+          "timeStr": 64,
+          "type": "goal",
+          "time": 64,
+          "overloadTime": null,
+          "eventId": 14728324,
+          "player": {
+            "id": 194165,
+            "name": "Harry Kane",
+            "profileUrl": "/players/194165/harry-kane"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/194165/harry-kane",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Penalty",
+          "goalDescriptionKey": "penalty",
+          "suffix": "Pen",
+          "suffixKey": "penalties_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Harry Kane",
+          "firstName": "Harry",
+          "lastName": "Kane",
+          "fullName": "Harry Kane",
+          "playerId": 194165,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2996763555,
+            "eventType": "Goal",
+            "teamId": 8491,
+            "playerId": 194165,
+            "playerName": "Harry Kane",
+            "x": 94,
+            "y": 34,
+            "min": 64,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0822,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 383971,
+            "firstName": "Harry",
+            "lastName": "Kane",
+            "fullName": "Harry Kane",
+            "teamColor": "#6FA3E6"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 1
       }
     }
