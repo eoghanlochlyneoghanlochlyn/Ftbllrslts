@@ -106982,8 +106982,8 @@
             "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": 34,
-            "goalCrossedZ": 2.0354736742,
+            "goalCrossedY": 33.695,
+            "goalCrossedZ": 1.9134736748,
             "expectedGoals": 0.541833221912384,
             "expectedGoalsOnTarget": 0.7360385060310364,
             "shotType": "LeftFoot",
@@ -106991,8 +106991,8 @@
             "period": "FirstHalf",
             "isOwnGoal": false,
             "onGoalShot": {
-              "x": 1,
-              "y": 0.538485098994709,
+              "x": 1.0806878306878307,
+              "y": 0.5062099668783069,
               "zoomRatio": 1
             },
             "isSavedOffLine": false,
