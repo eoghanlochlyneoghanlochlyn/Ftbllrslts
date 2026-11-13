@@ -106154,7 +106154,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:147308686Goal941213undefinedtrue"
+        "react:147308686Goal941213undefinedtrue",
+        "react:1473091512Goal868344undefinedtrue"
       ],
       "goals": [
         {
@@ -106206,6 +106207,94 @@
             "shotmapEvent": null,
             "assistStr": null,
             "assistProfileUrl": null
+          }
+        },
+        {
+          "event_key": "react:1473091512Goal868344undefinedtrue",
+          "player_id": 868344,
+          "player_name": "Tijjani Reijnders",
+          "assist_player_id": 792429,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "12",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5181,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473091512Goal868344undefinedtrue",
+            "timeStr": 12,
+            "type": "goal",
+            "time": 12,
+            "overloadTime": null,
+            "eventId": 14730915,
+            "player": {
+              "id": 868344,
+              "name": "Tijjani Reijnders",
+              "profileUrl": "/players/868344/tijjani-reijnders"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/868344/tijjani-reijnders",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Tijjani Reijnders",
+            "firstName": "Tijjani",
+            "lastName": "Reijnders",
+            "fullName": "Tijjani Reijnders",
+            "playerId": 868344,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2996913653,
+              "eventType": "Goal",
+              "teamId": 6708,
+              "playerId": 868344,
+              "playerName": "Tijjani Reijnders",
+              "x": 100.3534482762,
+              "y": 42.4084375,
+              "min": 12,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34.305,
+              "goalCrossedZ": 1.9134736748,
+              "expectedGoals": 0.5004,
+              "expectedGoalsOnTarget": 0.6256,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.9193121693121694,
+                "y": 0.5062099668783069,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1072068,
+              "firstName": "Tijjani",
+              "lastName": "Reijnders",
+              "fullName": "Tijjani Reijnders",
+              "teamColor": "#FB6132"
+            },
+            "assistStr": "assist by Joey Veerman",
+            "assistProfileUrl": "/players/792429/joey-veerman",
+            "assistPlayerId": 792429,
+            "assistKey": "assist_by",
+            "assistInput": "Joey Veerman"
           }
         }
       ],
@@ -106281,10 +106370,84 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1473091512Goal868344undefinedtrue",
+          "timeStr": 12,
+          "type": "goal",
+          "time": 12,
+          "overloadTime": null,
+          "eventId": 14730915,
+          "player": {
+            "id": 868344,
+            "name": "Tijjani Reijnders",
+            "profileUrl": "/players/868344/tijjani-reijnders"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/868344/tijjani-reijnders",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Tijjani Reijnders",
+          "firstName": "Tijjani",
+          "lastName": "Reijnders",
+          "fullName": "Tijjani Reijnders",
+          "playerId": 868344,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2996913653,
+            "eventType": "Goal",
+            "teamId": 6708,
+            "playerId": 868344,
+            "playerName": "Tijjani Reijnders",
+            "x": 100.3534482762,
+            "y": 42.4084375,
+            "min": 12,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34.305,
+            "goalCrossedZ": 1.9134736748,
+            "expectedGoals": 0.5004,
+            "expectedGoalsOnTarget": 0.6256,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.9193121693121694,
+              "y": 0.5062099668783069,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1072068,
+            "firstName": "Tijjani",
+            "lastName": "Reijnders",
+            "fullName": "Tijjani Reijnders",
+            "teamColor": "#FB6132"
+          },
+          "assistStr": "assist by Joey Veerman",
+          "assistProfileUrl": "/players/792429/joey-veerman",
+          "assistPlayerId": 792429,
+          "assistKey": "assist_by",
+          "assistInput": "Joey Veerman"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
@@ -106297,7 +106460,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:147308173Goal749736undefinedfalse",
-        "react:147308173Goal540967undefinedfalse"
+        "react:147308173Goal540967undefinedfalse",
+        "react:1473091814Goal1152455undefinedfalse"
       ],
       "goals": [
         {
@@ -106434,6 +106598,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1473091814Goal1152455undefinedfalse",
+          "player_id": 1152455,
+          "player_name": "Florian Wirtz",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "14",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5182,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473091814Goal1152455undefinedfalse",
+            "timeStr": 14,
+            "type": "goal",
+            "time": 14,
+            "overloadTime": null,
+            "eventId": 14730918,
+            "player": {
+              "id": 1152455,
+              "name": "Florian Wirtz",
+              "profileUrl": "/players/1152455/florian-wirtz"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1152455/florian-wirtz",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Florian Wirtz",
+            "firstName": "Florian",
+            "lastName": "Wirtz",
+            "fullName": "Florian Wirtz",
+            "playerId": 1152455,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2996913821,
+              "eventType": "Goal",
+              "teamId": 8570,
+              "playerId": 1152455,
+              "playerName": "Florian Wirtz",
+              "x": 103.3879310346,
+              "y": 36.5925,
+              "min": 14,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.440000000000005,
+              "goalCrossedZ": 0.28252631440000003,
+              "expectedGoals": 0.855,
+              "expectedGoalsOnTarget": 0.9859,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.3544973544973533,
+                "y": 0.07474241121693122,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 543021,
+              "firstName": "Florian",
+              "lastName": "Wirtz",
+              "fullName": "Florian Wirtz",
+              "teamColor": "#464646"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -106544,11 +106793,82 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1473091814Goal1152455undefinedfalse",
+          "timeStr": 14,
+          "type": "goal",
+          "time": 14,
+          "overloadTime": null,
+          "eventId": 14730918,
+          "player": {
+            "id": 1152455,
+            "name": "Florian Wirtz",
+            "profileUrl": "/players/1152455/florian-wirtz"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1152455/florian-wirtz",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Florian Wirtz",
+          "firstName": "Florian",
+          "lastName": "Wirtz",
+          "fullName": "Florian Wirtz",
+          "playerId": 1152455,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2996913821,
+            "eventType": "Goal",
+            "teamId": 8570,
+            "playerId": 1152455,
+            "playerName": "Florian Wirtz",
+            "x": 103.3879310346,
+            "y": 36.5925,
+            "min": 14,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.440000000000005,
+            "goalCrossedZ": 0.28252631440000003,
+            "expectedGoals": 0.855,
+            "expectedGoalsOnTarget": 0.9859,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.3544973544973533,
+              "y": 0.07474241121693122,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 543021,
+            "firstName": "Florian",
+            "lastName": "Wirtz",
+            "fullName": "Florian Wirtz",
+            "teamColor": "#464646"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5181869": {
