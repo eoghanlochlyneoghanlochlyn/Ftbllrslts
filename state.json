@@ -106158,7 +106158,8 @@
         "react:1473091512Goal868344undefinedtrue",
         "react:1473095718Goal868344undefinedtrue",
         "react:1473100624Goal899701undefinedfalse",
-        "react:1473107033Goal868344undefinedtrue"
+        "react:1473107033Goal868344undefinedtrue",
+        "react:1473111740Goal942381undefinedtrue"
       ],
       "goals": [
         {
@@ -106552,6 +106553,56 @@
             "assistKey": "assist_by",
             "assistInput": "Denzel Dumfries"
           }
+        },
+        {
+          "event_key": "react:1473111740Goal942381undefinedtrue",
+          "player_id": 942381,
+          "player_name": "Jurriën Timber",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "40",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5186,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473111740Goal942381undefinedtrue",
+            "timeStr": 40,
+            "type": "goal",
+            "time": 40,
+            "overloadTime": null,
+            "eventId": 14731117,
+            "player": {
+              "id": 942381,
+              "name": "Jurriën Timber",
+              "profileUrl": "/players/942381/jurrien-timber"
+            },
+            "homeScore": 4,
+            "awayScore": 0,
+            "profileUrl": "/players/942381/jurrien-timber",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Jurriën Timber",
+            "firstName": "Jurriën",
+            "lastName": "Timber",
+            "fullName": "Jurriën Timber",
+            "playerId": 942381,
+            "newScore": [
+              5,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -106919,10 +106970,46 @@
           "assistPlayerId": 593118,
           "assistKey": "assist_by",
           "assistInput": "Denzel Dumfries"
+        },
+        {
+          "reactKey": "1473111740Goal942381undefinedtrue",
+          "timeStr": 40,
+          "type": "goal",
+          "time": 40,
+          "overloadTime": null,
+          "eventId": 14731117,
+          "player": {
+            "id": 942381,
+            "name": "Jurriën Timber",
+            "profileUrl": "/players/942381/jurrien-timber"
+          },
+          "homeScore": 4,
+          "awayScore": 0,
+          "profileUrl": "/players/942381/jurrien-timber",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Jurriën Timber",
+          "firstName": "Jurriën",
+          "lastName": "Timber",
+          "fullName": "Jurriën Timber",
+          "playerId": 942381,
+          "newScore": [
+            5,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 4,
+        "home": 5,
         "away": 0
       }
     },
