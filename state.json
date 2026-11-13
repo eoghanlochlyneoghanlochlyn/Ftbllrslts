@@ -108001,7 +108001,7 @@
           "event_key": "react:1473139056Goal540967undefinedtrue",
           "player_id": 540967,
           "player_name": "Srdjan Babić",
-          "assist_player_id": null,
+          "assist_player_id": 1786574,
           "assist_player_name": "",
           "is_home": true,
           "minute": "56",
@@ -108059,8 +108059,8 @@
               "blockedY": null,
               "goalCrossedY": 35.83,
               "goalCrossedZ": 0.3274736826,
-              "expectedGoals": 0.5294,
-              "expectedGoalsOnTarget": 0.8708,
+              "expectedGoals": 0.7283198833465576,
+              "expectedGoalsOnTarget": 0.9685446619987488,
               "shotType": "LeftFoot",
               "situation": "SetPiece",
               "period": "SecondHalf",
@@ -108078,8 +108078,11 @@
               "fullName": "Srdjan Babić",
               "teamColor": "#CA2739"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Stefan Gudelj",
+            "assistProfileUrl": "/players/1786574/stefan-gudelj",
+            "assistPlayerId": 1786574,
+            "assistKey": "assist_by",
+            "assistInput": "Stefan Gudelj"
           }
         }
       ],
@@ -108474,8 +108477,11 @@
             "fullName": "Srdjan Babić",
             "teamColor": "#CA2739"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Stefan Gudelj",
+          "assistProfileUrl": "/players/1786574/stefan-gudelj",
+          "assistPlayerId": 1786574,
+          "assistKey": "assist_by",
+          "assistInput": "Stefan Gudelj"
         }
       ],
       "observed_score": {
