@@ -106153,12 +106153,104 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:147308686Goal941213undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:147308686Goal941213undefinedtrue",
+          "player_id": 941213,
+          "player_name": "Crysencio Summerville",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "6",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5179,
+          "needs_update": false,
+          "event": {
+            "reactKey": "147308686Goal941213undefinedtrue",
+            "timeStr": 6,
+            "type": "goal",
+            "time": 6,
+            "overloadTime": null,
+            "eventId": 14730868,
+            "player": {
+              "id": 941213,
+              "name": "Crysencio Summerville",
+              "profileUrl": "/players/941213/crysencio-summerville"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/941213/crysencio-summerville",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Crysencio Summerville",
+            "firstName": "Crysencio",
+            "lastName": "Summerville",
+            "fullName": "Crysencio Summerville",
+            "playerId": 941213,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "147308686Goal941213undefinedtrue",
+          "timeStr": 6,
+          "type": "goal",
+          "time": 6,
+          "overloadTime": null,
+          "eventId": 14730868,
+          "player": {
+            "id": 941213,
+            "name": "Crysencio Summerville",
+            "profileUrl": "/players/941213/crysencio-summerville"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/941213/crysencio-summerville",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Crysencio Summerville",
+          "firstName": "Crysencio",
+          "lastName": "Summerville",
+          "fullName": "Crysencio Summerville",
+          "playerId": 941213,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
@@ -106170,7 +106262,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:147308173Goal749736undefinedfalse"
+        "react:147308173Goal749736undefinedfalse",
+        "react:147308173Goal540967undefinedfalse"
       ],
       "goals": [
         {
@@ -106222,6 +106315,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:147308173Goal540967undefinedfalse",
+          "player_id": 540967,
+          "player_name": "Srdjan Babić",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "3",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 5180,
+          "needs_update": false,
+          "event": {
+            "reactKey": "147308173Goal540967undefinedfalse",
+            "timeStr": 3,
+            "type": "goal",
+            "time": 3,
+            "overloadTime": null,
+            "eventId": 14730817,
+            "player": {
+              "id": 540967,
+              "name": "Srdjan Babić",
+              "profileUrl": "/players/540967/srdjan-babic"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/540967/srdjan-babic",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Srdjan Babić",
+            "firstName": "Srdjan",
+            "lastName": "Babić",
+            "fullName": "Srdjan Babić",
+            "playerId": 540967,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2996907285,
+              "eventType": "Goal",
+              "teamId": 8205,
+              "playerId": 540967,
+              "playerName": "Srdjan Babić",
+              "x": 3.9827586204000003,
+              "y": 34.533750000000005,
+              "min": 3,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.865,
+              "goalCrossedZ": 0.3659999982,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "OtherBodyParts",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.5648148148148162,
+                "y": 0.09682539634920634,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 543021,
+              "firstName": "Srdjan",
+              "lastName": "Babić",
+              "fullName": "Srdjan Babić",
+              "teamColor": "#CA2739"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -106259,6 +106437,77 @@
             1
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "147308173Goal540967undefinedfalse",
+          "timeStr": 3,
+          "type": "goal",
+          "time": 3,
+          "overloadTime": null,
+          "eventId": 14730817,
+          "player": {
+            "id": 540967,
+            "name": "Srdjan Babić",
+            "profileUrl": "/players/540967/srdjan-babic"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/540967/srdjan-babic",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Srdjan Babić",
+          "firstName": "Srdjan",
+          "lastName": "Babić",
+          "fullName": "Srdjan Babić",
+          "playerId": 540967,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2996907285,
+            "eventType": "Goal",
+            "teamId": 8205,
+            "playerId": 540967,
+            "playerName": "Srdjan Babić",
+            "x": 3.9827586204000003,
+            "y": 34.533750000000005,
+            "min": 3,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.865,
+            "goalCrossedZ": 0.3659999982,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "OtherBodyParts",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.5648148148148162,
+              "y": 0.09682539634920634,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 543021,
+            "firstName": "Srdjan",
+            "lastName": "Babić",
+            "fullName": "Srdjan Babić",
+            "teamColor": "#CA2739"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
