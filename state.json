@@ -106244,7 +106244,41 @@
             0
           ],
           "penShootoutScore": null,
-          "shotmapEvent": null,
+          "shotmapEvent": {
+            "id": 2996910223,
+            "eventType": "Goal",
+            "teamId": 6708,
+            "playerId": 941213,
+            "playerName": "Crysencio Summerville",
+            "x": 97.3771929818,
+            "y": 27.782619046999997,
+            "min": 6,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 35.525000000000006,
+            "goalCrossedZ": 0.2439999988,
+            "expectedGoals": 0.3542,
+            "expectedGoalsOnTarget": 0.6119,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.5965608465608451,
+              "y": 0.06455026423280423,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1072068,
+            "firstName": "Crysencio",
+            "lastName": "Summerville",
+            "fullName": "Crysencio Summerville",
+            "teamColor": "#FB6132"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
