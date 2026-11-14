@@ -109159,7 +109159,8 @@
         "react:1473831943Goal266523undefinedfalse",
         "react:1473862750Goal1199272undefinedfalse",
         "react:1473870157Goal1199272undefinedfalse",
-        "react:1473893375Goal503659undefinedfalse"
+        "react:1473893375Goal503659undefinedfalse",
+        "react:1473909590Goal488139undefinedtrue"
       ],
       "goals": [
         {
@@ -109506,6 +109507,91 @@
             "assistKey": "assist_by",
             "assistInput": "Mathias Jensen"
           }
+        },
+        {
+          "event_key": "react:1473909590Goal488139undefinedtrue",
+          "player_id": 488139,
+          "player_name": "Bernardo Silva",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 3",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5217,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473909590Goal488139undefinedtrue",
+            "timeStr": "90 + 3",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 3,
+            "eventId": 14739095,
+            "player": {
+              "id": 488139,
+              "name": "Bernardo Silva",
+              "profileUrl": "/players/488139/bernardo-silva"
+            },
+            "homeScore": 0,
+            "awayScore": 4,
+            "profileUrl": "/players/488139/bernardo-silva",
+            "overloadTimeStr": "+3",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bernardo Silva",
+            "firstName": "Bernardo",
+            "lastName": "Silva",
+            "fullName": "Bernardo Silva",
+            "playerId": 488139,
+            "newScore": [
+              1,
+              4
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2997420353,
+              "eventType": "Goal",
+              "teamId": 8361,
+              "playerId": 488139,
+              "playerName": "Bernardo Silva",
+              "x": 102.06034482780001,
+              "y": 27.950714285,
+              "min": 90,
+              "minAdded": 3,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.0175,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": 0.5061,
+              "expectedGoalsOnTarget": 0.7451,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.5244708994709,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 967941,
+              "firstName": "Bernardo",
+              "lastName": "Silva",
+              "fullName": "Bernardo Silva",
+              "teamColor": "#ab0027"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -109802,10 +109888,81 @@
           "assistPlayerId": 650616,
           "assistKey": "assist_by",
           "assistInput": "Mathias Jensen"
+        },
+        {
+          "reactKey": "1473909590Goal488139undefinedtrue",
+          "timeStr": "90 + 3",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 3,
+          "eventId": 14739095,
+          "player": {
+            "id": 488139,
+            "name": "Bernardo Silva",
+            "profileUrl": "/players/488139/bernardo-silva"
+          },
+          "homeScore": 0,
+          "awayScore": 4,
+          "profileUrl": "/players/488139/bernardo-silva",
+          "overloadTimeStr": "+3",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bernardo Silva",
+          "firstName": "Bernardo",
+          "lastName": "Silva",
+          "fullName": "Bernardo Silva",
+          "playerId": 488139,
+          "newScore": [
+            1,
+            4
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2997420353,
+            "eventType": "Goal",
+            "teamId": 8361,
+            "playerId": 488139,
+            "playerName": "Bernardo Silva",
+            "x": 102.06034482780001,
+            "y": 27.950714285,
+            "min": 90,
+            "minAdded": 3,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.0175,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": 0.5061,
+            "expectedGoalsOnTarget": 0.7451,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.5244708994709,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 967941,
+            "firstName": "Bernardo",
+            "lastName": "Silva",
+            "fullName": "Bernardo Silva",
+            "teamColor": "#ab0027"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 4
       }
     }
