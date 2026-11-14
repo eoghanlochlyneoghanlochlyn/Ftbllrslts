@@ -108498,7 +108498,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1473709959Goal1248482undefinedtrue",
-        "react:1473720568Goal1228558undefinedtrue"
+        "react:1473720568Goal1228558undefinedtrue",
+        "react:1473737379Goal674014undefinedfalse"
       ],
       "goals": [
         {
@@ -108673,6 +108674,94 @@
             "assistKey": "assist_by",
             "assistInput": "Erling Haaland"
           }
+        },
+        {
+          "event_key": "react:1473737379Goal674014undefinedfalse",
+          "player_id": 674014,
+          "player_name": "David Brooks",
+          "assist_player_id": 494417,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "79",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5207,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473737379Goal674014undefinedfalse",
+            "timeStr": 79,
+            "type": "goal",
+            "time": 79,
+            "overloadTime": null,
+            "eventId": 14737373,
+            "player": {
+              "id": 674014,
+              "name": "David Brooks",
+              "profileUrl": "/players/674014/david-brooks"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/674014/david-brooks",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "David Brooks",
+            "firstName": "David",
+            "lastName": "Brooks",
+            "fullName": "David Brooks",
+            "playerId": 674014,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2997297493,
+              "eventType": "Goal",
+              "teamId": 5790,
+              "playerId": 674014,
+              "playerName": "David Brooks",
+              "x": 95.8333333322,
+              "y": 28.623095236999998,
+              "min": 79,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.39875,
+              "goalCrossedZ": 0.4879999976,
+              "expectedGoals": 0.388,
+              "expectedGoalsOnTarget": 0.5009,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.4236111111111112,
+                "y": 0.12910052846560846,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 631757,
+              "firstName": "David",
+              "lastName": "Brooks",
+              "fullName": "David Brooks",
+              "teamColor": "#E5231B"
+            },
+            "assistStr": "assist by Harry Wilson",
+            "assistProfileUrl": "/players/494417/harry-wilson",
+            "assistPlayerId": 494417,
+            "assistKey": "assist_by",
+            "assistInput": "Harry Wilson"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -108821,11 +108910,85 @@
           "assistPlayerId": 737066,
           "assistKey": "assist_by",
           "assistInput": "Erling Haaland"
+        },
+        {
+          "reactKey": "1473737379Goal674014undefinedfalse",
+          "timeStr": 79,
+          "type": "goal",
+          "time": 79,
+          "overloadTime": null,
+          "eventId": 14737373,
+          "player": {
+            "id": 674014,
+            "name": "David Brooks",
+            "profileUrl": "/players/674014/david-brooks"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/674014/david-brooks",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "David Brooks",
+          "firstName": "David",
+          "lastName": "Brooks",
+          "fullName": "David Brooks",
+          "playerId": 674014,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2997297493,
+            "eventType": "Goal",
+            "teamId": 5790,
+            "playerId": 674014,
+            "playerName": "David Brooks",
+            "x": 95.8333333322,
+            "y": 28.623095236999998,
+            "min": 79,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.39875,
+            "goalCrossedZ": 0.4879999976,
+            "expectedGoals": 0.388,
+            "expectedGoalsOnTarget": 0.5009,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.4236111111111112,
+              "y": 0.12910052846560846,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 631757,
+            "firstName": "David",
+            "lastName": "Brooks",
+            "fullName": "David Brooks",
+            "teamColor": "#E5231B"
+          },
+          "assistStr": "assist by Harry Wilson",
+          "assistProfileUrl": "/players/494417/harry-wilson",
+          "assistPlayerId": 494417,
+          "assistKey": "assist_by",
+          "assistInput": "Harry Wilson"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 0
+        "away": 1
       }
     },
     "5181870": {
