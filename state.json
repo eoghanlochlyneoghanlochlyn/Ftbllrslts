@@ -108497,7 +108497,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1473709959Goal1248482undefinedtrue"
+        "react:1473709959Goal1248482undefinedtrue",
+        "react:1473720568Goal1228558undefinedtrue"
       ],
       "goals": [
         {
@@ -108584,6 +108585,94 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1473720568Goal1228558undefinedtrue",
+          "player_id": 1228558,
+          "player_name": "Andreas Schjelderup",
+          "assist_player_id": 737066,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "68",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5206,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473720568Goal1228558undefinedtrue",
+            "timeStr": 68,
+            "type": "goal",
+            "time": 68,
+            "overloadTime": null,
+            "eventId": 14737205,
+            "player": {
+              "id": 1228558,
+              "name": "Andreas Schjelderup",
+              "profileUrl": "/players/1228558/andreas-schjelderup"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1228558/andreas-schjelderup",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Andreas Schjelderup",
+            "firstName": "Andreas",
+            "lastName": "Schjelderup",
+            "fullName": "Andreas Schjelderup",
+            "playerId": 1228558,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2997290393,
+              "eventType": "Goal",
+              "teamId": 8492,
+              "playerId": 1228558,
+              "playerName": "Andreas Schjelderup",
+              "x": 98.7280701752,
+              "y": 31.78875,
+              "min": 68,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.551249999999996,
+              "goalCrossedZ": 0.160526315,
+              "expectedGoals": 0.5376,
+              "expectedGoalsOnTarget": 0.8045,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3832671957671967,
+                "y": 0.042467279100529096,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 163604,
+              "firstName": "Andreas",
+              "lastName": "Schjelderup",
+              "fullName": "Andreas Schjelderup",
+              "teamColor": "#b53032"
+            },
+            "assistStr": "assist by Erling Haaland",
+            "assistProfileUrl": "/players/737066/erling-haaland",
+            "assistPlayerId": 737066,
+            "assistKey": "assist_by",
+            "assistInput": "Erling Haaland"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -108658,10 +108747,84 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1473720568Goal1228558undefinedtrue",
+          "timeStr": 68,
+          "type": "goal",
+          "time": 68,
+          "overloadTime": null,
+          "eventId": 14737205,
+          "player": {
+            "id": 1228558,
+            "name": "Andreas Schjelderup",
+            "profileUrl": "/players/1228558/andreas-schjelderup"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1228558/andreas-schjelderup",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Andreas Schjelderup",
+          "firstName": "Andreas",
+          "lastName": "Schjelderup",
+          "fullName": "Andreas Schjelderup",
+          "playerId": 1228558,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2997290393,
+            "eventType": "Goal",
+            "teamId": 8492,
+            "playerId": 1228558,
+            "playerName": "Andreas Schjelderup",
+            "x": 98.7280701752,
+            "y": 31.78875,
+            "min": 68,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.551249999999996,
+            "goalCrossedZ": 0.160526315,
+            "expectedGoals": 0.5376,
+            "expectedGoalsOnTarget": 0.8045,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.3832671957671967,
+              "y": 0.042467279100529096,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 163604,
+            "firstName": "Andreas",
+            "lastName": "Schjelderup",
+            "fullName": "Andreas Schjelderup",
+            "teamColor": "#b53032"
+          },
+          "assistStr": "assist by Erling Haaland",
+          "assistProfileUrl": "/players/737066/erling-haaland",
+          "assistPlayerId": 737066,
+          "assistKey": "assist_by",
+          "assistInput": "Erling Haaland"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
