@@ -109423,7 +109423,7 @@
           "event_key": "react:1473893375Goal503659undefinedfalse",
           "player_id": 503659,
           "player_name": "Joachim Andersen",
-          "assist_player_id": null,
+          "assist_player_id": 650616,
           "assist_player_name": "",
           "is_home": false,
           "minute": "75",
@@ -109476,18 +109476,22 @@
               "min": 75,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0585,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 37.355000000000004,
+              "goalCrossedZ": 1.3034736778000002,
+              "expectedGoals": 0.07880149036645889,
+              "expectedGoalsOnTarget": 0.7167247533798218,
               "shotType": "Header",
               "situation": "SetPiece",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.11243386243386144,
+                "y": 0.34483430629629636,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 795630,
@@ -109496,8 +109500,11 @@
               "fullName": "Joachim Andersen",
               "teamColor": "#D2151A"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Mathias Jensen",
+            "assistProfileUrl": "/players/650616/mathias-jensen",
+            "assistPlayerId": 650616,
+            "assistKey": "assist_by",
+            "assistInput": "Mathias Jensen"
           }
         }
       ],
@@ -109766,18 +109773,22 @@
             "min": 75,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0585,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 37.355000000000004,
+            "goalCrossedZ": 1.3034736778000002,
+            "expectedGoals": 0.07880149036645889,
+            "expectedGoalsOnTarget": 0.7167247533798218,
             "shotType": "Header",
             "situation": "SetPiece",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.11243386243386144,
+              "y": 0.34483430629629636,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 795630,
@@ -109786,8 +109797,11 @@
             "fullName": "Joachim Andersen",
             "teamColor": "#D2151A"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Mathias Jensen",
+          "assistProfileUrl": "/players/650616/mathias-jensen",
+          "assistPlayerId": 650616,
+          "assistKey": "assist_by",
+          "assistInput": "Mathias Jensen"
         }
       ],
       "observed_score": {
