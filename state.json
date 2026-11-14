@@ -109158,7 +109158,8 @@
       "event_keys": [
         "react:1473831943Goal266523undefinedfalse",
         "react:1473862750Goal1199272undefinedfalse",
-        "react:1473870157Goal1199272undefinedfalse"
+        "react:1473870157Goal1199272undefinedfalse",
+        "react:1473893375Goal503659undefinedfalse"
       ],
       "goals": [
         {
@@ -109417,6 +109418,87 @@
             "assistKey": "assist_by",
             "assistInput": "Pierre-Emile Højbjerg"
           }
+        },
+        {
+          "event_key": "react:1473893375Goal503659undefinedfalse",
+          "player_id": 503659,
+          "player_name": "Joachim Andersen",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "75",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5216,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1473893375Goal503659undefinedfalse",
+            "timeStr": 75,
+            "type": "goal",
+            "time": 75,
+            "overloadTime": null,
+            "eventId": 14738933,
+            "player": {
+              "id": 503659,
+              "name": "Joachim Andersen",
+              "profileUrl": "/players/503659/joachim-andersen"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/503659/joachim-andersen",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Joachim Andersen",
+            "firstName": "Joachim",
+            "lastName": "Andersen",
+            "fullName": "Joachim Andersen",
+            "playerId": 503659,
+            "newScore": [
+              0,
+              4
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2997409527,
+              "eventType": "Goal",
+              "teamId": 8238,
+              "playerId": 503659,
+              "playerName": "Joachim Andersen",
+              "x": 95.35087719170001,
+              "y": 31.254999999999995,
+              "min": 75,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0585,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "SetPiece",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 795630,
+              "firstName": "Joachim",
+              "lastName": "Andersen",
+              "fullName": "Joachim Andersen",
+              "teamColor": "#D2151A"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -109639,11 +109721,78 @@
           "assistPlayerId": 266523,
           "assistKey": "assist_by",
           "assistInput": "Pierre-Emile Højbjerg"
+        },
+        {
+          "reactKey": "1473893375Goal503659undefinedfalse",
+          "timeStr": 75,
+          "type": "goal",
+          "time": 75,
+          "overloadTime": null,
+          "eventId": 14738933,
+          "player": {
+            "id": 503659,
+            "name": "Joachim Andersen",
+            "profileUrl": "/players/503659/joachim-andersen"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/503659/joachim-andersen",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Joachim Andersen",
+          "firstName": "Joachim",
+          "lastName": "Andersen",
+          "fullName": "Joachim Andersen",
+          "playerId": 503659,
+          "newScore": [
+            0,
+            4
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2997409527,
+            "eventType": "Goal",
+            "teamId": 8238,
+            "playerId": 503659,
+            "playerName": "Joachim Andersen",
+            "x": 95.35087719170001,
+            "y": 31.254999999999995,
+            "min": 75,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0585,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "SetPiece",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 795630,
+            "firstName": "Joachim",
+            "lastName": "Andersen",
+            "fullName": "Joachim Andersen",
+            "teamColor": "#D2151A"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 3
+        "away": 4
       }
     }
   }
