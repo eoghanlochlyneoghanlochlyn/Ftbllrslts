@@ -109334,7 +109334,7 @@
           "event_key": "react:1473870157Goal1199272undefinedfalse",
           "player_id": 1199272,
           "player_name": "Rasmus Højlund",
-          "assist_player_id": null,
+          "assist_player_id": 266523,
           "assist_player_name": "",
           "is_home": false,
           "minute": "57",
@@ -109387,18 +109387,22 @@
               "min": 57,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0551,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 31.331249999999997,
+              "goalCrossedZ": 0.7319999964,
+              "expectedGoals": 0.0637,
+              "expectedGoalsOnTarget": 0.2608,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 1.7060185185185193,
+                "y": 0.19365079269841268,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 795630,
@@ -109407,8 +109411,11 @@
               "fullName": "Rasmus Højlund",
               "teamColor": "#D2151A"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Pierre-Emile Højbjerg",
+            "assistProfileUrl": "/players/266523/pierre-emile-hojbjerg",
+            "assistPlayerId": 266523,
+            "assistKey": "assist_by",
+            "assistInput": "Pierre-Emile Højbjerg"
           }
         }
       ],
@@ -109603,18 +109610,22 @@
             "min": 57,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0551,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 31.331249999999997,
+            "goalCrossedZ": 0.7319999964,
+            "expectedGoals": 0.0637,
+            "expectedGoalsOnTarget": 0.2608,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 1.7060185185185193,
+              "y": 0.19365079269841268,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 795630,
@@ -109623,8 +109634,11 @@
             "fullName": "Rasmus Højlund",
             "teamColor": "#D2151A"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Pierre-Emile Højbjerg",
+          "assistProfileUrl": "/players/266523/pierre-emile-hojbjerg",
+          "assistPlayerId": 266523,
+          "assistKey": "assist_by",
+          "assistInput": "Pierre-Emile Højbjerg"
         }
       ],
       "observed_score": {
