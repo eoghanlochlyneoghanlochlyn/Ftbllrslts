@@ -111511,7 +111511,8 @@
         "react:1474486145Goal194165undefinedfalse",
         "react:1474494153Goal710159undefinedfalse",
         "react:1474497757Goal776151undefinedfalse",
-        "react:1474500663Card1089691undefinedfalse"
+        "react:1474500663Card1089691undefinedfalse",
+        "react:1474501765Goal678234undefinedtrue"
       ],
       "goals": [
         {
@@ -111774,6 +111775,56 @@
             "assistKey": "assist_by",
             "assistInput": "Jude Bellingham"
           }
+        },
+        {
+          "event_key": "react:1474501765Goal678234undefinedtrue",
+          "player_id": 678234,
+          "player_name": "Mikel Oyarzabal",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "65",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5245,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1474501765Goal678234undefinedtrue",
+            "timeStr": 65,
+            "type": "goal",
+            "time": 65,
+            "overloadTime": null,
+            "eventId": 14745017,
+            "player": {
+              "id": 678234,
+              "name": "Mikel Oyarzabal",
+              "profileUrl": "/players/678234/mikel-oyarzabal"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/678234/mikel-oyarzabal",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Penalty",
+            "goalDescriptionKey": "penalty",
+            "suffix": "Pen",
+            "suffixKey": "penalties_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mikel Oyarzabal",
+            "firstName": "Mikel",
+            "lastName": "Oyarzabal",
+            "fullName": "Mikel Oyarzabal",
+            "playerId": 678234,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -111996,10 +112047,46 @@
           "assistPlayerId": 1077894,
           "assistKey": "assist_by",
           "assistInput": "Jude Bellingham"
+        },
+        {
+          "reactKey": "1474501765Goal678234undefinedtrue",
+          "timeStr": 65,
+          "type": "goal",
+          "time": 65,
+          "overloadTime": null,
+          "eventId": 14745017,
+          "player": {
+            "id": 678234,
+            "name": "Mikel Oyarzabal",
+            "profileUrl": "/players/678234/mikel-oyarzabal"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/678234/mikel-oyarzabal",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Penalty",
+          "goalDescriptionKey": "penalty",
+          "suffix": "Pen",
+          "suffixKey": "penalties_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mikel Oyarzabal",
+          "firstName": "Mikel",
+          "lastName": "Oyarzabal",
+          "fullName": "Mikel Oyarzabal",
+          "playerId": 678234,
+          "newScore": [
+            1,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 3
       }
     }
