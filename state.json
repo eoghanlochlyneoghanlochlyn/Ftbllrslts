@@ -111228,7 +111228,8 @@
         "react:1474490149Goal873855undefinedtrue",
         "react:1474492053Goal1253890undefinedfalse",
         "react:1474505279Goal0undefinedtrue",
-        "react:1474505280Goal1460534undefinedtrue"
+        "react:1474505280Goal1460534undefinedtrue",
+        "react:1474511590Goal291399undefinedfalse"
       ],
       "goals": [
         {
@@ -111588,6 +111589,94 @@
             "assistKey": "assist_by",
             "assistInput": "Rayan Cherki"
           }
+        },
+        {
+          "event_key": "react:1474511590Goal291399undefinedfalse",
+          "player_id": 291399,
+          "player_name": "Abdülkerim Bardakci",
+          "assist_player_id": 1253890,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5253,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1474511590Goal291399undefinedfalse",
+            "timeStr": 90,
+            "type": "goal",
+            "time": 90,
+            "overloadTime": null,
+            "eventId": 14745115,
+            "player": {
+              "id": 291399,
+              "name": "Abdülkerim Bardakci",
+              "profileUrl": "/players/291399/abdulkerim-bardakci"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/291399/abdulkerim-bardakci",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Abdülkerim Bardakci",
+            "firstName": "Abdülkerim",
+            "lastName": "Bardakci",
+            "fullName": "Abdülkerim Bardakci",
+            "playerId": 291399,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2997777949,
+              "eventType": "Goal",
+              "teamId": 6595,
+              "playerId": 291399,
+              "playerName": "Abdülkerim Bardakci",
+              "x": 99.8793103452,
+              "y": 35.9825,
+              "min": 90,
+              "minAdded": 0,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.9325,
+              "goalCrossedZ": 1.0145263108,
+              "expectedGoals": 0.4113,
+              "expectedGoalsOnTarget": 0.4744,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.282407407407408,
+                "y": 0.2683932039153439,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1524210,
+              "firstName": "Abdülkerim",
+              "lastName": "Bardakci",
+              "fullName": "Abdülkerim Bardakci",
+              "teamColor": "#d71c00"
+            },
+            "assistStr": "assist by Arda Güler",
+            "assistProfileUrl": "/players/1253890/arda-guler",
+            "assistPlayerId": 1253890,
+            "assistKey": "assist_by",
+            "assistInput": "Arda Güler"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -111879,11 +111968,85 @@
           "assistPlayerId": 1104053,
           "assistKey": "assist_by",
           "assistInput": "Rayan Cherki"
+        },
+        {
+          "reactKey": "1474511590Goal291399undefinedfalse",
+          "timeStr": 90,
+          "type": "goal",
+          "time": 90,
+          "overloadTime": null,
+          "eventId": 14745115,
+          "player": {
+            "id": 291399,
+            "name": "Abdülkerim Bardakci",
+            "profileUrl": "/players/291399/abdulkerim-bardakci"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/291399/abdulkerim-bardakci",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Abdülkerim Bardakci",
+          "firstName": "Abdülkerim",
+          "lastName": "Bardakci",
+          "fullName": "Abdülkerim Bardakci",
+          "playerId": 291399,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2997777949,
+            "eventType": "Goal",
+            "teamId": 6595,
+            "playerId": 291399,
+            "playerName": "Abdülkerim Bardakci",
+            "x": 99.8793103452,
+            "y": 35.9825,
+            "min": 90,
+            "minAdded": 0,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.9325,
+            "goalCrossedZ": 1.0145263108,
+            "expectedGoals": 0.4113,
+            "expectedGoalsOnTarget": 0.4744,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.282407407407408,
+              "y": 0.2683932039153439,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1524210,
+            "firstName": "Abdülkerim",
+            "lastName": "Bardakci",
+            "fullName": "Abdülkerim Bardakci",
+            "teamColor": "#d71c00"
+          },
+          "assistStr": "assist by Arda Güler",
+          "assistProfileUrl": "/players/1253890/arda-guler",
+          "assistPlayerId": 1253890,
+          "assistKey": "assist_by",
+          "assistInput": "Arda Güler"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 0
+        "away": 1
       }
     },
     "5181859": {
