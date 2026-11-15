@@ -109967,7 +109967,7 @@
       }
     },
     "5181798": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -109983,7 +109983,7 @@
       }
     },
     "5181799": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -109999,7 +109999,7 @@
       }
     },
     "5181859": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -110015,7 +110015,7 @@
       }
     },
     "5181860": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
