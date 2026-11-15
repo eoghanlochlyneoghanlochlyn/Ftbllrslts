@@ -111135,7 +111135,7 @@
             "goalCrossedZ": 0.7705263120000001,
             "expectedGoals": null,
             "expectedGoalsOnTarget": null,
-            "shotType": "RightFoot",
+            "shotType": "LeftFoot",
             "situation": "FromCorner",
             "period": "SecondHalf",
             "isOwnGoal": true,
