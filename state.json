@@ -110905,12 +110905,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1474490149Goal1297165undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1474490149Goal1297165undefinedtrue",
+          "player_id": 1297165,
+          "player_name": "Bradley Barcola",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "49",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5239,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1474490149Goal1297165undefinedtrue",
+            "timeStr": 49,
+            "type": "goal",
+            "time": 49,
+            "overloadTime": null,
+            "eventId": 14744901,
+            "player": {
+              "id": 1297165,
+              "name": "Bradley Barcola",
+              "profileUrl": "/players/1297165/bradley-barcola"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1297165/bradley-barcola",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bradley Barcola",
+            "firstName": "Bradley",
+            "lastName": "Barcola",
+            "fullName": "Bradley Barcola",
+            "playerId": 1297165,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1474490149Goal1297165undefinedtrue",
+          "timeStr": 49,
+          "type": "goal",
+          "time": 49,
+          "overloadTime": null,
+          "eventId": 14744901,
+          "player": {
+            "id": 1297165,
+            "name": "Bradley Barcola",
+            "profileUrl": "/players/1297165/bradley-barcola"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1297165/bradley-barcola",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bradley Barcola",
+          "firstName": "Bradley",
+          "lastName": "Barcola",
+          "fullName": "Bradley Barcola",
+          "playerId": 1297165,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
