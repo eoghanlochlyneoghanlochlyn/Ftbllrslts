@@ -113505,7 +113505,8 @@
         "react:1474648159Goal1152455undefinedtrue",
         "react:1474648160Goal1152455undefinedtrue",
         "react:1474650265Goal1002058undefinedtrue",
-        "react:1474652371Goal1152455undefinedtrue"
+        "react:1474652371Goal1152455undefinedtrue",
+        "react:1474656177Goal1430151undefinedtrue"
       ],
       "goals": [
         {
@@ -113987,6 +113988,56 @@
             "assistKey": "assist_by",
             "assistInput": "Brajan Gruda"
           }
+        },
+        {
+          "event_key": "react:1474656177Goal1430151undefinedtrue",
+          "player_id": 1430151,
+          "player_name": "Brajan Gruda",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "77",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5290,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1474656177Goal1430151undefinedtrue",
+            "timeStr": 77,
+            "type": "goal",
+            "time": 77,
+            "overloadTime": null,
+            "eventId": 14746561,
+            "player": {
+              "id": 1430151,
+              "name": "Brajan Gruda",
+              "profileUrl": "/players/1430151/brajan-gruda"
+            },
+            "homeScore": 4,
+            "awayScore": 0,
+            "profileUrl": "/players/1430151/brajan-gruda",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Brajan Gruda",
+            "firstName": "Brajan",
+            "lastName": "Gruda",
+            "fullName": "Brajan Gruda",
+            "playerId": 1430151,
+            "newScore": [
+              5,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -114390,10 +114441,46 @@
           "assistPlayerId": 1430151,
           "assistKey": "assist_by",
           "assistInput": "Brajan Gruda"
+        },
+        {
+          "reactKey": "1474656177Goal1430151undefinedtrue",
+          "timeStr": 77,
+          "type": "goal",
+          "time": 77,
+          "overloadTime": null,
+          "eventId": 14746561,
+          "player": {
+            "id": 1430151,
+            "name": "Brajan Gruda",
+            "profileUrl": "/players/1430151/brajan-gruda"
+          },
+          "homeScore": 4,
+          "awayScore": 0,
+          "profileUrl": "/players/1430151/brajan-gruda",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Brajan Gruda",
+          "firstName": "Brajan",
+          "lastName": "Gruda",
+          "fullName": "Brajan Gruda",
+          "playerId": 1430151,
+          "newScore": [
+            5,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 4,
+        "home": 5,
         "away": 0
       }
     },
