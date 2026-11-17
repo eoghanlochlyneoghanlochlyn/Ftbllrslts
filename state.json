@@ -114833,7 +114833,8 @@
       "event_keys": [
         "react:1474836211Goal1199272undefinedtrue",
         "react:1474841215Goal0undefinedtrue",
-        "react:1474841214Goal266523undefinedtrue"
+        "react:1474841214Goal266523undefinedtrue",
+        "react:1474862531Goal737066undefinedfalse"
       ],
       "goals": [
         {
@@ -115058,6 +115059,90 @@
             "assistKey": "assist_by",
             "assistInput": "Gustav Isaksen"
           }
+        },
+        {
+          "event_key": "react:1474862531Goal737066undefinedfalse",
+          "player_id": 737066,
+          "player_name": "Erling Haaland",
+          "assist_player_id": 659272,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "31",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5312,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1474862531Goal737066undefinedfalse",
+            "timeStr": 31,
+            "type": "goal",
+            "time": 31,
+            "overloadTime": null,
+            "eventId": 14748625,
+            "player": {
+              "id": 737066,
+              "name": "Erling Haaland",
+              "profileUrl": "/players/737066/erling-haaland"
+            },
+            "homeScore": 2,
+            "awayScore": 0,
+            "profileUrl": "/players/737066/erling-haaland",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Erling Haaland",
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "playerId": 737066,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2998214651,
+              "eventType": "Goal",
+              "teamId": 8492,
+              "playerId": 737066,
+              "playerName": "Erling Haaland",
+              "x": 101.4913793106,
+              "y": 30.232,
+              "min": 31,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1212,
+              "expectedGoalsOnTarget": null,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 967941,
+              "firstName": "Erling",
+              "lastName": "Haaland",
+              "fullName": "Erling Haaland",
+              "teamColor": "#b53032"
+            },
+            "assistStr": "assist by Julian Ryerson",
+            "assistProfileUrl": "/players/659272/julian-ryerson",
+            "assistPlayerId": 659272,
+            "assistKey": "assist_by",
+            "assistInput": "Julian Ryerson"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -115242,11 +115327,81 @@
           "assistPlayerId": 1016093,
           "assistKey": "assist_by",
           "assistInput": "Gustav Isaksen"
+        },
+        {
+          "reactKey": "1474862531Goal737066undefinedfalse",
+          "timeStr": 31,
+          "type": "goal",
+          "time": 31,
+          "overloadTime": null,
+          "eventId": 14748625,
+          "player": {
+            "id": 737066,
+            "name": "Erling Haaland",
+            "profileUrl": "/players/737066/erling-haaland"
+          },
+          "homeScore": 2,
+          "awayScore": 0,
+          "profileUrl": "/players/737066/erling-haaland",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Erling Haaland",
+          "firstName": "Erling",
+          "lastName": "Haaland",
+          "fullName": "Erling Haaland",
+          "playerId": 737066,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2998214651,
+            "eventType": "Goal",
+            "teamId": 8492,
+            "playerId": 737066,
+            "playerName": "Erling Haaland",
+            "x": 101.4913793106,
+            "y": 30.232,
+            "min": 31,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1212,
+            "expectedGoalsOnTarget": null,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 967941,
+            "firstName": "Erling",
+            "lastName": "Haaland",
+            "fullName": "Erling Haaland",
+            "teamColor": "#b53032"
+          },
+          "assistStr": "assist by Julian Ryerson",
+          "assistProfileUrl": "/players/659272/julian-ryerson",
+          "assistPlayerId": 659272,
+          "assistKey": "assist_by",
+          "assistInput": "Julian Ryerson"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 0
+        "away": 1
       }
     },
     "5181872": {
