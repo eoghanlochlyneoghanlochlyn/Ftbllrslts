@@ -115579,7 +115579,8 @@
         "react:1474836713Goal0undefinedtrue",
         "react:1474836713Goal674014undefinedtrue",
         "react:1474871941Goal0undefinedtrue",
-        "react:1474871941Goal812982undefinedtrue"
+        "react:1474871941Goal812982undefinedtrue",
+        "react:1474873143Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -115862,7 +115863,7 @@
           "event_key": "react:1474871941Goal812982undefinedtrue",
           "player_id": 812982,
           "player_name": "Sorba Thomas",
-          "assist_player_id": null,
+          "assist_player_id": 674014,
           "assist_player_name": "",
           "is_home": true,
           "minute": "41",
@@ -115910,23 +115911,27 @@
               "teamId": 5790,
               "playerId": 812982,
               "playerName": "Sorba Thomas",
-              "x": 92.6,
-              "y": 41.9459375,
+              "x": 93.9,
+              "y": 41.057857143,
               "min": 40,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0579,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 30.797499999999996,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.21581801772117615,
+              "expectedGoalsOnTarget": 0.8834137320518494,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 1.8472222222222223,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 795630,
@@ -115935,6 +115940,59 @@
               "fullName": "Sorba Thomas",
               "teamColor": "#E5231B"
             },
+            "assistStr": "assist by David Brooks",
+            "assistProfileUrl": "/players/674014/david-brooks",
+            "assistPlayerId": 674014,
+            "assistKey": "assist_by",
+            "assistInput": "David Brooks"
+          }
+        },
+        {
+          "event_key": "react:1474873143Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "43",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5316,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1474873143Goal0undefinedfalse",
+            "timeStr": 43,
+            "type": "goal",
+            "time": 43,
+            "overloadTime": null,
+            "eventId": 14748731,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
             "assistStr": null,
             "assistProfileUrl": null
           }
@@ -116230,13 +116288,52 @@
             "fullName": "Sorba Thomas",
             "teamColor": "#E5231B"
           },
+          "assistStr": "assist by David Brooks",
+          "assistProfileUrl": "/players/674014/david-brooks",
+          "assistPlayerId": 674014,
+          "assistKey": "assist_by",
+          "assistInput": "David Brooks"
+        },
+        {
+          "reactKey": "1474873143Goal0undefinedfalse",
+          "timeStr": 43,
+          "type": "goal",
+          "time": 43,
+          "overloadTime": null,
+          "eventId": 14748731,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
           "assistStr": null,
           "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     }
   }
