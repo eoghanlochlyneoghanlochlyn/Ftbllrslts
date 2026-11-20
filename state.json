@@ -117397,13 +117397,103 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:012Goal1407250undefinedfalse"
+      ],
+      "goals": [
+        {
+          "event_key": "react:012Goal1407250undefinedfalse",
+          "player_id": 1407250,
+          "player_name": "Mikey Moore",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "12",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5335,
+          "needs_update": false,
+          "event": {
+            "reactKey": "012Goal1407250undefinedfalse",
+            "timeStr": 12,
+            "type": "goal",
+            "time": 12,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 1407250,
+              "name": "Mikey Moore",
+              "profileUrl": "/players/1407250/mikey-moore"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1407250/mikey-moore",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mikey Moore",
+            "firstName": "Mikey",
+            "lastName": "Moore",
+            "fullName": "Mikey Moore",
+            "playerId": 1407250,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "012Goal1407250undefinedfalse",
+          "timeStr": 12,
+          "type": "goal",
+          "time": 12,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 1407250,
+            "name": "Mikey Moore",
+            "profileUrl": "/players/1407250/mikey-moore"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1407250/mikey-moore",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mikey Moore",
+          "firstName": "Mikey",
+          "lastName": "Moore",
+          "fullName": "Mikey Moore",
+          "playerId": 1407250,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "5795522": {
