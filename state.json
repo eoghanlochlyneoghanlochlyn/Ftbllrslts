@@ -117398,7 +117398,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:012Goal1407250undefinedfalse"
+        "react:012Goal1407250undefinedfalse",
+        "react:037Goal1395447undefinedtrue"
       ],
       "goals": [
         {
@@ -117488,6 +117489,94 @@
             "assistKey": "assist_by",
             "assistInput": "Saïd El Mala"
           }
+        },
+        {
+          "event_key": "react:037Goal1395447undefinedtrue",
+          "player_id": 1395447,
+          "player_name": "Nathaniel Brown",
+          "assist_player_id": 1286183,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "37",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5336,
+          "needs_update": false,
+          "event": {
+            "reactKey": "037Goal1395447undefinedtrue",
+            "timeStr": 37,
+            "type": "goal",
+            "time": 37,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 1395447,
+              "name": "Nathaniel Brown",
+              "profileUrl": "/players/1395447/nathaniel-brown"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1395447/nathaniel-brown",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nathaniel Brown",
+            "firstName": "Nathaniel",
+            "lastName": "Brown",
+            "fullName": "Nathaniel Brown",
+            "playerId": 1395447,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2998773651,
+              "eventType": "Goal",
+              "teamId": 9823,
+              "playerId": 1395447,
+              "playerName": "Nathaniel Brown",
+              "x": 83.8364077672,
+              "y": 32.9325,
+              "min": 37,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.178749999999994,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.0372,
+              "expectedGoalsOnTarget": 0.3008,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7463624338624355,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 573465,
+              "firstName": "Nathaniel",
+              "lastName": "Brown",
+              "fullName": "Nathaniel Brown",
+              "teamColor": "#C60428"
+            },
+            "assistStr": "assist by Tom Bischof",
+            "assistProfileUrl": "/players/1286183/tom-bischof",
+            "assistPlayerId": 1286183,
+            "assistKey": "assist_by",
+            "assistInput": "Tom Bischof"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -117565,10 +117654,84 @@
           "assistPlayerId": 1613676,
           "assistKey": "assist_by",
           "assistInput": "Saïd El Mala"
+        },
+        {
+          "reactKey": "037Goal1395447undefinedtrue",
+          "timeStr": 37,
+          "type": "goal",
+          "time": 37,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 1395447,
+            "name": "Nathaniel Brown",
+            "profileUrl": "/players/1395447/nathaniel-brown"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1395447/nathaniel-brown",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Nathaniel Brown",
+          "firstName": "Nathaniel",
+          "lastName": "Brown",
+          "fullName": "Nathaniel Brown",
+          "playerId": 1395447,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2998773651,
+            "eventType": "Goal",
+            "teamId": 9823,
+            "playerId": 1395447,
+            "playerName": "Nathaniel Brown",
+            "x": 83.8364077672,
+            "y": 32.9325,
+            "min": 37,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.178749999999994,
+            "goalCrossedZ": 0.20547368320000003,
+            "expectedGoals": 0.0372,
+            "expectedGoalsOnTarget": 0.3008,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7463624338624355,
+              "y": 0.05435811724867726,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 573465,
+            "firstName": "Nathaniel",
+            "lastName": "Brown",
+            "fullName": "Nathaniel Brown",
+            "teamColor": "#C60428"
+          },
+          "assistStr": "assist by Tom Bischof",
+          "assistProfileUrl": "/players/1286183/tom-bischof",
+          "assistPlayerId": 1286183,
+          "assistKey": "assist_by",
+          "assistInput": "Tom Bischof"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
