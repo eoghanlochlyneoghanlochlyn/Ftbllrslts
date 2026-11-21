@@ -117852,7 +117852,7 @@
           "event_key": "react:1476033416Goal1128945undefinedfalse",
           "player_id": 1128945,
           "player_name": "Rodrigo Muniz",
-          "assist_player_id": null,
+          "assist_player_id": 1113790,
           "assist_player_name": "",
           "is_home": false,
           "minute": "16",
@@ -117929,8 +117929,11 @@
               "fullName": "Rodrigo Muniz",
               "teamColor": "#000000"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Oscar Bobb",
+            "assistProfileUrl": "/players/1113790/oscar-bobb",
+            "assistPlayerId": 1113790,
+            "assistKey": "assist_by",
+            "assistInput": "Oscar Bobb"
           }
         }
       ],
@@ -118071,8 +118074,11 @@
             "fullName": "Rodrigo Muniz",
             "teamColor": "#000000"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Oscar Bobb",
+          "assistProfileUrl": "/players/1113790/oscar-bobb",
+          "assistPlayerId": 1113790,
+          "assistKey": "assist_by",
+          "assistInput": "Oscar Bobb"
         }
       ],
       "observed_score": {
