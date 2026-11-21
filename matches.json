@@ -1,12 +1,5 @@
 [
   {
-    "id": "5881226",
-    "url": "https://www.fotmob.com/match/5881226",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-20T19:30:00+00:00"
-  },
-  {
     "id": "5795522",
     "url": "https://www.fotmob.com/match/5795522",
     "enabled": true,
@@ -47,5 +40,12 @@
     "enabled": true,
     "auto": true,
     "start": "2026-11-21T17:30:00+00:00"
+  },
+  {
+    "id": "5868139",
+    "url": "https://www.fotmob.com/match/5868139",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-21T20:00:00+00:00"
   }
 ]
