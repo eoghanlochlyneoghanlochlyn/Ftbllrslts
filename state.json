@@ -120398,7 +120398,8 @@
         "react:08Goal1134206undefinedtrue",
         "react:031Goal1574189undefinedfalse",
         "react:032Goal1339208undefinedfalse",
-        "react:085Goal881771undefinedfalse"
+        "react:085Goal881771undefinedfalse",
+        "react:090Goal566187undefinedtrue"
       ],
       "goals": [
         {
@@ -120714,6 +120715,59 @@
             "assistKey": "assist_by",
             "assistInput": "Ousmane Dembélé"
           }
+        },
+        {
+          "event_key": "react:090Goal566187undefinedtrue",
+          "player_id": 566187,
+          "player_name": "Ali Abdi",
+          "assist_player_id": 715301,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "90 + 5",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5384,
+          "needs_update": false,
+          "event": {
+            "reactKey": "090Goal566187undefinedtrue",
+            "timeStr": "90 + 5",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 5,
+            "eventId": 0,
+            "player": {
+              "id": 566187,
+              "name": "Ali Abdi",
+              "profileUrl": "/players/566187/ali-abdi"
+            },
+            "homeScore": 1,
+            "awayScore": 3,
+            "profileUrl": "/players/566187/ali-abdi",
+            "overloadTimeStr": "+5",
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ali Abdi",
+            "firstName": "Ali",
+            "lastName": "Abdi",
+            "fullName": "Ali Abdi",
+            "playerId": 566187,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": "assist by Jonathan Clauss",
+            "assistProfileUrl": "/players/715301/jonathan-clauss",
+            "assistPlayerId": 715301,
+            "assistKey": "assist_by",
+            "assistInput": "Jonathan Clauss"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -121010,10 +121064,49 @@
           "assistPlayerId": 692984,
           "assistKey": "assist_by",
           "assistInput": "Ousmane Dembélé"
+        },
+        {
+          "reactKey": "090Goal566187undefinedtrue",
+          "timeStr": "90 + 5",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 5,
+          "eventId": 0,
+          "player": {
+            "id": 566187,
+            "name": "Ali Abdi",
+            "profileUrl": "/players/566187/ali-abdi"
+          },
+          "homeScore": 1,
+          "awayScore": 3,
+          "profileUrl": "/players/566187/ali-abdi",
+          "overloadTimeStr": "+5",
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ali Abdi",
+          "firstName": "Ali",
+          "lastName": "Abdi",
+          "fullName": "Ali Abdi",
+          "playerId": 566187,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": "assist by Jonathan Clauss",
+          "assistProfileUrl": "/players/715301/jonathan-clauss",
+          "assistPlayerId": 715301,
+          "assistKey": "assist_by",
+          "assistInput": "Jonathan Clauss"
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 3
       }
     },
