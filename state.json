@@ -118672,6 +118672,16 @@
           "time": 80,
           "overloadTime": null,
           "eventId": 0,
+          "highlight": {
+            "id": 2227514,
+            "eventId": 0,
+            "elapsed": "",
+            "title": "(N)MATCHWINNER NMECHA! | BORUSSIA M'GLADBACH - BORUSSIA DORTMUND | Highlights | MD 10 – Bundesliga",
+            "image": "https://i.ytimg.com/vi/I9zCBwd5ywU/maxresdefault.jpg",
+            "url": "https://www.youtube.com/watch?v=I9zCBwd5ywU",
+            "source": "www.youtube.com",
+            "eventType": "1"
+          },
           "player": {
             "id": 966019,
             "name": "Felix Nmecha",
