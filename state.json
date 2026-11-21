@@ -120397,7 +120397,8 @@
       "event_keys": [
         "react:08Goal1134206undefinedtrue",
         "react:031Goal1574189undefinedfalse",
-        "react:032Goal1339208undefinedfalse"
+        "react:032Goal1339208undefinedfalse",
+        "react:085Goal881771undefinedfalse"
       ],
       "goals": [
         {
@@ -120660,6 +120661,56 @@
             "assistKey": "assist_by",
             "assistInput": "Achraf Hakimi"
           }
+        },
+        {
+          "event_key": "react:085Goal881771undefinedfalse",
+          "player_id": 881771,
+          "player_name": "Ferrán Torres",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "85",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5383,
+          "needs_update": false,
+          "event": {
+            "reactKey": "085Goal881771undefinedfalse",
+            "timeStr": 85,
+            "type": "goal",
+            "time": 85,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 881771,
+              "name": "Ferrán Torres",
+              "profileUrl": "/players/881771/ferran-torres"
+            },
+            "homeScore": 1,
+            "awayScore": 2,
+            "profileUrl": "/players/881771/ferran-torres",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ferrán Torres",
+            "firstName": "Ferrán",
+            "lastName": "Torres",
+            "fullName": "Ferrán Torres",
+            "playerId": 881771,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -120882,11 +120933,47 @@
           "assistPlayerId": 770881,
           "assistKey": "assist_by",
           "assistInput": "Achraf Hakimi"
+        },
+        {
+          "reactKey": "085Goal881771undefinedfalse",
+          "timeStr": 85,
+          "type": "goal",
+          "time": 85,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 881771,
+            "name": "Ferrán Torres",
+            "profileUrl": "/players/881771/ferran-torres"
+          },
+          "homeScore": 1,
+          "awayScore": 2,
+          "profileUrl": "/players/881771/ferran-torres",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ferrán Torres",
+          "firstName": "Ferrán",
+          "lastName": "Torres",
+          "fullName": "Ferrán Torres",
+          "playerId": 881771,
+          "newScore": [
+            1,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 2
+        "away": 3
       }
     },
     "5795523": {
