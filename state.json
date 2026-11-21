@@ -121156,7 +121156,8 @@
         "react:1476703533Goal0undefinedfalse",
         "react:1476703533Goal818975undefinedfalse",
         "react:1476755049Goal760359undefinedtrue",
-        "react:1476779362Goal1137407undefinedtrue"
+        "react:1476779362Goal1137407undefinedtrue",
+        "react:1476805678Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -121472,6 +121473,56 @@
             "assistKey": "assist_by",
             "assistInput": "Joseph Willock"
           }
+        },
+        {
+          "event_key": "react:1476805678Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "78",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5390,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1476805678Goal0undefinedfalse",
+            "timeStr": 78,
+            "type": "goal",
+            "time": 78,
+            "overloadTime": null,
+            "eventId": 14768056,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              2
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -121733,11 +121784,47 @@
           "assistPlayerId": 860975,
           "assistKey": "assist_by",
           "assistInput": "Joseph Willock"
+        },
+        {
+          "reactKey": "1476805678Goal0undefinedfalse",
+          "timeStr": 78,
+          "type": "goal",
+          "time": 78,
+          "overloadTime": null,
+          "eventId": 14768056,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            2
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 1
+        "away": 2
       }
     },
     "5868139": {
