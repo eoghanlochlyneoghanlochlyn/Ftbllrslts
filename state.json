@@ -122005,7 +122005,7 @@
           "event_key": "react:147687736Goal1322858undefinedfalse",
           "player_id": 1322858,
           "player_name": "Pablo Durán",
-          "assist_player_id": null,
+          "assist_player_id": 1272740,
           "assist_player_name": "",
           "is_home": false,
           "minute": "6",
@@ -122053,8 +122053,8 @@
               "teamId": 9910,
               "playerId": 1322858,
               "playerName": "Pablo Durán",
-              "x": 101.3017241382,
-              "y": 33.2375,
+              "x": 101.9655172416,
+              "y": 33.466249999999995,
               "min": 6,
               "minAdded": null,
               "isBlocked": false,
@@ -122063,8 +122063,8 @@
               "blockedY": null,
               "goalCrossedY": 32.551249999999996,
               "goalCrossedZ": 1.0145263108,
-              "expectedGoals": 0.7237,
-              "expectedGoalsOnTarget": 0.9243,
+              "expectedGoals": 0.8511461019515991,
+              "expectedGoalsOnTarget": 0.9951348900794983,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -122082,8 +122082,11 @@
               "fullName": "Pablo Durán",
               "teamColor": "#67ade0"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Williot Swedberg",
+            "assistProfileUrl": "/players/1272740/williot-swedberg",
+            "assistPlayerId": 1272740,
+            "assistKey": "assist_by",
+            "assistInput": "Williot Swedberg"
           }
         }
       ],
@@ -122128,8 +122131,8 @@
             "teamId": 9910,
             "playerId": 1322858,
             "playerName": "Pablo Durán",
-            "x": 101.3017241382,
-            "y": 33.2375,
+            "x": 101.9655172416,
+            "y": 33.466249999999995,
             "min": 6,
             "minAdded": null,
             "isBlocked": false,
@@ -122138,8 +122141,8 @@
             "blockedY": null,
             "goalCrossedY": 32.551249999999996,
             "goalCrossedZ": 1.0145263108,
-            "expectedGoals": 0.7237,
-            "expectedGoalsOnTarget": 0.9243,
+            "expectedGoals": 0.8511461019515991,
+            "expectedGoalsOnTarget": 0.9951348900794983,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
@@ -122157,8 +122160,11 @@
             "fullName": "Pablo Durán",
             "teamColor": "#67ade0"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Williot Swedberg",
+          "assistProfileUrl": "/players/1272740/williot-swedberg",
+          "assistPlayerId": 1272740,
+          "assistKey": "assist_by",
+          "assistInput": "Williot Swedberg"
         }
       ],
       "observed_score": {
