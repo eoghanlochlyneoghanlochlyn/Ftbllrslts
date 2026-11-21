@@ -120052,11 +120052,8 @@
             "fullName": "Dominic Solanke",
             "teamColor": "#132257"
           },
-          "assistStr": "assist by Lucá Williams-Barnett",
-          "assistProfileUrl": "/players/1636112/luca-williams-barnett",
-          "assistPlayerId": 1636112,
-          "assistKey": "assist_by",
-          "assistInput": "Lucá Williams-Barnett"
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
