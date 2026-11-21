@@ -118594,7 +118594,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1476302924Goal1183148undefinedtrue"
+        "react:1476302924Goal1183148undefinedtrue",
+        "react:1476310027Goal915797undefinedfalse"
       ],
       "goals": [
         {
@@ -118684,6 +118685,56 @@
             "assistKey": "assist_by",
             "assistInput": "Morgan Rogers"
           }
+        },
+        {
+          "event_key": "react:1476310027Goal915797undefinedfalse",
+          "player_id": 915797,
+          "player_name": "Noah Okafor",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "27",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5360,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1476310027Goal915797undefinedfalse",
+            "timeStr": 27,
+            "type": "goal",
+            "time": 27,
+            "overloadTime": null,
+            "eventId": 14763100,
+            "player": {
+              "id": 915797,
+              "name": "Noah Okafor",
+              "profileUrl": "/players/915797/noah-okafor"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/915797/noah-okafor",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Noah Okafor",
+            "firstName": "Noah",
+            "lastName": "Okafor",
+            "fullName": "Noah Okafor",
+            "playerId": 915797,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -118761,11 +118812,47 @@
           "assistPlayerId": 883080,
           "assistKey": "assist_by",
           "assistInput": "Morgan Rogers"
+        },
+        {
+          "reactKey": "1476310027Goal915797undefinedfalse",
+          "timeStr": 27,
+          "type": "goal",
+          "time": 27,
+          "overloadTime": null,
+          "eventId": 14763100,
+          "player": {
+            "id": 915797,
+            "name": "Noah Okafor",
+            "profileUrl": "/players/915797/noah-okafor"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/915797/noah-okafor",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Noah Okafor",
+          "firstName": "Noah",
+          "lastName": "Okafor",
+          "fullName": "Noah Okafor",
+          "playerId": 915797,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "5795524": {
