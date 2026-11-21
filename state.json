@@ -118575,8 +118575,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:080Goal966019undefinedfalse"
       ],
@@ -119369,8 +119369,8 @@
             "blockedY": null,
             "goalCrossedY": 36.66875,
             "goalCrossedZ": 2.0354736742,
-            "expectedGoals": 0.2071,
-            "expectedGoalsOnTarget": 0.7086,
+            "expectedGoals": 0.21382108330726624,
+            "expectedGoalsOnTarget": 0.9126778244972229,
             "shotType": "RightFoot",
             "situation": "ThrowInSetPiece",
             "period": "SecondHalf",
