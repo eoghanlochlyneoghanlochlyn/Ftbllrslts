@@ -119113,7 +119113,7 @@
           "event_key": "react:1476611590Goal952322undefinedfalse",
           "player_id": 952322,
           "player_name": "Brenden Aaronson",
-          "assist_player_id": null,
+          "assist_player_id": 494417,
           "assist_player_name": "",
           "is_home": false,
           "minute": "90 + 1",
@@ -119190,8 +119190,11 @@
               "fullName": "Brenden Aaronson",
               "teamColor": "#0060AA"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Harry Wilson",
+            "assistProfileUrl": "/players/494417/harry-wilson",
+            "assistPlayerId": 494417,
+            "assistKey": "assist_by",
+            "assistInput": "Harry Wilson"
           }
         }
       ],
@@ -119555,8 +119558,11 @@
             "fullName": "Brenden Aaronson",
             "teamColor": "#0060AA"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Harry Wilson",
+          "assistProfileUrl": "/players/494417/harry-wilson",
+          "assistPlayerId": 494417,
+          "assistKey": "assist_by",
+          "assistInput": "Harry Wilson"
         }
       ],
       "observed_score": {
@@ -119569,8 +119575,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1476275615Goal1636112undefinedtrue",
         "react:1476436652Goal591734undefinedtrue",
