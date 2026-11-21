@@ -118430,7 +118430,7 @@
       }
     },
     "5795518": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -118446,7 +118446,7 @@
       }
     },
     "5795524": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
