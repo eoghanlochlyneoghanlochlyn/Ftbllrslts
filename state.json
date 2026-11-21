@@ -121154,7 +121154,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1476703533Goal0undefinedfalse",
-        "react:1476703533Goal818975undefinedfalse"
+        "react:1476703533Goal818975undefinedfalse",
+        "react:1476755049Goal760359undefinedtrue"
       ],
       "goals": [
         {
@@ -121294,6 +121295,94 @@
             "assistKey": "assist_by",
             "assistInput": "Kai Havertz"
           }
+        },
+        {
+          "event_key": "react:1476755049Goal760359undefinedtrue",
+          "player_id": 760359,
+          "player_name": "Harvey Barnes",
+          "assist_player_id": 1258092,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "49",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5387,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1476755049Goal760359undefinedtrue",
+            "timeStr": 49,
+            "type": "goal",
+            "time": 49,
+            "overloadTime": null,
+            "eventId": 14767550,
+            "player": {
+              "id": 760359,
+              "name": "Harvey Barnes",
+              "profileUrl": "/players/760359/harvey-barnes"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/760359/harvey-barnes",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Harvey Barnes",
+            "firstName": "Harvey",
+            "lastName": "Barnes",
+            "fullName": "Harvey Barnes",
+            "playerId": 760359,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2999575939,
+              "eventType": "Goal",
+              "teamId": 10261,
+              "playerId": 760359,
+              "playerName": "Harvey Barnes",
+              "x": 93.5,
+              "y": 37.05,
+              "min": 49,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 36.36375,
+              "goalCrossedZ": 0.1219999994,
+              "expectedGoals": 0.2903,
+              "expectedGoalsOnTarget": 0.6337,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 0.37466931216931143,
+                "y": 0.032275132116402115,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 562727,
+              "firstName": "Harvey",
+              "lastName": "Barnes",
+              "fullName": "Harvey Barnes",
+              "teamColor": "#141413"
+            },
+            "assistStr": "assist by William Osula",
+            "assistProfileUrl": "/players/1258092/william-osula",
+            "assistPlayerId": 1258092,
+            "assistKey": "assist_by",
+            "assistInput": "William Osula"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -121407,10 +121496,84 @@
           "assistPlayerId": 749736,
           "assistKey": "assist_by",
           "assistInput": "Kai Havertz"
+        },
+        {
+          "reactKey": "1476755049Goal760359undefinedtrue",
+          "timeStr": 49,
+          "type": "goal",
+          "time": 49,
+          "overloadTime": null,
+          "eventId": 14767550,
+          "player": {
+            "id": 760359,
+            "name": "Harvey Barnes",
+            "profileUrl": "/players/760359/harvey-barnes"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/760359/harvey-barnes",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Harvey Barnes",
+          "firstName": "Harvey",
+          "lastName": "Barnes",
+          "fullName": "Harvey Barnes",
+          "playerId": 760359,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2999575939,
+            "eventType": "Goal",
+            "teamId": 10261,
+            "playerId": 760359,
+            "playerName": "Harvey Barnes",
+            "x": 93.5,
+            "y": 37.05,
+            "min": 49,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 36.36375,
+            "goalCrossedZ": 0.1219999994,
+            "expectedGoals": 0.2903,
+            "expectedGoalsOnTarget": 0.6337,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 0.37466931216931143,
+              "y": 0.032275132116402115,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 562727,
+            "firstName": "Harvey",
+            "lastName": "Barnes",
+            "fullName": "Harvey Barnes",
+            "teamColor": "#141413"
+          },
+          "assistStr": "assist by William Osula",
+          "assistProfileUrl": "/players/1258092/william-osula",
+          "assistPlayerId": 1258092,
+          "assistKey": "assist_by",
+          "assistInput": "William Osula"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
