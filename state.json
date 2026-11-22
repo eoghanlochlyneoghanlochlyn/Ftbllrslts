@@ -126508,7 +126508,8 @@
         "react:1477762133Goal0undefinedfalse",
         "react:1477762133Goal1367618undefinedfalse",
         "react:1477763535Goal741049undefinedtrue",
-        "react:1477779052Goal1367618undefinedfalse"
+        "react:1477779052Goal1367618undefinedfalse",
+        "react:1477788572Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -126955,6 +126956,56 @@
             "assistKey": "assist_by",
             "assistInput": "Marcus Thuram"
           }
+        },
+        {
+          "event_key": "react:1477788572Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "72",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5464,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1477788572Goal0undefinedtrue",
+            "timeStr": 72,
+            "type": "goal",
+            "time": 72,
+            "overloadTime": null,
+            "eventId": 14777885,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 3,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -127323,10 +127374,46 @@
           "assistPlayerId": 621562,
           "assistKey": "assist_by",
           "assistInput": "Marcus Thuram"
+        },
+        {
+          "reactKey": "1477788572Goal0undefinedtrue",
+          "timeStr": 72,
+          "type": "goal",
+          "time": 72,
+          "overloadTime": null,
+          "eventId": 14777885,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 3,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 3
       }
     },
