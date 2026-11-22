@@ -125357,7 +125357,8 @@
         "react:147756114Goal1415326undefinedtrue",
         "react:1477587819Goal940087undefinedtrue",
         "react:1477597325Goal1189223undefinedfalse",
-        "react:1477650048Goal1163219undefinedtrue"
+        "react:1477650048Goal1163219undefinedtrue",
+        "react:1477669162Goal1445650undefinedtrue"
       ],
       "goals": [
         {
@@ -125751,6 +125752,56 @@
             "assistKey": "assist_by",
             "assistInput": "Adrien Rabiot"
           }
+        },
+        {
+          "event_key": "react:1477669162Goal1445650undefinedtrue",
+          "player_id": 1445650,
+          "player_name": "Alphadjo Cissè",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "62",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5443,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477669162Goal1445650undefinedtrue",
+            "timeStr": 62,
+            "type": "goal",
+            "time": 62,
+            "overloadTime": null,
+            "eventId": 14776691,
+            "player": {
+              "id": 1445650,
+              "name": "Alphadjo Cissè",
+              "profileUrl": "/players/1445650/alphadjo-cisse"
+            },
+            "homeScore": 3,
+            "awayScore": 1,
+            "profileUrl": "/players/1445650/alphadjo-cisse",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Alphadjo Cissè",
+            "firstName": "Alphadjo",
+            "lastName": "Cissè",
+            "fullName": "Alphadjo Cissè",
+            "playerId": 1445650,
+            "newScore": [
+              4,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -126080,10 +126131,46 @@
           "assistPlayerId": 352879,
           "assistKey": "assist_by",
           "assistInput": "Adrien Rabiot"
+        },
+        {
+          "reactKey": "1477669162Goal1445650undefinedtrue",
+          "timeStr": 62,
+          "type": "goal",
+          "time": 62,
+          "overloadTime": null,
+          "eventId": 14776691,
+          "player": {
+            "id": 1445650,
+            "name": "Alphadjo Cissè",
+            "profileUrl": "/players/1445650/alphadjo-cisse"
+          },
+          "homeScore": 3,
+          "awayScore": 1,
+          "profileUrl": "/players/1445650/alphadjo-cisse",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Alphadjo Cissè",
+          "firstName": "Alphadjo",
+          "lastName": "Cissè",
+          "fullName": "Alphadjo Cissè",
+          "playerId": 1445650,
+          "newScore": [
+            4,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 3,
+        "home": 4,
         "away": 1
       }
     },
