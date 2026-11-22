@@ -122743,12 +122743,102 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1477199253Goal1106563undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1477199253Goal1106563undefinedtrue",
+          "player_id": 1106563,
+          "player_name": "Nick Woltemade",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "53",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5405,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477199253Goal1106563undefinedtrue",
+            "timeStr": 53,
+            "type": "goal",
+            "time": 53,
+            "overloadTime": null,
+            "eventId": 14771992,
+            "player": {
+              "id": 1106563,
+              "name": "Nick Woltemade",
+              "profileUrl": "/players/1106563/nick-woltemade"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1106563/nick-woltemade",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Nick Woltemade",
+            "firstName": "Nick",
+            "lastName": "Woltemade",
+            "fullName": "Nick Woltemade",
+            "playerId": 1106563,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1477199253Goal1106563undefinedtrue",
+          "timeStr": 53,
+          "type": "goal",
+          "time": 53,
+          "overloadTime": null,
+          "eventId": 14771992,
+          "player": {
+            "id": 1106563,
+            "name": "Nick Woltemade",
+            "profileUrl": "/players/1106563/nick-woltemade"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1106563/nick-woltemade",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Nick Woltemade",
+          "firstName": "Nick",
+          "lastName": "Woltemade",
+          "fullName": "Nick Woltemade",
+          "playerId": 1106563,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
