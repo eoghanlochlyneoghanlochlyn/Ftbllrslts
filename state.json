@@ -122833,6 +122833,41 @@
             0
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2999914757,
+            "eventType": "Goal",
+            "teamId": 9885,
+            "playerId": 1106563,
+            "playerName": "Nick Woltemade",
+            "x": 100.9224137934,
+            "y": 33.2375,
+            "min": 53,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.92375,
+            "goalCrossedZ": 1.6694736760000002,
+            "expectedGoals": 0.7479,
+            "expectedGoalsOnTarget": 0.8789,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.0201719576719581,
+              "y": 0.44165970264550264,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1130600,
+            "firstName": "Nick",
+            "lastName": "Woltemade",
+            "fullName": "Nick Woltemade",
+            "teamColor": "#000001"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
