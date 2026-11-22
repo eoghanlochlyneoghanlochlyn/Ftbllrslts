@@ -123452,7 +123452,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:147722285Goal1026135undefinedfalse",
-        "react:147722517Goal1338740undefinedfalse"
+        "react:147722517Goal1338740undefinedfalse",
+        "react:1477310657Goal1598982undefinedtrue"
       ],
       "goals": [
         {
@@ -123623,6 +123624,94 @@
             "assistKey": "assist_by",
             "assistInput": "Alberto Moleiro"
           }
+        },
+        {
+          "event_key": "react:1477310657Goal1598982undefinedtrue",
+          "player_id": 1598982,
+          "player_name": "Gerard Martín",
+          "assist_player_id": 1083323,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "57",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5418,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477310657Goal1598982undefinedtrue",
+            "timeStr": 57,
+            "type": "goal",
+            "time": 57,
+            "overloadTime": null,
+            "eventId": 14773106,
+            "player": {
+              "id": 1598982,
+              "name": "Gerard Martín",
+              "profileUrl": "/players/1598982/gerard-martin"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/1598982/gerard-martin",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": "Header",
+            "goalDescriptionKey": "header",
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Gerard Martín",
+            "firstName": "Gerard",
+            "lastName": "Martín",
+            "fullName": "Gerard Martín",
+            "playerId": 1598982,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3000037121,
+              "eventType": "Goal",
+              "teamId": 8634,
+              "playerId": 1598982,
+              "playerName": "Gerard Martín",
+              "x": 97.4736842099,
+              "y": 37.744,
+              "min": 57,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.0175,
+              "goalCrossedZ": 1.4254736772,
+              "expectedGoals": 0.0815,
+              "expectedGoalsOnTarget": 0.2526,
+              "shotType": "Header",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.5244708994709,
+                "y": 0.3771094384126984,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 151001,
+              "firstName": "Gerard",
+              "lastName": "Martín",
+              "fullName": "Gerard Martín",
+              "teamColor": "#971e48"
+            },
+            "assistStr": "assist by Pedri",
+            "assistProfileUrl": "/players/1083323/pedri",
+            "assistPlayerId": 1083323,
+            "assistKey": "assist_by",
+            "assistInput": "Pedri"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -123771,10 +123860,84 @@
           "assistPlayerId": 1184694,
           "assistKey": "assist_by",
           "assistInput": "Alberto Moleiro"
+        },
+        {
+          "reactKey": "1477310657Goal1598982undefinedtrue",
+          "timeStr": 57,
+          "type": "goal",
+          "time": 57,
+          "overloadTime": null,
+          "eventId": 14773106,
+          "player": {
+            "id": 1598982,
+            "name": "Gerard Martín",
+            "profileUrl": "/players/1598982/gerard-martin"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/1598982/gerard-martin",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": "Header",
+          "goalDescriptionKey": "header",
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Gerard Martín",
+          "firstName": "Gerard",
+          "lastName": "Martín",
+          "fullName": "Gerard Martín",
+          "playerId": 1598982,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3000037121,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 1598982,
+            "playerName": "Gerard Martín",
+            "x": 97.4736842099,
+            "y": 37.744,
+            "min": 57,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.0175,
+            "goalCrossedZ": 1.4254736772,
+            "expectedGoals": 0.0815,
+            "expectedGoalsOnTarget": 0.2526,
+            "shotType": "Header",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.5244708994709,
+              "y": 0.3771094384126984,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 151001,
+            "firstName": "Gerard",
+            "lastName": "Martín",
+            "fullName": "Gerard Martín",
+            "teamColor": "#971e48"
+          },
+          "assistStr": "assist by Pedri",
+          "assistProfileUrl": "/players/1083323/pedri",
+          "assistPlayerId": 1083323,
+          "assistKey": "assist_by",
+          "assistInput": "Pedri"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 2
       }
     },
