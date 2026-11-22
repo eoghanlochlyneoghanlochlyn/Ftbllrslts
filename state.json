@@ -122753,7 +122753,7 @@
       }
     },
     "5868133": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
