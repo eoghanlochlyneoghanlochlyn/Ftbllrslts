@@ -126820,7 +126820,7 @@
           "event_key": "react:1477757310Goal942372undefinedfalse",
           "player_id": 942372,
           "player_name": "Álex Baena",
-          "assist_player_id": null,
+          "assist_player_id": 974753,
           "assist_player_name": "",
           "is_home": false,
           "minute": "10",
@@ -126868,8 +126868,8 @@
               "teamId": 9906,
               "playerId": 942372,
               "playerName": "Álex Baena",
-              "x": 84.3995145632,
-              "y": 46.943439487099994,
+              "x": 82.1470873792,
+              "y": 47.013503181400004,
               "min": 10,
               "minAdded": null,
               "isBlocked": false,
@@ -126878,8 +126878,8 @@
               "blockedY": null,
               "goalCrossedY": 37.27875,
               "goalCrossedZ": 0.3274736826,
-              "expectedGoals": 0.0268,
-              "expectedGoalsOnTarget": 0.2626,
+              "expectedGoals": 0.032311536371707916,
+              "expectedGoalsOnTarget": 0.05075344815850258,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
@@ -126897,8 +126897,11 @@
               "fullName": "Álex Baena",
               "teamColor": "#C63527"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Julián Álvarez",
+            "assistProfileUrl": "/players/974753/julian-alvarez",
+            "assistPlayerId": 974753,
+            "assistKey": "assist_by",
+            "assistInput": "Julián Álvarez"
           }
         }
       ],
@@ -126979,8 +126982,8 @@
             "teamId": 9906,
             "playerId": 942372,
             "playerName": "Álex Baena",
-            "x": 84.3995145632,
-            "y": 46.943439487099994,
+            "x": 82.1470873792,
+            "y": 47.013503181400004,
             "min": 10,
             "minAdded": null,
             "isBlocked": false,
@@ -126989,8 +126992,8 @@
             "blockedY": null,
             "goalCrossedY": 37.27875,
             "goalCrossedZ": 0.3274736826,
-            "expectedGoals": 0.0268,
-            "expectedGoalsOnTarget": 0.2626,
+            "expectedGoals": 0.032311536371707916,
+            "expectedGoalsOnTarget": 0.05075344815850258,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
@@ -127008,8 +127011,11 @@
             "fullName": "Álex Baena",
             "teamColor": "#C63527"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Julián Álvarez",
+          "assistProfileUrl": "/players/974753/julian-alvarez",
+          "assistPlayerId": 974753,
+          "assistKey": "assist_by",
+          "assistInput": "Julián Álvarez"
         }
       ],
       "observed_score": {
