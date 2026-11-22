@@ -127176,7 +127176,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1477757310Goal0undefinedfalse",
-        "react:1477757310Goal942372undefinedfalse"
+        "react:1477757310Goal942372undefinedfalse",
+        "react:1477768830Goal1173678undefinedfalse"
       ],
       "goals": [
         {
@@ -127316,6 +127317,90 @@
             "assistKey": "assist_by",
             "assistInput": "Julián Álvarez"
           }
+        },
+        {
+          "event_key": "react:1477768830Goal1173678undefinedfalse",
+          "player_id": 1173678,
+          "player_name": "Johnny Cardoso",
+          "assist_player_id": 974753,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "30",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5462,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477768830Goal1173678undefinedfalse",
+            "timeStr": 30,
+            "type": "goal",
+            "time": 30,
+            "overloadTime": null,
+            "eventId": 14777688,
+            "player": {
+              "id": 1173678,
+              "name": "Johnny Cardoso",
+              "profileUrl": "/players/1173678/johnny-cardoso"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1173678/johnny-cardoso",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Johnny Cardoso",
+            "firstName": "Johnny",
+            "lastName": "Cardoso",
+            "fullName": "Johnny Cardoso",
+            "playerId": 1173678,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3000404911,
+              "eventType": "Goal",
+              "teamId": 9906,
+              "playerId": 1173678,
+              "playerName": "Johnny Cardoso",
+              "x": 103.3879310346,
+              "y": 32.474999999999994,
+              "min": 30,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.8534,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 581919,
+              "firstName": "Johnny",
+              "lastName": "Cardoso",
+              "fullName": "Johnny Cardoso",
+              "teamColor": "#C63527"
+            },
+            "assistStr": "assist by Julián Álvarez",
+            "assistProfileUrl": "/players/974753/julian-alvarez",
+            "assistPlayerId": 974753,
+            "assistKey": "assist_by",
+            "assistInput": "Julián Álvarez"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -127429,11 +127514,81 @@
           "assistPlayerId": 974753,
           "assistKey": "assist_by",
           "assistInput": "Julián Álvarez"
+        },
+        {
+          "reactKey": "1477768830Goal1173678undefinedfalse",
+          "timeStr": 30,
+          "type": "goal",
+          "time": 30,
+          "overloadTime": null,
+          "eventId": 14777688,
+          "player": {
+            "id": 1173678,
+            "name": "Johnny Cardoso",
+            "profileUrl": "/players/1173678/johnny-cardoso"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1173678/johnny-cardoso",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Johnny Cardoso",
+          "firstName": "Johnny",
+          "lastName": "Cardoso",
+          "fullName": "Johnny Cardoso",
+          "playerId": 1173678,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3000404911,
+            "eventType": "Goal",
+            "teamId": 9906,
+            "playerId": 1173678,
+            "playerName": "Johnny Cardoso",
+            "x": 103.3879310346,
+            "y": 32.474999999999994,
+            "min": 30,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.8534,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 581919,
+            "firstName": "Johnny",
+            "lastName": "Cardoso",
+            "fullName": "Johnny Cardoso",
+            "teamColor": "#C63527"
+          },
+          "assistStr": "assist by Julián Álvarez",
+          "assistProfileUrl": "/players/974753/julian-alvarez",
+          "assistPlayerId": 974753,
+          "assistKey": "assist_by",
+          "assistInput": "Julián Álvarez"
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "6050097": {
