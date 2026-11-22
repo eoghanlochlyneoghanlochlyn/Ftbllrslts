@@ -123451,7 +123451,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:147722285Goal1026135undefinedfalse"
+        "react:147722285Goal1026135undefinedfalse",
+        "react:147722517Goal1338740undefinedfalse"
       ],
       "goals": [
         {
@@ -123534,6 +123535,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:147722517Goal1338740undefinedfalse",
+          "player_id": 1338740,
+          "player_name": "Tani Oluwaseyi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "7",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5414,
+          "needs_update": false,
+          "event": {
+            "reactKey": "147722517Goal1338740undefinedfalse",
+            "timeStr": 7,
+            "type": "goal",
+            "time": 7,
+            "overloadTime": null,
+            "eventId": 14772251,
+            "player": {
+              "id": 1338740,
+              "name": "Tani Oluwaseyi",
+              "profileUrl": "/players/1338740/tani-oluwaseyi"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1338740/tani-oluwaseyi",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Tani Oluwaseyi",
+            "firstName": "Tani",
+            "lastName": "Oluwaseyi",
+            "fullName": "Tani Oluwaseyi",
+            "playerId": 1338740,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 2999943647,
+              "eventType": "Goal",
+              "teamId": 10205,
+              "playerId": 1338740,
+              "playerName": "Tani Oluwaseyi",
+              "x": 95.9298245603,
+              "y": 47.0835668757,
+              "min": 7,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0719,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "FastBreak",
+              "period": "FirstHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1167220,
+              "firstName": "Tani",
+              "lastName": "Oluwaseyi",
+              "fullName": "Tani Oluwaseyi",
+              "teamColor": "#e19d00"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -123608,11 +123690,78 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "147722517Goal1338740undefinedfalse",
+          "timeStr": 7,
+          "type": "goal",
+          "time": 7,
+          "overloadTime": null,
+          "eventId": 14772251,
+          "player": {
+            "id": 1338740,
+            "name": "Tani Oluwaseyi",
+            "profileUrl": "/players/1338740/tani-oluwaseyi"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1338740/tani-oluwaseyi",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Tani Oluwaseyi",
+          "firstName": "Tani",
+          "lastName": "Oluwaseyi",
+          "fullName": "Tani Oluwaseyi",
+          "playerId": 1338740,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 2999943647,
+            "eventType": "Goal",
+            "teamId": 10205,
+            "playerId": 1338740,
+            "playerName": "Tani Oluwaseyi",
+            "x": 95.9298245603,
+            "y": 47.0835668757,
+            "min": 7,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0719,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "FastBreak",
+            "period": "FirstHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1167220,
+            "firstName": "Tani",
+            "lastName": "Oluwaseyi",
+            "fullName": "Tani Oluwaseyi",
+            "teamColor": "#e19d00"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 1
+        "away": 2
       }
     },
     "5795521": {
