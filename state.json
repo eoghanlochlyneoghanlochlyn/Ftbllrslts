@@ -124872,7 +124872,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:147756114Goal0undefinedtrue"
+        "react:147756114Goal0undefinedtrue",
+        "react:147756114Goal1415326undefinedtrue"
       ],
       "goals": [
         {
@@ -124924,6 +124925,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:147756114Goal1415326undefinedtrue",
+          "player_id": 1415326,
+          "player_name": "Gabriele Calvani",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "4",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 5436,
+          "needs_update": false,
+          "event": {
+            "reactKey": "147756114Goal1415326undefinedtrue",
+            "timeStr": 4,
+            "type": "goal",
+            "time": 4,
+            "overloadTime": null,
+            "eventId": 14775611,
+            "player": {
+              "id": 1415326,
+              "name": "Gabriele Calvani",
+              "profileUrl": "/players/1415326/gabriele-calvani"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/1415326/gabriele-calvani",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Gabriele Calvani",
+            "firstName": "Gabriele",
+            "lastName": "Calvani",
+            "fullName": "Gabriele Calvani",
+            "playerId": 1415326,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3000244615,
+              "eventType": "Goal",
+              "teamId": 9891,
+              "playerId": 1415326,
+              "playerName": "Gabriele Calvani",
+              "x": 8.4912280711,
+              "y": 34,
+              "min": 4,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.4075,
+              "goalCrossedZ": 0.0834736838,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "FirstHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.6858465608465611,
+                "y": 0.02208298513227513,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1289655,
+              "firstName": "Gabriele",
+              "lastName": "Calvani",
+              "fullName": "Gabriele Calvani",
+              "teamColor": "#d5a300"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -124961,6 +125047,77 @@
             0
           ],
           "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "147756114Goal1415326undefinedtrue",
+          "timeStr": 4,
+          "type": "goal",
+          "time": 4,
+          "overloadTime": null,
+          "eventId": 14775611,
+          "player": {
+            "id": 1415326,
+            "name": "Gabriele Calvani",
+            "profileUrl": "/players/1415326/gabriele-calvani"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/1415326/gabriele-calvani",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Gabriele Calvani",
+          "firstName": "Gabriele",
+          "lastName": "Calvani",
+          "fullName": "Gabriele Calvani",
+          "playerId": 1415326,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3000244615,
+            "eventType": "Goal",
+            "teamId": 9891,
+            "playerId": 1415326,
+            "playerName": "Gabriele Calvani",
+            "x": 8.4912280711,
+            "y": 34,
+            "min": 4,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.4075,
+            "goalCrossedZ": 0.0834736838,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "FirstHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.6858465608465611,
+              "y": 0.02208298513227513,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1289655,
+            "firstName": "Gabriele",
+            "lastName": "Calvani",
+            "fullName": "Gabriele Calvani",
+            "teamColor": "#d5a300"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
