@@ -129058,7 +129058,8 @@
       "event_keys": [
         "react:1477917351Goal1228981undefinedfalse",
         "react:1477918359Goal0undefinedtrue",
-        "react:1477918358Goal964040undefinedtrue"
+        "react:1477918358Goal964040undefinedtrue",
+        "react:1477925984Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -129219,6 +129220,57 @@
             "assistKey": "assist_by",
             "assistInput": "Abdoul Traoré"
           }
+        },
+        {
+          "event_key": "react:1477925984Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "84",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5498,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1477925984Goal0undefinedtrue",
+            "timeStr": 84,
+            "type": "goal",
+            "time": 84,
+            "overloadTime": null,
+            "eventId": 14779259,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              2,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -129339,6 +129391,43 @@
           "assistPlayerId": 1575574,
           "assistKey": "assist_by",
           "assistInput": "Abdoul Traoré"
+        },
+        {
+          "reactKey": "1477925984Goal0undefinedtrue",
+          "timeStr": 84,
+          "type": "goal",
+          "time": 84,
+          "overloadTime": null,
+          "eventId": 14779259,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            2,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
@@ -129785,7 +129874,7 @@
           "event_key": "react:1477923273Goal619506undefinedfalse",
           "player_id": 619506,
           "player_name": "Mehdi Taremi",
-          "assist_player_id": null,
+          "assist_player_id": 465033,
           "assist_player_name": "",
           "is_home": false,
           "minute": "73",
@@ -129828,8 +129917,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Fábio Lima",
+            "assistProfileUrl": "/players/465033/fabio-lima",
+            "assistPlayerId": 465033,
+            "assistKey": "assist_by",
+            "assistInput": "Fábio Lima"
           }
         }
       ],
@@ -130171,8 +130263,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Fábio Lima",
+          "assistProfileUrl": "/players/465033/fabio-lima",
+          "assistPlayerId": 465033,
+          "assistKey": "assist_by",
+          "assistInput": "Fábio Lima"
         }
       ],
       "observed_score": {
