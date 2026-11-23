@@ -129074,7 +129074,8 @@
       "event_keys": [
         "react:1477906815Card504244undefinedtrue",
         "react:1477906818Card504244undefinedtrue",
-        "react:1477913144Goal0undefinedfalse"
+        "react:1477913144Goal0undefinedfalse",
+        "react:1477913144Goal619506undefinedfalse"
       ],
       "goals": [
         {
@@ -129127,6 +129128,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1477913144Goal619506undefinedfalse",
+          "player_id": 619506,
+          "player_name": "Mehdi Taremi",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "44",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5487,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477913144Goal619506undefinedfalse",
+            "timeStr": 44,
+            "type": "goal",
+            "time": 44,
+            "overloadTime": null,
+            "eventId": 14779131,
+            "player": {
+              "id": 619506,
+              "name": "Mehdi Taremi",
+              "profileUrl": "/players/619506/mehdi-taremi"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/619506/mehdi-taremi",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mehdi Taremi",
+            "firstName": "Mehdi",
+            "lastName": "Taremi",
+            "fullName": "Mehdi Taremi",
+            "playerId": 619506,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -129159,6 +129211,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1477913144Goal619506undefinedfalse",
+          "timeStr": 44,
+          "type": "goal",
+          "time": 44,
+          "overloadTime": null,
+          "eventId": 14779131,
+          "player": {
+            "id": 619506,
+            "name": "Mehdi Taremi",
+            "profileUrl": "/players/619506/mehdi-taremi"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/619506/mehdi-taremi",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mehdi Taremi",
+          "firstName": "Mehdi",
+          "lastName": "Taremi",
+          "fullName": "Mehdi Taremi",
+          "playerId": 619506,
           "newScore": [
             0,
             1
