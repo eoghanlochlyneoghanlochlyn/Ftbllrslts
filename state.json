@@ -129361,7 +129361,8 @@
         "react:1477917855Goal0undefinedfalse",
         "react:1477917855Goal1353470undefinedfalse",
         "react:1477919561Goal0undefinedfalse",
-        "react:1477919561Goal1713982undefinedfalse"
+        "react:1477919561Goal1713982undefinedfalse",
+        "react:1477922972Goal1031319undefinedtrue"
       ],
       "goals": [
         {
@@ -129675,6 +129676,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1477922972Goal1031319undefinedtrue",
+          "player_id": 1031319,
+          "player_name": "Amirhossein Hosseinzadeh",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "72",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5495,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477922972Goal1031319undefinedtrue",
+            "timeStr": 72,
+            "type": "goal",
+            "time": 72,
+            "overloadTime": null,
+            "eventId": 14779229,
+            "player": {
+              "id": 1031319,
+              "name": "Amirhossein Hosseinzadeh",
+              "profileUrl": "/players/1031319/amirhossein-hosseinzadeh"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/1031319/amirhossein-hosseinzadeh",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Amirhossein Hosseinzadeh",
+            "firstName": "Amirhossein",
+            "lastName": "Hosseinzadeh",
+            "fullName": "Amirhossein Hosseinzadeh",
+            "playerId": 1031319,
+            "newScore": [
+              1,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -129906,10 +129958,47 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1477922972Goal1031319undefinedtrue",
+          "timeStr": 72,
+          "type": "goal",
+          "time": 72,
+          "overloadTime": null,
+          "eventId": 14779229,
+          "player": {
+            "id": 1031319,
+            "name": "Amirhossein Hosseinzadeh",
+            "profileUrl": "/players/1031319/amirhossein-hosseinzadeh"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/1031319/amirhossein-hosseinzadeh",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Amirhossein Hosseinzadeh",
+          "firstName": "Amirhossein",
+          "lastName": "Hosseinzadeh",
+          "fullName": "Amirhossein Hosseinzadeh",
+          "playerId": 1031319,
+          "newScore": [
+            1,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 3
       }
     }
