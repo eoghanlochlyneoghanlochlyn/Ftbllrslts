@@ -129133,7 +129133,7 @@
           "event_key": "react:1477913144Goal619506undefinedfalse",
           "player_id": 619506,
           "player_name": "Mehdi Taremi",
-          "assist_player_id": null,
+          "assist_player_id": 624410,
           "assist_player_name": "",
           "is_home": false,
           "minute": "44",
@@ -129176,8 +129176,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Nicolás Giménez",
+            "assistProfileUrl": "/players/624410/nicolas-gimenez",
+            "assistPlayerId": 624410,
+            "assistKey": "assist_by",
+            "assistInput": "Nicolás Giménez"
           }
         }
       ],
@@ -129254,8 +129257,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Nicolás Giménez",
+          "assistProfileUrl": "/players/624410/nicolas-gimenez",
+          "assistPlayerId": 624410,
+          "assistKey": "assist_by",
+          "assistInput": "Nicolás Giménez"
         }
       ],
       "observed_score": {
