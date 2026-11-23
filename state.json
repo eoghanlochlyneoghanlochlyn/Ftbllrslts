@@ -129053,8 +129053,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1477917351Goal1228981undefinedfalse",
         "react:1477918359Goal0undefinedtrue",
@@ -129453,7 +129453,8 @@
         "react:1477919561Goal1713982undefinedfalse",
         "react:1477922972Goal1031319undefinedtrue",
         "react:1477923273Goal0undefinedfalse",
-        "react:1477923273Goal619506undefinedfalse"
+        "react:1477923273Goal619506undefinedfalse",
+        "react:1477928790Goal0undefinedfalse"
       ],
       "goals": [
         {
@@ -129923,6 +129924,57 @@
             "assistKey": "assist_by",
             "assistInput": "Fábio Lima"
           }
+        },
+        {
+          "event_key": "react:1477928790Goal0undefinedfalse",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 3",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5501,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1477928790Goal0undefinedfalse",
+            "timeStr": "90 + 3",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 3,
+            "eventId": 14779287,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 1,
+            "awayScore": 4,
+            "profileUrl": "",
+            "overloadTimeStr": "+3",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              5
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -130268,11 +130320,48 @@
           "assistPlayerId": 465033,
           "assistKey": "assist_by",
           "assistInput": "Fábio Lima"
+        },
+        {
+          "reactKey": "1477928790Goal0undefinedfalse",
+          "timeStr": "90 + 3",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 3,
+          "eventId": 14779287,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 1,
+          "awayScore": 4,
+          "profileUrl": "",
+          "overloadTimeStr": "+3",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            5
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 4
+        "away": 5
       }
     }
   }
