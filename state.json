@@ -129454,7 +129454,8 @@
         "react:1477922972Goal1031319undefinedtrue",
         "react:1477923273Goal0undefinedfalse",
         "react:1477923273Goal619506undefinedfalse",
-        "react:1477928790Goal0undefinedfalse"
+        "react:1477928790Goal0undefinedfalse",
+        "react:1477928790Goal1282441undefinedfalse"
       ],
       "goals": [
         {
@@ -129975,6 +129976,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1477928790Goal1282441undefinedfalse",
+          "player_id": 1282441,
+          "player_name": "Renato Júnior",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 3",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5502,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477928790Goal1282441undefinedfalse",
+            "timeStr": "90 + 3",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 3,
+            "eventId": 14779287,
+            "player": {
+              "id": 1282441,
+              "name": "Renato Júnior",
+              "profileUrl": "/players/1282441/renato-junior"
+            },
+            "homeScore": 1,
+            "awayScore": 4,
+            "profileUrl": "/players/1282441/renato-junior",
+            "overloadTimeStr": "+3",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Renato Júnior",
+            "firstName": "Renato",
+            "lastName": "Júnior",
+            "fullName": "Renato Júnior",
+            "playerId": 1282441,
+            "newScore": [
+              1,
+              5
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -130349,6 +130401,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            1,
+            5
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1477928790Goal1282441undefinedfalse",
+          "timeStr": "90 + 3",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 3,
+          "eventId": 14779287,
+          "player": {
+            "id": 1282441,
+            "name": "Renato Júnior",
+            "profileUrl": "/players/1282441/renato-junior"
+          },
+          "homeScore": 1,
+          "awayScore": 4,
+          "profileUrl": "/players/1282441/renato-junior",
+          "overloadTimeStr": "+3",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Renato Júnior",
+          "firstName": "Renato",
+          "lastName": "Júnior",
+          "fullName": "Renato Júnior",
+          "playerId": 1282441,
           "newScore": [
             1,
             5
