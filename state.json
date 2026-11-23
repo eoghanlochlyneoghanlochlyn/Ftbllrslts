@@ -129056,7 +129056,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1477917351Goal1228981undefinedfalse"
+        "react:1477917351Goal1228981undefinedfalse",
+        "react:1477918359Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -129112,6 +129113,57 @@
             "assistKey": "assist_by",
             "assistInput": "Jasir Asani"
           }
+        },
+        {
+          "event_key": "react:1477918359Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "59",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5490,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1477918359Goal0undefinedtrue",
+            "timeStr": 59,
+            "type": "goal",
+            "time": 59,
+            "overloadTime": null,
+            "eventId": 14779183,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -129155,10 +129207,47 @@
           "assistPlayerId": 637760,
           "assistKey": "assist_by",
           "assistInput": "Jasir Asani"
+        },
+        {
+          "reactKey": "1477918359Goal0undefinedtrue",
+          "timeStr": 59,
+          "type": "goal",
+          "time": 59,
+          "overloadTime": null,
+          "eventId": 14779183,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
@@ -129174,7 +129263,8 @@
         "react:1477906818Card504244undefinedtrue",
         "react:1477913144Goal0undefinedfalse",
         "react:1477913144Goal619506undefinedfalse",
-        "react:1477917855Goal0undefinedfalse"
+        "react:1477917855Goal0undefinedfalse",
+        "react:1477917855Goal1353470undefinedfalse"
       ],
       "goals": [
         {
@@ -129332,6 +129422,60 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1477917855Goal1353470undefinedfalse",
+          "player_id": 1353470,
+          "player_name": "Brahian Palacios",
+          "assist_player_id": 619506,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "55",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5491,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477917855Goal1353470undefinedfalse",
+            "timeStr": 55,
+            "type": "goal",
+            "time": 55,
+            "overloadTime": null,
+            "eventId": 14779178,
+            "player": {
+              "id": 1353470,
+              "name": "Brahian Palacios",
+              "profileUrl": "/players/1353470/brahian-palacios"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1353470/brahian-palacios",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Brahian Palacios",
+            "firstName": "Brahian",
+            "lastName": "Palacios",
+            "fullName": "Brahian Palacios",
+            "playerId": 1353470,
+            "newScore": [
+              0,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": "assist by Mehdi Taremi",
+            "assistProfileUrl": "/players/619506/mehdi-taremi",
+            "assistPlayerId": 619506,
+            "assistKey": "assist_by",
+            "assistInput": "Mehdi Taremi"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -129449,6 +129593,46 @@
           "shotmapEvent": null,
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1477917855Goal1353470undefinedfalse",
+          "timeStr": 55,
+          "type": "goal",
+          "time": 55,
+          "overloadTime": null,
+          "eventId": 14779178,
+          "player": {
+            "id": 1353470,
+            "name": "Brahian Palacios",
+            "profileUrl": "/players/1353470/brahian-palacios"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1353470/brahian-palacios",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Brahian Palacios",
+          "firstName": "Brahian",
+          "lastName": "Palacios",
+          "fullName": "Brahian Palacios",
+          "playerId": 1353470,
+          "newScore": [
+            0,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": "assist by Mehdi Taremi",
+          "assistProfileUrl": "/players/619506/mehdi-taremi",
+          "assistPlayerId": 619506,
+          "assistKey": "assist_by",
+          "assistInput": "Mehdi Taremi"
         }
       ],
       "observed_score": {
