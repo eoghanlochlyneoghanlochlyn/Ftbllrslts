@@ -129360,7 +129360,8 @@
         "react:1477913144Goal619506undefinedfalse",
         "react:1477917855Goal0undefinedfalse",
         "react:1477917855Goal1353470undefinedfalse",
-        "react:1477919561Goal0undefinedfalse"
+        "react:1477919561Goal0undefinedfalse",
+        "react:1477919561Goal1713982undefinedfalse"
       ],
       "goals": [
         {
@@ -129635,7 +129636,7 @@
           "penalty": false,
           "own_goal": false,
           "cancelled": false,
-          "telegram_message_id": null,
+          "telegram_message_id": 5494,
           "needs_update": false,
           "event": {
             "reactKey": "1477919561Goal1713982undefinedfalse",
