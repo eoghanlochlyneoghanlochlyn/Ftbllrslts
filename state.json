@@ -129170,7 +129170,7 @@
           "event_key": "react:1477918358Goal964040undefinedtrue",
           "player_id": 964040,
           "player_name": "Matías Palacios",
-          "assist_player_id": null,
+          "assist_player_id": 1575574,
           "assist_player_name": "",
           "is_home": true,
           "minute": "58",
@@ -129213,8 +129213,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Abdoul Traoré",
+            "assistProfileUrl": "/players/1575574/abdoul-traore",
+            "assistPlayerId": 1575574,
+            "assistKey": "assist_by",
+            "assistInput": "Abdoul Traoré"
           }
         }
       ],
@@ -129331,8 +129334,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Abdoul Traoré",
+          "assistProfileUrl": "/players/1575574/abdoul-traore",
+          "assistPlayerId": 1575574,
+          "assistKey": "assist_by",
+          "assistInput": "Abdoul Traoré"
         }
       ],
       "observed_score": {
