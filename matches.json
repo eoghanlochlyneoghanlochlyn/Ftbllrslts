@@ -1,40 +1,5 @@
 [
   {
-    "id": "5868133",
-    "url": "https://www.fotmob.com/match/5868133",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-22T13:00:00+00:00"
-  },
-  {
-    "id": "5795521",
-    "url": "https://www.fotmob.com/match/5795521",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-22T16:30:00+00:00"
-  },
-  {
-    "id": "5749750",
-    "url": "https://www.fotmob.com/match/5749750",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-22T17:00:00+00:00"
-  },
-  {
-    "id": "5749751",
-    "url": "https://www.fotmob.com/match/5749751",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-22T19:45:00+00:00"
-  },
-  {
-    "id": "5868134",
-    "url": "https://www.fotmob.com/match/5868134",
-    "enabled": true,
-    "auto": true,
-    "start": "2026-11-22T20:00:00+00:00"
-  },
-  {
     "id": "6050097",
     "url": "https://www.fotmob.com/match/6050097",
     "enabled": true,
