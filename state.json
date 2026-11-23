@@ -129057,7 +129057,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1477917351Goal1228981undefinedfalse",
-        "react:1477918359Goal0undefinedtrue"
+        "react:1477918359Goal0undefinedtrue",
+        "react:1477918358Goal964040undefinedtrue"
       ],
       "goals": [
         {
@@ -129164,6 +129165,57 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1477918358Goal964040undefinedtrue",
+          "player_id": 964040,
+          "player_name": "Matías Palacios",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "58",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5492,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1477918358Goal964040undefinedtrue",
+            "timeStr": 58,
+            "type": "goal",
+            "time": 58,
+            "overloadTime": null,
+            "eventId": 14779183,
+            "player": {
+              "id": 964040,
+              "name": "Matías Palacios",
+              "profileUrl": "/players/964040/matias-palacios"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/964040/matias-palacios",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Matías Palacios",
+            "firstName": "Matías",
+            "lastName": "Palacios",
+            "fullName": "Matías Palacios",
+            "playerId": 964040,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -129236,6 +129288,43 @@
           "lastName": "<TBD>",
           "fullName": "<TBD>",
           "playerId": 0,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1477918358Goal964040undefinedtrue",
+          "timeStr": 58,
+          "type": "goal",
+          "time": 58,
+          "overloadTime": null,
+          "eventId": 14779183,
+          "player": {
+            "id": 964040,
+            "name": "Matías Palacios",
+            "profileUrl": "/players/964040/matias-palacios"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/964040/matias-palacios",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Matías Palacios",
+          "firstName": "Matías",
+          "lastName": "Palacios",
+          "fullName": "Matías Palacios",
+          "playerId": 964040,
           "newScore": [
             1,
             1
