@@ -129072,7 +129072,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1477906815Card504244undefinedtrue"
+        "react:1477906815Card504244undefinedtrue",
+        "react:1477906818Card504244undefinedtrue"
       ],
       "goals": [],
       "cancelled_goal_keys": [],
