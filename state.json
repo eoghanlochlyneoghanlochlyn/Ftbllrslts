@@ -129063,7 +129063,7 @@
           "event_key": "react:1477917351Goal1228981undefinedfalse",
           "player_id": 1228981,
           "player_name": "Saman Fallah",
-          "assist_player_id": null,
+          "assist_player_id": 637760,
           "assist_player_name": "",
           "is_home": false,
           "minute": "51",
@@ -129106,8 +129106,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Jasir Asani",
+            "assistProfileUrl": "/players/637760/jasir-asani",
+            "assistPlayerId": 637760,
+            "assistKey": "assist_by",
+            "assistInput": "Jasir Asani"
           }
         }
       ],
@@ -129147,8 +129150,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Jasir Asani",
+          "assistProfileUrl": "/players/637760/jasir-asani",
+          "assistPlayerId": 637760,
+          "assistKey": "assist_by",
+          "assistInput": "Jasir Asani"
         }
       ],
       "observed_score": {
