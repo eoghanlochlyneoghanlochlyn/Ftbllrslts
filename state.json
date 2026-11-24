@@ -130474,7 +130474,7 @@
           "event_key": "react:1478275010Goal664500undefinedtrue",
           "player_id": 664500,
           "player_name": "Viktor Gyökeres",
-          "assist_player_id": null,
+          "assist_player_id": 1084981,
           "assist_player_name": "",
           "is_home": true,
           "minute": "10",
@@ -130527,18 +130527,22 @@
               "min": 10,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
+              "goalCrossedY": 35.0675,
+              "goalCrossedZ": 1.7465263072000001,
               "expectedGoals": 0.0293,
-              "expectedGoalsOnTarget": null,
+              "expectedGoalsOnTarget": 0.1023,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "FirstHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 0.7175925925925919,
+                "y": 0.4620439966137566,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": false,
               "keeperId": 764018,
@@ -130547,8 +130551,11 @@
               "fullName": "Viktor Gyökeres",
               "teamColor": "#bd0510"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Noni Madueke",
+            "assistProfileUrl": "/players/1084981/noni-madueke",
+            "assistPlayerId": 1084981,
+            "assistKey": "assist_by",
+            "assistInput": "Noni Madueke"
           }
         }
       ],
@@ -130598,18 +130605,22 @@
             "min": 10,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
+            "goalCrossedY": 35.0675,
+            "goalCrossedZ": 1.7465263072000001,
             "expectedGoals": 0.0293,
-            "expectedGoalsOnTarget": null,
+            "expectedGoalsOnTarget": 0.1023,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "FirstHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 0.7175925925925919,
+              "y": 0.4620439966137566,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": false,
             "keeperId": 764018,
@@ -130618,8 +130629,11 @@
             "fullName": "Viktor Gyökeres",
             "teamColor": "#bd0510"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Noni Madueke",
+          "assistProfileUrl": "/players/1084981/noni-madueke",
+          "assistPlayerId": 1084981,
+          "assistKey": "assist_by",
+          "assistInput": "Noni Madueke"
         }
       ],
       "observed_score": {
