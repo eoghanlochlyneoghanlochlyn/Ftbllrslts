@@ -130467,7 +130467,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1478275010Goal664500undefinedtrue"
+        "react:1478275010Goal664500undefinedtrue",
+        "react:1478361155Goal1047667undefinedfalse"
       ],
       "goals": [
         {
@@ -130557,6 +130558,87 @@
             "assistKey": "assist_by",
             "assistInput": "Noni Madueke"
           }
+        },
+        {
+          "event_key": "react:1478361155Goal1047667undefinedfalse",
+          "player_id": 1047667,
+          "player_name": "Maximilian Beier",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "55",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5517,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478361155Goal1047667undefinedfalse",
+            "timeStr": 55,
+            "type": "goal",
+            "time": 55,
+            "overloadTime": null,
+            "eventId": 14783611,
+            "player": {
+              "id": 1047667,
+              "name": "Maximilian Beier",
+              "profileUrl": "/players/1047667/maximilian-beier"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/1047667/maximilian-beier",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Maximilian Beier",
+            "firstName": "Maximilian",
+            "lastName": "Beier",
+            "fullName": "Maximilian Beier",
+            "playerId": 1047667,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3001189963,
+              "eventType": "Goal",
+              "teamId": 9789,
+              "playerId": 1047667,
+              "playerName": "Maximilian Beier",
+              "x": 92.4,
+              "y": 30.279999999999998,
+              "min": 55,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.1041,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 317564,
+              "firstName": "Maximilian",
+              "lastName": "Beier",
+              "fullName": "Maximilian Beier",
+              "teamColor": "#d8a000"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -130634,11 +130716,78 @@
           "assistPlayerId": 1084981,
           "assistKey": "assist_by",
           "assistInput": "Noni Madueke"
+        },
+        {
+          "reactKey": "1478361155Goal1047667undefinedfalse",
+          "timeStr": 55,
+          "type": "goal",
+          "time": 55,
+          "overloadTime": null,
+          "eventId": 14783611,
+          "player": {
+            "id": 1047667,
+            "name": "Maximilian Beier",
+            "profileUrl": "/players/1047667/maximilian-beier"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/1047667/maximilian-beier",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Maximilian Beier",
+          "firstName": "Maximilian",
+          "lastName": "Beier",
+          "fullName": "Maximilian Beier",
+          "playerId": 1047667,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001189963,
+            "eventType": "Goal",
+            "teamId": 9789,
+            "playerId": 1047667,
+            "playerName": "Maximilian Beier",
+            "x": 92.4,
+            "y": 30.279999999999998,
+            "min": 55,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.1041,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 317564,
+            "firstName": "Maximilian",
+            "lastName": "Beier",
+            "fullName": "Maximilian Beier",
+            "teamColor": "#d8a000"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 0
+        "away": 1
       }
     },
     "6106256": {
