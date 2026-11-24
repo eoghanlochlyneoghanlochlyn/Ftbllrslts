@@ -130812,7 +130812,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1478365555Goal1199272undefinedfalse"
+        "react:1478365555Goal1199272undefinedfalse",
+        "react:1478390667Goal1561552undefinedtrue"
       ],
       "goals": [
         {
@@ -130902,6 +130903,94 @@
             "assistKey": "assist_by",
             "assistInput": "Billy Gilmour"
           }
+        },
+        {
+          "event_key": "react:1478390667Goal1561552undefinedtrue",
+          "player_id": 1561552,
+          "player_name": "Ayyoub Bouaddi",
+          "assist_player_id": 942368,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "67",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5521,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478390667Goal1561552undefinedtrue",
+            "timeStr": 67,
+            "type": "goal",
+            "time": 67,
+            "overloadTime": null,
+            "eventId": 14783906,
+            "player": {
+              "id": 1561552,
+              "name": "Ayyoub Bouaddi",
+              "profileUrl": "/players/1561552/ayyoub-bouaddi"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/1561552/ayyoub-bouaddi",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ayyoub Bouaddi",
+            "firstName": "Ayyoub",
+            "lastName": "Bouaddi",
+            "fullName": "Ayyoub Bouaddi",
+            "playerId": 1561552,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3001203137,
+              "eventType": "Goal",
+              "teamId": 8456,
+              "playerId": 1561552,
+              "playerName": "Ayyoub Bouaddi",
+              "x": 93.1,
+              "y": 38.704523811,
+              "min": 67,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 34,
+              "goalCrossedZ": 1.5859999922,
+              "expectedGoals": 0.0507,
+              "expectedGoalsOnTarget": 0.0296,
+              "shotType": "LeftFoot",
+              "situation": "FromCorner",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1,
+                "y": 0.4195767175132275,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 543021,
+              "firstName": "Ayyoub",
+              "lastName": "Bouaddi",
+              "fullName": "Ayyoub Bouaddi",
+              "teamColor": "#69A8D8"
+            },
+            "assistStr": "assist by Jérémy Doku",
+            "assistProfileUrl": "/players/942368/jeremy-doku",
+            "assistPlayerId": 942368,
+            "assistKey": "assist_by",
+            "assistInput": "Jérémy Doku"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -130979,10 +131068,84 @@
           "assistPlayerId": 942549,
           "assistKey": "assist_by",
           "assistInput": "Billy Gilmour"
+        },
+        {
+          "reactKey": "1478390667Goal1561552undefinedtrue",
+          "timeStr": 67,
+          "type": "goal",
+          "time": 67,
+          "overloadTime": null,
+          "eventId": 14783906,
+          "player": {
+            "id": 1561552,
+            "name": "Ayyoub Bouaddi",
+            "profileUrl": "/players/1561552/ayyoub-bouaddi"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/1561552/ayyoub-bouaddi",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ayyoub Bouaddi",
+          "firstName": "Ayyoub",
+          "lastName": "Bouaddi",
+          "fullName": "Ayyoub Bouaddi",
+          "playerId": 1561552,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001203137,
+            "eventType": "Goal",
+            "teamId": 8456,
+            "playerId": 1561552,
+            "playerName": "Ayyoub Bouaddi",
+            "x": 93.1,
+            "y": 38.704523811,
+            "min": 67,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 34,
+            "goalCrossedZ": 1.5859999922,
+            "expectedGoals": 0.0507,
+            "expectedGoalsOnTarget": 0.0296,
+            "shotType": "LeftFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1,
+              "y": 0.4195767175132275,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 543021,
+            "firstName": "Ayyoub",
+            "lastName": "Bouaddi",
+            "fullName": "Ayyoub Bouaddi",
+            "teamColor": "#69A8D8"
+          },
+          "assistStr": "assist by Jérémy Doku",
+          "assistProfileUrl": "/players/942368/jeremy-doku",
+          "assistPlayerId": 942368,
+          "assistKey": "assist_by",
+          "assistInput": "Jérémy Doku"
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     },
@@ -131695,8 +131858,8 @@
             "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": 35.75375,
-            "goalCrossedZ": 1.1365263102,
+            "goalCrossedY": 36.21125,
+            "goalCrossedZ": 1.5474736766000001,
             "expectedGoals": 0.38739317655563354,
             "expectedGoalsOnTarget": 0.6967756748199463,
             "shotType": "RightFoot",
@@ -131704,8 +131867,8 @@
             "period": "SecondHalf",
             "isOwnGoal": false,
             "onGoalShot": {
-              "x": 0.5360449735449745,
-              "y": 0.30066833603174603,
+              "x": 0.41501322751322767,
+              "y": 0.40938457052910054,
               "zoomRatio": 1
             },
             "isSavedOffLine": false,
