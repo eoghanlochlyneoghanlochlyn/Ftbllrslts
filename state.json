@@ -130813,7 +130813,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1478365555Goal1199272undefinedfalse",
-        "react:1478390667Goal1561552undefinedtrue"
+        "react:1478390667Goal1561552undefinedtrue",
+        "react:1478407276Goal837341undefinedfalse"
       ],
       "goals": [
         {
@@ -130991,6 +130992,94 @@
             "assistKey": "assist_by",
             "assistInput": "Jérémy Doku"
           }
+        },
+        {
+          "event_key": "react:1478407276Goal837341undefinedfalse",
+          "player_id": 837341,
+          "player_name": "Noa Lang",
+          "assist_player_id": 215242,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "76",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5522,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478407276Goal837341undefinedfalse",
+            "timeStr": 76,
+            "type": "goal",
+            "time": 76,
+            "overloadTime": null,
+            "eventId": 14784072,
+            "player": {
+              "id": 837341,
+              "name": "Noa Lang",
+              "profileUrl": "/players/837341/noa-lang"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/837341/noa-lang",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Noa Lang",
+            "firstName": "Noa",
+            "lastName": "Lang",
+            "fullName": "Noa Lang",
+            "playerId": 837341,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3001212479,
+              "eventType": "Goal",
+              "teamId": 9875,
+              "playerId": 837341,
+              "playerName": "Noa Lang",
+              "x": 96.50877192889999,
+              "y": 37.864047621,
+              "min": 76,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 32.779999999999994,
+              "goalCrossedZ": 0.0385263156,
+              "expectedGoals": 0.34,
+              "expectedGoalsOnTarget": 0.5287,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.3227513227513243,
+                "y": 0.010192146984126984,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 618878,
+              "firstName": "Noa",
+              "lastName": "Lang",
+              "fullName": "Noa Lang",
+              "teamColor": "#12A0D7"
+            },
+            "assistStr": "assist by Leonardo Spinazzola",
+            "assistProfileUrl": "/players/215242/leonardo-spinazzola",
+            "assistPlayerId": 215242,
+            "assistKey": "assist_by",
+            "assistInput": "Leonardo Spinazzola"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -131142,11 +131231,85 @@
           "assistPlayerId": 942368,
           "assistKey": "assist_by",
           "assistInput": "Jérémy Doku"
+        },
+        {
+          "reactKey": "1478407276Goal837341undefinedfalse",
+          "timeStr": 76,
+          "type": "goal",
+          "time": 76,
+          "overloadTime": null,
+          "eventId": 14784072,
+          "player": {
+            "id": 837341,
+            "name": "Noa Lang",
+            "profileUrl": "/players/837341/noa-lang"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/837341/noa-lang",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Noa Lang",
+          "firstName": "Noa",
+          "lastName": "Lang",
+          "fullName": "Noa Lang",
+          "playerId": 837341,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001212479,
+            "eventType": "Goal",
+            "teamId": 9875,
+            "playerId": 837341,
+            "playerName": "Noa Lang",
+            "x": 96.50877192889999,
+            "y": 37.864047621,
+            "min": 76,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 32.779999999999994,
+            "goalCrossedZ": 0.0385263156,
+            "expectedGoals": 0.34,
+            "expectedGoalsOnTarget": 0.5287,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.3227513227513243,
+              "y": 0.010192146984126984,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 618878,
+            "firstName": "Noa",
+            "lastName": "Lang",
+            "fullName": "Noa Lang",
+            "teamColor": "#12A0D7"
+          },
+          "assistStr": "assist by Leonardo Spinazzola",
+          "assistProfileUrl": "/players/215242/leonardo-spinazzola",
+          "assistPlayerId": 215242,
+          "assistKey": "assist_by",
+          "assistInput": "Leonardo Spinazzola"
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "6106243": {
