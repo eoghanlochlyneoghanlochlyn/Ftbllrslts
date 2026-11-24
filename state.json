@@ -130460,7 +130460,7 @@
       }
     },
     "6106259": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -130476,7 +130476,7 @@
       }
     },
     "6106256": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
@@ -130492,7 +130492,7 @@
       }
     },
     "6106243": {
-      "lineup_sent": false,
+      "lineup_sent": true,
       "fallback_sent": false,
       "started": false,
       "half_time": false,
