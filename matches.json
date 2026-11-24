@@ -19,5 +19,61 @@
     "enabled": true,
     "auto": true,
     "start": "2026-11-24T20:00:00+00:00"
+  },
+  {
+    "id": "6054598",
+    "url": "https://www.fotmob.com/match/6054598",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T16:00:00+00:00"
+  },
+  {
+    "id": "6106421",
+    "url": "https://www.fotmob.com/match/6106421",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T17:45:00+00:00"
+  },
+  {
+    "id": "6106269",
+    "url": "https://www.fotmob.com/match/6106269",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T20:00:00+00:00"
+  },
+  {
+    "id": "6106294",
+    "url": "https://www.fotmob.com/match/6106294",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T20:00:00+00:00"
+  },
+  {
+    "id": "6106253",
+    "url": "https://www.fotmob.com/match/6106253",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T20:00:00+00:00"
+  },
+  {
+    "id": "6106310",
+    "url": "https://www.fotmob.com/match/6106310",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T20:00:00+00:00"
+  },
+  {
+    "id": "6106235",
+    "url": "https://www.fotmob.com/match/6106235",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T20:00:00+00:00"
+  },
+  {
+    "id": "6106279",
+    "url": "https://www.fotmob.com/match/6106279",
+    "enabled": true,
+    "auto": true,
+    "start": "2026-11-25T20:00:00+00:00"
   }
 ]
