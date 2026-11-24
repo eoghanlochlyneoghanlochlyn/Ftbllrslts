@@ -130665,7 +130665,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1478302232Goal163670undefinedfalse"
+        "react:1478302232Goal163670undefinedfalse",
+        "react:1478355950Goal0undefinedtrue"
       ],
       "goals": [
         {
@@ -130752,6 +130753,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1478355950Goal0undefinedtrue",
+          "player_id": 0,
+          "player_name": "<TBD>",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "50",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5515,
+          "needs_update": true,
+          "event": {
+            "reactKey": "1478355950Goal0undefinedtrue",
+            "timeStr": 50,
+            "type": "goal",
+            "time": 50,
+            "overloadTime": null,
+            "eventId": 14783559,
+            "player": {
+              "id": 0,
+              "name": "<TBD>",
+              "profileUrl": ""
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "<TBD>",
+            "firstName": "",
+            "lastName": "<TBD>",
+            "fullName": "<TBD>",
+            "playerId": 0,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -130826,10 +130877,46 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1478355950Goal0undefinedtrue",
+          "timeStr": 50,
+          "type": "goal",
+          "time": 50,
+          "overloadTime": null,
+          "eventId": 14783559,
+          "player": {
+            "id": 0,
+            "name": "<TBD>",
+            "profileUrl": ""
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "<TBD>",
+          "firstName": "",
+          "lastName": "<TBD>",
+          "fullName": "<TBD>",
+          "playerId": 0,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 1
       }
     }
