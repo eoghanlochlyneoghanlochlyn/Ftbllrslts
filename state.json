@@ -133199,6 +133199,41 @@
             4
           ],
           "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001440745,
+            "eventType": "Goal",
+            "teamId": 8634,
+            "playerId": 576165,
+            "playerName": "Gabriel Jesus",
+            "x": 103.19827586219999,
+            "y": 32.9325,
+            "min": 60,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.78875,
+            "goalCrossedZ": 0.1219999994,
+            "expectedGoals": 0.8704,
+            "expectedGoalsOnTarget": 0.9911,
+            "shotType": "RightFoot",
+            "situation": "FromCorner",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.5849867724867723,
+              "y": 0.032275132116402115,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 489507,
+            "firstName": "Gabriel",
+            "lastName": "Jesus",
+            "fullName": "Gabriel Jesus",
+            "teamColor": "#971e48"
+          },
           "assistStr": null,
           "assistProfileUrl": null
         }
