@@ -132645,11 +132645,8 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": "assist by Bruno",
-          "assistProfileUrl": "/players/1104099/bruno",
-          "assistPlayerId": 1104099,
-          "assistKey": "assist_by",
-          "assistInput": "Bruno"
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
