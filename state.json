@@ -132618,6 +132618,16 @@
           "time": 40,
           "overloadTime": null,
           "eventId": 0,
+          "highlight": {
+            "id": 2229778,
+            "eventId": 0,
+            "elapsed": "",
+            "title": "Talisca's TRIVELA MAGIC! | Al Jazira FSC 🇦🇪 vs Golgohar Sirjan SC 🇮🇷 | Highlights ACL Two™",
+            "image": "https://i.ytimg.com/vi/awb2H3VIJzs/maxresdefault.jpg",
+            "url": "https://www.youtube.com/watch?v=awb2H3VIJzs",
+            "source": "www.youtube.com",
+            "eventType": "1"
+          },
           "player": {
             "id": 450011,
             "name": "Talisca",
@@ -134466,8 +134476,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:1478640957Goal1382000undefinedtrue",
         "react:1478652974Goal690230undefinedtrue"
@@ -135717,8 +135727,8 @@
       "fallback_sent": false,
       "started": true,
       "half_time": false,
-      "finished": false,
-      "finished_sent": false,
+      "finished": true,
+      "finished_sent": true,
       "event_keys": [
         "react:147860555Goal671203undefinedfalse",
         "react:1478619932Goal1140003undefinedtrue",
