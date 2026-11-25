@@ -134567,7 +134567,7 @@
           "event_key": "react:1478643562Goal942393undefinedtrue",
           "player_id": 942393,
           "player_name": "Ayase Ueda",
-          "assist_player_id": null,
+          "assist_player_id": 1252070,
           "assist_player_name": "",
           "is_home": true,
           "minute": "62",
@@ -134620,18 +134620,22 @@
               "min": 62,
               "minAdded": null,
               "isBlocked": false,
-              "isOnTarget": false,
+              "isOnTarget": true,
               "blockedX": null,
               "blockedY": null,
-              "goalCrossedY": null,
-              "goalCrossedZ": null,
-              "expectedGoals": 0.0594,
-              "expectedGoalsOnTarget": null,
+              "goalCrossedY": 31.1025,
+              "goalCrossedZ": 0.28252631440000003,
+              "expectedGoals": 0.2165890485048294,
+              "expectedGoalsOnTarget": 0.8307756781578064,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
               "isOwnGoal": false,
-              "onGoalShot": null,
+              "onGoalShot": {
+                "x": 1.7665343915343916,
+                "y": 0.07474241121693122,
+                "zoomRatio": 1
+              },
               "isSavedOffLine": false,
               "isFromInsideBox": true,
               "keeperId": 1285872,
@@ -134640,8 +134644,11 @@
               "fullName": "Ayase Ueda",
               "teamColor": "#E01D13"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Nathan Ngoy",
+            "assistProfileUrl": "/players/1252070/nathan-ngoy",
+            "assistPlayerId": 1252070,
+            "assistKey": "assist_by",
+            "assistInput": "Nathan Ngoy"
           }
         }
       ],
@@ -134873,18 +134880,22 @@
             "min": 62,
             "minAdded": null,
             "isBlocked": false,
-            "isOnTarget": false,
+            "isOnTarget": true,
             "blockedX": null,
             "blockedY": null,
-            "goalCrossedY": null,
-            "goalCrossedZ": null,
-            "expectedGoals": 0.0594,
-            "expectedGoalsOnTarget": null,
+            "goalCrossedY": 31.1025,
+            "goalCrossedZ": 0.28252631440000003,
+            "expectedGoals": 0.2165890485048294,
+            "expectedGoalsOnTarget": 0.8307756781578064,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
             "isOwnGoal": false,
-            "onGoalShot": null,
+            "onGoalShot": {
+              "x": 1.7665343915343916,
+              "y": 0.07474241121693122,
+              "zoomRatio": 1
+            },
             "isSavedOffLine": false,
             "isFromInsideBox": true,
             "keeperId": 1285872,
@@ -134893,8 +134904,11 @@
             "fullName": "Ayase Ueda",
             "teamColor": "#E01D13"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Nathan Ngoy",
+          "assistProfileUrl": "/players/1252070/nathan-ngoy",
+          "assistPlayerId": 1252070,
+          "assistKey": "assist_by",
+          "assistInput": "Nathan Ngoy"
         }
       ],
       "observed_score": {
