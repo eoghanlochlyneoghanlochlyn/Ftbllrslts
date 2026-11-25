@@ -135108,7 +135108,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1478619833Goal792303undefinedtrue",
-        "react:1478637348Goal422685undefinedfalse"
+        "react:1478637348Goal422685undefinedfalse",
+        "react:1478637650Goal422685undefinedfalse"
       ],
       "goals": [
         {
@@ -135280,6 +135281,87 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1478637650Goal422685undefinedfalse",
+          "player_id": 422685,
+          "player_name": "Bruno Fernandes",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "50",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5579,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478637650Goal422685undefinedfalse",
+            "timeStr": 50,
+            "type": "goal",
+            "time": 50,
+            "overloadTime": null,
+            "eventId": 14786376,
+            "player": {
+              "id": 422685,
+              "name": "Bruno Fernandes",
+              "profileUrl": "/players/422685/bruno-fernandes"
+            },
+            "homeScore": 1,
+            "awayScore": 1,
+            "profileUrl": "/players/422685/bruno-fernandes",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Bruno Fernandes",
+            "firstName": "Bruno",
+            "lastName": "Fernandes",
+            "fullName": "Bruno Fernandes",
+            "playerId": 422685,
+            "newScore": [
+              1,
+              2
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3001506711,
+              "eventType": "Goal",
+              "teamId": 10260,
+              "playerId": 422685,
+              "playerName": "Bruno Fernandes",
+              "x": 80.68300970960001,
+              "y": 22.3177070103,
+              "min": 50,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0296,
+              "expectedGoalsOnTarget": null,
+              "shotType": "LeftFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": false,
+              "keeperId": 1320169,
+              "firstName": "Bruno",
+              "lastName": "Fernandes",
+              "fullName": "Bruno Fernandes",
+              "teamColor": "#C70101"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -135425,11 +135507,78 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1478637650Goal422685undefinedfalse",
+          "timeStr": 50,
+          "type": "goal",
+          "time": 50,
+          "overloadTime": null,
+          "eventId": 14786376,
+          "player": {
+            "id": 422685,
+            "name": "Bruno Fernandes",
+            "profileUrl": "/players/422685/bruno-fernandes"
+          },
+          "homeScore": 1,
+          "awayScore": 1,
+          "profileUrl": "/players/422685/bruno-fernandes",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Bruno Fernandes",
+          "firstName": "Bruno",
+          "lastName": "Fernandes",
+          "fullName": "Bruno Fernandes",
+          "playerId": 422685,
+          "newScore": [
+            1,
+            2
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001506711,
+            "eventType": "Goal",
+            "teamId": 10260,
+            "playerId": 422685,
+            "playerName": "Bruno Fernandes",
+            "x": 80.68300970960001,
+            "y": 22.3177070103,
+            "min": 50,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0296,
+            "expectedGoalsOnTarget": null,
+            "shotType": "LeftFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": false,
+            "keeperId": 1320169,
+            "firstName": "Bruno",
+            "lastName": "Fernandes",
+            "fullName": "Bruno Fernandes",
+            "teamColor": "#C70101"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 1,
-        "away": 1
+        "away": 2
       }
     },
     "6112266": {
