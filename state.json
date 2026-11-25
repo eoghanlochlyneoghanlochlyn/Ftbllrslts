@@ -132558,7 +132558,7 @@
           "event_key": "react:040Goal450011undefinedtrue",
           "player_id": 450011,
           "player_name": "Talisca",
-          "assist_player_id": null,
+          "assist_player_id": 1104099,
           "assist_player_name": "",
           "is_home": true,
           "minute": "40",
@@ -132601,8 +132601,11 @@
             ],
             "penShootoutScore": null,
             "shotmapEvent": null,
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Bruno",
+            "assistProfileUrl": "/players/1104099/bruno",
+            "assistPlayerId": 1104099,
+            "assistKey": "assist_by",
+            "assistInput": "Bruno"
           }
         }
       ],
@@ -132642,8 +132645,11 @@
           ],
           "penShootoutScore": null,
           "shotmapEvent": null,
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Bruno",
+          "assistProfileUrl": "/players/1104099/bruno",
+          "assistPlayerId": 1104099,
+          "assistKey": "assist_by",
+          "assistInput": "Bruno"
         }
       ],
       "observed_score": {
