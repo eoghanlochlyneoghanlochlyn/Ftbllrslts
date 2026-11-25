@@ -134164,7 +134164,8 @@
       "event_keys": [
         "react:1478610115Goal0undefinedfalse",
         "react:1478610115Goal658554undefinedfalse",
-        "react:1478635347Goal942393undefinedtrue"
+        "react:1478635347Goal942393undefinedtrue",
+        "react:1478635346Goal942393undefinedtrue"
       ],
       "goals": [
         {
@@ -134354,6 +134355,56 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1478635346Goal942393undefinedtrue",
+          "player_id": 942393,
+          "player_name": "Ayase Ueda",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "46",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5577,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478635346Goal942393undefinedtrue",
+            "timeStr": 46,
+            "type": "goal",
+            "time": 46,
+            "overloadTime": null,
+            "eventId": 14786353,
+            "player": {
+              "id": 942393,
+              "name": "Ayase Ueda",
+              "profileUrl": "/players/942393/ayase-ueda"
+            },
+            "homeScore": 0,
+            "awayScore": 1,
+            "profileUrl": "/players/942393/ayase-ueda",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ayase Ueda",
+            "firstName": "Ayase",
+            "lastName": "Ueda",
+            "fullName": "Ayase Ueda",
+            "playerId": 942393,
+            "newScore": [
+              1,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -134473,6 +134524,42 @@
           "timeStr": 47,
           "type": "goal",
           "time": 47,
+          "overloadTime": null,
+          "eventId": 14786353,
+          "player": {
+            "id": 942393,
+            "name": "Ayase Ueda",
+            "profileUrl": "/players/942393/ayase-ueda"
+          },
+          "homeScore": 0,
+          "awayScore": 1,
+          "profileUrl": "/players/942393/ayase-ueda",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ayase Ueda",
+          "firstName": "Ayase",
+          "lastName": "Ueda",
+          "fullName": "Ayase Ueda",
+          "playerId": 942393,
+          "newScore": [
+            1,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1478635346Goal942393undefinedtrue",
+          "timeStr": 46,
+          "type": "goal",
+          "time": 46,
           "overloadTime": null,
           "eventId": 14786353,
           "player": {
