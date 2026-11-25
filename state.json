@@ -132664,7 +132664,8 @@
       "event_keys": [
         "react:1478554131Goal906937undefinedfalse",
         "react:1478567651Goal906937undefinedfalse",
-        "react:1478569055Goal959594undefinedfalse"
+        "react:1478569055Goal959594undefinedfalse",
+        "react:1478570960Goal576165undefinedfalse"
       ],
       "goals": [
         {
@@ -132892,6 +132893,56 @@
             "assistKey": "assist_by",
             "assistInput": "Alejandro Balde"
           }
+        },
+        {
+          "event_key": "react:1478570960Goal576165undefinedfalse",
+          "player_id": 576165,
+          "player_name": "Gabriel Jesus",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "60",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5551,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478570960Goal576165undefinedfalse",
+            "timeStr": 60,
+            "type": "goal",
+            "time": 60,
+            "overloadTime": null,
+            "eventId": 14785709,
+            "player": {
+              "id": 576165,
+              "name": "Gabriel Jesus",
+              "profileUrl": "/players/576165/gabriel-jesus"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/576165/gabriel-jesus",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Gabriel Jesus",
+            "firstName": "Gabriel",
+            "lastName": "Jesus",
+            "fullName": "Gabriel Jesus",
+            "playerId": 576165,
+            "newScore": [
+              0,
+              4
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -133114,11 +133165,47 @@
           "assistPlayerId": 1254166,
           "assistKey": "assist_by",
           "assistInput": "Alejandro Balde"
+        },
+        {
+          "reactKey": "1478570960Goal576165undefinedfalse",
+          "timeStr": 60,
+          "type": "goal",
+          "time": 60,
+          "overloadTime": null,
+          "eventId": 14785709,
+          "player": {
+            "id": 576165,
+            "name": "Gabriel Jesus",
+            "profileUrl": "/players/576165/gabriel-jesus"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/576165/gabriel-jesus",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Gabriel Jesus",
+          "firstName": "Gabriel",
+          "lastName": "Jesus",
+          "fullName": "Gabriel Jesus",
+          "playerId": 576165,
+          "newScore": [
+            0,
+            4
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 3
+        "away": 4
       }
     },
     "6106269": {
