@@ -132661,13 +132661,103 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:1478554131Goal906937undefinedfalse"
+      ],
+      "goals": [
+        {
+          "event_key": "react:1478554131Goal906937undefinedfalse",
+          "player_id": 906937,
+          "player_name": "Anthony Gordon",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "31",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5542,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478554131Goal906937undefinedfalse",
+            "timeStr": 31,
+            "type": "goal",
+            "time": 31,
+            "overloadTime": null,
+            "eventId": 14785541,
+            "player": {
+              "id": 906937,
+              "name": "Anthony Gordon",
+              "profileUrl": "/players/906937/anthony-gordon"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/906937/anthony-gordon",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Anthony Gordon",
+            "firstName": "Anthony",
+            "lastName": "Gordon",
+            "fullName": "Anthony Gordon",
+            "playerId": 906937,
+            "newScore": [
+              0,
+              1
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "1478554131Goal906937undefinedfalse",
+          "timeStr": 31,
+          "type": "goal",
+          "time": 31,
+          "overloadTime": null,
+          "eventId": 14785541,
+          "player": {
+            "id": 906937,
+            "name": "Anthony Gordon",
+            "profileUrl": "/players/906937/anthony-gordon"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/906937/anthony-gordon",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Anthony Gordon",
+          "firstName": "Anthony",
+          "lastName": "Gordon",
+          "fullName": "Anthony Gordon",
+          "playerId": 906937,
+          "newScore": [
+            0,
+            1
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
         "home": 0,
-        "away": 0
+        "away": 1
       }
     },
     "6106269": {
