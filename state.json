@@ -132550,12 +132550,104 @@
       "half_time": false,
       "finished": false,
       "finished_sent": false,
-      "event_keys": [],
-      "goals": [],
+      "event_keys": [
+        "react:040Goal450011undefinedtrue"
+      ],
+      "goals": [
+        {
+          "event_key": "react:040Goal450011undefinedtrue",
+          "player_id": 450011,
+          "player_name": "Talisca",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "40",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5538,
+          "needs_update": false,
+          "event": {
+            "reactKey": "040Goal450011undefinedtrue",
+            "timeStr": 40,
+            "type": "goal",
+            "time": 40,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 450011,
+              "name": "Talisca",
+              "profileUrl": "/players/450011/talisca"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/450011/talisca",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Talisca",
+            "firstName": "",
+            "lastName": "Talisca",
+            "fullName": "Talisca",
+            "playerId": 450011,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
+        }
+      ],
       "cancelled_goal_keys": [],
-      "observed_goal_events": [],
+      "observed_goal_events": [
+        {
+          "reactKey": "040Goal450011undefinedtrue",
+          "timeStr": 40,
+          "type": "goal",
+          "time": 40,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 450011,
+            "name": "Talisca",
+            "profileUrl": "/players/450011/talisca"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/450011/talisca",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Talisca",
+          "firstName": "",
+          "lastName": "Talisca",
+          "fullName": "Talisca",
+          "playerId": 450011,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": null,
+          "assistStr": null,
+          "assistProfileUrl": null
+        }
+      ],
       "observed_score": {
-        "home": 0,
+        "home": 1,
         "away": 0
       }
     },
