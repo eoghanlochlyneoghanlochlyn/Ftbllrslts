@@ -137603,7 +137603,8 @@
         "react:1478792431Goal466439undefinedtrue",
         "react:1478811449Goal1114798undefinedtrue",
         "react:1478816956Goal1215652undefinedfalse",
-        "react:1478826163Goal1445650undefinedfalse"
+        "react:1478826163Goal1445650undefinedfalse",
+        "react:1478839071Goal688295undefinedfalse"
       ],
       "goals": [
         {
@@ -138000,6 +138001,94 @@
             "assistKey": "assist_by",
             "assistInput": "Omari Hutchinson"
           }
+        },
+        {
+          "event_key": "react:1478839071Goal688295undefinedfalse",
+          "player_id": 688295,
+          "player_name": "Christian Pulisic",
+          "assist_player_id": 1215652,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "71",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5618,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478839071Goal688295undefinedfalse",
+            "timeStr": 71,
+            "type": "goal",
+            "time": 71,
+            "overloadTime": null,
+            "eventId": 14788390,
+            "player": {
+              "id": 688295,
+              "name": "Christian Pulisic",
+              "profileUrl": "/players/688295/christian-pulisic"
+            },
+            "homeScore": 2,
+            "awayScore": 2,
+            "profileUrl": "/players/688295/christian-pulisic",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Christian Pulisic",
+            "firstName": "Christian",
+            "lastName": "Pulisic",
+            "fullName": "Christian Pulisic",
+            "playerId": 688295,
+            "newScore": [
+              2,
+              3
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3001746131,
+              "eventType": "Goal",
+              "teamId": 8564,
+              "playerId": 688295,
+              "playerName": "Christian Pulisic",
+              "x": 94.8684210512,
+              "y": 31.865,
+              "min": 71,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 30.568749999999998,
+              "goalCrossedZ": 1.0594736790000001,
+              "expectedGoals": 0.08,
+              "expectedGoalsOnTarget": 0.4358,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.9077380952380967,
+                "y": 0.28028404206349206,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 276729,
+              "firstName": "Christian",
+              "lastName": "Pulisic",
+              "fullName": "Christian Pulisic",
+              "teamColor": "#CF2C27"
+            },
+            "assistStr": "assist by Omari Hutchinson",
+            "assistProfileUrl": "/players/1215652/omari-hutchinson",
+            "assistPlayerId": 1215652,
+            "assistKey": "assist_by",
+            "assistInput": "Omari Hutchinson"
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -138332,11 +138421,85 @@
           "assistPlayerId": 1215652,
           "assistKey": "assist_by",
           "assistInput": "Omari Hutchinson"
+        },
+        {
+          "reactKey": "1478839071Goal688295undefinedfalse",
+          "timeStr": 71,
+          "type": "goal",
+          "time": 71,
+          "overloadTime": null,
+          "eventId": 14788390,
+          "player": {
+            "id": 688295,
+            "name": "Christian Pulisic",
+            "profileUrl": "/players/688295/christian-pulisic"
+          },
+          "homeScore": 2,
+          "awayScore": 2,
+          "profileUrl": "/players/688295/christian-pulisic",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Christian Pulisic",
+          "firstName": "Christian",
+          "lastName": "Pulisic",
+          "fullName": "Christian Pulisic",
+          "playerId": 688295,
+          "newScore": [
+            2,
+            3
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001746131,
+            "eventType": "Goal",
+            "teamId": 8564,
+            "playerId": 688295,
+            "playerName": "Christian Pulisic",
+            "x": 94.8684210512,
+            "y": 31.865,
+            "min": 71,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 30.568749999999998,
+            "goalCrossedZ": 1.0594736790000001,
+            "expectedGoals": 0.08,
+            "expectedGoalsOnTarget": 0.4358,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.9077380952380967,
+              "y": 0.28028404206349206,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 276729,
+            "firstName": "Christian",
+            "lastName": "Pulisic",
+            "fullName": "Christian Pulisic",
+            "teamColor": "#CF2C27"
+          },
+          "assistStr": "assist by Omari Hutchinson",
+          "assistProfileUrl": "/players/1215652/omari-hutchinson",
+          "assistPlayerId": 1215652,
+          "assistKey": "assist_by",
+          "assistInput": "Omari Hutchinson"
         }
       ],
       "observed_score": {
         "home": 2,
-        "away": 2
+        "away": 3
       }
     },
     "6112252": {
