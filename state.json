@@ -139033,7 +139033,7 @@
           "event_key": "react:1478945172Goal643229undefinedtrue",
           "player_id": 643229,
           "player_name": "Jérémie Boga",
-          "assist_player_id": null,
+          "assist_player_id": 1078846,
           "assist_player_name": "",
           "is_home": true,
           "minute": "72",
@@ -139091,8 +139091,8 @@
               "blockedY": null,
               "goalCrossedY": 30.873749999999998,
               "goalCrossedZ": 1.7465263072000001,
-              "expectedGoals": 0.0525,
-              "expectedGoalsOnTarget": 0.5827,
+              "expectedGoals": 0.04102850332856178,
+              "expectedGoalsOnTarget": 0.8542845845222473,
               "shotType": "RightFoot",
               "situation": "RegularPlay",
               "period": "SecondHalf",
@@ -139110,8 +139110,11 @@
               "fullName": "Jérémie Boga",
               "teamColor": "#000001"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Andrea Cambiaso",
+            "assistProfileUrl": "/players/1078846/andrea-cambiaso",
+            "assistPlayerId": 1078846,
+            "assistKey": "assist_by",
+            "assistInput": "Andrea Cambiaso"
           }
         }
       ],
@@ -139459,8 +139462,8 @@
             "blockedY": null,
             "goalCrossedY": 30.873749999999998,
             "goalCrossedZ": 1.7465263072000001,
-            "expectedGoals": 0.0525,
-            "expectedGoalsOnTarget": 0.5827,
+            "expectedGoals": 0.04102850332856178,
+            "expectedGoalsOnTarget": 0.8542845845222473,
             "shotType": "RightFoot",
             "situation": "RegularPlay",
             "period": "SecondHalf",
@@ -139478,8 +139481,11 @@
             "fullName": "Jérémie Boga",
             "teamColor": "#000001"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Andrea Cambiaso",
+          "assistProfileUrl": "/players/1078846/andrea-cambiaso",
+          "assistPlayerId": 1078846,
+          "assistKey": "assist_by",
+          "assistInput": "Andrea Cambiaso"
         }
       ],
       "observed_score": {
