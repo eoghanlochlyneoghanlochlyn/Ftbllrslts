@@ -137599,7 +137599,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:1478792431Goal1050165undefinedtrue"
+        "react:1478792431Goal1050165undefinedtrue",
+        "react:1478792431Goal466439undefinedtrue"
       ],
       "goals": [
         {
@@ -137654,6 +137655,91 @@
             "assistKey": "assist_by",
             "assistInput": "Gustavo Sá"
           }
+        },
+        {
+          "event_key": "react:1478792431Goal466439undefinedtrue",
+          "player_id": 466439,
+          "player_name": "Mike Maignan",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "31",
+          "penalty": false,
+          "own_goal": true,
+          "cancelled": false,
+          "telegram_message_id": 5613,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1478792431Goal466439undefinedtrue",
+            "timeStr": 31,
+            "type": "goal",
+            "time": 31,
+            "overloadTime": null,
+            "eventId": 14787924,
+            "player": {
+              "id": 466439,
+              "name": "Mike Maignan",
+              "profileUrl": "/players/466439/mike-maignan"
+            },
+            "homeScore": 0,
+            "awayScore": 0,
+            "profileUrl": "/players/466439/mike-maignan",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": true,
+            "goalDescription": "Own goal",
+            "goalDescriptionKey": "owngoal",
+            "suffix": "OG",
+            "suffixKey": "own_goal_short",
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Mike Maignan",
+            "firstName": "Mike",
+            "lastName": "Maignan",
+            "fullName": "Mike Maignan",
+            "playerId": 466439,
+            "newScore": [
+              1,
+              0
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3001714151,
+              "eventType": "Goal",
+              "teamId": 8564,
+              "playerId": 466439,
+              "playerName": "Mike Maignan",
+              "x": 0.948275862,
+              "y": 33.61875,
+              "min": 31,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 33.466249999999995,
+              "goalCrossedZ": 1.2199999940000001,
+              "expectedGoals": null,
+              "expectedGoalsOnTarget": 0.1663183718919754,
+              "shotType": "OtherBodyParts",
+              "situation": "FromCorner",
+              "period": "FirstHalf",
+              "isOwnGoal": true,
+              "onGoalShot": {
+                "x": 1.141203703703705,
+                "y": 0.32275132116402117,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 466439,
+              "firstName": "Mike",
+              "lastName": "Maignan",
+              "fullName": "Mike Maignan",
+              "teamColor": "#CF2C27"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -137696,6 +137782,77 @@
           "assistPlayerId": 1395482,
           "assistKey": "assist_by",
           "assistInput": "Gustavo Sá"
+        },
+        {
+          "reactKey": "1478792431Goal466439undefinedtrue",
+          "timeStr": 31,
+          "type": "goal",
+          "time": 31,
+          "overloadTime": null,
+          "eventId": 14787924,
+          "player": {
+            "id": 466439,
+            "name": "Mike Maignan",
+            "profileUrl": "/players/466439/mike-maignan"
+          },
+          "homeScore": 0,
+          "awayScore": 0,
+          "profileUrl": "/players/466439/mike-maignan",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": true,
+          "goalDescription": "Own goal",
+          "goalDescriptionKey": "owngoal",
+          "suffix": "OG",
+          "suffixKey": "own_goal_short",
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Mike Maignan",
+          "firstName": "Mike",
+          "lastName": "Maignan",
+          "fullName": "Mike Maignan",
+          "playerId": 466439,
+          "newScore": [
+            1,
+            0
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3001714151,
+            "eventType": "Goal",
+            "teamId": 8564,
+            "playerId": 466439,
+            "playerName": "Mike Maignan",
+            "x": 0.948275862,
+            "y": 33.61875,
+            "min": 31,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 33.466249999999995,
+            "goalCrossedZ": 1.2199999940000001,
+            "expectedGoals": null,
+            "expectedGoalsOnTarget": 0.1663183718919754,
+            "shotType": "OtherBodyParts",
+            "situation": "FromCorner",
+            "period": "FirstHalf",
+            "isOwnGoal": true,
+            "onGoalShot": {
+              "x": 1.141203703703705,
+              "y": 0.32275132116402117,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 466439,
+            "firstName": "Mike",
+            "lastName": "Maignan",
+            "fullName": "Mike Maignan",
+            "teamColor": "#CF2C27"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
