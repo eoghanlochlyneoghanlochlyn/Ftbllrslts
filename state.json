@@ -139503,7 +139503,8 @@
       "event_keys": [
         "react:147924855Goal1082102undefinedtrue",
         "react:1479321751Goal789502undefinedtrue",
-        "react:1479325054Goal1183148undefinedfalse"
+        "react:1479325054Goal1183148undefinedfalse",
+        "react:1479344072Goal789502undefinedtrue"
       ],
       "goals": [
         {
@@ -139759,6 +139760,91 @@
             "assistStr": null,
             "assistProfileUrl": null
           }
+        },
+        {
+          "event_key": "react:1479344072Goal789502undefinedtrue",
+          "player_id": 789502,
+          "player_name": "Morgan Gibbs-White",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "72",
+          "penalty": true,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5643,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1479344072Goal789502undefinedtrue",
+            "timeStr": 72,
+            "type": "goal",
+            "time": 72,
+            "overloadTime": null,
+            "eventId": 14793440,
+            "player": {
+              "id": 789502,
+              "name": "Morgan Gibbs-White",
+              "profileUrl": "/players/789502/morgan-gibbs-white"
+            },
+            "homeScore": 2,
+            "awayScore": 1,
+            "profileUrl": "/players/789502/morgan-gibbs-white",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Morgan Gibbs-White",
+            "firstName": "Morgan",
+            "lastName": "Gibbs-White",
+            "fullName": "Morgan Gibbs-White",
+            "playerId": 789502,
+            "newScore": [
+              3,
+              1
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3002115385,
+              "eventType": "Goal",
+              "teamId": 10203,
+              "playerId": 789502,
+              "playerName": "Morgan Gibbs-White",
+              "x": 94,
+              "y": 34,
+              "min": 51,
+              "minAdded": null,
+              "isBlocked": false,
+              "isOnTarget": true,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": 31.331249999999997,
+              "goalCrossedZ": 0.20547368320000003,
+              "expectedGoals": 0.7884,
+              "expectedGoalsOnTarget": 0.8073384165763855,
+              "shotType": "RightFoot",
+              "situation": "Penalty",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": {
+                "x": 1.7060185185185193,
+                "y": 0.05435811724867726,
+                "zoomRatio": 1
+              },
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 268375,
+              "firstName": "Morgan",
+              "lastName": "Gibbs-White",
+              "fullName": "Morgan Gibbs-White",
+              "teamColor": "#C8102E"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -139978,10 +140064,81 @@
           },
           "assistStr": null,
           "assistProfileUrl": null
+        },
+        {
+          "reactKey": "1479344072Goal789502undefinedtrue",
+          "timeStr": 72,
+          "type": "goal",
+          "time": 72,
+          "overloadTime": null,
+          "eventId": 14793440,
+          "player": {
+            "id": 789502,
+            "name": "Morgan Gibbs-White",
+            "profileUrl": "/players/789502/morgan-gibbs-white"
+          },
+          "homeScore": 2,
+          "awayScore": 1,
+          "profileUrl": "/players/789502/morgan-gibbs-white",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Morgan Gibbs-White",
+          "firstName": "Morgan",
+          "lastName": "Gibbs-White",
+          "fullName": "Morgan Gibbs-White",
+          "playerId": 789502,
+          "newScore": [
+            3,
+            1
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3002115385,
+            "eventType": "Goal",
+            "teamId": 10203,
+            "playerId": 789502,
+            "playerName": "Morgan Gibbs-White",
+            "x": 94,
+            "y": 34,
+            "min": 51,
+            "minAdded": null,
+            "isBlocked": false,
+            "isOnTarget": true,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": 31.331249999999997,
+            "goalCrossedZ": 0.20547368320000003,
+            "expectedGoals": 0.7884,
+            "expectedGoalsOnTarget": 0.8073384165763855,
+            "shotType": "RightFoot",
+            "situation": "Penalty",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": {
+              "x": 1.7060185185185193,
+              "y": 0.05435811724867726,
+              "zoomRatio": 1
+            },
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 268375,
+            "firstName": "Morgan",
+            "lastName": "Gibbs-White",
+            "fullName": "Morgan Gibbs-White",
+            "teamColor": "#C8102E"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 2,
+        "home": 3,
         "away": 1
       }
     },
