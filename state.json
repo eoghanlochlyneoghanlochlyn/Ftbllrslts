@@ -140339,7 +140339,8 @@
       "event_keys": [
         "react:1479760019Goal184321undefinedfalse",
         "react:1479783832Goal184321undefinedfalse",
-        "react:1479959582Goal552718undefinedfalse"
+        "react:1479959582Goal552718undefinedfalse",
+        "react:1479995090Goal1083796undefinedfalse"
       ],
       "goals": [
         {
@@ -140601,6 +140602,87 @@
             "assistKey": "assist_by",
             "assistInput": "Dango Ouattara"
           }
+        },
+        {
+          "event_key": "react:1479995090Goal1083796undefinedfalse",
+          "player_id": 1083796,
+          "player_name": "Kevin Schade",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "90 + 2",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5660,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1479995090Goal1083796undefinedfalse",
+            "timeStr": "90 + 2",
+            "type": "goal",
+            "time": 90,
+            "overloadTime": 2,
+            "eventId": 14799950,
+            "player": {
+              "id": 1083796,
+              "name": "Kevin Schade",
+              "profileUrl": "/players/1083796/kevin-schade"
+            },
+            "homeScore": 0,
+            "awayScore": 3,
+            "profileUrl": "/players/1083796/kevin-schade",
+            "overloadTimeStr": "+2",
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Kevin Schade",
+            "firstName": "Kevin",
+            "lastName": "Schade",
+            "fullName": "Kevin Schade",
+            "playerId": 1083796,
+            "newScore": [
+              0,
+              4
+            ],
+            "penShootoutScore": null,
+            "shotmapEvent": {
+              "id": 3002645515,
+              "eventType": "Goal",
+              "teamId": 9937,
+              "playerId": 1083796,
+              "playerName": "Kevin Schade",
+              "x": 96.4122807008,
+              "y": 24.84,
+              "min": 90,
+              "minAdded": 1,
+              "isBlocked": false,
+              "isOnTarget": false,
+              "blockedX": null,
+              "blockedY": null,
+              "goalCrossedY": null,
+              "goalCrossedZ": null,
+              "expectedGoals": 0.0687,
+              "expectedGoalsOnTarget": null,
+              "shotType": "RightFoot",
+              "situation": "RegularPlay",
+              "period": "SecondHalf",
+              "isOwnGoal": false,
+              "onGoalShot": null,
+              "isSavedOffLine": false,
+              "isFromInsideBox": true,
+              "keeperId": 1178602,
+              "firstName": "Kevin",
+              "lastName": "Schade",
+              "fullName": "Kevin Schade",
+              "teamColor": "#C00808"
+            },
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -140826,11 +140908,78 @@
           "assistPlayerId": 1250253,
           "assistKey": "assist_by",
           "assistInput": "Dango Ouattara"
+        },
+        {
+          "reactKey": "1479995090Goal1083796undefinedfalse",
+          "timeStr": "90 + 2",
+          "type": "goal",
+          "time": 90,
+          "overloadTime": 2,
+          "eventId": 14799950,
+          "player": {
+            "id": 1083796,
+            "name": "Kevin Schade",
+            "profileUrl": "/players/1083796/kevin-schade"
+          },
+          "homeScore": 0,
+          "awayScore": 3,
+          "profileUrl": "/players/1083796/kevin-schade",
+          "overloadTimeStr": "+2",
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Kevin Schade",
+          "firstName": "Kevin",
+          "lastName": "Schade",
+          "fullName": "Kevin Schade",
+          "playerId": 1083796,
+          "newScore": [
+            0,
+            4
+          ],
+          "penShootoutScore": null,
+          "shotmapEvent": {
+            "id": 3002645515,
+            "eventType": "Goal",
+            "teamId": 9937,
+            "playerId": 1083796,
+            "playerName": "Kevin Schade",
+            "x": 96.4122807008,
+            "y": 24.84,
+            "min": 90,
+            "minAdded": 1,
+            "isBlocked": false,
+            "isOnTarget": false,
+            "blockedX": null,
+            "blockedY": null,
+            "goalCrossedY": null,
+            "goalCrossedZ": null,
+            "expectedGoals": 0.0687,
+            "expectedGoalsOnTarget": null,
+            "shotType": "RightFoot",
+            "situation": "RegularPlay",
+            "period": "SecondHalf",
+            "isOwnGoal": false,
+            "onGoalShot": null,
+            "isSavedOffLine": false,
+            "isFromInsideBox": true,
+            "keeperId": 1178602,
+            "firstName": "Kevin",
+            "lastName": "Schade",
+            "fullName": "Kevin Schade",
+            "teamColor": "#C00808"
+          },
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 3
+        "away": 4
       }
     },
     "5868144": {
