@@ -143194,7 +143194,8 @@
       "finished": false,
       "finished_sent": false,
       "event_keys": [
-        "react:032Goal1574189undefinedtrue"
+        "react:032Goal1574189undefinedtrue",
+        "react:067Goal692984undefinedtrue"
       ],
       "goals": [
         {
@@ -143248,6 +143249,56 @@
             "assistPlayerId": 1682313,
             "assistKey": "assist_by",
             "assistInput": "Dro Fernández"
+          }
+        },
+        {
+          "event_key": "react:067Goal692984undefinedtrue",
+          "player_id": 692984,
+          "player_name": "Ousmane Dembélé",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": true,
+          "minute": "67",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5692,
+          "needs_update": false,
+          "event": {
+            "reactKey": "067Goal692984undefinedtrue",
+            "timeStr": 67,
+            "type": "goal",
+            "time": 67,
+            "overloadTime": null,
+            "eventId": 0,
+            "player": {
+              "id": 692984,
+              "name": "Ousmane Dembélé",
+              "profileUrl": "/players/692984/ousmane-dembele"
+            },
+            "homeScore": 1,
+            "awayScore": 0,
+            "profileUrl": "/players/692984/ousmane-dembele",
+            "overloadTimeStr": false,
+            "isHome": true,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Ousmane Dembélé",
+            "firstName": "Ousmane",
+            "lastName": "Dembélé",
+            "fullName": "Ousmane Dembélé",
+            "playerId": 692984,
+            "newScore": [
+              2,
+              0
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
           }
         }
       ],
@@ -143326,10 +143377,46 @@
           "assistPlayerId": 1682313,
           "assistKey": "assist_by",
           "assistInput": "Dro Fernández"
+        },
+        {
+          "reactKey": "067Goal692984undefinedtrue",
+          "timeStr": 67,
+          "type": "goal",
+          "time": 67,
+          "overloadTime": null,
+          "eventId": 0,
+          "player": {
+            "id": 692984,
+            "name": "Ousmane Dembélé",
+            "profileUrl": "/players/692984/ousmane-dembele"
+          },
+          "homeScore": 1,
+          "awayScore": 0,
+          "profileUrl": "/players/692984/ousmane-dembele",
+          "overloadTimeStr": false,
+          "isHome": true,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Ousmane Dembélé",
+          "firstName": "Ousmane",
+          "lastName": "Dembélé",
+          "fullName": "Ousmane Dembélé",
+          "playerId": 692984,
+          "newScore": [
+            2,
+            0
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
-        "home": 1,
+        "home": 2,
         "away": 0
       }
     },
