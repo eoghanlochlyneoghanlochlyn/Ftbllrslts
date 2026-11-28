@@ -143733,7 +143733,7 @@
           "event_key": "react:1480287669Goal701154undefinedtrue",
           "player_id": 701154,
           "player_name": "Kylian Mbappé",
-          "assist_player_id": null,
+          "assist_player_id": 1077894,
           "assist_player_name": "",
           "is_home": true,
           "minute": "69",
@@ -143791,8 +143791,8 @@
               "blockedY": null,
               "goalCrossedY": 35.220000000000006,
               "goalCrossedZ": 1.8299999910000002,
-              "expectedGoals": 0.072,
-              "expectedGoalsOnTarget": 0.1184,
+              "expectedGoals": 0.08944778889417648,
+              "expectedGoalsOnTarget": 0.5126969218254089,
               "shotType": "LeftFoot",
               "situation": "FromCorner",
               "period": "SecondHalf",
@@ -143810,8 +143810,11 @@
               "fullName": "Kylian Mbappé",
               "teamColor": "#085098"
             },
-            "assistStr": null,
-            "assistProfileUrl": null
+            "assistStr": "assist by Jude Bellingham",
+            "assistProfileUrl": "/players/1077894/jude-bellingham",
+            "assistPlayerId": 1077894,
+            "assistKey": "assist_by",
+            "assistInput": "Jude Bellingham"
           }
         }
       ],
@@ -144047,8 +144050,8 @@
             "blockedY": null,
             "goalCrossedY": 35.220000000000006,
             "goalCrossedZ": 1.8299999910000002,
-            "expectedGoals": 0.072,
-            "expectedGoalsOnTarget": 0.1184,
+            "expectedGoals": 0.08944778889417648,
+            "expectedGoalsOnTarget": 0.5126969218254089,
             "shotType": "LeftFoot",
             "situation": "FromCorner",
             "period": "SecondHalf",
@@ -144066,8 +144069,11 @@
             "fullName": "Kylian Mbappé",
             "teamColor": "#085098"
           },
-          "assistStr": null,
-          "assistProfileUrl": null
+          "assistStr": "assist by Jude Bellingham",
+          "assistProfileUrl": "/players/1077894/jude-bellingham",
+          "assistPlayerId": 1077894,
+          "assistKey": "assist_by",
+          "assistInput": "Jude Bellingham"
         }
       ],
       "observed_score": {
