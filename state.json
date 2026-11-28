@@ -142729,11 +142729,8 @@
             "fullName": "Marcus Thuram",
             "teamColor": "#010E80"
           },
-          "assistStr": "assist by Lautaro Martínez",
-          "assistProfileUrl": "/players/690230/lautaro-martinez",
-          "assistPlayerId": 690230,
-          "assistKey": "assist_by",
-          "assistInput": "Lautaro Martínez"
+          "assistStr": null,
+          "assistProfileUrl": null
         },
         {
           "reactKey": "1480229844Goal605224undefinedtrue",
@@ -142852,7 +142849,7 @@
             "goalCrossedY": 31.941249999999997,
             "goalCrossedZ": 0.5714736814000001,
             "expectedGoals": 0.7884,
-            "expectedGoalsOnTarget": 0.9763,
+            "expectedGoalsOnTarget": 0.6269444227218628,
             "shotType": "RightFoot",
             "situation": "Penalty",
             "period": "FirstHalf",
