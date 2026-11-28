@@ -140338,7 +140338,8 @@
       "finished_sent": false,
       "event_keys": [
         "react:1479760019Goal184321undefinedfalse",
-        "react:1479783832Goal184321undefinedfalse"
+        "react:1479783832Goal184321undefinedfalse",
+        "react:1479959582Goal552718undefinedfalse"
       ],
       "goals": [
         {
@@ -140512,6 +140513,56 @@
             "assistKey": "assist_by",
             "assistInput": "Dango Ouattara"
           }
+        },
+        {
+          "event_key": "react:1479959582Goal552718undefinedfalse",
+          "player_id": 552718,
+          "player_name": "Kristoffer Ajer",
+          "assist_player_id": null,
+          "assist_player_name": "",
+          "is_home": false,
+          "minute": "82",
+          "penalty": false,
+          "own_goal": false,
+          "cancelled": false,
+          "telegram_message_id": 5659,
+          "needs_update": false,
+          "event": {
+            "reactKey": "1479959582Goal552718undefinedfalse",
+            "timeStr": 82,
+            "type": "goal",
+            "time": 82,
+            "overloadTime": null,
+            "eventId": 14799595,
+            "player": {
+              "id": 552718,
+              "name": "Kristoffer Ajer",
+              "profileUrl": "/players/552718/kristoffer-ajer"
+            },
+            "homeScore": 0,
+            "awayScore": 2,
+            "profileUrl": "/players/552718/kristoffer-ajer",
+            "overloadTimeStr": false,
+            "isHome": false,
+            "ownGoal": null,
+            "goalDescription": null,
+            "goalDescriptionKey": null,
+            "suffix": null,
+            "suffixKey": null,
+            "isPenaltyShootoutEvent": false,
+            "nameStr": "Kristoffer Ajer",
+            "firstName": "Kristoffer",
+            "lastName": "Ajer",
+            "fullName": "Kristoffer Ajer",
+            "playerId": 552718,
+            "newScore": [
+              0,
+              3
+            ],
+            "penShootoutScore": null,
+            "assistStr": null,
+            "assistProfileUrl": null
+          }
         }
       ],
       "cancelled_goal_keys": [],
@@ -140663,11 +140714,47 @@
           "assistPlayerId": 1250253,
           "assistKey": "assist_by",
           "assistInput": "Dango Ouattara"
+        },
+        {
+          "reactKey": "1479959582Goal552718undefinedfalse",
+          "timeStr": 82,
+          "type": "goal",
+          "time": 82,
+          "overloadTime": null,
+          "eventId": 14799595,
+          "player": {
+            "id": 552718,
+            "name": "Kristoffer Ajer",
+            "profileUrl": "/players/552718/kristoffer-ajer"
+          },
+          "homeScore": 0,
+          "awayScore": 2,
+          "profileUrl": "/players/552718/kristoffer-ajer",
+          "overloadTimeStr": false,
+          "isHome": false,
+          "ownGoal": null,
+          "goalDescription": null,
+          "goalDescriptionKey": null,
+          "suffix": null,
+          "suffixKey": null,
+          "isPenaltyShootoutEvent": false,
+          "nameStr": "Kristoffer Ajer",
+          "firstName": "Kristoffer",
+          "lastName": "Ajer",
+          "fullName": "Kristoffer Ajer",
+          "playerId": 552718,
+          "newScore": [
+            0,
+            3
+          ],
+          "penShootoutScore": null,
+          "assistStr": null,
+          "assistProfileUrl": null
         }
       ],
       "observed_score": {
         "home": 0,
-        "away": 2
+        "away": 3
       }
     },
     "5868144": {
