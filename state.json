@@ -142084,7 +142084,7 @@
     "5803007": {
       "lineup_sent": true,
       "fallback_sent": false,
-      "started": false,
+      "started": true,
       "half_time": false,
       "finished": false,
       "finished_sent": false,
